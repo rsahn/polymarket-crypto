@@ -43,6 +43,24 @@ class TestPolymarketOrderbookCollector(unittest.TestCase):
         self.assertEqual(normalized['up']['bid'], 0.56)
         self.assertEqual(normalized['up']['bid_qty'], 7.0)
 
+    def test_ignores_stale_token_event(self):
+        collector = PolymarketOrderbookCollector('5m', {'UP': 'new-up', 'DOWN': 'new-down'}, lambda *_: None)
+        normalized = collector.normalize_snapshot({
+            'asset_id': 'old-up', 'timestamp': str(int(time.time() * 1000)),
+            'bids': [{'price': '0.87', 'size': '10'}], 'asks': [{'price': '0.88', 'size': '10'}],
+        })
+        self.assertTrue(normalized['stale_token'])
+        self.assertIsNone(collector._books.get('new-up'))
+
+    def test_new_book_is_incomplete_until_both_tokens_exist(self):
+        collector = PolymarketOrderbookCollector('5m', {'UP': 'new-up', 'DOWN': 'new-down'}, lambda *_: None)
+        first = collector.normalize_snapshot({'asset_id': 'new-up', 'bids': [{'price': '0.50', 'size': '2'}], 'asks': [{'price': '0.51', 'size': '2'}]})
+        self.assertIsNotNone(first['up']['bid'])
+        self.assertIsNone(first['down']['bid'])
+        second = collector.normalize_snapshot({'asset_id': 'new-down', 'bids': [{'price': '0.49', 'size': '2'}], 'asks': [{'price': '0.50', 'size': '2'}]})
+        self.assertIsNotNone(second['up']['ask'])
+        self.assertIsNotNone(second['down']['bid'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -25,7 +25,7 @@ async def main():
     print(f'PAPER LIVE: mode={"SHADOW" if paper.shadow else "ACTIVE"} | equity={paper.initial_equity:.2f} USDC | champion={champion.name}')
     if not champion.validated:
         print(f'CHAMPION_NOT_VALIDATED: {champion.reason}')
-    stats = {'btc': 0, 'poly': 0, 'latest_btc': None, 'latest': {}, 'states': {'5m': 'WAITING_BOOK', '15m': 'WAITING_BOOK'}, 'metrics': {}, 'rotations': {'5m': 0, '15m': 0}}
+    stats = {'btc': 0, 'poly': 0, 'latest_btc': None, 'latest': {}, 'states': {'5m': 'WAITING_BOOK', '15m': 'WAITING_BOOK'}, 'metrics': {}, 'rotations': {'5m': 0, '15m': 0}, 'last_valid_book_monotonic': {}}
 
     async def on_tick(tick):
         await db.insert_btc(tick)
@@ -42,8 +42,9 @@ async def main():
         stats['poly'] += 1
         stats['latest'][snapshot['market_key']] = snapshot
         now_ms = int(time.time() * 1000)
+        stats['last_valid_book_monotonic'][snapshot['market_key']] = time.monotonic()
         stats['metrics'][snapshot['market_key']] = {
-            'feed_age_ms': now_ms - snapshot['event_ts_ms'] if snapshot.get('event_ts_ms') else None,
+            'feed_age_ms': 0,
             'processing_latency_ms': max(0, now_ms - snapshot['recv_ts_ms']),
             'decision_latency_ms': 0,
             'websocket_rtt_ms': None,
@@ -74,6 +75,9 @@ async def main():
                     f"spread DOWN {((down.get('ask') or 0) - (down.get('bid') or 0)) if down.get('ask') is not None and down.get('bid') is not None else 'n/a'} | remaining {remaining_text}"
                 )
                 metrics = stats['metrics'].get(key, {})
+                last_book = stats['last_valid_book_monotonic'].get(key)
+                if last_book is not None:
+                    metrics['feed_age_ms'] = int((time.monotonic() - last_book) * 1000)
                 lines.append(
                     f"{key.upper()} metrics: websocket_rtt_ms={metrics.get('websocket_rtt_ms', 'n/a')} "
                     f"feed_age_ms={metrics.get('feed_age_ms', 'n/a')} "
@@ -98,6 +102,7 @@ async def main():
             print(f'NEW MARKET {market_key}: slug={market["slug"]} conditionId={condition_id} tokens={market["token_ids"]}')
             state = 'WAITING_BOOK'
             stats['states'][market_key] = state
+            first_valid_book = asyncio.Event()
 
             async def on_rotated_quote(snapshot):
                 nonlocal state
@@ -114,12 +119,25 @@ async def main():
                 if state != 'ACTIVE':
                     state = 'ACTIVE'
                     stats['states'][market_key] = state
+                    first_valid_book.set()
                     print(f'ACTIVE {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
                 await on_quote(snapshot)
 
-            await PolymarketOrderbookCollector(
+            collector_task = asyncio.create_task(PolymarketOrderbookCollector(
                 market_key, market['token_ids'], on_rotated_quote, market.get('expiry_ts_ms')
-            ).run()
+            ).run())
+            try:
+                await asyncio.wait_for(asyncio.shield(first_valid_book.wait()), timeout=5)
+            except asyncio.TimeoutError:
+                print(f'WAITING_BOOK_TIMEOUT ({market_key})')
+                collector_task.cancel()
+                try:
+                    await collector_task
+                except asyncio.CancelledError:
+                    pass
+                previous_slug = None
+                continue
+            await collector_task
             stats['states'][market_key] = 'EXPIRED'
             stats['rotations'][market_key] += 1
             stats['latest'].pop(market_key, None)
