@@ -1,0 +1,466 @@
+{
+  "day": [
+    {
+      "period": "2026-03-25",
+      "pairs": 36428,
+      "paired_quantity": 595610.728304,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9903492652352895,
+      "pair_cost_lt_1_pct": 49.761172724278026,
+      "time_to_hedge_median_ms": 36000.0,
+      "hedge_rate": 0.39989404030836306
+    },
+    {
+      "period": "2026-03-26",
+      "pairs": 57273,
+      "paired_quantity": 879402.513834,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.99547003093528,
+      "pair_cost_lt_1_pct": 48.05056483858014,
+      "time_to_hedge_median_ms": 42000,
+      "hedge_rate": 0.4071261577912741
+    },
+    {
+      "period": "2026-03-27",
+      "pairs": 63648,
+      "paired_quantity": 911323.458133,
+      "pair_cost_median": 1.00140731465,
+      "weighted_pair_cost": 0.9970105564976666,
+      "pair_cost_lt_1_pct": 46.534062342885875,
+      "time_to_hedge_median_ms": 38000.0,
+      "hedge_rate": 0.4100551599246047
+    },
+    {
+      "period": "2026-03-28",
+      "pairs": 60154,
+      "paired_quantity": 897488.965842,
+      "pair_cost_median": 0.99929973105,
+      "weighted_pair_cost": 0.9906234482298084,
+      "pair_cost_lt_1_pct": 50.069820793297204,
+      "time_to_hedge_median_ms": 50000.0,
+      "hedge_rate": 0.3970188469758644
+    },
+    {
+      "period": "2026-03-29",
+      "pairs": 40985,
+      "paired_quantity": 487307.011879,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9985906684341688,
+      "pair_cost_lt_1_pct": 48.65682566792729,
+      "time_to_hedge_median_ms": 50000,
+      "hedge_rate": 0.33846073623832357
+    },
+    {
+      "period": "2026-03-30",
+      "pairs": 90588,
+      "paired_quantity": 977243.688804,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9895302733724857,
+      "pair_cost_lt_1_pct": 47.85402040005299,
+      "time_to_hedge_median_ms": 34000.0,
+      "hedge_rate": 0.3400127992144896
+    },
+    {
+      "period": "2026-03-31",
+      "pairs": 71205,
+      "paired_quantity": 901004.516486,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9807706912076366,
+      "pair_cost_lt_1_pct": 49.06958780984481,
+      "time_to_hedge_median_ms": 34000,
+      "hedge_rate": 0.2826514056321848
+    },
+    {
+      "period": "2026-04-01",
+      "pairs": 64108,
+      "paired_quantity": 805177.409335,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9848597777165657,
+      "pair_cost_lt_1_pct": 48.861296562051535,
+      "time_to_hedge_median_ms": 38000.0,
+      "hedge_rate": 0.3203116996530489
+    },
+    {
+      "period": "2026-04-02",
+      "pairs": 60081,
+      "paired_quantity": 610834.361895,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.986221044253306,
+      "pair_cost_lt_1_pct": 49.907624706646025,
+      "time_to_hedge_median_ms": 40000,
+      "hedge_rate": 0.2758232144402548
+    },
+    {
+      "period": "2026-04-03",
+      "pairs": 33493,
+      "paired_quantity": 548176.630168,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9992593993490818,
+      "pair_cost_lt_1_pct": 49.490938405039856,
+      "time_to_hedge_median_ms": 46000,
+      "hedge_rate": 0.24041942991967544
+    },
+    {
+      "period": "2026-04-04",
+      "pairs": 20520,
+      "paired_quantity": 339427.863339,
+      "pair_cost_median": 1.0000000267,
+      "weighted_pair_cost": 0.9972610747182572,
+      "pair_cost_lt_1_pct": 48.104288499025344,
+      "time_to_hedge_median_ms": 56000.0,
+      "hedge_rate": 0.2934188112573433
+    },
+    {
+      "period": "2026-04-05",
+      "pairs": 37305,
+      "paired_quantity": 469945.309762,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9829152127019499,
+      "pair_cost_lt_1_pct": 52.266452218201316,
+      "time_to_hedge_median_ms": 58000,
+      "hedge_rate": 0.2538601030718816
+    },
+    {
+      "period": "2026-04-06",
+      "pairs": 56886,
+      "paired_quantity": 737449.446809,
+      "pair_cost_median": 0.9900000702,
+      "weighted_pair_cost": 0.9826183119455233,
+      "pair_cost_lt_1_pct": 50.97563548148929,
+      "time_to_hedge_median_ms": 44000.0,
+      "hedge_rate": 0.24495066790672623
+    },
+    {
+      "period": "2026-04-07",
+      "pairs": 43234,
+      "paired_quantity": 772023.949436,
+      "pair_cost_median": 0.9928798060000001,
+      "weighted_pair_cost": 0.9907677347790461,
+      "pair_cost_lt_1_pct": 51.05009945875931,
+      "time_to_hedge_median_ms": 36000.0,
+      "hedge_rate": 0.2740628263714038
+    },
+    {
+      "period": "2026-04-08",
+      "pairs": 50906,
+      "paired_quantity": 998327.048238,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.97403996614811,
+      "pair_cost_lt_1_pct": 53.60861195143991,
+      "time_to_hedge_median_ms": 34000.0,
+      "hedge_rate": 0.3335031076464726
+    },
+    {
+      "period": "2026-04-09",
+      "pairs": 38640,
+      "paired_quantity": 810590.537975,
+      "pair_cost_median": 0.9876821053,
+      "weighted_pair_cost": 0.9690667896325158,
+      "pair_cost_lt_1_pct": 54.49016563146998,
+      "time_to_hedge_median_ms": 34000.0,
+      "hedge_rate": 0.33933449362136525
+    },
+    {
+      "period": "2026-04-10",
+      "pairs": 41087,
+      "paired_quantity": 772691.221986,
+      "pair_cost_median": 0.9972727272999999,
+      "weighted_pair_cost": 0.9891391053761398,
+      "pair_cost_lt_1_pct": 50.4709518825906,
+      "time_to_hedge_median_ms": 36000,
+      "hedge_rate": 0.33649570198792517
+    },
+    {
+      "period": "2026-04-11",
+      "pairs": 27859,
+      "paired_quantity": 507560.364764,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9866099504179726,
+      "pair_cost_lt_1_pct": 52.593416849133135,
+      "time_to_hedge_median_ms": 54000,
+      "hedge_rate": 0.373026896160307
+    },
+    {
+      "period": "2026-04-12",
+      "pairs": 48395,
+      "paired_quantity": 540707.830017,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 1.0019640350585666,
+      "pair_cost_lt_1_pct": 48.10414298997831,
+      "time_to_hedge_median_ms": 50000,
+      "hedge_rate": 0.30450759964472945
+    },
+    {
+      "period": "2026-04-13",
+      "pairs": 52807,
+      "paired_quantity": 540097.147346,
+      "pair_cost_median": 0.992972793,
+      "weighted_pair_cost": 0.9836798467198216,
+      "pair_cost_lt_1_pct": 50.60882080027269,
+      "time_to_hedge_median_ms": 44000,
+      "hedge_rate": 0.2713162429060763
+    },
+    {
+      "period": "2026-04-14",
+      "pairs": 63033,
+      "paired_quantity": 658400.219908,
+      "pair_cost_median": 0.9946273684,
+      "weighted_pair_cost": 0.9829532895514292,
+      "pair_cost_lt_1_pct": 50.668697349007665,
+      "time_to_hedge_median_ms": 42000,
+      "hedge_rate": 0.2831692724615087
+    },
+    {
+      "period": "2026-04-15",
+      "pairs": 45213,
+      "paired_quantity": 462178.806293,
+      "pair_cost_median": 0.9900000365,
+      "weighted_pair_cost": 0.9850985205113068,
+      "pair_cost_lt_1_pct": 50.9610067900825,
+      "time_to_hedge_median_ms": 42000,
+      "hedge_rate": 0.22635175911435712
+    },
+    {
+      "period": "2026-04-16",
+      "pairs": 46326,
+      "paired_quantity": 437957.255477,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9819108356617656,
+      "pair_cost_lt_1_pct": 53.561714803781896,
+      "time_to_hedge_median_ms": 42000.0,
+      "hedge_rate": 0.22481025870235594
+    },
+    {
+      "period": "2026-04-17",
+      "pairs": 49490,
+      "paired_quantity": 483606.44074499997,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9899663110999184,
+      "pair_cost_lt_1_pct": 51.2022630834512,
+      "time_to_hedge_median_ms": 40000.0,
+      "hedge_rate": 0.2479208996153077
+    },
+    {
+      "period": "2026-04-18",
+      "pairs": 35564,
+      "paired_quantity": 323038.530826,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9851861608954166,
+      "pair_cost_lt_1_pct": 52.68529974131144,
+      "time_to_hedge_median_ms": 54000.0,
+      "hedge_rate": 0.21600041167817496
+    },
+    {
+      "period": "2026-04-19",
+      "pairs": 36596,
+      "paired_quantity": 319562.750181,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9712938837956773,
+      "pair_cost_lt_1_pct": 53.27631435129523,
+      "time_to_hedge_median_ms": 46000.0,
+      "hedge_rate": 0.2331009659460031
+    },
+    {
+      "period": "2026-04-20",
+      "pairs": 38059,
+      "paired_quantity": 349300.631346,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9925673292206872,
+      "pair_cost_lt_1_pct": 51.538400903859795,
+      "time_to_hedge_median_ms": 42000,
+      "hedge_rate": 0.24497955522855636
+    },
+    {
+      "period": "2026-04-21",
+      "pairs": 37824,
+      "paired_quantity": 354185.930542,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9902254447820023,
+      "pair_cost_lt_1_pct": 51.028447546531304,
+      "time_to_hedge_median_ms": 42000.0,
+      "hedge_rate": 0.23045361836781342
+    },
+    {
+      "period": "2026-04-22",
+      "pairs": 105852,
+      "paired_quantity": 730524.515435,
+      "pair_cost_median": 1.0000000988,
+      "weighted_pair_cost": 0.9922594951578699,
+      "pair_cost_lt_1_pct": 44.08797188527378,
+      "time_to_hedge_median_ms": 26000.0,
+      "hedge_rate": 0.322753179314223
+    },
+    {
+      "period": "2026-04-23",
+      "pairs": 88663,
+      "paired_quantity": 562317.907857,
+      "pair_cost_median": 1.01,
+      "weighted_pair_cost": 1.0004281366221182,
+      "pair_cost_lt_1_pct": 41.62164600791762,
+      "time_to_hedge_median_ms": 28000,
+      "hedge_rate": 0.29365063419486265
+    },
+    {
+      "period": "2026-04-24",
+      "pairs": 33111,
+      "paired_quantity": 293128.192071,
+      "pair_cost_median": 1.01,
+      "weighted_pair_cost": 1.0045109503941074,
+      "pair_cost_lt_1_pct": 42.39678656639787,
+      "time_to_hedge_median_ms": 40000,
+      "hedge_rate": 0.20968956096839214
+    },
+    {
+      "period": "2026-04-25",
+      "pairs": 55253,
+      "paired_quantity": 289664.092008,
+      "pair_cost_median": 1.02,
+      "weighted_pair_cost": 1.0483973979668397,
+      "pair_cost_lt_1_pct": 33.89318227064594,
+      "time_to_hedge_median_ms": 46000,
+      "hedge_rate": 0.23964681677068497
+    },
+    {
+      "period": "2026-04-26",
+      "pairs": 15439,
+      "paired_quantity": 219675.790725,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.996272398299541,
+      "pair_cost_lt_1_pct": 49.180646414923245,
+      "time_to_hedge_median_ms": 76000,
+      "hedge_rate": 0.18489808098939461
+    },
+    {
+      "period": "2026-04-27",
+      "pairs": 32891,
+      "paired_quantity": 427797.225951,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9891405549138513,
+      "pair_cost_lt_1_pct": 52.88984828676538,
+      "time_to_hedge_median_ms": 42000,
+      "hedge_rate": 0.27123702597262217
+    },
+    {
+      "period": "2026-04-28",
+      "pairs": 19420,
+      "paired_quantity": 220087.073999,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9901748271342553,
+      "pair_cost_lt_1_pct": 52.857878475798145,
+      "time_to_hedge_median_ms": 44000.0,
+      "hedge_rate": 0.24780849918220038
+    },
+    {
+      "period": "2026-04-29",
+      "pairs": 32987,
+      "paired_quantity": 401781.384402,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9930137559293964,
+      "pair_cost_lt_1_pct": 48.919271228059536,
+      "time_to_hedge_median_ms": 44000,
+      "hedge_rate": 0.28086785162348077
+    },
+    {
+      "period": "2026-04-30",
+      "pairs": 32655,
+      "paired_quantity": 388368.954404,
+      "pair_cost_median": 1.0096415385,
+      "weighted_pair_cost": 1.0164184402935896,
+      "pair_cost_lt_1_pct": 46.25631603123565,
+      "time_to_hedge_median_ms": 44000,
+      "hedge_rate": 0.25455501215114806
+    },
+    {
+      "period": "2026-05-01",
+      "pairs": 27714,
+      "paired_quantity": 320935.369295,
+      "pair_cost_median": 1.00000028315,
+      "weighted_pair_cost": 1.0028974384404568,
+      "pair_cost_lt_1_pct": 47.51750018041423,
+      "time_to_hedge_median_ms": 44000.0,
+      "hedge_rate": 0.23074399620007408
+    },
+    {
+      "period": "2026-05-02",
+      "pairs": 19260,
+      "paired_quantity": 198670.70263,
+      "pair_cost_median": 0.9900000019,
+      "weighted_pair_cost": 0.9918921750062311,
+      "pair_cost_lt_1_pct": 51.31360332294912,
+      "time_to_hedge_median_ms": 60000.0,
+      "hedge_rate": 0.21488056464457939
+    },
+    {
+      "period": "2026-05-03",
+      "pairs": 15896,
+      "paired_quantity": 188703.735533,
+      "pair_cost_median": 0.99498333335,
+      "weighted_pair_cost": 0.9938742525457561,
+      "pair_cost_lt_1_pct": 50.69199798691495,
+      "time_to_hedge_median_ms": 58000.0,
+      "hedge_rate": 0.20442404481181767
+    }
+  ],
+  "week": [
+    {
+      "period": "2026-W12",
+      "pairs": 258488,
+      "paired_quantity": 3771132.677992,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9942833551397648,
+      "pair_cost_lt_1_pct": 48.484262325523815,
+      "time_to_hedge_median_ms": 42000.0,
+      "hedge_rate": 0.393965891078886
+    },
+    {
+      "period": "2026-W13",
+      "pairs": 377300,
+      "paired_quantity": 4651809.779789,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9876329947171519,
+      "pair_cost_lt_1_pct": 49.1767824012722,
+      "time_to_hedge_median_ms": 40000.0,
+      "hedge_rate": 0.2893235132477782
+    },
+    {
+      "period": "2026-W14",
+      "pairs": 307007,
+      "paired_quantity": 5139350.399225,
+      "pair_cost_median": 0.9900000568,
+      "weighted_pair_cost": 0.9834487204907926,
+      "pair_cost_lt_1_pct": 51.491659799287966,
+      "time_to_hedge_median_ms": 40000,
+      "hedge_rate": 0.30881052149508503
+    },
+    {
+      "period": "2026-W15",
+      "pairs": 329029,
+      "paired_quantity": 3224841.150776,
+      "pair_cost_median": 0.99,
+      "weighted_pair_cost": 0.9833608369412069,
+      "pair_cost_lt_1_pct": 51.694835409644746,
+      "time_to_hedge_median_ms": 44000,
+      "hedge_rate": 0.2457422210276007
+    },
+    {
+      "period": "2026-W16",
+      "pairs": 374201,
+      "paired_quantity": 2798797.059984,
+      "pair_cost_median": 1.01,
+      "weighted_pair_cost": 1.001089855735881,
+      "pair_cost_lt_1_pct": 43.518055804233555,
+      "time_to_hedge_median_ms": 34000,
+      "hedge_rate": 0.2559296991343394
+    },
+    {
+      "period": "2026-W17",
+      "pairs": 180823,
+      "paired_quantity": 2146344.446214,
+      "pair_cost_median": 1.0,
+      "weighted_pair_cost": 0.9976353224178974,
+      "pair_cost_lt_1_pct": 49.77961874319085,
+      "time_to_hedge_median_ms": 46000,
+      "hedge_rate": 0.24784419216912026
+    }
+  ]
+}

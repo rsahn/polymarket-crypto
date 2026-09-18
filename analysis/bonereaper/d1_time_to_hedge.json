@@ -1,0 +1,125 @@
+{
+  "summary_ms": {
+    "mean": 76202.7388157088,
+    "median": 40000.0,
+    "p01": 0.0,
+    "p05": 4000.0,
+    "p10": 6000.0,
+    "p25": 16000.0,
+    "p50": 40000.0,
+    "p75": 82000.0,
+    "p90": 150000.0,
+    "p95": 226000.0,
+    "p99": 566000.0
+  },
+  "buckets": {
+    "0-100ms": {
+      "pairs": 21684,
+      "paired_quantity": 267567.927709,
+      "pair_cost_mean": 0.4120239311051144,
+      "pair_cost_median": 0.44,
+      "pair_cost_lt_1_pct": 100.0,
+      "pair_cost_lt_0_99_pct": 100.0,
+      "pair_cost_lt_0_97_pct": 100.0,
+      "pair_cost_lt_0_95_pct": 100.0,
+      "gross_pair_edge_mean": 0.5879760688948856,
+      "gross_pair_edge_quantity_weighted": 0.5860309303152232
+    },
+    "100-500ms": {
+      "pairs": 0,
+      "paired_quantity": 0,
+      "pair_cost_mean": null,
+      "pair_cost_median": null,
+      "pair_cost_lt_1_pct": null,
+      "pair_cost_lt_0_99_pct": null,
+      "pair_cost_lt_0_97_pct": null,
+      "pair_cost_lt_0_95_pct": null,
+      "gross_pair_edge_mean": null,
+      "gross_pair_edge_quantity_weighted": null
+    },
+    "500ms-1s": {
+      "pairs": 0,
+      "paired_quantity": 0,
+      "pair_cost_mean": null,
+      "pair_cost_median": null,
+      "pair_cost_lt_1_pct": null,
+      "pair_cost_lt_0_99_pct": null,
+      "pair_cost_lt_0_97_pct": null,
+      "pair_cost_lt_0_95_pct": null,
+      "gross_pair_edge_mean": null,
+      "gross_pair_edge_quantity_weighted": null
+    },
+    "1-5s": {
+      "pairs": 112397,
+      "paired_quantity": 1280125.574224,
+      "pair_cost_mean": 0.6782538379984261,
+      "pair_cost_median": 0.6900000000000001,
+      "pair_cost_lt_1_pct": 100.0,
+      "pair_cost_lt_0_99_pct": 100.0,
+      "pair_cost_lt_0_97_pct": 100.0,
+      "pair_cost_lt_0_95_pct": 100.0,
+      "gross_pair_edge_mean": 0.3217461620015739,
+      "gross_pair_edge_quantity_weighted": 0.3237328232611332
+    },
+    "5-15s": {
+      "pairs": 273691,
+      "paired_quantity": 3262866.834384,
+      "pair_cost_mean": 0.8399976785134575,
+      "pair_cost_median": 0.8464109873,
+      "pair_cost_lt_1_pct": 100.0,
+      "pair_cost_lt_0_99_pct": 100.0,
+      "pair_cost_lt_0_97_pct": 100.0,
+      "pair_cost_lt_0_95_pct": 100.0,
+      "gross_pair_edge_mean": 0.16000232148654248,
+      "gross_pair_edge_quantity_weighted": 0.15956028484700713
+    },
+    "15-30s": {
+      "pairs": 309573,
+      "paired_quantity": 3778020.850524,
+      "pair_cost_mean": 0.9368714475353026,
+      "pair_cost_median": 0.94,
+      "pair_cost_lt_1_pct": 100.0,
+      "pair_cost_lt_0_99_pct": 100.0,
+      "pair_cost_lt_0_97_pct": 94.16421974784623,
+      "pair_cost_lt_0_95_pct": 61.357418121089374,
+      "gross_pair_edge_mean": 0.06312855246469752,
+      "gross_pair_edge_quantity_weighted": 0.0626289269347382
+    },
+    "30-60s": {
+      "pairs": 453774,
+      "paired_quantity": 5302121.717938,
+      "pair_cost_mean": 1.0011290562186654,
+      "pair_cost_median": 1.0,
+      "pair_cost_lt_1_pct": 38.46782759699762,
+      "pair_cost_lt_0_99_pct": 22.87217866162451,
+      "pair_cost_lt_0_97_pct": 0.0,
+      "pair_cost_lt_0_95_pct": 0.0,
+      "gross_pair_edge_mean": -0.0011290562186654612,
+      "gross_pair_edge_quantity_weighted": -0.0010750708371715257
+    },
+    "60-120s": {
+      "pairs": 390567,
+      "paired_quantity": 4698497.785494,
+      "pair_cost_mean": 1.0679232234002731,
+      "pair_cost_median": 1.0600000859,
+      "pair_cost_lt_1_pct": 0.0,
+      "pair_cost_lt_0_99_pct": 0.0,
+      "pair_cost_lt_0_97_pct": 0.0,
+      "pair_cost_lt_0_95_pct": 0.0,
+      "gross_pair_edge_mean": -0.06792322340027321,
+      "gross_pair_edge_quantity_weighted": -0.06765461475754493
+    },
+    ">120s": {
+      "pairs": 265162,
+      "paired_quantity": 3143074.823707,
+      "pair_cost_mean": 1.2543554545025135,
+      "pair_cost_median": 1.21000008175,
+      "pair_cost_lt_1_pct": 0.0,
+      "pair_cost_lt_0_99_pct": 0.0,
+      "pair_cost_lt_0_97_pct": 0.0,
+      "pair_cost_lt_0_95_pct": 0.0,
+      "gross_pair_edge_mean": -0.25435545450251357,
+      "gross_pair_edge_quantity_weighted": -0.25571420779716064
+    }
+  }
+}

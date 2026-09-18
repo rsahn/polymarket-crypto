@@ -1,0 +1,11 @@
+{
+  "entry_timing": "Not testable: market open/expiry timestamps are not reliably present in activity rows.",
+  "delay_distribution": {
+    "30-60s": 24012,
+    "5-15s": 141688,
+    "1-5s": 167792,
+    "15-30s": 50585,
+    ">60s": 11674,
+    "<100ms": 90119
+  }
+}

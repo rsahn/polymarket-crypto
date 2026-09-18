@@ -1,0 +1,19 @@
+{
+  "transitions": {
+    "UP->DOWN": 243037,
+    "DOWN->UP": 242833,
+    "DOWN->DOWN": 889184,
+    "UP->UP": 894329
+  },
+  "p_next_down_given_up": 0.2136840735524009,
+  "p_next_up_given_down": 0.21451356295886015,
+  "delay_distribution": {
+    "30-60s": 24012,
+    "5-15s": 141688,
+    "1-5s": 167792,
+    "15-30s": 50585,
+    ">60s": 11674,
+    "<100ms": 90119
+  },
+  "transition_total": 2269383
+}

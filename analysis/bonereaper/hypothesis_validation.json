@@ -1,0 +1,8 @@
+{
+  "H1_temporal_pairing": "IMPOSSIBLE_TO_CONFIRM",
+  "H2_inventory_management": "DESCRIPTIVE_ONLY",
+  "H3_directional_momentum": "IMPOSSIBLE_TO_TEST_WITHOUT_SETTLEMENT",
+  "H4_late_window": "IMPOSSIBLE_TO_TEST_WITHOUT_MARKET_OPEN_EXPIRY",
+  "H5_cross_market": "NOT_TESTED_D0",
+  "H6_sprt": "NOT_TESTED_D0"
+}

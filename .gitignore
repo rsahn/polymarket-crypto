@@ -1,0 +1,35 @@
+# Local databases and large research snapshots
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Node dependencies and build caches
+node_modules/
+.npm/
+.cache/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/*.log
+
+# Logs and temporary output
+*.log
+*.tmp

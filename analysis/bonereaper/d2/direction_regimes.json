@@ -1,0 +1,78 @@
+{
+  "UP->DOWN": {
+    "train": {
+      "pairs": 606725,
+      "paired_quantity": 8181927.107379,
+      "pair_cost_mean": 0.9831285826243962,
+      "pair_cost_weighted": 0.9866625194556407,
+      "pair_cost_lt_1_pct": 50.118093040504355,
+      "gross_edge_mean": 0.016871417375603933,
+      "gross_edge_weighted": 0.013337480544359348,
+      "markets": 13501,
+      "days": 24,
+      "weeks": 4
+    },
+    "validation": {
+      "pairs": 212953,
+      "paired_quantity": 1624008.40897,
+      "pair_cost_mean": 1.0056132048469615,
+      "pair_cost_weighted": 0.9972331386033834,
+      "pair_cost_lt_1_pct": 44.65774137955324,
+      "gross_edge_mean": -0.005613204846961539,
+      "gross_edge_weighted": 0.0027668613966166378,
+      "markets": 4916,
+      "days": 9,
+      "weeks": 2
+    },
+    "oos": {
+      "pairs": 106636,
+      "paired_quantity": 1257097.599375,
+      "pair_cost_mean": 0.9993825774364399,
+      "pair_cost_weighted": 0.999795889949778,
+      "pair_cost_lt_1_pct": 49.09599009715293,
+      "gross_edge_mean": 0.0006174225635601463,
+      "gross_edge_weighted": 0.00020411005022202833,
+      "markets": 4214,
+      "days": 9,
+      "weeks": 2
+    }
+  },
+  "DOWN->UP": {
+    "train": {
+      "pairs": 591282,
+      "paired_quantity": 7946949.390394,
+      "pair_cost_mean": 0.9846168281305021,
+      "pair_cost_weighted": 0.9880908825229672,
+      "pair_cost_lt_1_pct": 50.030949699128335,
+      "gross_edge_mean": 0.0153831718694978,
+      "gross_edge_weighted": 0.011909117477032827,
+      "markets": 13509,
+      "days": 24,
+      "weeks": 4
+    },
+    "validation": {
+      "pairs": 212465,
+      "paired_quantity": 1576232.578849,
+      "pair_cost_mean": 1.0013392659526337,
+      "pair_cost_weighted": 0.9938447695669927,
+      "pair_cost_lt_1_pct": 45.7708328430565,
+      "gross_edge_mean": -0.0013392659526336131,
+      "gross_edge_weighted": 0.006155230433007253,
+      "markets": 4846,
+      "days": 9,
+      "weeks": 2
+    },
+    "oos": {
+      "pairs": 96787,
+      "paired_quantity": 1146060.429013,
+      "pair_cost_mean": 1.0016250802612354,
+      "pair_cost_weighted": 0.9985914547474675,
+      "pair_cost_lt_1_pct": 48.868133117050846,
+      "gross_edge_mean": -0.0016250802612354988,
+      "gross_edge_weighted": 0.0014085452525325337,
+      "markets": 4144,
+      "days": 9,
+      "weeks": 2
+    }
+  }
+}

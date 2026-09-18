@@ -1,0 +1,17 @@
+{
+  "capital_minimum_observable": 38346435.92260663,
+  "definition": "Cumulative observed trade notional, not wallet starting capital.",
+  "first_trade": {
+    "timestamp": 1774422711,
+    "utc": "2026-03-25T07:11:51+00:00",
+    "price": 0.02,
+    "size": 344.0,
+    "notional": 6.88,
+    "outcome": "Down",
+    "side": "BUY",
+    "market": "0x2ca9908e859438750a885058b1205cf60cff779a1485157351fef2bd74d8ddb5"
+  },
+  "first_24h": 1040633.1659110077,
+  "first_7d": 9177330.54976323,
+  "snapshot_first_30d_notional": 38346435.92260663
+}

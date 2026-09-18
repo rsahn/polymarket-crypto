@@ -1,0 +1,14 @@
+{
+  "pair_cost_distribution": {
+    ">1.00": 13372,
+    "0.90-0.93": 1784,
+    "<0.85": 2132,
+    "0.85-0.90": 1836,
+    "0.99-1.00": 1108,
+    "0.95-0.97": 1763,
+    "0.97-0.99": 1910,
+    "0.93-0.95": 1559
+  },
+  "note": "Average inventory cost pairing is descriptive; no economic pairing inferred across unresolved sells.",
+  "markets_with_both_outcomes": 25464
+}

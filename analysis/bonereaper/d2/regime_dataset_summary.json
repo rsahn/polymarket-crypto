@@ -1,0 +1,43 @@
+{
+  "source": "C:\\Users\\User\\Documents\\Project\\Projet BTC\\analysis\\bonereaper\\pair_observations.db",
+  "read_only": true,
+  "created_utc": "2026-09-18T03:18:14.377709+00:00",
+  "baseline": {
+    "pairs": 1826848,
+    "paired_quantity": 21732275.51398,
+    "pair_cost_mean": 0.9902779211990291,
+    "pair_cost_weighted": 0.9898844558414149,
+    "pair_cost_lt_1_pct": 48.82190527071765,
+    "gross_edge_mean": 0.00972207880097085,
+    "gross_edge_weighted": 0.010115544158585066,
+    "markets": 25464,
+    "days": 40,
+    "weeks": 6
+  },
+  "split": {
+    "train": [
+      1774422711000,
+      1776466498800.0
+    ],
+    "validation": [
+      1776466498800.0,
+      1777147761400.0
+    ],
+    "oos": [
+      1777147761400.0,
+      1777829024001
+    ]
+  },
+  "feature_limits": [
+    "No BTC volatility",
+    "No order-book imbalance",
+    "No network latency",
+    "No time-to-expiry"
+  ],
+  "minimum_sample": {
+    "pairs": 10000,
+    "markets": 25,
+    "days": 3,
+    "weeks": 2
+  }
+}
