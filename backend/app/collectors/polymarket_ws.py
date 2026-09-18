@@ -16,6 +16,7 @@ class PolymarketOrderbookCollector:
         self.expiry_ts_ms = expiry_ts_ms
         self.url = 'wss://ws-subscriptions-clob.polymarket.com/ws/market'
         self._books: Dict[str, Dict[str, list]] = {}
+        self._expected_tokens = {str(token) for token in token_ids.values()}
 
     @staticmethod
     def _levels(value: Any) -> list:
@@ -34,12 +35,18 @@ class PolymarketOrderbookCollector:
         return levels
 
     def _update_book(self, asset_id: str, bids: list, asks: list) -> None:
+        if asset_id not in self._expected_tokens:
+            print(f'STALE_TOKEN_EVENT_IGNORED ({self.market_key}): {asset_id}')
+            return
         self._books[asset_id] = {'bids': self._levels(bids), 'asks': self._levels(asks)}
 
     def _apply_price_changes(self, payload: Dict[str, Any]) -> None:
         for change in payload.get('price_changes', []):
             asset_id = str(change.get('asset_id', ''))
             if not asset_id:
+                continue
+            if asset_id not in self._expected_tokens:
+                print(f'STALE_TOKEN_EVENT_IGNORED ({self.market_key}): {asset_id}')
                 continue
             book = self._books.setdefault(asset_id, {'bids': [], 'asks': []})
             side = 'bids' if str(change.get('side', '')).upper() == 'BUY' else 'asks'
@@ -82,7 +89,19 @@ class PolymarketOrderbookCollector:
         if not isinstance(outcomes, dict):
             outcomes = {}
 
+        now_ms = int(time.time() * 1000)
         asset_id = str(payload.get('asset_id', payload.get('token_id', '')))
+        if asset_id and asset_id not in self._expected_tokens:
+            print(f'STALE_TOKEN_EVENT_IGNORED ({self.market_key}): {asset_id}')
+            return {
+                'market_key': self.market_key,
+                'token_ids': self.token_ids,
+                'event_ts_ms': event_ts_ms,
+                'recv_ts_ms': now_ms,
+                'expiry_ts_ms': expiry_ts_ms,
+                'time_remaining_ms': max(0, expiry_ts_ms - now_ms) if expiry_ts_ms else None,
+                'stale_token': True,
+            }
         if asset_id and ('bids' in payload or 'asks' in payload):
             self._update_book(asset_id, payload.get('bids'), payload.get('asks'))
         values = {}
@@ -107,7 +126,6 @@ class PolymarketOrderbookCollector:
                 'bid_qty': float(bid_qty or 0),
                 'ask_qty': float(ask_qty or 0),
             }
-        now_ms = int(time.time() * 1000)
         return {
             'market_key': self.market_key,
             'token_ids': self.token_ids,
