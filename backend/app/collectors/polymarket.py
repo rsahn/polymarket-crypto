@@ -98,22 +98,48 @@ class PolymarketMarketDiscovery:
         ctx = ssl._create_unverified_context()
         now_s = int(time.time())
         markets = []
+
+        def request_json(url: str) -> Any:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'})
+            with urllib.request.urlopen(req, timeout=20, context=ctx) as resp:
+                return json.loads(resp.read().decode('utf-8', 'ignore'))
+
         for minutes in (5, 15):
             window_s = minutes * 60
             start_s = now_s - (now_s % window_s)
             for candidate in (start_s, start_s - window_s, start_s + window_s):
-                url = f'https://gamma-api.polymarket.com/markets?slug=btc-updown-{minutes}m-{candidate}'
-                req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0', 'Accept': 'application/json'})
+                slug = f'btc-updown-{minutes}m-{candidate}'
+                url = f'https://gamma-api.polymarket.com/markets/slug/{slug}'
                 try:
-                    with urllib.request.urlopen(req, timeout=20, context=ctx) as resp:
-                        data = json.loads(resp.read().decode('utf-8', 'ignore'))
+                    data = request_json(url)
                 except (OSError, json.JSONDecodeError):
                     continue
                 items = data.get('data', []) if isinstance(data, dict) else data
+                if isinstance(data, dict) and data.get('conditionId'):
+                    items = [data]
                 if isinstance(items, list):
                     markets.extend(items)
                     if items:
                         break
+        if markets:
+            return PolymarketMarketDiscovery.parse_market_list(markets)
+
+        for endpoint in ('markets?active=true&closed=false&limit=1000', 'events?active=true&closed=false&limit=1000'):
+            try:
+                data = request_json(f'https://gamma-api.polymarket.com/{endpoint}')
+            except (OSError, json.JSONDecodeError):
+                continue
+            items = data.get('data', []) if isinstance(data, dict) else data
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                nested = item.get('markets') if isinstance(item, dict) else None
+                if isinstance(nested, list):
+                    markets.extend(nested)
+                elif isinstance(item, dict):
+                    markets.append(item)
+            if markets:
+                break
         return PolymarketMarketDiscovery.parse_market_list(markets)
 
     @staticmethod
