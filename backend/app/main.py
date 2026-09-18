@@ -25,7 +25,7 @@ async def main():
     print(f'PAPER LIVE: mode={"SHADOW" if paper.shadow else "ACTIVE"} | equity={paper.initial_equity:.2f} USDC | champion={champion.name}')
     if not champion.validated:
         print(f'CHAMPION_NOT_VALIDATED: {champion.reason}')
-    stats = {'btc': 0, 'poly': 0, 'latest_btc': None, 'latest': {}, 'states': {'5m': 'WAITING_BOOK', '15m': 'WAITING_BOOK'}, 'metrics': {}}
+    stats = {'btc': 0, 'poly': 0, 'latest_btc': None, 'latest': {}, 'states': {'5m': 'WAITING_BOOK', '15m': 'WAITING_BOOK'}, 'metrics': {}, 'rotations': {'5m': 0, '15m': 0}}
 
     async def on_tick(tick):
         await db.insert_btc(tick)
@@ -104,11 +104,13 @@ async def main():
                 if snapshot.get('time_remaining_ms') is not None and snapshot['time_remaining_ms'] <= 0:
                     state = 'EXPIRED'
                     stats['states'][market_key] = state
+                    print('STALE MARKET TRADING BLOCKED')
                     return
                 up, down = snapshot.get('up') or {}, snapshot.get('down') or {}
                 if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
                     state = 'WAITING_BOOK'
                     stats['states'][market_key] = state
+                    print('STALE MARKET TRADING BLOCKED')
                     return
                 if state != 'ACTIVE':
                     state = 'ACTIVE'
@@ -120,9 +122,14 @@ async def main():
                 market_key, market['token_ids'], on_rotated_quote, market.get('expiry_ts_ms')
             ).run()
             stats['states'][market_key] = 'EXPIRED'
+            stats['rotations'][market_key] += 1
             stats['latest'].pop(market_key, None)
             stats['metrics'].pop(market_key, None)
             print(f'EXPIRED {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
+            if market_key == '5m' and stats['rotations'][market_key] >= 2:
+                print('5M ROTATION OK')
+            if market_key == '15m' and stats['rotations'][market_key] >= 1:
+                print('15M ROTATION OK')
 
     collector = BinanceCollector(os.getenv("BINANCE_SYMBOL", "btcusdt"), on_tick)
     tasks = [asyncio.create_task(collector.run()), asyncio.create_task(control_output())]
