@@ -110,7 +110,6 @@ async def main():
                 if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
                     state = 'WAITING_BOOK'
                     stats['states'][market_key] = state
-                    print('STALE MARKET TRADING BLOCKED')
                     return
                 if state != 'ACTIVE':
                     state = 'ACTIVE'
