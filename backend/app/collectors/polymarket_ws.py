@@ -127,7 +127,19 @@ class PolymarketOrderbookCollector:
                     print(f'Polymarket WS: CONNECTED ({self.market_key})')
                     msg = json.dumps({'assets_ids': list(self.token_ids.values()), 'type': 'market'})
                     await ws.send(msg)
-                    async for raw in ws:
+                    while True:
+                        timeout = None
+                        if self.expiry_ts_ms is not None:
+                            remaining_ms = self.expiry_ts_ms - int(time.time() * 1000)
+                            if remaining_ms <= 0:
+                                print(f'Polymarket WS: EXPIRED ({self.market_key})')
+                                return
+                            timeout = max(0.1, remaining_ms / 1000)
+                        try:
+                            raw = await asyncio.wait_for(ws.recv(), timeout=timeout)
+                        except asyncio.TimeoutError:
+                            print(f'Polymarket WS: EXPIRED ({self.market_key})')
+                            return
                         recv_ts_ms = int(time.time() * 1000)
                         if not raw or raw == '0':
                             continue

@@ -25,7 +25,7 @@ async def main():
     print(f'PAPER LIVE: mode={"SHADOW" if paper.shadow else "ACTIVE"} | equity={paper.initial_equity:.2f} USDC | champion={champion.name}')
     if not champion.validated:
         print(f'CHAMPION_NOT_VALIDATED: {champion.reason}')
-    stats = {'btc': 0, 'poly': 0, 'latencies': [], 'latest_btc': None, 'latest': {}}
+    stats = {'btc': 0, 'poly': 0, 'latest_btc': None, 'latest': {}, 'states': {'5m': 'WAITING_BOOK', '15m': 'WAITING_BOOK'}, 'metrics': {}}
 
     async def on_tick(tick):
         await db.insert_btc(tick)
@@ -33,12 +33,22 @@ async def main():
         stats['latest_btc'] = tick
 
     async def on_quote(snapshot):
+        if snapshot.get('time_remaining_ms') is not None and snapshot['time_remaining_ms'] <= 0:
+            return
+        up, down = snapshot.get('up') or {}, snapshot.get('down') or {}
+        if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
+            return
         await db.insert_poly_snapshot(snapshot)
         stats['poly'] += 1
         stats['latest'][snapshot['market_key']] = snapshot
-        await paper.record_snapshot(snapshot, stats['latest_btc'].price if stats['latest_btc'] else None, int(time.time() * 1000))
-        if snapshot.get('event_ts_ms'):
-            stats['latencies'].append(snapshot['recv_ts_ms'] - snapshot['event_ts_ms'])
+        now_ms = int(time.time() * 1000)
+        stats['metrics'][snapshot['market_key']] = {
+            'feed_age_ms': now_ms - snapshot['event_ts_ms'] if snapshot.get('event_ts_ms') else None,
+            'processing_latency_ms': max(0, now_ms - snapshot['recv_ts_ms']),
+            'decision_latency_ms': 0,
+            'websocket_rtt_ms': None,
+        }
+        await paper.record_snapshot(snapshot, stats['latest_btc'].price if stats['latest_btc'] else None, now_ms)
 
     async def control_output():
         while True:
@@ -48,6 +58,7 @@ async def main():
                 continue
             lines = [f'BTC LIVE: {btc.price:.2f} | Binance WS: CONNECTED | Polymarket WS: CONNECTED']
             for key in ('5m', '15m'):
+                lines.append(f'BTC {key.upper()} STATE: {stats["states"].get(key, "WAITING_BOOK")}')
                 snap = stats['latest'].get(key)
                 if not snap:
                     lines.append(f'BTC {key.upper()}: waiting for live order book')
@@ -62,19 +73,60 @@ async def main():
                     f"spread UP {((up.get('ask') or 0) - (up.get('bid') or 0)) if up.get('ask') is not None and up.get('bid') is not None else 'n/a'} | "
                     f"spread DOWN {((down.get('ask') or 0) - (down.get('bid') or 0)) if down.get('ask') is not None and down.get('bid') is not None else 'n/a'} | remaining {remaining_text}"
                 )
-            latency = f"{sum(stats['latencies']) / len(stats['latencies']):.0f}ms" if stats['latencies'] else 'n/a'
-            lines.append(f"SQLite: OK | BTC ticks: {stats['btc']} | snapshots: {stats['poly']} | latency: {latency}")
+                metrics = stats['metrics'].get(key, {})
+                lines.append(
+                    f"{key.upper()} metrics: websocket_rtt_ms={metrics.get('websocket_rtt_ms', 'n/a')} "
+                    f"feed_age_ms={metrics.get('feed_age_ms', 'n/a')} "
+                    f"processing_latency_ms={metrics.get('processing_latency_ms', 'n/a')} "
+                    f"decision_latency_ms={metrics.get('decision_latency_ms', 'n/a')}"
+                )
+            lines.append(f"SQLite: OK | BTC ticks: {stats['btc']} | snapshots: {stats['poly']}")
             print('\n'.join(lines))
 
+    async def rotate_market(market_key):
+        previous_slug = None
+        while True:
+            print(f'ROTATING {market_key}')
+            markets = PolymarketMarketDiscovery.get_active_btc_markets()
+            market = next((item for item in markets if item.get('market_key') == market_key and item.get('expiry_ts_ms', 0) > int(time.time() * 1000)), None)
+            if market is None or market.get('slug') == previous_slug:
+                print(f'WAITING_BOOK {market_key}: no fresh active market')
+                await asyncio.sleep(5)
+                continue
+            previous_slug = market['slug']
+            condition_id = (market.get('metadata') or {}).get('conditionId', market['slug'])
+            print(f'NEW MARKET {market_key}: slug={market["slug"]} conditionId={condition_id} tokens={market["token_ids"]}')
+            state = 'WAITING_BOOK'
+            stats['states'][market_key] = state
+
+            async def on_rotated_quote(snapshot):
+                nonlocal state
+                if snapshot.get('time_remaining_ms') is not None and snapshot['time_remaining_ms'] <= 0:
+                    state = 'EXPIRED'
+                    stats['states'][market_key] = state
+                    return
+                up, down = snapshot.get('up') or {}, snapshot.get('down') or {}
+                if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
+                    state = 'WAITING_BOOK'
+                    stats['states'][market_key] = state
+                    return
+                if state != 'ACTIVE':
+                    state = 'ACTIVE'
+                    stats['states'][market_key] = state
+                    print(f'ACTIVE {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
+                await on_quote(snapshot)
+
+            await PolymarketOrderbookCollector(
+                market_key, market['token_ids'], on_rotated_quote, market.get('expiry_ts_ms')
+            ).run()
+            stats['states'][market_key] = 'EXPIRED'
+            stats['latest'].pop(market_key, None)
+            stats['metrics'].pop(market_key, None)
+            print(f'EXPIRED {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
+
     collector = BinanceCollector(os.getenv("BINANCE_SYMBOL", "btcusdt"), on_tick)
-    markets = PolymarketMarketDiscovery.get_active_btc_markets()
-    if not markets:
-        print('Polymarket WS: NOT STARTED - no live BTC 5m/15m markets discovered')
     tasks = [asyncio.create_task(collector.run()), asyncio.create_task(control_output())]
-    for market in markets:
-        tasks.append(asyncio.create_task(PolymarketOrderbookCollector(
-            market['market_key'], market['token_ids'], on_quote, market.get('expiry_ts_ms')
-        ).run()))
+    tasks.extend(asyncio.create_task(rotate_market(key)) for key in ('5m', '15m'))
     await asyncio.gather(*tasks)
 
 if __name__ == "__main__":
