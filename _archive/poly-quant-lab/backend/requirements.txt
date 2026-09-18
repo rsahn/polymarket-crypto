@@ -1,0 +1,7 @@
+aiohttp>=3.10,<4
+websockets>=13,<16
+pydantic>=2.8,<3
+pydantic-settings>=2.4,<3
+aiosqlite>=0.20,<1
+numpy>=2.0,<3
+pandas>=2.2,<3

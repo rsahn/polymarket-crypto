@@ -1,0 +1,625 @@
+{
+  "candidates": [
+    {
+      "name": "C1_FAST_PAIR",
+      "conditions": "(time_to_hedge_ms >= ? AND time_to_hedge_ms < ?)",
+      "train": {
+        "pairs": 72792,
+        "paired_quantity": 1070075.436858,
+        "pair_cost_mean": 1.0097743283071656,
+        "pair_cost_weighted": 1.0093365172252489,
+        "pair_cost_lt_1_pct": 27.992087042532148,
+        "gross_edge_mean": -0.009774328307165629,
+        "gross_edge_weighted": -0.009336517225248864,
+        "markets": 9956,
+        "days": 24,
+        "weeks": 4
+      },
+      "validation": {
+        "pairs": 28549,
+        "paired_quantity": 217472.24346,
+        "pair_cost_mean": 1.0089656648005534,
+        "pair_cost_weighted": 1.0051050559508865,
+        "pair_cost_lt_1_pct": 26.421240673929034,
+        "gross_edge_mean": -0.008965664800553441,
+        "gross_edge_weighted": -0.005105055950886506,
+        "markets": 3369,
+        "days": 9,
+        "weeks": 2
+      },
+      "oos": {
+        "pairs": 11056,
+        "paired_quantity": 144608.793938,
+        "pair_cost_mean": 1.009346351672956,
+        "pair_cost_weighted": 1.0078680491874885,
+        "pair_cost_lt_1_pct": 31.738422575976845,
+        "gross_edge_mean": -0.009346351672955864,
+        "gross_edge_weighted": -0.007868049187488513,
+        "markets": 2515,
+        "days": 9,
+        "weeks": 2
+      },
+      "friction": {
+        "0.0": {
+          "net_edge_weighted": -0.007868049187488513,
+          "positive_edge_pct": null
+        },
+        "0.0025": {
+          "net_edge_weighted": -0.010368049187488513,
+          "positive_edge_pct": null
+        },
+        "0.005": {
+          "net_edge_weighted": -0.012868049187488514,
+          "positive_edge_pct": null
+        },
+        "0.01": {
+          "net_edge_weighted": -0.017868049187488515,
+          "positive_edge_pct": null
+        },
+        "0.02": {
+          "net_edge_weighted": -0.027868049187488513,
+          "positive_edge_pct": null
+        }
+      },
+      "walk_forward": [
+        {
+          "test_week": "2026-W14",
+          "result": {
+            "pairs": 18819,
+            "paired_quantity": 361206.143025,
+            "pair_cost_mean": 1.0078977947086083,
+            "pair_cost_weighted": 1.0071272846957977,
+            "pair_cost_lt_1_pct": 29.932515011424627,
+            "gross_edge_mean": -0.007897794708608326,
+            "gross_edge_weighted": -0.007127284695797709,
+            "markets": 2185,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W15",
+          "result": {
+            "pairs": 19028,
+            "paired_quantity": 204527.584479,
+            "pair_cost_mean": 1.004437650010863,
+            "pair_cost_weighted": 1.0042977653759086,
+            "pair_cost_lt_1_pct": 31.485179735127183,
+            "gross_edge_mean": -0.004437650010862943,
+            "gross_edge_weighted": -0.0042977653759086465,
+            "markets": 3399,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W16",
+          "result": {
+            "pairs": 26014,
+            "paired_quantity": 193442.361408,
+            "pair_cost_mean": 1.0097109509545668,
+            "pair_cost_weighted": 1.0055433208984947,
+            "pair_cost_lt_1_pct": 26.082109633274392,
+            "gross_edge_mean": -0.009710950954566777,
+            "gross_edge_weighted": -0.005543320898494741,
+            "markets": 2722,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W17",
+          "result": {
+            "pairs": 10111,
+            "paired_quantity": 131898.000381,
+            "pair_cost_mean": 1.0090608121059244,
+            "pair_cost_weighted": 1.0079219961706245,
+            "pair_cost_lt_1_pct": 31.80694293343883,
+            "gross_edge_mean": -0.009060812105924245,
+            "gross_edge_weighted": -0.007921996170624501,
+            "markets": 2303,
+            "days": 7,
+            "weeks": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "C2_MEDIUM_PAIR",
+      "conditions": "(time_to_hedge_ms >= ? AND time_to_hedge_ms < ?)",
+      "train": {
+        "pairs": 176296,
+        "paired_quantity": 2556118.693193,
+        "pair_cost_mean": 0.9966940242299502,
+        "pair_cost_weighted": 0.9971354321503723,
+        "pair_cost_lt_1_pct": 43.81721649952353,
+        "gross_edge_mean": 0.0033059757700497987,
+        "gross_edge_weighted": 0.0028645678496277416,
+        "markets": 12524,
+        "days": 24,
+        "weeks": 4
+      },
+      "validation": {
+        "pairs": 71509,
+        "paired_quantity": 539701.991701,
+        "pair_cost_mean": 1.005593208360096,
+        "pair_cost_weighted": 0.9975345278983734,
+        "pair_cost_lt_1_pct": 38.83287418366918,
+        "gross_edge_mean": -0.005593208360095936,
+        "gross_edge_weighted": 0.00246547210162662,
+        "markets": 4374,
+        "days": 9,
+        "weeks": 2
+      },
+      "oos": {
+        "pairs": 25886,
+        "paired_quantity": 322376.879007,
+        "pair_cost_mean": 1.0007009247156495,
+        "pair_cost_weighted": 0.9994648961007433,
+        "pair_cost_lt_1_pct": 43.08892837827397,
+        "gross_edge_mean": -0.0007009247156493894,
+        "gross_edge_weighted": 0.0005351038992567059,
+        "markets": 3539,
+        "days": 9,
+        "weeks": 2
+      },
+      "friction": {
+        "0.0": {
+          "net_edge_weighted": 0.0005351038992567059,
+          "positive_edge_pct": null
+        },
+        "0.0025": {
+          "net_edge_weighted": -0.001964896100743294,
+          "positive_edge_pct": null
+        },
+        "0.005": {
+          "net_edge_weighted": -0.004464896100743294,
+          "positive_edge_pct": null
+        },
+        "0.01": {
+          "net_edge_weighted": -0.009464896100743294,
+          "positive_edge_pct": null
+        },
+        "0.02": {
+          "net_edge_weighted": -0.019464896100743295,
+          "positive_edge_pct": null
+        }
+      },
+      "walk_forward": [
+        {
+          "test_week": "2026-W14",
+          "result": {
+            "pairs": 45686,
+            "paired_quantity": 848141.701474,
+            "pair_cost_mean": 0.9946746631235456,
+            "pair_cost_weighted": 0.9934128628584644,
+            "pair_cost_lt_1_pct": 45.49314888587313,
+            "gross_edge_mean": 0.0053253368764544905,
+            "gross_edge_weighted": 0.006587137141535582,
+            "markets": 2832,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W15",
+          "result": {
+            "pairs": 46129,
+            "paired_quantity": 495403.531755,
+            "pair_cost_mean": 0.9890680018345791,
+            "pair_cost_weighted": 0.9894861942244101,
+            "pair_cost_lt_1_pct": 48.20828546033948,
+            "gross_edge_mean": 0.010931998165420882,
+            "gross_edge_weighted": 0.010513805775589913,
+            "markets": 4389,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W16",
+          "result": {
+            "pairs": 64401,
+            "paired_quantity": 476262.451727,
+            "pair_cost_mean": 1.007818807814742,
+            "pair_cost_weighted": 0.9987746208198909,
+            "pair_cost_lt_1_pct": 37.7214639524231,
+            "gross_edge_mean": -0.007818807814742012,
+            "gross_edge_weighted": 0.0012253791801091207,
+            "markets": 3486,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W17",
+          "result": {
+            "pairs": 23722,
+            "paired_quantity": 292112.74851,
+            "pair_cost_mean": 1.00055622268431,
+            "pair_cost_weighted": 1.0002514922110965,
+            "pair_cost_lt_1_pct": 43.28049911474581,
+            "gross_edge_mean": -0.0005562226843099269,
+            "gross_edge_weighted": -0.00025149221109654896,
+            "markets": 3216,
+            "days": 7,
+            "weeks": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "C3_LATE_MEDIUM",
+      "conditions": "(time_to_hedge_ms >= ? AND time_to_hedge_ms < ?)",
+      "train": {
+        "pairs": 200564,
+        "paired_quantity": 2805073.057211,
+        "pair_cost_mean": 0.9885415950925196,
+        "pair_cost_weighted": 0.9916212548156322,
+        "pair_cost_lt_1_pct": 50.15256975329571,
+        "gross_edge_mean": 0.011458404907480402,
+        "gross_edge_weighted": 0.008378745184367764,
+        "markets": 13028,
+        "days": 24,
+        "weeks": 4
+      },
+      "validation": {
+        "pairs": 79325,
+        "paired_quantity": 592888.398889,
+        "pair_cost_mean": 0.9997615455482484,
+        "pair_cost_weighted": 0.9931132841126912,
+        "pair_cost_lt_1_pct": 46.30696501733375,
+        "gross_edge_mean": 0.00023845445175165123,
+        "gross_edge_weighted": 0.006886715887308825,
+        "markets": 4561,
+        "days": 9,
+        "weeks": 2
+      },
+      "oos": {
+        "pairs": 29684,
+        "paired_quantity": 371030.557653,
+        "pair_cost_mean": 0.9943810928554373,
+        "pair_cost_weighted": 0.9942119672490464,
+        "pair_cost_lt_1_pct": 49.01967389839644,
+        "gross_edge_mean": 0.005618907144562725,
+        "gross_edge_weighted": 0.005788032750953631,
+        "markets": 3697,
+        "days": 9,
+        "weeks": 2
+      },
+      "friction": {
+        "0.0": {
+          "net_edge_weighted": 0.005788032750953631,
+          "positive_edge_pct": null
+        },
+        "0.0025": {
+          "net_edge_weighted": 0.003288032750953631,
+          "positive_edge_pct": null
+        },
+        "0.005": {
+          "net_edge_weighted": 0.000788032750953631,
+          "positive_edge_pct": null
+        },
+        "0.01": {
+          "net_edge_weighted": -0.004211967249046369,
+          "positive_edge_pct": null
+        },
+        "0.02": {
+          "net_edge_weighted": -0.01421196724904637,
+          "positive_edge_pct": null
+        }
+      },
+      "walk_forward": [
+        {
+          "test_week": "2026-W14",
+          "result": {
+            "pairs": 52316,
+            "paired_quantity": 932651.3058109999,
+            "pair_cost_mean": 0.9872870443730598,
+            "pair_cost_weighted": 0.9891923334261361,
+            "pair_cost_lt_1_pct": 51.52152305222112,
+            "gross_edge_mean": 0.01271295562694013,
+            "gross_edge_weighted": 0.010807666573863894,
+            "markets": 2923,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W15",
+          "result": {
+            "pairs": 52625,
+            "paired_quantity": 544493.947197,
+            "pair_cost_mean": 0.9781880534963459,
+            "pair_cost_weighted": 0.980578905504482,
+            "pair_cost_lt_1_pct": 53.761520190023745,
+            "gross_edge_mean": 0.021811946503654152,
+            "gross_edge_weighted": 0.019421094495517988,
+            "markets": 4644,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W16",
+          "result": {
+            "pairs": 70890,
+            "paired_quantity": 518914.273965,
+            "pair_cost_mean": 1.0035788174982931,
+            "pair_cost_weighted": 0.9965529684318392,
+            "pair_cost_lt_1_pct": 44.96826068556919,
+            "gross_edge_mean": -0.003578817498293134,
+            "gross_edge_weighted": 0.003447031568160841,
+            "markets": 3619,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W17",
+          "result": {
+            "pairs": 27338,
+            "paired_quantity": 338631.081688,
+            "pair_cost_mean": 0.9941213553796729,
+            "pair_cost_weighted": 0.9951335487649292,
+            "pair_cost_lt_1_pct": 49.26475967517741,
+            "gross_edge_mean": 0.005878644620327016,
+            "gross_edge_weighted": 0.00486645123507079,
+            "markets": 3356,
+            "days": 7,
+            "weeks": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "C4_INVENTORY_REBALANCE",
+      "conditions": "(time_to_hedge_ms >= ? AND time_to_hedge_ms < ?) AND (abs(inventory_up_before - inventory_down_before) >= ?) AND (abs(inventory_up_before - inventory_down_before) - abs(inventory_up_after - inventory_down_after) > ?)",
+      "train": {
+        "pairs": 52963,
+        "paired_quantity": 1193604.755463,
+        "pair_cost_mean": 0.9865668448624549,
+        "pair_cost_weighted": 0.9900667716301568,
+        "pair_cost_lt_1_pct": 51.56429960538489,
+        "gross_edge_mean": 0.013433155137545076,
+        "gross_edge_weighted": 0.009933228369843228,
+        "markets": 4947,
+        "days": 24,
+        "weeks": 4
+      },
+      "validation": {
+        "pairs": 7144,
+        "paired_quantity": 121711.023087,
+        "pair_cost_mean": 0.98168488237542,
+        "pair_cost_weighted": 0.9826230657100636,
+        "pair_cost_lt_1_pct": 55.277155655095186,
+        "gross_edge_mean": 0.018315117624580064,
+        "gross_edge_weighted": 0.017376934289936363,
+        "markets": 1162,
+        "days": 9,
+        "weeks": 2
+      },
+      "oos": {
+        "pairs": 4004,
+        "paired_quantity": 88411.1036,
+        "pair_cost_mean": 0.9856041571371629,
+        "pair_cost_weighted": 0.9871046655284108,
+        "pair_cost_lt_1_pct": 52.5974025974026,
+        "gross_edge_mean": 0.01439584286283716,
+        "gross_edge_weighted": 0.012895334471589193,
+        "markets": 869,
+        "days": 9,
+        "weeks": 2
+      },
+      "friction": {
+        "0.0": {
+          "net_edge_weighted": 0.012895334471589193,
+          "positive_edge_pct": null
+        },
+        "0.0025": {
+          "net_edge_weighted": 0.010395334471589192,
+          "positive_edge_pct": null
+        },
+        "0.005": {
+          "net_edge_weighted": 0.007895334471589192,
+          "positive_edge_pct": null
+        },
+        "0.01": {
+          "net_edge_weighted": 0.0028953344715891925,
+          "positive_edge_pct": null
+        },
+        "0.02": {
+          "net_edge_weighted": -0.007104665528410808,
+          "positive_edge_pct": null
+        }
+      },
+      "walk_forward": [
+        {
+          "test_week": "2026-W14",
+          "result": {
+            "pairs": 21452,
+            "paired_quantity": 501077.161006,
+            "pair_cost_mean": 0.9843030586976973,
+            "pair_cost_weighted": 0.9855473194421076,
+            "pair_cost_lt_1_pct": 52.99272795077382,
+            "gross_edge_mean": 0.015696941302302814,
+            "gross_edge_weighted": 0.014452680557892394,
+            "markets": 1519,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W15",
+          "result": {
+            "pairs": 8082,
+            "paired_quantity": 138561.107726,
+            "pair_cost_mean": 0.9781163582293244,
+            "pair_cost_weighted": 0.981869187186301,
+            "pair_cost_lt_1_pct": 57.75798069784707,
+            "gross_edge_mean": 0.021883641770675574,
+            "gross_edge_weighted": 0.018130812813698993,
+            "markets": 1122,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W16",
+          "result": {
+            "pairs": 6238,
+            "paired_quantity": 109874.645188,
+            "pair_cost_mean": 0.9840023451095223,
+            "pair_cost_weighted": 0.9843332754904884,
+            "pair_cost_lt_1_pct": 53.174094260981086,
+            "gross_edge_mean": 0.015997654890477716,
+            "gross_edge_weighted": 0.015666724509511565,
+            "markets": 998,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W17",
+          "result": {
+            "pairs": 3616,
+            "paired_quantity": 77726.675899,
+            "pair_cost_mean": 0.9862111519397954,
+            "pair_cost_weighted": 0.9876204598603424,
+            "pair_cost_lt_1_pct": 52.93141592920354,
+            "gross_edge_mean": 0.013788848060204643,
+            "gross_edge_weighted": 0.012379540139657585,
+            "markets": 775,
+            "days": 7,
+            "weeks": 1
+          }
+        }
+      ]
+    },
+    {
+      "name": "C5_SMALL_MEDIUM",
+      "conditions": "(time_to_hedge_ms >= ? AND time_to_hedge_ms < ?) AND (paired_quantity >= ? AND paired_quantity < ?)",
+      "train": {
+        "pairs": 165931,
+        "paired_quantity": 1701603.189723,
+        "pair_cost_mean": 0.9966388719185156,
+        "pair_cost_weighted": 0.9961498522598164,
+        "pair_cost_lt_1_pct": 43.879082269135964,
+        "gross_edge_mean": 0.003361128081484469,
+        "gross_edge_weighted": 0.0038501477401835515,
+        "markets": 12415,
+        "days": 24,
+        "weeks": 4
+      },
+      "validation": {
+        "pairs": 70962,
+        "paired_quantity": 494926.066333,
+        "pair_cost_mean": 1.0056638136686578,
+        "pair_cost_weighted": 0.9974530391962086,
+        "pair_cost_lt_1_pct": 38.7996392435388,
+        "gross_edge_mean": -0.0056638136686578775,
+        "gross_edge_weighted": 0.002546960803791354,
+        "markets": 4363,
+        "days": 9,
+        "weeks": 2
+      },
+      "oos": {
+        "pairs": 25144,
+        "paired_quantity": 260368.451234,
+        "pair_cost_mean": 1.0007800695349427,
+        "pair_cost_weighted": 0.9997981047338385,
+        "pair_cost_lt_1_pct": 43.048043270760424,
+        "gross_edge_mean": -0.0007800695349427334,
+        "gross_edge_weighted": 0.00020189526616154474,
+        "markets": 3506,
+        "days": 9,
+        "weeks": 2
+      },
+      "friction": {
+        "0.0": {
+          "net_edge_weighted": 0.00020189526616154474,
+          "positive_edge_pct": null
+        },
+        "0.0025": {
+          "net_edge_weighted": -0.0022981047338384553,
+          "positive_edge_pct": null
+        },
+        "0.005": {
+          "net_edge_weighted": -0.004798104733838455,
+          "positive_edge_pct": null
+        },
+        "0.01": {
+          "net_edge_weighted": -0.009798104733838455,
+          "positive_edge_pct": null
+        },
+        "0.02": {
+          "net_edge_weighted": -0.019798104733838456,
+          "positive_edge_pct": null
+        }
+      },
+      "walk_forward": [
+        {
+          "test_week": "2026-W14",
+          "result": {
+            "pairs": 40977,
+            "paired_quantity": 460689.49365,
+            "pair_cost_mean": 0.9950680243548429,
+            "pair_cost_weighted": 0.9939199674079994,
+            "pair_cost_lt_1_pct": 45.38643629353052,
+            "gross_edge_mean": 0.004931975645157036,
+            "gross_edge_weighted": 0.006080032592000628,
+            "markets": 2787,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W15",
+          "result": {
+            "pairs": 45472,
+            "paired_quantity": 438034.08871,
+            "pair_cost_mean": 0.9888523856156053,
+            "pair_cost_weighted": 0.9874262916520918,
+            "pair_cost_lt_1_pct": 48.31104855735398,
+            "gross_edge_mean": 0.01114761438439479,
+            "gross_edge_weighted": 0.012573708347908163,
+            "markets": 4378,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W16",
+          "result": {
+            "pairs": 63816,
+            "paired_quantity": 428405.448425,
+            "pair_cost_mean": 1.0079395907348219,
+            "pair_cost_weighted": 0.9990118598028074,
+            "pair_cost_lt_1_pct": 37.66610254481635,
+            "gross_edge_mean": -0.007939590734821993,
+            "gross_edge_weighted": 0.0009881401971926218,
+            "markets": 3466,
+            "days": 7,
+            "weeks": 1
+          }
+        },
+        {
+          "test_week": "2026-W17",
+          "result": {
+            "pairs": 23111,
+            "paired_quantity": 241400.406935,
+            "pair_cost_mean": 1.0005947045632686,
+            "pair_cost_weighted": 1.0005480093389916,
+            "pair_cost_lt_1_pct": 43.269438795378825,
+            "gross_edge_mean": -0.0005947045632685769,
+            "gross_edge_weighted": -0.000548009338991573,
+            "markets": 3196,
+            "days": 7,
+            "weeks": 1
+          }
+        }
+      ]
+    }
+  ],
+  "selection_rule": "Candidates fixed from D1 windows and TRAIN-only conditions; OOS not used for selection"
+}

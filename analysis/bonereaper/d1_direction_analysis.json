@@ -1,0 +1,20 @@
+{
+  "UP->DOWN": {
+    "pairs": 926314,
+    "paired_quantity": 11063033.115724,
+    "pair_cost_mean": 0.9906693344466008,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.925958152419156,
+    "gross_pair_edge_mean": 0.009330665553399169
+  },
+  "DOWN->UP": {
+    "pairs": 900534,
+    "paired_quantity": 10669242.398256,
+    "pair_cost_mean": 0.9898753027848314,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.71487361943025,
+    "gross_pair_edge_mean": 0.010124697215168553
+  }
+}

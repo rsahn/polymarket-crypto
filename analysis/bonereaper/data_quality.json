@@ -1,0 +1,15 @@
+{
+  "snapshot": "C:\\Users\\User\\Documents\\Project\\Projet BTC\\analysis_bonereaper_snapshot.db",
+  "period": {
+    "first": "2026-03-25T07:11:51+00:00",
+    "last": "2026-05-03T17:24:00+00:00"
+  },
+  "fills": 2296021,
+  "duplicate_key_groups": 0,
+  "invalid_timestamps": 0,
+  "missing_price": 0,
+  "missing_size": 0,
+  "missing_outcome": 0,
+  "missing_market": 0,
+  "missing_side": 0
+}

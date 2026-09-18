@@ -1,0 +1,7 @@
+{
+  "benchmarks": [
+    {"name": "Bonereaper", "handle": "bonereaper", "focus": ["temporal_pairing", "inventory"]},
+    {"name": "BoneOhio", "handle": "boneohio", "focus": ["late_window", "high_confidence_execution"]},
+    {"name": "lkkdnfa", "handle": "lkkdnfa", "focus": ["sprt", "directional_entry"]}
+  ]
+}

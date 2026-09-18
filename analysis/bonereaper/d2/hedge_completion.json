@@ -1,0 +1,11 @@
+{
+  "status": "NOT_IDENTIFIABLE_FROM_PAIR_OBSERVATIONS",
+  "reason": "pair_observations contains completed FIFO pairs only; unmatched first legs are not persisted",
+  "horizons_seconds": [
+    5,
+    10,
+    15,
+    30,
+    60
+  ]
+}

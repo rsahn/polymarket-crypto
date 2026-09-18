@@ -1,0 +1,52 @@
+[
+  {
+    "finding": "Dataset size",
+    "value": 2296021,
+    "status": "SOLID"
+  },
+  {
+    "finding": "Markets observed",
+    "value": 26638,
+    "status": "SOLID"
+  },
+  {
+    "finding": "Period",
+    "value": "2026-03-25T07:11:51+00:00 -> 2026-05-03T17:24:00+00:00",
+    "status": "SOLID"
+  },
+  {
+    "finding": "BUY share",
+    "value": 0.9987378164224108,
+    "status": "SOLID"
+  },
+  {
+    "finding": "UP share",
+    "value": 0.5011766007366657,
+    "status": "SOLID"
+  },
+  {
+    "finding": "P(next=DOWN|UP)",
+    "value": 0.2136840735524009,
+    "status": "SOLID descriptive"
+  },
+  {
+    "finding": "P(next=UP|DOWN)",
+    "value": 0.21451356295886015,
+    "status": "SOLID descriptive"
+  },
+  {
+    "finding": "Median fill size",
+    "value": 10.0,
+    "status": "SOLID"
+  },
+  {
+    "finding": "Average fill notional USDC",
+    "value": 20.184293093657246,
+    "status": "SOLID"
+  },
+  {
+    "finding": "Markets with both outcomes average cost",
+    "value": 25464,
+    "status": "DESCRIPTIVE, not proof of pairing"
+  }
+]

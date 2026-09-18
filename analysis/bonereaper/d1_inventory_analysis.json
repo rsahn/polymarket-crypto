@@ -1,0 +1,24 @@
+{
+  "paired_quantity": 21732275.51398,
+  "total_inventory_handled": 75011588.459455,
+  "paired_ratio": 0.2897189082421132,
+  "directional_remainder_distribution": {
+    "p01": 3.3092527600000667,
+    "p05": 16.083375750000016,
+    "p10": 33.46032550000016,
+    "p25": 101.77410975000001,
+    "p50": 374.3136255,
+    "p75": 1148.00739825,
+    "p90": 3844.021894699999,
+    "p95": 5262.013193250001,
+    "p99": 10472.093384770005
+  },
+  "markets_with_pairs": 25464,
+  "second_legs_reducing_imbalance_pct": 96.30987361838532,
+  "imbalance_reduction_mean": 20.879229592599383,
+  "imbalance_reduction_median": 14.0,
+  "imbalance_before_mean": 269.25870133167456,
+  "imbalance_after_mean": 248.37947173907517,
+  "imbalance_before_median": 133.02277049999978,
+  "imbalance_after_median": 106.53019300000054
+}

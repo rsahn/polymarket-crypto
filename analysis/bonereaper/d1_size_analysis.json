@@ -1,0 +1,58 @@
+{
+  "<10": {
+    "pairs": 1228981,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.75803612911835,
+    "gross_pair_edge_mean": 0.009769379716740531
+  },
+  "10-50": {
+    "pairs": 529221,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.9572409258136,
+    "gross_pair_edge_mean": 0.00967934717304434
+  },
+  "50-100": {
+    "pairs": 60050,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.96752706078268,
+    "gross_pair_edge_mean": 0.009852305209661944
+  },
+  "100-250": {
+    "pairs": 7701,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 48.578106739384495,
+    "gross_pair_edge_mean": 0.005750288157369167
+  },
+  "250-500": {
+    "pairs": 722,
+    "pair_cost_median": 1.0,
+    "time_to_hedge_median_ms": 40000.0,
+    "pair_cost_lt_1_pct": 49.72299168975069,
+    "gross_pair_edge_mean": -0.0002783941398891991
+  },
+  "500-1000": {
+    "pairs": 130,
+    "pair_cost_median": 1.01,
+    "time_to_hedge_median_ms": 47000.0,
+    "pair_cost_lt_1_pct": 41.53846153846154,
+    "gross_pair_edge_mean": -0.03536849982076924
+  },
+  "1000-5000": {
+    "pairs": 43,
+    "pair_cost_median": 0.99,
+    "time_to_hedge_median_ms": 34000.0,
+    "pair_cost_lt_1_pct": 55.81395348837209,
+    "gross_pair_edge_mean": 0.0174273971255814
+  },
+  ">5000": {
+    "pairs": 0,
+    "pair_cost_median": null,
+    "time_to_hedge_median_ms": null,
+    "pair_cost_lt_1_pct": null,
+    "gross_pair_edge_mean": null
+  }
+}
