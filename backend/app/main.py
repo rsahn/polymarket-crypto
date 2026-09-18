@@ -3,14 +3,28 @@ from pathlib import Path
 from app.collectors.binance import BinanceCollector
 from app.collectors.polymarket import PolymarketMarketDiscovery
 from app.collectors.polymarket_ws import PolymarketOrderbookCollector
+from app.paper.live import ChampionV1, PaperAudit
 from app.storage.db import Database
 
 ROOT = Path(__file__).resolve().parents[2]
 DB_PATH = os.getenv("DATABASE_PATH", str(ROOT / "data" / "poly_quant.db"))
+PAPER_DB_PATH = os.getenv("PAPER_DATABASE_PATH", str(ROOT / "data" / "paper_live.db"))
+CHAMPION_PATH = Path(os.getenv("CHAMPION_PATH", str(ROOT / "analysis" / "bonereaper" / "d2" / "champion_v1.json")))
 
 async def main():
     db = Database(DB_PATH)
     await db.init()
+    champion = ChampionV1.load(CHAMPION_PATH)
+    paper = PaperAudit(
+        Path(PAPER_DB_PATH),
+        float(os.getenv("MAX_PAPER_CAPITAL", "500.0")),
+        os.getenv("PAPER_SHADOW", "true").lower() == "true",
+        champion,
+    )
+    await paper.init(int(time.time() * 1000))
+    print(f'PAPER LIVE: mode={"SHADOW" if paper.shadow else "ACTIVE"} | equity={paper.initial_equity:.2f} USDC | champion={champion.name}')
+    if not champion.validated:
+        print(f'CHAMPION_NOT_VALIDATED: {champion.reason}')
     stats = {'btc': 0, 'poly': 0, 'latencies': [], 'latest_btc': None, 'latest': {}}
 
     async def on_tick(tick):
@@ -22,6 +36,7 @@ async def main():
         await db.insert_poly_snapshot(snapshot)
         stats['poly'] += 1
         stats['latest'][snapshot['market_key']] = snapshot
+        await paper.record_snapshot(snapshot, stats['latest_btc'].price if stats['latest_btc'] else None, int(time.time() * 1000))
         if snapshot.get('event_ts_ms'):
             stats['latencies'].append(snapshot['recv_ts_ms'] - snapshot['event_ts_ms'])
 
