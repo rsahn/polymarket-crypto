@@ -87,6 +87,77 @@ async def main():
             lines.append(f"SQLite: OK | BTC ticks: {stats['btc']} | snapshots: {stats['poly']}")
             print('\n'.join(lines))
 
+    async def run_market_session(market_key, market):
+        """Run collector(s) for a single market until it truly expires.
+
+        Recreates the underlying collector whenever the order book stays
+        incomplete for too long (initial WAITING_BOOK timeout, or staleness
+        detected after the market was already ACTIVE), instead of blocking
+        forever on the original collector task.
+        """
+        state_holder = {'state': 'WAITING_BOOK'}
+        stats['states'][market_key] = 'WAITING_BOOK'
+
+        while True:
+            first_valid_book = asyncio.Event()
+
+            async def on_rotated_quote(snapshot):
+                if snapshot.get('time_remaining_ms') is not None and snapshot['time_remaining_ms'] <= 0:
+                    state_holder['state'] = 'EXPIRED'
+                    stats['states'][market_key] = 'EXPIRED'
+                    print('STALE MARKET TRADING BLOCKED')
+                    return
+                up, down = snapshot.get('up') or {}, snapshot.get('down') or {}
+                if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
+                    state_holder['state'] = 'WAITING_BOOK'
+                    stats['states'][market_key] = 'WAITING_BOOK'
+                    return
+                if state_holder['state'] != 'ACTIVE':
+                    state_holder['state'] = 'ACTIVE'
+                    stats['states'][market_key] = 'ACTIVE'
+                    if not first_valid_book.is_set():
+                        first_valid_book.set()
+                    print(f'ACTIVE {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
+                await on_quote(snapshot)
+
+            collector_task = asyncio.create_task(PolymarketOrderbookCollector(
+                market_key, market['token_ids'], on_rotated_quote, market.get('expiry_ts_ms')
+            ).run())
+
+            try:
+                await asyncio.wait_for(asyncio.shield(first_valid_book.wait()), timeout=5)
+            except asyncio.TimeoutError:
+                print(f'WAITING_BOOK_TIMEOUT ({market_key})')
+                collector_task.cancel()
+                try:
+                    await collector_task
+                except asyncio.CancelledError:
+                    pass
+                expiry = market.get('expiry_ts_ms')
+                if expiry and expiry <= int(time.time() * 1000):
+                    return
+                continue
+
+            # Market is ACTIVE: keep watching for staleness while waiting
+            # for the collector to finish (natural expiry) or reconnect issues
+            # to leave the book stuck incomplete.
+            while True:
+                done, _ = await asyncio.wait({collector_task}, timeout=2)
+                if collector_task in done:
+                    return
+                last_valid = stats['last_valid_book_monotonic'].get(market_key)
+                stale_for = (time.monotonic() - last_valid) if last_valid else None
+                if state_holder['state'] != 'ACTIVE' and stale_for is not None and stale_for > 10:
+                    print(f'STALE_BOOK_RECOVERY {market_key}')
+                    collector_task.cancel()
+                    try:
+                        await collector_task
+                    except asyncio.CancelledError:
+                        pass
+                    break
+            # Recreate a fresh collector for the same market (no rotation yet).
+            continue
+
     async def rotate_market(market_key):
         previous_slug = None
         while True:
@@ -100,44 +171,9 @@ async def main():
             previous_slug = market['slug']
             condition_id = (market.get('metadata') or {}).get('conditionId', market['slug'])
             print(f'NEW MARKET {market_key}: slug={market["slug"]} conditionId={condition_id} tokens={market["token_ids"]}')
-            state = 'WAITING_BOOK'
-            stats['states'][market_key] = state
-            first_valid_book = asyncio.Event()
 
-            async def on_rotated_quote(snapshot):
-                nonlocal state
-                if snapshot.get('time_remaining_ms') is not None and snapshot['time_remaining_ms'] <= 0:
-                    state = 'EXPIRED'
-                    stats['states'][market_key] = state
-                    print('STALE MARKET TRADING BLOCKED')
-                    return
-                up, down = snapshot.get('up') or {}, snapshot.get('down') or {}
-                if any(up.get(field) is None for field in ('bid', 'ask')) or any(down.get(field) is None for field in ('bid', 'ask')):
-                    state = 'WAITING_BOOK'
-                    stats['states'][market_key] = state
-                    return
-                if state != 'ACTIVE':
-                    state = 'ACTIVE'
-                    stats['states'][market_key] = state
-                    first_valid_book.set()
-                    print(f'ACTIVE {market_key}: slug={market["slug"]} tokens={market["token_ids"]}')
-                await on_quote(snapshot)
+            await run_market_session(market_key, market)
 
-            collector_task = asyncio.create_task(PolymarketOrderbookCollector(
-                market_key, market['token_ids'], on_rotated_quote, market.get('expiry_ts_ms')
-            ).run())
-            try:
-                await asyncio.wait_for(asyncio.shield(first_valid_book.wait()), timeout=5)
-            except asyncio.TimeoutError:
-                print(f'WAITING_BOOK_TIMEOUT ({market_key})')
-                collector_task.cancel()
-                try:
-                    await collector_task
-                except asyncio.CancelledError:
-                    pass
-                previous_slug = None
-                continue
-            await collector_task
             stats['states'][market_key] = 'EXPIRED'
             stats['rotations'][market_key] += 1
             stats['latest'].pop(market_key, None)
