@@ -27,6 +27,7 @@ class WriterCore:
         self.committed_sequence = -1
         self.closed = False
         self.failed = False
+        self.dirty_sequence = -1
 
     def apply(self, command):
         try:
@@ -112,6 +113,8 @@ class WriterCore:
         self.next_sequence += 1
         if kind in ('FLUSH','STOP'):
             self.committed_sequence = sequence
+        else:
+            self.dirty_sequence = sequence
         return {'sequence':sequence,'event_id':event_id,'processed_at_ms':processed_at,
                 'committed_sequence':self.committed_sequence,'closed':self.closed,
                 'counts':dict(self.store.counts)}
