@@ -40,8 +40,6 @@ async def run(args):
 
     async def on_btc(tick):
         if stopping:
-            writer.submit({'kind':'REJECT','received_ts_ms':tick.recv_ts_ms,'event_ts_ms':tick.event_ts_ms,
-                           'payload':{'reason':'COLLECTION_STOP_FENCE','feed':'BTC','tick':asdict(tick)}})
             return
         writer.submit({'kind':'BTC','received_ts_ms':tick.recv_ts_ms,'tick':asdict(tick)})
 
@@ -86,9 +84,6 @@ async def run(args):
                 async def on_book(snapshot):
                     nonlocal last_valid, active_printed
                     if stopping:
-                        writer.submit({'kind':'REJECT','received_ts_ms':snapshot['received_ts_ms'],
-                                       'event_ts_ms':snapshot.get('event_ts_ms'),'identity':identity,'generation':generation,
-                                       'payload':{'reason':'COLLECTION_STOP_FENCE','feed':duration,'snapshot':snapshot}})
                         return
                     writer.submit({'kind':'BOOK','received_ts_ms':snapshot['received_ts_ms'],'identity':identity,'generation':generation,'snapshot':snapshot})
                     observed_at = now_ms()
@@ -126,7 +121,7 @@ async def run(args):
                             forced.add(duration)
                             reason = 'FORCED_RECONNECT_TEST'
                             break
-                        if time.monotonic()-last_valid > 10:
+                        if time.monotonic()-last_valid > 4:
                             reason = 'STALE_BOOK_RECONNECT'
                             break
                     if task.done():
