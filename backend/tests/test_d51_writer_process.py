@@ -31,7 +31,9 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
     async def test_quiet_tail_flush_and_payload_frozen(self):
         w=await self.start();command=self.tick();seq=w.submit(command);command['tick']['price']=1.
         ack=await asyncio.wait_for(w.wait_processed(seq),timeout=5)
-        self.assertEqual(ack['committed_sequence'],-1)
+        # The process writer now commits each transport batch, so a quiet-tail
+        # acknowledgement is also durable.
+        self.assertEqual(ack['committed_sequence'],seq)
         await w.stop()
         self.assertEqual(decode(self.rows("SELECT payload_json FROM events WHERE kind='BTC'")[0][0])['price'],50000.)
     async def test_item_limit_explicit_and_stop_reserve(self):
