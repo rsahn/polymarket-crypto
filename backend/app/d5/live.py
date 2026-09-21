@@ -220,7 +220,9 @@ async def run(args):
         if cleanup_errors:
             status = 'FAILED'
         try:
-            ack = await writer.stop(received_ts_ms=now_ms(), status=status)
+            ack = await writer.stop(received_ts_ms=now_ms(), status=status,
+                payload={'elapsed_seconds':time.monotonic()-began,'collection_seconds':collection_seconds,
+                         'collection_stop_ts_ms':collection_stop_ms}, cleanup_errors=cleanup_errors)
         except Exception:
             status = 'FAILED'
             if writer.error is not None:
