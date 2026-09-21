@@ -96,8 +96,9 @@ class WriterCore:
                 raise ValueError('INVALID_STOP_STATUS')
             cleanup_errors = command.get('cleanup_errors',[])
             if cleanup_errors:status='FAILED'
-            self.store.event('COLLECTION_STOP',{**command.get('payload',{}),'last_input_sequence':sequence,
-                'ingress_stop_ts_ms':received},received_ts_ms=received,available_ts_ms=processed_at)
+            if not command.get('collection_stop_already_recorded'):
+                self.store.event('COLLECTION_STOP',{**command.get('payload',{}),'last_input_sequence':sequence,
+                    'ingress_stop_ts_ms':received},received_ts_ms=received,available_ts_ms=processed_at)
             for active_identity, _ in list(self.observer.active.values()):
                 self.observer.invalidate(active_identity,processed_at,'SESSION_END')
             self.observer.active.clear()
