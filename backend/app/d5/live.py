@@ -24,7 +24,8 @@ def now_ms():
 
 async def run(args):
     assert_shadow()
-    writer = ProcessWriter(args.db)
+    writer = ProcessWriter(args.db, config={'depth_levels':20,'seconds':args.seconds,
+        'reconnect_after':args.reconnect_after,'timestamp_contract':getattr(args,'timestamp_contract','legacy')})
     session_id = await writer.start()
     latest, generations, forced = {}, {'5m':0,'15m':0}, set()
     feed_timing = {}
@@ -85,23 +86,22 @@ async def run(args):
                         return
                     writer.submit({'kind':'BOOK','received_ts_ms':snapshot['received_ts_ms'],'identity':identity,'generation':generation,'snapshot':snapshot})
                     observed_at = now_ms()
-                    if True:
-                        wire = snapshot.get('wire_event_ts_ms')
-                        if wire is not None:
-                            timing = feed_timing.setdefault(duration, {'observations':0,'wire_age_sum_ms':0})
-                            age = snapshot['received_ts_ms']-wire
-                            timing['observations'] += 1
-                            timing['wire_age_sum_ms'] += age
-                            timing['last_wire_age_ms'] = age
-                            timing['max_wire_age_ms'] = max(timing.get('max_wire_age_ms',age),age)
-                            timing['last_processing_ms'] = observed_at-snapshot['received_ts_ms']
-                            timing['last_received_ts_ms'] = snapshot['received_ts_ms']
-                        last_valid = time.monotonic()
-                        latest[duration] = snapshot
-                        if not active_printed:
-                            print(f'D5 SHADOW {duration} ACTIVE slug={identity.market_slug} '
-                                  f'condition={identity.condition_id} tokens={identity.token_up}/{identity.token_down}',flush=True)
-                            active_printed = True
+                    wire = snapshot.get('wire_event_ts_ms')
+                    if wire is not None:
+                        timing = feed_timing.setdefault(duration, {'observations':0,'wire_age_sum_ms':0})
+                        age = snapshot['received_ts_ms']-wire
+                        timing['observations'] += 1
+                        timing['wire_age_sum_ms'] += age
+                        timing['last_wire_age_ms'] = age
+                        timing['max_wire_age_ms'] = max(timing.get('max_wire_age_ms',age),age)
+                        timing['last_processing_ms'] = observed_at-snapshot['received_ts_ms']
+                        timing['last_received_ts_ms'] = snapshot['received_ts_ms']
+                    last_valid = time.monotonic()
+                    latest[duration] = snapshot
+                    if not active_printed:
+                        print(f'D5 SHADOW {duration} ACTIVE slug={identity.market_slug} '
+                              f'condition={identity.condition_id} tokens={identity.token_up}/{identity.token_down}',flush=True)
+                        active_printed = True
 
                 collector = PolymarketOrderbookCollector(duration,{'UP':identity.token_up,'DOWN':identity.token_down},
                                                           on_book,identity.expiry_ts_ms,identity=identity,
