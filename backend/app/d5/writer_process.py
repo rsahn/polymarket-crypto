@@ -48,7 +48,7 @@ def _worker(inbox, replies, path, config):
 
 class ProcessWriter:
     def __init__(self, path, *, max_items=256, max_bytes=8*1024*1024,
-                 batch_size=128, flush_seconds=.002, config=None):
+                 batch_size=256, flush_seconds=.001, config=None):
         if min(max_items,max_bytes,batch_size) <= 0 or flush_seconds <= 0:
             raise ValueError('Positive bounds required')
         self.path = str(path)
@@ -58,7 +58,7 @@ class ProcessWriter:
         context = mp.get_context('spawn')
         # Fewer, larger batches reduce multiprocessing feeder/ACK overhead while the
         # producer-side item/byte bounds remain unchanged.
-        self.inbox = context.Queue(maxsize=4)
+        self.inbox = context.Queue(maxsize=2)
         self.replies = context.Queue(maxsize=8)
         self.process = context.Process(target=_worker,args=(self.inbox,self.replies,self.path,self.config))
         self.pending = deque()
