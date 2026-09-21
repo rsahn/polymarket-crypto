@@ -63,5 +63,17 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
         w=await self.start();w.submit({'kind':'STOP','received_ts_ms':1000})
         with self.assertRaises(RuntimeError):w.submit(self.tick())
         await w.stop()
+    async def test_config_and_stop_evidence_survive_process_boundary(self):
+        self.writer=ProcessWriter(self.path,config={'depth_levels':20,'timestamp_contract':'D5.1','probe':'yes'})
+        await self.writer.start()
+        await self.writer.stop(received_ts_ms=2000,status='FAILED',
+            payload={'elapsed_seconds':12.5,'collection_seconds':12.0,'collection_stop_ts_ms':1999},
+            cleanup_errors=['synthetic cleanup'])
+        self.assertEqual(self.rows('SELECT status FROM sessions'),[('FAILED',)])
+        stop=decode(self.rows("SELECT payload_json FROM events WHERE kind='COLLECTION_STOP'")[0][0])
+        end=decode(self.rows("SELECT payload_json FROM events WHERE kind='SESSION_END'")[0][0])
+        self.assertEqual(stop['collection_stop_ts_ms'],1999)
+        self.assertEqual(end['collection_seconds'],12.0)
+        self.assertEqual(end['cleanup_errors'],['synthetic cleanup'])
 
 if __name__=='__main__':unittest.main()
