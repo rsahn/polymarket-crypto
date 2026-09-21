@@ -13,10 +13,10 @@ import traceback
 from .writer_core import WriterCore
 
 
-def _worker(inbox, replies, path):
+def _worker(inbox, replies, path, config):
     core = None
     try:
-        core = WriterCore(path)
+        core = WriterCore(path, config=config)
         replies.put({'type':'READY','session_id':core.store.session_id})
         while True:
             batch = inbox.get()
@@ -41,16 +41,17 @@ def _worker(inbox, replies, path):
 
 class ProcessWriter:
     def __init__(self, path, *, max_items=256, max_bytes=8*1024*1024,
-                 batch_size=32, flush_seconds=.005):
+                 batch_size=32, flush_seconds=.005, config=None):
         if min(max_items,max_bytes,batch_size) <= 0 or flush_seconds <= 0:
             raise ValueError('Positive bounds required')
         self.path = str(path)
+        self.config = dict(config or {})
         self.max_items,self.max_bytes = max_items,max_bytes
         self.batch_size,self.flush_seconds = batch_size,flush_seconds
         context = mp.get_context('spawn')
         self.inbox = context.Queue(maxsize=8)
         self.replies = context.Queue(maxsize=8)
-        self.process = context.Process(target=_worker,args=(self.inbox,self.replies,self.path))
+        self.process = context.Process(target=_worker,args=(self.inbox,self.replies,self.path,self.config))
         self.pending = deque()
         self.outstanding = deque()
         self.outstanding_bytes = 0
