@@ -33,12 +33,15 @@ async def run(args):
     began = time.monotonic()
     status = 'STOPPED'
     stopping = False
+    stop_marker_sequence = None
     progress = getattr(args, 'on_progress', None)
     if progress:
         progress({'session_id':session_id,'elapsed_seconds':0,'counts':{},'last_books':{},'writer':writer.stats()})
 
     async def on_btc(tick):
         if stopping:
+            writer.submit({'kind':'REJECT','received_ts_ms':tick.recv_ts_ms,'event_ts_ms':tick.event_ts_ms,
+                           'payload':{'reason':'COLLECTION_STOP_FENCE','feed':'BTC','tick':asdict(tick)}})
             return
         writer.submit({'kind':'BTC','received_ts_ms':tick.recv_ts_ms,'tick':asdict(tick)})
 
@@ -83,6 +86,9 @@ async def run(args):
                 async def on_book(snapshot):
                     nonlocal last_valid, active_printed
                     if stopping:
+                        writer.submit({'kind':'REJECT','received_ts_ms':snapshot['received_ts_ms'],
+                                       'event_ts_ms':snapshot.get('event_ts_ms'),'identity':identity,'generation':generation,
+                                       'payload':{'reason':'COLLECTION_STOP_FENCE','feed':duration,'snapshot':snapshot}})
                         return
                     writer.submit({'kind':'BOOK','received_ts_ms':snapshot['received_ts_ms'],'identity':identity,'generation':generation,'snapshot':snapshot})
                     observed_at = now_ms()
@@ -209,6 +215,8 @@ async def run(args):
         # Late raw messages remain explicit REJECT evidence, never accepted BOOK/BTC.
         stopping = True
         collection_stop_ms = now_ms()
+        stop_marker_sequence = writer.submit({'kind':'EVENT','event_kind':'COLLECTION_STOP',
+            'payload':{'elapsed_seconds':time.monotonic()-began},'received_ts_ms':collection_stop_ms})
         collection_seconds = time.monotonic()-began
         for task in tasks:
             task.cancel()
@@ -220,6 +228,8 @@ async def run(args):
         if cleanup_errors:
             status = 'FAILED'
         try:
+            if stop_marker_sequence is not None:
+                await writer.wait_processed(stop_marker_sequence)
             ack = await writer.stop(received_ts_ms=now_ms(), status=status,
                 payload={'elapsed_seconds':time.monotonic()-began,'collection_seconds':collection_seconds,
                          'collection_stop_ts_ms':collection_stop_ms}, cleanup_errors=cleanup_errors)
