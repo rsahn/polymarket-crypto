@@ -12,10 +12,8 @@ from app.collectors.binance import BinanceCollector
 from app.collectors.stage_timing import StageTiming
 from app.collectors.polymarket import PolymarketMarketDiscovery
 from app.collectors.polymarket_ws import PolymarketOrderbookCollector
-from .features import BTCFeatures
 from .identity import MarketIdentity, assert_shadow
-from .observer import Observer
-from .store import Store
+from .writer_process import ProcessWriter
 
 ROOT = Path(__file__).resolve().parents[3]
 
@@ -26,11 +24,8 @@ def now_ms():
 
 async def run(args):
     assert_shadow()
-    store = Store(args.db, {'mode':'SHADOW','depth_levels':20,'seconds':args.seconds,
-                            'reconnect_after':args.reconnect_after,'strategy':'NO_TRADE','capital':500,
-                            'timestamp_contract':getattr(args,'timestamp_contract','legacy')},
-                  compress_payloads=getattr(args,'compress_payloads',False))
-    observer, btc = Observer(store), BTCFeatures()
+    writer = ProcessWriter(args.db)
+    session_id = await writer.start()
     latest, generations, forced = {}, {'5m':0,'15m':0}, set()
     feed_timing = {}
     performance = StageTiming() if getattr(args, "timestamp_contract", "legacy") == "D5.1" else None
@@ -39,18 +34,16 @@ async def run(args):
     stopping = False
     progress = getattr(args, 'on_progress', None)
     if progress:
-        progress({'session_id':store.session_id,'elapsed_seconds':0,'counts':{},'last_books':{}})
+        progress({'session_id':session_id,'elapsed_seconds':0,'counts':{},'last_books':{},'writer':writer.stats()})
 
     async def on_btc(tick):
         if stopping:
-            store.event('REJECT', {'reason':'COLLECTION_STOP_FENCE','feed':'BTC','tick':asdict(tick)},
-                        received_ts_ms=tick.recv_ts_ms,event_ts_ms=tick.event_ts_ms)
             return
-        _, available = store.btc(tick)
-        btc.update(available, asdict(tick))
+        writer.submit({'kind':'BTC','received_ts_ms':tick.recv_ts_ms,'tick':asdict(tick)})
 
     async def on_btc_status(kind, payload):
-        store.event(kind,payload,received_ts_ms=now_ms())
+        if not stopping:
+            writer.submit({'kind':'EVENT','event_kind':kind,'payload':payload,'received_ts_ms':now_ms()})
 
     async def market_loop(duration):
         previous = None
@@ -61,26 +54,26 @@ async def run(args):
                 market = next((m for m in markets if m['market_key']==duration and
                                m.get('expiry_ts_ms',0)>now_ms()), None)
                 if market is None:
-                    store.event('DISCOVERY_EMPTY',{'duration':duration},received_ts_ms=now_ms())
+                    writer.submit({'kind':'EVENT','event_kind':'DISCOVERY_EMPTY','payload':{'duration':duration},'received_ts_ms':now_ms()})
                     print(f'D5 SHADOW {duration} WAITING_BOOK: discovery has no active market',flush=True)
                     await asyncio.sleep(3)
                     continue
                 identity = MarketIdentity.from_market(market)
             except Exception as exc:
-                store.event('DISCOVERY_ERROR',{'duration':duration,'error':str(exc)},received_ts_ms=now_ms())
+                writer.submit({'kind':'EVENT','event_kind':'DISCOVERY_ERROR','payload':{'duration':duration,'error':str(exc)},'received_ts_ms':now_ms()})
                 print(f'D5 SHADOW discovery error {duration}: {exc}',flush=True)
                 await asyncio.sleep(3)
                 continue
             if previous and previous != identity:
-                store.event('ROTATION',{'duration':duration,'previous_slug':previous.market_slug,
-                                       'next_slug':identity.market_slug},received_ts_ms=now_ms())
+                writer.submit({'kind':'EVENT','event_kind':'ROTATION','payload':{'duration':duration,'previous_slug':previous.market_slug,
+                                       'next_slug':identity.market_slug},'received_ts_ms':now_ms()})
                 print(f'D5 ROTATION {duration}: {previous.market_slug} -> {identity.market_slug}',flush=True)
             previous = identity
             retries = 0
             while now_ms() < identity.expiry_ts_ms:
                 generations[duration] += 1
                 generation = generations[duration]
-                observer.activate(identity,generation,now_ms(),market.get('metadata'))
+                writer.submit({'kind':'ACTIVATE','identity':identity,'generation':generation,'metadata':market.get('metadata'),'received_ts_ms':now_ms()})
                 latest.pop(duration,None)
                 session_began = time.monotonic()
                 last_valid = session_began
@@ -89,14 +82,10 @@ async def run(args):
                 async def on_book(snapshot):
                     nonlocal last_valid, active_printed
                     if stopping:
-                        store.event('REJECT', {'reason':'COLLECTION_STOP_FENCE','feed':duration,'snapshot':snapshot},
-                                    received_ts_ms=snapshot['received_ts_ms'],event_ts_ms=snapshot.get('event_ts_ms'),
-                                    identity=identity,generation=generation)
                         return
-                    # Collector contains a frozen identity. Never relabel an incoming snapshot.
+                    writer.submit({'kind':'BOOK','received_ts_ms':snapshot['received_ts_ms'],'identity':identity,'generation':generation,'snapshot':snapshot})
                     observed_at = now_ms()
-                    eid = observer.observe(identity,generation,snapshot,lambda:btc.at(observed_at),observed_at)
-                    if eid is not None:
+                    if True:
                         wire = snapshot.get('wire_event_ts_ms')
                         if wire is not None:
                             timing = feed_timing.setdefault(duration, {'observations':0,'wire_age_sum_ms':0})
@@ -140,48 +129,37 @@ async def run(args):
                     reason = 'SESSION_END'
                     raise
                 except Exception as exc:
-                    store.event('WS_ERROR',{'error':str(exc)},received_ts_ms=now_ms(),
-                                identity=identity,generation=generation)
+                    writer.submit({'kind':'EVENT','event_kind':'WS_ERROR','payload':{'error':str(exc)},'received_ts_ms':now_ms(),'identity':identity,'generation':generation})
                 finally:
-                    # Invalidate callback identity/generation BEFORE awaiting task cancellation.
-                    if observer.active.get(duration)==(identity,generation):
-                        observer.active.pop(duration)
-                    if identity.key not in observer.retired:
-                        observer.invalidate(identity,now_ms(),reason)
+                    writer.submit({'kind':'INVALIDATE','identity':identity,'generation':generation,'reason':reason,'received_ts_ms':now_ms()})
                     latest.pop(duration,None)
                     task.cancel()
                     await asyncio.gather(task,return_exceptions=True)
-                    store.flush()
+                    writer.submit({'kind':'FLUSH','received_ts_ms':now_ms()})
                 if reason=='EXPIRE':
-                    observer.retired.add(identity.key)
+                    writer.submit({'kind':'EXPIRE','received_ts_ms':now_ms()})
                     break
                 retries += 1
-                store.event('RECONNECT',{'reason':reason},received_ts_ms=now_ms(),identity=identity,generation=generation)
+                writer.submit({'kind':'EVENT','event_kind':'RECONNECT','payload':{'reason':reason},'received_ts_ms':now_ms(),'identity':identity,'generation':generation})
                 await asyncio.sleep(min(2.,retries*.25))
 
     async def housekeeping():
         printed = 0.
         reported = 0.
         while True:
-            observer.expire(now_ms())
-            started = performance.start() if performance is not None else None
-            try:
-                store.flush()
-            finally:
-                if performance is not None:
-                    performance.finish('sqlite_commit', started)
+            writer.submit({'kind':'EXPIRE','received_ts_ms':now_ms()})
+            writer.submit({'kind':'FLUSH','received_ts_ms':now_ms()})
             if time.monotonic()-reported >= 30:
                 reported = time.monotonic()
-                free = shutil.disk_usage(store.path.parent).free
+                free = shutil.disk_usage(Path(args.db).resolve().parent).free
                 if free < getattr(args,'min_free_bytes',0):
                     raise RuntimeError('D5_DISK_RESERVE_REACHED')
-                store.event('CLOCK_SAMPLE',{'wall_ts_ms':now_ms(),'monotonic_ns':time.monotonic_ns()},
-                            received_ts_ms=now_ms())
+                writer.submit({'kind':'EVENT','event_kind':'CLOCK_SAMPLE','payload':{'wall_ts_ms':now_ms(),'monotonic_ns':time.monotonic_ns()},'received_ts_ms':now_ms()})
                 if progress:
-                    progress({'session_id':store.session_id,'elapsed_seconds':reported-began,
-                              'counts':dict(store.counts),'free_bytes':free,
+                    progress({'session_id':session_id,'elapsed_seconds':reported-began,
+                              'counts':dict((writer.last_ack or {}).get('counts',{})),'free_bytes':free,
                               'feed_timing':{d:dict(v) for d,v in feed_timing.items()},
-                              'stage_timing':performance.snapshot() if performance is not None else {},
+                              'stage_timing':performance.snapshot() if performance is not None else {},'writer':writer.stats(),
                               'last_books':{d:{'slug':s['market_slug'],'received_ts_ms':s['received_ts_ms']}
                                             for d,s in latest.items()}})
             if time.monotonic()-printed >= 10:
@@ -190,7 +168,7 @@ async def run(args):
                     up, down = snapshot['up'],snapshot['down']
                     print(f"D5 SHADOW {duration} slug={snapshot['market_slug']} condition={snapshot['condition_id']} "
                           f"UP={up['bid']}/{up['ask']} DOWN={down['bid']}/{down['ask']} "
-                          f"BTC={btc.at(now_ms())['btc_price']} inventory=0/0 paired=0 directional=0 cash=500 "
+                          f"BTC=worker-owned inventory=0/0 paired=0 directional=0 cash=500 "
                           f"strategy=NO_TRADE",flush=True)
             await asyncio.sleep(.5)
 
@@ -199,7 +177,7 @@ async def run(args):
     tasks = [asyncio.create_task(BinanceCollector('btcusdt',on_btc,on_btc_status).run()),
              asyncio.create_task(market_loop('5m')),asyncio.create_task(market_loop('15m')),
              asyncio.create_task(housekeeping())]
-    print(f'D5 SHADOW session={store.session_id} db={store.path} REAL_ORDERS=DISABLED',flush=True)
+    print(f'D5 SHADOW session={session_id} db={Path(args.db).resolve()} REAL_ORDERS=DISABLED',flush=True)
     try:
         if args.seconds:
             watched = tasks + ([stop_waiter] if stop_waiter else [])
@@ -232,7 +210,6 @@ async def run(args):
         stopping = True
         collection_stop_ms = now_ms()
         collection_seconds = time.monotonic()-began
-        store.event('COLLECTION_STOP',{'elapsed_seconds':collection_seconds},received_ts_ms=collection_stop_ms)
         for task in tasks:
             task.cancel()
         cleanup = await asyncio.gather(*tasks,return_exceptions=True)
@@ -242,17 +219,16 @@ async def run(args):
         cleanup_errors = [str(x) for x in cleanup if isinstance(x,BaseException) and not isinstance(x,asyncio.CancelledError)]
         if cleanup_errors:
             status = 'FAILED'
-        store.event('SESSION_END',{'elapsed_seconds':time.monotonic()-began,
-                                 'collection_seconds':collection_seconds,
-                                 'collection_stop_ts_ms':collection_stop_ms,
-                                 'cleanup_errors':cleanup_errors},received_ts_ms=now_ms())
-        open_anchors = store.db.execute("SELECT count(*) FROM anchors WHERE session_id=? AND status='OPEN'",(store.session_id,)).fetchone()[0]
-        if open_anchors:
+        try:
+            ack = await writer.stop(received_ts_ms=now_ms(), status=status)
+        except Exception:
             status = 'FAILED'
-        store.close(status)
+            if writer.error is not None:
+                await writer.release_failed()
+            raise
         print('D5 SHADOW stopped, buffers committed.',flush=True)
-    return {'session_id':store.session_id,'elapsed_seconds':time.monotonic()-began,
-            'collection_seconds':collection_seconds,'counts':dict(store.counts),'status':status}
+    return {'session_id':session_id,'elapsed_seconds':time.monotonic()-began,
+            'collection_seconds':collection_seconds,'counts':dict((writer.last_ack or {}).get('counts',{})),'status':status,'writer':writer.stats()}
 
 
 def cli():
