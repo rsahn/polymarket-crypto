@@ -41,6 +41,13 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(w.next_sequence,1)
         await w.stop();self.assertEqual(w.processed_sequence,1)
         self.assertLessEqual(w.high_water_items,2)
+    async def test_capacity_rejection_exposes_diagnostics(self):
+        w=await self.start(max_items=1)
+        w.submit(self.tick())
+        with self.assertRaises(BufferError) as caught:w.submit(self.tick())
+        self.assertIn('items',str(caught.exception));self.assertEqual(w.stats()['capacity_rejections'],1)
+        self.assertEqual(w.stats()['last_capacity_rejection']['kind'],'BTC')
+        await w.stop()
     async def test_byte_limit_rejects_without_advancing_sequence(self):
         w=await self.start(max_bytes=32)
         with self.assertRaises(BufferError):w.submit(self.tick())
