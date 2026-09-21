@@ -175,10 +175,10 @@ class ProcessWriter:
         self._check()
         return self.last_ack
 
-    async def stop(self, *, received_ts_ms=None, status='STOPPED'):
+    async def stop(self, *, received_ts_ms=None, status='STOPPED', payload=None, cleanup_errors=None):
         if self.stop_sequence is None:
             self.submit({'kind':'STOP','received_ts_ms':received_ts_ms or time.time_ns()//1_000_000,
-                         'status':status})
+                         'status':status,'payload':dict(payload or {}),'cleanup_errors':list(cleanup_errors or [])})
         await self.wait_processed(self.stop_sequence)
         while self.process.is_alive():await asyncio.sleep(.005)
         self.process.join()
