@@ -56,6 +56,8 @@ class ProcessWriter:
         self.outstanding = deque()
         self.outstanding_bytes = 0
         self.high_water_items = self.high_water_bytes = 0
+        self.capacity_rejections = 0
+        self.last_capacity_rejection = None
         self.last_sent_sequence = -1
         self.next_sequence = 0
         self.processed_sequence = self.committed_sequence = -1
@@ -93,7 +95,14 @@ class ProcessWriter:
         if is_stop and len(data)>4096:raise ValueError('Oversized stop control')
         if not is_stop and (len(self.outstanding)>=self.max_items or
                             self.outstanding_bytes+len(data)>self.max_bytes):
-            raise BufferError('WRITER_CAPACITY_EXCEEDED: command not accepted')
+            self._reap()
+            if len(self.outstanding)>=self.max_items or self.outstanding_bytes+len(data)>self.max_bytes:
+                self.capacity_rejections += 1
+                self.last_capacity_rejection = {'kind':command['kind'],'items':len(self.outstanding),
+                    'bytes':self.outstanding_bytes,'command_bytes':len(data),'processed_sequence':self.processed_sequence,
+                    'committed_sequence':self.committed_sequence,'sent_sequence':self.last_sent_sequence,
+                    'pending_items':len(self.pending),'at_monotonic':time.monotonic()}
+                raise BufferError('WRITER_CAPACITY_EXCEEDED: command not accepted; '+repr(self.last_capacity_rejection))
         sequence = self.next_sequence
         self.next_sequence += 1
         self.pending.append((data,command['kind'],time.monotonic()))
@@ -167,6 +176,7 @@ class ProcessWriter:
                 'high_water_items':self.high_water_items,'high_water_bytes':self.high_water_bytes,
                 'oldest_unacknowledged_age_seconds':time.monotonic()-self.outstanding[0][2] if self.outstanding else 0.,
                 'pending_batches_items':len(self.pending),'worker_pid':self.process.pid,
+                'capacity_rejections':self.capacity_rejections,'last_capacity_rejection':self.last_capacity_rejection,
                 'closed_ack':self.closed_ack,'error':self.error}
 
     async def wait_processed(self, sequence):
