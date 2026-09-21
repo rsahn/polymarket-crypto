@@ -26,6 +26,13 @@ def _worker(inbox, replies, path, config):
                 ack = core.apply(command)
                 if ack['closed'] and index != len(batch)-1:
                     raise RuntimeError('COMMAND_AFTER_STOP')
+            # Commit once per transport batch rather than once per producer-side FLUSH.
+            # This keeps durability bounded while removing redundant SQLite commits from
+            # the hot path. STOP already closes/commits inside WriterCore.
+            if not core.closed and core.dirty_sequence > core.committed_sequence:
+                core.store.flush()
+                core.committed_sequence = core.dirty_sequence
+                ack = {**ack,'committed_sequence':core.committed_sequence}
             replies.put({'type':'ACK',**ack})
             if core.closed:
                 return
@@ -53,6 +60,7 @@ class ProcessWriter:
         self.replies = context.Queue(maxsize=8)
         self.process = context.Process(target=_worker,args=(self.inbox,self.replies,self.path,self.config))
         self.pending = deque()
+        self.control_pending = deque()
         self.outstanding = deque()
         self.outstanding_bytes = 0
         self.high_water_items = self.high_water_bytes = 0
@@ -91,9 +99,12 @@ class ProcessWriter:
         command['sequence'] = self.next_sequence
         data = pickle.dumps(command,protocol=5)  # freeze before returning to caller
         is_stop = command['kind'] == 'STOP'
-        # One small stop control is reserved so a full queue can still drain.
+        is_control = command['kind'] in ('STOP','FLUSH','EXPIRE','INVALIDATE','ACTIVATE','EVENT','REJECT')
+        # Control commands are admitted through a reserved lane so saturation of BOOK/BTC
+        # cannot prevent expiry/fencing/clean shutdown. Sequence ordering is preserved by
+        # merging both lanes before transport.
         if is_stop and len(data)>4096:raise ValueError('Oversized stop control')
-        if not is_stop and (len(self.outstanding)>=self.max_items or
+        if not is_control and (len(self.outstanding)>=self.max_items or
                             self.outstanding_bytes+len(data)>self.max_bytes):
             self._reap()
             if len(self.outstanding)>=self.max_items or self.outstanding_bytes+len(data)>self.max_bytes:
@@ -105,7 +116,8 @@ class ProcessWriter:
                 raise BufferError('WRITER_CAPACITY_EXCEEDED: command not accepted; '+repr(self.last_capacity_rejection))
         sequence = self.next_sequence
         self.next_sequence += 1
-        self.pending.append((data,command['kind'],time.monotonic()))
+        target = self.control_pending if is_control else self.pending
+        target.append((data,command['kind'],time.monotonic()))
         self.outstanding.append((sequence,len(data),time.monotonic()))
         self.outstanding_bytes += len(data)
         self.high_water_items = max(self.high_water_items,len(self.outstanding))
@@ -143,7 +155,7 @@ class ProcessWriter:
                 self._reap()
                 if self.error is not None:return
                 if self.closed_ack:
-                    if self.pending or self.outstanding:
+                    if self.pending or self.control_pending or self.outstanding:
                         self.error='UNEXPECTED_PENDING_AFTER_STOP'
                     return
                 if self.process.exitcode is not None:
@@ -152,17 +164,34 @@ class ProcessWriter:
                     if not self.closed_ack and self.error is None:
                         self.error='PROCESS_EXIT_WITHOUT_CLEAN_ACK: '+str(self.process.exitcode)
                     return
-                if self.pending:
-                    barrier=any(kind not in ('BOOK','BTC') for _,kind,_ in self.pending)
-                    due=time.monotonic()-self.pending[0][2]>=self.flush_seconds
-                    if barrier or due or len(self.pending)>=self.batch_size:
-                        n=min(self.batch_size,len(self.pending))
-                        batch=[self.pending[i][0] for i in range(n)]
+                if self.pending or self.control_pending:
+                    # Both queues contain monotonically increasing sequence numbers in their
+                    # pickled commands. Pick the oldest admitted item to preserve global order.
+                    merged=[]
+                    while len(merged)<self.batch_size and (self.pending or self.control_pending):
+                        choices=[]
+                        if self.pending: choices.append((pickle.loads(self.pending[0][0])['sequence'],'data'))
+                        if self.control_pending: choices.append((pickle.loads(self.control_pending[0][0])['sequence'],'control'))
+                        _,lane=min(choices)
+                        merged.append((self.pending if lane=='data' else self.control_pending).popleft())
+                    oldest=merged[0][2]
+                    barrier=any(kind not in ('BOOK','BTC') for _,kind,_ in merged)
+                    due=time.monotonic()-oldest>=self.flush_seconds
+                    if barrier or due or len(merged)>=self.batch_size:
+                        batch=[item[0] for item in merged]
                         try:self.inbox.put_nowait(batch)
-                        except queue.Full:pass
+                        except queue.Full:
+                            # Put the batch back in sequence order; no command is lost.
+                            for item in reversed(merged):
+                                seq=pickle.loads(item[0])['sequence']
+                                lane=self.control_pending if item[1] not in ('BOOK','BTC') else self.pending
+                                lane.appendleft(item)
                         else:
-                            self.last_sent_sequence += n
-                            for _ in range(n):self.pending.popleft()
+                            self.last_sent_sequence += len(merged)
+                    else:
+                        for item in reversed(merged):
+                            lane=self.control_pending if item[1] not in ('BOOK','BTC') else self.pending
+                            lane.appendleft(item)
                 self.wake.clear()
                 try:await asyncio.wait_for(self.wake.wait(),timeout=min(self.flush_seconds,.01))
                 except asyncio.TimeoutError:pass
@@ -175,7 +204,7 @@ class ProcessWriter:
                 'outstanding_items':len(self.outstanding),'outstanding_bytes':self.outstanding_bytes,
                 'high_water_items':self.high_water_items,'high_water_bytes':self.high_water_bytes,
                 'oldest_unacknowledged_age_seconds':time.monotonic()-self.outstanding[0][2] if self.outstanding else 0.,
-                'pending_batches_items':len(self.pending),'worker_pid':self.process.pid,
+                'pending_batches_items':len(self.pending),'control_pending_items':len(self.control_pending),'worker_pid':self.process.pid,
                 'capacity_rejections':self.capacity_rejections,'last_capacity_rejection':self.last_capacity_rejection,
                 'closed_ack':self.closed_ack,'error':self.error}
 
