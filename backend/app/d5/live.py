@@ -232,7 +232,8 @@ async def run(args):
                 await writer.wait_processed(stop_marker_sequence)
             ack = await writer.stop(received_ts_ms=now_ms(), status=status,
                 payload={'elapsed_seconds':time.monotonic()-began,'collection_seconds':collection_seconds,
-                         'collection_stop_ts_ms':collection_stop_ms}, cleanup_errors=cleanup_errors)
+                         'collection_stop_ts_ms':collection_stop_ms}, cleanup_errors=cleanup_errors,
+                collection_stop_already_recorded=True)
         except Exception:
             status = 'FAILED'
             if writer.error is not None:
