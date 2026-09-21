@@ -1,0 +1,106 @@
+{
+  "activity_extracted.json": {
+    "bytes": 81389907,
+    "sha256": "8e2bb178a1e690b2d3ece8f8dbff66e5c596ff4385587102d3d7c5cb17e3d001"
+  },
+  "analyze.py": {
+    "bytes": 15341,
+    "sha256": "68e4ffb9fea5655e9b7233983ef8197f711203669d3908fc5c8a70e5c7053643"
+  },
+  "btc_inventory_ledger.csv": {
+    "bytes": 52569080,
+    "sha256": "1a2312a12ef80b66ff97a0567aa71553c411037cf033530ce0f6968453f218f7"
+  },
+  "btc_second_states.csv": {
+    "bytes": 8457805,
+    "sha256": "fc9a213d181114ce5e4bf0083be1c75c12cd1d840b4a3dbab68b503f4cf13bd7"
+  },
+  "check_analysis.py": {
+    "bytes": 3517,
+    "sha256": "8f98ebbbaa11754a73f85d51cd82702f92cea64a688c0c21233ebc6ce3dff593"
+  },
+  "coverage.json": {
+    "bytes": 37174,
+    "sha256": "2c66e6eb8e44567c07b6530850f2d626a7f60ab0a0246bafad21c38ba753dd91"
+  },
+  "D5_FUTURE_JOIN.md": {
+    "bytes": 3236,
+    "sha256": "7989d6602037c85adaf012ddb10be99525bfa56cbed489079a3403c630cc6631"
+  },
+  "duplicate_candidates.json": {
+    "bytes": 998,
+    "sha256": "c47092ccc80e560045096427329daddb1b4351633e54879b827a9f33d0ee3e7e"
+  },
+  "examples_selected.json": {
+    "bytes": 12733,
+    "sha256": "67582b18a68bde595bde615a5d9de96d349a993cf84a6bc42f076f7e154b341e"
+  },
+  "extract.py": {
+    "bytes": 1672,
+    "sha256": "c63d40c7a3415f820dff7e3560fa3327c5aa625152fd131702040e0f5c8d3f08"
+  },
+  "fetch_public.py": {
+    "bytes": 2345,
+    "sha256": "3c775c693290b832b52d6ef2f8fe5bc1897a4cd65e8718e4356359fd9deed738"
+  },
+  "FINAL_CHECKS.json": {
+    "bytes": 311,
+    "sha256": "7c0809c4bcc8a4fdd6a1a1c29415f9c81b3bf1542c8bc99ea534025c8a053998"
+  },
+  "future_join_schema.json": {
+    "bytes": 3187,
+    "sha256": "c93e0728d24619a651bdeb464ce14258312c14027a7a2605a9aeb31886d8c357"
+  },
+  "identity_excerpts.json": {
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "identity_verified.json": {
+    "bytes": 1373,
+    "sha256": "44bca61549e54dcaa17da3141c109e68610ef3c07fcb533e5947c4d13cb44c17"
+  },
+  "make_report.py": {
+    "bytes": 29123,
+    "sha256": "fdd742aa6c334eadb27e0f984794b0299720b945493c8d801947af317b79c7f9"
+  },
+  "markets.json": {
+    "bytes": 5127921,
+    "sha256": "a18110781b74846a482a51c8f91741995bf8578a24d7c73b700ce1caf3c5b221"
+  },
+  "market_metadata.json": {
+    "bytes": 11930579,
+    "sha256": "fa1e2bbd9e96279a9712f1e616f21294348dfd61c299fc0fef8ba9e30e9544fa"
+  },
+  "metadata_validation.json": {
+    "bytes": 197,
+    "sha256": "e5c15ee192cef52c972781bd6039dae4aa2a375eeb35fb3fa25acd21bbe18293"
+  },
+  "operations.csv": {
+    "bytes": 49081438,
+    "sha256": "e40e5f1a34fed2d63e489de7ba9720093bb6101c86f982e77e4c8a2e15e2c993"
+  },
+  "opposite_transitions.csv": {
+    "bytes": 1090333,
+    "sha256": "aa73cdbed404cf6ce3cdffc8a6839ff6f2d186a3dfae30bcc8e5240528d0eebc"
+  },
+  "REPORT.md": {
+    "bytes": 56530,
+    "sha256": "154f4e0595058d82a870e72ba2ba461cb76729de690ae2f0d958a05daf73a9bd"
+  },
+  "sensitivity_and_checks.json": {
+    "bytes": 3396,
+    "sha256": "b3d543a523794614394727769f197ff01a9c39f79e10f99c2e646ce1965573e5"
+  },
+  "statistics.json": {
+    "bytes": 10559,
+    "sha256": "b2ef33aad487142d66345abbbbf6b04b245187692f787c5436dffb449a66205a"
+  },
+  "validate_markets.py": {
+    "bytes": 2318,
+    "sha256": "a2f541b91cce4e4b86ae9d831f0c0072f3b48ba5c00e6869eda01e1250ed509b"
+  },
+  "validation.json": {
+    "bytes": 403,
+    "sha256": "2e93814e2726c16b7189d8fcd1778bde2469c3a6b854a543bff746e72ca371bc"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "D5_DATA_QUALITY": "PASS",
+  "duration_seconds": 2040.8742741000606,
+  "failures": [],
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 1366126,
+      "decision_sha256": "422e893ebbcef9144a3c82ebb58ab8611918953285a9e4d6e44a1db34b903120",
+      "result_sha256": "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b"
+    },
+    {
+      "replay": 2,
+      "event_count": 1366126,
+      "decision_sha256": "422e893ebbcef9144a3c82ebb58ab8611918953285a9e4d6e44a1db34b903120",
+      "result_sha256": "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b"
+    }
+  ],
+  "source_stat_unchanged": true
+}

@@ -1,0 +1,239 @@
+{
+  "status": "DIAGNOSIS_FROM_COMPLETED_QUALITY_METRICS_FINAL_REVIEW_PENDING",
+  "source_report_sha256": "841de33f18799da08d1e5777f8f555bc260a8d1e5b7c52209024495a40c6911c",
+  "classification_counts": {
+    "WITHIN_MARKET": 7,
+    "EXACT_MARKET_BOUNDARY": 6,
+    "BTC_FEED": 2
+  },
+  "gaps": [
+    {
+      "feed": "15m",
+      "from_ms": 1789903656383,
+      "to_ms": 1789903662934,
+      "gap_ms": 6551,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-15m-1789902900"
+      ],
+      "from_utc": "2026-09-20T11:27:36.383000+00:00",
+      "to_utc": "2026-09-20T11:27:42.934000+00:00"
+    },
+    {
+      "feed": "15m",
+      "from_ms": 1789906963945,
+      "to_ms": 1789906969996,
+      "gap_ms": 6051,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-15m-1789906500"
+      ],
+      "from_utc": "2026-09-20T12:22:43.945000+00:00",
+      "to_utc": "2026-09-20T12:22:49.996000+00:00"
+    },
+    {
+      "feed": "15m",
+      "from_ms": 1789909685294,
+      "to_ms": 1789909690369,
+      "gap_ms": 5075,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-15m-1789909200"
+      ],
+      "from_utc": "2026-09-20T13:08:05.294000+00:00",
+      "to_utc": "2026-09-20T13:08:10.369000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789902476409,
+      "to_ms": 1789902481421,
+      "gap_ms": 5012,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-5m-1789902300"
+      ],
+      "from_utc": "2026-09-20T11:07:56.409000+00:00",
+      "to_utc": "2026-09-20T11:08:01.421000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789902746655,
+      "to_ms": 1789902751844,
+      "gap_ms": 5189,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-5m-1789902600"
+      ],
+      "from_utc": "2026-09-20T11:12:26.655000+00:00",
+      "to_utc": "2026-09-20T11:12:31.844000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789903153937,
+      "to_ms": 1789903158979,
+      "gap_ms": 5042,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-5m-1789902900"
+      ],
+      "from_utc": "2026-09-20T11:19:13.937000+00:00",
+      "to_utc": "2026-09-20T11:19:18.979000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789903199814,
+      "to_ms": 1789903205623,
+      "gap_ms": 5809,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789902900"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789903200"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T11:19:59.814000+00:00",
+      "to_utc": "2026-09-20T11:20:05.623000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789903449348,
+      "to_ms": 1789903455230,
+      "gap_ms": 5882,
+      "classification": "WITHIN_MARKET",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [
+        "btc-updown-5m-1789903200"
+      ],
+      "from_utc": "2026-09-20T11:24:09.348000+00:00",
+      "to_utc": "2026-09-20T11:24:15.230000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789903499971,
+      "to_ms": 1789903505547,
+      "gap_ms": 5576,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789903200"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789903500"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T11:24:59.971000+00:00",
+      "to_utc": "2026-09-20T11:25:05.547000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789904099995,
+      "to_ms": 1789904108459,
+      "gap_ms": 8464,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789903800"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789904100"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T11:34:59.995000+00:00",
+      "to_utc": "2026-09-20T11:35:08.459000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789905899532,
+      "to_ms": 1789905908089,
+      "gap_ms": 8557,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789905600"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789905900"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T12:04:59.532000+00:00",
+      "to_utc": "2026-09-20T12:05:08.089000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789906199758,
+      "to_ms": 1789906207454,
+      "gap_ms": 7696,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789905900"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789906200"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T12:09:59.758000+00:00",
+      "to_utc": "2026-09-20T12:10:07.454000+00:00"
+    },
+    {
+      "feed": "5m",
+      "from_ms": 1789910699775,
+      "to_ms": 1789910706023,
+      "gap_ms": 6248,
+      "classification": "EXACT_MARKET_BOUNDARY",
+      "previous_market": [
+        "btc-updown-5m-1789910400"
+      ],
+      "next_market": [
+        "btc-updown-5m-1789910700"
+      ],
+      "containing_market": [],
+      "from_utc": "2026-09-20T13:24:59.775000+00:00",
+      "to_utc": "2026-09-20T13:25:06.023000+00:00"
+    },
+    {
+      "feed": "BTC",
+      "from_ms": 1789901381514,
+      "to_ms": 1789901386971,
+      "gap_ms": 5457,
+      "classification": "BTC_FEED",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [],
+      "from_utc": "2026-09-20T10:49:41.514000+00:00",
+      "to_utc": "2026-09-20T10:49:46.971000+00:00"
+    },
+    {
+      "feed": "BTC",
+      "from_ms": 1789901996738,
+      "to_ms": 1789902002118,
+      "gap_ms": 5380,
+      "classification": "BTC_FEED",
+      "previous_market": [],
+      "next_market": [],
+      "containing_market": [],
+      "from_utc": "2026-09-20T10:59:56.738000+00:00",
+      "to_utc": "2026-09-20T11:00:02.118000+00:00"
+    }
+  ],
+  "method": "Exact matching to per-market first/last BOOK receipt timestamps. Within-market classification requires both endpoints inside one market. Report examples exhaust all counted >5s gaps.",
+  "limitations": [
+    "Receiving silence does not by itself prove missing messages.",
+    "Boundary timing establishes alignment, not root cause or acceptable latency.",
+    "No underlying data was queried or changed for this diagnostic.",
+    "All 15 gaps still breach the unchanged >5000ms quality policy; no exceptions introduced.",
+    "Replays, source SHA and independent timestamp supplement remain pending."
+  ],
+  "d6_research_allowed": false,
+  "paper_started": false
+}

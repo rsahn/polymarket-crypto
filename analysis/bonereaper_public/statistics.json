@@ -1,0 +1,407 @@
+{
+  "300": {
+    "markets": 1982,
+    "fills": 62200,
+    "types": {
+      "BUY": 62200
+    },
+    "fills_per_market": {
+      "n": 1982,
+      "min": 1,
+      "p05": 6.0,
+      "p25": 17.0,
+      "median": 28.0,
+      "mean": 31.3824419778002,
+      "p75": 41.0,
+      "p95": 70.0,
+      "max": 188
+    },
+    "both_outcomes_markets": 1936,
+    "both_outcomes_pct": 97.67911200807265,
+    "first_leg": {
+      "Down": 932,
+      "Up": 1030,
+      "Down,Up": 18,
+      "null": 2
+    },
+    "up_to_down": 6628,
+    "down_to_up": 6586,
+    "opposite_seconds": {
+      "n": 13214,
+      "min": 1,
+      "p05": 1.0,
+      "p25": 4.0,
+      "median": 9.0,
+      "mean": 15.469502043287422,
+      "p75": 20.0,
+      "p95": 49.0,
+      "max": 198
+    },
+    "fill_quantity": {
+      "n": 62200,
+      "min": 0.005152,
+      "p05": 1.66,
+      "p25": 6.0,
+      "median": 20.0,
+      "mean": 43.63925068432476,
+      "p75": 49.0,
+      "p95": 160.0,
+      "max": 1263
+    },
+    "fill_notional": {
+      "n": 62200,
+      "min": 0.0009,
+      "p05": 0.5254493499745133,
+      "p25": 2.75,
+      "median": 8.2089500006735,
+      "mean": 22.3896030007928,
+      "p75": 21.200000000000003,
+      "p95": 82.36991499784963,
+      "max": 665.0719999913999
+    },
+    "final_paired_qty": {
+      "n": 1980,
+      "min": 0.0,
+      "p05": 29.27991185,
+      "p25": 198.3514605,
+      "median": 400.796428,
+      "mean": 476.503575830303,
+      "p75": 678.8734235000001,
+      "p95": 1157.3167095999997,
+      "max": 2741.5544609999997
+    },
+    "final_pair_cost_gross": {
+      "n": 1933,
+      "min": 0.31826798065209694,
+      "p05": 0.742779548714725,
+      "p25": 0.9042927427049654,
+      "median": 1.0027246802958882,
+      "mean": 1.007157816898071,
+      "p75": 1.1058192398414697,
+      "p95": 1.2866661921334928,
+      "max": 1.6147725027150002
+    },
+    "final_pair_cost_reported": {
+      "n": 1933,
+      "min": 0.32997209035037656,
+      "p05": 0.762714420740884,
+      "p25": 0.9232674107319698,
+      "median": 1.0231109097037612,
+      "mean": 1.0258450828662429,
+      "p75": 1.1247494224984838,
+      "p95": 1.304949849501939,
+      "max": 1.6208026693168434
+    },
+    "max_market_imbalance_shares": {
+      "n": 1982,
+      "min": 0,
+      "p05": 108.53550000000001,
+      "p25": 267.25,
+      "median": 465.5608879999999,
+      "mean": 533.7094470045408,
+      "p75": 714.21,
+      "p95": 1192.8835264499996,
+      "max": 2962.4968820000004
+    },
+    "final_abs_normalized_imbalance": {
+      "n": 1980,
+      "min": 0.0,
+      "p05": 0.02906089394915426,
+      "p25": 0.14112597740639898,
+      "median": 0.2991758180716779,
+      "mean": 0.3464586685236705,
+      "p75": 0.505444205294538,
+      "p95": 0.8402610525829758,
+      "max": 1.0
+    },
+    "final_abs_imbalance_shares": {
+      "n": 1980,
+      "min": 0.0,
+      "p05": 25.948295299999984,
+      "p25": 138.4575,
+      "median": 316.37565,
+      "mean": 414.03357690757576,
+      "p75": 603.01358375,
+      "p95": 1133.59634725,
+      "max": 2528.9699600000004
+    },
+    "fill_timing": {
+      "first_third": 23297,
+      "middle_third": 22190,
+      "before_open": 4630,
+      "last_third": 11948,
+      "after_expiry": 135
+    },
+    "rebalance_eligible": 37383,
+    "rebalance_opposite": 17447,
+    "rebalance_reduces": 15175,
+    "same_second_mixed_batches": 980,
+    "merges": 6,
+    "redeems": 1986,
+    "cash_mismatch_records": 29354,
+    "cash_difference_total": 24254.932599687898,
+    "thresholds": {
+      "1.0": {
+        "denominator_final_paired_markets": 1933,
+        "final_gross_pct": 48.99120538023797,
+        "final_reported_pct": 44.23176409725815,
+        "ever_gross_markets": 1706,
+        "ever_reported_markets": 1563,
+        "seconds_per_ever_market": {
+          "n": 1705,
+          "min": 1.0,
+          "p05": 18.0,
+          "p25": 99.0,
+          "median": 170.0,
+          "mean": 166.06275659824047,
+          "p75": 243.0,
+          "p95": 293.0,
+          "max": 300.0
+        },
+        "total_share_seconds": 81862880.563215
+      },
+      "0.99": {
+        "denominator_final_paired_markets": 1933,
+        "final_gross_pct": 46.301086394205896,
+        "final_reported_pct": 41.07604759441283,
+        "ever_gross_markets": 1643,
+        "ever_reported_markets": 1507,
+        "seconds_per_ever_market": {
+          "n": 1642,
+          "min": 1.0,
+          "p05": 17.05000000000001,
+          "p25": 89.0,
+          "median": 160.0,
+          "mean": 159.13520097442145,
+          "p75": 234.0,
+          "p95": 291.0,
+          "max": 300.0
+        },
+        "total_share_seconds": 75923872.785467
+      },
+      "0.98": {
+        "denominator_final_paired_markets": 1933,
+        "final_gross_pct": 43.8178996378686,
+        "final_reported_pct": 38.075530263838594,
+        "ever_gross_markets": 1590,
+        "ever_reported_markets": 1444,
+        "seconds_per_ever_market": {
+          "n": 1587,
+          "min": 1.0,
+          "p05": 17.0,
+          "p25": 78.5,
+          "median": 151.0,
+          "mean": 152.4303717706364,
+          "p75": 228.0,
+          "p95": 289.6999999999998,
+          "max": 300.0
+        },
+        "total_share_seconds": 70656213.09407
+      },
+      "0.95": {
+        "denominator_final_paired_markets": 1933,
+        "final_gross_pct": 34.816347646145886,
+        "final_reported_pct": 30.574236937403,
+        "ever_gross_markets": 1417,
+        "ever_reported_markets": 1246,
+        "seconds_per_ever_market": {
+          "n": 1416,
+          "min": 1.0,
+          "p05": 9.0,
+          "p25": 53.75,
+          "median": 117.0,
+          "mean": 128.79449152542372,
+          "p75": 197.0,
+          "p95": 280.25,
+          "max": 300.0
+        },
+        "total_share_seconds": 53909324.559032
+      }
+    }
+  },
+  "900": {
+    "markets": 67,
+    "fills": 177,
+    "types": {
+      "BUY": 177
+    },
+    "fills_per_market": {
+      "n": 67,
+      "min": 1,
+      "p05": 1.0,
+      "p25": 1.0,
+      "median": 2.0,
+      "mean": 2.6417910447761193,
+      "p75": 4.0,
+      "p95": 7.0,
+      "max": 8
+    },
+    "both_outcomes_markets": 3,
+    "both_outcomes_pct": 4.477611940298507,
+    "first_leg": {
+      "Up": 43,
+      "Down": 23,
+      "null": 1
+    },
+    "up_to_down": 2,
+    "down_to_up": 1,
+    "opposite_seconds": {
+      "n": 3,
+      "min": 6,
+      "p05": 7.6,
+      "p25": 14.0,
+      "median": 22.0,
+      "mean": 18.333333333333332,
+      "p75": 24.5,
+      "p95": 26.5,
+      "max": 27
+    },
+    "fill_quantity": {
+      "n": 177,
+      "min": 5,
+      "p05": 10.792000000000002,
+      "p25": 17.0,
+      "median": 42.0,
+      "mean": 60.37338983050847,
+      "p75": 117.0,
+      "p95": 136.22399999999982,
+      "max": 164
+    },
+    "fill_notional": {
+      "n": 177,
+      "min": 2.7,
+      "p05": 4.9880000000199995,
+      "p25": 8.5,
+      "median": 20.64,
+      "mean": 29.291262146888407,
+      "p75": 53.5,
+      "p95": 68.57423999999995,
+      "max": 80.60000000000001
+    },
+    "final_paired_qty": {
+      "n": 66,
+      "min": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "median": 0.0,
+      "mean": 2.4277272727272727,
+      "p75": 0.0,
+      "p95": 0.0,
+      "max": 97.0
+    },
+    "final_pair_cost_gross": {
+      "n": 3,
+      "min": 1.0066689526020098,
+      "p05": 1.0091235526689117,
+      "p25": 1.018941952936519,
+      "median": 1.0312149532710282,
+      "mean": 1.0233544643508417,
+      "p75": 1.0316972202252577,
+      "p95": 1.0320830337886413,
+      "max": 1.0321794871794872
+    },
+    "final_pair_cost_reported": {
+      "n": 3,
+      "min": 1.0415310293962492,
+      "p05": 1.0439954871079395,
+      "p25": 1.0538533179547005,
+      "median": 1.0661756065131516,
+      "mean": 1.0581471704916705,
+      "p75": 1.0664552410393813,
+      "p95": 1.066678948660365,
+      "max": 1.066734875565611
+    },
+    "max_market_imbalance_shares": {
+      "n": 67,
+      "min": 0,
+      "p05": 11.600000000000001,
+      "p25": 47.5,
+      "median": 124.0,
+      "mean": 156.52029850746268,
+      "p75": 230.25,
+      "p95": 401.1579999999999,
+      "max": 598.0
+    },
+    "final_abs_normalized_imbalance": {
+      "n": 66,
+      "min": 0.049019607843137254,
+      "p05": 1.0,
+      "p25": 1.0,
+      "median": 1.0,
+      "mean": 0.9754047983790242,
+      "p75": 1.0,
+      "p95": 1.0,
+      "max": 1.0
+    },
+    "final_abs_imbalance_shares": {
+      "n": 66,
+      "min": 10.0,
+      "p05": 11.5,
+      "p25": 47.25,
+      "median": 122.0,
+      "mean": 156.61560606060607,
+      "p75": 234.875,
+      "p95": 402.455,
+      "max": 598.0
+    },
+    "fill_timing": {
+      "before_open": 170,
+      "first_third": 6,
+      "after_expiry": 1
+    },
+    "rebalance_eligible": 104,
+    "rebalance_opposite": 5,
+    "rebalance_reduces": 4,
+    "same_second_mixed_batches": 0,
+    "merges": 0,
+    "redeems": 65,
+    "cash_mismatch_records": 177,
+    "cash_difference_total": 186.380810000752,
+    "thresholds": {
+      "1.0": {
+        "denominator_final_paired_markets": 3,
+        "final_gross_pct": 0.0,
+        "final_reported_pct": 0.0,
+        "ever_gross_markets": 0,
+        "ever_reported_markets": 0,
+        "seconds_per_ever_market": {
+          "n": 0
+        },
+        "total_share_seconds": 0.0
+      },
+      "0.99": {
+        "denominator_final_paired_markets": 3,
+        "final_gross_pct": 0.0,
+        "final_reported_pct": 0.0,
+        "ever_gross_markets": 0,
+        "ever_reported_markets": 0,
+        "seconds_per_ever_market": {
+          "n": 0
+        },
+        "total_share_seconds": 0.0
+      },
+      "0.98": {
+        "denominator_final_paired_markets": 3,
+        "final_gross_pct": 0.0,
+        "final_reported_pct": 0.0,
+        "ever_gross_markets": 0,
+        "ever_reported_markets": 0,
+        "seconds_per_ever_market": {
+          "n": 0
+        },
+        "total_share_seconds": 0.0
+      },
+      "0.95": {
+        "denominator_final_paired_markets": 3,
+        "final_gross_pct": 0.0,
+        "final_reported_pct": 0.0,
+        "ever_gross_markets": 0,
+        "ever_reported_markets": 0,
+        "seconds_per_ever_market": {
+          "n": 0
+        },
+        "total_share_seconds": 0.0
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "pid": 6680,
+  "status": "COMPLETE",
+  "stage": "COMPLETE",
+  "source_read": "NONE, Parquet only",
+  "max_memory_bytes": 700989440,
+  "percent": 100,
+  "elapsed_seconds": 186.39772579993587,
+  "memory_bytes": 112398336,
+  "updated_utc": "2026-09-20T17:46:30.694641+00:00",
+  "free_bytes": 102595678208,
+  "rows": 7441212,
+  "total": null,
+  "event_id_through": 7518713,
+  "event_id_max": 7518713
+}

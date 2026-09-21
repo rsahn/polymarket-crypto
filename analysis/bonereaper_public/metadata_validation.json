@@ -1,0 +1,10 @@
+{
+  "requested": 2049,
+  "found": 2049,
+  "missing": [],
+  "start_mismatch": [],
+  "end_mismatch": [],
+  "slug_mismatch": [],
+  "token_mismatch": [],
+  "trade_before_market_creation": []
+}

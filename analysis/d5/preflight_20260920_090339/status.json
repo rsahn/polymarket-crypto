@@ -1,0 +1,49 @@
+{
+  "pid": 18720,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_test_24h_20260920_090339.db",
+  "output": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\preflight_20260920_090339",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "research_allowed": false,
+  "requested_seconds": 20.0,
+  "test_run": true,
+  "started_utc": "2026-09-20T07:03:40.079624+00:00",
+  "phase": "QUALITY_REVIEW_BLOCKED",
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:ecccb1f6602bfebf4118dea43dd4ffde05a7c199b8938d7cae50f5848f379f1a",
+  "keep_awake": true,
+  "updated_utc": "2026-09-20T07:04:41.034172+00:00",
+  "collection_started_utc": "2026-09-20T07:03:44.555013+00:00",
+  "expected_collection_end_utc": "2026-09-20T07:04:04.555032+00:00",
+  "session_id": "411e6e58-0002-4154-9070-43f8725247f2",
+  "elapsed_seconds": 0.0831148000434041,
+  "counts": {
+    "CLOCK_SAMPLE": 1
+  },
+  "last_books": {},
+  "free_bytes": 150135250944,
+  "collection": {
+    "session_id": "411e6e58-0002-4154-9070-43f8725247f2",
+    "elapsed_seconds": 30.496796100051142,
+    "status": "STOPPED"
+  },
+  "collection_ended_utc": "2026-09-20T07:04:15.259856+00:00",
+  "quality_review_passed": false,
+  "quality_failures": [
+    "5M_ROTATION_NOT_OBSERVED",
+    "DURATION_BELOW_24H",
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "INSUFFICIENT_COVERAGE_15m",
+    "INSUFFICIENT_COVERAGE_5m",
+    "INSUFFICIENT_COVERAGE_BTC",
+    "RECONNECT_NOT_OBSERVED"
+  ],
+  "replay_hashes_equal": true,
+  "final_report": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\preflight_20260920_090339\\FINAL_DATA_QUALITY_REPORT.md",
+  "finished_utc": "2026-09-20T07:04:41.034147+00:00"
+}

@@ -1,0 +1,104 @@
+{
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "source_bytes": 26186612736,
+  "source_mtime_ns": 1789912262643310700,
+  "tables": {
+    "schema_info": {
+      "rows": 1,
+      "bytes": 522,
+      "seconds": 0.007942700060084462,
+      "sha256": "5027d3bbfe95b83a2067730846ef81a19362265f76adbbfa5b45ffcaee4ec006",
+      "reused_from": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\data\\parquet\\schema_info.parquet"
+    },
+    "sessions": {
+      "rows": 1,
+      "bytes": 3755,
+      "seconds": 0.00746290001552552,
+      "sha256": "0ec325c9f3169355aaaa0cf2e03e6921f774315898198ef2a5bf482454464b4d",
+      "reused_from": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\data\\parquet\\sessions.parquet"
+    },
+    "markets": {
+      "rows": 51,
+      "bytes": 31403,
+      "seconds": 0.004729999927803874,
+      "sha256": "5dd71809d8089677cb84410fad2b01e948298033d00142c8ffb8c5c5fd2d93d8",
+      "reused_from": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\data\\parquet\\markets.parquet"
+    },
+    "events": {
+      "rows": 7518713,
+      "bytes": 90953605,
+      "seconds": 403.73172369995154,
+      "sha256": "1cc2c040b00df896badd73f37c5d928980e4ab79f4a8bfc7a87ee734e9eaa840"
+    },
+    "book_sides": {
+      "rows": 14882424,
+      "bytes": 598552060,
+      "seconds": 1227.1126607999904,
+      "sha256": "95899f023e74730e5e5b88f873d4b0e07e45e546c1cd365f07163299019fba96"
+    },
+    "anchors": {
+      "rows": 39690,
+      "bytes": 21510720,
+      "seconds": 6.636671900050715,
+      "sha256": "e90e20a541cae98b26cb61dbca82598c72f89cfb59a99735c480d78c62ca8262"
+    },
+    "hedge_attempts": {
+      "rows": 0,
+      "bytes": 1072,
+      "seconds": 0.01653469994198531,
+      "sha256": "055674177636260d94e3dce027167553c3b8c4683657e0433ae00f4e5464e06e"
+    }
+  },
+  "source_unchanged": true,
+  "historical_audit": "separate, not modified",
+  "dataset_label": "prospective D5 short-window dataset",
+  "is_24h_validation": false,
+  "omissions": {
+    "events.BOOK.payload_json": "Derived export only: redundant snapshot JSON omitted; envelope, identity, full book_sides depths/timestamps/source hashes retained. RAW SQLite untouched."
+  },
+  "sessions": [
+    {
+      "session_id": "83b5cc8a-4592-4676-b28d-3da2ac6d0088",
+      "started_at_ms": 1789901307267,
+      "ended_at_ms": 1789912262122,
+      "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+      "schema_version": 2,
+      "mode": "SHADOW",
+      "status": "FAILED",
+      "config_json": "{\"capital\":500,\"depth_levels\":20,\"mode\":\"SHADOW\",\"reconnect_after\":0,\"seconds\":86520.0,\"strategy\":\"NO_TRADE\"}"
+    }
+  ],
+  "tail_markers": [
+    {
+      "event_id": 7518713,
+      "kind": "SESSION_END",
+      "payload": {
+        "collection_seconds": 10944.725369399996,
+        "collection_stop_ts_ms": 1789912252103,
+        "elapsed_seconds": 10954.743572100066
+      }
+    },
+    {
+      "event_id": 7518712,
+      "kind": "SESSION_END",
+      "payload": {
+        "closed_anchors": 634
+      }
+    },
+    {
+      "event_id": 7518711,
+      "kind": "SESSION_END",
+      "payload": {
+        "closed_anchors": 94
+      }
+    },
+    {
+      "event_id": 7518710,
+      "kind": "COLLECTION_STOP",
+      "payload": {
+        "elapsed_seconds": 10944.725369399996
+      }
+    }
+  ],
+  "source_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd"
+}

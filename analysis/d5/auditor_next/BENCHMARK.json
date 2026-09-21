@@ -1,0 +1,28 @@
+{
+  "synthetic_events": 10000,
+  "production_database_read": false,
+  "runs": [
+    {
+      "auditor": "reference",
+      "seconds": 0.18461420002859086,
+      "sha256_result": "203a2886dcb8be551788c0677e174ca2f24c35c3846f03262abe6679062925dd"
+    },
+    {
+      "auditor": "candidate",
+      "seconds": 0.1627062999177724,
+      "sha256_result": "203a2886dcb8be551788c0677e174ca2f24c35c3846f03262abe6679062925dd"
+    },
+    {
+      "auditor": "candidate",
+      "seconds": 0.1593639999628067,
+      "sha256_result": "203a2886dcb8be551788c0677e174ca2f24c35c3846f03262abe6679062925dd"
+    },
+    {
+      "auditor": "reference",
+      "seconds": 0.18630480009596795,
+      "sha256_result": "203a2886dcb8be551788c0677e174ca2f24c35c3846f03262abe6679062925dd"
+    }
+  ],
+  "results_identical": true,
+  "limitation": "Small synthetic warm-cache benchmark; not a large-dataset runtime prediction."
+}

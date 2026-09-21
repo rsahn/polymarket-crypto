@@ -1,0 +1,27 @@
+[
+  {
+    "proxyWallet": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+    "timestamp": 1789784473,
+    "conditionId": "0x0db45e78351907929439be0933cffa08390336eb783835268bfba120feb0ea2d",
+    "type": "TRADE",
+    "size": 12,
+    "usdcSize": 6.6,
+    "transactionHash": "0x3480d5dac82b6bb66c79d9f8cd821da47f0b694c98404ad344f9b1a19f866a29",
+    "price": 0.55,
+    "asset": "52286048489447115737470810641650319819680663279432009984422772488039279421268",
+    "side": "BUY",
+    "outcomeIndex": 1,
+    "title": "XRP Up or Down - September 18, 10:20PM-10:25PM ET",
+    "slug": "xrp-updown-5m-1789784400",
+    "icon": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+    "eventSlug": "xrp-updown-5m-1789784400",
+    "outcome": "Down",
+    "name": "Bonereaper",
+    "pseudonym": "Popular-Insurrection",
+    "bio": "",
+    "profileImage": "",
+    "profileImageOptimized": "",
+    "_raw_file": "activity_1789781400_1789786799.body",
+    "_raw_index": 307
+  }
+]

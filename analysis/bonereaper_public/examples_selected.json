@@ -1,0 +1,420 @@
+[
+  {
+    "selection_reason": "pair_cost_below_095",
+    "condition_id": "0x7fc425bb7f3dc1290ebc6042e72dffb0a7f52d79d43f896ae4aa815632d25a8f",
+    "market_slug": "btc-updown-5m-1789533600",
+    "market_duration": 300,
+    "market_open_timestamp": 1789533600,
+    "fills": 9,
+    "buy_up_fills": 4,
+    "buy_down_fills": 5,
+    "sell_fills": 0,
+    "both_outcomes_bought": true,
+    "first_leg": "Up",
+    "first_fill_offset": 28,
+    "last_fill_offset": 253,
+    "up_to_down": 2,
+    "down_to_up": 2,
+    "opposite_seconds": [
+      10,
+      50,
+      1,
+      12
+    ],
+    "same_second_mixed_batches": 0,
+    "final_pre_expiry": {
+      "timestamp": 1789533853,
+      "market_slug": "btc-updown-5m-1789533600",
+      "condition_id": "0x7fc425bb7f3dc1290ebc6042e72dffb0a7f52d79d43f896ae4aa815632d25a8f",
+      "market_duration": 300,
+      "up_qty": 428.0,
+      "down_qty": 708.2499999999999,
+      "paired_qty": 428.0,
+      "average_pair_cost": 0.31826798065209694,
+      "average_pair_cost_reported": 0.32997209035037656,
+      "inventory_imbalance": -0.24664466446644653,
+      "imbalance_shares": -280.2499999999999,
+      "trades_in_second": 1,
+      "outcomes": "Up",
+      "buy_qty_up": 348,
+      "buy_qty_down": 0
+    },
+    "min_pair_cost": 0.31826798065209694,
+    "min_pair_cost_reported": 0.32997209035037656,
+    "max_paired_qty": 428.0,
+    "max_abs_imbalance_shares": 628.2499999999999,
+    "max_abs_normalized_imbalance": 1.0,
+    "under_threshold": {
+      "1.0": {
+        "seconds": 225.0,
+        "paired_share_seconds": 33531.0,
+        "max_paired_qty": 428.0,
+        "qty_time_weighted_pair_cost": 0.5709618796888366
+      },
+      "0.99": {
+        "seconds": 225.0,
+        "paired_share_seconds": 33531.0,
+        "max_paired_qty": 428.0,
+        "qty_time_weighted_pair_cost": 0.5709618796888366
+      },
+      "0.98": {
+        "seconds": 225.0,
+        "paired_share_seconds": 33531.0,
+        "max_paired_qty": 428.0,
+        "qty_time_weighted_pair_cost": 0.5709618796888366
+      },
+      "0.95": {
+        "seconds": 110.0,
+        "paired_share_seconds": 24906.0,
+        "max_paired_qty": 428.0,
+        "qty_time_weighted_pair_cost": 0.4333602759683407
+      }
+    },
+    "rebalance_eligible": 8,
+    "rebalance_opposite": 4,
+    "rebalance_reduces": 3,
+    "merges": 0,
+    "redeems": 1,
+    "unknown_inventory_rows": 1,
+    "trades_after_expiry": 0,
+    "cash_reported_last": 521.54273
+  },
+  {
+    "selection_reason": "pair_cost_above_1",
+    "condition_id": "0x969c0ee79a299c13a4e832fce4009491a01e9f65b311853f6a36e87934bf291a",
+    "market_slug": "btc-updown-5m-1789711800",
+    "market_duration": 300,
+    "market_open_timestamp": 1789711800,
+    "fills": 29,
+    "buy_up_fills": 9,
+    "buy_down_fills": 20,
+    "sell_fills": 0,
+    "both_outcomes_bought": true,
+    "first_leg": "Down",
+    "first_fill_offset": 64,
+    "last_fill_offset": 258,
+    "up_to_down": 5,
+    "down_to_up": 5,
+    "opposite_seconds": [
+      21,
+      3,
+      3,
+      6,
+      3,
+      27,
+      18,
+      6,
+      30,
+      9
+    ],
+    "same_second_mixed_batches": 0,
+    "final_pre_expiry": {
+      "timestamp": 1789712058,
+      "market_slug": "btc-updown-5m-1789711800",
+      "condition_id": "0x969c0ee79a299c13a4e832fce4009491a01e9f65b311853f6a36e87934bf291a",
+      "market_duration": 300,
+      "up_qty": 248.92000000000002,
+      "down_qty": 836.909451,
+      "paired_qty": 248.92000000000002,
+      "average_pair_cost": 1.5583560709808988,
+      "average_pair_cost_reported": 1.5715367746495952,
+      "inventory_imbalance": -0.541511791247224,
+      "imbalance_shares": -587.9894509999999,
+      "trades_in_second": 3,
+      "outcomes": "Down",
+      "buy_qty_up": 0,
+      "buy_qty_down": 567.1400000000001
+    },
+    "min_pair_cost": 0.996982788597234,
+    "min_pair_cost_reported": 1.0143706299553776,
+    "max_paired_qty": 248.92000000000002,
+    "max_abs_imbalance_shares": 587.9894509999999,
+    "max_abs_normalized_imbalance": 1.0,
+    "under_threshold": {
+      "1.0": {
+        "seconds": 3.0,
+        "paired_share_seconds": 86.352723,
+        "max_paired_qty": 28.784241,
+        "qty_time_weighted_pair_cost": 0.996982788597234
+      },
+      "0.99": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      },
+      "0.98": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      },
+      "0.95": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      }
+    },
+    "rebalance_eligible": 20,
+    "rebalance_opposite": 13,
+    "rebalance_reduces": 11,
+    "merges": 0,
+    "redeems": 1,
+    "unknown_inventory_rows": 1,
+    "trades_after_expiry": 0,
+    "cash_reported_last": -40.19493200000011
+  },
+  {
+    "selection_reason": "frequent_alternation",
+    "condition_id": "0x36fc5d6055922df626b21f3746b32a8455b83f7bbc72972a518c9df2f8a8b3c1",
+    "market_slug": "btc-updown-5m-1789580700",
+    "market_duration": 300,
+    "market_open_timestamp": 1789580700,
+    "fills": 43,
+    "buy_up_fills": 14,
+    "buy_down_fills": 29,
+    "sell_fills": 0,
+    "both_outcomes_bought": true,
+    "first_leg": "Down",
+    "first_fill_offset": -27,
+    "last_fill_offset": 256,
+    "up_to_down": 10,
+    "down_to_up": 11,
+    "opposite_seconds": [
+      11,
+      31,
+      3,
+      23,
+      3,
+      3,
+      9,
+      3,
+      6,
+      2,
+      2,
+      10,
+      18,
+      4,
+      3,
+      29,
+      9,
+      7,
+      9,
+      14,
+      10
+    ],
+    "same_second_mixed_batches": 0,
+    "final_pre_expiry": {
+      "timestamp": 1789580956,
+      "market_slug": "btc-updown-5m-1789580700",
+      "condition_id": "0x36fc5d6055922df626b21f3746b32a8455b83f7bbc72972a518c9df2f8a8b3c1",
+      "market_duration": 300,
+      "up_qty": 1000.775,
+      "down_qty": 2158.039224,
+      "paired_qty": 1000.775,
+      "average_pair_cost": 0.9385159383702415,
+      "average_pair_cost_reported": 0.9638230873459339,
+      "inventory_imbalance": -0.366360330787215,
+      "imbalance_shares": -1157.264224,
+      "trades_in_second": 1,
+      "outcomes": "Up",
+      "buy_qty_up": 177,
+      "buy_qty_down": 0
+    },
+    "min_pair_cost": 0.9385159383702415,
+    "min_pair_cost_reported": 0.9638230873459339,
+    "max_paired_qty": 1000.775,
+    "max_abs_imbalance_shares": 1334.264224,
+    "max_abs_normalized_imbalance": 1.0,
+    "under_threshold": {
+      "1.0": {
+        "seconds": 44.0,
+        "paired_share_seconds": 44034.1,
+        "max_paired_qty": 1000.775,
+        "qty_time_weighted_pair_cost": 0.9385159383702415
+      },
+      "0.99": {
+        "seconds": 44.0,
+        "paired_share_seconds": 44034.1,
+        "max_paired_qty": 1000.775,
+        "qty_time_weighted_pair_cost": 0.9385159383702415
+      },
+      "0.98": {
+        "seconds": 44.0,
+        "paired_share_seconds": 44034.1,
+        "max_paired_qty": 1000.775,
+        "qty_time_weighted_pair_cost": 0.9385159383702415
+      },
+      "0.95": {
+        "seconds": 44.0,
+        "paired_share_seconds": 44034.1,
+        "max_paired_qty": 1000.775,
+        "qty_time_weighted_pair_cost": 0.9385159383702415
+      }
+    },
+    "rebalance_eligible": 36,
+    "rebalance_opposite": 12,
+    "rebalance_reduces": 12,
+    "merges": 0,
+    "redeems": 1,
+    "unknown_inventory_rows": 1,
+    "trades_after_expiry": 0,
+    "cash_reported_last": 761.0629799999999
+  },
+  {
+    "selection_reason": "merge",
+    "condition_id": "0xbf545c18a3081a082ac520f21efca113cb42b24755dea36b92bc6b88f11c2fb7",
+    "market_slug": "btc-updown-5m-1789845000",
+    "market_duration": 300,
+    "market_open_timestamp": 1789845000,
+    "fills": 11,
+    "buy_up_fills": 2,
+    "buy_down_fills": 9,
+    "sell_fills": 0,
+    "both_outcomes_bought": true,
+    "first_leg": "Down",
+    "first_fill_offset": -22,
+    "last_fill_offset": 245,
+    "up_to_down": 1,
+    "down_to_up": 1,
+    "opposite_seconds": [
+      94,
+      30
+    ],
+    "same_second_mixed_batches": 0,
+    "final_pre_expiry": {
+      "timestamp": 1789845245,
+      "market_slug": "btc-updown-5m-1789845000",
+      "condition_id": "0xbf545c18a3081a082ac520f21efca113cb42b24755dea36b92bc6b88f11c2fb7",
+      "market_duration": 300,
+      "up_qty": 10.986298999999999,
+      "down_qty": 289.0,
+      "paired_qty": 10.986298999999999,
+      "average_pair_cost": 1.0011809933993354,
+      "average_pair_cost_reported": 1.0086635193857538,
+      "inventory_imbalance": -0.9267546615520599,
+      "imbalance_shares": -278.013701,
+      "trades_in_second": 3,
+      "outcomes": "Down",
+      "buy_qty_up": 0,
+      "buy_qty_down": 130.0
+    },
+    "min_pair_cost": 0.7007692553103655,
+    "min_pair_cost_reported": 0.7044696399606805,
+    "max_paired_qty": 10.986298999999999,
+    "max_abs_imbalance_shares": 278.013701,
+    "max_abs_normalized_imbalance": 1.0,
+    "under_threshold": {
+      "1.0": {
+        "seconds": 173.0,
+        "paired_share_seconds": 1897.8900029999995,
+        "max_paired_qty": 10.986298999999999,
+        "qty_time_weighted_pair_cost": 0.7534660841443317
+      },
+      "0.99": {
+        "seconds": 173.0,
+        "paired_share_seconds": 1897.8900029999995,
+        "max_paired_qty": 10.986298999999999,
+        "qty_time_weighted_pair_cost": 0.7534660841443317
+      },
+      "0.98": {
+        "seconds": 173.0,
+        "paired_share_seconds": 1897.8900029999995,
+        "max_paired_qty": 10.986298999999999,
+        "qty_time_weighted_pair_cost": 0.7534660841443317
+      },
+      "0.95": {
+        "seconds": 173.0,
+        "paired_share_seconds": 1897.8900029999995,
+        "max_paired_qty": 10.986298999999999,
+        "qty_time_weighted_pair_cost": 0.7534660841443317
+      }
+    },
+    "rebalance_eligible": 8,
+    "rebalance_opposite": 2,
+    "rebalance_reduces": 2,
+    "merges": 1,
+    "redeems": 2,
+    "unknown_inventory_rows": 2,
+    "trades_after_expiry": 0,
+    "cash_reported_last": 72.55994900000005
+  },
+  {
+    "selection_reason": "paired_15m_counterexample",
+    "condition_id": "0x8441d8daa8e64ce28cccb6ed7c899642a14da96287b089d40aa1c4128f57ed5c",
+    "market_slug": "btc-updown-15m-1789755300",
+    "market_duration": 900,
+    "market_open_timestamp": 1789755300,
+    "fills": 3,
+    "buy_up_fills": 2,
+    "buy_down_fills": 1,
+    "sell_fills": 0,
+    "both_outcomes_bought": true,
+    "first_leg": "Down",
+    "first_fill_offset": -24,
+    "last_fill_offset": -17,
+    "up_to_down": 0,
+    "down_to_up": 1,
+    "opposite_seconds": [
+      6
+    ],
+    "same_second_mixed_batches": 0,
+    "final_pre_expiry": {
+      "timestamp": 1789755283,
+      "market_slug": "btc-updown-15m-1789755300",
+      "condition_id": "0x8441d8daa8e64ce28cccb6ed7c899642a14da96287b089d40aa1c4128f57ed5c",
+      "market_duration": 900,
+      "up_qty": 107.0,
+      "down_qty": 97.0,
+      "paired_qty": 97.0,
+      "average_pair_cost": 1.0312149532710282,
+      "average_pair_cost_reported": 1.0661756065131516,
+      "inventory_imbalance": 0.049019607843137254,
+      "imbalance_shares": 10.0,
+      "trades_in_second": 1,
+      "outcomes": "Up",
+      "buy_qty_up": 13,
+      "buy_qty_down": 0
+    },
+    "min_pair_cost": 1.03,
+    "min_pair_cost_reported": 1.0649649045843388,
+    "max_paired_qty": 97.0,
+    "max_abs_imbalance_shares": 97.0,
+    "max_abs_normalized_imbalance": 1.0,
+    "under_threshold": {
+      "1.0": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      },
+      "0.99": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      },
+      "0.98": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      },
+      "0.95": {
+        "seconds": 0.0,
+        "paired_share_seconds": 0.0,
+        "max_paired_qty": 0.0,
+        "qty_time_weighted_pair_cost": null
+      }
+    },
+    "rebalance_eligible": 2,
+    "rebalance_opposite": 2,
+    "rebalance_reduces": 1,
+    "merges": 0,
+    "redeems": 1,
+    "unknown_inventory_rows": 1,
+    "trades_after_expiry": 0,
+    "cash_reported_last": -1.8058599999999956
+  }
+]

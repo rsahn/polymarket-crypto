@@ -1,0 +1,38 @@
+[
+  {
+    "suite": "analysis/d5/auditor_next",
+    "exit_code": 0,
+    "seconds": 10.623643100028858,
+    "log": "analysis_d5_auditor_next_tests.log"
+  },
+  {
+    "suite": "analysis/d6/tests",
+    "exit_code": 0,
+    "seconds": 0.2695553000085056,
+    "log": "analysis_d6_tests_tests.log"
+  },
+  {
+    "suite": "analysis/d6/pipeline",
+    "exit_code": 0,
+    "seconds": 7.709925900097005,
+    "log": "analysis_d6_pipeline_tests.log"
+  },
+  {
+    "suite": "analysis/d6/research",
+    "exit_code": 0,
+    "seconds": 2.1027778000570834,
+    "log": "analysis_d6_research_tests.log"
+  },
+  {
+    "suite": "analysis/d6/paper_runtime",
+    "exit_code": 0,
+    "seconds": 1.174935800023377,
+    "log": "analysis_d6_paper_runtime_tests.log"
+  },
+  {
+    "suite": "analysis",
+    "exit_code": 0,
+    "seconds": 1.7379510999890044,
+    "log": "analysis_tests.log"
+  }
+]

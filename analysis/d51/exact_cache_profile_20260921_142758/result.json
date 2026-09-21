@@ -1,0 +1,86 @@
+{
+  "cache_hits": 178735,
+  "cache_misses": 131009,
+  "candidate_sha256": "5cc3ac0e3bd1d8bb57905278875a5a18472a7eb5cfdf0d9c1e8387f9c3c157fb",
+  "technical_only": true,
+  "not_D6": true,
+  "not_a_quality_smoke": true,
+  "profile_overhead_present": false,
+  "frames": 77477,
+  "seconds": 44.15917240001727,
+  "frames_per_second": 1754.4939315930137,
+  "timing_seconds": {
+    "parse": 1.1204961052862927,
+    "normalize": 11.606445006444119,
+    "observer_and_store": 27.166406298056245
+  },
+  "stage_counters": {
+    "5m:parse": {
+      "calls": 57052,
+      "wall_ns": 851221300,
+      "cpu_ns": 828125000,
+      "max_wall_ns": 4215500,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "5m:normalize": {
+      "calls": 57052,
+      "wall_ns": 8597896000,
+      "cpu_ns": 8281250000,
+      "max_wall_ns": 39453100,
+      "over_5ms": 4,
+      "over_50ms": 0
+    },
+    "5m:observer_and_store": {
+      "calls": 57052,
+      "wall_ns": 20067535200,
+      "cpu_ns": 19125000000,
+      "max_wall_ns": 8660900,
+      "over_5ms": 8,
+      "over_50ms": 0
+    },
+    "15m:parse": {
+      "calls": 20425,
+      "wall_ns": 290740300,
+      "cpu_ns": 281250000,
+      "max_wall_ns": 398600,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "15m:normalize": {
+      "calls": 20425,
+      "wall_ns": 3045268600,
+      "cpu_ns": 3046875000,
+      "max_wall_ns": 6667600,
+      "over_5ms": 1,
+      "over_50ms": 0
+    },
+    "15m:observer_and_store": {
+      "calls": 20425,
+      "wall_ns": 7151176000,
+      "cpu_ns": 7687500000,
+      "max_wall_ns": 17803500,
+      "over_5ms": 5,
+      "over_50ms": 0
+    },
+    "commit": {
+      "calls": 118,
+      "wall_ns": 3120107600,
+      "cpu_ns": 2078125000,
+      "max_wall_ns": 68871200,
+      "over_5ms": 91,
+      "over_50ms": 20
+    }
+  },
+  "capture_span_seconds": 59.6826452,
+  "counts": {
+    "ACTIVATE": 2,
+    "BOOK": 77436,
+    "REJECT": 41
+  },
+  "source_hashes": {
+    "5m_raw.jsonl": "3a61eaf67b01eca1c8cf47b43ce85f6b36b8060d07cec18da079a07418c63808",
+    "15m_raw.jsonl": "0dfb946476d2810fe76df6a3193ea52c0b0fd70a7284980d7b90bab865acd35e"
+  },
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:835b1a419e783673db86432443c234a518225f0e8a4dfb19c6f71985872b5b3f"
+}

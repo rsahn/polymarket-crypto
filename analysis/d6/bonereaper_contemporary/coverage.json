@@ -1,0 +1,26 @@
+{
+  "address": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+  "begin_ms": 1789901307240,
+  "end_ms": 1789912252103,
+  "windows": [
+    {
+      "start": 1789901307,
+      "end": 1789906779,
+      "rows": 272,
+      "raw": "activity_1789901307_1789906779.body"
+    },
+    {
+      "start": 1789906780,
+      "end": 1789912252,
+      "rows": 283,
+      "raw": "activity_1789906780_1789912252.body"
+    }
+  ],
+  "raw_rows": 555,
+  "unique_rows": 555,
+  "btc_rows": 345,
+  "inventory_initial": "UNKNOWN",
+  "margin_seconds": 0,
+  "api_second_precision_preserved": true,
+  "identity_unverified": 0
+}

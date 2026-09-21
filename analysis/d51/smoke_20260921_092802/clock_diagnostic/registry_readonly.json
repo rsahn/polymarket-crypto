@@ -1,0 +1,18 @@
+{
+  "client": {
+    "SpecialPollInterval": 32768,
+    "Enabled": 1
+  },
+  "parameters": {
+    "Type": "NTP",
+    "NtpServer": "time.windows.com,0x9"
+  },
+  "captured_utc": "2026-09-21T07:46:05.4425913Z",
+  "config": {
+    "MinPollInterval": 10,
+    "MaxPollInterval": 15,
+    "HoldPeriod": 5,
+    "SpikeWatchPeriod": 900,
+    "LargePhaseOffset": 50000000
+  }
+}

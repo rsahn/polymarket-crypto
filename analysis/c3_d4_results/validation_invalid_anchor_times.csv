@@ -1,0 +1,2 @@
+id,anchor_ts_ms,market_slug,condition_id,market_duration,direction,market_start_ms,market_end_ms
+212800,1789821000142,btc-updown-5m-1789820700,0xe840af8d4044cd6d3ef330dd914ef49681c4efcd9c346d2c33f6d06dbe4ba93c,5m,DOWN->UP,1789820700000,1789821000000

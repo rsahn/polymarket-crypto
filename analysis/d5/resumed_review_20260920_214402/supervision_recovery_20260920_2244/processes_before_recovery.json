@@ -1,0 +1,38 @@
+[
+  {
+    "ProcessId": 17140,
+    "ParentProcessId": 20232,
+    "CreationDate": "2026-09-20T19:12:27.818854+02:00",
+    "CommandLine": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe -B C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\paper_runtime\\dashboard_server.py"
+  },
+  {
+    "ProcessId": 5328,
+    "ParentProcessId": 17140,
+    "CreationDate": "2026-09-20T19:12:27.87488+02:00",
+    "CommandLine": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe -B C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\paper_runtime\\dashboard_server.py"
+  },
+  {
+    "ProcessId": 3440,
+    "ParentProcessId": 16984,
+    "CreationDate": "2026-09-20T21:44:02.648298+02:00",
+    "CommandLine": "\"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe\" -B -u analysis\\d5\\auditor_next\\tuned_review.py --db data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db --out analysis\\d5\\resumed_review_20260920_214402 --session 83b5cc8a-4592-4676-b28d-3da2ac6d0088 --reuse-review analysis\\d5\\full_review_20260920_201805 --alert-seconds 3600"
+  },
+  {
+    "ProcessId": 14672,
+    "ParentProcessId": 3440,
+    "CreationDate": "2026-09-20T21:44:02.735621+02:00",
+    "CommandLine": "\"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe\" -B -u analysis\\d5\\auditor_next\\tuned_review.py --db data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db --out analysis\\d5\\resumed_review_20260920_214402 --session 83b5cc8a-4592-4676-b28d-3da2ac6d0088 --reuse-review analysis\\d5\\full_review_20260920_201805 --alert-seconds 3600"
+  },
+  {
+    "ProcessId": 4816,
+    "ParentProcessId": 17340,
+    "CreationDate": "2026-09-20T22:12:07.35403+02:00",
+    "CommandLine": "\"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe\" -B analysis\\d5\\auditor_next\\supervisor_progress_server.py"
+  },
+  {
+    "ProcessId": 20004,
+    "ParentProcessId": 4816,
+    "CreationDate": "2026-09-20T22:12:07.433629+02:00",
+    "CommandLine": "\"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe\" -B analysis\\d5\\auditor_next\\supervisor_progress_server.py"
+  }
+]

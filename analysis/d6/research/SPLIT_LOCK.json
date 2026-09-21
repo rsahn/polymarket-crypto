@@ -1,0 +1,448 @@
+{
+  "frozen_utc": "2026-09-20T17:19:22.010568+00:00",
+  "before_result_analysis": true,
+  "dataset": "prospective D5 short-window dataset",
+  "metadata_markets": {
+    "5m": 38,
+    "15m": 13
+  },
+  "cuts_utc": [
+    "2026-09-20T12:15:00Z",
+    "2026-09-20T13:00:00Z"
+  ],
+  "counts": {
+    "15m:EXCLUDED_PARTIAL": 2,
+    "15m:OOS_LOCKED": 3,
+    "15m:TRAIN": 5,
+    "15m:VALIDATION": 3,
+    "5m:EXCLUDED_PARTIAL": 2,
+    "5m:OOS_LOCKED": 10,
+    "5m:TRAIN": 17,
+    "5m:VALIDATION": 9
+  },
+  "oos_opened": false,
+  "oos_minimum_complete_markets_per_duration": 30,
+  "oos_insufficient": true,
+  "primary_oos": "future PAPER24h if safety and explicit authorization gates pass",
+  "candidate_policy": "Fixed engine.py initial deterministic score; no parameter grid; latency250ms chosen before results; sensitivities0/100/500",
+  "sensitivity_not_selection": true,
+  "bonereaper_time_budget_ms": 100,
+  "api_semantics": "Contextual association strictly before bin_start-100ms; not proof of information available before actual trader decision",
+  "unknown_inventory": [
+    "H1",
+    "H2",
+    "H3",
+    "H6",
+    "H8 cash dependency"
+  ],
+  "markets": [
+    {
+      "condition_id": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+      "market_slug": "btc-updown-15m-1789901100",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789902000000,
+      "start_ms": 1789901100000,
+      "split": "EXCLUDED_PARTIAL"
+    },
+    {
+      "condition_id": "0xf98963f587a3f1ca3d22b5edc2272954b4489492e162caf4577cbd0da50d5ea2",
+      "market_slug": "btc-updown-5m-1789901100",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789901400000,
+      "start_ms": 1789901100000,
+      "split": "EXCLUDED_PARTIAL"
+    },
+    {
+      "condition_id": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+      "market_slug": "btc-updown-5m-1789901400",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789901700000,
+      "start_ms": 1789901400000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+      "market_slug": "btc-updown-5m-1789901700",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789902000000,
+      "start_ms": 1789901700000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x493a8563e108a795db0e1b8c91af1d7d46380688bd5bd2e491948a7cbde61fb9",
+      "market_slug": "btc-updown-15m-1789902000",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789902900000,
+      "start_ms": 1789902000000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+      "market_slug": "btc-updown-5m-1789902000",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789902300000,
+      "start_ms": 1789902000000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+      "market_slug": "btc-updown-5m-1789902300",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789902600000,
+      "start_ms": 1789902300000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+      "market_slug": "btc-updown-5m-1789902600",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789902900000,
+      "start_ms": 1789902600000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+      "market_slug": "btc-updown-15m-1789902900",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789903800000,
+      "start_ms": 1789902900000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+      "market_slug": "btc-updown-5m-1789902900",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789903200000,
+      "start_ms": 1789902900000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x684c22e97675e874c7133a44c37899807f27d10df0df78d47360ddf46114ab91",
+      "market_slug": "btc-updown-5m-1789903200",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789903500000,
+      "start_ms": 1789903200000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x3775f824276626dd936ad2f5c4bedefe87320c0ce1d2c0d4070ec4aece9d0220",
+      "market_slug": "btc-updown-5m-1789903500",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789903800000,
+      "start_ms": 1789903500000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x90a7ed28c2fbcae0a0a47b4e801c0b9b31e58d458fa106bc43d94809f415e8e0",
+      "market_slug": "btc-updown-15m-1789903800",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789904700000,
+      "start_ms": 1789903800000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xb31ea77e7874b3df0987bc0a79ef39d91a0ab2f197fc0e800e8676101806c7ad",
+      "market_slug": "btc-updown-5m-1789903800",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789904100000,
+      "start_ms": 1789903800000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xf53d0b43c8f6b4e6e78075677418c22a4a50d871179e3d7695b85387f91aaae8",
+      "market_slug": "btc-updown-5m-1789904100",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789904400000,
+      "start_ms": 1789904100000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x4536f9149b335e7ae41834518f3c0508a16272fc6ec7b41cf5ae0b64df3d51fe",
+      "market_slug": "btc-updown-5m-1789904400",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789904700000,
+      "start_ms": 1789904400000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xbff675bc570273c77f795775ef47ace4c84e68b66f434184e8cef993b3184511",
+      "market_slug": "btc-updown-15m-1789904700",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789905600000,
+      "start_ms": 1789904700000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xe28fe2670424af788f7517c3d487723dbd8757cea552c7f6c3c8d11708dfe09a",
+      "market_slug": "btc-updown-5m-1789904700",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789905000000,
+      "start_ms": 1789904700000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x3d5d4aca828cbcf6606f7f2798de0513101f86ecb2ab6c0b48f2b4aad80ee66a",
+      "market_slug": "btc-updown-5m-1789905000",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789905300000,
+      "start_ms": 1789905000000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x74d830fa582e469319d94335f4388ae2a401a8ef3d9a9c6ff48294cb325eadc3",
+      "market_slug": "btc-updown-5m-1789905300",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789905600000,
+      "start_ms": 1789905300000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x09bec6bea3ae3fc604ba08e15acf86cc4d7d1e5c37a80cb3a89acd3bcc5e87a0",
+      "market_slug": "btc-updown-15m-1789905600",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789906500000,
+      "start_ms": 1789905600000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xc7d21c39ec35d9af63c4a177c704e463a04da3f184c3533e04ef3dea86108961",
+      "market_slug": "btc-updown-5m-1789905600",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789905900000,
+      "start_ms": 1789905600000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0x56653ff5cd55ba0cf569dff7280a58244e6b44a40445c7b8256edfe04c604f33",
+      "market_slug": "btc-updown-5m-1789905900",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789906200000,
+      "start_ms": 1789905900000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xa3e35133594fe2e3cb4f100df79906b39c347eba2d925510149a1bca58a0088e",
+      "market_slug": "btc-updown-5m-1789906200",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789906500000,
+      "start_ms": 1789906200000,
+      "split": "TRAIN"
+    },
+    {
+      "condition_id": "0xbd38c9fb589ad4504de8afdf955cfd7976b8724f07683c57dd3a0194ed94c603",
+      "market_slug": "btc-updown-15m-1789906500",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789907400000,
+      "start_ms": 1789906500000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x584c9f8a528c063432097c134254972cb492e6b5a15b3821e1944433b8a0ebb2",
+      "market_slug": "btc-updown-5m-1789906500",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789906800000,
+      "start_ms": 1789906500000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x1091035b0ff5b7835b0a270afcb7163a03b75b773c9e4aac9f7ea76195f0389b",
+      "market_slug": "btc-updown-5m-1789906800",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789907100000,
+      "start_ms": 1789906800000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0xb578dc0b2b1913c0eccbde941a5029db009cc1172197aa3583e6d78b346fede9",
+      "market_slug": "btc-updown-5m-1789907100",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789907400000,
+      "start_ms": 1789907100000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x7521fccf208ccedc1cb3420047e5abef4da8e896cee27685d754d9892b82baac",
+      "market_slug": "btc-updown-15m-1789907400",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789908300000,
+      "start_ms": 1789907400000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x42d289db925931353ee74dec0491ed0a7ecfeae8c01c4fcf383c71b96ac0cb56",
+      "market_slug": "btc-updown-5m-1789907400",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789907700000,
+      "start_ms": 1789907400000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x7b6eb32ea019be1abc0bcdcc28dc4c2dcd7a36614cba0c94b1bad08f08a6711f",
+      "market_slug": "btc-updown-5m-1789907700",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789908000000,
+      "start_ms": 1789907700000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x9d932adaa757d8690948f144415be9e7e398a61364e774083894d2a548af44be",
+      "market_slug": "btc-updown-5m-1789908000",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789908300000,
+      "start_ms": 1789908000000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x6002f742ff42f68e60335b6ff62a2e54b5f0d8c3661310f7833f5ea4e03e1580",
+      "market_slug": "btc-updown-15m-1789908300",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789909200000,
+      "start_ms": 1789908300000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x738d47ec945d30df75938dfced673d92be37e4f9ea586862f4366d46deda3177",
+      "market_slug": "btc-updown-5m-1789908300",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789908600000,
+      "start_ms": 1789908300000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x7d466fa8be9b0c52bf98c18a25b9aa36da877fc3415fbd8e9d72cd17a687cb5f",
+      "market_slug": "btc-updown-5m-1789908600",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789908900000,
+      "start_ms": 1789908600000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x8d15bbe15c9b379a380d67460209221717db0e8818515a327079a7a94d91da19",
+      "market_slug": "btc-updown-5m-1789908900",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789909200000,
+      "start_ms": 1789908900000,
+      "split": "VALIDATION"
+    },
+    {
+      "condition_id": "0x220d9c9018f54eef1aef87117aba44af511a6a063de28d363ba325412454d07c",
+      "market_slug": "btc-updown-15m-1789909200",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789910100000,
+      "start_ms": 1789909200000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xf49ce1056c2b23c0daba295fb44d4306d1df7d7505be6870e6943dee36fca01a",
+      "market_slug": "btc-updown-5m-1789909200",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789909500000,
+      "start_ms": 1789909200000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xf7e86a8db764d7095cf53ae563bf4bdc6cfcc6e15e7f90a563683b11770f7313",
+      "market_slug": "btc-updown-5m-1789909500",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789909800000,
+      "start_ms": 1789909500000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x52374acdf615ee4972f8ce252173caf24b3a7b5a159cd3841397146745d966f4",
+      "market_slug": "btc-updown-5m-1789909800",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789910100000,
+      "start_ms": 1789909800000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xb7ad5fb9ef41710ce94f55c566ed8f956ce3771e42b0a8988f9cd8089fefe412",
+      "market_slug": "btc-updown-15m-1789910100",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789911000000,
+      "start_ms": 1789910100000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xf9760487344bd6f0889ddb8b5a8131b00fa2fe56bf6dfeb6c98d1b2decc27dc2",
+      "market_slug": "btc-updown-5m-1789910100",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789910400000,
+      "start_ms": 1789910100000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xfeecc5fba9051aa4bf1f6612755debca04af01d1fb8a1a9369316e69f1c2ee89",
+      "market_slug": "btc-updown-5m-1789910400",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789910700000,
+      "start_ms": 1789910400000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xe933101b7e433cbb510ea66be31e7fbf540eae8d54783ea83cd788c72f694666",
+      "market_slug": "btc-updown-5m-1789910700",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789911000000,
+      "start_ms": 1789910700000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x3e04914a88c74f31c41b8df88be7aadec583ac96fefb3becaaf54d4bdbae37c4",
+      "market_slug": "btc-updown-15m-1789911000",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789911900000,
+      "start_ms": 1789911000000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x1d7fffd9878da4dfaf0339678a8d9445f48cdd97532661388cb7c1180a2131e6",
+      "market_slug": "btc-updown-5m-1789911000",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789911300000,
+      "start_ms": 1789911000000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x673a4ad980f35e995e40def05b49c378880f7d0334d42e2004acc31157216564",
+      "market_slug": "btc-updown-5m-1789911300",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789911600000,
+      "start_ms": 1789911300000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0xd2bdd9b056105707847762bb787aae3d67d4a3cf39d55f410bc4357395ff2ee5",
+      "market_slug": "btc-updown-5m-1789911600",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789911900000,
+      "start_ms": 1789911600000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x3c80983474a747de6c6e46243ad1573850670a568a05ad0de17a816569a1b324",
+      "market_slug": "btc-updown-15m-1789911900",
+      "market_duration": "15m",
+      "expiry_ts_ms": 1789912800000,
+      "start_ms": 1789911900000,
+      "split": "EXCLUDED_PARTIAL"
+    },
+    {
+      "condition_id": "0x102f362b78e92dd22d855d867498604a18254a582fc04be1ebf8a2510f5aff8d",
+      "market_slug": "btc-updown-5m-1789911900",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789912200000,
+      "start_ms": 1789911900000,
+      "split": "OOS_LOCKED"
+    },
+    {
+      "condition_id": "0x173ca21d4eabbc8017b77915126ca71ea2c29e0d987382faa8ee39aab8a9da36",
+      "market_slug": "btc-updown-5m-1789912200",
+      "market_duration": "5m",
+      "expiry_ts_ms": 1789912500000,
+      "start_ms": 1789912200000,
+      "split": "EXCLUDED_PARTIAL"
+    }
+  ]
+}

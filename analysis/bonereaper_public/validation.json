@@ -1,0 +1,13 @@
+{
+  "raw_rows": 92638,
+  "unique_operations": 92637,
+  "duplicate_candidates": 1,
+  "crosscheck_trades_rows": 500,
+  "crosscheck_exact_matches": 500,
+  "btc_missing_token_ids": 0,
+  "btc_missing_hash": 0,
+  "btc_before_redeem_invalid_inventory": 0,
+  "time_order_nondecreasing": true,
+  "analysis_start": "2026-09-13T00:00:00+00:00",
+  "analysis_end_exclusive": "2026-09-20T00:00:00+00:00"
+}

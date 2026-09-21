@@ -1,0 +1,57 @@
+{
+  "scope": "Bounded read-only probe over event_id 1..60000; not an audit result and not a full integrity runtime estimate",
+  "sql": "SELECT count(*),sum(b.token_id != CASE WHEN b.side='UP' THEN e.token_up ELSE e.token_down END) FROM book_sides b JOIN events e USING(event_id) WHERE b.event_id BETWEEN 1 AND 60000",
+  "results": [
+    {
+      "cache_kib": 2000,
+      "seconds": 1.0476896000327542,
+      "cpu_seconds": 0.265625,
+      "result": [
+        [
+          118896,
+          0
+        ]
+      ]
+    },
+    {
+      "cache_kib": 131072,
+      "seconds": 0.41989599994849414,
+      "cpu_seconds": 0.421875,
+      "result": [
+        [
+          118896,
+          0
+        ]
+      ]
+    },
+    {
+      "cache_kib": 131072,
+      "seconds": 0.42472019989509135,
+      "cpu_seconds": 0.40625,
+      "result": [
+        [
+          118896,
+          0
+        ]
+      ]
+    },
+    {
+      "cache_kib": 2000,
+      "seconds": 0.3672513000201434,
+      "cpu_seconds": 0.34375,
+      "result": [
+        [
+          118896,
+          0
+        ]
+      ]
+    }
+  ],
+  "source_stat_unchanged": true,
+  "equivalent": true,
+  "median_seconds": {
+    "2000": 0.7074704500264488,
+    "131072": 0.42230809992179275
+  },
+  "probe_speedup": 1.6752471718100252
+}

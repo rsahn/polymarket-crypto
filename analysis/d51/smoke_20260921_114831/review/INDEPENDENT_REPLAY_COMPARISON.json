@@ -1,0 +1,23 @@
+{
+  "checked_utc": "2026-09-21T10:46:15.631016+00:00",
+  "event_counts": [
+    1366126,
+    1366126
+  ],
+  "decision_hashes": [
+    "422e893ebbcef9144a3c82ebb58ab8611918953285a9e4d6e44a1db34b903120",
+    "422e893ebbcef9144a3c82ebb58ab8611918953285a9e4d6e44a1db34b903120"
+  ],
+  "result_hashes": [
+    "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b",
+    "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b"
+  ],
+  "recomputed_result_hashes": [
+    "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b",
+    "f029be0b486dfacc53c4c44a383b32a851b1043204916737445bf4b2928f9b9b"
+  ],
+  "complete_results_equal": true,
+  "decision_hashes_equal": true,
+  "result_hashes_verified": true,
+  "quality_gate_not_inferred_from_replay": true
+}

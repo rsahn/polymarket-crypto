@@ -1,0 +1,44 @@
+{
+  "captured_utc": "2026-09-20T09:43:44.821562+00:00",
+  "wall_ns": 1789897424821581400,
+  "monotonic_ns": 928865980025600,
+  "commands": [
+    {
+      "command": [
+        "w32tm",
+        "/query",
+        "/status",
+        "/verbose"
+      ],
+      "exit_code": 0,
+      "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0420960s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 9055.0787662s\n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "w32tm",
+        "/stripchart",
+        "/computer:time.windows.com",
+        "/samples:3",
+        "/period:1",
+        "/dataonly"
+      ],
+      "exit_code": 0,
+      "stdout": "Suivi de time.windows.com [51.145.123.29:123].\nCollecte de 3 \u201achantillons.\nL'heure actuelle est 20/09/2026 11:43:44.\n11:43:44, +00.0636550s\n11:43:45, +00.0644539s\n11:43:46, +00.0598642s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "w32tm",
+        "/stripchart",
+        "/computer:time.cloudflare.com",
+        "/samples:3",
+        "/period:1",
+        "/dataonly"
+      ],
+      "exit_code": 0,
+      "stdout": "Suivi de time.cloudflare.com [162.159.200.1:123].\nCollecte de 3 \u201achantillons.\nL'heure actuelle est 20/09/2026 11:43:47.\n11:43:47, +00.0652415s\n11:43:48, +00.0628103s\n11:43:49, +00.0650434s\n",
+      "stderr": ""
+    }
+  ]
+}

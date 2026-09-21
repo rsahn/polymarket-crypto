@@ -1,0 +1,13 @@
+{
+  "tests": {
+    "test_atomic_status": 3,
+    "test_post_supervisor": 1,
+    "test_provenance": 2,
+    "test_timestamp_supplement": 3
+  },
+  "total_passed": 9,
+  "failed": 0,
+  "runner": "python -B -m unittest discover -s analysis/d5/auditor_next -p TEST_FILE -v",
+  "database_used": "isolated synthetic fixtures only",
+  "live_db_modified": false
+}

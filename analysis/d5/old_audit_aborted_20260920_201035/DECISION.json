@@ -1,0 +1,7 @@
+{
+  "captured_utc": "2026-09-20T18:10:35.2869746Z",
+  "authorized_pid": 12408,
+  "old_results_not_validation": true,
+  "method": "Targeted process termination; not a successful or cooperative audit completion",
+  "decision": "OLD_AUDIT_ABORTED_BY_USER_FOR_PERFORMANCE"
+}

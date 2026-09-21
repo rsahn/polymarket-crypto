@@ -1,0 +1,12 @@
+{
+  "mode": "eager",
+  "synthetic": true,
+  "book_events": 2000,
+  "btc_ticks_retained": 1800,
+  "feature_calls": 2000,
+  "seconds": 2.185237900004722,
+  "events_per_second": 915.2321584737654,
+  "anchor_count": 4,
+  "anchor_features_sha256": "2937c0372849663fc5c3ee351fc0eef14d9406299d3f2f2f3e15fd41eb7970b6",
+  "captured_utc": "2026-09-21T09:43:49.771985+00:00"
+}

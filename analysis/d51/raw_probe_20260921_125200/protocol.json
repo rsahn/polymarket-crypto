@@ -1,0 +1,10 @@
+{
+  "diagnostic_only": true,
+  "seconds": 60,
+  "reconnect": false,
+  "normalization": false,
+  "sqlite": false,
+  "source_DB_untouched": true,
+  "raw_receipt_preserved": true,
+  "script_sha256": "5c4d0191d10f57a7ef0532250833fe514546e2b31a7fa3e1113ae0eac59672f0"
+}

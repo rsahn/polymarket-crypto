@@ -1,0 +1,2352 @@
+{
+  "captured_utc": "2026-09-21T09:37:40.754695+00:00",
+  "read_only": true,
+  "source_stat_unchanged": true,
+  "collection_stop": {
+    "event_id": 818482,
+    "session_id": "e651bb61-7874-4136-93dc-7a8f8020d101",
+    "kind": "COLLECTION_STOP",
+    "event_ts_ms": null,
+    "received_ts_ms": 1789981695748,
+    "available_ts_ms": 1789981695748,
+    "market_duration": null,
+    "market_slug": null,
+    "condition_id": null,
+    "token_up": null,
+    "token_down": null,
+    "generation": null
+  },
+  "late_events_exact_within_tail512": 202,
+  "late_kinds": {
+    "BOOK": 202
+  },
+  "late_first_last_ids": [
+    818483,
+    818685
+  ],
+  "late_received_range": [
+    1789981695750,
+    1789981696536
+  ],
+  "sample_note": "Deterministic PK ranges 25 rows every100000 IDs; not population statistics",
+  "samples": [
+    {
+      "event_id": 4,
+      "duration": "15m",
+      "received_ms": 1789980374694,
+      "source_state_ms": 1789980374664,
+      "wire_ms": 1789980374664,
+      "wire_age_ms": 30,
+      "state_age_ms": 30,
+      "wire_event_type": [
+        "book",
+        "book"
+      ]
+    },
+    {
+      "event_id": 5,
+      "duration": "15m",
+      "received_ms": 1789980374702,
+      "source_state_ms": 1789980374683,
+      "wire_ms": 1789980374683,
+      "wire_age_ms": 19,
+      "state_age_ms": 19,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 6,
+      "duration": "15m",
+      "received_ms": 1789980374712,
+      "source_state_ms": 1789980374693,
+      "wire_ms": 1789980374693,
+      "wire_age_ms": 19,
+      "state_age_ms": 19,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 7,
+      "duration": "15m",
+      "received_ms": 1789980374713,
+      "source_state_ms": 1789980374693,
+      "wire_ms": 1789980374693,
+      "wire_age_ms": 20,
+      "state_age_ms": 20,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 8,
+      "duration": "15m",
+      "received_ms": 1789980374714,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 20,
+      "state_age_ms": 20,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 9,
+      "duration": "15m",
+      "received_ms": 1789980374716,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 22,
+      "state_age_ms": 22,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 10,
+      "duration": "15m",
+      "received_ms": 1789980374717,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 23,
+      "state_age_ms": 23,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 11,
+      "duration": "15m",
+      "received_ms": 1789980374717,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 23,
+      "state_age_ms": 23,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 12,
+      "duration": "15m",
+      "received_ms": 1789980374718,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 24,
+      "state_age_ms": 24,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 13,
+      "duration": "15m",
+      "received_ms": 1789980374719,
+      "source_state_ms": 1789980374694,
+      "wire_ms": 1789980374694,
+      "wire_age_ms": 25,
+      "state_age_ms": 25,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 14,
+      "duration": "15m",
+      "received_ms": 1789980374720,
+      "source_state_ms": 1789980374697,
+      "wire_ms": 1789980374697,
+      "wire_age_ms": 23,
+      "state_age_ms": 23,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 15,
+      "duration": "15m",
+      "received_ms": 1789980374720,
+      "source_state_ms": 1789980374697,
+      "wire_ms": 1789980374697,
+      "wire_age_ms": 23,
+      "state_age_ms": 23,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 16,
+      "duration": "15m",
+      "received_ms": 1789980374721,
+      "source_state_ms": 1789980374697,
+      "wire_ms": 1789980374697,
+      "wire_age_ms": 24,
+      "state_age_ms": 24,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 17,
+      "duration": "15m",
+      "received_ms": 1789980374725,
+      "source_state_ms": 1789980374707,
+      "wire_ms": 1789980374707,
+      "wire_age_ms": 18,
+      "state_age_ms": 18,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 18,
+      "duration": "15m",
+      "received_ms": 1789980374727,
+      "source_state_ms": 1789980374709,
+      "wire_ms": 1789980374709,
+      "wire_age_ms": 18,
+      "state_age_ms": 18,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 19,
+      "duration": "15m",
+      "received_ms": 1789980374729,
+      "source_state_ms": 1789980374711,
+      "wire_ms": 1789980374711,
+      "wire_age_ms": 18,
+      "state_age_ms": 18,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 20,
+      "duration": "15m",
+      "received_ms": 1789980374746,
+      "source_state_ms": 1789980374726,
+      "wire_ms": 1789980374726,
+      "wire_age_ms": 20,
+      "state_age_ms": 20,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 21,
+      "duration": "5m",
+      "received_ms": 1789980374747,
+      "source_state_ms": 1789980374686,
+      "wire_ms": 1789980374686,
+      "wire_age_ms": 61,
+      "state_age_ms": 61,
+      "wire_event_type": [
+        "book",
+        "book"
+      ]
+    },
+    {
+      "event_id": 22,
+      "duration": "15m",
+      "received_ms": 1789980374749,
+      "source_state_ms": 1789980374727,
+      "wire_ms": 1789980374727,
+      "wire_age_ms": 22,
+      "state_age_ms": 22,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 23,
+      "duration": "15m",
+      "received_ms": 1789980374750,
+      "source_state_ms": 1789980374730,
+      "wire_ms": 1789980374730,
+      "wire_age_ms": 20,
+      "state_age_ms": 20,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 24,
+      "duration": "15m",
+      "received_ms": 1789980374751,
+      "source_state_ms": 1789980374733,
+      "wire_ms": 1789980374733,
+      "wire_age_ms": 18,
+      "state_age_ms": 18,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 25,
+      "duration": "15m",
+      "received_ms": 1789980374769,
+      "source_state_ms": 1789980374751,
+      "wire_ms": 1789980374751,
+      "wire_age_ms": 18,
+      "state_age_ms": 18,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100001,
+      "duration": "5m",
+      "received_ms": 1789980515307,
+      "source_state_ms": 1789980408279,
+      "wire_ms": 1789980408279,
+      "wire_age_ms": 107028,
+      "state_age_ms": 107028,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100002,
+      "duration": "5m",
+      "received_ms": 1789980515308,
+      "source_state_ms": 1789980408279,
+      "wire_ms": 1789980408279,
+      "wire_age_ms": 107029,
+      "state_age_ms": 107029,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100003,
+      "duration": "5m",
+      "received_ms": 1789980515309,
+      "source_state_ms": 1789980408280,
+      "wire_ms": 1789980408280,
+      "wire_age_ms": 107029,
+      "state_age_ms": 107029,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100004,
+      "duration": "5m",
+      "received_ms": 1789980515311,
+      "source_state_ms": 1789980408280,
+      "wire_ms": 1789980408280,
+      "wire_age_ms": 107031,
+      "state_age_ms": 107031,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100005,
+      "duration": "5m",
+      "received_ms": 1789980515312,
+      "source_state_ms": 1789980408280,
+      "wire_ms": 1789980408280,
+      "wire_age_ms": 107032,
+      "state_age_ms": 107032,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100006,
+      "duration": "5m",
+      "received_ms": 1789980515313,
+      "source_state_ms": 1789980408280,
+      "wire_ms": 1789980408280,
+      "wire_age_ms": 107033,
+      "state_age_ms": 107033,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100007,
+      "duration": "5m",
+      "received_ms": 1789980515315,
+      "source_state_ms": 1789980408281,
+      "wire_ms": 1789980408281,
+      "wire_age_ms": 107034,
+      "state_age_ms": 107034,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100008,
+      "duration": "5m",
+      "received_ms": 1789980515317,
+      "source_state_ms": 1789980408281,
+      "wire_ms": 1789980408281,
+      "wire_age_ms": 107036,
+      "state_age_ms": 107036,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100009,
+      "duration": "5m",
+      "received_ms": 1789980515318,
+      "source_state_ms": 1789980408281,
+      "wire_ms": 1789980408281,
+      "wire_age_ms": 107037,
+      "state_age_ms": 107037,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100010,
+      "duration": "5m",
+      "received_ms": 1789980515319,
+      "source_state_ms": 1789980408281,
+      "wire_ms": 1789980408281,
+      "wire_age_ms": 107038,
+      "state_age_ms": 107038,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100011,
+      "duration": "5m",
+      "received_ms": 1789980515321,
+      "source_state_ms": 1789980408282,
+      "wire_ms": 1789980408282,
+      "wire_age_ms": 107039,
+      "state_age_ms": 107039,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100012,
+      "duration": "5m",
+      "received_ms": 1789980515322,
+      "source_state_ms": 1789980408282,
+      "wire_ms": 1789980408282,
+      "wire_age_ms": 107040,
+      "state_age_ms": 107040,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100013,
+      "duration": "5m",
+      "received_ms": 1789980515323,
+      "source_state_ms": 1789980408283,
+      "wire_ms": 1789980408283,
+      "wire_age_ms": 107040,
+      "state_age_ms": 107040,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100014,
+      "duration": "5m",
+      "received_ms": 1789980515325,
+      "source_state_ms": 1789980408283,
+      "wire_ms": 1789980408283,
+      "wire_age_ms": 107042,
+      "state_age_ms": 107042,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100015,
+      "duration": "5m",
+      "received_ms": 1789980515326,
+      "source_state_ms": 1789980408284,
+      "wire_ms": 1789980408284,
+      "wire_age_ms": 107042,
+      "state_age_ms": 107042,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100016,
+      "duration": "5m",
+      "received_ms": 1789980515327,
+      "source_state_ms": 1789980408285,
+      "wire_ms": 1789980408285,
+      "wire_age_ms": 107042,
+      "state_age_ms": 107042,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100017,
+      "duration": "5m",
+      "received_ms": 1789980515329,
+      "source_state_ms": 1789980408285,
+      "wire_ms": 1789980408285,
+      "wire_age_ms": 107044,
+      "state_age_ms": 107044,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100018,
+      "duration": "5m",
+      "received_ms": 1789980515331,
+      "source_state_ms": 1789980408286,
+      "wire_ms": 1789980408286,
+      "wire_age_ms": 107045,
+      "state_age_ms": 107045,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100019,
+      "duration": "5m",
+      "received_ms": 1789980515333,
+      "source_state_ms": 1789980408287,
+      "wire_ms": 1789980408287,
+      "wire_age_ms": 107046,
+      "state_age_ms": 107046,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100020,
+      "duration": "5m",
+      "received_ms": 1789980515335,
+      "source_state_ms": 1789980408287,
+      "wire_ms": 1789980408287,
+      "wire_age_ms": 107048,
+      "state_age_ms": 107048,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100021,
+      "duration": "5m",
+      "received_ms": 1789980515337,
+      "source_state_ms": 1789980408288,
+      "wire_ms": 1789980408288,
+      "wire_age_ms": 107049,
+      "state_age_ms": 107049,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100022,
+      "duration": "5m",
+      "received_ms": 1789980515339,
+      "source_state_ms": 1789980408288,
+      "wire_ms": 1789980408288,
+      "wire_age_ms": 107051,
+      "state_age_ms": 107051,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100023,
+      "duration": "5m",
+      "received_ms": 1789980515340,
+      "source_state_ms": 1789980408289,
+      "wire_ms": 1789980408289,
+      "wire_age_ms": 107051,
+      "state_age_ms": 107051,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100024,
+      "duration": "5m",
+      "received_ms": 1789980515342,
+      "source_state_ms": 1789980408289,
+      "wire_ms": 1789980408289,
+      "wire_age_ms": 107053,
+      "state_age_ms": 107053,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 100025,
+      "duration": "5m",
+      "received_ms": 1789980515343,
+      "source_state_ms": 1789980408290,
+      "wire_ms": 1789980408290,
+      "wire_age_ms": 107053,
+      "state_age_ms": 107053,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300001,
+      "duration": "15m",
+      "received_ms": 1789980817182,
+      "source_state_ms": 1789980632450,
+      "wire_ms": 1789980632450,
+      "wire_age_ms": 184732,
+      "state_age_ms": 184732,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300002,
+      "duration": "15m",
+      "received_ms": 1789980817192,
+      "source_state_ms": 1789980632450,
+      "wire_ms": 1789980632450,
+      "wire_age_ms": 184742,
+      "state_age_ms": 184742,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300003,
+      "duration": "15m",
+      "received_ms": 1789980817194,
+      "source_state_ms": 1789980632451,
+      "wire_ms": 1789980632451,
+      "wire_age_ms": 184743,
+      "state_age_ms": 184743,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300004,
+      "duration": "15m",
+      "received_ms": 1789980817196,
+      "source_state_ms": 1789980632451,
+      "wire_ms": 1789980632451,
+      "wire_age_ms": 184745,
+      "state_age_ms": 184745,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300005,
+      "duration": "15m",
+      "received_ms": 1789980817198,
+      "source_state_ms": 1789980632451,
+      "wire_ms": 1789980632451,
+      "wire_age_ms": 184747,
+      "state_age_ms": 184747,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300006,
+      "duration": "15m",
+      "received_ms": 1789980817200,
+      "source_state_ms": 1789980632451,
+      "wire_ms": 1789980632451,
+      "wire_age_ms": 184749,
+      "state_age_ms": 184749,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300007,
+      "duration": "15m",
+      "received_ms": 1789980817202,
+      "source_state_ms": 1789980632452,
+      "wire_ms": 1789980632452,
+      "wire_age_ms": 184750,
+      "state_age_ms": 184750,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300008,
+      "duration": "15m",
+      "received_ms": 1789980817204,
+      "source_state_ms": 1789980632452,
+      "wire_ms": 1789980632452,
+      "wire_age_ms": 184752,
+      "state_age_ms": 184752,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300009,
+      "duration": "15m",
+      "received_ms": 1789980817206,
+      "source_state_ms": 1789980632452,
+      "wire_ms": 1789980632452,
+      "wire_age_ms": 184754,
+      "state_age_ms": 184754,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300010,
+      "duration": "15m",
+      "received_ms": 1789980817207,
+      "source_state_ms": 1789980632453,
+      "wire_ms": 1789980632453,
+      "wire_age_ms": 184754,
+      "state_age_ms": 184754,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300011,
+      "duration": "15m",
+      "received_ms": 1789980817208,
+      "source_state_ms": 1789980632453,
+      "wire_ms": 1789980632453,
+      "wire_age_ms": 184755,
+      "state_age_ms": 184755,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300012,
+      "duration": "15m",
+      "received_ms": 1789980817210,
+      "source_state_ms": 1789980632455,
+      "wire_ms": 1789980632455,
+      "wire_age_ms": 184755,
+      "state_age_ms": 184755,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300013,
+      "duration": "15m",
+      "received_ms": 1789980817212,
+      "source_state_ms": 1789980632455,
+      "wire_ms": 1789980632455,
+      "wire_age_ms": 184757,
+      "state_age_ms": 184757,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300014,
+      "duration": "15m",
+      "received_ms": 1789980817214,
+      "source_state_ms": 1789980632455,
+      "wire_ms": 1789980632455,
+      "wire_age_ms": 184759,
+      "state_age_ms": 184759,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300015,
+      "duration": "15m",
+      "received_ms": 1789980817216,
+      "source_state_ms": 1789980632455,
+      "wire_ms": 1789980632455,
+      "wire_age_ms": 184761,
+      "state_age_ms": 184761,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300016,
+      "duration": "15m",
+      "received_ms": 1789980817218,
+      "source_state_ms": 1789980632456,
+      "wire_ms": 1789980632456,
+      "wire_age_ms": 184762,
+      "state_age_ms": 184762,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300017,
+      "duration": "15m",
+      "received_ms": 1789980817220,
+      "source_state_ms": 1789980632458,
+      "wire_ms": 1789980632458,
+      "wire_age_ms": 184762,
+      "state_age_ms": 184762,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300018,
+      "duration": "15m",
+      "received_ms": 1789980817221,
+      "source_state_ms": 1789980632458,
+      "wire_ms": 1789980632458,
+      "wire_age_ms": 184763,
+      "state_age_ms": 184763,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300019,
+      "duration": "15m",
+      "received_ms": 1789980817223,
+      "source_state_ms": 1789980632461,
+      "wire_ms": 1789980632461,
+      "wire_age_ms": 184762,
+      "state_age_ms": 184762,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300020,
+      "duration": "15m",
+      "received_ms": 1789980817225,
+      "source_state_ms": 1789980632462,
+      "wire_ms": 1789980632462,
+      "wire_age_ms": 184763,
+      "state_age_ms": 184763,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300021,
+      "duration": "15m",
+      "received_ms": 1789980817233,
+      "source_state_ms": 1789980632464,
+      "wire_ms": 1789980632464,
+      "wire_age_ms": 184769,
+      "state_age_ms": 184769,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300022,
+      "duration": "15m",
+      "received_ms": 1789980817235,
+      "source_state_ms": 1789980632466,
+      "wire_ms": 1789980632466,
+      "wire_age_ms": 184769,
+      "state_age_ms": 184769,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300023,
+      "duration": "15m",
+      "received_ms": 1789980817237,
+      "source_state_ms": 1789980632466,
+      "wire_ms": 1789980632466,
+      "wire_age_ms": 184771,
+      "state_age_ms": 184771,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300024,
+      "duration": "15m",
+      "received_ms": 1789980817238,
+      "source_state_ms": 1789980632472,
+      "wire_ms": 1789980632472,
+      "wire_age_ms": 184766,
+      "state_age_ms": 184766,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 300025,
+      "duration": "15m",
+      "received_ms": 1789980817240,
+      "source_state_ms": 1789980632472,
+      "wire_ms": 1789980632472,
+      "wire_age_ms": 184768,
+      "state_age_ms": 184768,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400001,
+      "duration": "5m",
+      "received_ms": 1789980954443,
+      "source_state_ms": 1789980925427,
+      "wire_ms": 1789980925427,
+      "wire_age_ms": 29016,
+      "state_age_ms": 29016,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400002,
+      "duration": "5m",
+      "received_ms": 1789980954444,
+      "source_state_ms": 1789980925430,
+      "wire_ms": 1789980925430,
+      "wire_age_ms": 29014,
+      "state_age_ms": 29014,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400003,
+      "duration": "5m",
+      "received_ms": 1789980954446,
+      "source_state_ms": 1789980925431,
+      "wire_ms": 1789980925431,
+      "wire_age_ms": 29015,
+      "state_age_ms": 29015,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400004,
+      "duration": "5m",
+      "received_ms": 1789980954446,
+      "source_state_ms": 1789980925431,
+      "wire_ms": 1789980925431,
+      "wire_age_ms": 29015,
+      "state_age_ms": 29015,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400005,
+      "duration": "5m",
+      "received_ms": 1789980954447,
+      "source_state_ms": 1789980925433,
+      "wire_ms": 1789980925433,
+      "wire_age_ms": 29014,
+      "state_age_ms": 29014,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400006,
+      "duration": "5m",
+      "received_ms": 1789980954448,
+      "source_state_ms": 1789980925435,
+      "wire_ms": 1789980925435,
+      "wire_age_ms": 29013,
+      "state_age_ms": 29013,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400007,
+      "duration": "5m",
+      "received_ms": 1789980954449,
+      "source_state_ms": 1789980925437,
+      "wire_ms": 1789980925437,
+      "wire_age_ms": 29012,
+      "state_age_ms": 29012,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400008,
+      "duration": "5m",
+      "received_ms": 1789980954450,
+      "source_state_ms": 1789980925438,
+      "wire_ms": 1789980925438,
+      "wire_age_ms": 29012,
+      "state_age_ms": 29012,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400009,
+      "duration": "5m",
+      "received_ms": 1789980954450,
+      "source_state_ms": 1789980925440,
+      "wire_ms": 1789980925440,
+      "wire_age_ms": 29010,
+      "state_age_ms": 29010,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400010,
+      "duration": "5m",
+      "received_ms": 1789980954451,
+      "source_state_ms": 1789980925440,
+      "wire_ms": 1789980925440,
+      "wire_age_ms": 29011,
+      "state_age_ms": 29011,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400011,
+      "duration": "5m",
+      "received_ms": 1789980954452,
+      "source_state_ms": 1789980925440,
+      "wire_ms": 1789980925440,
+      "wire_age_ms": 29012,
+      "state_age_ms": 29012,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400012,
+      "duration": "5m",
+      "received_ms": 1789980954453,
+      "source_state_ms": 1789980925441,
+      "wire_ms": 1789980925441,
+      "wire_age_ms": 29012,
+      "state_age_ms": 29012,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400013,
+      "duration": "5m",
+      "received_ms": 1789980954454,
+      "source_state_ms": 1789980925441,
+      "wire_ms": 1789980925441,
+      "wire_age_ms": 29013,
+      "state_age_ms": 29013,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400014,
+      "duration": "5m",
+      "received_ms": 1789980954454,
+      "source_state_ms": 1789980925441,
+      "wire_ms": 1789980925441,
+      "wire_age_ms": 29013,
+      "state_age_ms": 29013,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400015,
+      "duration": "5m",
+      "received_ms": 1789980954455,
+      "source_state_ms": 1789980925441,
+      "wire_ms": 1789980925441,
+      "wire_age_ms": 29014,
+      "state_age_ms": 29014,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400016,
+      "duration": "5m",
+      "received_ms": 1789980954456,
+      "source_state_ms": 1789980925441,
+      "wire_ms": 1789980925441,
+      "wire_age_ms": 29015,
+      "state_age_ms": 29015,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400017,
+      "duration": "5m",
+      "received_ms": 1789980954457,
+      "source_state_ms": 1789980925442,
+      "wire_ms": 1789980925442,
+      "wire_age_ms": 29015,
+      "state_age_ms": 29015,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400018,
+      "duration": "5m",
+      "received_ms": 1789980954458,
+      "source_state_ms": 1789980925442,
+      "wire_ms": 1789980925442,
+      "wire_age_ms": 29016,
+      "state_age_ms": 29016,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400019,
+      "duration": "5m",
+      "received_ms": 1789980954460,
+      "source_state_ms": 1789980925443,
+      "wire_ms": 1789980925443,
+      "wire_age_ms": 29017,
+      "state_age_ms": 29017,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400020,
+      "duration": "5m",
+      "received_ms": 1789980954461,
+      "source_state_ms": 1789980925443,
+      "wire_ms": 1789980925443,
+      "wire_age_ms": 29018,
+      "state_age_ms": 29018,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 400021,
+      "duration": "5m",
+      "received_ms": 1789980954462,
+      "source_state_ms": 1789980925444,
+      "wire_ms": 1789980925444,
+      "wire_age_ms": 29018,
+      "state_age_ms": 29018,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500001,
+      "duration": "5m",
+      "received_ms": 1789981077458,
+      "source_state_ms": 1789981007530,
+      "wire_ms": 1789981007530,
+      "wire_age_ms": 69928,
+      "state_age_ms": 69928,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500002,
+      "duration": "5m",
+      "received_ms": 1789981077459,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69928,
+      "state_age_ms": 69928,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500003,
+      "duration": "5m",
+      "received_ms": 1789981077461,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69930,
+      "state_age_ms": 69930,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500004,
+      "duration": "5m",
+      "received_ms": 1789981077462,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69931,
+      "state_age_ms": 69931,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500005,
+      "duration": "5m",
+      "received_ms": 1789981077464,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69933,
+      "state_age_ms": 69933,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500006,
+      "duration": "5m",
+      "received_ms": 1789981077465,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69934,
+      "state_age_ms": 69934,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500007,
+      "duration": "5m",
+      "received_ms": 1789981077466,
+      "source_state_ms": 1789981007531,
+      "wire_ms": 1789981007531,
+      "wire_age_ms": 69935,
+      "state_age_ms": 69935,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500008,
+      "duration": "5m",
+      "received_ms": 1789981077467,
+      "source_state_ms": 1789981007532,
+      "wire_ms": 1789981007532,
+      "wire_age_ms": 69935,
+      "state_age_ms": 69935,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500009,
+      "duration": "5m",
+      "received_ms": 1789981077469,
+      "source_state_ms": 1789981007533,
+      "wire_ms": 1789981007533,
+      "wire_age_ms": 69936,
+      "state_age_ms": 69936,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500010,
+      "duration": "5m",
+      "received_ms": 1789981077470,
+      "source_state_ms": 1789981007533,
+      "wire_ms": 1789981007533,
+      "wire_age_ms": 69937,
+      "state_age_ms": 69937,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500011,
+      "duration": "5m",
+      "received_ms": 1789981077471,
+      "source_state_ms": 1789981007534,
+      "wire_ms": 1789981007534,
+      "wire_age_ms": 69937,
+      "state_age_ms": 69937,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500012,
+      "duration": "5m",
+      "received_ms": 1789981077473,
+      "source_state_ms": 1789981007534,
+      "wire_ms": 1789981007534,
+      "wire_age_ms": 69939,
+      "state_age_ms": 69939,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500013,
+      "duration": "5m",
+      "received_ms": 1789981077475,
+      "source_state_ms": 1789981007535,
+      "wire_ms": 1789981007535,
+      "wire_age_ms": 69940,
+      "state_age_ms": 69940,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500014,
+      "duration": "5m",
+      "received_ms": 1789981077476,
+      "source_state_ms": 1789981007535,
+      "wire_ms": 1789981007535,
+      "wire_age_ms": 69941,
+      "state_age_ms": 69941,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500015,
+      "duration": "5m",
+      "received_ms": 1789981077478,
+      "source_state_ms": 1789981007536,
+      "wire_ms": 1789981007536,
+      "wire_age_ms": 69942,
+      "state_age_ms": 69942,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500016,
+      "duration": "5m",
+      "received_ms": 1789981077479,
+      "source_state_ms": 1789981007537,
+      "wire_ms": 1789981007537,
+      "wire_age_ms": 69942,
+      "state_age_ms": 69942,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500017,
+      "duration": "5m",
+      "received_ms": 1789981077481,
+      "source_state_ms": 1789981007538,
+      "wire_ms": 1789981007538,
+      "wire_age_ms": 69943,
+      "state_age_ms": 69943,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500018,
+      "duration": "5m",
+      "received_ms": 1789981077482,
+      "source_state_ms": 1789981007539,
+      "wire_ms": 1789981007539,
+      "wire_age_ms": 69943,
+      "state_age_ms": 69943,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500019,
+      "duration": "5m",
+      "received_ms": 1789981077483,
+      "source_state_ms": 1789981007540,
+      "wire_ms": 1789981007540,
+      "wire_age_ms": 69943,
+      "state_age_ms": 69943,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500020,
+      "duration": "5m",
+      "received_ms": 1789981077485,
+      "source_state_ms": 1789981007540,
+      "wire_ms": 1789981007540,
+      "wire_age_ms": 69945,
+      "state_age_ms": 69945,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500021,
+      "duration": "5m",
+      "received_ms": 1789981077486,
+      "source_state_ms": 1789981007541,
+      "wire_ms": 1789981007541,
+      "wire_age_ms": 69945,
+      "state_age_ms": 69945,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500022,
+      "duration": "5m",
+      "received_ms": 1789981077488,
+      "source_state_ms": 1789981007541,
+      "wire_ms": 1789981007541,
+      "wire_age_ms": 69947,
+      "state_age_ms": 69947,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500023,
+      "duration": "5m",
+      "received_ms": 1789981077490,
+      "source_state_ms": 1789981007541,
+      "wire_ms": 1789981007541,
+      "wire_age_ms": 69949,
+      "state_age_ms": 69949,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500024,
+      "duration": "5m",
+      "received_ms": 1789981077491,
+      "source_state_ms": 1789981007542,
+      "wire_ms": 1789981007542,
+      "wire_age_ms": 69949,
+      "state_age_ms": 69949,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 500025,
+      "duration": "5m",
+      "received_ms": 1789981077493,
+      "source_state_ms": 1789981007542,
+      "wire_ms": 1789981007542,
+      "wire_age_ms": 69951,
+      "state_age_ms": 69951,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600001,
+      "duration": "15m",
+      "received_ms": 1789981192922,
+      "source_state_ms": 1789981021364,
+      "wire_ms": 1789981021364,
+      "wire_age_ms": 171558,
+      "state_age_ms": 171558,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600002,
+      "duration": "15m",
+      "received_ms": 1789981192923,
+      "source_state_ms": 1789981021365,
+      "wire_ms": 1789981021365,
+      "wire_age_ms": 171558,
+      "state_age_ms": 171558,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600003,
+      "duration": "15m",
+      "received_ms": 1789981192924,
+      "source_state_ms": 1789981021365,
+      "wire_ms": 1789981021365,
+      "wire_age_ms": 171559,
+      "state_age_ms": 171559,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600004,
+      "duration": "15m",
+      "received_ms": 1789981192925,
+      "source_state_ms": 1789981021366,
+      "wire_ms": 1789981021366,
+      "wire_age_ms": 171559,
+      "state_age_ms": 171559,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600005,
+      "duration": "15m",
+      "received_ms": 1789981192927,
+      "source_state_ms": 1789981021366,
+      "wire_ms": 1789981021366,
+      "wire_age_ms": 171561,
+      "state_age_ms": 171561,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600006,
+      "duration": "15m",
+      "received_ms": 1789981192928,
+      "source_state_ms": 1789981021366,
+      "wire_ms": 1789981021366,
+      "wire_age_ms": 171562,
+      "state_age_ms": 171562,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600007,
+      "duration": "15m",
+      "received_ms": 1789981192929,
+      "source_state_ms": 1789981021367,
+      "wire_ms": 1789981021367,
+      "wire_age_ms": 171562,
+      "state_age_ms": 171562,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600008,
+      "duration": "15m",
+      "received_ms": 1789981192930,
+      "source_state_ms": 1789981021368,
+      "wire_ms": 1789981021368,
+      "wire_age_ms": 171562,
+      "state_age_ms": 171562,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600009,
+      "duration": "15m",
+      "received_ms": 1789981192932,
+      "source_state_ms": 1789981021368,
+      "wire_ms": 1789981021368,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600010,
+      "duration": "15m",
+      "received_ms": 1789981192933,
+      "source_state_ms": 1789981021369,
+      "wire_ms": 1789981021369,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600011,
+      "duration": "15m",
+      "received_ms": 1789981192934,
+      "source_state_ms": 1789981021370,
+      "wire_ms": 1789981021370,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600012,
+      "duration": "15m",
+      "received_ms": 1789981192935,
+      "source_state_ms": 1789981021372,
+      "wire_ms": 1789981021372,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600013,
+      "duration": "15m",
+      "received_ms": 1789981192937,
+      "source_state_ms": 1789981021372,
+      "wire_ms": 1789981021372,
+      "wire_age_ms": 171565,
+      "state_age_ms": 171565,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600014,
+      "duration": "15m",
+      "received_ms": 1789981192939,
+      "source_state_ms": 1789981021375,
+      "wire_ms": 1789981021375,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600015,
+      "duration": "15m",
+      "received_ms": 1789981192941,
+      "source_state_ms": 1789981021379,
+      "wire_ms": 1789981021379,
+      "wire_age_ms": 171562,
+      "state_age_ms": 171562,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600016,
+      "duration": "15m",
+      "received_ms": 1789981192943,
+      "source_state_ms": 1789981021380,
+      "wire_ms": 1789981021380,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600017,
+      "duration": "15m",
+      "received_ms": 1789981192944,
+      "source_state_ms": 1789981021381,
+      "wire_ms": 1789981021381,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600018,
+      "duration": "15m",
+      "received_ms": 1789981192946,
+      "source_state_ms": 1789981021382,
+      "wire_ms": 1789981021382,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600019,
+      "duration": "15m",
+      "received_ms": 1789981192948,
+      "source_state_ms": 1789981021382,
+      "wire_ms": 1789981021382,
+      "wire_age_ms": 171566,
+      "state_age_ms": 171566,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600020,
+      "duration": "15m",
+      "received_ms": 1789981192949,
+      "source_state_ms": 1789981021385,
+      "wire_ms": 1789981021385,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600021,
+      "duration": "15m",
+      "received_ms": 1789981192951,
+      "source_state_ms": 1789981021388,
+      "wire_ms": 1789981021388,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600022,
+      "duration": "15m",
+      "received_ms": 1789981192953,
+      "source_state_ms": 1789981021390,
+      "wire_ms": 1789981021390,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600023,
+      "duration": "15m",
+      "received_ms": 1789981192954,
+      "source_state_ms": 1789981021391,
+      "wire_ms": 1789981021391,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600024,
+      "duration": "15m",
+      "received_ms": 1789981192956,
+      "source_state_ms": 1789981021392,
+      "wire_ms": 1789981021392,
+      "wire_age_ms": 171564,
+      "state_age_ms": 171564,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 600025,
+      "duration": "15m",
+      "received_ms": 1789981192957,
+      "source_state_ms": 1789981021394,
+      "wire_ms": 1789981021394,
+      "wire_age_ms": 171563,
+      "state_age_ms": 171563,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700001,
+      "duration": "5m",
+      "received_ms": 1789981342742,
+      "source_state_ms": 1789981248273,
+      "wire_ms": 1789981248273,
+      "wire_age_ms": 94469,
+      "state_age_ms": 94469,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700002,
+      "duration": "5m",
+      "received_ms": 1789981342743,
+      "source_state_ms": 1789981248273,
+      "wire_ms": 1789981248273,
+      "wire_age_ms": 94470,
+      "state_age_ms": 94470,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700003,
+      "duration": "5m",
+      "received_ms": 1789981342744,
+      "source_state_ms": 1789981248273,
+      "wire_ms": 1789981248273,
+      "wire_age_ms": 94471,
+      "state_age_ms": 94471,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700004,
+      "duration": "5m",
+      "received_ms": 1789981342746,
+      "source_state_ms": 1789981248273,
+      "wire_ms": 1789981248273,
+      "wire_age_ms": 94473,
+      "state_age_ms": 94473,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700005,
+      "duration": "5m",
+      "received_ms": 1789981342748,
+      "source_state_ms": 1789981248274,
+      "wire_ms": 1789981248274,
+      "wire_age_ms": 94474,
+      "state_age_ms": 94474,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700006,
+      "duration": "5m",
+      "received_ms": 1789981342750,
+      "source_state_ms": 1789981248274,
+      "wire_ms": 1789981248274,
+      "wire_age_ms": 94476,
+      "state_age_ms": 94476,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700007,
+      "duration": "5m",
+      "received_ms": 1789981342751,
+      "source_state_ms": 1789981248275,
+      "wire_ms": 1789981248275,
+      "wire_age_ms": 94476,
+      "state_age_ms": 94476,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700008,
+      "duration": "5m",
+      "received_ms": 1789981342753,
+      "source_state_ms": 1789981248276,
+      "wire_ms": 1789981248276,
+      "wire_age_ms": 94477,
+      "state_age_ms": 94477,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700009,
+      "duration": "5m",
+      "received_ms": 1789981342754,
+      "source_state_ms": 1789981248277,
+      "wire_ms": 1789981248277,
+      "wire_age_ms": 94477,
+      "state_age_ms": 94477,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700010,
+      "duration": "5m",
+      "received_ms": 1789981342755,
+      "source_state_ms": 1789981248277,
+      "wire_ms": 1789981248277,
+      "wire_age_ms": 94478,
+      "state_age_ms": 94478,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700011,
+      "duration": "5m",
+      "received_ms": 1789981342756,
+      "source_state_ms": 1789981248278,
+      "wire_ms": 1789981248278,
+      "wire_age_ms": 94478,
+      "state_age_ms": 94478,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700012,
+      "duration": "5m",
+      "received_ms": 1789981342757,
+      "source_state_ms": 1789981248278,
+      "wire_ms": 1789981248278,
+      "wire_age_ms": 94479,
+      "state_age_ms": 94479,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700013,
+      "duration": "5m",
+      "received_ms": 1789981342758,
+      "source_state_ms": 1789981248279,
+      "wire_ms": 1789981248279,
+      "wire_age_ms": 94479,
+      "state_age_ms": 94479,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700014,
+      "duration": "5m",
+      "received_ms": 1789981342759,
+      "source_state_ms": 1789981248279,
+      "wire_ms": 1789981248279,
+      "wire_age_ms": 94480,
+      "state_age_ms": 94480,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700015,
+      "duration": "5m",
+      "received_ms": 1789981342761,
+      "source_state_ms": 1789981248280,
+      "wire_ms": 1789981248280,
+      "wire_age_ms": 94481,
+      "state_age_ms": 94481,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700016,
+      "duration": "5m",
+      "received_ms": 1789981342762,
+      "source_state_ms": 1789981248280,
+      "wire_ms": 1789981248280,
+      "wire_age_ms": 94482,
+      "state_age_ms": 94482,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700017,
+      "duration": "5m",
+      "received_ms": 1789981342764,
+      "source_state_ms": 1789981248281,
+      "wire_ms": 1789981248281,
+      "wire_age_ms": 94483,
+      "state_age_ms": 94483,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700018,
+      "duration": "5m",
+      "received_ms": 1789981342766,
+      "source_state_ms": 1789981248281,
+      "wire_ms": 1789981248281,
+      "wire_age_ms": 94485,
+      "state_age_ms": 94485,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700019,
+      "duration": "5m",
+      "received_ms": 1789981342768,
+      "source_state_ms": 1789981248282,
+      "wire_ms": 1789981248282,
+      "wire_age_ms": 94486,
+      "state_age_ms": 94486,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700020,
+      "duration": "5m",
+      "received_ms": 1789981342770,
+      "source_state_ms": 1789981248282,
+      "wire_ms": 1789981248282,
+      "wire_age_ms": 94488,
+      "state_age_ms": 94488,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700021,
+      "duration": "5m",
+      "received_ms": 1789981342772,
+      "source_state_ms": 1789981248282,
+      "wire_ms": 1789981248282,
+      "wire_age_ms": 94490,
+      "state_age_ms": 94490,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700022,
+      "duration": "5m",
+      "received_ms": 1789981342773,
+      "source_state_ms": 1789981248282,
+      "wire_ms": 1789981248282,
+      "wire_age_ms": 94491,
+      "state_age_ms": 94491,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700023,
+      "duration": "5m",
+      "received_ms": 1789981342775,
+      "source_state_ms": 1789981248283,
+      "wire_ms": 1789981248283,
+      "wire_age_ms": 94492,
+      "state_age_ms": 94492,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700024,
+      "duration": "5m",
+      "received_ms": 1789981342777,
+      "source_state_ms": 1789981248284,
+      "wire_ms": 1789981248284,
+      "wire_age_ms": 94493,
+      "state_age_ms": 94493,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 700025,
+      "duration": "5m",
+      "received_ms": 1789981342779,
+      "source_state_ms": 1789981248284,
+      "wire_ms": 1789981248284,
+      "wire_age_ms": 94495,
+      "state_age_ms": 94495,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800001,
+      "duration": "15m",
+      "received_ms": 1789981644551,
+      "source_state_ms": 1789981451210,
+      "wire_ms": 1789981451210,
+      "wire_age_ms": 193341,
+      "state_age_ms": 193341,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800002,
+      "duration": "15m",
+      "received_ms": 1789981644552,
+      "source_state_ms": 1789981451224,
+      "wire_ms": 1789981451224,
+      "wire_age_ms": 193328,
+      "state_age_ms": 193328,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800003,
+      "duration": "15m",
+      "received_ms": 1789981644554,
+      "source_state_ms": 1789981451242,
+      "wire_ms": 1789981451242,
+      "wire_age_ms": 193312,
+      "state_age_ms": 193312,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800004,
+      "duration": "15m",
+      "received_ms": 1789981644555,
+      "source_state_ms": 1789981451245,
+      "wire_ms": 1789981451245,
+      "wire_age_ms": 193310,
+      "state_age_ms": 193310,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800005,
+      "duration": "15m",
+      "received_ms": 1789981644557,
+      "source_state_ms": 1789981451247,
+      "wire_ms": 1789981451247,
+      "wire_age_ms": 193310,
+      "state_age_ms": 193310,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800006,
+      "duration": "15m",
+      "received_ms": 1789981644562,
+      "source_state_ms": 1789981451256,
+      "wire_ms": 1789981451256,
+      "wire_age_ms": 193306,
+      "state_age_ms": 193306,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800007,
+      "duration": "15m",
+      "received_ms": 1789981644564,
+      "source_state_ms": 1789981451299,
+      "wire_ms": 1789981451299,
+      "wire_age_ms": 193265,
+      "state_age_ms": 193265,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800008,
+      "duration": "15m",
+      "received_ms": 1789981644566,
+      "source_state_ms": 1789981451300,
+      "wire_ms": 1789981451300,
+      "wire_age_ms": 193266,
+      "state_age_ms": 193266,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800009,
+      "duration": "15m",
+      "received_ms": 1789981644571,
+      "source_state_ms": 1789981451300,
+      "wire_ms": 1789981451300,
+      "wire_age_ms": 193271,
+      "state_age_ms": 193271,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800010,
+      "duration": "15m",
+      "received_ms": 1789981644573,
+      "source_state_ms": 1789981451311,
+      "wire_ms": 1789981451311,
+      "wire_age_ms": 193262,
+      "state_age_ms": 193262,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800011,
+      "duration": "15m",
+      "received_ms": 1789981644584,
+      "source_state_ms": 1789981451315,
+      "wire_ms": 1789981451315,
+      "wire_age_ms": 193269,
+      "state_age_ms": 193269,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800012,
+      "duration": "15m",
+      "received_ms": 1789981644585,
+      "source_state_ms": 1789981451330,
+      "wire_ms": 1789981451330,
+      "wire_age_ms": 193255,
+      "state_age_ms": 193255,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800013,
+      "duration": "15m",
+      "received_ms": 1789981644586,
+      "source_state_ms": 1789981451332,
+      "wire_ms": 1789981451332,
+      "wire_age_ms": 193254,
+      "state_age_ms": 193254,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800014,
+      "duration": "15m",
+      "received_ms": 1789981644588,
+      "source_state_ms": 1789981451339,
+      "wire_ms": 1789981451339,
+      "wire_age_ms": 193249,
+      "state_age_ms": 193249,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800015,
+      "duration": "15m",
+      "received_ms": 1789981644590,
+      "source_state_ms": 1789981451350,
+      "wire_ms": 1789981451350,
+      "wire_age_ms": 193240,
+      "state_age_ms": 193240,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800016,
+      "duration": "15m",
+      "received_ms": 1789981644594,
+      "source_state_ms": 1789981451356,
+      "wire_ms": 1789981451356,
+      "wire_age_ms": 193238,
+      "state_age_ms": 193238,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800017,
+      "duration": "15m",
+      "received_ms": 1789981644595,
+      "source_state_ms": 1789981451356,
+      "wire_ms": 1789981451356,
+      "wire_age_ms": 193239,
+      "state_age_ms": 193239,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800018,
+      "duration": "15m",
+      "received_ms": 1789981644597,
+      "source_state_ms": 1789981451359,
+      "wire_ms": 1789981451359,
+      "wire_age_ms": 193238,
+      "state_age_ms": 193238,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800019,
+      "duration": "15m",
+      "received_ms": 1789981644599,
+      "source_state_ms": 1789981451364,
+      "wire_ms": 1789981451364,
+      "wire_age_ms": 193235,
+      "state_age_ms": 193235,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800020,
+      "duration": "15m",
+      "received_ms": 1789981644601,
+      "source_state_ms": 1789981451368,
+      "wire_ms": 1789981451368,
+      "wire_age_ms": 193233,
+      "state_age_ms": 193233,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800021,
+      "duration": "15m",
+      "received_ms": 1789981644602,
+      "source_state_ms": 1789981451369,
+      "wire_ms": 1789981451369,
+      "wire_age_ms": 193233,
+      "state_age_ms": 193233,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800022,
+      "duration": "15m",
+      "received_ms": 1789981644604,
+      "source_state_ms": 1789981451370,
+      "wire_ms": 1789981451370,
+      "wire_age_ms": 193234,
+      "state_age_ms": 193234,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800023,
+      "duration": "15m",
+      "received_ms": 1789981644605,
+      "source_state_ms": 1789981451376,
+      "wire_ms": 1789981451376,
+      "wire_age_ms": 193229,
+      "state_age_ms": 193229,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800024,
+      "duration": "15m",
+      "received_ms": 1789981644606,
+      "source_state_ms": 1789981451380,
+      "wire_ms": 1789981451380,
+      "wire_age_ms": 193226,
+      "state_age_ms": 193226,
+      "wire_event_type": [
+        "price_change"
+      ]
+    },
+    {
+      "event_id": 800025,
+      "duration": "15m",
+      "received_ms": 1789981644608,
+      "source_state_ms": 1789981451381,
+      "wire_ms": 1789981451381,
+      "wire_age_ms": 193227,
+      "state_age_ms": 193227,
+      "wire_event_type": [
+        "price_change"
+      ]
+    }
+  ]
+}

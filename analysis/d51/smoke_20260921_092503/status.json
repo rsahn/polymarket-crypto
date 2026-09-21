@@ -1,0 +1,16 @@
+{
+  "pid": 11328,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_092503.db",
+  "started_utc": "2026-09-21T07:25:03.349368+00:00",
+  "updated_utc": "2026-09-21T07:25:08.167948+00:00",
+  "error": "RuntimeError(\"CLOCK_PREFLIGHT_FAILED:['W32TIME_STALE_SYNC', 'W32TIME_SYNC_ERROR']\")"
+}

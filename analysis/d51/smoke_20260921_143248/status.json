@@ -1,0 +1,124 @@
+{
+  "pid": 22452,
+  "phase": "COMPLETE",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_143248.db",
+  "started_utc": "2026-09-21T12:32:48.679852+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T13:34:00.245222+00:00",
+  "session_id": "319094ae-d046-49af-9835-5d874f1510c8",
+  "elapsed_seconds": 1302.9135846000863,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 11,
+    "BOOK": 1354153,
+    "BTC_CONNECTED": 1,
+    "REJECT": 1891,
+    "BTC": 26776,
+    "EXPIRE": 6,
+    "ROTATION": 6,
+    "WS_ERROR": 3,
+    "RECONNECT": 6
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1789994700",
+      "received_ts_ms": 1789995311733
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1789995300",
+      "received_ts_ms": 1789995311688
+    }
+  },
+  "free_bytes": 90020093952,
+  "feed_timing": {
+    "5m": {
+      "observations": 921115,
+      "wire_age_sum_ms": 5865843443,
+      "last_wire_age_ms": 563,
+      "max_wire_age_ms": 33351,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1789995311688
+    },
+    "15m": {
+      "observations": 433038,
+      "wire_age_sum_ms": 177288933,
+      "last_wire_age_ms": 248,
+      "max_wire_age_ms": 3864,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1789995311733
+    }
+  },
+  "stage_timing": {
+    "sqlite_commit": {
+      "calls": 1934,
+      "wall_ns": 66199446100,
+      "cpu_ns": 37859375000,
+      "max_wall_ns": 468530500,
+      "over_5ms": 1346,
+      "over_50ms": 608
+    },
+    "5m:normalize": {
+      "calls": 922833,
+      "wall_ns": 167365986300,
+      "cpu_ns": 157281250000,
+      "max_wall_ns": 76725200,
+      "over_5ms": 275,
+      "over_50ms": 4
+    },
+    "5m:callback_including_store": {
+      "calls": 922833,
+      "wall_ns": 392812543000,
+      "cpu_ns": 374656250000,
+      "max_wall_ns": 188370900,
+      "over_5ms": 898,
+      "over_50ms": 9
+    },
+    "15m:normalize": {
+      "calls": 433211,
+      "wall_ns": 77557640100,
+      "cpu_ns": 72765625000,
+      "max_wall_ns": 56552100,
+      "over_5ms": 154,
+      "over_50ms": 1
+    },
+    "15m:callback_including_store": {
+      "calls": 433211,
+      "wall_ns": 187748280000,
+      "cpu_ns": 176843750000,
+      "max_wall_ns": 157552100,
+      "over_5ms": 448,
+      "over_50ms": 4
+    }
+  },
+  "last_clock_failures": [],
+  "collection": {
+    "session_id": "319094ae-d046-49af-9835-5d874f1510c8",
+    "elapsed_seconds": 1328.2820541000692,
+    "collection_seconds": 1320.0051229000092,
+    "counts": {
+      "CLOCK_SAMPLE": 44,
+      "ACTIVATE": 11,
+      "BOOK": 1371683,
+      "BTC_CONNECTED": 1,
+      "REJECT": 1898,
+      "BTC": 26956,
+      "EXPIRE": 6,
+      "ROTATION": 6,
+      "WS_ERROR": 3,
+      "RECONNECT": 6,
+      "COLLECTION_STOP": 1,
+      "SESSION_END": 3
+    },
+    "status": "STOPPED"
+  },
+  "D51_DATA_QUALITY": "PASS",
+  "failures": []
+}

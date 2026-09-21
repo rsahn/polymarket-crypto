@@ -1,0 +1,13 @@
+{
+  "timestamp_utc": "2026-09-20T17:54:51.343585+00:00",
+  "reason": "Replay did not enforce runtime drawdown stop. Correct safety comparability; no parameter/model selection or OOS change. Preserve original outputs as superseded for baseline comparison.",
+  "candidate_engine_unchanged": true,
+  "engine_sha256": "2089506413d7353a6af99151829fa77240a0f2d72c7227cdc4fcd942360f9db7",
+  "books_sha256": "859a8b28ebe4e3642a6af55f94a5699f9adaee386d5f2e9be93117d6649c7859",
+  "code": {
+    "analysis\\d6\\research\\offline.py": "4d9ce947540d891be50f29c4e157d9ac6544fcf78da957a334888ce4d0e57ef1",
+    "analysis\\d6\\research\\test_offline.py": "54e7bb28c9cee0cedc288c2bf9e183221819396e47f271a39c96131631e07385"
+  },
+  "source": "Parquet cache only",
+  "oos_opened": false
+}

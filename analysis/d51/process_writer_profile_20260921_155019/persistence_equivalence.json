@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "technical_only": true,
+  "rows_equal": {
+    "events": 77479,
+    "book_sides": 154872,
+    "anchors": 236,
+    "markets": 2
+  },
+  "excluded_columns": [
+    "session_id",
+    "closed_at_ms"
+  ],
+  "payloads_depths_timestamps_byte_identical": true,
+  "source_stats_unchanged": true,
+  "seconds": 14.023649299982935
+}

@@ -1,0 +1,25 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "duration_seconds": 13378.527405599947,
+  "failures": [
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "UNCLEAN_STOP"
+  ],
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    },
+    {
+      "replay": 2,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    }
+  ],
+  "source_stat_unchanged": true
+}

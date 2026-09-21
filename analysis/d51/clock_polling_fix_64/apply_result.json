@@ -1,0 +1,10 @@
+{
+  "finished_utc": "2026-09-21T08:23:11.2186801Z",
+  "config_exit": 0,
+  "started_utc": "2026-09-21T08:23:09.6338910Z",
+  "resync_output": "Envoi de la commande de resynchronisation à l'ordinateur local\r\nLa commande s'est terminée correctement.\r\n",
+  "resync_exit": 0,
+  "manual_clock_set": false,
+  "config_output": "La commande s'est terminée correctement.\r\n",
+  "status": "APPLIED_PENDING_OBSERVATION"
+}

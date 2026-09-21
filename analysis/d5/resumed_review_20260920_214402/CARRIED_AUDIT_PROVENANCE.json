@@ -1,0 +1,15 @@
+{
+  "prior_review": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\full_review_20260920_201805",
+  "report_sha256": "27895f397891919470e87938e16e95ec2efb1e501277e8c680c80085323c46c7",
+  "manifest_sha256": "7a594df55c42fc949b1ac3bbeece45cf74bdd785b89ff38ea9d5bf7c268bf2c7",
+  "checks": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ]
+}

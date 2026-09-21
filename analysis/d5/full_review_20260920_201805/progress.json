@@ -1,0 +1,48 @@
+{
+  "pid": 10548,
+  "status": "FAILED",
+  "steps_total": 8,
+  "research_allowed": false,
+  "paper_started": false,
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "minimum_seconds": 10800,
+  "budget_seconds": 3600,
+  "step": 3,
+  "stage": "SQLite integrity_check source",
+  "rows_processed": null,
+  "total_rows": null,
+  "percent": null,
+  "rows_per_second": null,
+  "detail": null,
+  "elapsed_seconds": 3613.974592600018,
+  "stage_elapsed_seconds": 1011.8436640000436,
+  "updated_utc": "2026-09-20T19:17:50.906481+00:00",
+  "completed_steps": [
+    {
+      "step": 1,
+      "stage": "Projection mÃ©tadonnÃ©es neuve",
+      "status": "PASS",
+      "seconds": 1772.291682299925,
+      "details": {
+        "note": "Derived metadata only; not integrity or replay evidence"
+      }
+    },
+    {
+      "step": 2,
+      "stage": "ExÃ©cution audit_next complet",
+      "status": "PASS",
+      "seconds": 800.8623639999423,
+      "details": {
+        "failures": []
+      }
+    },
+    {
+      "step": 3,
+      "status": "FAIL",
+      "error": "OperationalError('interrupted')"
+    }
+  ],
+  "sql": "PRAGMA temp_store=FILE",
+  "D5_DATA_QUALITY": "FAIL",
+  "error": "OperationalError('interrupted')"
+}

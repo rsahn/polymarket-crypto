@@ -1,0 +1,13 @@
+{
+  "pid": 17852,
+  "status": "RUNNING",
+  "source_writes": false,
+  "research_allowed": false,
+  "paper_started": false,
+  "phase": "WAITING_FOR_CORE_REVIEW_EXIT",
+  "elapsed_seconds": 1591.130659300019,
+  "updated_utc": "2026-09-20T20:35:55.479190+00:00",
+  "core_pid": 14672,
+  "core_step": 3,
+  "core_alive": true
+}

@@ -1,0 +1,77 @@
+# D5_DATA_QUALITY = FAIL
+
+Validation incomplete; no claim of source corruption.
+
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "reason": "INCOMPLETE_REVIEW_TIME_BUDGET_EXCEEDED",
+  "duration_seconds": 3613.9770368000027,
+  "failed_stage": "3/8 PRAGMA integrity_check on original source",
+  "error_preserved": [
+    "OperationalError('interrupted')"
+  ],
+  "cause": "The 3600-second deadline raises TimeoutError inside the SQLite progress handler; SQLite surfaces this as OperationalError(interrupted). Exit occurred at the next handler callback, 13.977 seconds after the deadline. No other process was killed.",
+  "projection": "PASS",
+  "audit_next": "PASS",
+  "integrity_check": "INCOMPLETE_NO_RESULT",
+  "foreign_key_check": "NOT_EXECUTED",
+  "quality_metrics_and_gate": "NOT_EXECUTED",
+  "replay_1_sha256": null,
+  "replay_2_sha256": null,
+  "replays": "NOT_EXECUTED",
+  "source_stat_before": [
+    26186612736,
+    1789912262643310700
+  ],
+  "source_stat_after": [
+    26186612736,
+    1789912262643310700
+  ],
+  "source_stat_unchanged": true,
+  "source_access": "mode=ro, query_only=ON during validation; no VACUUM or checkpoint",
+  "code_version_now": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+  "code_version_at_collection": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+  "quality_py_sha256_unchanged": true,
+  "connection_configuration_after_exit_read_only": {
+    "cache_size": -2000,
+    "page_size": 4096,
+    "mmap_size": 0
+  },
+  "last_process_sample": {
+    "ProcessId": 10548,
+    "CreationDate": "2026-09-20T20:18:05.590577+02:00",
+    "KernelModeTime": 3622500000,
+    "UserModeTime": 2630468750,
+    "ReadTransferCount": 101399338238,
+    "WriteTransferCount": 15673708614,
+    "ReadOperationCount": 24757337,
+    "WriteOperationCount": 3831751,
+    "WorkingSetSize": 6938624
+  },
+  "RESEARCH_ALLOWED": false,
+  "D6_RESEARCH_ALLOWED": false,
+  "PAPER_STARTED": false,
+  "audited_metrics": {
+    "TOTAL_EVENTS": 7518713,
+    "ROWS": 7441212,
+    "5M_MARKETS": 38,
+    "15M_MARKETS": 13,
+    "CROSS_MARKET_VIOLATIONS": 0,
+    "POST_EXPIRY_EVENTS": 0,
+    "POST_EXPIRY_ANCHORS": 0,
+    "POST_EXPIRY_BOOK_SIDES": 0,
+    "INCOMPLETE_BOOK_EVENTS": 0,
+    "MISSING_TOKEN_IDS": 0,
+    "AVAILABILITY_REGRESSIONS": 0,
+    "EXPIRED_OPEN_ANCHORS": 0,
+    "SMOKE_FAILURES": []
+  },
+  "limitations": [
+    "A successful audit_next is not a successful complete D5 review.",
+    "Integrity interrupted is not evidence of corruption.",
+    "No hash is invented for an unexecuted replay.",
+    "SQLite uses a roughly 2 MiB default page cache and mmap disabled. Repeated reads and limited CPU activity support I/O latency as the likely bottleneck; hardware cause is not established.",
+    "Any cache or streaming optimization must retain full source integrity/FK and double-replay checks and pass equivalence tests before a separately authorized retry. No retry was started."
+  ],
+  "code_provenance_matches": true
+}

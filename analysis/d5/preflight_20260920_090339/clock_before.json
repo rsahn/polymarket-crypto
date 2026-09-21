@@ -1,0 +1,44 @@
+{
+  "captured_utc": "2026-09-20T07:03:40.150357+00:00",
+  "wall_ns": 1789887820150380600,
+  "monotonic_ns": 919261868773800,
+  "commands": [
+    {
+      "command": [
+        "w32tm",
+        "/query",
+        "/status",
+        "/verbose"
+      ],
+      "exit_code": 2147943462,
+      "stdout": "L'erreur suivante s'est produite\u00ff: Le service n'a pas \u201at\u201a d\u201amarr\u201a. (0x80070426)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "w32tm",
+        "/stripchart",
+        "/computer:time.windows.com",
+        "/samples:3",
+        "/period:1",
+        "/dataonly"
+      ],
+      "exit_code": 0,
+      "stdout": "Suivi de time.windows.com [51.145.123.29:123].\nCollecte de 3 \u201achantillons.\nL'heure actuelle est 20/09/2026 09:03:40.\n09:03:40, +00.5903892s\n09:03:41, +00.5952273s\n09:03:42, +00.5897896s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "w32tm",
+        "/stripchart",
+        "/computer:time.cloudflare.com",
+        "/samples:3",
+        "/period:1",
+        "/dataonly"
+      ],
+      "exit_code": 0,
+      "stdout": "Suivi de time.cloudflare.com [162.159.200.123:123].\nCollecte de 3 \u201achantillons.\nL'heure actuelle est 20/09/2026 09:03:42.\n09:03:42, +00.5952075s\n09:03:43, +00.5940030s\n09:03:44, +00.5969581s\n",
+      "stderr": ""
+    }
+  ]
+}

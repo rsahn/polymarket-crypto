@@ -1,0 +1,49 @@
+{
+  "depth_arrays": 40000,
+  "runs": [
+    {
+      "repeat": 0,
+      "candidate": false,
+      "seconds": 0.8380593999754637,
+      "hits": 0,
+      "misses": 0
+    },
+    {
+      "repeat": 0,
+      "candidate": true,
+      "seconds": 0.677880399976857,
+      "hits": 23215,
+      "misses": 16785
+    },
+    {
+      "repeat": 1,
+      "candidate": true,
+      "seconds": 0.6611790000461042,
+      "hits": 23215,
+      "misses": 16785
+    },
+    {
+      "repeat": 1,
+      "candidate": false,
+      "seconds": 0.75764079997316,
+      "hits": 0,
+      "misses": 0
+    },
+    {
+      "repeat": 2,
+      "candidate": false,
+      "seconds": 0.76432700001169,
+      "hits": 0,
+      "misses": 0
+    },
+    {
+      "repeat": 2,
+      "candidate": true,
+      "seconds": 0.7640091000357643,
+      "hits": 23215,
+      "misses": 16785
+    }
+  ],
+  "baseline_median": 0.76432700001169,
+  "candidate_median": 0.677880399976857
+}

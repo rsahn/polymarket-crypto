@@ -1,0 +1,33 @@
+{
+  "updated_utc": "2026-09-20T23:44:35.269794+00:00",
+  "D5_DATA_QUALITY": "FAIL",
+  "D6_RESEARCH_ALLOWED": false,
+  "RESEARCH_ALLOWED": false,
+  "PAPER_STARTED": false,
+  "terminal_milestone": "D5_FAIL_REQUIRING_USER_METHODOLOGICAL_DECISION",
+  "defects": [
+    "ACCEPTED_TIMESTAMP_REGRESSION_BOOK_SOURCE",
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "UNCLEAN_STOP"
+  ],
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    },
+    {
+      "replay": 2,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    }
+  ],
+  "resumed_review_wall_seconds": 13797.174519,
+  "first_new_attempt_wall_seconds": 18954.837389,
+  "source_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd",
+  "report": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402\\SUPERVISOR_FINAL_REPORT.md"
+}

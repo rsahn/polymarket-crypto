@@ -1,0 +1,108 @@
+"""Wait for measured Windows NTP convergence, then run the authorized D5 protocol once."""
+from __future__ import annotations
+import ctypes
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import statistics
+import subprocess
+import sys
+import time
+from datetime import datetime,timezone
+
+from app.d5.prospective import atomic_json,clock_snapshot
+from app.d5.store import code_version
+
+ROOT=Path(__file__).resolve().parents[1]
+EVIDENCE=ROOT/'analysis/d5/clock_sync_20260920_091052'
+DATA=ROOT/'data/d5_24h_20260920_085530'
+STATUS=EVIDENCE/'launch_gate_status.json'
+
+
+def evaluate(sample,service):
+    measurements={}
+    for command in sample['commands']:
+        parts=command['command']
+        host=next((v.split(':',1)[1] for v in parts if v.startswith('/computer:')),None)
+        if host:
+            offsets=[float(v.replace(',','.')) for v in re.findall(r'^\s*\d{1,2}:\d{2}:\d{2},\s*([+-]\d+[.,]\d+)s\s*$',command.get('stdout',''),re.M)]
+            measurements[host]={'offsets_seconds':offsets,'exit_code':command.get('exit_code'),
+                                'median_seconds':statistics.median(offsets) if offsets else None}
+    status=sample['commands'][0]
+    okay=service=='Running' and status.get('exit_code')==0 and 'time.windows.com' in status.get('stdout','')
+    for host in ('time.windows.com','time.cloudflare.com'):
+        values=measurements.get(host,{})
+        offsets=values.get('offsets_seconds',[])
+        okay=okay and values.get('exit_code')==0 and len(offsets)>=3 and all(abs(v)<=.05 for v in offsets)
+    return bool(okay),measurements
+
+
+def main():
+    if STATUS.exists():
+        raise FileExistsError('A gate already exists; inspect it instead of creating a duplicate')
+    initial_version=code_version()
+    state={'phase':'WAITING_CLOCK','pid':os.getpid(),'started_utc':datetime.now(timezone.utc).isoformat(),
+           'mode':'SHADOW','strategy':'NO_TRADE','capital':500,'research_allowed':False,
+           'threshold_seconds':.05,'required_consecutive_checks':2,'maximum_wait_seconds':14400,
+           'preflight_code_version':initial_version}
+    def update(**changes):
+        state.update(changes); state['updated_utc']=datetime.now(timezone.utc).isoformat()
+        atomic_json(STATUS,state)
+    awake=False
+    try:
+        awake=bool(ctypes.windll.kernel32.SetThreadExecutionState(0x80000001))
+        if not awake: raise OSError('System wakefulness request failed')
+        update(keep_awake=True)
+        began=time.monotonic(); consecutive=0; attempt=0
+        while time.monotonic()-began<14400:
+            attempt+=1
+            service=subprocess.run(['powershell.exe','-NoProfile','-Command','(Get-Service W32Time).Status.ToString()'],capture_output=True,text=True,timeout=15).stdout.strip()
+            sample=clock_snapshot()
+            filename=f'convergence_{attempt:04d}.json'
+            with (EVIDENCE/filename).open('x',encoding='utf-8') as f: json.dump(sample,f,indent=2)
+            okay,measurements=evaluate(sample,service)
+            consecutive=consecutive+1 if okay else 0
+            update(attempt=attempt,consecutive_valid_checks=consecutive,service_status=service,
+                   ntp=measurements,latest_clock_evidence=str(EVIDENCE/filename))
+            if consecutive>=2: break
+            time.sleep(60)
+        else:
+            update(phase='CLOCK_NOT_CONVERGED',error='No launch: NTP gate did not pass within four hours')
+            return 2
+        if code_version()!=initial_version:
+            update(phase='PREFLIGHT_BLOCKED',error='Application code changed after preflight; no launch')
+            return 2
+        update(phase='PREFLIGHT')
+        with (EVIDENCE/'prelaunch_tests.log').open('x',encoding='utf-8') as log:
+            result=subprocess.run([sys.executable,'-B','-m','unittest','discover','-s','tests','-v'],
+                                   cwd=ROOT/'backend',stdout=log,stderr=subprocess.STDOUT,timeout=180)
+        if result.returncode: raise RuntimeError('Prelaunch tests failed')
+        if shutil.disk_usage(DATA).free < 120*1024**3:
+            raise RuntimeError('Less than the planned 120 GiB storage budget remains; no launch')
+        tag=datetime.now().strftime('%Y%m%d_%H%M%S')
+        db=DATA/f'd5_live_24h_{tag}.db'
+        out=ROOT/'analysis/d5'/f'24h_{tag}'
+        stdout=ROOT/'analysis/d5'/f'24h_{tag}_stdout.log'
+        stderr=ROOT/'analysis/d5'/f'24h_{tag}_stderr.log'
+        command=[sys.executable,'-u','-B',str(ROOT/'backend/run_d5_24h.py'),'--db',str(db),'--out',str(out),'--seconds','86520']
+        with stdout.open('x',encoding='utf-8') as log,stderr.open('x',encoding='utf-8') as errors:
+            proc=subprocess.Popen(command,cwd=ROOT/'backend',stdout=log,stderr=errors,creationflags=subprocess.CREATE_NO_WINDOW)
+        update(phase='LAUNCHED',collector_launcher_pid=proc.pid,database=str(db),output=str(out),
+               collector_status=str(out/'status.json'),stdout=str(stdout),stderr=str(stderr),
+               launched_utc=datetime.now(timezone.utc).isoformat(),requested_seconds=86520)
+        result=proc.wait()
+        update(phase='RUN_FINISHED',collector_exit_code=result,finished_utc=datetime.now(timezone.utc).isoformat())
+        return result
+    except BaseException as exc:
+        update(phase='FAILED',error=repr(exc))
+        raise
+    finally:
+        if awake:
+            ctypes.windll.kernel32.SetThreadExecutionState(0x80000000)
+            update(keep_awake=False)
+
+
+if __name__=='__main__': raise SystemExit(main())

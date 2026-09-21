@@ -1,0 +1,26 @@
+{
+  "url": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1789304400",
+  "retrieved_utc": "2026-09-20T11:19:12.126573+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 11:19:12 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "set-cookie": "__cf_bm=RU0dOZhJZuWOvE721f3MTH.Ep95IhsYj6Nn2cZnlMsE-1789903152.1270587-1.0.1.1-J.yALoYs29qML9vmImBGzQem0im6JlnzIAsK9Y5SO5tOPVQDvFwZZZ9wzMGu_5FXamPtXQNphubLXnJ.Wuy9YqlCrupg9pJu9UcGmJDNIvjHkMiU0EXgs51iz95pVh4O; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 11:49:12 GMT",
+    "Server": "cloudflare",
+    "vary": "Accept-Encoding,Origin",
+    "x-envoy-upstream-service-time": "21",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "Server-Timing": "cfCacheStatus;desc=\"HIT\"",
+    "last-modified": "Sun, 20 Sep 2026 11:19:12 GMT",
+    "expires": "Sun, 20 Sep 2026 11:24:12 GMT",
+    "Cache-Control": "public, max-age=300",
+    "cf-cache-status": "HIT",
+    "link": "</schemas/Market.json>; rel=\"describedBy\"",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "CF-RAY": "a3e06f0cc85f3ce9-CDG"
+  },
+  "sha256": "e1abdd653d93a3d26045a6d08c61b3e0d74fe14b41c4352cce6157ccc54af2ce",
+  "bytes": 5043
+}

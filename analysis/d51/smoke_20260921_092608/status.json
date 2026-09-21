@@ -1,0 +1,16 @@
+{
+  "pid": 16780,
+  "phase": "PREFLIGHT_PASS_NO_COLLECTION",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_092608.db",
+  "started_utc": "2026-09-21T07:26:08.450499+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T07:26:47.728915+00:00"
+}

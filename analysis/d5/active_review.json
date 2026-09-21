@@ -1,0 +1,15 @@
+{
+  "paper_started": false,
+  "alert_seconds": 3600,
+  "previous_completed_audit": "analysis\\d5\\full_review_20260920_201805",
+  "research_allowed": false,
+  "launcher_pid": 3440,
+  "stdout": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402_stdout.log",
+  "out": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402",
+  "cache_kib": 131072,
+  "stderr": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402_stderr.log",
+  "started_utc": "2026-09-20T19:44:02.6628708Z",
+  "tests_passed": 29,
+  "benchmark": "analysis\\d5\\cache_probe_20260920_214309\\BENCHMARK.json",
+  "hard_timeout": false
+}

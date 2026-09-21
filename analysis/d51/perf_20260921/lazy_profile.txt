@@ -1,0 +1,30 @@
+         602130 function calls (566130 primitive calls) in 1.396 seconds
+
+   Ordered by: cumulative time
+   List reduced from 54 to 22 due to restriction <22>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    0.048    0.000    1.273    0.001 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\observer.py:59(observe)
+     2000    0.048    0.000    1.063    0.001 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:114(book)
+    10004    0.018    0.000    0.657    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:81(pack)
+    10004    0.011    0.000    0.530    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:19(encode)
+    10004    0.033    0.000    0.519    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py:185(dumps)
+     2000    0.024    0.000    0.486    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:100(event)
+    10004    0.023    0.000    0.478    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py:185(encode)
+    10004    0.442    0.000    0.442    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py:207(iterencode)
+     6004    0.221    0.000    0.221    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+     4000    0.013    0.000    0.169    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:70(matches)
+     6000    0.005    0.000    0.133    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:48(fields)
+     6000    0.008    0.000    0.128    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\dataclasses.py:1387(asdict)
+42000/6000    0.053    0.000    0.113    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\dataclasses.py:1411(_asdict_inner)
+    16000    0.029    0.000    0.103    0.000 {built-in method builtins.all}
+     2004    0.099    0.000    0.099    0.000 {built-in method zlib.compress}
+        1    0.000    0.000    0.076    0.076 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:138(flush)
+        1    0.076    0.076    0.076    0.076 {method 'commit' of 'sqlite3.Connection' objects}
+     2000    0.013    0.000    0.061    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\tests\test_d5.py:23(snapshot)
+     6000    0.035    0.000    0.051    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\dataclasses.py:1357(fields)
+     4000    0.013    0.000    0.044    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:32(book_before_expiry)
+   130004    0.038    0.000    0.038    0.000 {method 'get' of 'dict' objects}
+    12000    0.025    0.000    0.035    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:71(<genexpr>)
+
+

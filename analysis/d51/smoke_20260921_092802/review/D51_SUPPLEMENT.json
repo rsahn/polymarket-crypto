@@ -1,0 +1,74 @@
+{
+  "contract": "D5.1",
+  "rows": 760478,
+  "book_events": 745392,
+  "book_sides": 1490784,
+  "btc_events": 13541,
+  "failures": {},
+  "gap_counts": {
+    "STARTUP_GAP": 3,
+    "SHUTDOWN_GAP": 3
+  },
+  "gaps": [
+    {
+      "feed": "5m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789975721563,
+      "to_ms": 1789975722453,
+      "gap_ms": 890,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789975721563,
+      "to_ms": 1789975722591,
+      "gap_ms": 1028,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789975721563,
+      "to_ms": 1789975723428,
+      "gap_ms": 1865,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789977041659,
+      "to_ms": 1789977041830,
+      "gap_ms": 171,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789977041829,
+      "to_ms": 1789977041830,
+      "gap_ms": 1,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789977041661,
+      "to_ms": 1789977041830,
+      "gap_ms": 169,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    }
+  ]
+}

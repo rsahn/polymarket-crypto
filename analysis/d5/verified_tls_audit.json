@@ -1,0 +1,60 @@
+{
+  "SESSION": {
+    "session_id": "aa38ec01-4615-411b-9ccd-087c4071392c",
+    "started_at_ms": 1789885378995,
+    "ended_at_ms": 1789885409133,
+    "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:ce03370778ea21fb1a77eac53f236c26b700a0ea86dbc3bbda877e82f7e83b6e",
+    "schema_version": 1,
+    "mode": "SHADOW",
+    "status": "STOPPED",
+    "config_json": "{\"depth_levels\":20,\"mode\":\"SHADOW\",\"reconnect_after\":0,\"seconds\":20.0,\"strategy\":\"NO_TRADE\"}"
+  },
+  "ROWS": 0,
+  "TOTAL_EVENTS": 173,
+  "REAL_MARKETS": 0,
+  "5M_MARKETS": 0,
+  "15M_MARKETS": 0,
+  "CROSS_MARKET_VIOLATIONS": 0,
+  "POST_EXPIRY_EVENTS": 0,
+  "POST_EXPIRY_ANCHORS": 0,
+  "MISSING_TOKEN_IDS": 0,
+  "AVAILABILITY_REGRESSIONS": 0,
+  "EXPIRED_OPEN_ANCHORS": 0,
+  "BTC_TICKS": 160,
+  "RECONNECTS": 0,
+  "KINDS": {
+    "BTC": 160,
+    "BTC_CONNECTED": 1,
+    "DISCOVERY_ERROR": 11,
+    "SESSION_END": 1
+  },
+  "REJECTIONS": {},
+  "LATENCY": [
+    {
+      "kind": "BTC",
+      "n": 160,
+      "mean_ms": -460.04375,
+      "min_ms": -475,
+      "max_ms": -259,
+      "missing_source_timestamp": 0,
+      "clock_ahead_over_2s": 0,
+      "mean_processing_ms": 0.01875,
+      "max_processing_ms": 1
+    }
+  ],
+  "DEPTH": [],
+  "MARKETS": [],
+  "GAPS": [],
+  "BOUNDS": {
+    "first_ms": 1789885379343,
+    "last_ms": 1789885409133
+  },
+  "SMOKE_VALIDATED": false,
+  "SMOKE_FAILURES": [
+    "MISSING_FEED_COVERAGE",
+    "5M_ROTATION_NOT_OBSERVED",
+    "RECONNECT_NOT_OBSERVED"
+  ],
+  "RESEARCH_ALLOWED": false,
+  "RESEARCH_REASON": "Separate 24h+ quality review required; no automatic optimization"
+}

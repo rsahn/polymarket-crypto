@@ -1,0 +1,14 @@
+{
+  "pid": 18624,
+  "status": "COMPLETE",
+  "source_writes": false,
+  "research_allowed": false,
+  "paper_started": false,
+  "phase": "SUPPLEMENTS_COMPLETE",
+  "elapsed_seconds": 10152.14804260002,
+  "updated_utc": "2026-09-20T23:33:59.837389+00:00",
+  "core_pid": 14672,
+  "core_step": 8,
+  "core_alive": false,
+  "D5_DATA_QUALITY": "FAIL"
+}

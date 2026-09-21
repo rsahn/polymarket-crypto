@@ -1,0 +1,31 @@
+{
+  "technical_only": true,
+  "production_unchanged": true,
+  "n": 5000,
+  "samples_seconds": {
+    "json_zlib": [
+      0.7519238999811932,
+      0.6851098000770435,
+      0.6851069999393076
+    ],
+    "guarded_msgpack_zlib": [
+      1.121929100016132,
+      1.0413953999523073,
+      1.0886424999916926
+    ]
+  },
+  "median_seconds": {
+    "json_zlib": 0.6851098000770435,
+    "guarded_msgpack_zlib": 1.0886424999916926
+  },
+  "total_encoded_bytes": {
+    "json_zlib": 5243262,
+    "guarded_msgpack_zlib": 6653060
+  },
+  "canonical_decoded_equality": true,
+  "float_bits_test": "PASS",
+  "invalid_rejections": "PASS",
+  "candidate_sha256": {
+    "guarded_msgpack_zlib": "0f5f27464a2e8055cce5af5b7d7e34fa406f62087b77b6f8f589c47ae1d06c96"
+  }
+}

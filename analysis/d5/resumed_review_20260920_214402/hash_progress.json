@@ -1,0 +1,11 @@
+{
+  "pid": 18624,
+  "status": "COMPLETE",
+  "phase": "FULL_SOURCE_SHA256",
+  "bytes_processed": 26186612736,
+  "total_bytes": 26186612736,
+  "bytes_per_second": 297656244.89200217,
+  "percent": 100.0,
+  "elapsed_seconds": 87.9760232999688,
+  "updated_utc": "2026-09-20T23:28:43.733898+00:00"
+}

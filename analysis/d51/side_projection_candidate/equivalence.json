@@ -1,0 +1,15 @@
+{
+  "pass_all": true,
+  "counts": {
+    "5m": 57052,
+    "15m": 20425
+  },
+  "snapshot_sha256": {
+    "5m": "9cf08cdbb9e972c80563ae010b1700bd51ccec7a10ae491b0f7935859012e861",
+    "15m": "d0922b17c2523e49c3d62f2741e069ec6c9340de6a0500f37b91c4987ebd4692"
+  },
+  "seconds": 39.29122160002589,
+  "reference_sha256": "17e4b48d6ffe837142c5561f8ead4954ea2deb2bc1c0ffe7537f299d1c5b427e",
+  "candidate_sha256": "1a8cb8e77b75f15649ca423187e3f8a2246f90b6462c3aa9c44fa374bd9ec0ed",
+  "scope": "every normalized snapshot from the two bounded raw captures; identity fields equal dataclass reference"
+}

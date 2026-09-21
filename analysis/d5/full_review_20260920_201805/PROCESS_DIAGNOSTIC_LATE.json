@@ -1,0 +1,55 @@
+{
+  "process": {
+    "ProcessId": 10548,
+    "CreationDate": "2026-09-20T20:18:05.590577+02:00",
+    "KernelModeTime": 3622500000,
+    "UserModeTime": 2630468750,
+    "ReadTransferCount": 101399338238,
+    "WriteTransferCount": 15673708614,
+    "ReadOperationCount": 24757337,
+    "WriteOperationCount": 3831751,
+    "WorkingSetSize": 6938624
+  },
+  "captured_utc": "2026-09-20T19:15:42.5004542Z",
+  "progress": {
+    "pid": 10548,
+    "status": "RUNNING",
+    "steps_total": 8,
+    "research_allowed": false,
+    "paper_started": false,
+    "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+    "minimum_seconds": 10800,
+    "budget_seconds": 3600,
+    "step": 3,
+    "stage": "SQLite integrity_check source",
+    "rows_processed": null,
+    "total_rows": null,
+    "percent": null,
+    "rows_per_second": null,
+    "detail": null,
+    "elapsed_seconds": 3426.311502100085,
+    "stage_elapsed_seconds": 853.0699671000475,
+    "updated_utc": "2026-09-20T21:15:12.132402+02:00",
+    "completed_steps": [
+      {
+        "step": 1,
+        "stage": "Projection mÃ©tadonnÃ©es neuve",
+        "status": "PASS",
+        "seconds": 1772.291682299925,
+        "details": {
+          "note": "Derived metadata only; not integrity or replay evidence"
+        }
+      },
+      {
+        "step": 2,
+        "stage": "ExÃ©cution audit_next complet",
+        "status": "PASS",
+        "seconds": 800.8623639999423,
+        "details": {
+          "failures": []
+        }
+      }
+    ],
+    "sql": "PRAGMA temp_store=FILE"
+  }
+}

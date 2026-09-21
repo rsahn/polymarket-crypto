@@ -1,0 +1,21 @@
+{
+  "decided_utc": "2026-09-20T10:46:39.683719+00:00",
+  "authorized_by": "Explicit user instruction in this task",
+  "previous_threshold_seconds": 0.05,
+  "previous_gate_passed": false,
+  "new_max_absolute_offset_seconds": 0.1,
+  "required_consecutive_checks": 2,
+  "samples_per_reference_per_check": 3,
+  "references": [
+    "time.windows.com",
+    "time.cloudflare.com"
+  ],
+  "decision_before_collection": true,
+  "historical_timestamps_modified": false,
+  "raw_timestamps_preserved": true,
+  "ntp_evidence": "All earlier evidence retained; new measurements stored in this directory",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "research_allowed": false
+}

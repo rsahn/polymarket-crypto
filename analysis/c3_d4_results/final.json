@@ -1,0 +1,14 @@
+{
+  "decision": "NO EDGE",
+  "oos_opened": false,
+  "oos_results": null,
+  "reason": "NO_TRAIN_CANDIDATE",
+  "paper_allowed": false,
+  "abstention_portfolio": {
+    "initial": 500,
+    "final": 500,
+    "pnl": 0,
+    "drawdown": 0,
+    "trades": 0
+  }
+}

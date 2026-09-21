@@ -1,0 +1,10 @@
+{
+  "checked_utc": "2026-09-20T11:35:28.934570+00:00",
+  "ledger_rows": 64434,
+  "known_inventory_rows_invariant_checked": 62375,
+  "inventory_invariants_pass": true,
+  "complete_example_count": 5,
+  "outputs_present": true,
+  "d5_database_opened": false,
+  "scope": "analysis/bonereaper_public only"
+}

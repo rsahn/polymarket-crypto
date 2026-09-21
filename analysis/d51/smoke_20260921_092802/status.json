@@ -1,0 +1,68 @@
+{
+  "pid": 14376,
+  "phase": "COMPLETE",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_092802.db",
+  "started_utc": "2026-09-21T07:28:02.361024+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T08:10:36.804402+00:00",
+  "session_id": "08a1cee0-26c3-4fe3-9d15-a569310fb7c1",
+  "elapsed_seconds": 1310.0146655999124,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 12,
+    "BOOK": 735953,
+    "REJECT": 1448,
+    "BTC_CONNECTED": 1,
+    "BTC": 13458,
+    "EXPIRE": 7,
+    "ROTATION": 7,
+    "WS_ERROR": 3,
+    "RECONNECT": 6
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1789976700",
+      "received_ts_ms": 1789977031570
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1789977000",
+      "received_ts_ms": 1789977031556
+    }
+  },
+  "free_bytes": 118230118400,
+  "last_clock_failures": [
+    "W32TIME_SYNC_ERROR"
+  ],
+  "collection": {
+    "session_id": "08a1cee0-26c3-4fe3-9d15-a569310fb7c1",
+    "elapsed_seconds": 1328.9308955000015,
+    "collection_seconds": 1320.219239099999,
+    "counts": {
+      "CLOCK_SAMPLE": 44,
+      "ACTIVATE": 12,
+      "BOOK": 745392,
+      "REJECT": 1461,
+      "BTC_CONNECTED": 1,
+      "BTC": 13541,
+      "EXPIRE": 7,
+      "ROTATION": 7,
+      "WS_ERROR": 3,
+      "RECONNECT": 6,
+      "COLLECTION_STOP": 1,
+      "SESSION_END": 3
+    },
+    "status": "STOPPED"
+  },
+  "D51_DATA_QUALITY": "FAIL",
+  "failures": [
+    "W32TIME_SYNC_ERROR"
+  ]
+}

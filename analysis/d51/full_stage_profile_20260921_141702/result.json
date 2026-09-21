@@ -1,0 +1,83 @@
+{
+  "technical_only": true,
+  "not_D6": true,
+  "not_a_quality_smoke": true,
+  "profile_overhead_present": false,
+  "frames": 77477,
+  "seconds": 46.72810270008631,
+  "frames_per_second": 1658.0386431965467,
+  "timing_seconds": {
+    "parse": 1.1328094081254676,
+    "normalize": 12.791587208397686,
+    "observer_and_store": 28.50972892018035
+  },
+  "stage_counters": {
+    "5m:parse": {
+      "calls": 57052,
+      "wall_ns": 860562300,
+      "cpu_ns": 625000000,
+      "max_wall_ns": 6773000,
+      "over_5ms": 1,
+      "over_50ms": 0
+    },
+    "5m:normalize": {
+      "calls": 57052,
+      "wall_ns": 9474038300,
+      "cpu_ns": 8953125000,
+      "max_wall_ns": 8382700,
+      "over_5ms": 6,
+      "over_50ms": 0
+    },
+    "5m:observer_and_store": {
+      "calls": 57052,
+      "wall_ns": 21183777100,
+      "cpu_ns": 21421875000,
+      "max_wall_ns": 21061300,
+      "over_5ms": 28,
+      "over_50ms": 0
+    },
+    "15m:parse": {
+      "calls": 20425,
+      "wall_ns": 293487800,
+      "cpu_ns": 281250000,
+      "max_wall_ns": 1795400,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "15m:normalize": {
+      "calls": 20425,
+      "wall_ns": 3354646900,
+      "cpu_ns": 3531250000,
+      "max_wall_ns": 6528200,
+      "over_5ms": 2,
+      "over_50ms": 0
+    },
+    "15m:observer_and_store": {
+      "calls": 20425,
+      "wall_ns": 7378904100,
+      "cpu_ns": 6984375000,
+      "max_wall_ns": 24741700,
+      "over_5ms": 7,
+      "over_50ms": 0
+    },
+    "commit": {
+      "calls": 118,
+      "wall_ns": 3034973900,
+      "cpu_ns": 2203125000,
+      "max_wall_ns": 97103200,
+      "over_5ms": 88,
+      "over_50ms": 23
+    }
+  },
+  "capture_span_seconds": 59.6826452,
+  "counts": {
+    "ACTIVATE": 2,
+    "BOOK": 77436,
+    "REJECT": 41
+  },
+  "source_hashes": {
+    "5m_raw.jsonl": "3a61eaf67b01eca1c8cf47b43ce85f6b36b8060d07cec18da079a07418c63808",
+    "15m_raw.jsonl": "0dfb946476d2810fe76df6a3193ea52c0b0fd70a7284980d7b90bab865acd35e"
+  },
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:835b1a419e783673db86432443c234a518225f0e8a4dfb19c6f71985872b5b3f"
+}

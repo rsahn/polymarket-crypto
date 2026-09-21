@@ -1,0 +1,97 @@
+{
+  "updated_utc": "2026-09-20T23:44:35.269794+00:00",
+  "source_immutable": true,
+  "storage_observation": {
+    "media": "SSD",
+    "bus": "NVMe",
+    "health": "Healthy",
+    "source_attributes": [
+      "Archive",
+      "Compressed"
+    ],
+    "source_logical_bytes": 26186612736,
+    "physical_memory_total_kib": 8058096,
+    "physical_memory_free_observed_kib": 864204,
+    "interpretation": "Compression and limited free RAM are observed, not a proven attribution of latency. No decompression, attribute change, or source rewrite performed."
+  },
+  "requirements": {
+    "source_and_code_sha256": {
+      "evidence": "SOURCE_HASH_VERIFICATION.json",
+      "state": "PASS_ATTESTED"
+    },
+    "auditor_next_full": {
+      "evidence": "AUDIT_NEXT_REPORT.json + CARRIED_AUDIT_PROVENANCE.json",
+      "state": "PASS_ATTESTED"
+    },
+    "integrity_check_full": {
+      "evidence": "INTEGRITY_CHECK.json",
+      "state": "PASS",
+      "result": [
+        [
+          "ok"
+        ]
+      ],
+      "seconds": 3395.4392412999878
+    },
+    "foreign_key_check": {
+      "evidence": "FOREIGN_KEY_CHECK.json",
+      "state": "PASS",
+      "result": [],
+      "seconds": 932.008058300009
+    },
+    "anchors_expiry_crossmarket_tokens_feed_coverage_rotations_reconnects_rejections": {
+      "evidence": "DATA_QUALITY_REPORT.json + PRELIMINARY_QUALITY_FINDINGS.json",
+      "state": "METRICS_COMPLETE_POLICY_FINDINGS_PRESENT"
+    },
+    "accepted_source_timestamp_regressions": {
+      "evidence": "TIMESTAMP_SUPPLEMENT.json",
+      "state": "COMPLETE_FINDING_REQUIRES_METHODOLOGICAL_DECISION",
+      "command": "backend/.venv/Scripts/python.exe -B analysis/d5/auditor_next/timestamp_supplement.py --review analysis/d5/resumed_review_20260920_214402"
+    },
+    "ntp_evolution_raw": {
+      "evidence": "NTP_RAW_REVIEW.json",
+      "state": "COMPLETED_FROM_9_RAW_FILES",
+      "limitations": "Discrete probes <=79.1627ms around/during collection; raw W32Time stale synchronization warnings retained."
+    },
+    "independent_replay_1": {
+      "evidence": "REPLAY_1.json + REPLAY_1_INSPECTION.json",
+      "state": "PASS_COMPLETENESS_AND_NOTRADE",
+      "seconds": 3876.2643914000364
+    },
+    "independent_replay_2": {
+      "evidence": "REPLAY_2.json",
+      "state": "PASS_COMPLETENESS_AND_NOTRADE",
+      "seconds": 3373.2393866999773
+    },
+    "complete_results_final_state_decision_and_result_hash_equality": {
+      "evidence": "INDEPENDENT_REPLAY_INSPECTION.json + REPLAY_1.json + REPLAY_2.json",
+      "state": "PASS"
+    },
+    "final_d5_verdict": {
+      "state": "FAIL_COMPLETE_DIAGNOSED",
+      "condition": "Only after complete source quality, provenance, supplements and replay comparisons. Tool failures require automatic diagnosis; real data defects block D6/Paper.",
+      "core_failures": [
+        "GAPS_REQUIRE_REVIEW_15m",
+        "GAPS_REQUIRE_REVIEW_5m",
+        "GAPS_REQUIRE_REVIEW_BTC",
+        "UNCLEAN_STOP"
+      ],
+      "evidence": "SUPERVISOR_FINAL_REPORT.md"
+    },
+    "d6": {
+      "state": "NOT_EXECUTED_CURRENT_REVIEW_BLOCKED_D5_FAIL",
+      "condition": "TRAIN/VALIDATION then OOS only after strategy freeze; no adjustment after OOS"
+    },
+    "paper500": {
+      "state": "NOT_STARTED",
+      "condition": "Prepare only; explicit user launch approval required"
+    }
+  },
+  "supervision_recovery": {
+    "archive": "supervision_recovery_20260920_2244",
+    "current_post_pid": 18624,
+    "code_manifest": "POST_REVIEW_CODE_MANIFEST_V2.json",
+    "targeted_tests_passed": 9,
+    "core_untouched": 14672
+  }
+}

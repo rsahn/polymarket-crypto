@@ -1,0 +1,73 @@
+{
+  "status": "DESIGN_ONLY_NOT_EXECUTED",
+  "requires": [
+    "D5 collection stopped",
+    "D5 data quality and deterministic replays validated",
+    "explicit authorization for the comparison"
+  ],
+  "identity": {
+    "profile": "bonereaper",
+    "proxy_wallet": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+    "unverified_address_excluded": "0xcd30457c790d8b35a08bcf3f894ad6bb52bc2dd0"
+  },
+  "join_key": [
+    "condition_id",
+    "token_id",
+    "market_duration_seconds",
+    "market_generation"
+  ],
+  "public_action": {
+    "record_id": "sha256 canonical observed operation",
+    "transaction_hash": "string; not a unique fill identifier",
+    "timestamp_raw_seconds": "int64, unchanged",
+    "timestamp_semantics": "API timestamp; decision and matching times UNKNOWN",
+    "timestamp_bin_start_ms": "raw_seconds*1000, derived field only",
+    "timestamp_bin_end_exclusive_ms": "(raw_seconds+1)*1000",
+    "retrieved_utc": "from raw HTTP metadata",
+    "side": "BUY/SELL",
+    "outcome": "Up/Down",
+    "price_api": "decimal, potentially aggregated",
+    "quantity_api": "decimal",
+    "usdc_size_reported": "decimal",
+    "raw_reference": "filename + row index"
+  },
+  "d5_book_read_only_after_validation": {
+    "source_ts_ms": "raw int64",
+    "received_ts_ms": "raw int64",
+    "available_ts_ms": "D5 availability timestamp per validated schema",
+    "session_id": "string",
+    "condition_id": "string",
+    "token_id": "string",
+    "market_generation": "string or generation counter",
+    "best_bid": "decimal",
+    "best_ask": "decimal",
+    "depth": "raw book rows",
+    "quality_flags": "gaps, crossed/stale/expired, out of order, rejected"
+  },
+  "btc_context": {
+    "feed": "identify feed; do not equate with resolution oracle",
+    "windows_seconds": [
+      1,
+      5,
+      10,
+      30,
+      60
+    ],
+    "selection": "strictly preceding conservative public timestamp lower bound with availability constraints",
+    "features": "past-only changes; no future label or outcome in features"
+  },
+  "inventory_context": {
+    "selection": "known end-of-second state strictly before action second",
+    "qty_up": "conditional observed quantity or null",
+    "qty_down": "conditional observed quantity or null",
+    "gross_cost_up": "conditional or null",
+    "gross_cost_down": "conditional or null",
+    "paired_qty": "conditional or null",
+    "imbalance": "conditional or null",
+    "within_second_unknown": "boolean"
+  },
+  "selection_rule": "as-of backward using records with both source and availability before lower time bound, never across identities/generations; exclude missing/gap/expiry-invalid snapshots; record age; do not use resolution information",
+  "timing_warning": "A source timestamp bin is not a bound on the true decision time. Any alignment remains contextual, not causal. Evaluate lag sensitivity only as predeclared diagnostic after authorization.",
+  "current_dataset_overlap": "NONE: historical cohort ends 2026-09-20T00:00:00Z, before active D5 start. Fetch a separate public activity interval matching validated D5 later.",
+  "research_allowed_changed": false
+}

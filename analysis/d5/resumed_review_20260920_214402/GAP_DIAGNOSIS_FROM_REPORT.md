@@ -1,0 +1,23 @@
+# Diagnostic des gaps — règles qualité inchangées
+
+Sur les 15 gaps de réception > 5 s, six joignent exactement la dernière réception d’un marché 5m à la première réception du suivant. Sept sont internes à un marché (4 × 5m, 3 × 15m) et deux concernent le flux BTC. Les exemples couvrent tous les gaps comptés.
+
+Cette classification localise les interruptions ; elle ne prouve ni perte de messages ni cause réseau. La présence d’une rotation ne vaut pas dérogation au seuil. Les 15 gaps restent à examiner avant toute progression D6.
+
+| Flux | Début UTC | Fin UTC | Gap ms | Classe |
+|---|---|---|---:|---|
+| 15m | 2026-09-20T11:27:36.383000+00:00 | 2026-09-20T11:27:42.934000+00:00 | 6551 | WITHIN_MARKET |
+| 15m | 2026-09-20T12:22:43.945000+00:00 | 2026-09-20T12:22:49.996000+00:00 | 6051 | WITHIN_MARKET |
+| 15m | 2026-09-20T13:08:05.294000+00:00 | 2026-09-20T13:08:10.369000+00:00 | 5075 | WITHIN_MARKET |
+| 5m | 2026-09-20T11:07:56.409000+00:00 | 2026-09-20T11:08:01.421000+00:00 | 5012 | WITHIN_MARKET |
+| 5m | 2026-09-20T11:12:26.655000+00:00 | 2026-09-20T11:12:31.844000+00:00 | 5189 | WITHIN_MARKET |
+| 5m | 2026-09-20T11:19:13.937000+00:00 | 2026-09-20T11:19:18.979000+00:00 | 5042 | WITHIN_MARKET |
+| 5m | 2026-09-20T11:19:59.814000+00:00 | 2026-09-20T11:20:05.623000+00:00 | 5809 | EXACT_MARKET_BOUNDARY |
+| 5m | 2026-09-20T11:24:09.348000+00:00 | 2026-09-20T11:24:15.230000+00:00 | 5882 | WITHIN_MARKET |
+| 5m | 2026-09-20T11:24:59.971000+00:00 | 2026-09-20T11:25:05.547000+00:00 | 5576 | EXACT_MARKET_BOUNDARY |
+| 5m | 2026-09-20T11:34:59.995000+00:00 | 2026-09-20T11:35:08.459000+00:00 | 8464 | EXACT_MARKET_BOUNDARY |
+| 5m | 2026-09-20T12:04:59.532000+00:00 | 2026-09-20T12:05:08.089000+00:00 | 8557 | EXACT_MARKET_BOUNDARY |
+| 5m | 2026-09-20T12:09:59.758000+00:00 | 2026-09-20T12:10:07.454000+00:00 | 7696 | EXACT_MARKET_BOUNDARY |
+| 5m | 2026-09-20T13:24:59.775000+00:00 | 2026-09-20T13:25:06.023000+00:00 | 6248 | EXACT_MARKET_BOUNDARY |
+| BTC | 2026-09-20T10:49:41.514000+00:00 | 2026-09-20T10:49:46.971000+00:00 | 5457 | BTC_FEED |
+| BTC | 2026-09-20T10:59:56.738000+00:00 | 2026-09-20T11:00:02.118000+00:00 | 5380 | BTC_FEED |

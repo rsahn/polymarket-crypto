@@ -1,0 +1,12 @@
+{
+  "frozen_utc": "2026-09-20T00:20:23.358242+00:00",
+  "policy": "NO_TRADE",
+  "rule": null,
+  "reason": "NO_TRAIN_CANDIDATE",
+  "manifest_sha256": "1459521a7f4f5abb029ee4d90cb6b843fa9d8e6bab1bb1a4af990aaabbf1a6c7",
+  "development_sha256": "f9581d895c8cae085db03c2b154649f5c2be33275987f1e5646886be5194a7d8",
+  "nomination_sha256": "5ecf2e4185f7e8ebf8eb08238ad8e94ff7b4fed5c8e204634fead2ed85b8dc55",
+  "candidates_sha256": "c4e975487049f44856986d3098045795865994477c7956c99337a982e138f3d7",
+  "paper_allowed": false,
+  "data_quality_block": true
+}

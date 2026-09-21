@@ -1,0 +1,173 @@
+{
+  "contract": "D5.1",
+  "rows": 1400618,
+  "book_events": 1371683,
+  "book_sides": 2743366,
+  "btc_events": 26956,
+  "failures": {},
+  "gap_counts": {
+    "STARTUP_GAP": 3,
+    "TRANSITION_GAP": 6,
+    "RECONNECT_GAP": 3,
+    "SHUTDOWN_GAP": 3
+  },
+  "gaps": [
+    {
+      "feed": "5m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789994008818,
+      "to_ms": 1789994009696,
+      "gap_ms": 878,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789994008818,
+      "to_ms": 1789994009782,
+      "gap_ms": 964,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789994008818,
+      "to_ms": 1789994010360,
+      "gap_ms": 1542,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789994099998,
+      "to_ms": 1789994100885,
+      "gap_ms": 887,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789994315908,
+      "to_ms": 1789994316803,
+      "gap_ms": 895,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789994399992,
+      "to_ms": 1789994400902,
+      "gap_ms": 910,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789994473878,
+      "to_ms": 1789994474754,
+      "gap_ms": 876,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789994699992,
+      "to_ms": 1789994700998,
+      "gap_ms": 1006,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789994699749,
+      "to_ms": 1789994701012,
+      "gap_ms": 1263,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789994999999,
+      "to_ms": 1789995001206,
+      "gap_ms": 1207,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789995168691,
+      "to_ms": 1789995169656,
+      "gap_ms": 965,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789995299984,
+      "to_ms": 1789995300772,
+      "gap_ms": 788,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789995328878,
+      "to_ms": 1789995328880,
+      "gap_ms": 2,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789995328875,
+      "to_ms": 1789995328880,
+      "gap_ms": 5,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789995328672,
+      "to_ms": 1789995328880,
+      "gap_ms": 208,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    }
+  ],
+  "wire_regressions_diagnostic_only": 193,
+  "wire_worst_regression_ms": 160,
+  "wire_missing_timestamp_count": 0,
+  "reconnect_event_markers": 6,
+  "reconnect_attempts": 3,
+  "collection_stop_markers": 1,
+  "session_end_markers": 3
+}

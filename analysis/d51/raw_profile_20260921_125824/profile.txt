@@ -1,0 +1,53 @@
+         12123902 function calls in 17.871 seconds
+
+   Ordered by: cumulative time
+   List reduced from 72 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    19996    0.335    0.000    9.923    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\observer.py:59(observe)
+    19983    0.377    0.000    8.705    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:114(book)
+    19996    2.576    0.000    6.964    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:267(normalize_snapshot)
+   100016    0.145    0.000    5.779    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:81(pack)
+    19996    0.129    0.000    4.808    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:100(event)
+   120012    0.314    0.000    4.629    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py:185(dumps)
+   100016    0.098    0.000    4.308    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:19(encode)
+   120012    0.240    0.000    4.252    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py:185(encode)
+   120012    3.897    0.000    3.897    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py:207(iterencode)
+    60050    1.822    0.000    1.822    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+    19985    0.087    0.000    1.321    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:232(_process_event)
+    20084    1.243    0.000    1.243    0.000 {built-in method zlib.compress}
+    19670    0.915    0.000    1.049    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:121(_apply_price_changes)
+   179847    0.257    0.000    0.799    0.000 {built-in method builtins.all}
+   139894    0.566    0.000    0.787    0.000 {built-in method builtins.max}
+  3012480    0.740    0.000    0.740    0.000 {method 'get' of 'dict' objects}
+    79932    0.492    0.000    0.712    0.000 {built-in method builtins.min}
+       63    0.000    0.000    0.706    0.011 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:138(flush)
+       63    0.706    0.011    0.706    0.011 {method 'commit' of 'sqlite3.Connection' objects}
+    39966    0.096    0.000    0.642    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:74(matches)
+    20000    0.044    0.000    0.367    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\__init__.py:304(loads)
+    39966    0.088    0.000    0.331    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:32(book_before_expiry)
+   118826    0.060    0.000    0.314    0.000 {built-in method builtins.next}
+    20000    0.060    0.000    0.312    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py:340(decode)
+  1976249    0.221    0.000    0.221    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:394(<lambda>)
+  1976249    0.220    0.000    0.220    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:400(<lambda>)
+    20000    0.185    0.000    0.185    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\decoder.py:351(raw_decode)
+   279762    0.123    0.000    0.171    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:75(<genexpr>)
+    59964    0.088    0.000    0.147    0.000 {built-in method builtins.any}
+    78908    0.106    0.000    0.146    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:307(<genexpr>)
+    79932    0.146    0.000    0.146    0.000 {built-in method builtins.sorted}
+   500739    0.136    0.000    0.136    0.000 {built-in method builtins.isinstance}
+    19996    0.126    0.000    0.126    0.000 {built-in method _hashlib.openssl_sha256}
+    39966    0.057    0.000    0.120    0.000 {method 'extend' of 'list' objects}
+      216    0.002    0.000    0.117    0.001 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:102(_update_book)
+      432    0.075    0.000    0.115    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:75(_levels)
+   199830    0.067    0.000    0.096    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\observer.py:83(<genexpr>)
+    79264    0.095    0.000    0.095    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:412(<genexpr>)
+    79264    0.084    0.000    0.084    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:415(<genexpr>)
+    39983    0.043    0.000    0.078    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\collectors\polymarket_ws.py:206(_unwrap_event)
+    60164    0.065    0.000    0.065    0.000 {method 'encode' of 'str' objects}
+   120012    0.063    0.000    0.063    0.000 C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\json\encoder.py:105(__init__)
+   119898    0.047    0.000    0.063    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\store.py:34(<genexpr>)
+    59962    0.062    0.000    0.062    0.000 C:\Users\Ramy\Documents\polymarket-crypto\backend\app\d5\identity.py:48(fields)
+   179849    0.054    0.000    0.054    0.000 {method 'lower' of 'str' objects}
+
+

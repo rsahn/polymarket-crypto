@@ -1,0 +1,26 @@
+{
+  "url": "https://gamma-api.polymarket.com/markets?condition_ids=0x4536f9149b335e7ae41834518f3c0508a16272fc6ec7b41cf5ae0b64df3d51fe&closed=true",
+  "retrieved_utc": "2026-09-20T17:07:20.557713+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 17:07:20 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "deprecation": "true",
+    "Server": "cloudflare",
+    "sunset": "Fri, 01 May 2026 00:00:00 GMT",
+    "vary": "Accept-Encoding,Origin",
+    "warning": "299 - \"use /markets/keyset\"",
+    "x-envoy-upstream-service-time": "17",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "set-cookie": "__cf_bm=NYk.h7AIQ3htI8Bt2C1gRbzSPgP4FJx_QFZO0E2BWM8-1789924040.5389788-1.0.1.1-VSVRlFhM7bjkH0fleLbcb0A2e11nxAMm_DPpab3KEzvmg8BsP8BUG9xN1iL4QDpOvHmzltmaLIRob7M3jhxTD13xERwSej6YHKmOOGsaeSB.x95vGnuu3pRpC3hdp6gE; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 17:37:20 GMT",
+    "last-modified": "Sun, 20 Sep 2026 17:07:20 GMT",
+    "expires": "Sun, 20 Sep 2026 17:12:20 GMT",
+    "Cache-Control": "public, max-age=300",
+    "cf-cache-status": "HIT",
+    "CF-RAY": "a3e26d055ee99ea2-CDG"
+  },
+  "sha256": "b4312a5c6bbb8663ad47168b293ab290ef428f1ed813b897d3f0aeab93728c10"
+}

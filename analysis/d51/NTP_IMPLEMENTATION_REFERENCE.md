@@ -1,0 +1,1 @@
+NTP packet fields and four-timestamp offset/delay formulas: RFC 5905, https://www.rfc-editor.org/rfc/rfc5905.html . This probe preserves wire bytes and never adjusts the clock. Server root dispersion is distinct from sample jitter or Windows root dispersion.

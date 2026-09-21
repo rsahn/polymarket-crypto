@@ -1,0 +1,51 @@
+﻿**********************
+Début de la transcription Windows PowerShell
+Heure de début : 20260920091131
+Nom d'utilisateur : DESKTOP-E6HV095\Ramy
+Utilisateur runAs :  DESKTOP-E6HV095\Ramy
+Nom de la configuration : 
+Ordinateur : DESKTOP-E6HV095 (Microsoft Windows NT 10.0.19045.0)
+Application hôte : C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\sync_windows_time.ps1
+ID de processus : 4880
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcription démarrée, le fichier de sortie est C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\windows_sync_transcript.txt
+Envoi de la commande de resynchronisation à l’ordinateur local
+La commande s’est terminée correctement.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0443903s
+Dispersion de racine : 8.3612473s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:11:31
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5912218s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 0.0556990s
+time.windows.com,0x9
+
+
+Name      : W32Time
+Status    : Running
+StartType : Manual
+
+
+
+**********************
+Fin de la transcription Windows PowerShell
+Heure de fin : 20260920091132
+**********************

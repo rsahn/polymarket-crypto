@@ -1,0 +1,11 @@
+{
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:9269b63dde48bcfe80c5a4ecbeac8f3e7fce024ef7bdeead453f670775103ebf",
+  "requested_seconds": 1320,
+  "protocol_hashes": {
+    "NTP_IMPLEMENTATION_REFERENCE.md": "5a3898d340976628edcb878a03e495ba3e5822e21c0cf10d7da41cc00b78eee7",
+    "QUALITY_PROTOCOL.md": "91c3ee5059c9b91ce48028ff1d60b0dd34e7844f4b00f11f3777eeebd9afde95",
+    "TEMPORAL_CONTRACT.md": "6cb81a55ba1c4d5453e5e1c6bfea1cec3392823e119b020755957db0daae2264",
+    "USER_PROTOCOL.md": "53f01ce29a547949eb6de4ee85d34398477db1aec01667dcca45ae610752378a"
+  },
+  "created_utc": "2026-09-21T07:28:41.542152+00:00"
+}

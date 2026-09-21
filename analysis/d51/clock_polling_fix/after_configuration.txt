@@ -1,0 +1,43 @@
+[Configuration]
+
+EventLogFlags: 2 (Locale)
+AnnounceFlags: 10 (Locale)
+TimeJumpAuditOffset: 28800 (Locale)
+MinPollInterval: 6 (Locale)
+MaxPollInterval: 9 (Locale)
+MaxNegPhaseCorrection: 54000 (Locale)
+MaxPosPhaseCorrection: 54000 (Locale)
+MaxAllowedPhaseOffset: 1 (Locale)
+
+FrequencyCorrectRate: 4 (Locale)
+PollAdjustFactor: 5 (Locale)
+LargePhaseOffset: 50000000 (Locale)
+SpikeWatchPeriod: 900 (Locale)
+LocalClockDispersion: 10 (Locale)
+HoldPeriod: 5 (Locale)
+PhaseCorrectRate: 1 (Locale)
+UpdateInterval: 360000 (Locale)
+
+
+[Fournisseurs de temps]
+
+NtpClient (Locale)
+DllName: C:\WINDOWS\system32\w32time.dll (Locale)
+Enabled: 1 (Locale)
+InputProvider: 1 (Locale)
+AllowNonstandardModeCombinations: 1 (Locale)
+ResolvePeerBackoffMinutes: 15 (Locale)
+ResolvePeerBackoffMaxTimes: 7 (Locale)
+CompatibilityFlags: 2147483648 (Locale)
+EventLogFlags: 1 (Locale)
+LargeSampleSkew: 3 (Locale)
+SpecialPollInterval: 512 (Locale)
+Type: NTP (Locale)
+NtpServer: time.windows.com,0x8 (Locale)
+
+NtpServer (Locale)
+DllName: C:\WINDOWS\system32\w32time.dll (Locale)
+Enabled: 0 (Locale)
+InputProvider: 0 (Locale)
+
+

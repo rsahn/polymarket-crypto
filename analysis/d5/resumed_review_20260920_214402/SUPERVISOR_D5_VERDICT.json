@@ -1,0 +1,47 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "quality_failures": [
+    "ACCEPTED_TIMESTAMP_REGRESSION_BOOK_SOURCE",
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "UNCLEAN_STOP"
+  ],
+  "core_quality_failures": [
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "UNCLEAN_STOP"
+  ],
+  "replay_comparison": {
+    "event_count": true,
+    "decision_sha256": true,
+    "result_sha256": true,
+    "result": true
+  },
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    },
+    {
+      "replay": 2,
+      "event_count": 7518713,
+      "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+      "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752"
+    }
+  ],
+  "source_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd",
+  "source_and_code_provenance": "PASS",
+  "timestamp_supplement_complete": true,
+  "core_duration_seconds": 13378.527405599947,
+  "post_supervisor_seconds_including_wait": 10152.147198599996,
+  "source_hash_seconds": 87.97419700003229,
+  "timestamp_supplement_seconds": 316.0361645000521,
+  "dataset_label": "prospective D5 short-window dataset, not 24h validation",
+  "research_allowed": false,
+  "paper_started": false,
+  "required_next_action": "Diagnose quality findings before user escalation; distinguish tool errors and data defects"
+}

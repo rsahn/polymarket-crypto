@@ -1,0 +1,18 @@
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0403404s
+Dispersion de racine : 7.7764456s
+ID de référence : 0x33917B1D (IP de la source :  51.145.123.29)
+Heure de la dernière synchronisation réussie : 21/09/2026 10:23:11
+Source : time.windows.com,0x8 
+Intervalle d'interrogation : 6 (64s)
+
+Décalage de phase : 0.0063206s
+Fréquence d'horloge : 0.0156250s
+Ordinateur d'état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s'est terminée correctement.)
+Durée écoulée depuis l'heure de la dernière synchronisation réussie : 0.0463810s
+

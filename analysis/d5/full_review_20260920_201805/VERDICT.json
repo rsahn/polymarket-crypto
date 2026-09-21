@@ -1,0 +1,8 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "duration_seconds": 3613.9770368000027,
+  "failures": [
+    "OperationalError('interrupted')"
+  ],
+  "replay_hashes": "Only completed REPLAY_N.json are evidence; not fabricated for unexecuted steps"
+}
