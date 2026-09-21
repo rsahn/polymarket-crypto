@@ -73,7 +73,7 @@ class WriterCore:
         elif kind == 'EVENT':
             event_kind = command['event_kind']
             if event_kind not in ('CLOCK_SAMPLE','DISCOVERY_EMPTY','DISCOVERY_ERROR',
-                                  'ROTATION','WS_ERROR','RECONNECT','BTC_CONNECTED','BTC_DISCONNECTED','BTC_ERROR','BTC_RECONNECT'):
+                                  'ROTATION','WS_ERROR','RECONNECT','BTC_CONNECTED','BTC_DISCONNECTED','BTC_ERROR','BTC_RECONNECT','COLLECTION_STOP'):
                 raise ValueError('UNSUPPORTED_WRITER_EVENT')
             event_id, _ = self.store.event(event_kind,command['payload'],received_ts_ms=received,
                 identity=identity,generation=generation,available_ts_ms=processed_at)
