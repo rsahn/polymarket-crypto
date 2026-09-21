@@ -43,6 +43,12 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(w.next_sequence,1)
         await w.stop();self.assertEqual(w.processed_sequence,1)
         self.assertLessEqual(w.high_water_items,2)
+    async def test_pending_transport_keeps_sequence_metadata_without_unpickle(self):
+        w=await self.start(batch_size=32,flush_seconds=.05)
+        seq=w.submit(self.tick())
+        self.assertEqual(w.pending[0][0],seq)
+        self.assertIsInstance(w.pending[0][1],bytes)
+        await w.stop()
     async def test_capacity_rejection_exposes_diagnostics(self):
         w=await self.start(max_items=1)
         w.submit(self.tick())
