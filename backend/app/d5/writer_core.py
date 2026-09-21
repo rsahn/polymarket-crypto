@@ -11,13 +11,14 @@ from .features import BTCFeatures
 
 
 class WriterCore:
-    def __init__(self, path, *, clock=None):
+    def __init__(self, path, *, clock=None, config=None):
         if Path(path).exists():
             raise FileExistsError('Writer requires a new database')
         self.clock = clock or (lambda: time.time_ns() // 1_000_000)
-        self.store = Store(path, {'mode':'SHADOW','strategy':'NO_TRADE','capital':500,
-                                 'timestamp_contract':'D5.1','writer':'ordered-core-candidate'},
-                           compress_payloads=True)
+        store_config = {'mode':'SHADOW','strategy':'NO_TRADE','capital':500,
+                        'timestamp_contract':'D5.1','writer':'process-writer'}
+        store_config.update(config or {})
+        self.store = Store(path, store_config, compress_payloads=True)
         self.observer = Observer(self.store)
         self.btc = BTCFeatures()
         self.last_generation = {}
