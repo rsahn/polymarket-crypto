@@ -65,6 +65,11 @@ class WriterCore:
             event_id, available = self.store.event('BTC',tick,received_ts_ms=received,
                 event_ts_ms=tick.get('event_ts_ms'),available_ts_ms=processed_at)
             self.btc.update(available,tick)
+        elif kind == 'REJECT':
+            payload = command['payload']
+            event_id, _ = self.store.event('REJECT',payload,received_ts_ms=received,
+                event_ts_ms=command.get('event_ts_ms'),identity=identity,generation=generation,
+                available_ts_ms=processed_at)
         elif kind == 'EVENT':
             event_kind = command['event_kind']
             if event_kind not in ('CLOCK_SAMPLE','DISCOVERY_EMPTY','DISCOVERY_ERROR',
