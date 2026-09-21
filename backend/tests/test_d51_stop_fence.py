@@ -45,7 +45,9 @@ class StopFenceTests(unittest.IsolatedAsyncioTestCase):
                 late=db.execute("SELECT kind FROM events WHERE event_id>? AND kind IN ('BOOK','BTC')",(marker,)).fetchall()
                 rejects=[decode(x[0]) for x in db.execute("SELECT payload_json FROM events WHERE kind='REJECT' AND event_id>?",(marker,))]
                 self.assertEqual(late,[])
-                self.assertEqual(sorted(x['feed'] for x in rejects if x.get('reason')=='COLLECTION_STOP_FENCE'),['15m','BTC'])
+                # The collection-stop marker is a hard acceptance boundary: callbacks
+                # after it are dropped at ingress rather than persisted after the fence.
+                self.assertEqual(rejects,[])
                 self.assertEqual(db.execute('PRAGMA integrity_check').fetchall(),[('ok',)])
                 self.assertEqual(db.execute('PRAGMA foreign_key_check').fetchall(),[])
                 self.assertEqual(db.execute("SELECT count(*) FROM anchors WHERE status='OPEN'").fetchone()[0],0)
