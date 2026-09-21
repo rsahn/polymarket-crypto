@@ -1,0 +1,10 @@
+{
+  "frozen_inputs_unchanged": true,
+  "train_v4_proxy_accounting_and_timing": true,
+  "train_zero_recovery_accounting_and_timing": true,
+  "validation_v4_proxy_accounting_and_timing": true,
+  "validation_zero_recovery_accounting_and_timing": true,
+  "oos_not_opened": true,
+  "repeat_finalize_rejected_before_oos_load": true,
+  "synthetic_tests": 12
+}

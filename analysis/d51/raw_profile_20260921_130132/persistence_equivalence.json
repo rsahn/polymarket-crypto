@@ -1,0 +1,25 @@
+{
+  "tables": {
+    "events": {
+      "rows": 19998,
+      "equal": true
+    },
+    "book_sides": {
+      "rows": 39966,
+      "equal": true
+    },
+    "anchors": {
+      "rows": 88,
+      "equal": true
+    },
+    "markets": {
+      "rows": 2,
+      "equal": true
+    }
+  },
+  "excluded_columns": [
+    "session_id",
+    "closed_at_ms"
+  ],
+  "reason": "Run-specific session UUID and technical close wall-clock; all persisted market event timestamps/payload/depth compared exactly."
+}

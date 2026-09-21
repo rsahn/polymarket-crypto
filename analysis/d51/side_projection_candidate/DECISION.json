@@ -1,0 +1,12 @@
+{
+  "decision": "NOT_ADOPTED_NO_DEMONSTRATED_GAIN",
+  "candidate_seconds": 46.43997459998354,
+  "reference_seconds": 46.34294750005938,
+  "candidate_normalize_seconds": 12.793827811256051,
+  "reference_normalize_seconds": 12.314596319687553,
+  "all_77477_snapshots_equal": true,
+  "synthetic_invalidation_isolation_reset_rejection_test": "PASS",
+  "persisted_equivalence_not_run": "No performance benefit; candidate not integrated",
+  "backend_unchanged": true,
+  "limitations": "One sequential measurement per variant; no statistical speed claim; technical captures exclude live BTC/network."
+}

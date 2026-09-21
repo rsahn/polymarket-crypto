@@ -1,0 +1,16 @@
+Nb d'homologues�: 1
+
+Homologue�: time.windows.com,0x9
+�tat�: Actif
+Temps restant�: 31578.3577291s
+Mode�: 3 (Client)
+Couche�: 4 (R�f�rence secondaire, synchronis�e par (S)NTP)
+HomologueIntervalle d'interrogation�: 10 (1024s)
+H�teIntervalle d'interrogation�: 10 (1024s)
+Heure de la derni�re synchronisation r�ussie�: 21/09/2026 09:25:32
+Erreur lors de la derni�re synchronisation�: 0x00000000 (Op�ration r�ussie)
+ID du message d'erreur de la derni�re synchronisation�: 0x00000000 (Op�ration r�ussie)
+ID du message de type d'authentification�: 0x0000005A (NoAuth )
+Tentatives de r�solution�: 0
+Compteur de donn�es valides�: 5
+Accessibilit��: 63

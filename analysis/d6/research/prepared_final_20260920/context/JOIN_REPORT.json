@@ -1,0 +1,960 @@
+{
+  "eligible": 228,
+  "matched": 17,
+  "unmatched": [
+    {
+      "action_id": 2,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 8,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 9,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 10,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 18,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 19,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 33,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 37,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 52,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 59,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 64,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 69,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 74,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 81,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 99,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 100,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 101,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 109,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 110,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 111,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 129,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 167,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 168,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 169,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 197,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 208,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 209,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 210,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 219,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 232,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 238,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 239,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 249,
+      "reason": "NO_ACTIVE_MATCHING_GENERATION"
+    },
+    {
+      "action_id": 4,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 5,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 7,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 12,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 13,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 14,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 15,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 16,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 17,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 21,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 22,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 23,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 24,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 25,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 27,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 28,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 29,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 30,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 31,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 32,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 34,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 35,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 38,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 39,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 40,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 42,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 43,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 44,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 45,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 46,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 48,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 49,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 50,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 51,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 53,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 54,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 55,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 57,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 58,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 60,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 61,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 63,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 65,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 66,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 67,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 70,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 72,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 76,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 77,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 78,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 79,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 80,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 82,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 83,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 85,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 86,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 87,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 88,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 89,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 90,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 91,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 94,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 95,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 96,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 97,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 98,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 103,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 104,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 105,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 106,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 107,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 108,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 112,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 113,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 114,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 115,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 117,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 119,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 120,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 121,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 124,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 125,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 126,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 127,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 128,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 130,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 131,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 132,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 133,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 134,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 135,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 136,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 137,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 138,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 140,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 141,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 142,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 143,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 144,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 145,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 146,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 147,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 148,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 149,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 150,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 151,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 152,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 153,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 154,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 155,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 156,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 157,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 158,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 159,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 160,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 161,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 162,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 163,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 165,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 166,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 170,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 171,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 173,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 174,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 175,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 176,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 178,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 180,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 181,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 182,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 183,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 192,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 193,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 194,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 195,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 198,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 199,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 200,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 201,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 202,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 204,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 206,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 207,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 212,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 214,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 215,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 216,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 217,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 218,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 220,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 222,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 223,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 224,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 225,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 226,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 227,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 228,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 229,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 230,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 231,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 236,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 241,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 242,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 243,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 244,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 245,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 246,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 247,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 248,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 250,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 251,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 252,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 255,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 256,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 257,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 258,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 259,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    },
+    {
+      "action_id": 260,
+      "reason": "NO_FRESH_CAUSAL_BOOK"
+    }
+  ],
+  "groups": {
+    "5m_TRAIN": {
+      "operations": 3,
+      "markets": 2,
+      "H4_momentum_side_agreement": 0.5,
+      "H4_n": 2,
+      "cheaper_side_agreement": 0.3333333333333333,
+      "H5_microstructure_side_agreement": 0.6666666666666666,
+      "H7_age_thirds_counts": {
+        "0": 2,
+        "2": 1
+      },
+      "H8_observed_quantity_mean": 20.456666666666667,
+      "H8_size_context_correlations": {
+        "absolute_btc_momentum": {
+          "n": 2,
+          "pearson": null
+        },
+        "top_ask_qty": {
+          "n": 3,
+          "pearson": -0.9899748620191098
+        },
+        "time_remaining": {
+          "n": 3,
+          "pearson": -0.17752530085335538
+        }
+      }
+    },
+    "5m_VALIDATION": {
+      "operations": 14,
+      "markets": 7,
+      "H4_momentum_side_agreement": 0.8,
+      "H4_n": 5,
+      "cheaper_side_agreement": 0.5,
+      "H5_microstructure_side_agreement": 0.42857142857142855,
+      "H7_age_thirds_counts": {
+        "0": 11,
+        "2": 3
+      },
+      "H8_observed_quantity_mean": 23.343846071428572,
+      "H8_size_context_correlations": {
+        "absolute_btc_momentum": {
+          "n": 7,
+          "pearson": 0.07796253800635783
+        },
+        "top_ask_qty": {
+          "n": 14,
+          "pearson": 0.19417707264506856
+        },
+        "time_remaining": {
+          "n": 14,
+          "pearson": -0.1846356123151795
+        }
+      }
+    },
+    "15m_TRAIN": {
+      "operations": 0,
+      "markets": 0,
+      "H4_momentum_side_agreement": null,
+      "H4_n": 0,
+      "cheaper_side_agreement": null,
+      "H5_microstructure_side_agreement": null,
+      "H7_age_thirds_counts": {},
+      "H8_observed_quantity_mean": null,
+      "H8_size_context_correlations": {
+        "absolute_btc_momentum": {
+          "n": 0,
+          "pearson": null
+        },
+        "top_ask_qty": {
+          "n": 0,
+          "pearson": null
+        },
+        "time_remaining": {
+          "n": 0,
+          "pearson": null
+        }
+      }
+    },
+    "15m_VALIDATION": {
+      "operations": 0,
+      "markets": 0,
+      "H4_momentum_side_agreement": null,
+      "H4_n": 0,
+      "cheaper_side_agreement": null,
+      "H5_microstructure_side_agreement": null,
+      "H7_age_thirds_counts": {},
+      "H8_observed_quantity_mean": null,
+      "H8_size_context_correlations": {
+        "absolute_btc_momentum": {
+          "n": 0,
+          "pearson": null
+        },
+        "top_ask_qty": {
+          "n": 0,
+          "pearson": null
+        },
+        "time_remaining": {
+          "n": 0,
+          "pearson": null
+        }
+      }
+    }
+  },
+  "H1_H2_H3_H6": "NON_IDENTIFIABLE_INITIAL_INVENTORY_UNKNOWN",
+  "H8_cash_inventory_policy": "NON_IDENTIFIABLE_PRIVATE_CASH_AND_INVENTORY",
+  "interpretation": "Descriptive contextual associations, clustered observations, no significance or edge claim; API time semantics not bounded to actual decision. Top-level imbalance only, not full-depth imbalance.",
+  "oos_opened": false,
+  "time_budget_ms": 100,
+  "elapsed_seconds": 6.139150300063193
+}

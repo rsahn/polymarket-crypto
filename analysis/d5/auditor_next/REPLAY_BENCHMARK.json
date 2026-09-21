@@ -1,0 +1,20 @@
+{
+  "synthetic_only": true,
+  "runs": [
+    {
+      "name": "reference",
+      "seconds": 1.0024607999948785,
+      "count": 3301,
+      "decision_sha256": "d8ffb8e1a761fd31919493dd7d92dffbd9198f2acd6f002791063e9d7ac99166",
+      "result_sha256": "0272d3d6c17ddc14e0888c68c1c10dd27985be4df14df4a618dca3a15f6a8f2d"
+    },
+    {
+      "name": "accelerated",
+      "seconds": 0.43882449995726347,
+      "count": 3301,
+      "decision_sha256": "d8ffb8e1a761fd31919493dd7d92dffbd9198f2acd6f002791063e9d7ac99166",
+      "result_sha256": "0272d3d6c17ddc14e0888c68c1c10dd27985be4df14df4a618dca3a15f6a8f2d"
+    }
+  ],
+  "warning": "No full-chain production runtime guarantee; synthetic BTC/context-heavy workload."
+}

@@ -1,0 +1,10 @@
+{
+  "created_utc": "2026-09-20T15:52:34.957421+00:00",
+  "status": "CANDIDATE_SYNTHETIC_VALIDATED_NOT_DEPLOYED",
+  "production_audit_unchanged": true,
+  "large_collection_prerequisite": "Integrate and validate candidate with full quality/replay pipeline before next large collection; never switch current audit.",
+  "reference_sha256": "bfa633981aa6ef073845f63d16ca13b4bdaf3e61767f6be263123c2e3b5cf69a",
+  "candidate_sha256": "6ebeb0327ed7bcf036dd6af24e14fcc474cb3ac83fea61a5739e983a79ed5be5",
+  "tests_passed": 8,
+  "production_benchmark_performed": false
+}

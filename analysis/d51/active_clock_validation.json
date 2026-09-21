@@ -1,0 +1,13 @@
+{
+  "directory": "analysis\\d51\\clock_polling_fix_64",
+  "phase": "COMPLETE",
+  "previous_trial": "clock_polling_fix",
+  "previous_trial_verdict": "FAIL",
+  "created_utc": "2026-09-21T08:22:56.872539+00:00",
+  "pid": 3268,
+  "process_created_local": "2026-09-21T10:23:11.524520+02:00",
+  "updated_utc": "2026-09-21T08:29:48.005540+00:00",
+  "verdict": "PASS",
+  "validated_utc": "2026-09-21T08:45:33.744671+00:00",
+  "sample_count": 11
+}

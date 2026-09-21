@@ -1,0 +1,12 @@
+{
+  "full_results_equal": true,
+  "event_counts_equal": true,
+  "decision_hashes_equal": true,
+  "computed_result_hashes": [
+    "9c98f4bf1f8db560b3dd63545855db725639b4489aa558d520409e5e7297fa54",
+    "9c98f4bf1f8db560b3dd63545855db725639b4489aa558d520409e5e7297fa54"
+  ],
+  "reported_hashes_match": true,
+  "event_count": 1400618,
+  "decision_sha256": "1e1b559a6d586d717a4f3034b495c2574f6edc34fc27f0c44242f85b2f41677c"
+}

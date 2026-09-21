@@ -1,0 +1,103 @@
+{
+  "pid": 14376,
+  "status": "COMPLETE",
+  "steps_total": 8,
+  "research_allowed": false,
+  "paper_started": false,
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_092802.db",
+  "minimum_seconds": 1200,
+  "alert_after_seconds": 3600,
+  "hard_timeout": false,
+  "sqlite_cache_kib": 131072,
+  "one_hour_alert": false,
+  "step": 8,
+  "stage": "Comparaison et quality gate",
+  "rows_processed": null,
+  "total_rows": null,
+  "percent": null,
+  "rows_per_second": null,
+  "detail": null,
+  "sql": null,
+  "elapsed_seconds": 1178.082812000066,
+  "stage_elapsed_seconds": 94.7547179000685,
+  "updated_utc": "2026-09-21T08:10:33.551947+00:00",
+  "completed_steps": [
+    {
+      "step": 1,
+      "stage": "Preparation metadata",
+      "status": "PASS",
+      "seconds": 99.7937809000723,
+      "details": {
+        "note": "Derived metadata only; not integrity or replay evidence"
+      }
+    },
+    {
+      "step": 2,
+      "stage": "Audit_next complet",
+      "status": "PASS",
+      "seconds": 22.506849400000647,
+      "details": {
+        "failures": []
+      }
+    },
+    {
+      "step": 3,
+      "stage": "SQLite integrity_check source",
+      "status": "PASS",
+      "seconds": 132.63583000004292,
+      "details": [
+        [
+          "ok"
+        ]
+      ]
+    },
+    {
+      "step": 4,
+      "stage": "SQLite foreign_key_check source",
+      "status": "PASS",
+      "seconds": 43.21167919994332,
+      "details": []
+    },
+    {
+      "step": 5,
+      "stage": "Qualite / provenance source",
+      "status": "PASS",
+      "seconds": 99.30667780002113,
+      "details": {
+        "note": "All quality metrics computed; policy evaluated at final gate"
+      }
+    },
+    {
+      "step": 6,
+      "stage": "Replay NoTrade 1 source",
+      "status": "PASS",
+      "seconds": 344.53858300007414,
+      "details": {
+        "events": 760478,
+        "no_trade": true
+      }
+    },
+    {
+      "step": 7,
+      "stage": "Replay NoTrade 2 source",
+      "status": "PASS",
+      "seconds": 341.16529779997654,
+      "details": {
+        "events": 760478,
+        "no_trade": true
+      }
+    },
+    {
+      "step": 8,
+      "stage": "Comparaison et quality gate",
+      "status": "FAIL",
+      "seconds": 94.74384010001086,
+      "details": {
+        "failures": [
+          "W32TIME_SYNC_ERROR"
+        ]
+      }
+    }
+  ],
+  "D5_DATA_QUALITY": "FAIL"
+}

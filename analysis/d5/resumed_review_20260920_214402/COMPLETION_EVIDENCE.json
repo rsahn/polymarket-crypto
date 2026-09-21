@@ -1,0 +1,94 @@
+{
+  "checked_utc": "2026-09-20T23:44:35.269794+00:00",
+  "status": "EVIDENCE_CHECKS_PASS_DATASET_GATE_FAIL",
+  "checks": {
+    "source_stat_unchanged": true,
+    "source_hash_attested": true,
+    "post_code": {
+      "post_review_supervisor.py": true,
+      "verify_source_provenance.py": true,
+      "timestamp_supplement.py": true,
+      "atomic_status.py": true,
+      "supervisor_progress_server.py": true,
+      "sqlite_tuning.py": true,
+      "run_accelerated.py": true
+    },
+    "ntp_raw": {
+      "analysis\\d5\\clock_sync_20260920_091052\\before.json": true,
+      "analysis\\d5\\clock_sync_20260920_091052\\after_initial.json": true,
+      "analysis\\d5\\clock_sync_20260920_091052\\gate_100ms_20260920_124639\\convergence_0001.json": true,
+      "analysis\\d5\\clock_sync_20260920_091052\\gate_100ms_20260920_124639\\convergence_0002.json": true,
+      "analysis\\d5\\24h_20260920_124822\\clock_before.json": true,
+      "analysis\\d5\\24h_20260920_124822\\clock_1789904912863529300.json": true,
+      "analysis\\d5\\24h_20260920_124822\\clock_1789908518416510100.json": true,
+      "analysis\\d5\\24h_20260920_124822\\clock_1789912123607504200.json": true,
+      "analysis\\d5\\3h_20260920_124822_review\\clock_after_user_stop.json": true
+    },
+    "carried_report_hash": true,
+    "carried_manifest_hash": true,
+    "carried_report_equal": true,
+    "carried_prechecks": true,
+    "replay_artifact_hashes": {
+      "REPLAY_1.json": true,
+      "REPLAY_2.json": true
+    },
+    "replay_full_comparison": true
+  },
+  "source_stat": [
+    26186612736,
+    1789912262643310700
+  ],
+  "artifact_sha256": {
+    "AUDIT_NEXT_REPORT.json": "27895f397891919470e87938e16e95ec2efb1e501277e8c680c80085323c46c7",
+    "BOOK_ENVELOPE_REGRESSION_DIAGNOSIS.json": "4d7acc2dd9a4e1bcc6b209d3a495dd9657906ff33ac246e2bfceba91eb0dbed3",
+    "CARRIED_AUDIT_PROVENANCE.json": "bb0926cc6b740e7d567fe1bedb05c6cc656a67945dd41b6fa61f49d56445ec19",
+    "D6_FINAL_REPORT_BEFORE_FINAL_DECISION.md": "a2b079f72ce0da864d2dfdc4c35d427fd041df179c91c312a7f026e1f6e032cd",
+    "D6_FINAL_REPORT_BEFORE_SUPERVISION.md": "33597712b12347a92e47ee65b17cc10acbaeea9ea986842436c3d7eba1a06760",
+    "D6_OFFLINE_VERDICT_BEFORE_FINAL_DECISION.json": "a5e703a15c5e459dee559a266bed500c5662388c9cc1ef0f5960658e5f65fd03",
+    "D6_OFFLINE_VERDICT_BEFORE_SUPERVISION.json": "77ff7814e928bcfad8c9ee28a6ffac4d3cf1600e748f3cecdcb7ae353494c36f",
+    "DATA_QUALITY_REPORT.json": "841de33f18799da08d1e5777f8f555bc260a8d1e5b7c52209024495a40c6911c",
+    "DISPLAY_FORMAT_FIX_SNAPSHOT.json": "29b13ac165efcee7b62402d5f9e23b946650ffe7b7ede97779793495052d404b",
+    "DISPLAY_POST_PHASE_SNAPSHOT.json": "b9d986e8e9ba1c2f31e079301504825ab12682e6b7b3006e921d4c63ceb9f813",
+    "DISPLAY_REPLACEMENT_SNAPSHOT.json": "0bc068f0bd7fcd402673085f08d99b206a1639e4cd2e435365d55a0e303a74be",
+    "FINAL_DATA_QUALITY_REPORT.json": "c4a22392da1a38434623f74c93124a7bbd9db1ea39bca477af86e01e687c9352",
+    "FINAL_DATA_QUALITY_REPORT.md": "59fc374bac56f7f661141371044331d6c66ca1dc3bb5de59680b1733ce9436c8",
+    "FINAL_REVIEW_DECISION.json": "4a20a0c565deb4280b7b8c3dbcf3b6fc88452edfd63778ec441941265dbafb1e",
+    "FOREIGN_KEY_CHECK.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "GAP_DIAGNOSIS_FROM_REPORT.json": "ad3905e0d8f74609d53d989e34d095a829e26323df4ccfe6ed10a913fc2ee332",
+    "GAP_DIAGNOSIS_FROM_REPORT.md": "9d9e25453fce4eb6b72b3c6d2c5d984444e97edd4238fe2a9b612a8f47cdd0d2",
+    "hash_progress.json": "75d22dd37f2940c0615763f032082310f25a2b8f1d21536c9e5404fd4809b1d9",
+    "INDEPENDENT_REPLAY_INSPECTION.json": "75f78f53ddc72d327a0383cd985776519a3751d0a2f6bd3d83fd63429ddc7350",
+    "INTEGRITY_CHECK.json": "e7db3094d75b0aef541c294689eaf3ea748228abd6188691f6e66b980404d88b",
+    "NTP_RAW_REVIEW.json": "38eebe93e8a97843469ff438fd9dec1a9a7a617039cab6b83374f8b930e74ec4",
+    "POST_REVIEW_CODE_MANIFEST.json": "9b95bbfd78c862d2944f64ddb1970660dbfd21f8c55cf5e334f344a73e2ae1b4",
+    "POST_REVIEW_CODE_MANIFEST_V2.json": "23c5848ec6219cfbc5190076c6aa1652f3590f2646f19b604188895174ad3bdf",
+    "post_review_progress.json": "13045adf000aa950e413ee21033b205cfde50f784293c465ffb491fab1398e26",
+    "PRELIMINARY_QUALITY_FINDINGS.json": "685dad715d343a7ab63fa7964921695492974cf13a7537cc140af14f2df9f11e",
+    "PRELIMINARY_QUALITY_FINDINGS.md": "d32a892f91cd19a02f2f2e22fd1d97480c95a97e7dbed3a83ca001d69e91c39d",
+    "progress.json": "daa5edd7cb6692cc667ef0585bdf6dd3793bf7cb6086c658b798d368bf318f3e",
+    "REPLAY_1.json": "ea17f20259040153046d3555aeafd688d24ecc91043f6e9c9d05d97383d75762",
+    "REPLAY_1_INSPECTION.json": "52c206e17dbd34c9c56db8e79f9ca6f6e9bfb23352feb48a100ff233ed814988",
+    "REPLAY_2.json": "c90fcd023b7ec6a1f669f74afe76e077626b8194d308799bbfd8f42c1d056781",
+    "REQUIREMENTS_TRACKER.json": "e1b507dd9a6c32a33c6540f4b9672d96e5c7cc4a00dee338790dfaca79f18f20",
+    "RESUMPTION_DECISION.md": "608cbcf7c5954335430f0b162f73262645060a0d3367556b097959d583a4556d",
+    "RUN_MANIFEST.json": "77595de37cc886960878593cab67edb38c16b506f7ab3f1bd6cf75fde82d17b4",
+    "SOURCE_HASH_VERIFICATION.json": "4396181ecdfe1e21132c468b3700bd5a11f1d1982a85244fb83903082f3dc05e",
+    "SUPERVISOR_D5_VERDICT.json": "f239f601ae917674e3d9861cd6ca222d0097e8a51bf3ac96aa25b9aee5a3202f",
+    "SUPERVISOR_FINAL_REPORT.md": "2e1837709f760b5f20d38e1b99b8f686cdf30e97ba8fcd53ee3c6c28acbf63cc",
+    "SUPERVISOR_NEXT_ACTIONS.md": "6c654fc36452d93407d8c7a5f8ef800650be60e698efddd193c457d0d0686ff2",
+    "supplement_progress.json": "30abec4b7dc0dac50b8aba12977f5733cb0581d6ddcb968599da92f4c58b66cf",
+    "TIMESTAMP_SUPPLEMENT.json": "baa3e520436aa0dca0ef001b6584e9064f8670d29f334a3c926183042a1ced6b",
+    "VERDICT.json": "2c6e646ebb4fe64cc464e04c8b38615a606cbae07ad0253de83063cc6b9f0ee4"
+  },
+  "d6_report_sha256": "2b4c844f8d6904821c5172f727219d7bd9e26a7f327725fdbb9ece22c2a2bad3",
+  "d6_verdict_sha256": "0077c24310872be4eaeee451e0989d5ba55a52dec913cd45e8b9051aa3f3ac8d",
+  "live_monitoring_excluded": {
+    "telemetry.json": {
+      "reason": "Live dashboard telemetry continues to refresh after audit exit; not a validation result or frozen evidence file.",
+      "previous_observed_sha256": "e300e1ac7c254b55ee6de8f8b0cf10494e70ca77ff8652184069778604959cd4"
+    }
+  },
+  "final_checked_utc": "2026-09-20T23:45:23.841710+00:00",
+  "audit_and_post_processes_exited": true,
+  "automation_status": "PAUSED"
+}

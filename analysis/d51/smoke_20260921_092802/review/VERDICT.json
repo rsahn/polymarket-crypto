@@ -1,0 +1,22 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "duration_seconds": 1178.0854298999766,
+  "failures": [
+    "W32TIME_SYNC_ERROR"
+  ],
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 760478,
+      "decision_sha256": "046225ccc1d6f4d5e93e2f60d605069805406f01c1bdf267da6e034b69667b12",
+      "result_sha256": "59812d88afeff2c65b169e366268476200e122a86dc2f18f629d628eef75ac3c"
+    },
+    {
+      "replay": 2,
+      "event_count": 760478,
+      "decision_sha256": "046225ccc1d6f4d5e93e2f60d605069805406f01c1bdf267da6e034b69667b12",
+      "result_sha256": "59812d88afeff2c65b169e366268476200e122a86dc2f18f629d628eef75ac3c"
+    }
+  ],
+  "source_stat_unchanged": true
+}

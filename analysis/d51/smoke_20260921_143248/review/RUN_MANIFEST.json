@@ -1,0 +1,39 @@
+{
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_143248.db",
+  "source_stat_before": [
+    4846747648,
+    1789995337147467500
+  ],
+  "prior_completed_audit": null,
+  "new_source_integrity_fk_and_replays": true,
+  "alert_only_seconds": 3600,
+  "cache_kib": 131072,
+  "quality_sha256": "7a86a86e06e6bb3be8725a40e13da23af7636365877cff0519af5aa111f6406f",
+  "code_files": {
+    "acceleration.py": "b8f9bb96c417f27886b2992f5214e2d45604fc725533556163db29af316e0b64",
+    "atomic_status.py": "e4127230a282231ea938463aafce5dcce7448fb9e9d24dd202766b61abec9fcb",
+    "audit_next.py": "6ebeb0327ed7bcf036dd6af24e14fcc474cb3ac83fea61a5739e983a79ed5be5",
+    "benchmark_cache.py": "0266334ba04bc3ad1cdc32f53d2d064baebee382a22bbf273a56cd710cfb743e",
+    "instrumented_review.py": "2eb118c49b13c5f6bb6a54a743c4d9dacec0e24b1b72daafb1bb8282533701c0",
+    "post_review_supervisor.py": "8bef0249c11104045173707068b87cefe7913f78613f888b84a472a30230f1e0",
+    "progress_server.py": "a4930c0cc54bf436aa9894f5992758fceb5a3b3a0ef7c232790dc7adc4deae65",
+    "run_accelerated.py": "cdd5bfda0c13a7ce713c71c31fcceeb628541aa7b63868f81800936ca6efdde6",
+    "sqlite_tuning.py": "a3aa778e2df825abb99ae2a3f2b02809881b471bbcebeb214553faca91f2faa2",
+    "supervisor_progress_server.py": "da0baa002445c4e2e23f02e72de516337e8040e9c70267af33ed0be1f0d68e55",
+    "test_acceleration.py": "ca3a53bdfd757c208fa7462f7f81925c30dc158ff6ff305c963c4d2605290465",
+    "test_atomic_status.py": "3cf94678360d0c1a7a086bc56c6c6b79ec8998c552c4cb68bd070098c05bdc93",
+    "test_audit_next.py": "70cf6ea70e7cc709f4b45c6ef859dffb6c66ff6010f17b6762bfa759df6f9ced",
+    "test_chain_equivalence.py": "ea83f64b3db8a13286705a3d29b2f1e78b69cc3eecb1adef96a29aeb4b9c0d70",
+    "test_instrumented.py": "11dfa921c0eb58b65219af438a824187a1575a669edf41dda2df80575e663102",
+    "test_post_supervisor.py": "1ca10a3298405f1b418e54abd4d0bbec38521485a17104d6a5ce7a6cc0e2fcfd",
+    "test_provenance.py": "ff5757690d9054f4051a00e1b046b880c6010523f67de7679da72b5c21e5f642",
+    "test_runner.py": "24822a71a8edade60bcc57932ef4bcee7fea6b8a312352e482f5fec6ca42784c",
+    "test_timestamp_supplement.py": "042b5c47c1bd42520fb6da431ea7be6b324536920184d0579148ff14d06179fb",
+    "test_tuned.py": "5162d07ff4bb59573135514fe642f3f30fa027cf0f85cedfd9829d23b190ffa2",
+    "timestamp_supplement.py": "c129716b24f6552393874b0cfc3d6709184c38f1c0bb82baa9f35360d12707dc",
+    "tuned_review.py": "15443d9dd63a6d6412644f72d06d0d9c636c40e690072c84d832a290d5f50759",
+    "verify_source_provenance.py": "b39aa519be1616325a3d3f3b5ede660a9b746438fa9ad700cd98765196806f50"
+  },
+  "source_integrity_fk_and_two_replays": true,
+  "old_audit_disposition": "OLD_AUDIT_ABORTED_BY_USER_FOR_PERFORMANCE"
+}

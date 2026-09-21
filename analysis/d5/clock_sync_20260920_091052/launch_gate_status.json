@@ -1,0 +1,49 @@
+{
+  "phase": "RUN_FINISHED",
+  "pid": 8588,
+  "started_utc": "2026-09-20T10:47:10.294869+00:00",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "research_allowed": false,
+  "threshold_seconds": 0.1,
+  "required_consecutive_checks": 2,
+  "maximum_wait_seconds": 14400,
+  "preflight_code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+  "keep_awake": false,
+  "updated_utc": "2026-09-20T13:51:03.850517+00:00",
+  "attempt": 2,
+  "consecutive_valid_checks": 2,
+  "service_status": "Running",
+  "ntp": {
+    "time.windows.com": {
+      "offsets_seconds": [
+        0.0544957,
+        0.0534875,
+        0.0570172
+      ],
+      "exit_code": 0,
+      "median_seconds": 0.0544957
+    },
+    "time.cloudflare.com": {
+      "offsets_seconds": [
+        0.0537046,
+        0.0538729,
+        0.0510902
+      ],
+      "exit_code": 0,
+      "median_seconds": 0.0537046
+    }
+  },
+  "latest_clock_evidence": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\clock_sync_20260920_091052\\gate_100ms_20260920_124639\\convergence_0002.json",
+  "collector_launcher_pid": 13112,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "output": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\24h_20260920_124822",
+  "collector_status": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\24h_20260920_124822\\status.json",
+  "stdout": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\24h_20260920_124822_stdout.log",
+  "stderr": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\24h_20260920_124822_stderr.log",
+  "launched_utc": "2026-09-20T10:48:22.506424+00:00",
+  "requested_seconds": 86520,
+  "collector_exit_code": 3221225786,
+  "finished_utc": "2026-09-20T13:51:03.808747+00:00"
+}

@@ -1,0 +1,24 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "duration_seconds": 1662.478566500009,
+  "failures": [
+    "ACCEPTED_AFTER_COLLECTION_STOP",
+    "RECEIVE_CLOCK_REGRESSION",
+    "RECONNECT_GAP_OVER_5S"
+  ],
+  "replays": [
+    {
+      "replay": 1,
+      "event_count": 818688,
+      "decision_sha256": "0d4eff77e110a0bdf69aae33dc642aca0bab39e2cae646b07e493f5f2fe8cf74",
+      "result_sha256": "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba"
+    },
+    {
+      "replay": 2,
+      "event_count": 818688,
+      "decision_sha256": "0d4eff77e110a0bdf69aae33dc642aca0bab39e2cae646b07e493f5f2fe8cf74",
+      "result_sha256": "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba"
+    }
+  ],
+  "source_stat_unchanged": true
+}

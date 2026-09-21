@@ -1,0 +1,23 @@
+{
+  "monitor_pid": 17896,
+  "target_pid": 12408,
+  "updated_utc": "2026-09-20T18:10:23.675090+00:00",
+  "target_alive": true,
+  "phase": "DATA_QUALITY",
+  "review_elapsed_seconds": 15553.5,
+  "cpu_seconds": 2093.734375,
+  "read_bytes": 357189542495,
+  "write_bytes": 10680463293,
+  "read_operations": 87206670,
+  "audit_percent": null,
+  "audit_rows_processed": null,
+  "replay_number": null,
+  "replay_events_processed": null,
+  "total_events": null,
+  "replay_percent": null,
+  "remaining_seconds": null,
+  "read_MBs": 17.989,
+  "write_MBs": 0.0,
+  "cpu_percent_one_core": 9.06,
+  "note": "Process I/O includes OS cache; cumulative counters include controller lifetime. Audit percentage and ETA are unknown. Replay progress comes from existing status."
+}

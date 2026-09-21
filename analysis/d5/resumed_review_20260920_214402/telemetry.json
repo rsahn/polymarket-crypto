@@ -1,0 +1,16 @@
+{
+  "monitor_updated_utc": "2026-09-21T15:49:34.662401+00:00",
+  "step": 8,
+  "stage": "Comparaison et quality gate",
+  "sql": null,
+  "duration_seconds": 13378.524444599985,
+  "heartbeat_age_seconds": 58953.137364,
+  "process": {
+    "pid": 14672,
+    "alive": false,
+    "error_code": 87
+  },
+  "rows_processed": null,
+  "total_rows": null,
+  "status": "COMPLETE"
+}

@@ -1,0 +1,12 @@
+{
+  "stdout": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d51\\launch_20260921_114830.stdout.log",
+  "stderr": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d51\\launch_20260921_114830.stderr.log",
+  "created_utc": "2026-09-21T09:48:30.2079114Z",
+  "launcher_pid": 14400,
+  "script": "analysis/d51/run_smoke.py",
+  "prelaunch_attestation": "analysis/d51/prepared_smoke3_20260921/ATTESTATION.json",
+  "run_directory": "analysis/d51/smoke_20260921_114831",
+  "collector_pid": 10560,
+  "collector_created_local": "2026-09-21T11:48:30.297443+02:00",
+  "confirmed_collecting_utc": "2026-09-21T09:50:52.781798+00:00"
+}

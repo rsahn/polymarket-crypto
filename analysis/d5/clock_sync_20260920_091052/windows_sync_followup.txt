@@ -1,0 +1,99 @@
+﻿**********************
+Début de la transcription Windows PowerShell
+Heure de début : 20260920091248
+Nom d'utilisateur : DESKTOP-E6HV095\Ramy
+Utilisateur runAs :  DESKTOP-E6HV095\Ramy
+Nom de la configuration : 
+Ordinateur : DESKTOP-E6HV095 (Microsoft Windows NT 10.0.19045.0)
+Application hôte : C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\sync_followup.ps1
+ID de processus : 18712
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcription démarrée, le fichier de sortie est C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\windows_sync_followup.txt
+[Configuration]
+
+EventLogFlags: 2 (Locale)
+AnnounceFlags: 10 (Locale)
+TimeJumpAuditOffset: 28800 (Locale)
+MinPollInterval: 10 (Locale)
+MaxPollInterval: 15 (Locale)
+MaxNegPhaseCorrection: 54000 (Locale)
+MaxPosPhaseCorrection: 54000 (Locale)
+MaxAllowedPhaseOffset: 1 (Locale)
+
+FrequencyCorrectRate: 4 (Locale)
+PollAdjustFactor: 5 (Locale)
+LargePhaseOffset: 50000000 (Locale)
+SpikeWatchPeriod: 900 (Locale)
+LocalClockDispersion: 10 (Locale)
+HoldPeriod: 5 (Locale)
+PhaseCorrectRate: 1 (Locale)
+UpdateInterval: 360000 (Locale)
+
+
+[Fournisseurs de temps]
+
+NtpClient (Locale)
+DllName: C:\WINDOWS\system32\w32time.dll (Locale)
+Enabled: 1 (Locale)
+InputProvider: 1 (Locale)
+AllowNonstandardModeCombinations: 1 (Locale)
+ResolvePeerBackoffMinutes: 15 (Locale)
+ResolvePeerBackoffMaxTimes: 7 (Locale)
+CompatibilityFlags: 2147483648 (Locale)
+EventLogFlags: 1 (Locale)
+LargeSampleSkew: 3 (Locale)
+SpecialPollInterval: 32768 (Locale)
+Type: NTP (Locale)
+NtpServer: time.windows.com,0x9 (Locale)
+
+NtpServer (Locale)
+DllName: C:\WINDOWS\system32\w32time.dll (Locale)
+Enabled: 0 (Locale)
+InputProvider: 0 (Locale)
+Envoi de la commande de resynchronisation à l’ordinateur local
+La commande s’est terminée correctement.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5918881s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 0.0282015s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 5 échantillons.
+L’heure actuelle est 20/09/2026 09:12:49.
+09:12:49, +00.5967075s
+09:12:51, +00.5910732s
+09:12:53, +00.5918298s
+09:12:55, +00.5952852s
+09:12:58, +00.5960087s
+Suivi de time.cloudflare.com [162.159.200.123:123].
+Collecte de 5 échantillons.
+L’heure actuelle est 20/09/2026 09:12:58.
+09:12:58, +00.5954771s
+09:13:00, +00.5986898s
+09:13:02, +00.5930286s
+09:13:04, +00.5985466s
+09:13:06, +00.5961292s
+**********************
+Fin de la transcription Windows PowerShell
+Heure de fin : 20260920091306
+**********************

@@ -1,0 +1,83 @@
+{
+  "technical_only": true,
+  "not_D6": true,
+  "not_a_quality_smoke": true,
+  "profile_overhead_present": false,
+  "frames": 77477,
+  "seconds": 46.34294750005938,
+  "frames_per_second": 1671.8185652714628,
+  "timing_seconds": {
+    "parse": 1.1830146940192208,
+    "normalize": 12.314596319687553,
+    "observer_and_store": 28.766517109819688
+  },
+  "stage_counters": {
+    "5m:parse": {
+      "calls": 57052,
+      "wall_ns": 885551600,
+      "cpu_ns": 1031250000,
+      "max_wall_ns": 2055000,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "5m:normalize": {
+      "calls": 57052,
+      "wall_ns": 9067171300,
+      "cpu_ns": 8921875000,
+      "max_wall_ns": 9363200,
+      "over_5ms": 11,
+      "over_50ms": 0
+    },
+    "5m:observer_and_store": {
+      "calls": 57052,
+      "wall_ns": 21218892200,
+      "cpu_ns": 20453125000,
+      "max_wall_ns": 49690500,
+      "over_5ms": 38,
+      "over_50ms": 0
+    },
+    "15m:parse": {
+      "calls": 20425,
+      "wall_ns": 318680500,
+      "cpu_ns": 406250000,
+      "max_wall_ns": 5119500,
+      "over_5ms": 1,
+      "over_50ms": 0
+    },
+    "15m:normalize": {
+      "calls": 20425,
+      "wall_ns": 3287693600,
+      "cpu_ns": 3000000000,
+      "max_wall_ns": 29933500,
+      "over_5ms": 3,
+      "over_50ms": 0
+    },
+    "15m:observer_and_store": {
+      "calls": 20425,
+      "wall_ns": 7596438500,
+      "cpu_ns": 7312500000,
+      "max_wall_ns": 36538600,
+      "over_5ms": 11,
+      "over_50ms": 0
+    },
+    "commit": {
+      "calls": 118,
+      "wall_ns": 2846071800,
+      "cpu_ns": 2093750000,
+      "max_wall_ns": 85188900,
+      "over_5ms": 88,
+      "over_50ms": 18
+    }
+  },
+  "capture_span_seconds": 59.6826452,
+  "counts": {
+    "ACTIVATE": 2,
+    "BOOK": 77436,
+    "REJECT": 41
+  },
+  "source_hashes": {
+    "5m_raw.jsonl": "3a61eaf67b01eca1c8cf47b43ce85f6b36b8060d07cec18da079a07418c63808",
+    "15m_raw.jsonl": "0dfb946476d2810fe76df6a3193ea52c0b0fd70a7284980d7b90bab865acd35e"
+  },
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:e9d2865d6f20d8c3099039e6b850f797a3d08d65ee045f1b64db35657155d6dd"
+}

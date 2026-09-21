@@ -1,0 +1,9 @@
+# Quatrième smoke — vérification prospective des optimisations
+
+Décision prise avant lancement le21septembre2026. Le smoke114831 reste PASS instrumentation, mais ses retards wire5m (médiane6087ms,p95=29387ms,54.71%>5s) motivent une amélioration du traitement avant collecte longue.
+
+Modifications conservées: suppression de calculs min/max inutilisés dans _apply_price_changes; remplacement de asdict récursif par les six champs scalaires immuables de MarketIdentity. Les77477snapshots des captures publiques sont strictement identiques à la référence du smokePASS.182testsPASS (PERF_V1_20260921). Le candidat cacheprofondeur a été retiré faute de gain démontré; code revenu exactement à39f5ba58db5d4405aef3c606dff6a2a6a9151136e6d2817b49d2671b2062a5f3.
+
+Même lot technique19996messages:24.56s avant contre18.30s après souscProfile;11.88s sanscProfile (~1683messages/s). Ces mesures ne prouvent pas la tenue en production. L'observation brute publique indépendante recevait57057frames5m et20430frames15m en60s, médianes25/24ms; elle n'est pas contemporaine du smoke et ne prouve pas seule sa cause.
+
+Nouvelle expérience:1320s, nouvelleDB, SHADOW/NO_TRADE500,aucunordre/fill/inventaire, critères qualité D5.1 inchangés, deuxgatesNTPfraîches et suiviavant/pendant/après. Pasdereconnexionforcée ni abandondefile. Code/runner/HEADfigés pendantcollecte+revue. Revue8étapes complète aprèsfermeture. Aprèsrevueclose seulement, diagnostic exhaustif wire/source/disponibilité parfeed et comparaison descriptive des médiane/p95/p99, fractions>1/5/10/30s, maxima, profondeur, débit et espace disque. Aucune correctiontimestamp ni écartementd'événement. Aucun gain de latence n'est déclaré avant résultats. Smoke uniquement: pasD6 niPaper, pascollectelongueconcurrente. Une autre expérience identique ne sera pas relancée pour chercherPASS.

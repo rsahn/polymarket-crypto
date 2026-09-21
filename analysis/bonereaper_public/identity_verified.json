@@ -1,0 +1,26 @@
+{
+  "requested_address": "0xcd30457c790d8b35a08bcf3f894ad6bb52bc2dd0",
+  "profile_proxy_address": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+  "gamma": {
+    "$schema": "https://gamma-api.polymarket.com/schemas/PublicProfileResponse.json",
+    "createdAt": "2026-03-25T05:55:18.904078Z",
+    "proxyWallet": "0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+    "displayUsernamePublic": true,
+    "pseudonym": "Popular-Insurrection",
+    "name": "Bonereaper",
+    "users": [
+      {
+        "id": "6943965",
+        "creator": false,
+        "mod": false,
+        "communityMod": false
+      }
+    ],
+    "verifiedBadge": false,
+    "takerTier": 6,
+    "takerTierName": "Obsidian",
+    "weightedVolume": 7313989.709549
+  },
+  "profile_excerpt": "username=bonereaper&amp;locale=fr&amp;tid=1789902941714\"/><meta property=\"og:type\" content=\"website\"/><meta name=\"twitter:card\" content=\"summary_large_image\"/><meta name=\"twitter:site\" content=\"@polymarket\"/><meta name=\"twitter:title\" content=\"@bonereaper sur Polymarket\"/><meta name=\"twitter:description\" content=\"Consultez ce profil sur Polymarket.\"/><meta name=\"twitter:image\" content=\"https://polymarket.com/api/og?username=bonereaper&amp;locale=fr&amp;tid=1789902941714\"/><link rel=\"icon\" href=\"/icons/favicon-32x3",
+  "association_of_requested_address": "NOT_VERIFIED"
+}

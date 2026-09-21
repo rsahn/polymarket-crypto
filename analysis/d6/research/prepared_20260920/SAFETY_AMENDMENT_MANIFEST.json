@@ -1,0 +1,18 @@
+{
+  "observed_utc": "2026-09-20T17:36:24.829988+00:00",
+  "chain_phase_at_amendment": "WAITING_FOR_CONVERSION",
+  "changed_files": {
+    "analysis\\d6\\paper_runtime\\runtime.py": {
+      "before": "afb50059cce3c5926366ed95a9f887eef33a1cf858e874179b5df6bec96845eb",
+      "after": "a680180da5be0863796d97208b0a29b6943ab1320d8f4a4e9a4d0c32805760c6"
+    },
+    "analysis\\d6\\paper_runtime\\test_safety.py": {
+      "before": "9db57a026f75345e3de39eaa39de73c689eebd4906e2acde21525ad4b1b4b132",
+      "after": "9c069c27ecc80cee33eb4927626be8ece7c6d16952e46d8e5939a7de6d314993"
+    }
+  },
+  "engine_and_research_unchanged": true,
+  "runtime_tests_passed": 22,
+  "note": "Pre-result critical safety correction, not a parameter or strategy change. Preserve original lock and final mismatch.",
+  "path_comparison": "Normalized Windows path separators"
+}

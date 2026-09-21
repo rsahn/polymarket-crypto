@@ -1,0 +1,39 @@
+{
+  "phase": "WAITING_CLOCK",
+  "pid": 16280,
+  "started_utc": "2026-09-20T07:17:08.828537+00:00",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "research_allowed": false,
+  "threshold_seconds": 0.05,
+  "required_consecutive_checks": 2,
+  "maximum_wait_seconds": 14400,
+  "preflight_code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+  "keep_awake": true,
+  "updated_utc": "2026-09-20T10:46:22.278230+00:00",
+  "attempt": 195,
+  "consecutive_valid_checks": 0,
+  "service_status": "Running",
+  "ntp": {
+    "time.windows.com": {
+      "offsets_seconds": [
+        0.0460056,
+        0.0467766,
+        0.0482367
+      ],
+      "exit_code": 0,
+      "median_seconds": 0.0467766
+    },
+    "time.cloudflare.com": {
+      "offsets_seconds": [
+        0.051247,
+        0.0508274,
+        0.052047
+      ],
+      "exit_code": 0,
+      "median_seconds": 0.051247
+    }
+  },
+  "latest_clock_evidence": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\clock_sync_20260920_091052\\convergence_0195.json"
+}

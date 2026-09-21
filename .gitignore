@@ -33,3 +33,21 @@ Thumbs.db
 # Logs and temporary output
 *.log
 *.tmp
+
+# Generated research datasets
+*.parquet
+*.db
+*.db-wal
+*.db-shm
+
+# Large generated datasets
+*.parquet
+*.db
+*.db-wal
+*.db-shm
+
+# Generated datasets - never commit
+*.parquet
+*.db
+*.db-wal
+*.db-shm

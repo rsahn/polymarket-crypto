@@ -1,0 +1,26 @@
+{
+  "captured_utc": "2026-09-21T08:33:29.731702+00:00",
+  "status": "PLANNING_ONLY_NOT_LAUNCH_AUTHORIZATION",
+  "no_outcomes_inspected": true,
+  "observed_growth_gib_per_hour": 6.700761392168767,
+  "observation_span_seconds": 672.267516400083,
+  "free_gib": 108.49459075927734,
+  "reserve_gib": 5,
+  "raw_projection_gib": {
+    "3": 20.102284176506302,
+    "8": 53.606091137350134,
+    "24": 160.81827341205042,
+    "32": 214.42436454940054
+  },
+  "conservative_2x_raw_projection_gib": {
+    "3": 40.204568353012604,
+    "8": 107.21218227470027,
+    "24": 321.63654682410083,
+    "32": 428.8487290988011
+  },
+  "existing_oos_minimum_markets_per_duration": 30,
+  "minimum_15m_oos_hours_before_boundary_purges": 7.5,
+  "old_50_25_25_split_minimum_total_hours_before_purges": 30,
+  "chosen_duration_hours": null,
+  "new_collection_allowed_by_this_file": false
+}

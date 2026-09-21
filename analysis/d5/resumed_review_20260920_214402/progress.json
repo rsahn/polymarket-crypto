@@ -1,0 +1,110 @@
+{
+  "pid": 14672,
+  "status": "COMPLETE",
+  "steps_total": 8,
+  "research_allowed": false,
+  "paper_started": false,
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "minimum_seconds": 10800,
+  "alert_after_seconds": 3600,
+  "hard_timeout": false,
+  "sqlite_cache_kib": 131072,
+  "one_hour_alert": true,
+  "step": 8,
+  "stage": "Comparaison et quality gate",
+  "rows_processed": null,
+  "total_rows": null,
+  "percent": null,
+  "rows_per_second": null,
+  "detail": null,
+  "sql": null,
+  "elapsed_seconds": 13378.524444599985,
+  "stage_elapsed_seconds": 0.018569600069895387,
+  "updated_utc": "2026-09-20T23:27:01.525037+00:00",
+  "completed_steps": [
+    {
+      "step": 1,
+      "stage": "Preparation metadata",
+      "status": "PASS",
+      "seconds": 0.0023792999563738704,
+      "details": {
+        "carried_forward_completed_step": true,
+        "prior_review": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\full_review_20260920_201805",
+        "note": "User authorized completion of missing checks; no historical PID12408 result reused"
+      }
+    },
+    {
+      "step": 2,
+      "stage": "Audit_next complet",
+      "status": "PASS",
+      "seconds": 0.0020058000227436423,
+      "details": {
+        "carried_forward_completed_step": true,
+        "prior_review": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\full_review_20260920_201805",
+        "note": "User authorized completion of missing checks; no historical PID12408 result reused"
+      }
+    },
+    {
+      "step": 3,
+      "stage": "SQLite integrity_check source",
+      "status": "PASS",
+      "seconds": 3395.4392412999878,
+      "details": [
+        [
+          "ok"
+        ]
+      ]
+    },
+    {
+      "step": 4,
+      "stage": "SQLite foreign_key_check source",
+      "status": "PASS",
+      "seconds": 932.008058300009,
+      "details": []
+    },
+    {
+      "step": 5,
+      "stage": "Qualite / provenance source",
+      "status": "PASS",
+      "seconds": 1801.3896559000714,
+      "details": {
+        "note": "All quality metrics computed; policy evaluated at final gate"
+      }
+    },
+    {
+      "step": 6,
+      "stage": "Replay NoTrade 1 source",
+      "status": "PASS",
+      "seconds": 3876.2643914000364,
+      "details": {
+        "events": 7518713,
+        "no_trade": true
+      }
+    },
+    {
+      "step": 7,
+      "stage": "Replay NoTrade 2 source",
+      "status": "PASS",
+      "seconds": 3373.2393866999773,
+      "details": {
+        "events": 7518713,
+        "no_trade": true
+      }
+    },
+    {
+      "step": 8,
+      "stage": "Comparaison et quality gate",
+      "status": "FAIL",
+      "seconds": 0.007384099997580051,
+      "details": {
+        "failures": [
+          "GAPS_REQUIRE_REVIEW_15m",
+          "GAPS_REQUIRE_REVIEW_5m",
+          "GAPS_REQUIRE_REVIEW_BTC",
+          "UNCLEAN_STOP"
+        ]
+      }
+    }
+  ],
+  "D5_DATA_QUALITY": "FAIL"
+}

@@ -1,0 +1,28 @@
+{
+  "url": "https://gamma-api.polymarket.com/markets?closed=true&limit=100&condition_ids=0xa57e91771f60d6e34246c3faa738c0664122446c73eb1308a9f86b20d37ce3d0&condition_ids=0xc12b000fe41255ac859fb0cebc255c3e35970ead032d356d2f9be5742bfa2861&condition_ids=0x0c33564d77932d97279c6667c767fe18884acf7543a17a1f85166745d79b42a0&condition_ids=0x16a2a866aa113e50e507d86692396b639e535733eaf0422f8248fc1fd6f62956&condition_ids=0xd8520a855853098440519ac0fb6385d9abe653491515796f4c8efb0ac849cb30&condition_ids=0x15b9fdef699ccbe2c215acb2b32b622471cf23056ac6d0c6ea0b305015ce8f81&condition_ids=0x07c24470a22fbd78594529f39f98f7c10f19cb2129b736b8487e6164a9d09f0c&condition_ids=0xd1b967db3ac55b7c1d09e20532273b427a90b21862de69fc35dc7c48cd77cfb4&condition_ids=0x6e19e08839cf5b257e0c804a00e2ed28652d14dc011a0c29f90fb35bbe1fed1d",
+  "retrieved_utc": "2026-09-20T11:25:10.118407+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 11:25:10 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "set-cookie": "__cf_bm=XmjIlUaRFZG3hd.BXcO.KT2eyDbyPwslVaWCTcnnyBQ-1789903510.0322535-1.0.1.1-JLwXn.OOMqJuYVQFetK5wH6x4WZKa1cSum3_Su_wGTyuqkN8YJ9i0B3.6mkp.jRWDpRP6j_M88Fn2N9VJXiZjYcJ5OKqUpjrn7Qo76369gvH5aNhn.1NLAvl0PhLm3rd; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 11:55:10 GMT",
+    "deprecation": "true",
+    "Server": "cloudflare",
+    "sunset": "Fri, 01 May 2026 00:00:00 GMT",
+    "vary": "Accept-Encoding,Origin",
+    "warning": "299 - \"use /markets/keyset\"",
+    "x-envoy-upstream-service-time": "19",
+    "Server-Timing": "cfCacheStatus;desc=\"MISS\"",
+    "last-modified": "Sun, 20 Sep 2026 11:25:10 GMT",
+    "expires": "Sun, 20 Sep 2026 11:30:10 GMT",
+    "Cache-Control": "public, max-age=300",
+    "cf-cache-status": "MISS",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "CF-RAY": "a3e077c9bd3ad108-CDG"
+  },
+  "sha256": "eb45ac4f26392858397d879874620854c97adee35ba8ea5e64fa76631ffc315f",
+  "bytes": 52002
+}

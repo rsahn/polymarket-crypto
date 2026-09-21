@@ -1,0 +1,13 @@
+{
+  "test": "detached_windows_asyncio_ctrl_c",
+  "passed": true,
+  "finally_executed": true,
+  "keyboard_interrupt_caught": true,
+  "exit_code": 0,
+  "console_scope": [
+    12668,
+    16812,
+    17320
+  ],
+  "real_collector_signal_sent": false
+}

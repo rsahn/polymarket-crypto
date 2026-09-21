@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "tables_rows_equal": {
+    "events": 77479,
+    "book_sides": 154872,
+    "anchors": 236,
+    "markets": 2
+  },
+  "excluded_run_specific_columns": [
+    "session_id",
+    "closed_at_ms"
+  ],
+  "all_event_timestamps_payloads_depth_identical": true,
+  "seconds": 2.6619547000154853,
+  "baseline": "analysis\\d51\\full_stage_profile_20260921_141256",
+  "candidate": "analysis\\d51\\full_stage_profile_20260921_141702"
+}

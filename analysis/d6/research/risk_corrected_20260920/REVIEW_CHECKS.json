@@ -1,0 +1,15 @@
+{
+  "ledger_issues": [],
+  "candidate_unchanged": {
+    "TRAIN_D6_0": true,
+    "TRAIN_D6_100": true,
+    "TRAIN_D6_250": true,
+    "TRAIN_D6_500": true,
+    "VALIDATION_D6_0": true,
+    "VALIDATION_D6_100": true,
+    "VALIDATION_D6_250": true,
+    "VALIDATION_D6_500": true
+  },
+  "oos_opened": false,
+  "risk_policy_correction": "No parameter/model selection; comparable runtime safety stop"
+}

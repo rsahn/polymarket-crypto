@@ -1,0 +1,385 @@
+{
+  "recomputed_from_raw_files": true,
+  "not_reused_partial_audit_result": true,
+  "timestamps_corrected": false,
+  "dataset_is_24h_validation": false,
+  "rows": [
+    {
+      "phase": "before_service_sync",
+      "source_file": "analysis\\d5\\clock_sync_20260920_091052\\before.json",
+      "source_sha256": "f27041234f90582ccef4a5012dbc645ffb60ba430f64ed63d002e41fb2384e47",
+      "captured_utc": "2026-09-20T07:10:52.872824+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            591.2618,
+            591.8426,
+            590.5412
+          ],
+          "max_abs_ms": 591.8426,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            598.0583,
+            598.2869,
+            595.7746000000001
+          ],
+          "max_abs_ms": 598.2869,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 2147943462,
+          "stdout": "L'erreur suivante s'est produite\u00ff: Le service n'a pas \u201at\u201a d\u201amarr\u201a. (0x80070426)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "after_initial_sync",
+      "source_file": "analysis\\d5\\clock_sync_20260920_091052\\after_initial.json",
+      "source_sha256": "1eed4d4d842066a5f52ee7316fe2b00648e6dc5c41e30e2c80113ffb766d489e",
+      "captured_utc": "2026-09-20T07:12:01.691036+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            591.7878,
+            591.0624,
+            597.5785
+          ],
+          "max_abs_ms": 597.5785,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            598.2831,
+            596.3273,
+            595.7099999999999
+          ],
+          "max_abs_ms": 598.2831,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0443903s\nDispersion de racine\u00ff: 8.3612473s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:11:31\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.5912218s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 1 (Attente)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 0 (La commande s'est termin\u201ae correctement.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 29.9193095s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "gate_100ms_check_1",
+      "source_file": "analysis\\d5\\clock_sync_20260920_091052\\gate_100ms_20260920_124639\\convergence_0001.json",
+      "source_sha256": "96516c0fc486dc261b978f039c2b262e364f829c99979f6e0a210729cfd9b196",
+      "captured_utc": "2026-09-20T10:47:10.664304+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            46.231,
+            45.504999999999995,
+            52.9522
+          ],
+          "max_abs_ms": 52.9522,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            51.3209,
+            51.2462,
+            53.606300000000005
+          ],
+          "max_abs_ms": 53.606300000000005,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0111712s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 12860.9263911s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "gate_100ms_check_2",
+      "source_file": "analysis\\d5\\clock_sync_20260920_091052\\gate_100ms_20260920_124639\\convergence_0002.json",
+      "source_sha256": "4ef1ea6cfe708611071f15a3b873bf6c40474c9c919b8d6b54cbe84a1d80e381",
+      "captured_utc": "2026-09-20T10:48:15.299559+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            54.4957,
+            53.4875,
+            57.017199999999995
+          ],
+          "max_abs_ms": 57.017199999999995,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            53.7046,
+            53.8729,
+            51.0902
+          ],
+          "max_abs_ms": 53.8729,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0111712s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 12925.5582989s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "immediately_before_collection",
+      "source_file": "analysis\\d5\\24h_20260920_124822\\clock_before.json",
+      "source_sha256": "85be6d81b9b3460c6b87739051b8c2a2036f7502117c26802a5ab0dae657c248",
+      "captured_utc": "2026-09-20T10:48:22.883935+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            53.440599999999996,
+            47.8018,
+            51.4824
+          ],
+          "max_abs_ms": 53.440599999999996,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            50.8988,
+            51.129,
+            52.9242
+          ],
+          "max_abs_ms": 52.9242,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0111712s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 12933.1431700s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "during_collection",
+      "source_file": "analysis\\d5\\24h_20260920_124822\\clock_1789904912863529300.json",
+      "source_sha256": "5dfe1cd74e1aacc50d6137dc843a73e51b352d1edc25d4cee014a2135434c14a",
+      "captured_utc": "2026-09-20T11:48:27.867124+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            52.396699999999996,
+            51.2264,
+            46.9304
+          ],
+          "max_abs_ms": 52.396699999999996,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            51.9146,
+            58.1642,
+            58.8592
+          ],
+          "max_abs_ms": 58.8592,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0030816s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 16538.1750953s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "during_collection",
+      "source_file": "analysis\\d5\\24h_20260920_124822\\clock_1789908518416510100.json",
+      "source_sha256": "b228c6fc675ac0027048135ac0188d2e85cbfdba6dfce5e7798bce175223e94c",
+      "captured_utc": "2026-09-20T12:48:33.497542+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            58.8579,
+            69.67819999999999,
+            60.616299999999995
+          ],
+          "max_abs_ms": 69.67819999999999,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            62.0225,
+            66.9141,
+            62.89450000000001
+          ],
+          "max_abs_ms": 66.9141,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0012384s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20143.7859477s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "during_collection",
+      "source_file": "analysis\\d5\\24h_20260920_124822\\clock_1789912123607504200.json",
+      "source_sha256": "39891a9f94d9933a3815a624dd6a05819506ad24092cf483661b4ea38e74e684",
+      "captured_utc": "2026-09-20T13:48:38.812970+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            78.4449,
+            71.15440000000001,
+            72.41359999999999
+          ],
+          "max_abs_ms": 78.4449,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            77.9715,
+            77.2403,
+            78.8665
+          ],
+          "max_abs_ms": 78.8665,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0004192s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 23749.0804742s\n\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "phase": "after_collection",
+      "source_file": "analysis\\d5\\3h_20260920_124822_review\\clock_after_user_stop.json",
+      "source_sha256": "274b39b368866a141cd12dfa22d02f2e2ed2644a77acc7d25e1b453ae676255c",
+      "captured_utc": "2026-09-20T13:51:04.904176+00:00",
+      "measurements": [
+        {
+          "server": "time.windows.com",
+          "offset_ms": [
+            78.3833,
+            78.01339999999999,
+            78.3533
+          ],
+          "max_abs_ms": 78.3833,
+          "exit_code": 0
+        },
+        {
+          "server": "time.cloudflare.com",
+          "offset_ms": [
+            78.826,
+            78.85889999999999,
+            79.1627
+          ],
+          "max_abs_ms": 79.1627,
+          "exit_code": 0
+        }
+      ],
+      "raw_status": [
+        {
+          "command": [
+            "w32tm",
+            "/query",
+            "/status",
+            "/verbose"
+          ],
+          "exit_code": 0,
+          "stdout": "Indicateur de d\u201arive\u00ff: 0(Aucun avertissement)\nCouche\u00ff: 5 (R\u201af\u201arence secondaire, synchronis\u201ae par (S)NTP)\nPr\u201acision\u00ff: -23 (119.209ns par battement)\nD\u201alai de racine\u00ff: 0.0449245s\nDispersion de racine\u00ff: 8.3619067s\nID de r\u201af\u201arence\u00ff: 0x14653909 (IP de la source\u00ff:  20.101.57.9)\nHeure de la derni\u0160re synchronisation r\u201aussie\u00ff: 20/09/2026 09:12:49\nSource\u00ff: time.windows.com,0x9 \nIntervalle d'interrogation\u00ff: 10 (1024s)\n\nD\u201acalage de phase\u00ff: 0.0004192s\nFr\u201aquence d'horloge\u00ff: 0.0156250s\nOrdinateur d'\u201atat\u00ff: 2 (Synchroniser)\nIndicateur de source de temps\u00ff: 0 (Aucun)\nR\u201cle de serveur\u00ff: 0 (Aucun)\nErreur lors de la derni\u0160re synchronisation\u00ff: 2 (L'ordinateur ne s'est pas resynchronis\u201a car seules des donn\u201aes de temps\nobsol\u0160tes \u201ataient disponibles.)\nDur\u201ae \u201acoul\u201ae depuis l'heure de la derni\u0160re synchronisation r\u201aussie\u00ff: 23895.3898551s\n\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "all_collection_sample_offsets_at_most_100ms": true,
+  "collection_max_abs_ms": 79.1627,
+  "limitations": [
+    "Discrete independent NTP probes do not measure clock error continuously.",
+    "Raw W32Time status reports stale synchronization data (last sync error 2), including at the launch gate and afterwards. Do not claim recent continuous W32Time synchronization.",
+    "Initial 50ms criterion was not satisfied; 100ms replacement was explicitly authorized before launch. No retroactive threshold change.",
+    "BOOK receive-minus-source minimum -54ms is compatible with clock-domain offset/asymmetry; these probes cannot attribute the exact per-event cause or justify correcting raw timestamps."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "CANDIDATE_NOT_INTEGRATED",
+  "backend_tests": 88,
+  "backend_tests_result": "PASS",
+  "log": "BACKEND_TESTS_TRANSPORT.log",
+  "new_process_tests": 7,
+  "core_tests": 10,
+  "queue_bounds": "Outstanding serialized bytes and items, plus one reserved STOP <=4096 bytes; original caller-owned input and temporary pickle allocation are not included.",
+  "features": [
+    "spawn worker sole Store/Observer/BTCFeatures owner",
+    "quiet-tail batch flush",
+    "immutable serialized command before returning submit",
+    "explicit admission failure without sequence consumption",
+    "monotone processed/committed ACK validation",
+    "ordered stop drain and join without terminate",
+    "worker exception terminal FAILED",
+    "queue high-water and oldest unacknowledged age"
+  ],
+  "remaining": [
+    "integrate producer callbacks, generation controls, BTC status events and housekeeping",
+    "preserve admission-failed input and terminal failure state in live supervisor",
+    "complete all existing suites and full fixture audit plus two independent replays",
+    "instrument end-to-end live latency and queue age",
+    "new frozen-protocol NTP-gated >=20minute smoke after integration"
+  ],
+  "sha256": {
+    "backend/app/d5/writer_core.py": "8b7c227f33af14f4dc876c562746b1b92ec132d7db06d455b418cf1c38adee62",
+    "backend/app/d5/writer_process.py": "480ea799f49d13526c007b8b9b3790da16b37acac52830c56249eafe5f0188a8",
+    "backend/tests/test_d51_writer_core.py": "1b268476266996c78b229f377b35e7c16df10205912ac9c0e994ee07cd75feac",
+    "backend/tests/test_d51_writer_process.py": "fb5aaae75e1d479f2339d19c82b7ccaabc2d7bd135d46052b2418fb513150b98"
+  },
+  "live_py_changed": false,
+  "historical_D5": "FAIL",
+  "paper_started": false
+}

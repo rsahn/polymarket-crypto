@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "all_events_replayed": true,
+    "result_hash_recomputed": true,
+    "capital_500": true,
+    "orders_and_fills_zero": true,
+    "all_markets_flat": true,
+    "markets_match": true,
+    "session_match": true,
+    "strategy_no_trade": true,
+    "last_event_id": true
+  },
+  "status": "PASS_COMPLETENESS_AND_NOTRADE_ONLY",
+  "replay_file_sha256": "ea17f20259040153046d3555aeafd688d24ecc91043f6e9c9d05d97383d75762",
+  "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+  "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752",
+  "duration_seconds": 3876.2643914000364,
+  "independent_replay_comparison": "PENDING_REPLAY_2",
+  "source_attestation": "PENDING"
+}

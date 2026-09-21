@@ -1,0 +1,82 @@
+{
+  "pid": 20544,
+  "phase": "COMPLETE",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_130414.db",
+  "started_utc": "2026-09-21T11:04:14.210581+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T12:05:02.388933+00:00",
+  "session_id": "5ced6610-0030-4aaa-b8ad-64e155f2e729",
+  "elapsed_seconds": 1308.9133860000875,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 12,
+    "BOOK": 1246508,
+    "REJECT": 1799,
+    "BTC_CONNECTED": 1,
+    "BTC": 19705,
+    "EXPIRE": 6,
+    "ROTATION": 6,
+    "WS_ERROR": 4,
+    "RECONNECT": 8
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1789989300",
+      "received_ts_ms": 1789990003117
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1789989900",
+      "received_ts_ms": 1789990003051
+    }
+  },
+  "free_bytes": 97373458432,
+  "feed_timing": {
+    "15m": {
+      "observations": 412050,
+      "wire_age_sum_ms": 389578572,
+      "last_wire_age_ms": 305,
+      "max_wire_age_ms": 8180,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1789990003117
+    },
+    "5m": {
+      "observations": 834458,
+      "wire_age_sum_ms": 12908176958,
+      "last_wire_age_ms": 1085,
+      "max_wire_age_ms": 61792,
+      "last_processing_ms": 1,
+      "last_received_ts_ms": 1789990003051
+    }
+  },
+  "last_clock_failures": [],
+  "collection": {
+    "session_id": "5ced6610-0030-4aaa-b8ad-64e155f2e729",
+    "elapsed_seconds": 1330.0992864000145,
+    "collection_seconds": 1320.013272000011,
+    "counts": {
+      "CLOCK_SAMPLE": 44,
+      "ACTIVATE": 12,
+      "BOOK": 1257795,
+      "REJECT": 1806,
+      "BTC_CONNECTED": 1,
+      "BTC": 19854,
+      "EXPIRE": 6,
+      "ROTATION": 6,
+      "WS_ERROR": 4,
+      "RECONNECT": 8,
+      "COLLECTION_STOP": 1,
+      "SESSION_END": 3
+    },
+    "status": "STOPPED"
+  },
+  "D51_DATA_QUALITY": "PASS",
+  "failures": []
+}

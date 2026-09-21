@@ -1,0 +1,20 @@
+{
+  "session_id": "5ced6610-0030-4aaa-b8ad-64e155f2e729",
+  "elapsed_seconds": 1330.0992864000145,
+  "collection_seconds": 1320.013272000011,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 12,
+    "BOOK": 1257795,
+    "REJECT": 1806,
+    "BTC_CONNECTED": 1,
+    "BTC": 19854,
+    "EXPIRE": 6,
+    "ROTATION": 6,
+    "WS_ERROR": 4,
+    "RECONNECT": 8,
+    "COLLECTION_STOP": 1,
+    "SESSION_END": 3
+  },
+  "status": "STOPPED"
+}

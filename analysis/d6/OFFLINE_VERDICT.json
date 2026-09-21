@@ -1,0 +1,53 @@
+{
+  "verdict": "INSUFFICIENT_DATA",
+  "updated_utc": "2026-09-20T23:44:35.269794+00:00",
+  "technical_tests_passed": true,
+  "technical_test_count": 29,
+  "technical_tests_scope": "Synthetic conversion, causal joins, virtual engine/runtime. Not actual D5 quality PASS or real feed experiment. Risk stop assertion passed after correction.",
+  "critical_anomalies": [
+    "ACCEPTED_TIMESTAMP_REGRESSION_BOOK_SOURCE",
+    "GAPS_REQUIRE_REVIEW_15m",
+    "GAPS_REQUIRE_REVIEW_5m",
+    "GAPS_REQUIRE_REVIEW_BTC",
+    "UNCLEAN_STOP"
+  ],
+  "critical_review_status": "COMPLETE_BLOCKED_D5_DATA_QUALITY",
+  "validated_fingerprint": {
+    "limits": {
+      "capital": "500",
+      "cash_reserve": "100",
+      "max_market_cost": "50",
+      "max_order_qty": "5",
+      "max_directional_shares": "20",
+      "max_drawdown": "25",
+      "minimum_depth": "5",
+      "latency_ms": 250,
+      "fresh_ms": 1000,
+      "action_interval_ms": 3000,
+      "fee_rate": "0.07"
+    },
+    "code": {
+      "analysis\\d6\\paper_runtime\\engine.py": "2089506413d7353a6af99151829fa77240a0f2d72c7227cdc4fcd942360f9db7",
+      "analysis\\d6\\paper_runtime\\runtime.py": "a680180da5be0863796d97208b0a29b6943ab1320d8f4a4e9a4d0c32805760c6",
+      "analysis\\d6\\paper_runtime\\clock_guard.py": "e50619f13bc7a3938bc36b210501213b1a1e9f5aa72f0c4dc03a2a8ba8175b96",
+      "backend\\app\\collectors\\binance.py": "676d1a1cd5547b0481134d60dc59d5d660f055fbf9711ecb83d711ff85905f82",
+      "backend\\app\\collectors\\polymarket_ws.py": "56260a75088a2975e3775561ce7f034f9506514f4367041c498414ddfa6706d1",
+      "backend\\app\\collectors\\polymarket.py": "45a7daad4296334b04c97f78b1884711be927c4987c5a75123207a604f74a224"
+    }
+  },
+  "paper_started": false,
+  "real_money": false,
+  "oos_opened": false,
+  "quant_conclusion": "NOT_VALIDATED_BY_CURRENT_D5_REVIEW",
+  "candidate_paper_latency_ms": 250,
+  "candidate_parameters_selected_before_results": true,
+  "candidate_after_risk_correction_unchanged": true,
+  "next_step": "User methodological decision required; no automatic D6, Paper or new collection",
+  "report": "analysis/d6/FINAL_REPORT.md",
+  "active_d5_review": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402",
+  "D5_DATA_QUALITY": "FAIL",
+  "D6_RESEARCH_ALLOWED": false,
+  "research_allowed": false,
+  "final_d5_report": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402\\SUPERVISOR_FINAL_REPORT.md",
+  "historical_evidence_archive": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\resumed_review_20260920_214402\\D6_OFFLINE_VERDICT_BEFORE_FINAL_DECISION.json"
+}

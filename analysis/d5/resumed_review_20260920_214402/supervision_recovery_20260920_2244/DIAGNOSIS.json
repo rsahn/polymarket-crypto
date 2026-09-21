@@ -1,0 +1,9 @@
+{
+  "observed_utc": "2026-09-20T20:43:32.856916+00:00",
+  "post_pid_17852_absent": true,
+  "cause": "Transient Windows access denied replacing JSON status; no source read started",
+  "display_cause": "Integrity completed details is a list, display assumed dict and failed telemetry refresh",
+  "main_pid_14672_untouched": true,
+  "source_db_untouched": true,
+  "repair": "Bounded retry atomic status, preserve existing status on denied replace; typed display detail mapping"
+}

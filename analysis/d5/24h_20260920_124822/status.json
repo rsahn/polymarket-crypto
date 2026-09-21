@@ -1,0 +1,49 @@
+{
+  "pid": 4920,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "output": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\24h_20260920_124822",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "research_allowed": false,
+  "requested_seconds": 86520.0,
+  "test_run": false,
+  "started_utc": "2026-09-20T10:48:22.831633+00:00",
+  "phase": "FAILED",
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:d217f12b9c6a2b2e130df454d25c42c434304b0f2ad1321fe669cab0759df1bc",
+  "keep_awake": false,
+  "updated_utc": "2026-09-20T13:51:03.594031+00:00",
+  "collection_started_utc": "2026-09-20T10:48:27.240000+00:00",
+  "expected_collection_end_utc": "2026-09-21T10:50:27.240024+00:00",
+  "session_id": "83b5cc8a-4592-4676-b28d-3da2ac6d0088",
+  "elapsed_seconds": 10940.55836060003,
+  "counts": {
+    "CLOCK_SAMPLE": 359,
+    "ACTIVATE": 85,
+    "BOOK": 7438105,
+    "REJECT": 10333,
+    "BTC_CONNECTED": 1,
+    "BTC": 66507,
+    "WS_ERROR": 34,
+    "RECONNECT": 68,
+    "EXPIRE": 49,
+    "ROTATION": 49
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1789911900",
+      "received_ts_ms": 1789912247610
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1789912200",
+      "received_ts_ms": 1789912247558
+    }
+  },
+  "free_bytes": 103975931904,
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 119, in run\n    return self._loop.run_until_complete(task)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\base_events.py\", line 726, in run_until_complete\n    return future.result()\n           ~~~~~~~~~~~~~^^\n  File \"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\app\\d5\\prospective.py\", line 69, in collect\n    return await run(SimpleNamespace(db=db,seconds=seconds,reconnect_after=0,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                    compress_payloads=True,min_free_bytes=reserve,on_progress=progress))\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\app\\d5\\live.py\", line 169, in run\n    done, _ = await asyncio.wait(tasks,timeout=args.seconds,return_when=asyncio.FIRST_COMPLETED)\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\tasks.py\", line 451, in wait\n    return await _wait(fs, timeout, return_when, loop)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\tasks.py\", line 537, in _wait\n    await waiter\nasyncio.exceptions.CancelledError\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\app\\d5\\prospective.py\", line 112, in main\n    result=asyncio.run(collect(db,args.seconds,reserve,update,output))\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 196, in run\n    return runner.run(main)\n           ~~~~~~~~~~^^^^^^\n  File \"C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\asyncio\\runners.py\", line 124, in run\n    raise KeyboardInterrupt()\nKeyboardInterrupt\n",
+  "failed_utc": "2026-09-20T13:51:03.589535+00:00"
+}

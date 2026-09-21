@@ -1,0 +1,17 @@
+{
+  "pid": 19808,
+  "status": "FAILED",
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "stage": "[10/10] DuckDB catalog and essential features",
+  "rows": null,
+  "total": null,
+  "percent": null,
+  "memory_bytes": 385327104,
+  "max_memory_bytes": 385327104,
+  "elapsed_seconds": 1767.206829700037,
+  "updated_utc": "2026-09-20T17:40:49.429439+00:00",
+  "free_bytes": 103578542080,
+  "rows_per_second": 5992.944180182202,
+  "bytes_hashed": 26172456960,
+  "error": "OutOfMemoryException(\"Out of Memory Error: failed to pin block of size 256.0 KiB (366.0 MiB/366.2 MiB used)\\n\\nPossible solutions:\\n* Reducing the number of threads (SET threads=X)\\n* Disabling insertion-order preservation (SET preserve_insertion_order=false)\\n* Increasing the memory limit (SET memory_limit='...GB')\\n\\nSee also https://duckdb.org/docs/stable/guides/performance/how_to_tune_workloads\")"
+}

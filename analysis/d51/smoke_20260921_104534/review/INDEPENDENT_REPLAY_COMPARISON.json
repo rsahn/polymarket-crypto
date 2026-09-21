@@ -1,0 +1,31 @@
+{
+  "checked_utc": "2026-09-21T09:35:17.164904+00:00",
+  "event_counts": [
+    818688,
+    818688
+  ],
+  "decision_hashes": [
+    "0d4eff77e110a0bdf69aae33dc642aca0bab39e2cae646b07e493f5f2fe8cf74",
+    "0d4eff77e110a0bdf69aae33dc642aca0bab39e2cae646b07e493f5f2fe8cf74"
+  ],
+  "result_hashes": [
+    "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba",
+    "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba"
+  ],
+  "recomputed_result_hashes": [
+    "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba",
+    "8b4eb7aaee38b40ebb4e173a0cf1655cdd8779fea84f6d021a1eb787d9f001ba"
+  ],
+  "complete_results_equal": true,
+  "result_top_level_keys": [
+    "metrics",
+    "markets",
+    "decisions",
+    "orders",
+    "fills",
+    "provenance"
+  ],
+  "decision_hashes_equal": true,
+  "quality_gate_not_inferred_from_replay": true,
+  "result_hashes_verified": true
+}

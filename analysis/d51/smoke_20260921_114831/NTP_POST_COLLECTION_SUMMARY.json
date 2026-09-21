@@ -1,0 +1,98 @@
+{
+  "captured_utc": "2026-09-21T10:12:58.204799+00:00",
+  "samples": [
+    {
+      "file": "clock_after_1789985485506581100.json",
+      "phase": "after",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 12.9395387,
+        "last_sync_raw": "21/09/2026 12:11:12"
+      },
+      "max_abs_offset_ms": 6.412863731384277
+    },
+    {
+      "file": "clock_during_1789984455522472500.json",
+      "phase": "during",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 7.0322141,
+        "last_sync_raw": "21/09/2026 11:54:08"
+      },
+      "max_abs_offset_ms": 5.3768157958984375
+    },
+    {
+      "file": "clock_during_1789984760194000500.json",
+      "phase": "during",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 55.6775073,
+        "last_sync_raw": "21/09/2026 11:58:24"
+      },
+      "max_abs_offset_ms": 4.075884819030762
+    },
+    {
+      "file": "clock_during_1789985065499776900.json",
+      "phase": "during",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 40.8690173,
+        "last_sync_raw": "21/09/2026 12:03:44"
+      },
+      "max_abs_offset_ms": 9.167313575744629
+    },
+    {
+      "file": "clock_during_1789985370861188600.json",
+      "phase": "during",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 26.1671861,
+        "last_sync_raw": "21/09/2026 12:09:04"
+      },
+      "max_abs_offset_ms": 9.702801704406738
+    },
+    {
+      "file": "clock_gate_1_1789984116040593600.json",
+      "phase": "gate_1",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 51.4743124,
+        "last_sync_raw": "21/09/2026 11:47:44"
+      },
+      "max_abs_offset_ms": 13.519644737243652
+    },
+    {
+      "file": "clock_gate_2_1789984150671253900.json",
+      "phase": "gate_2",
+      "failures": [],
+      "w32time": {
+        "service": "Running",
+        "source": "time.windows.com,0x8",
+        "last_sync_error": 0,
+        "last_sync_age_seconds": 22.3185023,
+        "last_sync_raw": "21/09/2026 11:48:48"
+      },
+      "max_abs_offset_ms": 6.727099418640137
+    }
+  ],
+  "all_checks_passed": true,
+  "quality_gate_pending": true
+}

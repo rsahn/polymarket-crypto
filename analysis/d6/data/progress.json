@@ -1,0 +1,14 @@
+{
+  "pid": 6096,
+  "status": "FAILED",
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "stage": "[4/10] events",
+  "rows": 4940000,
+  "total": 7518713,
+  "percent": 65.70273396524112,
+  "elapsed_seconds": 640.2753092999337,
+  "updated_utc": "2026-09-20T17:07:16.985255+00:00",
+  "free_bytes": 104312664064,
+  "rows_per_second": 7717.2259563971265,
+  "error": "PermissionError(13, 'Accès refusé')"
+}

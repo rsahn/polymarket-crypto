@@ -1,0 +1,218 @@
+{
+  "train": {
+    "signals": 275,
+    "invalid_hedges": 37,
+    "after_expiry": 37,
+    "positive_edges_invalid_hedge": 37,
+    "positive_edges_valid_hedge": 5,
+    "book_classes": {
+      "complete": 178,
+      "reduced": 60,
+      "impossible": 37
+    },
+    "best_market": {
+      "market_slug": "btc-updown-5m-1789800900",
+      "trades": 1,
+      "pnl": -0.0333000000000005,
+      "complete": 1,
+      "reduced": 0,
+      "impossible": 0
+    },
+    "worst_market": {
+      "market_slug": "btc-updown-5m-1789768200",
+      "trades": 4,
+      "pnl": -19.35147190792066,
+      "complete": 0,
+      "reduced": 3,
+      "impossible": 1
+    },
+    "top5_share_absolute_pnl": 0.23369532265813373,
+    "winning_trades": 2,
+    "losing_trades": 273,
+    "feature_quality": {
+      "first_ask": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 15
+      },
+      "first_bid": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 15
+      },
+      "first_ask_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 272
+      },
+      "first_bid_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 255
+      },
+      "first_spread": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 13
+      },
+      "opposite_ask": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 15
+      },
+      "opposite_bid": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 15
+      },
+      "opposite_ask_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 255
+      },
+      "opposite_bid_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 272
+      },
+      "opposite_spread": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 9
+      },
+      "depth_imbalance": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 275
+      },
+      "btc_return_1s": {
+        "missing": 0,
+        "zero": 137,
+        "distinct": 132
+      },
+      "btc_return_5s": {
+        "missing": 0,
+        "zero": 92,
+        "distinct": 176
+      },
+      "btc_return_15s": {
+        "missing": 0,
+        "zero": 43,
+        "distinct": 226
+      },
+      "time_remaining_ms": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 275
+      }
+    }
+  },
+  "validation": {
+    "signals": 120,
+    "invalid_hedges": 13,
+    "after_expiry": 13,
+    "positive_edges_invalid_hedge": 13,
+    "positive_edges_valid_hedge": 1,
+    "book_classes": {
+      "complete": 80,
+      "reduced": 27,
+      "impossible": 13
+    },
+    "best_market": {
+      "market_slug": "btc-updown-5m-1789818300",
+      "trades": 1,
+      "pnl": -0.3571428571428612,
+      "complete": 1,
+      "reduced": 0,
+      "impossible": 0
+    },
+    "worst_market": {
+      "market_slug": "btc-updown-5m-1789812600",
+      "trades": 10,
+      "pnl": -18.37471955965993,
+      "complete": 4,
+      "reduced": 1,
+      "impossible": 5
+    },
+    "top5_share_absolute_pnl": 0.511459752108701,
+    "winning_trades": 1,
+    "losing_trades": 119,
+    "feature_quality": {
+      "first_ask": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 13
+      },
+      "first_bid": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 13
+      },
+      "first_ask_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 116
+      },
+      "first_bid_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 116
+      },
+      "first_spread": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 7
+      },
+      "opposite_ask": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 13
+      },
+      "opposite_bid": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 13
+      },
+      "opposite_ask_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 116
+      },
+      "opposite_bid_qty": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 116
+      },
+      "opposite_spread": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 4
+      },
+      "depth_imbalance": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 120
+      },
+      "btc_return_1s": {
+        "missing": 0,
+        "zero": 72,
+        "distinct": 44
+      },
+      "btc_return_5s": {
+        "missing": 0,
+        "zero": 54,
+        "distinct": 61
+      },
+      "btc_return_15s": {
+        "missing": 0,
+        "zero": 32,
+        "distinct": 86
+      },
+      "time_remaining_ms": {
+        "missing": 0,
+        "zero": 0,
+        "distinct": 120
+      }
+    }
+  }
+}

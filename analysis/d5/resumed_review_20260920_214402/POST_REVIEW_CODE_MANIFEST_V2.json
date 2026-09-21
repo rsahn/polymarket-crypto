@@ -1,0 +1,14 @@
+{
+  "captured_utc": "2026-09-20T20:44:47.390912+00:00",
+  "hashes": {
+    "post_review_supervisor.py": "8bef0249c11104045173707068b87cefe7913f78613f888b84a472a30230f1e0",
+    "verify_source_provenance.py": "b39aa519be1616325a3d3f3b5ede660a9b746438fa9ad700cd98765196806f50",
+    "timestamp_supplement.py": "c129716b24f6552393874b0cfc3d6709184c38f1c0bb82baa9f35360d12707dc",
+    "atomic_status.py": "e4127230a282231ea938463aafce5dcce7448fb9e9d24dd202766b61abec9fcb",
+    "supervisor_progress_server.py": "da0baa002445c4e2e23f02e72de516337e8040e9c70267af33ed0be1f0d68e55",
+    "sqlite_tuning.py": "a3aa778e2df825abb99ae2a3f2b02809881b471bbcebeb214553faca91f2faa2",
+    "run_accelerated.py": "cdd5bfda0c13a7ce713c71c31fcceeb628541aa7b63868f81800936ca6efdde6"
+  },
+  "tests_passed": 9,
+  "reason": "Monitoring-only retry and display repair; no changes to quality/replay logic or active core code"
+}

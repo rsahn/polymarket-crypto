@@ -1,0 +1,7 @@
+{
+  "decision": "NOT_ADOPTED",
+  "reason": "No demonstrated speed gain; full technical benchmark 76.762s versus recent reference 46.343s. Scheduling noise also present; do not attribute entire wall-time difference to candidate.",
+  "synthetic_equivalence": "2000 byte-exact cases PASS; 6 nonfinite rejections PASS",
+  "backend_unchanged": true,
+  "full_persistence_equivalence": "Not run because candidate not adopted."
+}

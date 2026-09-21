@@ -1,0 +1,28 @@
+{
+  "url": "https://gamma-api.polymarket.com/markets?closed=true&limit=100&condition_ids=0x79d49dc34cd00fb80ff20e7a3a54887f24e0e3b9ba2e8f3c066e0f25b20b5ce7&condition_ids=0x2d799ae55b075660f710b7bdd94da8a297e3e17d0e829a94ecc0fa74c52d1a77&condition_ids=0xed7476ba4f729021d39333fefe45342025bbdb3c4ec0842c7ded39a2295600b2&condition_ids=0xd8c98df3457aae6c0ea2f2a47875d38bd57b04a77eb3c2d5f09049680df64efb&condition_ids=0x11753c720a23511843ec6b1b4a6fe488a1a260ff023eceb162df307dfe685d97&condition_ids=0x65de0e1a54e657989da5b2b568a36ffb859e499c802faf911daac33a1e1d5959&condition_ids=0x486fa065798607acc12d346f782961567fb83d5529c659204428a7b8873bd15c&condition_ids=0xdc3cd980b112772a7b1770db9b1a9c5beb168f433987480f2ee451fd8ccc714a&condition_ids=0x5f0e00da64a3e49b6b0c8ef19f6299ace645b1b613b6f0af4a27460d09d8e296&condition_ids=0xe1bf0c08df19f8581735159cec0bcf0cd5998a240b7fa3e5e73bbad36309a918&condition_ids=0xaf38b7ba73a905a7d7c7dd6b8241f61bf74c59811ad90e78389eda9df88ea7dc&condition_ids=0x1d632e9f2e59e7e13aba16af475c147a15d0164e390de8f0b4afca31dbb6d429&condition_ids=0x20c95574b672cf802c297da4bbffa767eacd68d203c2918a143ac19b2efb0bdb&condition_ids=0x9cb7c7e1cd9fc5c0a111ca6d57db274d2daff0c9ec26825b64f31fbeb21ca2af&condition_ids=0x80411f7ba85236fbd4a2312de789d7dd9024c56c0131a650e1dc2f30b0ebcb47&condition_ids=0x54d9c3bc82091bd983d3703be701a13be92181744b2bff55a67b7f0e4b7bee41&condition_ids=0xb345645d83131978b96e180f0d9b47eaaa87ff574f63514c95bcd34461b04d08&condition_ids=0x18d7522d0b488dcc06d5c4fddda5da93363fae0c138942519efe0c1eece6ea38&condition_ids=0x1c281e9c3ead98a6de0ff3ec1110b317e8e1994c7c98ee0f5a68bc51ef31fdf9&condition_ids=0x44c5ca5fdab7b292ed24ca25628e52f5648cbcb4adfd50e594376dada91802ec&condition_ids=0x3cdfd3cbd2110acfd706f7f00bde03fa37eac059feb5e5615f9f1ef5f5d94afe&condition_ids=0x203b5a32fb1178c0b38a1116023cadc966d902abf58daddd910bb8d10c653b42&condition_ids=0x14c51cdbfa51841591d138fc76f378bccaa930a27f92b8a3e3395bc7bf1b2c84&condition_ids=0xe5115cbbf8d721afd2c3e84b25e097cf6f8b891625169ff8991b6afee27094a2&condition_ids=0x10dad85ddd98dc768b3bbfd57d5c8f4c03a7f05e7b6d0d4d713674aa0c4fdca4&condition_ids=0xeff4554276617e10e8adc566da168519b9d393a58f547de69e4f90dafa44cdb1&condition_ids=0x48082d67e4ed91a6c9605c4f7b910c7b61b7b99c73eae30c698ac2d450f626b7&condition_ids=0x34443c3bbd6ad341acd0bad72359852e9a388ab2aaba0cf0ce3d71abcca685e4&condition_ids=0xdf0c91fbcf36f88df97db96a47be88d23b89f3184f6d027d3b8414e751515400&condition_ids=0x7044dada3dffaf7e13978f390c8bbdd05465ebcfc6c59a5e56b9863c46e44264&condition_ids=0x97dd22fda00a810dfaf79a093644bb3638548d232eefe3a71c5ae6a3beeb65e8&condition_ids=0x1cad0cdd9d61b0e38372cf3db12f8f82b3a57a905f54c4d81dca76e9262d36df&condition_ids=0x11c73f7f669cd496cd2be0652cd2150b152348cd3dd4413025355d2ea650ca49&condition_ids=0x3ddcedb72bbad2b0ea141336138a99fd575ff78d9d41cbfc21b0721751b11aa4&condition_ids=0x782afee21a13c2fe0394e83ca149ad8eedbb186bb7ae0d7242806039750a641e&condition_ids=0x78abd821f2caf02cc295686574460a73bc0f1f4011d7ef0b2166e859a026045f&condition_ids=0x1346c65dcfd43520291d68d187f645e20ae2660987640f487a9324ec95a74b42&condition_ids=0x9f0f79f0d791b967173daca68b1507ecfbe21a88d6462c9d12ea8ea12e94e001&condition_ids=0xc98eb49bfc130592384800ebd0a5884ba47ef63b6566c7291bad2f49dedfde82&condition_ids=0xa15b65ba2a0df1ac46f5841f46820b8f8b63cb2ad1f03fd4f8b6ad15ee90453e",
+  "retrieved_utc": "2026-09-20T11:25:06.803119+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 11:25:06 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "set-cookie": "__cf_bm=ZWBgEcBGI6umlpGrBDwKzIf45iCGNihKqlI7q8Dvo3M-1789903506.6359408-1.0.1.1-mlOFXt678dLVbs5StSCIzKQmTpoRO_1EyEdeEHgy5iaJwIE8VYEKGLj7KcJ4ZnpF3vqVCaT38pi84zQL3YEtRtstnilaZclYr9UMD8oF_coJESEheybm2gA8eOqXu1Ue; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 11:55:06 GMT",
+    "deprecation": "true",
+    "Server": "cloudflare",
+    "sunset": "Fri, 01 May 2026 00:00:00 GMT",
+    "vary": "Accept-Encoding,Origin",
+    "warning": "299 - \"use /markets/keyset\"",
+    "x-envoy-upstream-service-time": "24",
+    "Server-Timing": "cfCacheStatus;desc=\"MISS\"",
+    "last-modified": "Sun, 20 Sep 2026 11:25:06 GMT",
+    "expires": "Sun, 20 Sep 2026 11:30:06 GMT",
+    "Cache-Control": "public, max-age=300",
+    "cf-cache-status": "MISS",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "CF-RAY": "a3e077b47dee99c8-CDG"
+  },
+  "sha256": "f89564edaaf6b6232a460d1d470246af1091bb0fd94946d8464d723d7689593a",
+  "bytes": 217691
+}

@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "comparison": {
+    "event_count": true,
+    "decision_sha256": true,
+    "result_sha256": true,
+    "result": true
+  },
+  "checks": [
+    {
+      "replay": 1,
+      "complete": true,
+      "result_hash_recomputed": true,
+      "capital_500": true,
+      "zero_orders_fills": true,
+      "all_markets_flat": true,
+      "markets_match": true,
+      "same_session": true,
+      "no_trade": true
+    },
+    {
+      "replay": 2,
+      "complete": true,
+      "result_hash_recomputed": true,
+      "capital_500": true,
+      "zero_orders_fills": true,
+      "all_markets_flat": true,
+      "markets_match": true,
+      "same_session": true,
+      "no_trade": true
+    }
+  ],
+  "source_artifact_sha256": {
+    "REPLAY_1.json": "ea17f20259040153046d3555aeafd688d24ecc91043f6e9c9d05d97383d75762",
+    "REPLAY_2.json": "c90fcd023b7ec6a1f669f74afe76e077626b8194d308799bbfd8f42c1d056781"
+  },
+  "decision_sha256": "6184bfe7562e14867bd18789f315bedd7d15d613662c1a948a13ef828d1cdaa7",
+  "result_sha256": "00d76b967afeae5406afd09dabe1265550e6218f0bf67e13732a53c932ee9752",
+  "note": "Full-result equality inspected; does not override data quality failures or pending source attestation/supplement."
+}

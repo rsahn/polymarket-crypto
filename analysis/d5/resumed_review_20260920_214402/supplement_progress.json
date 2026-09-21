@@ -1,0 +1,15 @@
+{
+  "pid": 18624,
+  "status": "COMPLETE",
+  "step": 5,
+  "stage": "Supplement accepted timestamps / gaps, original source",
+  "sql": "SELECT e.event_id,e.kind,e.market_duration,e.market_slug,e.condition_id,e.generation,\n e.event_ts_ms,e.received_ts_ms,e.available_ts_ms,b.side,b.token_id,b.event_ts_ms,b.received_ts_ms\n FROM events e LEFT JOIN book_sides b USING(event_id)\n WHERE e.session_id=? AND e.kind IN ('BOOK','BTC') ORDER BY e.event_id",
+  "rows_processed": 14948941,
+  "accepted_events": 7507729,
+  "total_rows": 14948941,
+  "percent": 100.0,
+  "rows_per_second": 47299.72541213523,
+  "elapsed_seconds": 316.0470989999594,
+  "updated_utc": "2026-09-20T23:33:59.801419+00:00",
+  "error": null
+}

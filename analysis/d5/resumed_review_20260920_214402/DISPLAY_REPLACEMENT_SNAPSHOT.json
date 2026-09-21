@@ -1,0 +1,9 @@
+{
+  "ProcessId": 19488,
+  "CreationDate": "2026-09-20T20:18:54.517088+02:00",
+  "CommandLine": "\"C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe\" -B analysis\\d5\\auditor_next\\progress_server.py",
+  "KernelModeTime": 28281250,
+  "UserModeTime": 41093750,
+  "ReadTransferCount": 11222066,
+  "WriteTransferCount": 0
+}

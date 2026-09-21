@@ -1,0 +1,187 @@
+{
+  "contract": "D5.1",
+  "rows": 818688,
+  "book_events": 776312,
+  "book_sides": 1552624,
+  "btc_events": 41548,
+  "failures": {
+    "RECONNECT_GAP_OVER_5S": 2,
+    "ACCEPTED_AFTER_COLLECTION_STOP": 202,
+    "RECEIVE_CLOCK_REGRESSION": 1
+  },
+  "gap_counts": {
+    "STARTUP_GAP": 3,
+    "TRANSITION_GAP": 5,
+    "RECONNECT_GAP": 5,
+    "SHUTDOWN_GAP": 3
+  },
+  "gaps": [
+    {
+      "feed": "15m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789980373870,
+      "to_ms": 1789980374694,
+      "gap_ms": 824,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789980373870,
+      "to_ms": 1789980374747,
+      "gap_ms": 877,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1789980373870,
+      "to_ms": 1789980375366,
+      "gap_ms": 1496,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789980599824,
+      "to_ms": 1789980607773,
+      "gap_ms": 7949,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789980712231,
+      "to_ms": 1789980716696,
+      "gap_ms": 4465,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789980792589,
+      "to_ms": 1789980797589,
+      "gap_ms": 5000,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789980884192,
+      "to_ms": 1789980889326,
+      "gap_ms": 5134,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789980899898,
+      "to_ms": 1789980904667,
+      "gap_ms": 4769,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789980968495,
+      "to_ms": 1789980971824,
+      "gap_ms": 3329,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789981199743,
+      "to_ms": 1789981200998,
+      "gap_ms": 1255,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789981199979,
+      "to_ms": 1789981201008,
+      "gap_ms": 1029,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1789981499265,
+      "to_ms": 1789981506394,
+      "gap_ms": 7129,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1789981636390,
+      "to_ms": 1789981644012,
+      "gap_ms": 7622,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789981695718,
+      "to_ms": 1789981695748,
+      "gap_ms": 30,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789981696536,
+      "to_ms": 1789981695748,
+      "gap_ms": -788,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": "RECEIVE_CLOCK_REGRESSION"
+    },
+    {
+      "feed": "BTC",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1789981695747,
+      "to_ms": 1789981695748,
+      "gap_ms": 1,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    }
+  ],
+  "wire_regressions_diagnostic_only": 77,
+  "wire_worst_regression_ms": 66,
+  "wire_missing_timestamp_count": 0,
+  "reconnect_event_markers": 10,
+  "reconnect_attempts": 5,
+  "collection_stop_markers": 1,
+  "session_end_markers": 3
+}

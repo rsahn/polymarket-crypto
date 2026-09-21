@@ -1,0 +1,187 @@
+﻿**********************
+Début de la transcription Windows PowerShell
+Heure de début : 20260920091350
+Nom d'utilisateur : DESKTOP-E6HV095\Ramy
+Utilisateur runAs :  DESKTOP-E6HV095\Ramy
+Nom de la configuration : 
+Ordinateur : DESKTOP-E6HV095 (Microsoft Windows NT 10.0.19045.0)
+Application hôte : C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\sync_convergence.ps1
+ID de processus : 12060
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcription démarrée, le fichier de sortie est C:\Users\Ramy\Documents\polymarket-crypto\analysis\d5\clock_sync_20260920_091052\windows_sync_convergence.txt
+NTP_CONVERGENCE_ATTEMPT=1
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5918821s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 60.4057421s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:13:50.
+09:13:50, +00.5957248s
+NTP_CONVERGENCE_ATTEMPT=2
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5892517s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 76.4058409s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:14:06.
+09:14:06, +00.5932715s
+NTP_CONVERGENCE_ATTEMPT=3
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5866341s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 92.4211980s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:14:22.
+09:14:22, +00.5868699s
+NTP_CONVERGENCE_ATTEMPT=4
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5840277s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 1 (Attente)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 108.4339432s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:14:38.
+09:14:38, +00.5845387s
+NTP_CONVERGENCE_ATTEMPT=5
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5814325s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 2 (Synchroniser)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 124.4379353s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:14:54.
+09:14:54, +00.5855170s
+NTP_CONVERGENCE_ATTEMPT=6
+Envoi de la commande de resynchronisation à l’ordinateur local
+L’ordinateur ne s’est pas resynchronisé car seules des données de temps
+obsolètes étaient disponibles.
+Indicateur de dérive : 0(Aucun avertissement)
+Couche : 5 (Référence secondaire, synchronisée par (S)NTP)
+Précision : -23 (119.209ns par battement)
+Délai de racine : 0.0449245s
+Dispersion de racine : 8.3619067s
+ID de référence : 0x14653909 (IP de la source :  20.101.57.9)
+Heure de la dernière synchronisation réussie : 20/09/2026 09:12:49
+Source : time.windows.com,0x9
+Intervalle d’interrogation : 10 (1024s)
+
+Décalage de phase : 0.5788485s
+Fréquence d’horloge : 0.0156250s
+Ordinateur d’état : 2 (Synchroniser)
+Indicateur de source de temps : 0 (Aucun)
+Rôle de serveur : 0 (Aucun)
+Erreur lors de la dernière synchronisation : 0 (La commande s’est terminée correctement.)
+Durée écoulée depuis l’heure de la dernière synchronisation réussie : 140.4466254s
+Suivi de time.windows.com [20.101.57.9:123].
+Collecte de 1 échantillons.
+L’heure actuelle est 20/09/2026 09:15:10.
+09:15:10, +00.5782520s
+Suivi de time.cloudflare.com [162.159.200.123:123].
+Collecte de 3 échantillons.
+L’heure actuelle est 20/09/2026 09:15:10.
+09:15:10, +00.5859074s
+09:15:11, +00.5858812s
+09:15:12, +00.5832280s
+
+
+Name      : W32Time
+Status    : Running
+StartType : Manual
+
+
+
+**********************
+Fin de la transcription Windows PowerShell
+Heure de fin : 20260920091512
+**********************

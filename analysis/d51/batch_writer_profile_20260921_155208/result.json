@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "rows": 77477,
+  "last_sequence": 77476,
+  "counts": {
+    "ACTIVATE": 2,
+    "BOOK": 77436,
+    "REJECT": 41
+  },
+  "seconds": 33.54195469990373,
+  "technical_only": true,
+  "not_D6": true,
+  "not_prospective": true,
+  "frames": 77477,
+  "total_seconds": 34.01296290010214,
+  "frames_per_second": 2277.866830583211,
+  "normalize_seconds": 12.531766590545885,
+  "queue_put_wall_seconds": 20.164601899683475,
+  "queue_capacity": 256,
+  "batch_size": 32,
+  "no_dropped_frames": true,
+  "drained": true,
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:e9d2865d6f20d8c3099039e6b850f797a3d08d65ee045f1b64db35657155d6dd",
+  "timing_note": "Captured timestamps reused only in technical fixture; not a live latency measurement. Includes process startup and drain."
+}

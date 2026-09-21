@@ -1,0 +1,26 @@
+{
+  "monitor_updated_utc": "2026-09-20T20:40:25.828594+00:00",
+  "step": 3,
+  "stage": "SQLite integrity_check source",
+  "sql": "PRAGMA integrity_check",
+  "duration_seconds": 3382.7276869999478,
+  "heartbeat_age_seconds": 0.115371,
+  "process": {
+    "pid": 14672,
+    "alive": true,
+    "cpu_seconds": 296.703125,
+    "created_unix": 1789933442.7356205,
+    "read_operations": 12732313,
+    "write_operations": 2925,
+    "other_operations": 58078,
+    "read_bytes": 52152893585,
+    "write_bytes": 4488565,
+    "other_bytes": 831028,
+    "read_bytes_per_second": 17845537.857201114,
+    "write_bytes_per_second": 2842.304662429165,
+    "cpu_seconds_per_second": 0.0883811547056737
+  },
+  "rows_processed": null,
+  "total_rows": null,
+  "status": "RUNNING"
+}

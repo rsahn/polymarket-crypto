@@ -1,0 +1,14 @@
+{
+  "ProcessId": 12408,
+  "ParentProcessId": 18112,
+  "Name": "python.exe",
+  "ExecutablePath": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+  "CommandLine": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\backend\\.venv\\Scripts\\python.exe -B -u C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d5\\stop_3h_20260920\\controller.py",
+  "CreationDate": "2026-09-20T15:00:28.918872+02:00",
+  "KernelModeTime": 17392343750,
+  "UserModeTime": 3555781250,
+  "ReadTransferCount": 357394956895,
+  "WriteTransferCount": 10680463293,
+  "ReadOperationCount": 87256820,
+  "WriteOperationCount": 2610092
+}

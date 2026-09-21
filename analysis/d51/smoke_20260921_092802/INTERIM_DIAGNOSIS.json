@@ -1,0 +1,29 @@
+{
+  "captured_utc": "2026-09-21T08:02:22.079900+00:00",
+  "current_smoke_clock_evidence_not_replaced": true,
+  "first_smoke_has_known_failure": "W32TIME_SYNC_ERROR",
+  "full_verdict_pending": true,
+  "quality_metrics_so_far": {
+    "TOTAL_EVENTS": 760478,
+    "ACTUAL_DURATION_SECONDS": 1320.219239099999,
+    "5M_MARKETS": 6,
+    "15M_MARKETS": 3,
+    "OPEN_ANCHORS": 0,
+    "CROSS_MARKET_VIOLATIONS": 0,
+    "POST_EXPIRY_ACCEPTED": 0,
+    "MISSING_TOKEN_IDS": 0
+  },
+  "clock_repair": {
+    "finished_utc": "2026-09-21T07:56:59.9063096Z",
+    "config_exit": 0,
+    "manual_clock_set": false,
+    "started_utc": "2026-09-21T07:56:58.6775076Z",
+    "resync_exit": 0,
+    "config_output": "La commande s'est termin\u00e9e correctement.\r\n",
+    "status": "APPLIED_PENDING_OBSERVATION",
+    "resync_output": "Envoi de la commande de resynchronisation \u00e0 l'ordinateur local\r\nLa commande s'est termin\u00e9e correctement.\r\n"
+  },
+  "reference": "clock_polling_fix/DECISION.md",
+  "new_collection_not_started": true,
+  "historical_D5_DATA_QUALITY": "FAIL"
+}

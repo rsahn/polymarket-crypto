@@ -1,0 +1,26 @@
+{
+  "url": "https://data-api.polymarket.com/activity?user=0xeebde7a0e019a63e6b476eb425505b7b3e6eba30&limit=500&start=1789273800&end=1789276499&sortBy=TIMESTAMP&sortDirection=ASC",
+  "retrieved_utc": "2026-09-20T11:17:58.074154+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 11:17:58 GMT",
+    "Content-Type": "application/json",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close",
+    "set-cookie": "__cf_bm=IvFOzEGUeLSxrMdZ_qsNPVsMyGItdKFwaNoCmUGwo20-1789903077.8965096-1.0.1.1-Zy1aIX1GbVJoDtKlW2X2DtmEnEUPy1hMvXm_TwxtZemcUB7ckod4xzamA2qZ_bY77BFkP7qj..PR.xjqbHjNMsFPn9nv4X8eRPsUIOF2t97ispUj89rQpaJpmhKnQ0iG; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 11:47:58 GMT",
+    "traceparent": "00-1f7af2cf5ee3547fa4fd47caa4824f35-1f7af2cf5ee3547f-01",
+    "vary": "Accept-Encoding",
+    "x-request-id": "1f7af2cf5ee3547fa4fd47caa4824f35",
+    "Server-Timing": "cfCacheStatus;desc=\"MISS\"",
+    "last-modified": "Sun, 20 Sep 2026 11:17:58 GMT",
+    "expires": "Sun, 20 Sep 2026 11:18:13 GMT",
+    "Cache-Control": "public, max-age=15",
+    "cf-cache-status": "MISS",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "Server": "cloudflare",
+    "CF-RAY": "a3e06d3cd80ad0be-CDG"
+  },
+  "sha256": "17b6d9efd6c1b735ef554b1625e6b93111b92dc100a7e9682bdf378a849faee5",
+  "bytes": 232186
+}

@@ -1,0 +1,4843 @@
+{
+  "status": "BOUNDED_DIAGNOSIS_NOT_A_THRESHOLD_EXCEPTION",
+  "sample_count": 100,
+  "full_regression_count": 744,
+  "selection": "First 100 examples retained by full source scan; not a random sample and not every regression",
+  "message_type_patterns": {
+    "last_trade_price -> price_change": 98,
+    "last_trade_price -> book": 2
+  },
+  "pairs": [
+    [
+      {
+        "event_id": 29847,
+        "envelope_source_ms": 1789901345722,
+        "received_ms": 1789901346153,
+        "available_ms": 1789901346153,
+        "side_source_ms": {
+          "up": 1789901345721,
+          "down": 1789901345721
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "1273523321555155490674318795664115339536063199005701587232759893713678265465",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf98963f587a3f1ca3d22b5edc2272954b4489492e162caf4577cbd0da50d5ea2",
+            "price": "0.93",
+            "side": "BUY",
+            "size": "6",
+            "timestamp": "1789901345722",
+            "transaction_hash": "0x1c70d6186057a0bb7096125b12687234a2fa548622498b430079f4e96782eb20"
+          }
+        ]
+      },
+      {
+        "event_id": 29848,
+        "envelope_source_ms": 1789901345721,
+        "received_ms": 1789901346154,
+        "available_ms": 1789901346154,
+        "side_source_ms": {
+          "up": 1789901345721,
+          "down": 1789901345721
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf98963f587a3f1ca3d22b5edc2272954b4489492e162caf4577cbd0da50d5ea2",
+            "timestamp": "1789901345721"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 52244,
+        "envelope_source_ms": 1789901368490,
+        "received_ms": 1789901371684,
+        "available_ms": 1789901371684,
+        "side_source_ms": {
+          "up": 1789901368487,
+          "down": 1789901368487
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "246625115741332783624799174462639495156888463455265474923192134849155954526",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "price": "0.37",
+            "side": "BUY",
+            "size": "15",
+            "timestamp": "1789901368490",
+            "transaction_hash": "0xdb66962688d6dceaee6ab1eae3a6bc7cacf45ec4b03d3b81cd5fefc9b54f3450"
+          }
+        ]
+      },
+      {
+        "event_id": 52245,
+        "envelope_source_ms": 1789901368488,
+        "received_ms": 1789901371685,
+        "available_ms": 1789901371685,
+        "side_source_ms": {
+          "up": 1789901368488,
+          "down": 1789901368488
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "timestamp": "1789901368488"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 53509,
+        "envelope_source_ms": 1789901368225,
+        "received_ms": 1789901373018,
+        "available_ms": 1789901373019,
+        "side_source_ms": {
+          "up": 1789901368224,
+          "down": 1789901368224
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "74356406435613379544191307658471903909986002043799457369696909603779194426404",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf98963f587a3f1ca3d22b5edc2272954b4489492e162caf4577cbd0da50d5ea2",
+            "price": "0.95",
+            "side": "BUY",
+            "size": "10.311875",
+            "timestamp": "1789901368225",
+            "transaction_hash": "0x42abbb0d550b9191c2ef98339f94fcd77daa39f179ff2e43180066d94fbf9185"
+          }
+        ]
+      },
+      {
+        "event_id": 53510,
+        "envelope_source_ms": 1789901368224,
+        "received_ms": 1789901373019,
+        "available_ms": 1789901373019,
+        "side_source_ms": {
+          "up": 1789901368224,
+          "down": 1789901368224
+        },
+        "message_types": [
+          "book"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "74356406435613379544191307658471903909986002043799457369696909603779194426404",
+            "event_type": "book",
+            "hash": "471340d7b69ed54e84ed1508ef752cca85aa0711",
+            "market": "0xf98963f587a3f1ca3d22b5edc2272954b4489492e162caf4577cbd0da50d5ea2",
+            "timestamp": "1789901368224"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 94697,
+        "envelope_source_ms": 1789901416223,
+        "received_ms": 1789901422449,
+        "available_ms": 1789901422449,
+        "side_source_ms": {
+          "up": 1789901416171,
+          "down": 1789901416171
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "105722898459438279595643808970735192963257435317381980834899016883565429990097",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.53",
+            "side": "BUY",
+            "size": "21.2",
+            "timestamp": "1789901416223",
+            "transaction_hash": "0x8235cf15e71bba2b9ba1469c005e65e61f7fff067c273de7eefab0f3a1124a2f"
+          }
+        ]
+      },
+      {
+        "event_id": 94698,
+        "envelope_source_ms": 1789901416199,
+        "received_ms": 1789901422450,
+        "available_ms": 1789901422450,
+        "side_source_ms": {
+          "up": 1789901416199,
+          "down": 1789901416199
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901416199"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 95015,
+        "envelope_source_ms": 1789901416383,
+        "received_ms": 1789901422708,
+        "available_ms": 1789901422708,
+        "side_source_ms": {
+          "up": 1789901416379,
+          "down": 1789901416379
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "90073300498846197701811653193728872132987142016223944545407691327492454501311",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.47",
+            "side": "BUY",
+            "size": "10.638298",
+            "timestamp": "1789901416383",
+            "transaction_hash": "0x6862552e29fa086bc6b97393e436eddd5c928308e8f360dd75af0119e8642f96"
+          }
+        ]
+      },
+      {
+        "event_id": 95016,
+        "envelope_source_ms": 1789901416382,
+        "received_ms": 1789901422708,
+        "available_ms": 1789901422709,
+        "side_source_ms": {
+          "up": 1789901416382,
+          "down": 1789901416382
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901416382"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 110891,
+        "envelope_source_ms": 1789901441647,
+        "received_ms": 1789901441947,
+        "available_ms": 1789901441947,
+        "side_source_ms": {
+          "up": 1789901441641,
+          "down": 1789901441641
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "76729376489632049112020185820719127886051396741049834863659403600506736259441",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "price": "0.5",
+            "side": "BUY",
+            "size": "15",
+            "timestamp": "1789901441647",
+            "transaction_hash": "0xf7e608dea7eb4d13bf54de57e346141d9fe55daa005fe287679293f6f3838691"
+          }
+        ]
+      },
+      {
+        "event_id": 110892,
+        "envelope_source_ms": 1789901441642,
+        "received_ms": 1789901441947,
+        "available_ms": 1789901441948,
+        "side_source_ms": {
+          "up": 1789901441642,
+          "down": 1789901441642
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "timestamp": "1789901441642"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 168934,
+        "envelope_source_ms": 1789901489637,
+        "received_ms": 1789901504864,
+        "available_ms": 1789901504864,
+        "side_source_ms": {
+          "up": 1789901489528,
+          "down": 1789901489528
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "90073300498846197701811653193728872132987142016223944545407691327492454501311",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.4",
+            "side": "SELL",
+            "size": "5",
+            "timestamp": "1789901489637",
+            "transaction_hash": "0x85bc3990353ffb273b7089bf61bc81141b830a7f577044afe0bbd0c0a619d2e3"
+          }
+        ]
+      },
+      {
+        "event_id": 168935,
+        "envelope_source_ms": 1789901489535,
+        "received_ms": 1789901504864,
+        "available_ms": 1789901504865,
+        "side_source_ms": {
+          "up": 1789901489535,
+          "down": 1789901489535
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901489535"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 247319,
+        "envelope_source_ms": 1789901592561,
+        "received_ms": 1789901603564,
+        "available_ms": 1789901603564,
+        "side_source_ms": {
+          "up": 1789901592471,
+          "down": 1789901592471
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "105722898459438279595643808970735192963257435317381980834899016883565429990097",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.94",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789901592561",
+            "transaction_hash": "0x4e6c6f22dfc98b494c924eb8bffb894e7a836d5471d2b1321024625a447d4c66"
+          }
+        ]
+      },
+      {
+        "event_id": 247320,
+        "envelope_source_ms": 1789901592494,
+        "received_ms": 1789901603565,
+        "available_ms": 1789901603565,
+        "side_source_ms": {
+          "up": 1789901592494,
+          "down": 1789901592494
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901592494"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 247322,
+        "envelope_source_ms": 1789901592671,
+        "received_ms": 1789901603566,
+        "available_ms": 1789901603566,
+        "side_source_ms": {
+          "up": 1789901592494,
+          "down": 1789901592494
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "105722898459438279595643808970735192963257435317381980834899016883565429990097",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.95",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789901592671",
+            "transaction_hash": "0x716b0aab3d27bfa50365667a7c5619542e5b1b443963fe01061f60ea1d6eb6c6"
+          }
+        ]
+      },
+      {
+        "event_id": 247323,
+        "envelope_source_ms": 1789901592540,
+        "received_ms": 1789901603567,
+        "available_ms": 1789901603567,
+        "side_source_ms": {
+          "up": 1789901592540,
+          "down": 1789901592540
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901592540"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 247339,
+        "envelope_source_ms": 1789901592721,
+        "received_ms": 1789901603580,
+        "available_ms": 1789901603580,
+        "side_source_ms": {
+          "up": 1789901592694,
+          "down": 1789901592694
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "90073300498846197701811653193728872132987142016223944545407691327492454501311",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.06",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789901592721",
+            "transaction_hash": "0x06aa5f34d54f07605f7e134ac1acf83cebb1fd6b12a583980281d2adee009bf0"
+          }
+        ]
+      },
+      {
+        "event_id": 247340,
+        "envelope_source_ms": 1789901592694,
+        "received_ms": 1789901603581,
+        "available_ms": 1789901603581,
+        "side_source_ms": {
+          "up": 1789901592694,
+          "down": 1789901592694
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901592694"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 247630,
+        "envelope_source_ms": 1789901592791,
+        "received_ms": 1789901604323,
+        "available_ms": 1789901604324,
+        "side_source_ms": {
+          "up": 1789901592790,
+          "down": 1789901592790
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "105722898459438279595643808970735192963257435317381980834899016883565429990097",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.95",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789901592791",
+            "transaction_hash": "0xa2d529ed907e6a9ba63f29507827290beeb572b847d696fb498fb47c40b9c3bb"
+          }
+        ]
+      },
+      {
+        "event_id": 247631,
+        "envelope_source_ms": 1789901592790,
+        "received_ms": 1789901604325,
+        "available_ms": 1789901604326,
+        "side_source_ms": {
+          "up": 1789901592790,
+          "down": 1789901592790
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901592790"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 247710,
+        "envelope_source_ms": 1789901592854,
+        "received_ms": 1789901604426,
+        "available_ms": 1789901604426,
+        "side_source_ms": {
+          "up": 1789901592853,
+          "down": 1789901592853
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "105722898459438279595643808970735192963257435317381980834899016883565429990097",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "price": "0.95",
+            "side": "BUY",
+            "size": "6.41",
+            "timestamp": "1789901592854",
+            "transaction_hash": "0x754ebb06f8f4aa31088287b4a35a54b1d580288ea8d403129f37309cf24e214f"
+          }
+        ]
+      },
+      {
+        "event_id": 247711,
+        "envelope_source_ms": 1789901592853,
+        "received_ms": 1789901604427,
+        "available_ms": 1789901604427,
+        "side_source_ms": {
+          "up": 1789901592853,
+          "down": 1789901592853
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xfe60fc2db7e0a5b9d9cf640b5f32bac2d7854232100f61b18ad556c294df9ab8",
+            "timestamp": "1789901592853"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 305720,
+        "envelope_source_ms": 1789901704213,
+        "received_ms": 1789901706437,
+        "available_ms": 1789901706438,
+        "side_source_ms": {
+          "up": 1789901704158,
+          "down": 1789901704158
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75523119183551725654987396338564286419198625938443224883121485856418293209805",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.59",
+            "side": "BUY",
+            "size": "18.644068",
+            "timestamp": "1789901704213",
+            "transaction_hash": "0xc868c27cd24847b67b67dcb6d57cc36d7ab9ffba22a99ea95a7c4065641c457c"
+          }
+        ]
+      },
+      {
+        "event_id": 305721,
+        "envelope_source_ms": 1789901704211,
+        "received_ms": 1789901706438,
+        "available_ms": 1789901706439,
+        "side_source_ms": {
+          "up": 1789901704211,
+          "down": 1789901704211
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901704211"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 323920,
+        "envelope_source_ms": 1789901726610,
+        "received_ms": 1789901726583,
+        "available_ms": 1789901726583,
+        "side_source_ms": {
+          "up": 1789901726601,
+          "down": 1789901726601
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75523119183551725654987396338564286419198625938443224883121485856418293209805",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.66",
+            "side": "BUY",
+            "size": "1.515152",
+            "timestamp": "1789901726610",
+            "transaction_hash": "0xdaaa63d0e11c52fcc390a6de56ca1277d85f69560d90e09c215f6f4c761ff818"
+          }
+        ]
+      },
+      {
+        "event_id": 323921,
+        "envelope_source_ms": 1789901726604,
+        "received_ms": 1789901726587,
+        "available_ms": 1789901726588,
+        "side_source_ms": {
+          "up": 1789901726604,
+          "down": 1789901726604
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901726604"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 325023,
+        "envelope_source_ms": 1789901728007,
+        "received_ms": 1789901728365,
+        "available_ms": 1789901728365,
+        "side_source_ms": {
+          "up": 1789901728002,
+          "down": 1789901728002
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75523119183551725654987396338564286419198625938443224883121485856418293209805",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.66",
+            "side": "BUY",
+            "size": "3.030302",
+            "timestamp": "1789901728007",
+            "transaction_hash": "0xb38d43b697d0a193609fd8b912154d5237ae4b3dc09642f03b22b0b891094b43"
+          }
+        ]
+      },
+      {
+        "event_id": 325024,
+        "envelope_source_ms": 1789901728003,
+        "received_ms": 1789901728366,
+        "available_ms": 1789901728366,
+        "side_source_ms": {
+          "up": 1789901728003,
+          "down": 1789901728003
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901728003"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 325314,
+        "envelope_source_ms": 1789901728076,
+        "received_ms": 1789901728615,
+        "available_ms": 1789901728616,
+        "side_source_ms": {
+          "up": 1789901728075,
+          "down": 1789901728075
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "17037110485909882370820754688080648970274961979722375310548416194937497584844",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.34",
+            "side": "SELL",
+            "size": "0.45",
+            "timestamp": "1789901728076",
+            "transaction_hash": "0x4918cc4dbadaa4bed57d7dae379351ec2bf5f941d29a2509db27995b7cb47045"
+          }
+        ]
+      },
+      {
+        "event_id": 325315,
+        "envelope_source_ms": 1789901728075,
+        "received_ms": 1789901728616,
+        "available_ms": 1789901728616,
+        "side_source_ms": {
+          "up": 1789901728075,
+          "down": 1789901728075
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901728075"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 335613,
+        "envelope_source_ms": 1789901737046,
+        "received_ms": 1789901739544,
+        "available_ms": 1789901739544,
+        "side_source_ms": {
+          "up": 1789901737043,
+          "down": 1789901737043
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "246625115741332783624799174462639495156888463455265474923192134849155954526",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "price": "0.52",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789901737046",
+            "transaction_hash": "0xd8d4f35267bf1d356a701fd8eeb8e35082ef5893c37526c5dd42663ceb0f8533"
+          }
+        ]
+      },
+      {
+        "event_id": 335614,
+        "envelope_source_ms": 1789901737045,
+        "received_ms": 1789901739544,
+        "available_ms": 1789901739545,
+        "side_source_ms": {
+          "up": 1789901737045,
+          "down": 1789901737045
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "timestamp": "1789901737045"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 347829,
+        "envelope_source_ms": 1789901746725,
+        "received_ms": 1789901752258,
+        "available_ms": 1789901752258,
+        "side_source_ms": {
+          "up": 1789901746723,
+          "down": 1789901746723
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "17037110485909882370820754688080648970274961979722375310548416194937497584844",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.17",
+            "side": "BUY",
+            "size": "5.882353",
+            "timestamp": "1789901746725",
+            "transaction_hash": "0x96f45dde217956ddd14965a10dd3d36af1d6cf224aad31a30b3dcc1d594860db"
+          }
+        ]
+      },
+      {
+        "event_id": 347830,
+        "envelope_source_ms": 1789901746724,
+        "received_ms": 1789901752258,
+        "available_ms": 1789901752258,
+        "side_source_ms": {
+          "up": 1789901746724,
+          "down": 1789901746724
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901746724"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 350477,
+        "envelope_source_ms": 1789901751829,
+        "received_ms": 1789901755037,
+        "available_ms": 1789901755037,
+        "side_source_ms": {
+          "up": 1789901751828,
+          "down": 1789901751828
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "76729376489632049112020185820719127886051396741049834863659403600506736259441",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "price": "0.38",
+            "side": "BUY",
+            "size": "20",
+            "timestamp": "1789901751829",
+            "transaction_hash": "0xc4b194e45b13c9cb3c2016bb890aee70b103d828c2b845ae508d7852a32efe56"
+          }
+        ]
+      },
+      {
+        "event_id": 350478,
+        "envelope_source_ms": 1789901751828,
+        "received_ms": 1789901755037,
+        "available_ms": 1789901755038,
+        "side_source_ms": {
+          "up": 1789901751828,
+          "down": 1789901751828
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "timestamp": "1789901751828"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 429889,
+        "envelope_source_ms": 1789901857001,
+        "received_ms": 1789901857221,
+        "available_ms": 1789901857221,
+        "side_source_ms": {
+          "up": 1789901856996,
+          "down": 1789901856996
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "76729376489632049112020185820719127886051396741049834863659403600506736259441",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "price": "0.37",
+            "side": "BUY",
+            "size": "8.216217",
+            "timestamp": "1789901857001",
+            "transaction_hash": "0x13937973eebab467ef065bf8c705133c4cab270491d646f2d3ac474d44320342"
+          }
+        ]
+      },
+      {
+        "event_id": 429890,
+        "envelope_source_ms": 1789901856998,
+        "received_ms": 1789901857221,
+        "available_ms": 1789901857222,
+        "side_source_ms": {
+          "up": 1789901856998,
+          "down": 1789901856998
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf5b88a531fecff0abac1d2c360a1ceb900df9f4a06084d8a59a3e3d2df43d079",
+            "timestamp": "1789901856998"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 452571,
+        "envelope_source_ms": 1789901882713,
+        "received_ms": 1789901882844,
+        "available_ms": 1789901882844,
+        "side_source_ms": {
+          "up": 1789901882711,
+          "down": 1789901882711
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75523119183551725654987396338564286419198625938443224883121485856418293209805",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "price": "0.94",
+            "side": "BUY",
+            "size": "1.276583",
+            "timestamp": "1789901882713",
+            "transaction_hash": "0x44a16de42e736e0ff999e8b6c2f444d3e07fc46c05d619fe9f9eb6243066682d"
+          }
+        ]
+      },
+      {
+        "event_id": 452572,
+        "envelope_source_ms": 1789901882712,
+        "received_ms": 1789901882844,
+        "available_ms": 1789901882845,
+        "side_source_ms": {
+          "up": 1789901882712,
+          "down": 1789901882712
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x1bf72cb8e40fdf432fa1e5b997c1f3bb4ace008fc4201b6013f1a67d46865469",
+            "timestamp": "1789901882712"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 482964,
+        "envelope_source_ms": 1789902005883,
+        "received_ms": 1789902006116,
+        "available_ms": 1789902006117,
+        "side_source_ms": {
+          "up": 1789902005882,
+          "down": 1789902005882
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.65",
+            "side": "BUY",
+            "size": "8.62",
+            "timestamp": "1789902005883",
+            "transaction_hash": "0x6c3421d618df661cc3720c045c3cfa995a8421e20d22f18c65fd7cf2e91e3a07"
+          }
+        ]
+      },
+      {
+        "event_id": 482965,
+        "envelope_source_ms": 1789902005882,
+        "received_ms": 1789902006117,
+        "available_ms": 1789902006118,
+        "side_source_ms": {
+          "up": 1789902005882,
+          "down": 1789902005882
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902005882"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 486824,
+        "envelope_source_ms": 1789902010761,
+        "received_ms": 1789902011859,
+        "available_ms": 1789902011859,
+        "side_source_ms": {
+          "up": 1789902010759,
+          "down": 1789902010759
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.7",
+            "side": "BUY",
+            "size": "5.142856",
+            "timestamp": "1789902010761",
+            "transaction_hash": "0x6bd62f606fd12441c3d796e3218c1f673e52aa407ed9c4a4acb99096e3b11a6c"
+          }
+        ]
+      },
+      {
+        "event_id": 486825,
+        "envelope_source_ms": 1789902010760,
+        "received_ms": 1789902011860,
+        "available_ms": 1789902011860,
+        "side_source_ms": {
+          "up": 1789902010760,
+          "down": 1789902010760
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902010760"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 509487,
+        "envelope_source_ms": 1789902026873,
+        "received_ms": 1789902038238,
+        "available_ms": 1789902038238,
+        "side_source_ms": {
+          "up": 1789902026733,
+          "down": 1789902026733
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.69",
+            "side": "BUY",
+            "size": "55",
+            "timestamp": "1789902026873",
+            "transaction_hash": "0xe76aa7c07e9f5cf733995e3b7a85e858b1dbd21273a1cb5f21d1dffa7c42843b"
+          }
+        ]
+      },
+      {
+        "event_id": 509696,
+        "envelope_source_ms": 1789902026760,
+        "received_ms": 1789902038427,
+        "available_ms": 1789902038428,
+        "side_source_ms": {
+          "up": 1789902026760,
+          "down": 1789902026760
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902026760"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 509702,
+        "envelope_source_ms": 1789902026969,
+        "received_ms": 1789902038434,
+        "available_ms": 1789902038434,
+        "side_source_ms": {
+          "up": 1789902026760,
+          "down": 1789902026760
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "71369492849869095275950545264954671703625866421527293318743337714791529116741",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.33",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789902026969",
+            "transaction_hash": "0x22e85b8bf867c39c41590154aaf600c9c84601539e4092b6af9a9250e548b2ae"
+          }
+        ]
+      },
+      {
+        "event_id": 509703,
+        "envelope_source_ms": 1789902026909,
+        "received_ms": 1789902038434,
+        "available_ms": 1789902038435,
+        "side_source_ms": {
+          "up": 1789902026909,
+          "down": 1789902026909
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902026909"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 520140,
+        "envelope_source_ms": 1789902049875,
+        "received_ms": 1789902050399,
+        "available_ms": 1789902050399,
+        "side_source_ms": {
+          "up": 1789902049641,
+          "down": 1789902049641
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "86874188323143882566137059494655072875084375546744725024259248556361588879406",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x493a8563e108a795db0e1b8c91af1d7d46380688bd5bd2e491948a7cbde61fb9",
+            "price": "0.5",
+            "side": "SELL",
+            "size": "2.32",
+            "timestamp": "1789902049875",
+            "transaction_hash": "0x7ef88dc5f53b4d64aaace9412de73b963fee116c7dbbd2469e0d009cd9839ca1"
+          }
+        ]
+      },
+      {
+        "event_id": 520141,
+        "envelope_source_ms": 1789902049850,
+        "received_ms": 1789902050399,
+        "available_ms": 1789902050400,
+        "side_source_ms": {
+          "up": 1789902049850,
+          "down": 1789902049850
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x493a8563e108a795db0e1b8c91af1d7d46380688bd5bd2e491948a7cbde61fb9",
+            "timestamp": "1789902049850"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 540336,
+        "envelope_source_ms": 1789902049905,
+        "received_ms": 1789902073986,
+        "available_ms": 1789902073987,
+        "side_source_ms": {
+          "up": 1789902049876,
+          "down": 1789902049876
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.52",
+            "side": "BUY",
+            "size": "3.846154",
+            "timestamp": "1789902049905",
+            "transaction_hash": "0xc94a3d53a91755d26c9b0c7579c7c1f98801f48f3f287a4e3495c06f20d98ed5"
+          }
+        ]
+      },
+      {
+        "event_id": 540337,
+        "envelope_source_ms": 1789902049879,
+        "received_ms": 1789902073987,
+        "available_ms": 1789902073988,
+        "side_source_ms": {
+          "up": 1789902049879,
+          "down": 1789902049879
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902049879"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 549423,
+        "envelope_source_ms": 1789902060367,
+        "received_ms": 1789902084231,
+        "available_ms": 1789902084231,
+        "side_source_ms": {
+          "up": 1789902060366,
+          "down": 1789902060366
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.53",
+            "side": "BUY",
+            "size": "5.09434",
+            "timestamp": "1789902060367",
+            "transaction_hash": "0x30e9ae6ea3026a590f6538ce222aaa33867cfe585dfbce7e1fa73ef18499d842"
+          }
+        ]
+      },
+      {
+        "event_id": 549424,
+        "envelope_source_ms": 1789902060366,
+        "received_ms": 1789902084232,
+        "available_ms": 1789902084232,
+        "side_source_ms": {
+          "up": 1789902060366,
+          "down": 1789902060366
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902060366"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 565245,
+        "envelope_source_ms": 1789902072036,
+        "received_ms": 1789902101220,
+        "available_ms": 1789902101221,
+        "side_source_ms": {
+          "up": 1789902072032,
+          "down": 1789902072032
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.64",
+            "side": "BUY",
+            "size": "25.720922",
+            "timestamp": "1789902072036",
+            "transaction_hash": "0xbc296886639615b0fc91732ef9af4b55561d891c3a2a260d8f5df38bf5d18571"
+          }
+        ]
+      },
+      {
+        "event_id": 565246,
+        "envelope_source_ms": 1789902072034,
+        "received_ms": 1789902101221,
+        "available_ms": 1789902101221,
+        "side_source_ms": {
+          "up": 1789902072034,
+          "down": 1789902072034
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902072034"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 572558,
+        "envelope_source_ms": 1789902076681,
+        "received_ms": 1789902109254,
+        "available_ms": 1789902109254,
+        "side_source_ms": {
+          "up": 1789902076679,
+          "down": 1789902076679
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.65",
+            "side": "BUY",
+            "size": "42.433029",
+            "timestamp": "1789902076681",
+            "transaction_hash": "0x5b27d3138178a10f32f66bba69cac637a056bca1afd22439e48b15efc93a7ab3"
+          }
+        ]
+      },
+      {
+        "event_id": 572559,
+        "envelope_source_ms": 1789902076680,
+        "received_ms": 1789902109254,
+        "available_ms": 1789902109255,
+        "side_source_ms": {
+          "up": 1789902076680,
+          "down": 1789902076680
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902076680"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 574647,
+        "envelope_source_ms": 1789902078297,
+        "received_ms": 1789902111218,
+        "available_ms": 1789902111218,
+        "side_source_ms": {
+          "up": 1789902078296,
+          "down": 1789902078296
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.66",
+            "side": "BUY",
+            "size": "5.757576",
+            "timestamp": "1789902078297",
+            "transaction_hash": "0xe44eec79d5d68476205d7ccf7635e559f5d0f4c9e72bca0f20b80dd74739efe2"
+          }
+        ]
+      },
+      {
+        "event_id": 574648,
+        "envelope_source_ms": 1789902078296,
+        "received_ms": 1789902111219,
+        "available_ms": 1789902111219,
+        "side_source_ms": {
+          "up": 1789902078296,
+          "down": 1789902078296
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902078296"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 600213,
+        "envelope_source_ms": 1789902090982,
+        "received_ms": 1789902139434,
+        "available_ms": 1789902139434,
+        "side_source_ms": {
+          "up": 1789902090981,
+          "down": 1789902090981
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.67",
+            "side": "BUY",
+            "size": "5.223881",
+            "timestamp": "1789902090982",
+            "transaction_hash": "0xae254feb9821354e28f1f5cca682abef94e335ba6f2bec41bbaebadc2aba4aa3"
+          }
+        ]
+      },
+      {
+        "event_id": 600214,
+        "envelope_source_ms": 1789902090981,
+        "received_ms": 1789902139435,
+        "available_ms": 1789902139435,
+        "side_source_ms": {
+          "up": 1789902090981,
+          "down": 1789902090981
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902090981"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 616163,
+        "envelope_source_ms": 1789902103143,
+        "received_ms": 1789902156837,
+        "available_ms": 1789902156837,
+        "side_source_ms": {
+          "up": 1789902103141,
+          "down": 1789902103141
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.68",
+            "side": "BUY",
+            "size": "1.470587",
+            "timestamp": "1789902103143",
+            "transaction_hash": "0x946e922688a5f0a52ba1585f5af8c50f1404861394aaeaf24789509ca3a241d0"
+          }
+        ]
+      },
+      {
+        "event_id": 616164,
+        "envelope_source_ms": 1789902103142,
+        "received_ms": 1789902156838,
+        "available_ms": 1789902156838,
+        "side_source_ms": {
+          "up": 1789902103142,
+          "down": 1789902103142
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902103142"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 626061,
+        "envelope_source_ms": 1789902111858,
+        "received_ms": 1789902167448,
+        "available_ms": 1789902167449,
+        "side_source_ms": {
+          "up": 1789902111857,
+          "down": 1789902111857
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.72",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789902111858",
+            "transaction_hash": "0x760a0a61ae6df1c70a9e81e10b76f8d461c59b9fbd89d935d03be43fe5e69aa2"
+          }
+        ]
+      },
+      {
+        "event_id": 626062,
+        "envelope_source_ms": 1789902111857,
+        "received_ms": 1789902167449,
+        "available_ms": 1789902167450,
+        "side_source_ms": {
+          "up": 1789902111857,
+          "down": 1789902111857
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902111857"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 635951,
+        "envelope_source_ms": 1789902120202,
+        "received_ms": 1789902177914,
+        "available_ms": 1789902177915,
+        "side_source_ms": {
+          "up": 1789902120199,
+          "down": 1789902120199
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.79",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789902120202",
+            "transaction_hash": "0x577d72e43c9438bd5e69354261156b69fcf1ba469ed7c1e5f93eaabc428b6650"
+          }
+        ]
+      },
+      {
+        "event_id": 635952,
+        "envelope_source_ms": 1789902120201,
+        "received_ms": 1789902177915,
+        "available_ms": 1789902177916,
+        "side_source_ms": {
+          "up": 1789902120201,
+          "down": 1789902120201
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902120201"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 637805,
+        "envelope_source_ms": 1789902122743,
+        "received_ms": 1789902179732,
+        "available_ms": 1789902179732,
+        "side_source_ms": {
+          "up": 1789902122611,
+          "down": 1789902122611
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.79",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789902122743",
+            "transaction_hash": "0x1ece1caf4b80d52aec973212b5c299e653a8d462b33017e89e3e200672ee8755"
+          }
+        ]
+      },
+      {
+        "event_id": 637806,
+        "envelope_source_ms": 1789902122724,
+        "received_ms": 1789902179733,
+        "available_ms": 1789902179733,
+        "side_source_ms": {
+          "up": 1789902122724,
+          "down": 1789902122724
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902122724"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 637835,
+        "envelope_source_ms": 1789902122765,
+        "received_ms": 1789902179759,
+        "available_ms": 1789902179759,
+        "side_source_ms": {
+          "up": 1789902122761,
+          "down": 1789902122761
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "71369492849869095275950545264954671703625866421527293318743337714791529116741",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.22",
+            "side": "BUY",
+            "size": "22.727273",
+            "timestamp": "1789902122765",
+            "transaction_hash": "0x7ee7607c67ad93617b8a762bd029c5fd4efd0c213d66590080b115654f959b63"
+          }
+        ]
+      },
+      {
+        "event_id": 637836,
+        "envelope_source_ms": 1789902122761,
+        "received_ms": 1789902179760,
+        "available_ms": 1789902179760,
+        "side_source_ms": {
+          "up": 1789902122761,
+          "down": 1789902122761
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902122761"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 644499,
+        "envelope_source_ms": 1789902127343,
+        "received_ms": 1789902186365,
+        "available_ms": 1789902186365,
+        "side_source_ms": {
+          "up": 1789902127342,
+          "down": 1789902127342
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.78",
+            "side": "BUY",
+            "size": "59.230768",
+            "timestamp": "1789902127343",
+            "transaction_hash": "0xbf96988fe1fe2e674ea23fce18a0d61344a979a271f9c463cc1358168d61fe00"
+          }
+        ]
+      },
+      {
+        "event_id": 644500,
+        "envelope_source_ms": 1789902127342,
+        "received_ms": 1789902186366,
+        "available_ms": 1789902186366,
+        "side_source_ms": {
+          "up": 1789902127342,
+          "down": 1789902127342
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902127342"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 648956,
+        "envelope_source_ms": 1789902130733,
+        "received_ms": 1789902191219,
+        "available_ms": 1789902191219,
+        "side_source_ms": {
+          "up": 1789902130732,
+          "down": 1789902130732
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "71369492849869095275950545264954671703625866421527293318743337714791529116741",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.25",
+            "side": "BUY",
+            "size": "12",
+            "timestamp": "1789902130733",
+            "transaction_hash": "0x03984879ea0fc517bed06484778793634d55093af74f1200d661ffc160da0d00"
+          }
+        ]
+      },
+      {
+        "event_id": 648957,
+        "envelope_source_ms": 1789902130732,
+        "received_ms": 1789902191219,
+        "available_ms": 1789902191220,
+        "side_source_ms": {
+          "up": 1789902130732,
+          "down": 1789902130732
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902130732"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 661901,
+        "envelope_source_ms": 1789902147040,
+        "received_ms": 1789902204355,
+        "available_ms": 1789902204355,
+        "side_source_ms": {
+          "up": 1789902147037,
+          "down": 1789902147037
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.85",
+            "side": "SELL",
+            "size": "6.41",
+            "timestamp": "1789902147040",
+            "transaction_hash": "0x2f6003e470dfcc215b3dd4ca8313645a81964a7fefc69d5776c63c18f6d0f6de"
+          }
+        ]
+      },
+      {
+        "event_id": 661902,
+        "envelope_source_ms": 1789902147038,
+        "received_ms": 1789902204355,
+        "available_ms": 1789902204356,
+        "side_source_ms": {
+          "up": 1789902147038,
+          "down": 1789902147038
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902147038"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 671918,
+        "envelope_source_ms": 1789902153353,
+        "received_ms": 1789902215513,
+        "available_ms": 1789902215513,
+        "side_source_ms": {
+          "up": 1789902153352,
+          "down": 1789902153352
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.82",
+            "side": "BUY",
+            "size": "30.487805",
+            "timestamp": "1789902153353",
+            "transaction_hash": "0x5bc93212a00f3c8f25041ae538f1ab7db1543bbc320519761d80be8507c124bf"
+          }
+        ]
+      },
+      {
+        "event_id": 671919,
+        "envelope_source_ms": 1789902153352,
+        "received_ms": 1789902215514,
+        "available_ms": 1789902215514,
+        "side_source_ms": {
+          "up": 1789902153352,
+          "down": 1789902153352
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902153352"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 677681,
+        "envelope_source_ms": 1789902159325,
+        "received_ms": 1789902221757,
+        "available_ms": 1789902221757,
+        "side_source_ms": {
+          "up": 1789902159319,
+          "down": 1789902159319
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.83",
+            "side": "BUY",
+            "size": "1.204817",
+            "timestamp": "1789902159325",
+            "transaction_hash": "0x7d1ef851ff51d57dd8288114d7c1e19bab4b66aa0acdefcb25088973209c69d3"
+          }
+        ]
+      },
+      {
+        "event_id": 677682,
+        "envelope_source_ms": 1789902159324,
+        "received_ms": 1789902221758,
+        "available_ms": 1789902221758,
+        "side_source_ms": {
+          "up": 1789902159324,
+          "down": 1789902159324
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902159324"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 706700,
+        "envelope_source_ms": 1789902187423,
+        "received_ms": 1789902253819,
+        "available_ms": 1789902253819,
+        "side_source_ms": {
+          "up": 1789902187421,
+          "down": 1789902187421
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "71369492849869095275950545264954671703625866421527293318743337714791529116741",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.18",
+            "side": "BUY",
+            "size": "9.944445",
+            "timestamp": "1789902187423",
+            "transaction_hash": "0xeab95812d58f241f090a6cc0bdd5dc96a50cb2d5e14cffa6d834ecffb5cbcd59"
+          }
+        ]
+      },
+      {
+        "event_id": 706701,
+        "envelope_source_ms": 1789902187422,
+        "received_ms": 1789902253820,
+        "available_ms": 1789902253821,
+        "side_source_ms": {
+          "up": 1789902187422,
+          "down": 1789902187422
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902187422"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 708273,
+        "envelope_source_ms": 1789902187943,
+        "received_ms": 1789902255684,
+        "available_ms": 1789902255685,
+        "side_source_ms": {
+          "up": 1789902187942,
+          "down": 1789902187942
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "55717384055850007093622498272337997173279899916463735748742937578010742120282",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "price": "0.86",
+            "side": "BUY",
+            "size": "1.627907",
+            "timestamp": "1789902187943",
+            "transaction_hash": "0x7af68d4f350e152f4f6d718b55094cb54a974766a2d6cea47c74fd1b53dcb2c8"
+          }
+        ]
+      },
+      {
+        "event_id": 708274,
+        "envelope_source_ms": 1789902187942,
+        "received_ms": 1789902255685,
+        "available_ms": 1789902255686,
+        "side_source_ms": {
+          "up": 1789902187942,
+          "down": 1789902187942
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xa6cb7729cf2b53fda99f808ea6559fbe3d84b695ae0e13cf2bc29e6891402334",
+            "timestamp": "1789902187942"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 796397,
+        "envelope_source_ms": 1789902351983,
+        "received_ms": 1789902352727,
+        "available_ms": 1789902352727,
+        "side_source_ms": {
+          "up": 1789902351982,
+          "down": 1789902351982
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "45495245087441112221255515424355646280625160712885599932931254311873332719916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "price": "0.55",
+            "side": "BUY",
+            "size": "10.018182",
+            "timestamp": "1789902351983",
+            "transaction_hash": "0x616616116f553efc58e9da4ec6dff9c0694ca0728228c0907e22201dee9ceafc"
+          }
+        ]
+      },
+      {
+        "event_id": 796398,
+        "envelope_source_ms": 1789902351982,
+        "received_ms": 1789902352727,
+        "available_ms": 1789902352728,
+        "side_source_ms": {
+          "up": 1789902351982,
+          "down": 1789902351982
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "timestamp": "1789902351982"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 814011,
+        "envelope_source_ms": 1789902374967,
+        "received_ms": 1789902376315,
+        "available_ms": 1789902376315,
+        "side_source_ms": {
+          "up": 1789902374965,
+          "down": 1789902374965
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "45495245087441112221255515424355646280625160712885599932931254311873332719916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "price": "0.52",
+            "side": "BUY",
+            "size": "15.6",
+            "timestamp": "1789902374967",
+            "transaction_hash": "0xb10d175486d3e0593356255f781fa50a43a54ac939481887b008fd610e705f76"
+          }
+        ]
+      },
+      {
+        "event_id": 814012,
+        "envelope_source_ms": 1789902374966,
+        "received_ms": 1789902376316,
+        "available_ms": 1789902376316,
+        "side_source_ms": {
+          "up": 1789902374966,
+          "down": 1789902374966
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "timestamp": "1789902374966"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 826987,
+        "envelope_source_ms": 1789902380458,
+        "received_ms": 1789902389733,
+        "available_ms": 1789902389733,
+        "side_source_ms": {
+          "up": 1789902380456,
+          "down": 1789902380456
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "45495245087441112221255515424355646280625160712885599932931254311873332719916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "price": "0.8",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789902380458",
+            "transaction_hash": "0x881a5a25af5b59eaddeb8c17e42503e1c5538a81587e58dfd2856e6106080064"
+          }
+        ]
+      },
+      {
+        "event_id": 826988,
+        "envelope_source_ms": 1789902380457,
+        "received_ms": 1789902389734,
+        "available_ms": 1789902389734,
+        "side_source_ms": {
+          "up": 1789902380457,
+          "down": 1789902380457
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "timestamp": "1789902380457"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 933096,
+        "envelope_source_ms": 1789902524092,
+        "received_ms": 1789902525750,
+        "available_ms": 1789902525750,
+        "side_source_ms": {
+          "up": 1789902524087,
+          "down": 1789902524087
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "45495245087441112221255515424355646280625160712885599932931254311873332719916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "price": "0.96",
+            "side": "BUY",
+            "size": "5.208325",
+            "timestamp": "1789902524092",
+            "transaction_hash": "0xf3f05363e4411a7dc5e1bdcb593f2c56018fbf3a42d28540467c13f8e74d7dc3"
+          }
+        ]
+      },
+      {
+        "event_id": 933097,
+        "envelope_source_ms": 1789902524087,
+        "received_ms": 1789902525751,
+        "available_ms": 1789902525751,
+        "side_source_ms": {
+          "up": 1789902524087,
+          "down": 1789902524087
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "timestamp": "1789902524087"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 958453,
+        "envelope_source_ms": 1789902546099,
+        "received_ms": 1789902551625,
+        "available_ms": 1789902551625,
+        "side_source_ms": {
+          "up": 1789902546096,
+          "down": 1789902546096
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "45495245087441112221255515424355646280625160712885599932931254311873332719916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "price": "0.999",
+            "side": "BUY",
+            "size": "116.95",
+            "timestamp": "1789902546099",
+            "transaction_hash": "0x24ac8435c98256e0cb6c2bb592e79d06892bf44f0dce80a861af79f7140710ff"
+          }
+        ]
+      },
+      {
+        "event_id": 958454,
+        "envelope_source_ms": 1789902546097,
+        "received_ms": 1789902551626,
+        "available_ms": 1789902551627,
+        "side_source_ms": {
+          "up": 1789902546097,
+          "down": 1789902546097
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x60c58a6e9145c9aaee73817558cf37d929ce19fc275aef12517d355605759e31",
+            "timestamp": "1789902546097"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1004399,
+        "envelope_source_ms": 1789902630936,
+        "received_ms": 1789902639611,
+        "available_ms": 1789902639612,
+        "side_source_ms": {
+          "up": 1789902630933,
+          "down": 1789902630933
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "86874188323143882566137059494655072875084375546744725024259248556361588879406",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x493a8563e108a795db0e1b8c91af1d7d46380688bd5bd2e491948a7cbde61fb9",
+            "price": "0.78",
+            "side": "BUY",
+            "size": "7.74",
+            "timestamp": "1789902630936",
+            "transaction_hash": "0xb7e4b8d6dfffba0ae08cf6ecfcd6bb38b80714a605040f03117cc4881dc59b17"
+          }
+        ]
+      },
+      {
+        "event_id": 1004400,
+        "envelope_source_ms": 1789902630934,
+        "received_ms": 1789902639613,
+        "available_ms": 1789902639614,
+        "side_source_ms": {
+          "up": 1789902630934,
+          "down": 1789902630934
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x493a8563e108a795db0e1b8c91af1d7d46380688bd5bd2e491948a7cbde61fb9",
+            "timestamp": "1789902630934"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1126692,
+        "envelope_source_ms": 1789902783449,
+        "received_ms": 1789902815366,
+        "available_ms": 1789902815367,
+        "side_source_ms": {
+          "up": 1789902783447,
+          "down": 1789902783447
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.45",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789902783449",
+            "transaction_hash": "0xfa5082904c471f1913ce98a5a6e52625177ea94af1d437d8dd391865cc72fdbd"
+          }
+        ]
+      },
+      {
+        "event_id": 1126693,
+        "envelope_source_ms": 1789902783448,
+        "received_ms": 1789902815368,
+        "available_ms": 1789902815369,
+        "side_source_ms": {
+          "up": 1789902783448,
+          "down": 1789902783448
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902783448"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1132157,
+        "envelope_source_ms": 1789902787513,
+        "received_ms": 1789902823712,
+        "available_ms": 1789902823712,
+        "side_source_ms": {
+          "up": 1789902787511,
+          "down": 1789902787511
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "47307317810978654786375199724955568501771705100597864103725615448924337639117",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.63",
+            "side": "BUY",
+            "size": "100",
+            "timestamp": "1789902787513",
+            "transaction_hash": "0x2efe88b93ad2acdfb525ba0a127a32641b61e16022d97d1772bc1bfd59820497"
+          }
+        ]
+      },
+      {
+        "event_id": 1132158,
+        "envelope_source_ms": 1789902787511,
+        "received_ms": 1789902823713,
+        "available_ms": 1789902823714,
+        "side_source_ms": {
+          "up": 1789902787511,
+          "down": 1789902787511
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902787511"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1135064,
+        "envelope_source_ms": 1789902789926,
+        "received_ms": 1789902828709,
+        "available_ms": 1789902828709,
+        "side_source_ms": {
+          "up": 1789902789774,
+          "down": 1789902789774
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.42",
+            "side": "BUY",
+            "size": "50",
+            "timestamp": "1789902789926",
+            "transaction_hash": "0x5c2e8b18e686ed40eaaa2574a950b79ca623046f56844a85df50dbe3c9a8c593"
+          }
+        ]
+      },
+      {
+        "event_id": 1135065,
+        "envelope_source_ms": 1789902789790,
+        "received_ms": 1789902828710,
+        "available_ms": 1789902828710,
+        "side_source_ms": {
+          "up": 1789902789790,
+          "down": 1789902789790
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902789790"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1147903,
+        "envelope_source_ms": 1789902848487,
+        "received_ms": 1789902850168,
+        "available_ms": 1789902850168,
+        "side_source_ms": {
+          "up": 1789902848486,
+          "down": 1789902848486
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "47307317810978654786375199724955568501771705100597864103725615448924337639117",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.59",
+            "side": "BUY",
+            "size": "55.084746",
+            "timestamp": "1789902848487",
+            "transaction_hash": "0xd98d58698b30b71dc83a9e1ea3f5dc8767861e10c17931d9627f4e242daae4ce"
+          }
+        ]
+      },
+      {
+        "event_id": 1147904,
+        "envelope_source_ms": 1789902848486,
+        "received_ms": 1789902850169,
+        "available_ms": 1789902850169,
+        "side_source_ms": {
+          "up": 1789902848486,
+          "down": 1789902848486
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902848486"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1153126,
+        "envelope_source_ms": 1789902851127,
+        "received_ms": 1789902857788,
+        "available_ms": 1789902857789,
+        "side_source_ms": {
+          "up": 1789902851126,
+          "down": 1789902851126
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "47307317810978654786375199724955568501771705100597864103725615448924337639117",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.34",
+            "side": "BUY",
+            "size": "40",
+            "timestamp": "1789902851127",
+            "transaction_hash": "0x92cd6c828984930bf37350323d1667219fd869121993a21e4b42b46d14994be4"
+          }
+        ]
+      },
+      {
+        "event_id": 1153127,
+        "envelope_source_ms": 1789902851126,
+        "received_ms": 1789902857789,
+        "available_ms": 1789902857790,
+        "side_source_ms": {
+          "up": 1789902851126,
+          "down": 1789902851126
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902851126"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1163806,
+        "envelope_source_ms": 1789902857756,
+        "received_ms": 1789902873344,
+        "available_ms": 1789902873345,
+        "side_source_ms": {
+          "up": 1789902857754,
+          "down": 1789902857754
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "47307317810978654786375199724955568501771705100597864103725615448924337639117",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.1",
+            "side": "BUY",
+            "size": "50",
+            "timestamp": "1789902857756",
+            "transaction_hash": "0x942bc9dca0fac553d35cac0e56db24fc486798d9a1c307322d1fe439ffd76b56"
+          }
+        ]
+      },
+      {
+        "event_id": 1163807,
+        "envelope_source_ms": 1789902857755,
+        "received_ms": 1789902873346,
+        "available_ms": 1789902873347,
+        "side_source_ms": {
+          "up": 1789902857755,
+          "down": 1789902857755
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902857755"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1167801,
+        "envelope_source_ms": 1789902860604,
+        "received_ms": 1789902878261,
+        "available_ms": 1789902878262,
+        "side_source_ms": {
+          "up": 1789902860603,
+          "down": 1789902860603
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.78",
+            "side": "BUY",
+            "size": "1.769231",
+            "timestamp": "1789902860604",
+            "transaction_hash": "0x2b882fb37ca52daf2c219918c3c5959bcf7c67f039cf0ef44c271a23eed0e601"
+          }
+        ]
+      },
+      {
+        "event_id": 1167802,
+        "envelope_source_ms": 1789902860603,
+        "received_ms": 1789902878262,
+        "available_ms": 1789902878263,
+        "side_source_ms": {
+          "up": 1789902860603,
+          "down": 1789902860603
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902860603"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1168233,
+        "envelope_source_ms": 1789902860859,
+        "received_ms": 1789902878976,
+        "available_ms": 1789902878976,
+        "side_source_ms": {
+          "up": 1789902860858,
+          "down": 1789902860858
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.75",
+            "side": "BUY",
+            "size": "11",
+            "timestamp": "1789902860859",
+            "transaction_hash": "0xe97622296092783f0b34ee1cdcaa6e2d31519f7372ddd936d8e767b860fd63de"
+          }
+        ]
+      },
+      {
+        "event_id": 1168234,
+        "envelope_source_ms": 1789902860858,
+        "received_ms": 1789902878977,
+        "available_ms": 1789902878978,
+        "side_source_ms": {
+          "up": 1789902860858,
+          "down": 1789902860858
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902860858"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1172002,
+        "envelope_source_ms": 1789902862844,
+        "received_ms": 1789902884483,
+        "available_ms": 1789902884484,
+        "side_source_ms": {
+          "up": 1789902862843,
+          "down": 1789902862843
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "47307317810978654786375199724955568501771705100597864103725615448924337639117",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.3",
+            "side": "BUY",
+            "size": "50",
+            "timestamp": "1789902862844",
+            "transaction_hash": "0xfe9d8de9ba9831c34ef3000cab858657641358fdaf02056857952c4d3631e230"
+          }
+        ]
+      },
+      {
+        "event_id": 1172003,
+        "envelope_source_ms": 1789902862843,
+        "received_ms": 1789902884484,
+        "available_ms": 1789902884484,
+        "side_source_ms": {
+          "up": 1789902862843,
+          "down": 1789902862843
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902862843"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1172701,
+        "envelope_source_ms": 1789902863165,
+        "received_ms": 1789902885482,
+        "available_ms": 1789902885483,
+        "side_source_ms": {
+          "up": 1789902863163,
+          "down": 1789902863163
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.69",
+            "side": "BUY",
+            "size": "50",
+            "timestamp": "1789902863165",
+            "transaction_hash": "0x9f9b2a79ea96dee8410a5a18333dd40970cd55c7fcf03da703167a364d88d76f"
+          }
+        ]
+      },
+      {
+        "event_id": 1172702,
+        "envelope_source_ms": 1789902863164,
+        "received_ms": 1789902885483,
+        "available_ms": 1789902885484,
+        "side_source_ms": {
+          "up": 1789902863164,
+          "down": 1789902863164
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902863164"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1174627,
+        "envelope_source_ms": 1789902864345,
+        "received_ms": 1789902888123,
+        "available_ms": 1789902888124,
+        "side_source_ms": {
+          "up": 1789902864343,
+          "down": 1789902864343
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "30585232861016297209442447914578897494702268507778971533692233025997294132916",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "price": "0.83",
+            "side": "SELL",
+            "size": "1.29",
+            "timestamp": "1789902864345",
+            "transaction_hash": "0xa9d782d788ad9635478b2bd7d12c296d761f223baca6bb22ae22e1e7e8e5b96f"
+          }
+        ]
+      },
+      {
+        "event_id": 1174628,
+        "envelope_source_ms": 1789902864343,
+        "received_ms": 1789902888124,
+        "available_ms": 1789902888125,
+        "side_source_ms": {
+          "up": 1789902864343,
+          "down": 1789902864343
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xf0e60dff43a34f5bf9319079f96d57b0567c54902beacac5be48fb208ffe966b",
+            "timestamp": "1789902864343"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1194716,
+        "envelope_source_ms": 1789902916790,
+        "received_ms": 1789902917525,
+        "available_ms": 1789902917525,
+        "side_source_ms": {
+          "up": 1789902916789,
+          "down": 1789902916789
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.52",
+            "side": "BUY",
+            "size": "9.24",
+            "timestamp": "1789902916790",
+            "transaction_hash": "0x22048636adb1e1b5701a1fb22578b98a928e0c7ab70ce8805dfbbe01ddcf7471"
+          }
+        ]
+      },
+      {
+        "event_id": 1194717,
+        "envelope_source_ms": 1789902916789,
+        "received_ms": 1789902917526,
+        "available_ms": 1789902917526,
+        "side_source_ms": {
+          "up": 1789902916789,
+          "down": 1789902916789
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902916789"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1205371,
+        "envelope_source_ms": 1789902927026,
+        "received_ms": 1789902931924,
+        "available_ms": 1789902931924,
+        "side_source_ms": {
+          "up": 1789902927025,
+          "down": 1789902927025
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.61",
+            "side": "BUY",
+            "size": "10.327869",
+            "timestamp": "1789902927026",
+            "transaction_hash": "0x83e0e1ee09c928e86ae91626b7aff825ab1ac9688ae432b188008ca063f176d1"
+          }
+        ]
+      },
+      {
+        "event_id": 1205372,
+        "envelope_source_ms": 1789902927025,
+        "received_ms": 1789902931925,
+        "available_ms": 1789902931925,
+        "side_source_ms": {
+          "up": 1789902927025,
+          "down": 1789902927025
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902927025"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1205744,
+        "envelope_source_ms": 1789902927143,
+        "received_ms": 1789902932312,
+        "available_ms": 1789902932313,
+        "side_source_ms": {
+          "up": 1789902927142,
+          "down": 1789902927142
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.61",
+            "side": "BUY",
+            "size": "1.639343",
+            "timestamp": "1789902927143",
+            "transaction_hash": "0xe0cb3eced929374b4cb5d76e955ead3bae4e1df9a955eceff98d4ec351494c7e"
+          }
+        ]
+      },
+      {
+        "event_id": 1205745,
+        "envelope_source_ms": 1789902927142,
+        "received_ms": 1789902932314,
+        "available_ms": 1789902932315,
+        "side_source_ms": {
+          "up": 1789902927142,
+          "down": 1789902927142
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902927142"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1206717,
+        "envelope_source_ms": 1789902927485,
+        "received_ms": 1789902933633,
+        "available_ms": 1789902933633,
+        "side_source_ms": {
+          "up": 1789902927484,
+          "down": 1789902927484
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.41",
+            "side": "BUY",
+            "size": "5.45",
+            "timestamp": "1789902927485",
+            "transaction_hash": "0x33fe768bb9c583f9ec1f98aa8282d4d3f881f998a8ae21ab6ee4bb0cbce35230"
+          }
+        ]
+      },
+      {
+        "event_id": 1206718,
+        "envelope_source_ms": 1789902927484,
+        "received_ms": 1789902933634,
+        "available_ms": 1789902933634,
+        "side_source_ms": {
+          "up": 1789902927484,
+          "down": 1789902927484
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902927484"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1207008,
+        "envelope_source_ms": 1789902927628,
+        "received_ms": 1789902933929,
+        "available_ms": 1789902933930,
+        "side_source_ms": {
+          "up": 1789902927627,
+          "down": 1789902927627
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.6",
+            "side": "BUY",
+            "size": "9",
+            "timestamp": "1789902927628",
+            "transaction_hash": "0xf4dbd63c91ee594288f2b96ef54c691b1300d205a4de0cede2065a087e648776"
+          }
+        ]
+      },
+      {
+        "event_id": 1207009,
+        "envelope_source_ms": 1789902927627,
+        "received_ms": 1789902933930,
+        "available_ms": 1789902933931,
+        "side_source_ms": {
+          "up": 1789902927627,
+          "down": 1789902927627
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902927627"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1209430,
+        "envelope_source_ms": 1789902928911,
+        "received_ms": 1789902936916,
+        "available_ms": 1789902936916,
+        "side_source_ms": {
+          "up": 1789902928909,
+          "down": 1789902928909
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.6",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789902928911",
+            "transaction_hash": "0xd4083255838c71e7e240d1799f39375037b7e17db7746891d2a2f3b8a96458d1"
+          }
+        ]
+      },
+      {
+        "event_id": 1209431,
+        "envelope_source_ms": 1789902928910,
+        "received_ms": 1789902936917,
+        "available_ms": 1789902936917,
+        "side_source_ms": {
+          "up": 1789902928910,
+          "down": 1789902928910
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902928910"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1233433,
+        "envelope_source_ms": 1789902958099,
+        "received_ms": 1789902967738,
+        "available_ms": 1789902967739,
+        "side_source_ms": {
+          "up": 1789902958097,
+          "down": 1789902958097
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.63",
+            "side": "SELL",
+            "size": "5",
+            "timestamp": "1789902958099",
+            "transaction_hash": "0x6ba76a65bbd57bd98f76da7fce8272bea93a846ddf7078f9d7f6bedb1b68276d"
+          }
+        ]
+      },
+      {
+        "event_id": 1233434,
+        "envelope_source_ms": 1789902958098,
+        "received_ms": 1789902967739,
+        "available_ms": 1789902967739,
+        "side_source_ms": {
+          "up": 1789902958098,
+          "down": 1789902958098
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902958098"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1239619,
+        "envelope_source_ms": 1789902963791,
+        "received_ms": 1789902976339,
+        "available_ms": 1789902976339,
+        "side_source_ms": {
+          "up": 1789902963790,
+          "down": 1789902963790
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.72",
+            "side": "BUY",
+            "size": "26",
+            "timestamp": "1789902963791",
+            "transaction_hash": "0x8eed52b00ed7faa913649528da60e633146cf988ef17c9739147ee6e9ece82cc"
+          }
+        ]
+      },
+      {
+        "event_id": 1239620,
+        "envelope_source_ms": 1789902963790,
+        "received_ms": 1789902976340,
+        "available_ms": 1789902976340,
+        "side_source_ms": {
+          "up": 1789902963790,
+          "down": 1789902963790
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902963790"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1239936,
+        "envelope_source_ms": 1789902963839,
+        "received_ms": 1789902976674,
+        "available_ms": 1789902976674,
+        "side_source_ms": {
+          "up": 1789902963838,
+          "down": 1789902963838
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.72",
+            "side": "BUY",
+            "size": "25",
+            "timestamp": "1789902963839",
+            "transaction_hash": "0xb6bbdf71059b913ca8ca2970b9d1b34908034b9d855a8c81705d27fb88df5b17"
+          }
+        ]
+      },
+      {
+        "event_id": 1239937,
+        "envelope_source_ms": 1789902963838,
+        "received_ms": 1789902976675,
+        "available_ms": 1789902976675,
+        "side_source_ms": {
+          "up": 1789902963838,
+          "down": 1789902963838
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902963838"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1250253,
+        "envelope_source_ms": 1789902973581,
+        "received_ms": 1789902991375,
+        "available_ms": 1789902991376,
+        "side_source_ms": {
+          "up": 1789902973579,
+          "down": 1789902973579
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.73",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789902973581",
+            "transaction_hash": "0x6c03dcbda90dc2229ef707081fee0ec7511a5c024fb2ebca26aa8d93eb8d1cb4"
+          }
+        ]
+      },
+      {
+        "event_id": 1250254,
+        "envelope_source_ms": 1789902973579,
+        "received_ms": 1789902991378,
+        "available_ms": 1789902991379,
+        "side_source_ms": {
+          "up": 1789902973579,
+          "down": 1789902973579
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902973579"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1253139,
+        "envelope_source_ms": 1789902976015,
+        "received_ms": 1789902995577,
+        "available_ms": 1789902995577,
+        "side_source_ms": {
+          "up": 1789902976014,
+          "down": 1789902976014
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.26",
+            "side": "BUY",
+            "size": "5",
+            "timestamp": "1789902976015",
+            "transaction_hash": "0x77058f168fffc5605d83ff68eee6ed11820a7e834d3a77c4290e0163f29b7863"
+          }
+        ]
+      },
+      {
+        "event_id": 1253140,
+        "envelope_source_ms": 1789902976014,
+        "received_ms": 1789902995578,
+        "available_ms": 1789902995578,
+        "side_source_ms": {
+          "up": 1789902976014,
+          "down": 1789902976014
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902976014"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1253645,
+        "envelope_source_ms": 1789902976249,
+        "received_ms": 1789902996197,
+        "available_ms": 1789902996198,
+        "side_source_ms": {
+          "up": 1789902976245,
+          "down": 1789902976245
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.36",
+            "side": "BUY",
+            "size": "30",
+            "timestamp": "1789902976249",
+            "transaction_hash": "0xfba73bf5a3cb40371e5da974c03762a5a4e5766363f8019bc17c0f0a7fad41ad"
+          }
+        ]
+      },
+      {
+        "event_id": 1253646,
+        "envelope_source_ms": 1789902976248,
+        "received_ms": 1789902996198,
+        "available_ms": 1789902996199,
+        "side_source_ms": {
+          "up": 1789902976248,
+          "down": 1789902976248
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902976248"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1253716,
+        "envelope_source_ms": 1789902976278,
+        "received_ms": 1789902996285,
+        "available_ms": 1789902996286,
+        "side_source_ms": {
+          "up": 1789902976277,
+          "down": 1789902976277
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.38",
+            "side": "BUY",
+            "size": "6",
+            "timestamp": "1789902976278",
+            "transaction_hash": "0xfea107717b9a80eea9409a2b31749abed3f0049467b2e676e3dcdfb4b3a0daa7"
+          }
+        ]
+      },
+      {
+        "event_id": 1253717,
+        "envelope_source_ms": 1789902976277,
+        "received_ms": 1789902996286,
+        "available_ms": 1789902996287,
+        "side_source_ms": {
+          "up": 1789902976277,
+          "down": 1789902976277
+        },
+        "message_types": [
+          "book"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "book",
+            "hash": "539d97dc54b21fc42889b85b6f17fd8e6159c148",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902976277"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1260131,
+        "envelope_source_ms": 1789902980559,
+        "received_ms": 1789903005018,
+        "available_ms": 1789903005019,
+        "side_source_ms": {
+          "up": 1789902980557,
+          "down": 1789902980557
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.68",
+            "side": "SELL",
+            "size": "4",
+            "timestamp": "1789902980559",
+            "transaction_hash": "0x15048c7c500c8c09dacd5dfbec7edb077433477b19c00c04b6f3890859256d2b"
+          }
+        ]
+      },
+      {
+        "event_id": 1260132,
+        "envelope_source_ms": 1789902980558,
+        "received_ms": 1789903005019,
+        "available_ms": 1789903005020,
+        "side_source_ms": {
+          "up": 1789902980558,
+          "down": 1789902980558
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902980558"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1262849,
+        "envelope_source_ms": 1789902983650,
+        "received_ms": 1789903008834,
+        "available_ms": 1789903008835,
+        "side_source_ms": {
+          "up": 1789902983648,
+          "down": 1789902983648
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.3",
+            "side": "BUY",
+            "size": "5.666667",
+            "timestamp": "1789902983650",
+            "transaction_hash": "0xf97fb8fae0db266faf08f526bb9d91973f8fb235a4471de0024debbcc8342f74"
+          }
+        ]
+      },
+      {
+        "event_id": 1262850,
+        "envelope_source_ms": 1789902983649,
+        "received_ms": 1789903008835,
+        "available_ms": 1789903008836,
+        "side_source_ms": {
+          "up": 1789902983649,
+          "down": 1789902983649
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902983649"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1265887,
+        "envelope_source_ms": 1789902985540,
+        "received_ms": 1789903014050,
+        "available_ms": 1789903014052,
+        "side_source_ms": {
+          "up": 1789902985538,
+          "down": 1789902985538
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.78",
+            "side": "BUY",
+            "size": "10.384613",
+            "timestamp": "1789902985540",
+            "transaction_hash": "0x3a5bb5051b788419014c1bec08ba13a1ef6e9cb13e2b2064ff3850fe19ba7c26"
+          }
+        ]
+      },
+      {
+        "event_id": 1265888,
+        "envelope_source_ms": 1789902985539,
+        "received_ms": 1789903014054,
+        "available_ms": 1789903014055,
+        "side_source_ms": {
+          "up": 1789902985539,
+          "down": 1789902985539
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902985539"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1275296,
+        "envelope_source_ms": 1789902996794,
+        "received_ms": 1789903029167,
+        "available_ms": 1789903029168,
+        "side_source_ms": {
+          "up": 1789902996793,
+          "down": 1789902996793
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.32",
+            "side": "BUY",
+            "size": "50",
+            "timestamp": "1789902996794",
+            "transaction_hash": "0x30347b1148671592090c1c273576aa5d3b3268b1201b098fd6753771faed5cd1"
+          }
+        ]
+      },
+      {
+        "event_id": 1275297,
+        "envelope_source_ms": 1789902996793,
+        "received_ms": 1789903029169,
+        "available_ms": 1789903029169,
+        "side_source_ms": {
+          "up": 1789902996793,
+          "down": 1789902996793
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902996793"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1275368,
+        "envelope_source_ms": 1789902996849,
+        "received_ms": 1789903029308,
+        "available_ms": 1789903029309,
+        "side_source_ms": {
+          "up": 1789902996847,
+          "down": 1789902996847
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.33",
+            "side": "BUY",
+            "size": "30",
+            "timestamp": "1789902996849",
+            "transaction_hash": "0x827fda4680e19912877dc235aba996a3966500f7bacc1a6cd101c415284ee5a5"
+          }
+        ]
+      },
+      {
+        "event_id": 1275369,
+        "envelope_source_ms": 1789902996848,
+        "received_ms": 1789903029310,
+        "available_ms": 1789903029311,
+        "side_source_ms": {
+          "up": 1789902996848,
+          "down": 1789902996848
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902996848"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1277536,
+        "envelope_source_ms": 1789903029357,
+        "received_ms": 1789903032633,
+        "available_ms": 1789903032634,
+        "side_source_ms": {
+          "up": 1789903029356,
+          "down": 1789903029356
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "37655868289163315122074518349734024665417770307575636146425017634422115671478",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.33",
+            "side": "SELL",
+            "size": "30",
+            "timestamp": "1789903029357",
+            "transaction_hash": "0x0420a9ff256ac8397a86e7b273414c8b2650145078e5bc98b15272fe30e2809b"
+          }
+        ]
+      },
+      {
+        "event_id": 1277537,
+        "envelope_source_ms": 1789903029356,
+        "received_ms": 1789903032634,
+        "available_ms": 1789903032635,
+        "side_source_ms": {
+          "up": 1789903029356,
+          "down": 1789903029356
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903029356"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1279772,
+        "envelope_source_ms": 1789902998548,
+        "received_ms": 1789903036023,
+        "available_ms": 1789903036023,
+        "side_source_ms": {
+          "up": 1789902998547,
+          "down": 1789902998547
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.68",
+            "side": "BUY",
+            "size": "49.99",
+            "timestamp": "1789902998548",
+            "transaction_hash": "0x91a7b1edafb027367319426b4e116ab78ba940a43bec27352c02c1eb1b755694"
+          }
+        ]
+      },
+      {
+        "event_id": 1279773,
+        "envelope_source_ms": 1789902998547,
+        "received_ms": 1789903036024,
+        "available_ms": 1789903036025,
+        "side_source_ms": {
+          "up": 1789902998547,
+          "down": 1789902998547
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789902998547"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1284020,
+        "envelope_source_ms": 1789903001483,
+        "received_ms": 1789903042438,
+        "available_ms": 1789903042439,
+        "side_source_ms": {
+          "up": 1789903001481,
+          "down": 1789903001481
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.72",
+            "side": "BUY",
+            "size": "12",
+            "timestamp": "1789903001483",
+            "transaction_hash": "0x8a4acf6dca15d2040cbe6df12fce9956d2e2296074593c25fba109448e11850a"
+          }
+        ]
+      },
+      {
+        "event_id": 1284021,
+        "envelope_source_ms": 1789903001481,
+        "received_ms": 1789903042440,
+        "available_ms": 1789903042440,
+        "side_source_ms": {
+          "up": 1789903001481,
+          "down": 1789903001481
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903001481"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1296662,
+        "envelope_source_ms": 1789903013101,
+        "received_ms": 1789903062782,
+        "available_ms": 1789903062782,
+        "side_source_ms": {
+          "up": 1789903013099,
+          "down": 1789903013099
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.74",
+            "side": "SELL",
+            "size": "1.58",
+            "timestamp": "1789903013101",
+            "transaction_hash": "0xefb23fe0e24fe381445ba543d309ce3eec4e72c328ab0e1173f055e0a48ba158"
+          }
+        ]
+      },
+      {
+        "event_id": 1296663,
+        "envelope_source_ms": 1789903013100,
+        "received_ms": 1789903062783,
+        "available_ms": 1789903062783,
+        "side_source_ms": {
+          "up": 1789903013100,
+          "down": 1789903013100
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903013100"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1297996,
+        "envelope_source_ms": 1789903015197,
+        "received_ms": 1789903064601,
+        "available_ms": 1789903064602,
+        "side_source_ms": {
+          "up": 1789903015092,
+          "down": 1789903015092
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.75",
+            "side": "BUY",
+            "size": "55",
+            "timestamp": "1789903015197",
+            "transaction_hash": "0x0eb1df3cee4b490f01ae62ad6082755946d447d6a5ac328a8b000d002502ed37"
+          }
+        ]
+      },
+      {
+        "event_id": 1297997,
+        "envelope_source_ms": 1789903015102,
+        "received_ms": 1789903064603,
+        "available_ms": 1789903064604,
+        "side_source_ms": {
+          "up": 1789903015102,
+          "down": 1789903015102
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903015102"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1300673,
+        "envelope_source_ms": 1789903018214,
+        "received_ms": 1789903069238,
+        "available_ms": 1789903069238,
+        "side_source_ms": {
+          "up": 1789903018200,
+          "down": 1789903018200
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.75",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789903018214",
+            "transaction_hash": "0xfb0e9e546f3006ddef73a3836c7eef0e1ecd8ed7e6e61f25545441351bfff795"
+          }
+        ]
+      },
+      {
+        "event_id": 1300674,
+        "envelope_source_ms": 1789903018213,
+        "received_ms": 1789903069239,
+        "available_ms": 1789903069241,
+        "side_source_ms": {
+          "up": 1789903018213,
+          "down": 1789903018213
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903018213"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1303569,
+        "envelope_source_ms": 1789903020939,
+        "received_ms": 1789903074524,
+        "available_ms": 1789903074525,
+        "side_source_ms": {
+          "up": 1789903020938,
+          "down": 1789903020938
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.8",
+            "side": "BUY",
+            "size": "6.7625",
+            "timestamp": "1789903020939",
+            "transaction_hash": "0xbc593ce90e719b13418c8179f202d435ae5162870ca4caa83a6baf438cd66949"
+          }
+        ]
+      },
+      {
+        "event_id": 1303570,
+        "envelope_source_ms": 1789903020938,
+        "received_ms": 1789903074526,
+        "available_ms": 1789903074526,
+        "side_source_ms": {
+          "up": 1789903020938,
+          "down": 1789903020938
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903020938"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1308057,
+        "envelope_source_ms": 1789903080219,
+        "received_ms": 1789903080912,
+        "available_ms": 1789903080912,
+        "side_source_ms": {
+          "up": 1789903080217,
+          "down": 1789903080217
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.04",
+            "side": "BUY",
+            "size": "17",
+            "timestamp": "1789903080219",
+            "transaction_hash": "0xa3f1786885c3457e636f43f4cf7cde78a63576ba8e3629cd3b27a7de4d92e0f8"
+          }
+        ]
+      },
+      {
+        "event_id": 1308058,
+        "envelope_source_ms": 1789903080218,
+        "received_ms": 1789903080913,
+        "available_ms": 1789903080913,
+        "side_source_ms": {
+          "up": 1789903080218,
+          "down": 1789903080218
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903080218"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1341387,
+        "envelope_source_ms": 1789903148401,
+        "received_ms": 1789903149419,
+        "available_ms": 1789903149420,
+        "side_source_ms": {
+          "up": 1789903148400,
+          "down": 1789903148400
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.01",
+            "side": "BUY",
+            "size": "490",
+            "timestamp": "1789903148401",
+            "transaction_hash": "0x2a354014f0c2c412f4c12edac56c45041cbb1516163a121da96b5d40733e2e1b"
+          }
+        ]
+      },
+      {
+        "event_id": 1341388,
+        "envelope_source_ms": 1789903148400,
+        "received_ms": 1789903149420,
+        "available_ms": 1789903149421,
+        "side_source_ms": {
+          "up": 1789903148400,
+          "down": 1789903148400
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903148400"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1342236,
+        "envelope_source_ms": 1789903148814,
+        "received_ms": 1789903150541,
+        "available_ms": 1789903150542,
+        "side_source_ms": {
+          "up": 1789903148813,
+          "down": 1789903148813
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "112855595920875046318463575635905985493948389593224833602263557004307060787444",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.55",
+            "side": "BUY",
+            "size": "15",
+            "timestamp": "1789903148814",
+            "transaction_hash": "0xe1906eb829039c1b4558aa6f3560f1cd5ef04cc5360dbb4d76dbe1f1779781ba"
+          }
+        ]
+      },
+      {
+        "event_id": 1342237,
+        "envelope_source_ms": 1789903148813,
+        "received_ms": 1789903150543,
+        "available_ms": 1789903150544,
+        "side_source_ms": {
+          "up": 1789903148813,
+          "down": 1789903148813
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903148813"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1342883,
+        "envelope_source_ms": 1789903148937,
+        "received_ms": 1789903152139,
+        "available_ms": 1789903152139,
+        "side_source_ms": {
+          "up": 1789903148935,
+          "down": 1789903148935
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "88426552590929378622977167861741755789131781414145366421116275879546295490459",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.9",
+            "side": "BUY",
+            "size": "32.03333",
+            "timestamp": "1789903148937",
+            "transaction_hash": "0x317598333f3b5e7a35c0ba14dc7cfbddc771498f36096b62e2be8aefafe60209"
+          }
+        ]
+      },
+      {
+        "event_id": 1342884,
+        "envelope_source_ms": 1789903148936,
+        "received_ms": 1789903152140,
+        "available_ms": 1789903152140,
+        "side_source_ms": {
+          "up": 1789903148936,
+          "down": 1789903148936
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903148936"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1366764,
+        "envelope_source_ms": 1789903165582,
+        "received_ms": 1789903195486,
+        "available_ms": 1789903195486,
+        "side_source_ms": {
+          "up": 1789903165577,
+          "down": 1789903165577
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.59",
+            "side": "BUY",
+            "size": "30",
+            "timestamp": "1789903165582",
+            "transaction_hash": "0xdb52762871db13144b5490604cbf9ee0a6541041b4cc66a20cc1276d9dab4b0c"
+          }
+        ]
+      },
+      {
+        "event_id": 1366765,
+        "envelope_source_ms": 1789903165578,
+        "received_ms": 1789903195487,
+        "available_ms": 1789903195487,
+        "side_source_ms": {
+          "up": 1789903165578,
+          "down": 1789903165578
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903165578"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1368720,
+        "envelope_source_ms": 1789903166016,
+        "received_ms": 1789903199008,
+        "available_ms": 1789903199008,
+        "side_source_ms": {
+          "up": 1789903166015,
+          "down": 1789903166015
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "52412650772020571532269552936207397043048850926499882826994639553935094397965",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "price": "0.67",
+            "side": "BUY",
+            "size": "24",
+            "timestamp": "1789903166016",
+            "transaction_hash": "0x545047dc73096d76af1e4edf46d72616669b439f9da3a24843674e33733822cd"
+          }
+        ]
+      },
+      {
+        "event_id": 1368721,
+        "envelope_source_ms": 1789903166015,
+        "received_ms": 1789903199009,
+        "available_ms": 1789903199010,
+        "side_source_ms": {
+          "up": 1789903166015,
+          "down": 1789903166015
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xda0f5918fc0e71977217b9e17df434d1c580b70a48405fbf5ece2bb5c34574f8",
+            "timestamp": "1789903166015"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1376476,
+        "envelope_source_ms": 1789903204005,
+        "received_ms": 1789903212393,
+        "available_ms": 1789903212394,
+        "side_source_ms": {
+          "up": 1789903203995,
+          "down": 1789903203995
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "37655868289163315122074518349734024665417770307575636146425017634422115671478",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.54",
+            "side": "BUY",
+            "size": "26",
+            "timestamp": "1789903204005",
+            "transaction_hash": "0xf52aef6e783011dd6f6c37d305479b21efdda83e5b7ff30a844a35ab99f4da41"
+          }
+        ]
+      },
+      {
+        "event_id": 1376477,
+        "envelope_source_ms": 1789903204001,
+        "received_ms": 1789903212394,
+        "available_ms": 1789903212395,
+        "side_source_ms": {
+          "up": 1789903204001,
+          "down": 1789903204001
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903204001"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1520955,
+        "envelope_source_ms": 1789903381064,
+        "received_ms": 1789903443771,
+        "available_ms": 1789903443772,
+        "side_source_ms": {
+          "up": 1789903381063,
+          "down": 1789903381063
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "62222707494380115509328975066770381743629334450609817178036308348903211679747",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x684c22e97675e874c7133a44c37899807f27d10df0df78d47360ddf46114ab91",
+            "price": "0.73",
+            "side": "BUY",
+            "size": "4.219177",
+            "timestamp": "1789903381064",
+            "transaction_hash": "0x9e83b9ab89330df32f455f261f6c4bff68ecfc926a9f577ef47a8097ee47eb87"
+          }
+        ]
+      },
+      {
+        "event_id": 1520956,
+        "envelope_source_ms": 1789903381063,
+        "received_ms": 1789903443772,
+        "available_ms": 1789903443773,
+        "side_source_ms": {
+          "up": 1789903381063,
+          "down": 1789903381063
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x684c22e97675e874c7133a44c37899807f27d10df0df78d47360ddf46114ab91",
+            "timestamp": "1789903381063"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1522243,
+        "envelope_source_ms": 1789903381748,
+        "received_ms": 1789903446023,
+        "available_ms": 1789903446024,
+        "side_source_ms": {
+          "up": 1789903381747,
+          "down": 1789903381747
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "62222707494380115509328975066770381743629334450609817178036308348903211679747",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x684c22e97675e874c7133a44c37899807f27d10df0df78d47360ddf46114ab91",
+            "price": "0.73",
+            "side": "BUY",
+            "size": "5.18",
+            "timestamp": "1789903381748",
+            "transaction_hash": "0x3cd343ade69c5f238281ba96dc6e1cd46be1745a5a258d297a84c6bd93054541"
+          }
+        ]
+      },
+      {
+        "event_id": 1522244,
+        "envelope_source_ms": 1789903381747,
+        "received_ms": 1789903446025,
+        "available_ms": 1789903446026,
+        "side_source_ms": {
+          "up": 1789903381747,
+          "down": 1789903381747
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x684c22e97675e874c7133a44c37899807f27d10df0df78d47360ddf46114ab91",
+            "timestamp": "1789903381747"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1543561,
+        "envelope_source_ms": 1789903459766,
+        "received_ms": 1789903478068,
+        "available_ms": 1789903478068,
+        "side_source_ms": {
+          "up": 1789903459763,
+          "down": 1789903459763
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "37655868289163315122074518349734024665417770307575636146425017634422115671478",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.59",
+            "side": "SELL",
+            "size": "34",
+            "timestamp": "1789903459766",
+            "transaction_hash": "0x9406434b40ea40a0ad9411af59fb0f55bf24166d3c253a191cde33154825e424"
+          }
+        ]
+      },
+      {
+        "event_id": 1543562,
+        "envelope_source_ms": 1789903459764,
+        "received_ms": 1789903478069,
+        "available_ms": 1789903478070,
+        "side_source_ms": {
+          "up": 1789903459764,
+          "down": 1789903459764
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903459764"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1556882,
+        "envelope_source_ms": 1789903487834,
+        "received_ms": 1789903498366,
+        "available_ms": 1789903498366,
+        "side_source_ms": {
+          "up": 1789903487828,
+          "down": 1789903487828
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "112855595920875046318463575635905985493948389593224833602263557004307060787444",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.5",
+            "side": "BUY",
+            "size": "10",
+            "timestamp": "1789903487834",
+            "transaction_hash": "0xcc07d7fed9b0e726c55989ba71a469c36a6a0e8c881243df1f43ad734483e29e"
+          }
+        ]
+      },
+      {
+        "event_id": 1556883,
+        "envelope_source_ms": 1789903487832,
+        "received_ms": 1789903498366,
+        "available_ms": 1789903498367,
+        "side_source_ms": {
+          "up": 1789903487832,
+          "down": 1789903487832
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903487832"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1569525,
+        "envelope_source_ms": 1789903516056,
+        "received_ms": 1789903518579,
+        "available_ms": 1789903518580,
+        "side_source_ms": {
+          "up": 1789903516054,
+          "down": 1789903516054
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75131999411570153045898909936135012787474371661480538994978691747689883664690",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x3775f824276626dd936ad2f5c4bedefe87320c0ce1d2c0d4070ec4aece9d0220",
+            "price": "0.5",
+            "side": "BUY",
+            "size": "5.2",
+            "timestamp": "1789903516056",
+            "transaction_hash": "0xe4a0d37b8e75a0d42af9b28aa250847a33f3d7873eef5a43ab30162fd55540a8"
+          }
+        ]
+      },
+      {
+        "event_id": 1569526,
+        "envelope_source_ms": 1789903516055,
+        "received_ms": 1789903518580,
+        "available_ms": 1789903518581,
+        "side_source_ms": {
+          "up": 1789903516055,
+          "down": 1789903516055
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x3775f824276626dd936ad2f5c4bedefe87320c0ce1d2c0d4070ec4aece9d0220",
+            "timestamp": "1789903516055"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1569568,
+        "envelope_source_ms": 1789903516132,
+        "received_ms": 1789903518635,
+        "available_ms": 1789903518635,
+        "side_source_ms": {
+          "up": 1789903516121,
+          "down": 1789903516121
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "75131999411570153045898909936135012787474371661480538994978691747689883664690",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0x3775f824276626dd936ad2f5c4bedefe87320c0ce1d2c0d4070ec4aece9d0220",
+            "price": "0.49",
+            "side": "SELL",
+            "size": "2.04",
+            "timestamp": "1789903516132",
+            "transaction_hash": "0x4bae81091ba5831a544525dbbb991433c8003cdf042ad8b44f9750b9dcd8ff93"
+          }
+        ]
+      },
+      {
+        "event_id": 1569569,
+        "envelope_source_ms": 1789903516131,
+        "received_ms": 1789903518636,
+        "available_ms": 1789903518638,
+        "side_source_ms": {
+          "up": 1789903516131,
+          "down": 1789903516131
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0x3775f824276626dd936ad2f5c4bedefe87320c0ce1d2c0d4070ec4aece9d0220",
+            "timestamp": "1789903516131"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "event_id": 1586629,
+        "envelope_source_ms": 1789903538427,
+        "received_ms": 1789903542934,
+        "available_ms": 1789903542935,
+        "side_source_ms": {
+          "up": 1789903538409,
+          "down": 1789903538409
+        },
+        "message_types": [
+          "last_trade_price"
+        ],
+        "source_metadata": [
+          {
+            "asset_id": "112855595920875046318463575635905985493948389593224833602263557004307060787444",
+            "event_type": "last_trade_price",
+            "fee_rate_bps": "0",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "price": "0.52",
+            "side": "BUY",
+            "size": "5.795",
+            "timestamp": "1789903538427",
+            "transaction_hash": "0x144f8f88b60daabf2246a90d269239b4bf2570f848bf11e7a4f8201da994aca3"
+          }
+        ]
+      },
+      {
+        "event_id": 1586630,
+        "envelope_source_ms": 1789903538410,
+        "received_ms": 1789903542936,
+        "available_ms": 1789903542936,
+        "side_source_ms": {
+          "up": 1789903538410,
+          "down": 1789903538410
+        },
+        "message_types": [
+          "price_change"
+        ],
+        "source_metadata": [
+          {
+            "event_type": "price_change",
+            "market": "0xe89f56d0f2178f3a4c1347ac6e6a786e34a0059fbb6865eaa30485f3d080bd3d",
+            "timestamp": "1789903538410"
+          }
+        ]
+      }
+    ]
+  ],
+  "all_sample_side_timestamps_nondecreasing": true,
+  "all_sample_availability_nondecreasing": true,
+  "source_stat_unchanged": true,
+  "source_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd",
+  "mechanism": "Collector fences last source timestamp per token for book/price_change updates, then uses last processed message timestamp as BOOK envelope. last_trade_price and book events therefore share an envelope stream with different source timing; envelope regressions are not equivalent to per-token book regressions.",
+  "scope": "All 744 envelope regressions and 0 side/BTC/availability regressions remain in final evidence. The sample supports message-type mixing; no universal cause claim and no automatic quality waiver.",
+  "code_evidence": {
+    "backend/app/collectors/polymarket_ws.py": {
+      "lines": [
+        302,
+        305,
+        315,
+        324,
+        327,
+        425
+      ],
+      "sha256": "56260a75088a2975e3775561ce7f034f9506514f4367041c498414ddfa6706d1"
+    },
+    "backend/app/d5/observer.py": {
+      "lines": [
+        67,
+        72,
+        87
+      ],
+      "sha256": "0a67f4e3a9f488fe1afdc0d15bfa0de46f09d3ac50c9f7e2315da26d561639af"
+    }
+  }
+}

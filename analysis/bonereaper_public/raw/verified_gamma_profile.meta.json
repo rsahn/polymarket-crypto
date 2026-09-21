@@ -1,0 +1,27 @@
+{
+  "url": "https://gamma-api.polymarket.com/public-profile?address=0xeebde7a0e019a63e6b476eb425505b7b3e6eba30",
+  "retrieved_utc": "2026-09-20T11:16:48.717483+00:00",
+  "status": 200,
+  "headers": {
+    "Date": "Sun, 20 Sep 2026 11:16:48 GMT",
+    "Content-Type": "application/json",
+    "Content-Length": "438",
+    "Connection": "close",
+    "Server": "cloudflare",
+    "vary": "Accept-Encoding,Origin",
+    "x-envoy-upstream-service-time": "11",
+    "Accept-Ranges": "bytes",
+    "Server-Timing": "cfCacheStatus;desc=\"HIT\"",
+    "last-modified": "Sun, 20 Sep 2026 11:16:48 GMT",
+    "expires": "Sun, 20 Sep 2026 11:18:48 GMT",
+    "Cache-Control": "public, max-age=120",
+    "cf-cache-status": "HIT",
+    "link": "</schemas/PublicProfileResponse.json>; rel=\"describedBy\"",
+    "Strict-Transport-Security": "max-age=7776000; includeSubDomains",
+    "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+    "set-cookie": "__cf_bm=A3lW7bcMsSXhfhkgk_v69bwwjPuGzskA48JLjR_uvwk-1789903008.723258-1.0.1.1-T.v5Si5F_kH_i3tXau.vmG7qi4ZNt1LDHQWjqbKMsEgZdx2ZRkjhAQ6VCyuvHQxmowgUQaJG1biO3RO0.0h3tN4GPNJQEOfiIDJalvXnZx5nBhovZsZG66QqHMvjJpnU; HttpOnly; SameSite=None; Secure; Path=/; Domain=polymarket.com; Expires=Sun, 20 Sep 2026 11:46:48 GMT",
+    "CF-RAY": "a3e06b8c8da6e746-CDG"
+  },
+  "sha256": "2099e7a927338d15b5cf5a03e0e4e771da10c8654dfad233debf81865f6bf926",
+  "bytes": 438
+}

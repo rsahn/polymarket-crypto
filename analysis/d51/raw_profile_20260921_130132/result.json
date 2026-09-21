@@ -1,0 +1,24 @@
+{
+  "technical_only": true,
+  "not_D6": true,
+  "not_a_quality_smoke": true,
+  "profile_overhead_present": false,
+  "frames": 19996,
+  "seconds": 12.732376499916427,
+  "frames_per_second": 1570.4845046116293,
+  "timing_seconds": {
+    "parse": 0.29999979585409164,
+    "normalize": 4.0244101990247145,
+    "observer_and_store": 7.557891311938874
+  },
+  "counts": {
+    "ACTIVATE": 2,
+    "BOOK": 19983,
+    "REJECT": 13
+  },
+  "source_hashes": {
+    "5m_raw.jsonl": "3a61eaf67b01eca1c8cf47b43ce85f6b36b8060d07cec18da079a07418c63808",
+    "15m_raw.jsonl": "0dfb946476d2810fe76df6a3193ea52c0b0fd70a7284980d7b90bab865acd35e"
+  },
+  "code_version": "2b10856c9e4af10b68e71c38a39daa7c3a9d4516:working-tree-sha256:c1c8b4a59bdc4e1a89e2342650d2b7a67bfb08245b0c93637b3e4d07d1712610"
+}

@@ -1,0 +1,8 @@
+{
+  "stdout": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d51\\launch_20260921_104534.stdout.log",
+  "stderr": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d51\\launch_20260921_104534.stderr.log",
+  "created_utc": "2026-09-21T08:45:34.0952591Z",
+  "launcher_pid": 4864,
+  "script": "analysis/d51/run_smoke.py",
+  "prelaunch_attestation": "analysis/d51/prepared_smoke2_20260921_1035/LAUNCH_AUTHORIZATION_CHECK.json"
+}

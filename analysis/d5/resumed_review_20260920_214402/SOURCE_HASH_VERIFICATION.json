@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d5_24h_20260920_085530\\d5_live_24h_20260920_124822.db",
+  "source_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd",
+  "expected_sha256": "e4f7212036818141c86e2d45c0082adaa834126f61db3060c3809264c588d0bd",
+  "reference_manifest": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\data_final_20260920\\raw_manifest.json",
+  "reference_manifest_sha256": "07d5cf11e9cccefa9daf8bc6c17680a65166a93dd5a2b643216a2db9bf3320be",
+  "checks": {
+    "sha256_matches_reference": true,
+    "source_stat_unchanged": true,
+    "source_matches_review_stat": true,
+    "complete_read": true,
+    "wal_empty": true,
+    "code_hashes": {
+      "audit_next.py": true,
+      "acceleration.py": true,
+      "sqlite_tuning.py": true,
+      "tuned_review.py": true,
+      "quality.py": true,
+      "collection_code": true
+    }
+  },
+  "duration_seconds": 87.97419700003229,
+  "note": "Attests completed auditor reuse and unchanged source; does not replace integrity, FK, quality or replay checks."
+}

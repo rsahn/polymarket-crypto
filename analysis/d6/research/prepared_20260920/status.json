@@ -1,0 +1,12 @@
+{
+  "pid": 4372,
+  "mode": "PREPARATION_ONLY",
+  "paper_started": false,
+  "out": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\research\\prepared_20260920",
+  "phase": "FAILED",
+  "updated_utc": "2026-09-20T17:41:35.949268+00:00",
+  "elapsed_seconds": 448.314370600041,
+  "conversion_stage": "[10/10] DuckDB catalog and essential features",
+  "conversion_percent": null,
+  "error": "RuntimeError('CONVERSION_FAILED:OutOfMemoryException(\"Out of Memory Error: failed to pin block of size 256.0 KiB (366.0 MiB/366.2 MiB used)\\\\n\\\\nPossible solutions:\\\\n* Reducing the number of threads (SET threads=X)\\\\n* Disabling insertion-order preservation (SET preserve_insertion_order=false)\\\\n* Increasing the memory limit (SET memory_limit=\\'...GB\\')\\\\n\\\\nSee also https://duckdb.org/docs/stable/guides/performance/how_to_tune_workloads\")')"
+}

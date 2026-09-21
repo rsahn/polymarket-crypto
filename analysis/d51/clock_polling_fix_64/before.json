@@ -1,0 +1,7 @@
+{
+  "NtpServer": "time.windows.com,0x8",
+  "captured_utc": "2026-09-21T08:23:09.5603635Z",
+  "Type": "NTP",
+  "MinPollInterval": 6,
+  "MaxPollInterval": 9
+}
