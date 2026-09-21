@@ -76,7 +76,11 @@ def main():
         frozen=dict(code_version=code_version(),requested_seconds=a.seconds,protocol_hashes={x.name:sha(x) for x in (ROOT/'analysis/d51').glob('*.md')},created_utc=utc())
         write_new(out/'LAUNCH_MANIFEST.json',frozen)
         if a.prepare_only:update(dict(phase='PREFLIGHT_PASS_NO_COLLECTION'));return
-        with db.open('xb'):pass
+        # WriterCore owns creation of the SQLite database and deliberately refuses
+        # pre-existing paths. Reserve uniqueness via the smoke directory/tag only;
+        # do not pre-create the DB here.
+        if db.exists():
+            raise FileExistsError(f'Smoke database path unexpectedly exists: {db}')
         async def collect():
             stop=asyncio.Event();loop=asyncio.get_running_loop()
             def request_stop(*_):loop.call_soon_threadsafe(stop.set)
