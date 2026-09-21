@@ -117,7 +117,7 @@ class ProcessWriter:
         sequence = self.next_sequence
         self.next_sequence += 1
         target = self.control_pending if is_control else self.pending
-        target.append((data,command['kind'],time.monotonic()))
+        target.append((sequence,data,command['kind'],time.monotonic()))
         self.outstanding.append((sequence,len(data),time.monotonic()))
         self.outstanding_bytes += len(data)
         self.high_water_items = max(self.high_water_items,len(self.outstanding))
@@ -169,28 +169,28 @@ class ProcessWriter:
                     # pickled commands. Pick the oldest admitted item to preserve global order.
                     merged=[]
                     while len(merged)<self.batch_size and (self.pending or self.control_pending):
-                        choices=[]
-                        if self.pending: choices.append((pickle.loads(self.pending[0][0])['sequence'],'data'))
-                        if self.control_pending: choices.append((pickle.loads(self.control_pending[0][0])['sequence'],'control'))
-                        _,lane=min(choices)
-                        merged.append((self.pending if lane=='data' else self.control_pending).popleft())
-                    oldest=merged[0][2]
-                    barrier=any(kind not in ('BOOK','BTC') for _,kind,_ in merged)
+                        data_seq=self.pending[0][0] if self.pending else None
+                        control_seq=self.control_pending[0][0] if self.control_pending else None
+                        if control_seq is not None and (data_seq is None or control_seq < data_seq):
+                            merged.append(self.control_pending.popleft())
+                        else:
+                            merged.append(self.pending.popleft())
+                    oldest=merged[0][3]
+                    barrier=any(kind not in ('BOOK','BTC') for _,_,kind,_ in merged)
                     due=time.monotonic()-oldest>=self.flush_seconds
                     if barrier or due or len(merged)>=self.batch_size:
-                        batch=[item[0] for item in merged]
+                        batch=[item[1] for item in merged]
                         try:self.inbox.put_nowait(batch)
                         except queue.Full:
                             # Put the batch back in sequence order; no command is lost.
                             for item in reversed(merged):
-                                seq=pickle.loads(item[0])['sequence']
-                                lane=self.control_pending if item[1] not in ('BOOK','BTC') else self.pending
+                                lane=self.control_pending if item[2] not in ('BOOK','BTC') else self.pending
                                 lane.appendleft(item)
                         else:
                             self.last_sent_sequence += len(merged)
                     else:
                         for item in reversed(merged):
-                            lane=self.control_pending if item[1] not in ('BOOK','BTC') else self.pending
+                            lane=self.control_pending if item[2] not in ('BOOK','BTC') else self.pending
                             lane.appendleft(item)
                 self.wake.clear()
                 try:await asyncio.wait_for(self.wake.wait(),timeout=min(self.flush_seconds,.01))
