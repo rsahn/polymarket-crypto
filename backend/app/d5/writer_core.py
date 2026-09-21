@@ -96,8 +96,8 @@ class WriterCore:
             for active_identity, _ in list(self.observer.active.values()):
                 self.observer.invalidate(active_identity,processed_at,'SESSION_END')
             self.observer.active.clear()
-            self.store.event('SESSION_END',{'cleanup_errors':cleanup_errors, 'last_input_sequence':sequence},
-                             received_ts_ms=received,available_ts_ms=processed_at)
+            self.store.event('SESSION_END',{**command.get('payload',{}),'cleanup_errors':cleanup_errors,
+                             'last_input_sequence':sequence},received_ts_ms=received,available_ts_ms=processed_at)
             self.store.close(status)
             self.closed = True
         else:
