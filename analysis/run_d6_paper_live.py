@@ -26,9 +26,11 @@ async def main_async(a):
  async def execute_signal(signal_ts,move,side):
   await asyncio.sleep(a.latency_ms/1000)
   snap=latest.get("5m")
-  if not snap:return
+  if not snap:
+   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_BOOK"});return
   q=snap[side.lower()];asks=q.get("asks") or []
-  if not asks:return
+  if not asks:
+   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_DEPTH","slug":snap.get("market_slug")});return
   available=sum(float(p)*float(n) for p,n in asks);entries={}
   for name,budget in ledger.sizes(available).items():
    budget=min(budget,ledger.portfolios[name].capital)
@@ -36,12 +38,15 @@ async def main_async(a):
    if shares:entries[name]=(cost,shares,vwap,snap["market_slug"])
   await asyncio.sleep(a.hold_ms/1000)
   exit_snap=latest.get("5m")
-  if not exit_snap:return
+  if not exit_snap:
+   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_EXIT_BOOK"});return
   opp="down" if side=="UP" else "up";opp_ask=exit_snap[opp].get("ask")
-  if opp_ask is None:return
+  if opp_ask is None:
+   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_EXIT_BBO","slug":exit_snap.get("market_slug")});return
   exit_price=max(0.0,1.0-float(opp_ask))
   for name,(cost,shares,vwap,slug) in entries.items():
-   if exit_snap.get("market_slug")!=slug:continue
+   if exit_snap.get("market_slug")!=slug:
+    ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"MARKET_ROTATION","slug":slug});continue
    ledger.record_fill(name,{"signal_ts_ms":signal_ts,"side":side,"btc_move":move,"slug":slug,
      "entry_vwap":vwap,"cost":cost,"shares":shares,"exit_price":exit_price},shares*exit_price-cost)
   ledger.snapshot()
