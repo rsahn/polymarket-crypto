@@ -48,6 +48,7 @@ def event_study(
     lookback_ms: int,
     threshold: float,
     horizons_ms: Iterable[int] = (50, 100, 250, 500, 1000),
+    cooldown_ms: int = 0,
 ) -> list[Response]:
     """Create BTC-move anchors and measure subsequent Polymarket changes.
 
@@ -60,7 +61,10 @@ def event_study(
     if any(poly[i].ts_ms > poly[i + 1].ts_ms for i in range(len(poly) - 1)):
         raise ValueError("poly must be sorted")
 
+    if cooldown_ms < 0:
+        raise ValueError("cooldown_ms must be non-negative")
     out: list[Response] = []
+    last_anchor_ts = None
     for current in btc:
         prior = value_at_or_after(btc, current.ts_ms - lookback_ms)
         if prior is None or prior.ts_ms >= current.ts_ms:
@@ -68,9 +72,12 @@ def event_study(
         move = pct_move(prior.value, current.value)
         if abs(move) < threshold:
             continue
+        if last_anchor_ts is not None and current.ts_ms - last_anchor_ts < cooldown_ms:
+            continue
         p0 = value_at_or_after(poly, current.ts_ms)
         if p0 is None:
             continue
+        last_anchor_ts = current.ts_ms
         for horizon in horizons_ms:
             if horizon <= 0:
                 raise ValueError("horizons must be positive")
@@ -158,8 +165,12 @@ def summarize(rows: Sequence[Response]) -> dict:
             for r, change in ((r, r.poly_change) for r in values)
             if change is not None
         ]
+        up = [r for r in values if r.btc_return > 0]
+        down = [r for r in values if r.btc_return < 0]
         out[str(horizon)] = {
             "anchors": len(values),
+            "btc_up_anchors": len(up),
+            "btc_down_anchors": len(down),
             "usable": len(usable),
             "mean_poly_change": None if not usable else sum(usable) / len(usable),
             "mean_directional_response": None if not signed else sum(signed) / len(signed),
