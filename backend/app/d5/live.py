@@ -35,6 +35,8 @@ async def run(args):
     stopping = False
     stop_marker_sequence = None
     progress = getattr(args, 'on_progress', None)
+    quote_hook = getattr(args, 'on_live_quote', None)
+    btc_hook = getattr(args, 'on_live_btc', None)
     if progress:
         progress({'session_id':session_id,'elapsed_seconds':0,'counts':{},'last_books':{},'writer':writer.stats()})
 
@@ -42,6 +44,8 @@ async def run(args):
         if stopping:
             return
         writer.submit({'kind':'BTC','received_ts_ms':tick.recv_ts_ms,'tick':asdict(tick)})
+        if btc_hook is not None:
+            await btc_hook(tick)
 
     async def on_btc_status(kind, payload):
         if not stopping:
@@ -99,6 +103,8 @@ async def run(args):
                         timing['last_received_ts_ms'] = snapshot['received_ts_ms']
                     last_valid = time.monotonic()
                     latest[duration] = snapshot
+                    if quote_hook is not None:
+                        await quote_hook(duration, snapshot)
                     if not active_printed:
                         print(f'D5 SHADOW {duration} ACTIVE slug={identity.market_slug} '
                               f'condition={identity.condition_id} tokens={identity.token_up}/{identity.token_down}',flush=True)
