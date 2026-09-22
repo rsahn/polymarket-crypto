@@ -27,8 +27,8 @@ def _fill(asks, budget):
         if remaining<=1e-9: break
     return cost,shares,(cost/shares if shares else None)
 
-def simulate(db_path, *, capital=500.0, lookback_ms=250, threshold=0.0005,
-             cooldown_ms=1000, latency_ms=250, hold_ms=500, allocation=1.0):
+def load_execution_data(db_path):
+    """Load immutable D5.1 execution inputs once for repeated simulations."""
     db=sqlite3.connect(str(db_path))
     try:
         sid,status=db.execute("SELECT session_id,status FROM sessions ORDER BY started_at_ms DESC LIMIT 1").fetchone()
@@ -45,11 +45,20 @@ def simulate(db_path, *, capital=500.0, lookback_ms=250, threshold=0.0005,
              AND bs.best_ask IS NOT NULL ORDER BY bs.received_ts_ms,e.event_id"""
         for ts,slug,expiry,side,ask,asks in db.execute(q,(sid,)):
             books[side].append(Book(int(ts),slug,int(expiry),side,float(ask),_unpack(asks)))
-        times={s:[b.ts_ms for b in arr] for s,arr in books.items()}
-        def book_at(side,ts):
-            from bisect import bisect_left
-            arr=books[side]; i=bisect_left(times[side],ts)
-            return arr[i] if i<len(arr) else None
+        return btc,books
+
+
+def simulate(db_path=None, *, data=None, capital=500.0, lookback_ms=250, threshold=0.0005,
+             cooldown_ms=1000, latency_ms=250, hold_ms=500, allocation=1.0):
+    if data is None:
+        if db_path is None: raise ValueError("db_path or preloaded data required")
+        data=load_execution_data(db_path)
+    btc,books=data
+    from bisect import bisect_left
+    times={s:[b.ts_ms for b in arr] for s,arr in books.items()}
+    def book_at(side,ts):
+        arr=books[side]; i=bisect_left(times[side],ts)
+        return arr[i] if i<len(arr) else None
 
         cash=float(capital); trades=[]; last_anchor=None
         for cur in btc:
@@ -81,4 +90,3 @@ def simulate(db_path, *, capital=500.0, lookback_ms=250, threshold=0.0005,
         return {"contract":"D6_CAUSAL_RESEARCH_ONLY","initial_capital":capital,"final_capital":cash,
                 "pnl":cash-capital,"latency_ms":latency_ms,"hold_ms":hold_ms,
                 "allocation":allocation,"trade_count":len(trades),"trades":trades}
-    finally: db.close()
