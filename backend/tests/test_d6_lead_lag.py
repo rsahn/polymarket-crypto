@@ -29,6 +29,13 @@ class D6LeadLagTests(unittest.TestCase):
         self.assertAlmostEqual(rows[0].poly_change, .01)
         self.assertAlmostEqual(rows[1].poly_change, .03)
 
+    def test_cooldown_declusters_one_btc_impulse(self):
+        btc = [Tick(0,100), Tick(100,101), Tick(200,102), Tick(1300,103)]
+        poly = [Tick(100,.5,"m",5000), Tick(200,.51,"m",5000), Tick(1300,.52,"m",5000), Tick(1400,.53,"m",5000)]
+        rows = event_study(btc, poly, lookback_ms=100, threshold=.005,
+                           horizons_ms=(100,), cooldown_ms=1000)
+        self.assertEqual([r.anchor_ts_ms for r in rows], [100,1300])
+
     def test_never_compares_across_market_rotation(self):
         btc = [Tick(0, 100), Tick(100, 100), Tick(200, 101)]
         poly = [
