@@ -46,6 +46,8 @@ def load_execution_data(db_path):
         for ts,slug,expiry,side,ask,asks in db.execute(q,(sid,)):
             books[side].append(Book(int(ts),slug,int(expiry),side,float(ask),_unpack(asks)))
         return btc,books
+    finally:
+        db.close()
 
 
 def simulate(db_path=None, *, data=None, capital=500.0, lookback_ms=250, threshold=0.0005,
@@ -60,33 +62,32 @@ def simulate(db_path=None, *, data=None, capital=500.0, lookback_ms=250, thresho
         arr=books[side]; i=bisect_left(times[side],ts)
         return arr[i] if i<len(arr) else None
 
-        cash=float(capital); trades=[]; last_anchor=None
-        for cur in btc:
-            prior=value_at_or_after(btc,cur.ts_ms-lookback_ms)
-            if prior is None or prior.ts_ms>=cur.ts_ms: continue
-            move=pct_move(prior.value,cur.value)
-            if abs(move)<threshold: continue
-            if last_anchor is not None and cur.ts_ms-last_anchor<cooldown_ms: continue
-            last_anchor=cur.ts_ms
-            side="UP" if move>0 else "DOWN"
-            entry=book_at(side,cur.ts_ms+latency_ms)
-            if entry is None or cur.ts_ms+latency_ms>=entry.expiry_ms: continue
-            exitb=book_at(side,cur.ts_ms+latency_ms+hold_ms)
-            if exitb is None or exitb.slug!=entry.slug or exitb.ts_ms>=entry.expiry_ms: continue
-            budget=cash*allocation
-            cost,shares,vwap=_fill(entry.asks,budget)
-            if not shares: continue
-            # Conservative exit proxy: sell at recorded best bid from opposite-side ask complement.
-            opp="DOWN" if side=="UP" else "UP"
-            oppb=book_at(opp,exitb.ts_ms)
-            exit_price=None if oppb is None or oppb.slug!=entry.slug else max(0.0,1.0-oppb.ask)
-            if exit_price is None: continue
-            proceeds=shares*exit_price
-            pnl=proceeds-cost; cash += pnl
-            trades.append({"signal_ts_ms":cur.ts_ms,"side":side,"btc_move":move,"slug":entry.slug,
-                           "entry_ts_ms":entry.ts_ms,"entry_vwap":vwap,"shares":shares,"cost":cost,
-                           "exit_ts_ms":exitb.ts_ms,"exit_price":exit_price,"proceeds":proceeds,
-                           "pnl":pnl,"capital_after":cash})
-        return {"contract":"D6_CAUSAL_RESEARCH_ONLY","initial_capital":capital,"final_capital":cash,
-                "pnl":cash-capital,"latency_ms":latency_ms,"hold_ms":hold_ms,
-                "allocation":allocation,"trade_count":len(trades),"trades":trades}
+    cash=float(capital); trades=[]; last_anchor=None
+    for cur in btc:
+        prior=value_at_or_after(btc,cur.ts_ms-lookback_ms)
+        if prior is None or prior.ts_ms>=cur.ts_ms: continue
+        move=pct_move(prior.value,cur.value)
+        if abs(move)<threshold: continue
+        if last_anchor is not None and cur.ts_ms-last_anchor<cooldown_ms: continue
+        last_anchor=cur.ts_ms
+        side="UP" if move>0 else "DOWN"
+        entry=book_at(side,cur.ts_ms+latency_ms)
+        if entry is None or cur.ts_ms+latency_ms>=entry.expiry_ms: continue
+        exitb=book_at(side,cur.ts_ms+latency_ms+hold_ms)
+        if exitb is None or exitb.slug!=entry.slug or exitb.ts_ms>=entry.expiry_ms: continue
+        budget=cash*allocation
+        cost,shares,vwap=_fill(entry.asks,budget)
+        if not shares: continue
+        opp="DOWN" if side=="UP" else "UP"
+        oppb=book_at(opp,exitb.ts_ms)
+        exit_price=None if oppb is None or oppb.slug!=entry.slug else max(0.0,1.0-oppb.ask)
+        if exit_price is None: continue
+        proceeds=shares*exit_price
+        pnl=proceeds-cost; cash += pnl
+        trades.append({"signal_ts_ms":cur.ts_ms,"side":side,"btc_move":move,"slug":entry.slug,
+                       "entry_ts_ms":entry.ts_ms,"entry_vwap":vwap,"shares":shares,"cost":cost,
+                       "exit_ts_ms":exitb.ts_ms,"exit_price":exit_price,"proceeds":proceeds,
+                       "pnl":pnl,"capital_after":cash})
+    return {"contract":"D6_CAUSAL_RESEARCH_ONLY","initial_capital":capital,"final_capital":cash,
+            "pnl":cash-capital,"latency_ms":latency_ms,"hold_ms":hold_ms,
+            "allocation":allocation,"trade_count":len(trades),"trades":trades}
