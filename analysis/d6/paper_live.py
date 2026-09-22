@@ -23,6 +23,8 @@ class PaperLedger:
         return {"fixed_25":min(25,available_eur),"fixed_50":min(50,available_eur),
                 "fixed_100":min(100,available_eur),"dynamic_depth":max(0,min(100,available_eur*.25))}
     def record_signal(self,row): self.signals.append(dict(row))
+    def record_skip(self,row):
+        self.fills.append({"portfolio":None,"status":"SKIP",**dict(row)})
     def record_fill(self,name,row,pnl):
         self.portfolios[name].mark(float(pnl));self.fills.append({"portfolio":name,**row,"pnl":float(pnl)})
     def state(self):
