@@ -486,8 +486,7 @@ class PolymarketOrderbookCollector:
         else:
             preview = str(raw)
 
-        preview = preview.replace("
-", " ")[:500]
+        preview = preview.replace(chr(10), " ")[:500]
         print(
             f"POLY_RAW ({self.market_key}) "
             f"gen={self._connection_generation} "
