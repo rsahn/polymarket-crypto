@@ -1,7 +1,9 @@
 """D6 V1 live paper trading. Public feeds only; NEVER sends real orders."""
-import argparse,asyncio,json,types
+import argparse,asyncio,json,types,sys
 from collections import deque
 from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/"backend"))
 from d6.paper_live import PaperLedger,V1
 from app.d5.live import run as collect_live
 
