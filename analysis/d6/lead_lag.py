@@ -14,6 +14,8 @@ from typing import Iterable, Sequence
 class Tick:
     ts_ms: int
     value: float
+    market_slug: str | None = None
+    expiry_ts_ms: int | None = None
 
 
 @dataclass(frozen=True)
@@ -73,11 +75,16 @@ def event_study(
             if horizon <= 0:
                 raise ValueError("horizons must be positive")
             ph = value_at_or_after(poly, current.ts_ms + horizon)
+            comparable = (
+                ph is not None
+                and p0.market_slug == ph.market_slug
+                and (p0.expiry_ts_ms is None or current.ts_ms + horizon < p0.expiry_ts_ms)
+            )
             out.append(Response(
                 anchor_ts_ms=current.ts_ms,
                 horizon_ms=horizon,
                 btc_return=move,
-                poly_change=None if ph is None else ph.value - p0.value,
+                poly_change=(ph.value - p0.value) if comparable else None,
             ))
     return out
 
@@ -122,10 +129,11 @@ def load_d5_timelines(db_path, *, market_duration: str, side: str = "UP"):
                 btc.append(Tick(int(recv_ts), float(price)))
 
         poly = [
-            Tick(int(ts), float(ask))
-            for ts, ask in db.execute(
-                "SELECT bs.received_ts_ms,bs.best_ask FROM events e "
-                "JOIN book_sides bs ON bs.event_id=e.event_id "
+            Tick(int(ts), float(ask), slug, int(expiry))
+            for ts, ask, slug, expiry in db.execute(
+                "SELECT bs.received_ts_ms,bs.best_ask,e.market_slug,m.expiry_ts_ms "
+                "FROM events e JOIN book_sides bs ON bs.event_id=e.event_id "
+                "JOIN markets m ON m.market_slug=e.market_slug "
                 "WHERE e.session_id=? AND e.kind='BOOK' AND e.market_duration=? "
                 "AND bs.side=? AND bs.best_ask IS NOT NULL "
                 "ORDER BY bs.received_ts_ms,e.event_id",
