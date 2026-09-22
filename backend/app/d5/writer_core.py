@@ -11,13 +11,14 @@ from .features import BTCFeatures
 
 
 class WriterCore:
-    def __init__(self, path, *, clock=None):
+    def __init__(self, path, *, clock=None, config=None):
         if Path(path).exists():
             raise FileExistsError('Writer requires a new database')
         self.clock = clock or (lambda: time.time_ns() // 1_000_000)
-        self.store = Store(path, {'mode':'SHADOW','strategy':'NO_TRADE','capital':500,
-                                 'timestamp_contract':'D5.1','writer':'ordered-core-candidate'},
-                           compress_payloads=True)
+        store_config = {'mode':'SHADOW','strategy':'NO_TRADE','capital':500,
+                        'timestamp_contract':'D5.1','writer':'process-writer'}
+        store_config.update(config or {})
+        self.store = Store(path, store_config, compress_payloads=True)
         self.observer = Observer(self.store)
         self.btc = BTCFeatures()
         self.last_generation = {}
@@ -26,6 +27,7 @@ class WriterCore:
         self.committed_sequence = -1
         self.closed = False
         self.failed = False
+        self.dirty_sequence = -1
 
     def apply(self, command):
         try:
@@ -64,10 +66,15 @@ class WriterCore:
             event_id, available = self.store.event('BTC',tick,received_ts_ms=received,
                 event_ts_ms=tick.get('event_ts_ms'),available_ts_ms=processed_at)
             self.btc.update(available,tick)
+        elif kind == 'REJECT':
+            payload = command['payload']
+            event_id, _ = self.store.event('REJECT',payload,received_ts_ms=received,
+                event_ts_ms=command.get('event_ts_ms'),identity=identity,generation=generation,
+                available_ts_ms=processed_at)
         elif kind == 'EVENT':
             event_kind = command['event_kind']
             if event_kind not in ('CLOCK_SAMPLE','DISCOVERY_EMPTY','DISCOVERY_ERROR',
-                                  'ROTATION','WS_ERROR','RECONNECT','BTC_CONNECTED','BTC_DISCONNECTED','BTC_ERROR','BTC_RECONNECT'):
+                                  'ROTATION','WS_ERROR','RECONNECT','BTC_CONNECTED','BTC_DISCONNECTED','BTC_ERROR','BTC_RECONNECT','COLLECTION_STOP'):
                 raise ValueError('UNSUPPORTED_WRITER_EVENT')
             event_id, _ = self.store.event(event_kind,command['payload'],received_ts_ms=received,
                 identity=identity,generation=generation,available_ts_ms=processed_at)
@@ -90,13 +97,14 @@ class WriterCore:
                 raise ValueError('INVALID_STOP_STATUS')
             cleanup_errors = command.get('cleanup_errors',[])
             if cleanup_errors:status='FAILED'
-            self.store.event('COLLECTION_STOP',{**command.get('payload',{}),'last_input_sequence':sequence,
-                'ingress_stop_ts_ms':received},received_ts_ms=received,available_ts_ms=processed_at)
+            if not command.get('collection_stop_already_recorded'):
+                self.store.event('COLLECTION_STOP',{**command.get('payload',{}),'last_input_sequence':sequence,
+                    'ingress_stop_ts_ms':received},received_ts_ms=received,available_ts_ms=processed_at)
             for active_identity, _ in list(self.observer.active.values()):
                 self.observer.invalidate(active_identity,processed_at,'SESSION_END')
             self.observer.active.clear()
-            self.store.event('SESSION_END',{'cleanup_errors':cleanup_errors, 'last_input_sequence':sequence},
-                             received_ts_ms=received,available_ts_ms=processed_at)
+            self.store.event('SESSION_END',{**command.get('payload',{}),'cleanup_errors':cleanup_errors,
+                             'last_input_sequence':sequence},received_ts_ms=received,available_ts_ms=processed_at)
             self.store.close(status)
             self.closed = True
         else:
@@ -105,6 +113,8 @@ class WriterCore:
         self.next_sequence += 1
         if kind in ('FLUSH','STOP'):
             self.committed_sequence = sequence
+        else:
+            self.dirty_sequence = sequence
         return {'sequence':sequence,'event_id':event_id,'processed_at_ms':processed_at,
                 'committed_sequence':self.committed_sequence,'closed':self.closed,
                 'counts':dict(self.store.counts)}

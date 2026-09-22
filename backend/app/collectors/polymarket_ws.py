@@ -63,6 +63,8 @@ class PolymarketOrderbookCollector:
         self._raw_messages_seen = 0
         self._last_message_monotonic: Optional[float] = None
         self._authoritative_top: Dict[str, Dict[str, Optional[float]]] = {}
+        self._ingress_queue = None
+        self._ingress_worker = None
 
     def _reset_connection_state(self) -> None:
         """Hard reset: never reuse order-book state across WS generations."""
@@ -484,7 +486,7 @@ class PolymarketOrderbookCollector:
         else:
             preview = str(raw)
 
-        preview = preview.replace("\n", " ")[:500]
+        preview = preview.replace(chr(10), " ")[:500]
         print(
             f"POLY_RAW ({self.market_key}) "
             f"gen={self._connection_generation} "
@@ -505,6 +507,32 @@ class PolymarketOrderbookCollector:
         while True:
             await asyncio.sleep(self.HEARTBEAT_SECONDS)
             await ws.send("PING")
+
+    async def _consume_ingress(self):
+        """Normalize and dispatch outside the socket receive loop."""
+        while True:
+            payload, recv_ts_ms = await self._ingress_queue.get()
+            try:
+                was_ready = self._book_ready()
+                timer = self.performance
+                started = timer.start() if timer is not None else None
+                try:
+                    snapshot = self.normalize_snapshot(payload, recv_ts_ms)
+                finally:
+                    if timer is not None:
+                        timer.finish(self.market_key + ':normalize', started)
+                snapshot["recv_ts_ms"] = recv_ts_ms
+                snapshot["received_ts_ms"] = recv_ts_ms
+                if not was_ready and self._book_ready():
+                    print(f"POLY_BOOK_SYNCED ({self.market_key}) gen={self._connection_generation} initialized={self._initialized_summary()}")
+                started = timer.start() if timer is not None else None
+                try:
+                    await self.on_quote(snapshot)
+                finally:
+                    if timer is not None:
+                        timer.finish(self.market_key + ':callback_including_store', started)
+            finally:
+                self._ingress_queue.task_done()
 
     async def run(self):
         """
@@ -557,6 +585,11 @@ class PolymarketOrderbookCollector:
                 heartbeat_task = asyncio.create_task(
                     self._heartbeat(ws),
                     name=f"{self.market_key}-polymarket-heartbeat",
+                )
+                self._ingress_queue = asyncio.Queue(maxsize=4096)
+                self._ingress_worker = asyncio.create_task(
+                    self._consume_ingress(),
+                    name=f"{self.market_key}-ingress-consumer",
                 )
 
                 # A new subscription must yield authoritative book snapshots.
@@ -655,31 +688,10 @@ class PolymarketOrderbookCollector:
                     if not isinstance(payload, (dict, list)):
                         continue
 
-                    was_ready = self._book_ready()
-
-                    timer = self.performance
-                    started = timer.start() if timer is not None else None
                     try:
-                        snapshot = self.normalize_snapshot(payload, recv_ts_ms)
-                    finally:
-                        if timer is not None:
-                            timer.finish(self.market_key + ':normalize', started)
-                    snapshot["recv_ts_ms"] = recv_ts_ms
-                    snapshot["received_ts_ms"] = recv_ts_ms
-
-                    if not was_ready and self._book_ready():
-                        print(
-                            f"POLY_BOOK_SYNCED ({self.market_key}) "
-                            f"gen={generation} "
-                            f"initialized={self._initialized_summary()}"
-                        )
-
-                    started = timer.start() if timer is not None else None
-                    try:
-                        await self.on_quote(snapshot)
-                    finally:
-                        if timer is not None:
-                            timer.finish(self.market_key + ':callback_including_store', started)
+                        self._ingress_queue.put_nowait((payload, recv_ts_ms))
+                    except asyncio.QueueFull:
+                        raise BufferError("POLY_INGRESS_CAPACITY_EXCEEDED")
 
         except asyncio.CancelledError:
             raise
@@ -695,6 +707,17 @@ class PolymarketOrderbookCollector:
             raise
 
         finally:
+            # Every connection generation owns exactly one ingress consumer.
+            # Cancel and await it before the generation exits/reconnects so an
+            # old consumer cannot survive with a stale queue/book state.
+            ingress_worker = self._ingress_worker
+            self._ingress_worker = None
+            if ingress_worker is not None:
+                ingress_worker.cancel()
+                with suppress(asyncio.CancelledError):
+                    await ingress_worker
+            self._ingress_queue = None
+
             if heartbeat_task is not None:
                 heartbeat_task.cancel()
                 with suppress(asyncio.CancelledError):
