@@ -1,7 +1,7 @@
-name: D5.1 tests
+name: D5.1 + D6 tests
 on:
   push:
-    branches: [d51-process-writer-integration]
+    branches: [d51-process-writer-integration, d6-lead-lag-research]
   pull_request:
     branches: [main]
 jobs:
