@@ -19,7 +19,7 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
         with closing(sqlite3.connect(self.path.as_uri()+'?mode=ro',uri=True)) as db:return db.execute(sql).fetchall()
     async def test_default_transport_uses_large_batches_with_same_admission_bound(self):
         w=await self.start()
-        self.assertEqual(w.batch_size,256);self.assertEqual(w.max_items,256)
+        self.assertEqual(w.batch_size,256);self.assertEqual(w.max_items,8192);self.assertEqual(w.max_bytes,64*1024*1024)
         await w.stop()
     async def test_batch_boundaries_and_drain(self):
         for n in (0,1,31,32,33):
