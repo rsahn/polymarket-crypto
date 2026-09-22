@@ -47,7 +47,7 @@ def _worker(inbox, replies, path, config):
 
 
 class ProcessWriter:
-    def __init__(self, path, *, max_items=256, max_bytes=8*1024*1024,
+    def __init__(self, path, *, max_items=8192, max_bytes=64*1024*1024,
                  batch_size=256, flush_seconds=.001, config=None):
         if min(max_items,max_bytes,batch_size) <= 0 or flush_seconds <= 0:
             raise ValueError('Positive bounds required')
@@ -114,7 +114,7 @@ class ProcessWriter:
                 self.last_capacity_rejection = {'kind':command['kind'],'items':len(self.outstanding),
                     'bytes':self.outstanding_bytes,'command_bytes':len(data),'processed_sequence':self.processed_sequence,
                     'committed_sequence':self.committed_sequence,'sent_sequence':self.last_sent_sequence,
-                    'pending_items':len(self.pending),'at_monotonic':time.monotonic()}
+                    'pending_items':len(self.pending),'high_water_items':self.high_water_items,\n                    'high_water_bytes':self.high_water_bytes,'at_monotonic':time.monotonic()}
                 raise BufferError('WRITER_CAPACITY_EXCEEDED: command not accepted; '+repr(self.last_capacity_rejection))
         sequence = self.next_sequence
         self.next_sequence += 1
