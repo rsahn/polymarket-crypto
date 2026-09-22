@@ -80,3 +80,81 @@ def event_study(
                 poly_change=None if ph is None else ph.value - p0.value,
             ))
     return out
+
+
+def load_d5_timelines(db_path, *, market_duration: str, side: str = "UP"):
+    """Load source/receive-timestamped BTC and executable Polymarket ask timelines."""
+    import json
+    import sqlite3
+    import zlib
+
+    if market_duration not in ("5m", "15m"):
+        raise ValueError("market_duration must be 5m or 15m")
+    side = side.upper()
+    if side not in ("UP", "DOWN"):
+        raise ValueError("side must be UP or DOWN")
+
+    def unpack(value):
+        if isinstance(value, bytes):
+            value = zlib.decompress(value).decode("utf-8")
+        return json.loads(value)
+
+    db = sqlite3.connect(str(db_path))
+    try:
+        schema = db.execute("SELECT version FROM schema_info").fetchone()
+        if schema != (2,):
+            raise ValueError("D6 requires validated D5.1 schema v2")
+        session = db.execute(
+            "SELECT session_id,status FROM sessions ORDER BY started_at_ms DESC LIMIT 1"
+        ).fetchone()
+        if not session or session[1] != "STOPPED":
+            raise ValueError("D6 requires a cleanly STOPPED D5.1 session")
+
+        btc = []
+        for event_ts, recv_ts, payload in db.execute(
+            "SELECT event_ts_ms,received_ts_ms,payload_json FROM events "
+            "WHERE session_id=? AND kind='BTC' ORDER BY received_ts_ms,event_id",
+            (session[0],),
+        ):
+            obj = unpack(payload)
+            price = obj.get("price")
+            if price is not None:
+                btc.append(Tick(int(recv_ts), float(price)))
+
+        poly = [
+            Tick(int(ts), float(ask))
+            for ts, ask in db.execute(
+                "SELECT bs.received_ts_ms,bs.best_ask FROM events e "
+                "JOIN book_sides bs ON bs.event_id=e.event_id "
+                "WHERE e.session_id=? AND e.kind='BOOK' AND e.market_duration=? "
+                "AND bs.side=? AND bs.best_ask IS NOT NULL "
+                "ORDER BY bs.received_ts_ms,e.event_id",
+                (session[0], market_duration, side),
+            )
+        ]
+        return btc, poly
+    finally:
+        db.close()
+
+
+def summarize(rows: Sequence[Response]) -> dict:
+    """Deterministic per-horizon descriptive summary; no profitability claim."""
+    grouped = {}
+    for row in rows:
+        grouped.setdefault(row.horizon_ms, []).append(row)
+    out = {}
+    for horizon, values in sorted(grouped.items()):
+        usable = [r.poly_change for r in values if r.poly_change is not None]
+        signed = [
+            change if r.btc_return > 0 else -change
+            for r, change in ((r, r.poly_change) for r in values)
+            if change is not None
+        ]
+        out[str(horizon)] = {
+            "anchors": len(values),
+            "usable": len(usable),
+            "mean_poly_change": None if not usable else sum(usable) / len(usable),
+            "mean_directional_response": None if not signed else sum(signed) / len(signed),
+            "same_direction_fraction": None if not signed else sum(x > 0 for x in signed) / len(signed),
+        }
+    return out
