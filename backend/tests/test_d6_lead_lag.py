@@ -29,6 +29,19 @@ class D6LeadLagTests(unittest.TestCase):
         self.assertAlmostEqual(rows[0].poly_change, .01)
         self.assertAlmostEqual(rows[1].poly_change, .03)
 
+    def test_never_compares_across_market_rotation(self):
+        btc = [Tick(0, 100), Tick(100, 100), Tick(200, 101)]
+        poly = [
+            Tick(200, .90, "old", 250),
+            Tick(300, .40, "new", 600),
+        ]
+        rows = event_study(
+            btc, poly, lookback_ms=100, threshold=.005,
+            horizons_ms=(100,),
+        )
+        self.assertEqual(len(rows), 1)
+        self.assertIsNone(rows[0].poly_change)
+
     def test_rejects_unsorted_series(self):
         with self.assertRaises(ValueError):
             event_study(
