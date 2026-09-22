@@ -707,6 +707,17 @@ class PolymarketOrderbookCollector:
             raise
 
         finally:
+            # Every connection generation owns exactly one ingress consumer.
+            # Cancel and await it before the generation exits/reconnects so an
+            # old consumer cannot survive with a stale queue/book state.
+            ingress_worker = self._ingress_worker
+            self._ingress_worker = None
+            if ingress_worker is not None:
+                ingress_worker.cancel()
+                with suppress(asyncio.CancelledError):
+                    await ingress_worker
+            self._ingress_queue = None
+
             if heartbeat_task is not None:
                 heartbeat_task.cancel()
                 with suppress(asyncio.CancelledError):
