@@ -62,7 +62,9 @@ class PolymarketOrderbookCollector:
         # Keep the monotonically increasing WS generation counter.
         self._raw_messages_seen = 0
         self._last_message_monotonic: Optional[float] = None
-        self._authoritative_top: Dict[str, Dict[str, Optional[float]]] = {}\n        self._ingress_queue = None\n        self._ingress_worker = None
+        self._authoritative_top: Dict[str, Dict[str, Optional[float]]] = {}
+        self._ingress_queue = None
+        self._ingress_worker = None
 
     def _reset_connection_state(self) -> None:
         """Hard reset: never reuse order-book state across WS generations."""
@@ -484,7 +486,8 @@ class PolymarketOrderbookCollector:
         else:
             preview = str(raw)
 
-        preview = preview.replace("\n", " ")[:500]
+        preview = preview.replace("
+", " ")[:500]
         print(
             f"POLY_RAW ({self.market_key}) "
             f"gen={self._connection_generation} "
@@ -686,7 +689,10 @@ class PolymarketOrderbookCollector:
                     if not isinstance(payload, (dict, list)):
                         continue
 
-                    try:\n                        self._ingress_queue.put_nowait((payload, recv_ts_ms))\n                    except asyncio.QueueFull:\n                        raise BufferError("POLY_INGRESS_CAPACITY_EXCEEDED")
+                    try:
+                        self._ingress_queue.put_nowait((payload, recv_ts_ms))
+                    except asyncio.QueueFull:
+                        raise BufferError("POLY_INGRESS_CAPACITY_EXCEEDED")
 
         except asyncio.CancelledError:
             raise
