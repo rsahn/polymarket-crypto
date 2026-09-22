@@ -62,7 +62,7 @@ class PolymarketOrderbookCollector:
         # Keep the monotonically increasing WS generation counter.
         self._raw_messages_seen = 0
         self._last_message_monotonic: Optional[float] = None
-        self._authoritative_top: Dict[str, Dict[str, Optional[float]]] = {}
+        self._authoritative_top: Dict[str, Dict[str, Optional[float]]] = {}\n        self._ingress_queue = None\n        self._ingress_worker = None
 
     def _reset_connection_state(self) -> None:
         """Hard reset: never reuse order-book state across WS generations."""
@@ -655,31 +655,7 @@ class PolymarketOrderbookCollector:
                     if not isinstance(payload, (dict, list)):
                         continue
 
-                    was_ready = self._book_ready()
-
-                    timer = self.performance
-                    started = timer.start() if timer is not None else None
-                    try:
-                        snapshot = self.normalize_snapshot(payload, recv_ts_ms)
-                    finally:
-                        if timer is not None:
-                            timer.finish(self.market_key + ':normalize', started)
-                    snapshot["recv_ts_ms"] = recv_ts_ms
-                    snapshot["received_ts_ms"] = recv_ts_ms
-
-                    if not was_ready and self._book_ready():
-                        print(
-                            f"POLY_BOOK_SYNCED ({self.market_key}) "
-                            f"gen={generation} "
-                            f"initialized={self._initialized_summary()}"
-                        )
-
-                    started = timer.start() if timer is not None else None
-                    try:
-                        await self.on_quote(snapshot)
-                    finally:
-                        if timer is not None:
-                            timer.finish(self.market_key + ':callback_including_store', started)
+                    try:\n                        self._ingress_queue.put_nowait((payload, recv_ts_ms))\n                    except asyncio.QueueFull:\n                        raise BufferError("POLY_INGRESS_CAPACITY_EXCEEDED")
 
         except asyncio.CancelledError:
             raise
