@@ -503,10 +503,22 @@ class PolymarketOrderbookCollector:
         """
         Polymarket's market WS requires an application-level text PING every
         10 seconds. This is separate from RFC WebSocket ping frames.
+
+        A heartbeat is auxiliary: if the peer is already closing, recv() owns
+        generation failure/reconnect. Do not leave an un-retrieved task
+        exception that can surface during shutdown.
         """
         while True:
             await asyncio.sleep(self.HEARTBEAT_SECONDS)
-            await ws.send("PING")
+            try:
+                await ws.send("PING")
+            except asyncio.CancelledError:
+                raise
+            except Exception as exc:
+                print(
+                    f"[polymarket:{self.market_key}] heartbeat stopped: {exc}"
+                )
+                return
 
     async def _consume_ingress(self):
         """Normalize and dispatch outside the socket receive loop."""
@@ -720,6 +732,9 @@ class PolymarketOrderbookCollector:
 
             if heartbeat_task is not None:
                 heartbeat_task.cancel()
-                with suppress(asyncio.CancelledError):
+                # Retrieve every heartbeat result. Connection-close errors are
+                # expected during generation teardown and must not kill the
+                # parent session after recv() has already handled the socket.
+                with suppress(asyncio.CancelledError, Exception):
                     await heartbeat_task
 
