@@ -31,20 +31,28 @@ def main():
  db=sqlite3.connect(f"file:{a.db.resolve()}?mode=ro",uri=True)
  try:
   sid=db.execute("SELECT session_id FROM sessions ORDER BY started_at_ms DESC LIMIT 1").fetchone()[0]
-  books={"UP":[],"DOWN":[]}
+  signals=paper.get("signals",[])
+  # Load only narrow windows around captured signals. This avoids a global
+  # ORDER BY over the ~46 GB soak DB (and multi-GB SQLite temp files).
+  books={"UP":[],"DOWN":[]};seen=set()
   q="""SELECT bs.received_ts_ms,e.market_slug,bs.side,bs.best_bid,bs.best_ask,bs.bids_json,bs.asks_json
        FROM events e JOIN book_sides bs ON bs.event_id=e.event_id
        WHERE e.session_id=? AND e.kind='BOOK' AND e.market_duration='5m'
-       ORDER BY bs.received_ts_ms,e.event_id"""
-  for ts,slug,side,bid,ask,bids,asks in db.execute(q,(sid,)):
-   books[side].append((int(ts),slug,bid,ask,unpack(bids),unpack(asks)))
+       AND bs.received_ts_ms BETWEEN ? AND ?"""
+  for sig in signals:
+   st=int(sig["ts_ms"]);lo=st+a.latency_ms-100;hi=st+a.latency_ms+a.hold_ms+1500
+   for ts,slug,side,bid,ask,bids,asks in db.execute(q,(sid,lo,hi)):
+    key=(int(ts),slug,side)
+    if key in seen:continue
+    seen.add(key);books[side].append((int(ts),slug,bid,ask,unpack(bids),unpack(asks)))
+  for side in books:books[side].sort(key=lambda x:x[0])
   times={s:[x[0] for x in arr] for s,arr in books.items()}
   def at(side,ts,slug):
    arr=books[side];i=bisect_left(times[side],ts)
    while i<len(arr) and arr[i][1]!=slug:i+=1
    return arr[i] if i<len(arr) else None
 
-  signals=paper.get("signals",[]); portfolios={"fixed_25":500.0,"fixed_50":500.0,"fixed_100":500.0,"dynamic_depth":500.0}
+  portfolios={"fixed_25":500.0,"fixed_50":500.0,"fixed_100":500.0,"dynamic_depth":500.0}
   budgets={"fixed_25":25.0,"fixed_50":50.0,"fixed_100":100.0}
   trades=[];skips=[]
   for sig in signals:
