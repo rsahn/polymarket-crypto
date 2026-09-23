@@ -44,8 +44,36 @@ def main():
     if rem<=1e-9: break
    fill100={"book_ts_ms":entry["book_ts_ms"],"generation":entry["generation"],"best_ask":entry["best_ask"],
     "cost":cost,"shares":shares,"vwap":(cost/shares if shares else None),"unfilled_budget":rem,"levels":levels}
+  # Audit exit at T+750 using the same conservative convention as D6:
+  # exit(side) = 1 - opposite-side best ask. Also report visible same-side
+  # bids so we can distinguish proxy valuation from directly executable bids.
+  exitrow=next((x for x in rows if x.get("offset_ms")==750 and not x.get("missing")),None)
+  opp="DOWN" if a.side=="UP" else "UP"
+  target_exit=a.signal_ts_ms+750
+  orow=db.execute("""SELECT bs.received_ts_ms,bs.best_bid,bs.best_ask,bs.bids_json,bs.asks_json,e.generation
+    FROM events e JOIN book_sides bs ON bs.event_id=e.event_id
+    WHERE e.session_id=? AND e.kind='BOOK' AND e.market_slug=? AND bs.side=? AND bs.received_ts_ms>=?
+    ORDER BY bs.received_ts_ms,e.event_id LIMIT 1""",(sid,a.slug,opp,target_exit)).fetchone()
+  exit_audit=None
+  if exitrow and orow:
+   ots,obid,oask,obids,oasks,ogen=orow
+   proxy=max(0.0,1.0-float(oask)) if oask is not None else None
+   same_bids=exitrow.get("bids") or []
+   # Direct liquidation value for the entry shares by walking same-side bids.
+   remaining=(fill100 or {}).get("shares",0.0);proceeds=0.0;bid_levels=[]
+   for level in same_bids:
+    price,qty=float(level[0]),float(level[1])
+    if price<=0 or qty<=0 or remaining<=1e-9: continue
+    take=min(qty,remaining);got=take*price
+    bid_levels.append({"price":price,"available_qty":qty,"sold_qty":take,"proceeds":got})
+    proceeds+=got;remaining-=take
+   exit_audit={"target_ts_ms":target_exit,"same_side_book_ts_ms":exitrow["book_ts_ms"],
+    "same_side_best_bid":exitrow["best_bid"],"opposite_side":opp,"opposite_book_ts_ms":ots,
+    "opposite_best_ask":oask,"proxy_exit_price":proxy,
+    "entry_shares":(fill100 or {}).get("shares"),"direct_bid_proceeds":proceeds,
+    "direct_bid_unfilled_shares":remaining,"direct_bid_levels":bid_levels}
   report={"contract":"D6_SIGNAL_AUDIT","session_id":sid,"signal_ts_ms":a.signal_ts_ms,"slug":a.slug,"side":a.side,
-   "books":rows,"recomputed_entry_100":fill100,"rejects":[{"kind":k,"ts_ms":t,"payload":unpack(v)} for k,t,v in rejects],
+   "books":rows,"recomputed_entry_100":fill100,"exit_audit":exit_audit,"rejects":[{"kind":k,"ts_ms":t,"payload":unpack(v)} for k,t,v in rejects],
    "controls":[{"kind":k,"ts_ms":t,"slug":s,"generation":g,"payload":unpack(v) if v else None} for k,t,s,g,v in controls]}
   s=json.dumps(report,indent=2,sort_keys=True);print(s)
   if a.out:a.out.write_text(s,encoding="utf-8")
