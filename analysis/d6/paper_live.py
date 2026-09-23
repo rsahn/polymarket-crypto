@@ -13,7 +13,7 @@ class Portfolio:
 
 class PaperLedger:
     """One signal -> parallel virtual sizings, with persistent snapshots."""
-    def __init__(self,out_dir,initial=500.0,snapshot_hours=10):
+    def __init__(self,out_dir,initial=500.0,snapshot_hours=1):
         self.out=Path(out_dir);self.out.mkdir(parents=True,exist_ok=True)
         self.snapshot_seconds=snapshot_hours*3600
         self.started_ms=int(time.time()*1000);self.last_snapshot=time.monotonic()
@@ -41,4 +41,4 @@ class PaperLedger:
 
 V1={"btc_threshold_bps":5.0,"btc_lookback_ms":250,"cooldown_ms":1000,"market":"5m",
     "parallel_sizes_eur":[25,50,100],"dynamic_depth_fraction":0.25,"dynamic_cap_eur":100,
-    "snapshot_hours":10,"mode":"PAPER","real_orders":False}
+    "snapshot_hours":1,"mode":"PAPER","real_orders":False}
