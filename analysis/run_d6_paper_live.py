@@ -80,7 +80,7 @@ async def main_async(a):
 def main():
  p=argparse.ArgumentParser();p.add_argument("--db",type=Path,default=Path("data/d6/d6_paper_live.db"))
  p.add_argument("--out-dir",type=Path,default=Path("analysis/d6/paper_live"));p.add_argument("--capital",type=float,default=500)
- p.add_argument("--snapshot-hours",type=float,default=10);p.add_argument("--latency-ms",type=int,default=250)
+ p.add_argument("--snapshot-hours",type=float,default=1);p.add_argument("--latency-ms",type=int,default=250)
  p.add_argument("--hold-ms",type=int,default=500);p.add_argument("--seconds",type=float,default=0)
  asyncio.run(main_async(p.parse_args()))
 if __name__=="__main__":main()
