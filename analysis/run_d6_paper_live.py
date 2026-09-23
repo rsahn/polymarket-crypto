@@ -6,6 +6,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/"backend"))
 from d6.paper_live import PaperLedger,V1
 from app.d5.live import run as collect_live
+from app.live.pipeline import DryRunPipeline
 
 def fill(asks,budget):
  rem=float(budget);cost=shares=0.0
@@ -30,6 +31,7 @@ async def main_async(a):
  a.out_dir.mkdir(parents=True,exist_ok=True)
  (a.out_dir/"STRATEGY_V1_FROZEN.json").write_text(json.dumps(frozen,indent=2,sort_keys=True),encoding="utf-8")
  btc=deque(maxlen=4096);latest={};pending=set();last_signal=-10**18
+ dryrun=DryRunPipeline(a.out_dir/"live_dry_run.jsonl") if a.live_dry_run else None
 
  async def execute_signal(signal_ts,move,side):
   await asyncio.sleep(a.latency_ms/1000)
@@ -72,6 +74,14 @@ async def main_async(a):
   if abs(move)<.0005 or tick.recv_ts_ms-last_signal<1000:return
   last_signal=tick.recv_ts_ms;side="UP" if move>0 else "DOWN"
   ledger.record_signal({"ts_ms":tick.recv_ts_ms,"btc_move":move,"side":side})
+  if dryrun:
+   snap=latest.get("5m")
+   if snap:
+    q=snap.get(side.lower()) or {};ask=q.get("ask");token=q.get("token_id")
+    if ask is not None and token:
+     dr=asyncio.create_task(dryrun.process(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),
+       token_id=str(token),side=side,best_ask=float(ask),bankroll=100,open_positions=0,session_pnl=0))
+     pending.add(dr);dr.add_done_callback(pending.discard)
   task=asyncio.create_task(execute_signal(tick.recv_ts_ms,move,side));pending.add(task);task.add_done_callback(pending.discard)
 
  async def on_quote(duration,snapshot):latest[duration]=snapshot
@@ -94,5 +104,6 @@ def main():
  p.add_argument("--out-dir",type=Path,default=Path("analysis/d6/paper_live"));p.add_argument("--capital",type=float,default=500)
  p.add_argument("--snapshot-hours",type=float,default=1);p.add_argument("--latency-ms",type=int,default=250)
  p.add_argument("--hold-ms",type=int,default=500);p.add_argument("--seconds",type=float,default=0)
+ p.add_argument("--live-dry-run",action="store_true",help="Mirror V1 signals into safe CLOB dry-run journal")
  asyncio.run(main_async(p.parse_args()))
 if __name__=="__main__":main()
