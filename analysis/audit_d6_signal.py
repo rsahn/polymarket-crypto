@@ -24,15 +24,15 @@ def main():
     rows.append({"offset_ms":off,"target_ts_ms":target,"book_ts_ms":ts,"book_delay_ms":ts-target,
      "best_bid":bid,"best_ask":ask,"generation":gen,"bids":unpack(bids),"asks":unpack(asks)})
    else:rows.append({"offset_ms":off,"target_ts_ms":target,"missing":True})
-  rejects=db.execute("""SELECT event_kind,received_ts_ms,payload_json FROM events
+  rejects=db.execute("""SELECT kind,received_ts_ms,payload_json FROM events
    WHERE session_id=? AND received_ts_ms BETWEEN ? AND ? AND kind='REJECT'
    ORDER BY received_ts_ms""",(sid,a.signal_ts_ms-1000,a.signal_ts_ms+2000)).fetchall()
-  controls=db.execute("""SELECT kind,event_kind,received_ts_ms,market_slug,generation,payload_json FROM events
+  controls=db.execute("""SELECT kind,received_ts_ms,market_slug,generation,payload_json FROM events
    WHERE session_id=? AND received_ts_ms BETWEEN ? AND ? AND kind IN ('ACTIVATE','INVALIDATE','ROTATION','RECONNECT','WS_ERROR')
    ORDER BY received_ts_ms""",(sid,a.signal_ts_ms-2000,a.signal_ts_ms+2000)).fetchall()
   report={"contract":"D6_SIGNAL_AUDIT","session_id":sid,"signal_ts_ms":a.signal_ts_ms,"slug":a.slug,"side":a.side,
    "books":rows,"rejects":[{"kind":k,"ts_ms":t,"payload":unpack(v)} for k,t,v in rejects],
-   "controls":[{"kind":k,"event_kind":ek,"ts_ms":t,"slug":s,"generation":g,"payload":unpack(v) if v else None} for k,ek,t,s,g,v in controls]}
+   "controls":[{"kind":k,"ts_ms":t,"slug":s,"generation":g,"payload":unpack(v) if v else None} for k,t,s,g,v in controls]}
   s=json.dumps(report,indent=2,sort_keys=True);print(s)
   if a.out:a.out.write_text(s,encoding="utf-8")
  finally:db.close()
