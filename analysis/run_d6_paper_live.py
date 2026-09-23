@@ -16,6 +16,14 @@ def fill(asks,budget):
   if rem<=1e-9:break
  return cost,shares,(cost/shares if shares else None)
 
+def liquidate(bids,shares):
+ rem=float(shares);proceeds=sold=0.0
+ for p,q in bids:
+  p=float(p);q=float(q)
+  if p<=0 or q<=0 or rem<=1e-9:continue
+  take=min(q,rem);proceeds+=take*p;sold+=take;rem-=take
+ return proceeds,sold,(proceeds/sold if sold else None),rem
+
 async def main_async(a):
  ledger=PaperLedger(a.out_dir,a.capital,a.snapshot_hours)
  frozen={**V1,"initial_capital":a.capital,"snapshot_hours":a.snapshot_hours,"latency_ms":a.latency_ms,"hold_ms":a.hold_ms}
@@ -40,15 +48,19 @@ async def main_async(a):
   exit_snap=latest.get("5m")
   if not exit_snap:
    ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_EXIT_BOOK"});return
-  opp="down" if side=="UP" else "up";opp_ask=exit_snap[opp].get("ask")
-  if opp_ask is None:
-   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_EXIT_BBO","slug":exit_snap.get("market_slug")});return
-  exit_price=max(0.0,1.0-float(opp_ask))
+  exit_bids=exit_snap[side.lower()].get("bids") or []
+  if not exit_bids:
+   ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"NO_EXIT_DEPTH","slug":exit_snap.get("market_slug")});return
   for name,(cost,shares,vwap,slug) in entries.items():
    if exit_snap.get("market_slug")!=slug:
     ledger.record_skip({"signal_ts_ms":signal_ts,"side":side,"reason":"MARKET_ROTATION","slug":slug});continue
+   proceeds,sold,exit_vwap,remaining=liquidate(exit_bids,shares)
+   realized_cost=cost*(sold/shares) if shares else 0.0
+   pnl=proceeds-realized_cost
    ledger.record_fill(name,{"signal_ts_ms":signal_ts,"side":side,"btc_move":move,"slug":slug,
-     "entry_vwap":vwap,"cost":cost,"shares":shares,"exit_price":exit_price},shares*exit_price-cost)
+     "entry_vwap":vwap,"cost":cost,"shares":shares,"exit_vwap":exit_vwap,
+     "exit_sold_shares":sold,"exit_remaining_shares":remaining,"proceeds":proceeds,
+     "realized_cost":realized_cost,"exit_complete":remaining<=1e-9},pnl)
   ledger.snapshot()
 
  async def on_btc(tick):
