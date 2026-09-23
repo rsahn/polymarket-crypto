@@ -1,5 +1,9 @@
 import asyncio
+import sys
 from pathlib import Path
+
+BACKEND = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(BACKEND))
 from app.live.pipeline import DryRunPipeline
 def test_pipeline_stops_at_dry_run(tmp_path):
  p=DryRunPipeline(tmp_path/"events.jsonl")
