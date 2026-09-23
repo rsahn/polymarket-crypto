@@ -30,7 +30,9 @@ def main():
  a=p.parse_args();paper=json.loads(a.paper_json.read_text(encoding="utf-8"))
  db=sqlite3.connect(f"file:{a.db.resolve()}?mode=ro",uri=True)
  try:
-  sid=db.execute("SELECT session_id FROM sessions ORDER BY started_at_ms DESC LIMIT 1").fetchone()[0]
+  # Compact DB intentionally has no sessions table; its provenance is the
+  # frozen paper JSON plus the extracted signal windows.
+  sid="compact-signal-windows"
   signals=paper.get("signals",[])
   # Compact extractor schema: books already contains only the 13 signal windows.
   books={"UP":[],"DOWN":[]}
