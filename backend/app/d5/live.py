@@ -172,6 +172,8 @@ async def run(args):
             if time.monotonic()-printed >= 10:
                 printed = time.monotonic()
                 for duration,snapshot in list(latest.items()):
+                    if 'up' not in snapshot or 'down' not in snapshot:
+                        continue
                     up, down = snapshot['up'],snapshot['down']
                     print(f"D5 SHADOW {duration} slug={snapshot['market_slug']} condition={snapshot['condition_id']} "
                           f"UP={up['bid']}/{up['ask']} DOWN={down['bid']}/{down['ask']} "
