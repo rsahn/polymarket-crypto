@@ -253,3 +253,34 @@ class BookFreshnessGate:
             if age>self.max_book_age_ms:reasons.append("BOOK_STALE")
         return {"allow":not reasons,"reasons":reasons,
                 "book_age_ms":None if self.last_book_update_ms is None else max(0,now-self.last_book_update_ms)}
+
+
+class SimulatedCycleError(RuntimeError):
+    pass
+
+class SimulatedNightCycle:
+    """Deterministic fail-closed controller for unattended lifecycle testing."""
+    def __init__(self, *, hold_ms=500):
+        self.hold_ms=int(hold_ms)
+
+    def run(self, *, requested_size, entry_fills, exit_fills):
+        life=SimulatedLifecycle();events=[]
+        def snap(name):
+            events.append({"event":name,**life.snapshot()})
+        snap("PREPARED");life.ack();snap("ACK")
+        for size,price in entry_fills:
+            life.fill(size=float(size),price=float(price),requested_size=float(requested_size))
+            snap("FILL" if life.state=="FILLED" else "PARTIAL_FILL")
+        if life.state in {"ACKED","PARTIAL"}:
+            life.cancel();snap("CANCEL_REMAINDER")
+        if life.open_size<=0:
+            raise SimulatedCycleError("ENTRY_NOT_FILLED")
+        # hold_ms is recorded by policy; tests stay deterministic and do not sleep.
+        events.append({"event":"HOLD","hold_ms":self.hold_ms})
+        for size,price in exit_fills:
+            life.exit_fill(size=float(size),price=float(price));snap("EXIT_FILL")
+        if life.open_size>1e-9:
+            raise SimulatedCycleError(f"POSITION_NOT_FLAT:{life.open_size}")
+        if life.state!="CLOSED":
+            raise SimulatedCycleError("CYCLE_NOT_CLOSED")
+        return {"state":"CLOSED","events":events,"final":life.snapshot()}
