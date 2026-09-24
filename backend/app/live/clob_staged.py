@@ -218,3 +218,38 @@ class ExecutionInvariantGuard:
         if state in {"FILLED","CANCELLED_PARTIAL","EXIT_PARTIAL"} and elapsed>=self.policy.exit_timeout_ms:
             return "EXIT_RETRY_OR_KILL"
         return "WAIT"
+
+
+@dataclass
+class BookFreshnessGate:
+    """Fail closed after disconnect until a full book sync and fresh update."""
+    max_book_age_ms: int = 500
+    connected: bool = False
+    synced: bool = False
+    last_book_update_ms: int | None = None
+
+    def on_disconnect(self):
+        self.connected=False;self.synced=False;self.last_book_update_ms=None
+
+    def on_connect(self):
+        self.connected=True;self.synced=False;self.last_book_update_ms=None
+
+    def on_book_synced(self, *, initialized, required=2, ts_ms=None):
+        self.synced=self.connected and int(initialized)>=int(required)
+        if self.synced:self.last_book_update_ms=int(ts_ms if ts_ms is not None else time.time()*1000)
+
+    def on_book_update(self, *, ts_ms=None):
+        if self.connected and self.synced:
+            self.last_book_update_ms=int(ts_ms if ts_ms is not None else time.time()*1000)
+
+    def status(self, *, now_ms=None):
+        now=int(now_ms if now_ms is not None else time.time()*1000)
+        reasons=[]
+        if not self.connected:reasons.append("WS_DISCONNECTED")
+        if not self.synced:reasons.append("BOOK_NOT_SYNCED")
+        if self.last_book_update_ms is None:reasons.append("BOOK_TIMESTAMP_MISSING")
+        else:
+            age=max(0,now-self.last_book_update_ms)
+            if age>self.max_book_age_ms:reasons.append("BOOK_STALE")
+        return {"allow":not reasons,"reasons":reasons,
+                "book_age_ms":None if self.last_book_update_ms is None else max(0,now-self.last_book_update_ms)}
