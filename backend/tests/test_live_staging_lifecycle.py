@@ -4,7 +4,7 @@ def test_full_fill_exit():
  s=SimulatedLifecycle();s.ack();s.fill(size=10,price=.4,requested_size=10)
  assert s.state=="FILLED" and s.open_size==10
  s.exit_fill(size=10,price=.41)
- assert s.state=="CLOSED" and round(s.realized_pnl,8)==1
+ assert s.state=="CLOSED" and round(s.realized_pnl,8)==.1
 
 def test_partial_cancel_then_exit():
  s=SimulatedLifecycle();s.ack();s.fill(size=4,price=.5,requested_size=10);s.cancel()
