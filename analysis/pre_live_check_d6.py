@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
 from app.live.risk import RiskManager
+from app.collectors.polymarket import PolymarketMarketDiscovery
 
 DEFAULT_NOTIONAL = 25.0
 DEFAULT_BANKROLL_CAP = 100.0
@@ -86,6 +87,9 @@ async def main():
         "collateral_balance": None,
         "allowance": None,
         "risk_manager_25": False,
+        "btc_5m_market": None,
+        "order_books": {},
+        "market_constraints": {},
         "forbidden_order_methods_called": False,
         "ready_for_live": False,
         "reasons": [],
@@ -122,6 +126,47 @@ async def main():
             if key in payload:
                 result["allowance"] = payload[key]
                 break
+
+        # Public discovery + read-only CLOB books. No order creation/submission.
+        markets = await asyncio.to_thread(
+            PolymarketMarketDiscovery.get_active_btc_markets,
+            True, True
+        )
+        market = next((m for m in markets if m.get("market_key") == "5m"), None)
+        if market is None:
+            result["reasons"].append("NO_ACTIVE_BTC_5M_MARKET")
+        else:
+            meta = market.get("metadata") or {}
+            result["btc_5m_market"] = {
+                "slug": market.get("slug"),
+                "active": market.get("active"),
+                "expiry_ts_ms": market.get("expiry_ts_ms"),
+                "accepting_orders": meta.get("acceptingOrders"),
+            }
+            tick = meta.get("orderPriceMinTickSize")
+            min_size = meta.get("orderMinSize")
+            result["market_constraints"] = {
+                "tick_size": tick,
+                "min_order_size": min_size,
+            }
+            if tick is None:
+                result["reasons"].append("UNKNOWN_TICK_SIZE")
+            if min_size is None:
+                result["reasons"].append("UNKNOWN_MIN_ORDER_SIZE")
+            for side, token in (market.get("token_ids") or {}).items():
+                book = await client.get_order_book(token_id=str(token))
+                bp = _plain(book)
+                bids = bp.get("bids") or []
+                asks = bp.get("asks") or []
+                result["order_books"][side] = {
+                    "token_id": str(token),
+                    "best_bid": _plain(bids[-1]) if bids else None,
+                    "best_ask": _plain(asks[-1]) if asks else None,
+                    "bid_levels": len(bids),
+                    "ask_levels": len(asks),
+                }
+                if not asks:
+                    result["reasons"].append(f"NO_{side}_ASK_DEPTH")
     except Exception as exc:
         result["reasons"].append(f"READ_ONLY_CHECK_FAILED:{type(exc).__name__}:{exc}")
     finally:
@@ -150,6 +195,10 @@ async def main():
         and result["risk_manager_25"]
         and balance_value >= DEFAULT_NOTIONAL
         and allowance_ok
+        and result["btc_5m_market"] is not None
+        and bool(result["order_books"])
+        and result["market_constraints"].get("tick_size") is not None
+        and result["market_constraints"].get("min_order_size") is not None
         and not result["forbidden_order_methods_called"]
         and not result["reasons"]
     )
