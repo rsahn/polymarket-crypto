@@ -117,3 +117,31 @@ def test_position_state_store_allows_closed_restart(tmp_path):
  store.save(s)
  gate=store.assert_flat_or_recover()
  assert gate["allow_new_entry"] and gate["reason"]=="FLAT"
+
+
+def test_reconciler_closed_local_allows():
+ import asyncio
+ from app.live.clob_staged import RecoveryReconciler,PersistedPositionState
+ class C:
+  async def get_order(self,**kw):raise AssertionError("must not query")
+ s=PersistedPositionState("s","slug","t",state="CLOSED",filled_shares=5,sold_shares=5)
+ r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
+ assert r["allow_new_entry"] and r["reason"]=="LOCAL_FLAT"
+
+def test_reconciler_unknown_remote_fails_closed():
+ import asyncio
+ from app.live.clob_staged import RecoveryReconciler,PersistedPositionState
+ class C:
+  async def get_order(self,**kw):raise RuntimeError("network")
+ s=PersistedPositionState("s","slug","t",state="FILLED",entry_order_id="oid",filled_shares=5)
+ r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
+ assert not r["allow_new_entry"] and r["reason"]=="REMOTE_LOOKUP_FAILED"
+
+def test_reconciler_remote_state_requires_review():
+ import asyncio
+ from app.live.clob_staged import RecoveryReconciler,PersistedPositionState
+ class C:
+  async def get_order(self,**kw):return {"status":"LIVE","size_matched":"2"}
+ s=PersistedPositionState("s","slug","t",state="PARTIAL",entry_order_id="oid",filled_shares=2)
+ r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
+ assert not r["allow_new_entry"] and r["reason"]=="REMOTE_REVIEW_REQUIRED"
