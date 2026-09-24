@@ -79,3 +79,64 @@ class StagedClobExecutor:
                 inspect.signature(self.client.create_limit_order)
             ) if hasattr(self.client, "create_limit_order") else None,
         }
+
+
+@dataclass
+class SimulatedLifecycle:
+    """State machine for exercising ACK/fill/cancel/exit handling with zero submission."""
+    state: str = "PREPARED"
+    filled_size: float = 0.0
+    average_fill_price: float | None = None
+    open_size: float = 0.0
+    exit_filled_size: float = 0.0
+    exit_average_price: float | None = None
+    realized_pnl: float = 0.0
+
+    def ack(self):
+        if self.state != "PREPARED": raise RuntimeError("ACK_INVALID_STATE")
+        self.state = "ACKED"
+
+    def fill(self, *, size: float, price: float, requested_size: float):
+        if self.state not in {"ACKED","PARTIAL"}: raise RuntimeError("FILL_INVALID_STATE")
+        if size <= 0 or price <= 0 or self.filled_size + size > requested_size + 1e-9:
+            raise ValueError("INVALID_FILL")
+        previous_cost=(self.average_fill_price or 0.0)*self.filled_size
+        self.filled_size += size
+        self.average_fill_price=(previous_cost+size*price)/self.filled_size
+        self.open_size=self.filled_size
+        self.state="FILLED" if self.filled_size >= requested_size-1e-9 else "PARTIAL"
+
+    def cancel(self):
+        if self.state not in {"ACKED","PARTIAL"}: raise RuntimeError("CANCEL_INVALID_STATE")
+        self.state="CANCELLED_PARTIAL" if self.filled_size else "CANCELLED"
+
+    def exit_fill(self, *, size: float, price: float):
+        if self.open_size <= 0 or size <= 0 or size > self.open_size + 1e-9:
+            raise ValueError("INVALID_EXIT_FILL")
+        previous=self.exit_filled_size
+        previous_proceeds=(self.exit_average_price or 0.0)*previous
+        self.exit_filled_size += size
+        self.exit_average_price=(previous_proceeds+size*price)/self.exit_filled_size
+        entry=float(self.average_fill_price or 0.0)
+        self.realized_pnl += size*(price-entry)
+        self.open_size -= size
+        self.state="CLOSED" if self.open_size <= 1e-9 else "EXIT_PARTIAL"
+
+    def snapshot(self):
+        return asdict(self)
+
+
+class KillSwitch:
+    def __init__(self, *, max_open_positions=1, max_session_loss=25.0):
+        self.max_open_positions=max_open_positions
+        self.max_session_loss=max_session_loss
+
+    def check(self, *, open_positions, session_pnl, geoblock_blocked=False,
+              market_rotated=False, book_available=True):
+        reasons=[]
+        if open_positions >= self.max_open_positions: reasons.append("OPEN_POSITION_LIMIT")
+        if session_pnl <= -self.max_session_loss: reasons.append("SESSION_LOSS_LIMIT")
+        if geoblock_blocked: reasons.append("GEOBLOCK")
+        if market_rotated: reasons.append("MARKET_ROTATION")
+        if not book_available: reasons.append("BOOK_UNAVAILABLE")
+        return {"allow":not reasons,"reasons":reasons}
