@@ -71,10 +71,12 @@ def _client_factory():
     private_key = _env_first("SIGNER_PRIVATE_KEY", "POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY")
     if not private_key:
         raise RuntimeError("missing local SIGNER_PRIVATE_KEY/private-key env")
-    wallet = _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS")
-    # polymarket-client 0.11.x deliberately blocks direct construction:
-    # AsyncSecureClient.create(...) derives/validates authenticated context.
-    return AsyncSecureClient.create(private_key=private_key, wallet=wallet)
+    # Important: do NOT force POLYMARKET_WALLET_ADDRESS here. In SDK 0.11,
+    # wallet=None resolves the signer's Polymarket Deposit Wallet. The UI's
+    # "signer address" can differ conceptually from the collateral wallet.
+    # Forcing the signer address previously authenticated successfully but
+    # queried a zero collateral balance.
+    return AsyncSecureClient.create(private_key=private_key)
 
 
 async def main():
