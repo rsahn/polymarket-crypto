@@ -184,3 +184,37 @@ async def simulate_lifecycle(*, order: StagedLimitOrder, entry_fill_ratio=1.0,
         px=float(exit_price if exit_price is not None else order.limit_price)
         state.exit_fill(size=state.open_size,price=px);emit("EXIT_FILL",{"price":px})
     return state.snapshot()
+
+
+@dataclass(frozen=True)
+class TimeoutPolicy:
+    ack_timeout_ms: int = 1500
+    fill_timeout_ms: int = 2000
+    exit_timeout_ms: int = 2000
+
+
+class ExecutionInvariantGuard:
+    """Fail-closed staging invariants. Pure logic; never touches the network."""
+    def __init__(self, policy=TimeoutPolicy()):
+        self.policy=policy
+
+    def validate_entry(self, *, open_positions, session_pnl, geoblock_blocked,
+                       market_rotated, book_available, seconds_remaining):
+        reasons=[]
+        if open_positions != 0: reasons.append("POSITION_ALREADY_OPEN")
+        if session_pnl <= -25.0: reasons.append("SESSION_LOSS_LIMIT")
+        if geoblock_blocked: reasons.append("GEOBLOCK")
+        if market_rotated: reasons.append("MARKET_ROTATION")
+        if not book_available: reasons.append("BOOK_UNAVAILABLE")
+        if seconds_remaining < 120: reasons.append("MARKET_TOO_CLOSE_TO_EXPIRY")
+        return {"allow":not reasons,"reasons":reasons}
+
+    def timeout_action(self, *, state, elapsed_ms):
+        elapsed=int(elapsed_ms)
+        if state=="PREPARED" and elapsed>=self.policy.ack_timeout_ms:
+            return "ABORT_NO_ACK"
+        if state in {"ACKED","PARTIAL"} and elapsed>=self.policy.fill_timeout_ms:
+            return "CANCEL_REMAINDER"
+        if state in {"FILLED","CANCELLED_PARTIAL","EXIT_PARTIAL"} and elapsed>=self.policy.exit_timeout_ms:
+            return "EXIT_RETRY_OR_KILL"
+        return "WAIT"
