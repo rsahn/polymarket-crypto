@@ -20,3 +20,15 @@ def test_kill_switch():
  assert not k.check(open_positions=0,session_pnl=0,geoblock_blocked=True)["allow"]
  assert not k.check(open_positions=0,session_pnl=0,market_rotated=True)["allow"]
  assert not k.check(open_positions=0,session_pnl=0,book_available=False)["allow"]
+
+
+def test_append_only_lifecycle_journal(tmp_path):
+ import asyncio,json
+ from app.live.clob_staged import LifecycleJournal,StagedLimitOrder,simulate_lifecycle
+ order=StagedLimitOrder("sig1","slug","token","BUY",25,.5,50,.01,5)
+ journal=LifecycleJournal(tmp_path/"life.jsonl")
+ final=asyncio.run(simulate_lifecycle(order=order,entry_fill_ratio=.4,exit_price=.51,journal=journal))
+ rows=[json.loads(x) for x in (tmp_path/"life.jsonl").read_text().splitlines()]
+ assert [x["event"] for x in rows]==["PREPARED","ACK","PARTIAL_FILL","CANCEL_REMAINDER","EXIT_FILL"]
+ assert all(x["submit_allowed"] is False for x in rows)
+ assert final["state"]=="CLOSED" and round(final["realized_pnl"],8)==.2
