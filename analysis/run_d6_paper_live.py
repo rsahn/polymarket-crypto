@@ -1,5 +1,5 @@
 """D6 V1 live paper trading. Public feeds only; NEVER sends real orders."""
-import argparse,asyncio,json,types,sys
+import argparse,asyncio,json,types,sys,os
 from collections import deque
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -7,6 +7,7 @@ sys.path.insert(0,str(ROOT/"backend"))
 from d6.paper_live import PaperLedger,V1
 from app.d5.live import run as collect_live
 from app.live.pipeline import DryRunPipeline
+from app.live.clob_staged import StagedClobExecutor
 
 def fill(asks,budget):
  rem=float(budget);cost=shares=0.0
@@ -32,6 +33,13 @@ async def main_async(a):
  (a.out_dir/"STRATEGY_V1_FROZEN.json").write_text(json.dumps(frozen,indent=2,sort_keys=True),encoding="utf-8")
  btc=deque(maxlen=4096);latest={};pending=set();last_signal=-10**18
  dryrun=DryRunPipeline(a.out_dir/"live_dry_run.jsonl") if a.live_dry_run else None
+ staged_client=None;staged=None;staged_journal=a.out_dir/"live_staging.jsonl"
+ if a.live_staging:
+  if os.getenv("REAL_ORDERS_ENABLED","false").lower()=="true":raise RuntimeError("LIVE_STAGING_REQUIRES_REAL_ORDERS_DISABLED")
+  from polymarket import AsyncSecureClient
+  key=os.getenv("SIGNER_PRIVATE_KEY")
+  if not key:raise RuntimeError("SIGNER_PRIVATE_KEY missing for live staging")
+  staged_client=await AsyncSecureClient.create(private_key=key);staged=StagedClobExecutor(staged_client)
 
  async def execute_signal(signal_ts,move,side):
   await asyncio.sleep(a.latency_ms/1000)
@@ -82,6 +90,15 @@ async def main_async(a):
      dr=asyncio.create_task(dryrun.process(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),
        token_id=str(token),side=side,best_ask=float(ask),bankroll=100,open_positions=0,session_pnl=0))
      pending.add(dr);dr.add_done_callback(pending.discard)
+  if staged:
+   snap=latest.get("5m")
+   if snap:
+    q=snap.get(side.lower()) or {};ask=q.get("ask");token=q.get("token_id")
+    if ask is not None and token:
+     order=staged.prepare_buy(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),token_id=str(token),notional=25.0,best_ask=float(ask),tick_size=0.01,min_order_size=5.0)
+     event=await staged.stage(order)
+     with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps(event,sort_keys=True)+"\\n")
+     print("D6 LIVE STAGING",side,event["mode"],"submit_allowed=",event["submit_allowed"],flush=True)
   task=asyncio.create_task(execute_signal(tick.recv_ts_ms,move,side));pending.add(task);task.add_done_callback(pending.discard)
 
  async def on_quote(duration,snapshot):latest[duration]=snapshot
@@ -97,6 +114,7 @@ async def main_async(a):
  finally:
   snap_task.cancel();await asyncio.gather(snap_task,return_exceptions=True)
   if pending:await asyncio.gather(*pending,return_exceptions=True)
+  if staged_client is not None:await staged_client.close()
   print("D6 PAPER LIVE stopped; snapshot=",ledger.snapshot(force=True))
 
 def main():
@@ -105,5 +123,6 @@ def main():
  p.add_argument("--snapshot-hours",type=float,default=1);p.add_argument("--latency-ms",type=int,default=250)
  p.add_argument("--hold-ms",type=int,default=500);p.add_argument("--seconds",type=float,default=0)
  p.add_argument("--live-dry-run",action="store_true",help="Mirror V1 signals into safe CLOB dry-run journal")
+ p.add_argument("--live-staging",action="store_true",help="Authenticated live-shaped staging; hard-fenced, never submits")
  asyncio.run(main_async(p.parse_args()))
 if __name__=="__main__":main()
