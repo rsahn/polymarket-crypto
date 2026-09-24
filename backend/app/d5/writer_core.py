@@ -51,8 +51,17 @@ class WriterCore:
         generation = command.get('generation')
         event_id = None
         if kind == 'ACTIVATE':
-            self.observer.activate(identity, generation, processed_at, command.get('metadata'))
-            self.last_generation[identity.key] = generation
+            # A delayed reconnect/discovery may try to reactivate a market already
+            # fenced as retired. This is a data-quality reject, not a terminal
+            # writer failure: preserve evidence and keep the writer alive.
+            if identity.key in self.observer.retired:
+                event_id, _ = self.store.event('REJECT',
+                    {'reason':'CROSS_MARKET_REJECT','detail':'retired identity','command_kind':'ACTIVATE'},
+                    received_ts_ms=received,identity=identity,generation=generation,
+                    available_ts_ms=processed_at)
+            else:
+                self.observer.activate(identity, generation, processed_at, command.get('metadata'))
+                self.last_generation[identity.key] = generation
         elif kind == 'BOOK':
             snapshot = command['snapshot']
             if snapshot['received_ts_ms'] != received:
