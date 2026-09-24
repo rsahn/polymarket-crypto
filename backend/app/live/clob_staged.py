@@ -328,3 +328,29 @@ class PositionStateStore:
         if state.open_shares>1e-9 or state.state not in {"CLOSED","CANCELLED"}:
             return {"allow_new_entry":False,"reason":"RECOVERY_REQUIRED","state":asdict(state)}
         return {"allow_new_entry":True,"reason":"FLAT","state":asdict(state)}
+
+
+class RecoveryReconciler:
+    """Reconcile persisted state with a read-only CLOB order lookup.
+
+    This class never submits or cancels. Unknown remote state fails closed.
+    """
+    def __init__(self, client):
+        self.client=client
+
+    async def reconcile(self, state):
+        if state is None:
+            return {"allow_new_entry":True,"reason":"NO_LOCAL_POSITION"}
+        if state.state=="CLOSED" and state.open_shares<=1e-9:
+            return {"allow_new_entry":True,"reason":"LOCAL_FLAT"}
+        order_id=state.exit_order_id or state.entry_order_id
+        if not order_id:
+            return {"allow_new_entry":False,"reason":"ORDER_ID_MISSING"}
+        try:
+            remote=await self.client.get_order(order_id=str(order_id))
+        except Exception as exc:
+            return {"allow_new_entry":False,"reason":"REMOTE_LOOKUP_FAILED",
+                    "error":f"{type(exc).__name__}:{exc}"}
+        data=_plain(remote)
+        return {"allow_new_entry":False,"reason":"REMOTE_REVIEW_REQUIRED",
+                "order_id":str(order_id),"remote":data,"local":asdict(state)}
