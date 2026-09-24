@@ -140,3 +140,47 @@ class KillSwitch:
         if market_rotated: reasons.append("MARKET_ROTATION")
         if not book_available: reasons.append("BOOK_UNAVAILABLE")
         return {"allow":not reasons,"reasons":reasons}
+
+
+class LifecycleJournal:
+    """Append-only JSONL audit for simulated order lifecycle events."""
+    def __init__(self, path):
+        from pathlib import Path
+        self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
+
+    def write(self, *, signal_id, event, lifecycle, details=None):
+        import json
+        row={
+            "ts_ms":int(time.time()*1000),
+            "signal_id":str(signal_id),
+            "event":str(event),
+            "lifecycle":lifecycle.snapshot(),
+            "details":details or {},
+            "real_orders_enabled":StagedClobExecutor.real_orders_enabled(),
+            "submit_allowed":False,
+        }
+        with self.path.open("a",encoding="utf-8") as fh:
+            fh.write(json.dumps(row,sort_keys=True)+"\n")
+        return row
+
+
+async def simulate_lifecycle(*, order: StagedLimitOrder, entry_fill_ratio=1.0,
+                             exit_price=None, journal=None):
+    """Exercise ACK/fill/partial/cancel/exit deterministically; zero network writes."""
+    state=SimulatedLifecycle()
+    emit=lambda event,details=None: journal.write(
+        signal_id=order.signal_id,event=event,lifecycle=state,details=details
+    ) if journal else None
+    emit("PREPARED",{"order":asdict(order)})
+    state.ack();emit("ACK")
+    ratio=max(0.0,min(1.0,float(entry_fill_ratio)))
+    fill_size=order.size*ratio
+    if fill_size>0:
+        state.fill(size=fill_size,price=order.limit_price,requested_size=order.size)
+        emit("FILL" if ratio>=1.0 else "PARTIAL_FILL",{"size":fill_size})
+    if ratio<1.0:
+        state.cancel();emit("CANCEL_REMAINDER")
+    if state.open_size>0:
+        px=float(exit_price if exit_price is not None else order.limit_price)
+        state.exit_fill(size=state.open_size,price=px);emit("EXIT_FILL",{"price":px})
+    return state.snapshot()
