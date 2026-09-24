@@ -9,6 +9,8 @@ import json
 import os
 import sys
 import time
+import urllib.request
+from decimal import Decimal, ROUND_DOWN
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
 
@@ -20,6 +22,7 @@ from app.collectors.polymarket import PolymarketMarketDiscovery
 
 DEFAULT_NOTIONAL = 25.0
 DEFAULT_BANKROLL_CAP = 100.0
+MAX_DRY_RUN_SLIPPAGE_BPS = 100
 MIN_MARKET_REMAINING_SECONDS = 120
 
 
@@ -93,6 +96,8 @@ async def main():
         "btc_5m_market": None,
         "order_books": {},
         "market_constraints": {},
+        "geoblock": None,
+        "dry_run_orders": {},
         "forbidden_order_methods_called": False,
         "ready_for_live": False,
         "reasons": [],
@@ -133,6 +138,23 @@ async def main():
             if key in payload:
                 result["allowance"] = payload[key]
                 break
+
+        # Public geoblock gate. Read-only; fail closed on any uncertainty.
+        def geoblock_probe():
+            req = urllib.request.Request(
+                "https://polymarket.com/api/geoblock",
+                headers={"User-Agent":"Mozilla/5.0","Accept":"application/json"},
+            )
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        try:
+            geo = await asyncio.to_thread(geoblock_probe)
+            blocked = bool(geo.get("blocked"))
+            result["geoblock"] = geo
+            if blocked:
+                result["reasons"].append("GEOBLOCK_BLOCKED")
+        except Exception as exc:
+            result["reasons"].append(f"GEOBLOCK_CHECK_FAILED:{type(exc).__name__}:{exc}")
 
         # Public discovery + read-only CLOB books. No order creation/submission.
         markets = await asyncio.to_thread(
@@ -199,6 +221,29 @@ async def main():
                     "notional_25_vwap": (cost / shares if shares else None),
                     "notional_25_cost": cost,
                 }
+                if asks and remaining <= 1e-9 and tick is not None and min_size is not None:
+                    best_ask = Decimal(str(ask_rows[0]["price"]))
+                    tick_dec = Decimal(str(tick))
+                    cap = best_ask * (Decimal(1) + Decimal(str(MAX_DRY_RUN_SLIPPAGE_BPS))/Decimal(10000))
+                    ticks = (cap / tick_dec).to_integral_value(rounding=ROUND_DOWN)
+                    limit_price = max(tick_dec, min(Decimal("0.99"), ticks * tick_dec))
+                    size = (Decimal(str(DEFAULT_NOTIONAL)) / limit_price).quantize(
+                        Decimal("0.0001"), rounding=ROUND_DOWN
+                    )
+                    result["dry_run_orders"][side] = {
+                        "mode": "DRY_RUN",
+                        "submit_allowed": False,
+                        "token_id": str(token),
+                        "side": "BUY",
+                        "notional": DEFAULT_NOTIONAL,
+                        "limit_price": float(limit_price),
+                        "size": float(size),
+                        "tick_size": float(tick_dec),
+                        "min_order_size": float(min_size),
+                        "size_meets_minimum": float(size) >= float(min_size),
+                    }
+                    if float(size) < float(min_size):
+                        result["reasons"].append(f"{side}_DRY_RUN_BELOW_MIN_SIZE")
                 if not asks:
                     result["reasons"].append(f"NO_{side}_ASK_DEPTH")
                 elif remaining > 1e-9:
@@ -236,6 +281,10 @@ async def main():
         and all(v.get("notional_25_fillable") for v in result["order_books"].values())
         and result["market_constraints"].get("tick_size") is not None
         and result["market_constraints"].get("min_order_size") is not None
+        and isinstance(result["geoblock"], dict)
+        and result["geoblock"].get("blocked") is False
+        and len(result["dry_run_orders"]) == 2
+        and all(v.get("size_meets_minimum") for v in result["dry_run_orders"].values())
         and not result["forbidden_order_methods_called"]
         and not result["reasons"]
     )
