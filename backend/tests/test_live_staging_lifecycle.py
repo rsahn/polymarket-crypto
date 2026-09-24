@@ -145,3 +145,26 @@ def test_reconciler_remote_state_requires_review():
  s=PersistedPositionState("s","slug","t",state="PARTIAL",entry_order_id="oid",filled_shares=2)
  r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
  assert not r["allow_new_entry"] and r["reason"]=="REMOTE_REVIEW_REQUIRED"
+
+
+def test_remote_projector_open_partial_full():
+ from app.live.clob_staged import RemoteStateProjector,PersistedPositionState
+ p=RemoteStateProjector();s=PersistedPositionState("s","slug","t")
+ r=p.apply(s,{"known":True,"status":"LIVE","original_size":10,"filled_size":0,"remaining_size":10})
+ assert r["ok"] and s.state=="ACKED"
+ r=p.apply(s,{"known":True,"status":"LIVE","original_size":10,"filled_size":4,"remaining_size":6})
+ assert r["ok"] and s.state=="PARTIAL" and s.filled_shares==4
+ r=p.apply(s,{"known":True,"status":"MATCHED","original_size":10,"filled_size":10,"remaining_size":0})
+ assert r["ok"] and s.state=="FILLED" and s.filled_shares==10
+
+def test_remote_projector_unknown_status_fails_closed():
+ from app.live.clob_staged import RemoteStateProjector,PersistedPositionState
+ s=PersistedPositionState("s","slug","t")
+ r=RemoteStateProjector().apply(s,{"known":True,"status":"MYSTERY","original_size":10,"filled_size":0,"remaining_size":10})
+ assert not r["ok"] and r["reason"]=="UNMAPPED_REMOTE_STATUS"
+
+def test_remote_projector_invalid_sizes_fails_closed():
+ from app.live.clob_staged import RemoteStateProjector,PersistedPositionState
+ s=PersistedPositionState("s","slug","t")
+ r=RemoteStateProjector().apply(s,{"known":True,"status":"LIVE","original_size":5,"filled_size":6,"remaining_size":0})
+ assert not r["ok"] and r["reason"]=="INVALID_REMOTE_SIZES"
