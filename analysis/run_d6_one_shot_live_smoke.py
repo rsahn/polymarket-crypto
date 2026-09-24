@@ -38,9 +38,13 @@ async def main(a):
   geo=await asyncio.to_thread(geoblock)
   markets=await asyncio.to_thread(PolymarketMarketDiscovery.get_active_btc_markets,True,True)
   now=int(time.time()*1000)
-  candidates=[m for m in markets if m.get("market_key")=="5m" and m.get("active") is True and (m.get("metadata") or {}).get("acceptingOrders") is True and (m.get("expiry_ts_ms") or 0)-now>=120000]
+  active=[m for m in markets if m.get("market_key")=="5m" and m.get("active") is True and (m.get("metadata") or {}).get("acceptingOrders") is True]
+  candidates=[m for m in active if (m.get("expiry_ts_ms") or 0)-now>=120000]
   market=min(candidates,key=lambda m:m["expiry_ts_ms"],default=None)
-  if not market:raise RuntimeError("NO_FRESH_BTC_5M_MARKET")
+  if not market:
+   diag=[{"slug":m.get("slug"),"seconds_remaining":round(((m.get("expiry_ts_ms") or 0)-now)/1000,3),"active":m.get("active"),"acceptingOrders":(m.get("metadata") or {}).get("acceptingOrders")} for m in active]
+   print(json.dumps({"status":"NO_FRESH_BTC_5M_MARKET","now_ms":now,"active_5m":diag},indent=2))
+   return
   token=(market.get("token_ids") or {}).get(a.side)
   if not token:raise RuntimeError("TOKEN_NOT_FOUND")
   book=await client.get_order_book(token_id=str(token))
