@@ -168,3 +168,28 @@ def test_remote_projector_invalid_sizes_fails_closed():
  s=PersistedPositionState("s","slug","t")
  r=RemoteStateProjector().apply(s,{"known":True,"status":"LIVE","original_size":5,"filled_size":6,"remaining_size":0})
  assert not r["ok"] and r["reason"]=="INVALID_REMOTE_SIZES"
+
+
+def test_readonly_sync_persists_remote_state(tmp_path):
+ import asyncio
+ from app.live.clob_staged import ReadOnlyPositionSynchronizer,PositionStateStore,PersistedPositionState
+ class C:
+  async def get_order(self,**kw):
+   return {"status":"LIVE","original_size":"10","size_matched":"4"}
+ store=PositionStateStore(tmp_path/"position.json")
+ state=PersistedPositionState("s","slug","t",entry_order_id="oid")
+ r=asyncio.run(ReadOnlyPositionSynchronizer(C(),store).sync(state))
+ assert r["ok"] and r["reason"]=="SYNCED_AND_PERSISTED"
+ loaded=store.load()
+ assert loaded.state=="PARTIAL" and loaded.filled_shares==4
+
+def test_readonly_sync_unknown_remote_does_not_persist(tmp_path):
+ import asyncio
+ from app.live.clob_staged import ReadOnlyPositionSynchronizer,PositionStateStore,PersistedPositionState
+ class C:
+  async def get_order(self,**kw):return {"foo":"bar"}
+ store=PositionStateStore(tmp_path/"position.json")
+ state=PersistedPositionState("s","slug","t",entry_order_id="oid")
+ r=asyncio.run(ReadOnlyPositionSynchronizer(C(),store).sync(state))
+ assert not r["ok"]
+ assert not (tmp_path/"position.json").exists()
