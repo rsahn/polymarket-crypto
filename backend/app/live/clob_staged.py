@@ -354,3 +354,33 @@ class RecoveryReconciler:
         data=_plain(remote)
         return {"allow_new_entry":False,"reason":"REMOTE_REVIEW_REQUIRED",
                 "order_id":str(order_id),"remote":data,"local":asdict(state)}
+
+
+class RemoteStateProjector:
+    """Project normalized read-only CLOB status into persisted local state."""
+    TERMINAL_CANCEL={"CANCELLED","CANCELED","EXPIRED"}
+    FULL={"FILLED","MATCHED"}
+
+    def apply(self, state, normalized):
+        if not normalized or not normalized.get("known"):
+            return {"ok":False,"reason":"UNKNOWN_REMOTE_STATUS","state":state}
+        status=str(normalized.get("status") or "").upper()
+        filled=float(normalized.get("filled_size") or 0)
+        original=float(normalized.get("original_size") or 0)
+        remaining=normalized.get("remaining_size")
+        if filled<0 or (original>0 and filled>original+1e-9):
+            return {"ok":False,"reason":"INVALID_REMOTE_SIZES","state":state}
+        if filled>state.filled_shares:
+            state.filled_shares=filled
+        if status in self.FULL or (remaining is not None and remaining<=1e-9 and filled>0):
+            state.state="FILLED"
+        elif filled>0:
+            state.state="PARTIAL"
+        elif status in self.TERMINAL_CANCEL:
+            state.state="CANCELLED"
+        elif status in {"LIVE","OPEN","PENDING"}:
+            state.state="ACKED"
+        else:
+            return {"ok":False,"reason":"UNMAPPED_REMOTE_STATUS","status":status,"state":state}
+        state.updated_ms=int(time.time()*1000)
+        return {"ok":True,"reason":"PROJECTED","state":state}
