@@ -85,6 +85,7 @@ async def main():
         "authenticated_wallet": False,
         "real_orders_enabled": _real_orders_enabled(),
         "collateral_balance": None,
+        "collateral_balance_usdc": None,
         "allowance": None,
         "risk_manager_25": False,
         "btc_5m_market": None,
@@ -121,6 +122,10 @@ async def main():
         for key in ("balance", "available_balance", "collateral_balance"):
             if key in payload:
                 result["collateral_balance"] = payload[key]
+                try:
+                    result["collateral_balance_usdc"] = float(payload[key]) / 1_000_000
+                except (TypeError, ValueError):
+                    pass
                 break
         for key in ("allowance", "allowances"):
             if key in payload:
@@ -158,15 +163,33 @@ async def main():
                 bp = _plain(book)
                 bids = bp.get("bids") or []
                 asks = bp.get("asks") or []
+                ask_rows = [_plain(x) for x in asks]
+                # SDK books are observed worst->best here; consume best ask first.
+                ask_rows = sorted(ask_rows, key=lambda x: float(x.get("price", 999)))
+                remaining = DEFAULT_NOTIONAL
+                cost = shares = 0.0
+                for level in ask_rows:
+                    p = float(level.get("price", 0)); q = float(level.get("size", 0))
+                    if p <= 0 or q <= 0:
+                        continue
+                    take = min(q, remaining / p)
+                    cost += take * p; shares += take; remaining -= take * p
+                    if remaining <= 1e-9:
+                        break
                 result["order_books"][side] = {
                     "token_id": str(token),
                     "best_bid": _plain(bids[-1]) if bids else None,
                     "best_ask": _plain(asks[-1]) if asks else None,
                     "bid_levels": len(bids),
                     "ask_levels": len(asks),
+                    "notional_25_fillable": remaining <= 1e-9,
+                    "notional_25_vwap": (cost / shares if shares else None),
+                    "notional_25_cost": cost,
                 }
                 if not asks:
                     result["reasons"].append(f"NO_{side}_ASK_DEPTH")
+                elif remaining > 1e-9:
+                    result["reasons"].append(f"INSUFFICIENT_{side}_DEPTH_FOR_25")
     except Exception as exc:
         result["reasons"].append(f"READ_ONLY_CHECK_FAILED:{type(exc).__name__}:{exc}")
     finally:
@@ -197,6 +220,7 @@ async def main():
         and allowance_ok
         and result["btc_5m_market"] is not None
         and bool(result["order_books"])
+        and all(v.get("notional_25_fillable") for v in result["order_books"].values())
         and result["market_constraints"].get("tick_size") is not None
         and result["market_constraints"].get("min_order_size") is not None
         and not result["forbidden_order_methods_called"]
