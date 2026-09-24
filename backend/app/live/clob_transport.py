@@ -42,3 +42,22 @@ class LiveClobTransport:
             token_id=str(token_id), price=price, size=size, side="SELL", post_only=False
         )
         return {"ts_ms":int(time.time()*1000),"kind":"EXIT_SUBMIT","response":_plain(resp)}
+
+
+def extract_order_id(event):
+    """Best-effort extraction from SDK AcceptedOrder payload; fail closed if absent."""
+    data=(event or {}).get("response") or {}
+    for key in ("order_id","orderID","id"):
+        value=data.get(key) if isinstance(data,dict) else None
+        if value:return str(value)
+    return None
+
+def normalize_order_status(event):
+    data=(event or {}).get("response") or {}
+    if not isinstance(data,dict):return {"known":False,"raw":data}
+    status=str(data.get("status") or data.get("state") or "").upper()
+    original=float(data.get("original_size") or data.get("size") or 0)
+    matched=float(data.get("size_matched") or data.get("matched_size") or data.get("filled_size") or 0)
+    remaining=max(0.0,original-matched) if original else None
+    return {"known":bool(status),"status":status,"original_size":original,
+            "filled_size":matched,"remaining_size":remaining,"raw":data}
