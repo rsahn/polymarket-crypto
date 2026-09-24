@@ -66,3 +66,34 @@ def test_book_freshness_gate_fail_closed():
  g.on_book_update(ts_ms=1501);assert g.status(now_ms=1600)["allow"]
  g.on_disconnect();assert not g.status(now_ms=1600)["allow"]
  g.on_connect();assert not g.status(now_ms=1600)["allow"]
+
+
+def test_night_cycle_full_fill_closes():
+ from app.live.clob_staged import SimulatedNightCycle
+ r=SimulatedNightCycle().run(requested_size=10,entry_fills=[(10,.4)],exit_fills=[(10,.41)])
+ assert r["state"]=="CLOSED" and r["final"]["open_size"]==0
+
+def test_night_cycle_partial_entry_cancel_then_close():
+ from app.live.clob_staged import SimulatedNightCycle
+ r=SimulatedNightCycle().run(requested_size=10,entry_fills=[(4,.5)],exit_fills=[(4,.49)])
+ assert any(x["event"]=="CANCEL_REMAINDER" for x in r["events"])
+ assert r["final"]["state"]=="CLOSED"
+
+def test_night_cycle_zero_fill_fails_closed():
+ from app.live.clob_staged import SimulatedNightCycle,SimulatedCycleError
+ try:SimulatedNightCycle().run(requested_size=10,entry_fills=[],exit_fills=[])
+ except SimulatedCycleError as e:assert str(e)=="ENTRY_NOT_FILLED"
+ else:assert False
+
+def test_night_cycle_partial_exit_fails_closed():
+ from app.live.clob_staged import SimulatedNightCycle,SimulatedCycleError
+ try:SimulatedNightCycle().run(requested_size=10,entry_fills=[(10,.4)],exit_fills=[(6,.41)])
+ except SimulatedCycleError as e:assert str(e).startswith("POSITION_NOT_FLAT:")
+ else:assert False
+
+def test_night_cycle_multi_fill_weighted_pnl():
+ from app.live.clob_staged import SimulatedNightCycle
+ r=SimulatedNightCycle().run(requested_size=10,entry_fills=[(4,.4),(6,.5)],exit_fills=[(3,.55),(7,.56)])
+ assert r["final"]["state"]=="CLOSED"
+ assert round(r["final"]["average_fill_price"],8)==.46
+ assert round(r["final"]["realized_pnl"],8)==.97
