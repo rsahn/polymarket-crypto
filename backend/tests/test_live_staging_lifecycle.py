@@ -97,3 +97,23 @@ def test_night_cycle_multi_fill_weighted_pnl():
  assert r["final"]["state"]=="CLOSED"
  assert round(r["final"]["average_fill_price"],8)==.46
  assert round(r["final"]["realized_pnl"],8)==.97
+
+
+def test_position_state_store_blocks_unclosed_restart(tmp_path):
+ from app.live.clob_staged import PositionStateStore,PersistedPositionState
+ store=PositionStateStore(tmp_path/"position.json")
+ assert store.assert_flat_or_recover()["allow_new_entry"]
+ s=PersistedPositionState("sig","slug","token",state="FILLED",filled_shares=10)
+ store.save(s)
+ loaded=store.load()
+ assert loaded.open_shares==10
+ gate=store.assert_flat_or_recover()
+ assert not gate["allow_new_entry"] and gate["reason"]=="RECOVERY_REQUIRED"
+
+def test_position_state_store_allows_closed_restart(tmp_path):
+ from app.live.clob_staged import PositionStateStore,PersistedPositionState
+ store=PositionStateStore(tmp_path/"position.json")
+ s=PersistedPositionState("sig","slug","token",state="CLOSED",filled_shares=10,sold_shares=10)
+ store.save(s)
+ gate=store.assert_flat_or_recover()
+ assert gate["allow_new_entry"] and gate["reason"]=="FLAT"
