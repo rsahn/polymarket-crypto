@@ -16,18 +16,27 @@ sys.path.insert(0, str(ROOT / "backend"))
 
 from app.live.risk import RiskManager
 
-FORBIDDEN_METHODS = {
-    "place_limit_order",
-    "place_market_order",
-    "post_order",
-    "post_orders",
-    "cancel_order",
-    "cancel_orders",
-    "cancel_market_orders",
-}
-
 DEFAULT_NOTIONAL = 25.0
 DEFAULT_BANKROLL_CAP = 100.0
+
+
+def _load_dotenv(path: Path):
+    """Minimal .env loader: local values only, never logs secrets."""
+    if not path.exists():
+        return
+    for raw in path.read_text(encoding="utf-8-sig").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in ("'", '"'):
+            value = value[1:-1]
+        os.environ.setdefault(key, value)
+
+
+_load_dotenv(ROOT / ".env")
 
 
 def _plain(value):
@@ -57,36 +66,31 @@ def _real_orders_enabled():
 
 
 def _client_factory():
-    """Build the installed polymarket 0.11.x client using local env only.
-
-    We intentionally inspect constructor names at runtime so no credential
-    values are ever logged or committed. If the local SDK/environment differs,
-    fail closed with a clear reason.
-    """
     from polymarket import AsyncSecureClient
 
     sig = inspect.signature(AsyncSecureClient)
     params = sig.parameters
+    private_key = _env_first("SIGNER_PRIVATE_KEY", "POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY")
+    if not private_key:
+        raise RuntimeError("missing local SIGNER_PRIVATE_KEY/private-key env")
+
     candidates = {
-        "private_key": _env_first("POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY"),
-        "key": _env_first("POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY"),
-        "funder": _env_first("POLYMARKET_FUNDER", "FUNDER_ADDRESS", "POLYMARKET_WALLET_ADDRESS"),
-        "funder_address": _env_first("POLYMARKET_FUNDER", "FUNDER_ADDRESS", "POLYMARKET_WALLET_ADDRESS"),
+        "private_key": private_key,
+        "key": private_key,
+        "funder": _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS"),
+        "funder_address": _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS"),
+        "wallet_address": _env_first("POLYMARKET_WALLET_ADDRESS"),
         "signature_type": _env_first("POLYMARKET_SIGNATURE_TYPE", "SIGNATURE_TYPE"),
         "host": _env_first("POLYMARKET_CLOB_HOST") or "https://clob.polymarket.com",
         "chain_id": int(_env_first("POLYMARKET_CHAIN_ID", "CHAIN_ID") or "137"),
     }
     kwargs = {k: v for k, v in candidates.items() if k in params and v is not None}
 
-    missing_secret = not (_env_first("POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY"))
-    if missing_secret:
-        raise RuntimeError("missing local private-key env; no secret is read from GitHub")
-
     try:
         return AsyncSecureClient(**kwargs)
     except TypeError as exc:
         raise RuntimeError(
-            "unable to construct AsyncSecureClient from known local env names; "
+            "unable to construct AsyncSecureClient from local env; "
             f"constructor={sig}"
         ) from exc
 
@@ -120,13 +124,11 @@ async def main():
     client = None
     try:
         client = _client_factory()
-        result["authenticated_wallet"] = True
-
-        # Explicitly read-only account call.
+        # Authentication is considered verified only after the authenticated
+        # read-only account endpoint succeeds.
         bal = await client.get_balance_allowance(asset_type="COLLATERAL")
+        result["authenticated_wallet"] = True
         payload = _plain(bal)
-
-        # Preserve raw normalized response without guessing SDK field names.
         result["balance_allowance_raw"] = payload
         for key in ("balance", "available_balance", "collateral_balance"):
             if key in payload:
@@ -136,7 +138,6 @@ async def main():
             if key in payload:
                 result["allowance"] = payload[key]
                 break
-
     except Exception as exc:
         result["reasons"].append(f"READ_ONLY_CHECK_FAILED:{type(exc).__name__}:{exc}")
     finally:
