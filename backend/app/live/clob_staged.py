@@ -384,3 +384,28 @@ class RemoteStateProjector:
             return {"ok":False,"reason":"UNMAPPED_REMOTE_STATUS","status":status,"state":state}
         state.updated_ms=int(time.time()*1000)
         return {"ok":True,"reason":"PROJECTED","state":state}
+
+
+class ReadOnlyPositionSynchronizer:
+    """Read get_order(), normalize/project it, then atomically persist local state.
+
+    No create/post/cancel methods are called.
+    """
+    def __init__(self, client, store):
+        self.client=client;self.store=store;self.projector=RemoteStateProjector()
+
+    async def sync(self, state):
+        from .clob_transport import normalize_order_status
+        order_id=state.exit_order_id or state.entry_order_id
+        if not order_id:
+            return {"ok":False,"reason":"ORDER_ID_MISSING"}
+        try:
+            raw=await self.client.get_order(order_id=str(order_id))
+        except Exception as exc:
+            return {"ok":False,"reason":"GET_ORDER_FAILED","error":f"{type(exc).__name__}:{exc}"}
+        normalized=normalize_order_status({"response":_plain(raw)})
+        projected=self.projector.apply(state,normalized)
+        if not projected.get("ok"):
+            return {"ok":False,"reason":projected.get("reason"),"normalized":normalized}
+        saved=self.store.save(state)
+        return {"ok":True,"reason":"SYNCED_AND_PERSISTED","normalized":normalized,"state":saved}
