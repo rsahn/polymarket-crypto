@@ -32,3 +32,24 @@ def test_append_only_lifecycle_journal(tmp_path):
  assert [x["event"] for x in rows]==["PREPARED","ACK","PARTIAL_FILL","CANCEL_REMAINDER","EXIT_FILL"]
  assert all(x["submit_allowed"] is False for x in rows)
  assert final["state"]=="CLOSED" and round(final["realized_pnl"],8)==.2
+
+
+def test_timeout_and_entry_invariants():
+ from app.live.clob_staged import ExecutionInvariantGuard
+ g=ExecutionInvariantGuard()
+ assert g.validate_entry(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=180)["allow"]
+ for kwargs in (
+  dict(open_positions=1,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=180),
+  dict(open_positions=0,session_pnl=-25,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=180),
+  dict(open_positions=0,session_pnl=0,geoblock_blocked=True,market_rotated=False,book_available=True,seconds_remaining=180),
+  dict(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=True,book_available=True,seconds_remaining=180),
+  dict(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=False,seconds_remaining=180),
+  dict(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=119),
+ ):
+  assert not g.validate_entry(**kwargs)["allow"]
+ assert g.timeout_action(state="PREPARED",elapsed_ms=1499)=="WAIT"
+ assert g.timeout_action(state="PREPARED",elapsed_ms=1500)=="ABORT_NO_ACK"
+ assert g.timeout_action(state="ACKED",elapsed_ms=2000)=="CANCEL_REMAINDER"
+ assert g.timeout_action(state="PARTIAL",elapsed_ms=2000)=="CANCEL_REMAINDER"
+ assert g.timeout_action(state="FILLED",elapsed_ms=2000)=="EXIT_RETRY_OR_KILL"
+ assert g.timeout_action(state="EXIT_PARTIAL",elapsed_ms=2000)=="EXIT_RETRY_OR_KILL"
