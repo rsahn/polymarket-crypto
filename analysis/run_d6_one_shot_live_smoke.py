@@ -36,15 +36,19 @@ async def main(a):
  client=await AsyncSecureClient.create(private_key=key)
  try:
   geo=await asyncio.to_thread(geoblock)
-  markets=await asyncio.to_thread(PolymarketMarketDiscovery.get_active_btc_markets,True,True)
-  now=int(time.time()*1000)
-  active=[m for m in markets if m.get("market_key")=="5m" and m.get("active") is True and (m.get("metadata") or {}).get("acceptingOrders") is True]
-  candidates=[m for m in active if (m.get("expiry_ts_ms") or 0)-now>=120000]
-  market=min(candidates,key=lambda m:m["expiry_ts_ms"],default=None)
-  if not market:
-   diag=[{"slug":m.get("slug"),"seconds_remaining":round(((m.get("expiry_ts_ms") or 0)-now)/1000,3),"active":m.get("active"),"acceptingOrders":(m.get("metadata") or {}).get("acceptingOrders")} for m in active]
-   print(json.dumps({"status":"NO_FRESH_BTC_5M_MARKET","now_ms":now,"active_5m":diag},indent=2))
-   return
+  deadline=time.time()+360
+  market=None
+  while time.time()<deadline:
+   markets=await asyncio.to_thread(PolymarketMarketDiscovery.get_active_btc_markets,True,True)
+   now=int(time.time()*1000)
+   active=[m for m in markets if m.get("market_key")=="5m" and m.get("active") is True and (m.get("metadata") or {}).get("acceptingOrders") is True]
+   candidates=[m for m in active if (m.get("expiry_ts_ms") or 0)-now>=120000]
+   market=min(candidates,key=lambda m:m["expiry_ts_ms"],default=None)
+   if market:break
+   diag=[{"slug":m.get("slug"),"seconds_remaining":round(((m.get("expiry_ts_ms") or 0)-now)/1000,3)} for m in active]
+   print("WAITING_FOR_FRESH_5M",json.dumps(diag),flush=True)
+   await asyncio.sleep(5)
+  if not market:raise RuntimeError("NO_FRESH_BTC_5M_MARKET_AFTER_360S")
   token=(market.get("token_ids") or {}).get(a.side)
   if not token:raise RuntimeError("TOKEN_NOT_FOUND")
   book=await client.get_order_book(token_id=str(token))
