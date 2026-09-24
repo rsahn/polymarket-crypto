@@ -53,3 +53,16 @@ def test_timeout_and_entry_invariants():
  assert g.timeout_action(state="PARTIAL",elapsed_ms=2000)=="CANCEL_REMAINDER"
  assert g.timeout_action(state="FILLED",elapsed_ms=2000)=="EXIT_RETRY_OR_KILL"
  assert g.timeout_action(state="EXIT_PARTIAL",elapsed_ms=2000)=="EXIT_RETRY_OR_KILL"
+
+
+def test_book_freshness_gate_fail_closed():
+ from app.live.clob_staged import BookFreshnessGate
+ g=BookFreshnessGate(max_book_age_ms=500)
+ assert not g.status(now_ms=1000)["allow"]
+ g.on_connect();assert not g.status(now_ms=1000)["allow"]
+ g.on_book_synced(initialized=1,required=2,ts_ms=1000);assert not g.status(now_ms=1000)["allow"]
+ g.on_book_synced(initialized=2,required=2,ts_ms=1000);assert g.status(now_ms=1499)["allow"]
+ stale=g.status(now_ms=1501);assert not stale["allow"] and "BOOK_STALE" in stale["reasons"]
+ g.on_book_update(ts_ms=1501);assert g.status(now_ms=1600)["allow"]
+ g.on_disconnect();assert not g.status(now_ms=1600)["allow"]
+ g.on_connect();assert not g.status(now_ms=1600)["allow"]
