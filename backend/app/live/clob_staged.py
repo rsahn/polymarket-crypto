@@ -284,3 +284,47 @@ class SimulatedNightCycle:
         if life.state!="CLOSED":
             raise SimulatedCycleError("CYCLE_NOT_CLOSED")
         return {"state":"CLOSED","events":events,"final":life.snapshot()}
+
+
+@dataclass
+class PersistedPositionState:
+    """Crash-recovery state. No transport calls; safe for staging/tests."""
+    signal_id: str
+    market_slug: str
+    token_id: str
+    state: str = "PREPARED"
+    entry_order_id: str | None = None
+    exit_order_id: str | None = None
+    filled_shares: float = 0.0
+    sold_shares: float = 0.0
+    updated_ms: int = 0
+
+    @property
+    def open_shares(self):
+        return max(0.0,self.filled_shares-self.sold_shares)
+
+class PositionStateStore:
+    def __init__(self,path):
+        from pathlib import Path
+        self.path=Path(path);self.path.parent.mkdir(parents=True,exist_ok=True)
+
+    def save(self,state):
+        import json,os,tempfile
+        state.updated_ms=int(time.time()*1000)
+        payload=asdict(state)
+        tmp=self.path.with_suffix(self.path.suffix+".tmp")
+        tmp.write_text(json.dumps(payload,sort_keys=True,indent=2),encoding="utf-8")
+        os.replace(tmp,self.path)
+        return payload
+
+    def load(self):
+        import json
+        if not self.path.exists():return None
+        return PersistedPositionState(**json.loads(self.path.read_text(encoding="utf-8")))
+
+    def assert_flat_or_recover(self):
+        state=self.load()
+        if state is None:return {"allow_new_entry":True,"reason":"NO_STATE"}
+        if state.open_shares>1e-9 or state.state not in {"CLOSED","CANCELLED"}:
+            return {"allow_new_entry":False,"reason":"RECOVERY_REQUIRED","state":asdict(state)}
+        return {"allow_new_entry":True,"reason":"FLAT","state":asdict(state)}
