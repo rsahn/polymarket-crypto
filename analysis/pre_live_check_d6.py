@@ -68,31 +68,13 @@ def _real_orders_enabled():
 def _client_factory():
     from polymarket import AsyncSecureClient
 
-    sig = inspect.signature(AsyncSecureClient)
-    params = sig.parameters
     private_key = _env_first("SIGNER_PRIVATE_KEY", "POLYMARKET_PRIVATE_KEY", "PRIVATE_KEY")
     if not private_key:
         raise RuntimeError("missing local SIGNER_PRIVATE_KEY/private-key env")
-
-    candidates = {
-        "private_key": private_key,
-        "key": private_key,
-        "funder": _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS"),
-        "funder_address": _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS"),
-        "wallet_address": _env_first("POLYMARKET_WALLET_ADDRESS"),
-        "signature_type": _env_first("POLYMARKET_SIGNATURE_TYPE", "SIGNATURE_TYPE"),
-        "host": _env_first("POLYMARKET_CLOB_HOST") or "https://clob.polymarket.com",
-        "chain_id": int(_env_first("POLYMARKET_CHAIN_ID", "CHAIN_ID") or "137"),
-    }
-    kwargs = {k: v for k, v in candidates.items() if k in params and v is not None}
-
-    try:
-        return AsyncSecureClient(**kwargs)
-    except TypeError as exc:
-        raise RuntimeError(
-            "unable to construct AsyncSecureClient from local env; "
-            f"constructor={sig}"
-        ) from exc
+    wallet = _env_first("POLYMARKET_WALLET_ADDRESS", "POLYMARKET_FUNDER", "FUNDER_ADDRESS")
+    # polymarket-client 0.11.x deliberately blocks direct construction:
+    # AsyncSecureClient.create(...) derives/validates authenticated context.
+    return AsyncSecureClient.create(private_key=private_key, wallet=wallet)
 
 
 async def main():
@@ -123,7 +105,7 @@ async def main():
 
     client = None
     try:
-        client = _client_factory()
+        client = await _client_factory()
         # Authentication is considered verified only after the authenticated
         # read-only account endpoint succeeds.
         bal = await client.get_balance_allowance(asset_type="COLLATERAL")
