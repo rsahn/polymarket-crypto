@@ -8,6 +8,7 @@ import inspect
 import json
 import os
 import sys
+import time
 from dataclasses import asdict, is_dataclass
 from pathlib import Path
 
@@ -19,6 +20,7 @@ from app.collectors.polymarket import PolymarketMarketDiscovery
 
 DEFAULT_NOTIONAL = 25.0
 DEFAULT_BANKROLL_CAP = 100.0
+MIN_MARKET_REMAINING_SECONDS = 120
 
 
 def _load_dotenv(path: Path):
@@ -137,15 +139,26 @@ async def main():
             PolymarketMarketDiscovery.get_active_btc_markets,
             True, True
         )
-        market = next((m for m in markets if m.get("market_key") == "5m"), None)
+        now_ms = int(time.time() * 1000)
+        candidates = [
+            m for m in markets
+            if m.get("market_key") == "5m"
+            and m.get("active") is True
+            and (m.get("metadata") or {}).get("acceptingOrders") is True
+            and m.get("expiry_ts_ms") is not None
+            and m["expiry_ts_ms"] - now_ms >= MIN_MARKET_REMAINING_SECONDS * 1000
+        ]
+        market = min(candidates, key=lambda m: m["expiry_ts_ms"], default=None)
         if market is None:
-            result["reasons"].append("NO_ACTIVE_BTC_5M_MARKET")
+            result["reasons"].append("NO_FRESH_BTC_5M_MARKET")
         else:
             meta = market.get("metadata") or {}
             result["btc_5m_market"] = {
                 "slug": market.get("slug"),
                 "active": market.get("active"),
                 "expiry_ts_ms": market.get("expiry_ts_ms"),
+                "seconds_remaining": round((market["expiry_ts_ms"] - now_ms) / 1000, 3),
+                "min_required_seconds_remaining": MIN_MARKET_REMAINING_SECONDS,
                 "accepting_orders": meta.get("acceptingOrders"),
             }
             tick = meta.get("orderPriceMinTickSize")
