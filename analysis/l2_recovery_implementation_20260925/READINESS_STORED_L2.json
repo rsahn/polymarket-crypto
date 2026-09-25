@@ -1,0 +1,47 @@
+{
+  "phase": "AUTHENTICATED_READ_ONLY",
+  "status": "STORAGE_PASS_NETWORK_BLOCKED",
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete_and_parseable": true,
+    "signer_nonce_environment_verified": true,
+    "storage_validated": true
+  },
+  "leak_scan": {
+    "detected": false,
+    "local_files_checked": 2198,
+    "local_files_unchecked": 7,
+    "scope": "selected tracked working-tree text and L2 logs/reports",
+    "git_history_and_terminal_history_checked": false,
+    "global_absence_proven": false
+  },
+  "network": {
+    "context": "CODEX_ENVIRONMENT",
+    "public_get_attempts": 4,
+    "error": "URLError; no HTTP status received",
+    "authenticated_get_attempts": 0,
+    "balance_allowance": "BLOCKED_TIME_PREFLIGHT",
+    "open_orders": "NOT_EXECUTED",
+    "trades": "NOT_EXECUTED",
+    "positions": "GET_FAILED",
+    "reconciliation": "BLOCKED",
+    "target_powershell_failure_inferred": false,
+    "bypass_attempted": false
+  },
+  "complete": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "derive_attempted": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "monetary_transport_locked": true,
+  "tests": {
+    "suite_passed": 437,
+    "suite_failed": 0,
+    "subtests_passed": 25
+  }
+}
