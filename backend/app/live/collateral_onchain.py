@@ -6,6 +6,7 @@ import hashlib
 from decimal import Decimal
 import urllib.request
 import urllib.error
+from urllib.parse import urlsplit
 from .network_readonly import NoRedirect
 
 RPC='https://polygon.drpc.org'
@@ -72,9 +73,20 @@ def http_error_metadata(response,request_id):
     except Exception:return {'http_error_body_status':'BODY_READ_FAILED'}
 
 
+def validate_rpc_endpoint(value):
+    try:
+        if not isinstance(value,str) or not value or any(c.isspace() or ord(c)<32 or ord(c)==127 for c in value):raise ValueError()
+        url=urlsplit(value)
+        if url.scheme!='https' or not url.hostname or url.username is not None or url.password is not None or url.fragment or '#' in value or '\\' in value:raise ValueError()
+        if url.port is not None and not 1<=url.port<=65535:raise ValueError()
+    except Exception:raise ValueError('POLYGON_ARCHIVE_RPC_URL_INVALID') from None
+    return value
+
+
 class PublicRPC:
-    def __init__(self,wallet):
+    def __init__(self,wallet,*,endpoint=RPC):
         if not re.fullmatch('0x[0-9a-fA-F]{40}',wallet):raise ValueError('WALLET')
+        self._endpoint=validate_rpc_endpoint(endpoint)
         self.wallet=wallet;self.calls=[];self.counter=0
     def call(self,method,params):
         block=lambda s:isinstance(s,str) and re.fullmatch('0x[0-9a-fA-F]+',s)
@@ -98,7 +110,7 @@ class PublicRPC:
         if not valid:raise ValueError('RPC_METHOD_OR_PARAMS_FORBIDDEN')
         self.counter+=1
         payload={'jsonrpc':'2.0','id':self.counter,'method':method,'params':params}
-        request=urllib.request.Request(RPC,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
+        request=urllib.request.Request(self._endpoint,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
         entry={'rpc_method':method,'id':self.counter,'started_ms':time.time_ns()//1000000}
         if method=='eth_getLogs':
             entry.update(from_block=int(params[0]['fromBlock'],16),to_block=int(params[0]['toBlock'],16))
