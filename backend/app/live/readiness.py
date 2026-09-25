@@ -1,4 +1,5 @@
 """Single read-only readiness report. Never arms or submits."""
+from .freshness_policy import freshness_limit_ms
 import inspect
 import asyncio
 import ast
@@ -44,7 +45,7 @@ class ProductionReadinessCheck:
         _,values['book']=await read_source('book',self.sources['book'])
         now=self.clock()
         evaluation_cpu_started=time.thread_time_ns()
-        def valid(name,limit=500):
+        def valid(name,limit=None):
             v=values[name]
             try:return v.get("available") is True and fresh(v.get("observed_ms"),now,limit)
             except (ValueError,TypeError):return False
@@ -84,7 +85,7 @@ class ProductionReadinessCheck:
         health_checks['book_stream_health']=book_health
         system_ready=all(health_checks.values())
         market_eligible=checks['book_freshness'] and b.get('market_eligible') is True
-        return dict(evaluated_ms=now,evaluation_started_ms=now,evaluation_complete_ms=self.clock(),evaluation_thread_cpu_ms=(time.thread_time_ns()-evaluation_cpu_started)/1000000,book_sample_started_ms=book_sample_started_ms,book_sample_finished_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
+        return dict(freshness_limit_ms=freshness_limit_ms(),evaluated_ms=now,evaluation_started_ms=now,evaluation_complete_ms=self.clock(),evaluation_thread_cpu_ms=(time.thread_time_ns()-evaluation_cpu_started)/1000000,book_sample_started_ms=book_sample_started_ms,book_sample_finished_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
             health_checks=health_checks,operating_state="SYSTEM_BLOCKED" if not system_ready else "ELIGIBLE_BUT_LOCKED" if market_eligible else "NO_TRADE",checks=checks,observations=values,flags=flags,
             ready_for_arm=system_ready and market_eligible and all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
 

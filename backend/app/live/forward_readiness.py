@@ -2,6 +2,7 @@
 Unmodelled D6 activity is rejected, never assigned invented PnL or fees.
 """
 from decimal import Decimal
+from .freshness_policy import stale_reason
 from .production_readonly import fresh
 
 
@@ -21,7 +22,7 @@ def evaluate_baseline(prior,remote,*,now):
         if not set(base['conditional_assets']['balances'])<=set(remote['balances']):return blocked('KNOWN_ASSET_NOT_OBSERVED')
         if any(not isinstance(v,str) or not v.isdigit() for v in remote['balances'].values()):return blocked('BALANCE_SCHEMA')
         if any(int(v)>0 for v in remote['balances'].values()):return recovery('CONDITIONAL_INVENTORY_UNEXPLAINED')
-        if not fresh(remote['observed_ms'],now):return blocked('RECONCILIATION_STALE_500MS')
+        if not fresh(remote['observed_ms'],now):return blocked(stale_reason('RECONCILIATION'))
         raw=remote['balance_raw']
         if not isinstance(raw,str) or not raw.isdigit():return blocked('COLLATERAL_SCHEMA')
         return {'phase':'RECONCILED','reconciled':True,'observed_ms':remote['observed_ms'],
@@ -66,6 +67,6 @@ def validate_generation(generation, now):
         if any(type(p['observed_ms']) is not int for p in parts.values()):return result
         stale=[n for n,p in parts.items() if not fresh(p['observed_ms'],now)]
         return {**result,'id':g['id'],'watermark':dict(w),'component_age_ms':ages,
-                'complete':not stale,'reason':'GENERATION_FRESH' if not stale else 'GENERATION_STALE_500MS',
+                'complete':not stale,'reason':'GENERATION_FRESH' if not stale else stale_reason('GENERATION'),
                 'stale_components':sorted(stale)}
     except (KeyError,ValueError,TypeError,AttributeError):return result

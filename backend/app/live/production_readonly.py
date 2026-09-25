@@ -2,6 +2,7 @@
 Never construct/authenticate a wallet or create an order. Caller supplies an already
 validated SDK client. Credential-scoped data is not full-wallet flatness evidence.
 """
+from .freshness_policy import freshness_limit_ms
 import asyncio
 import time
 from decimal import Decimal, InvalidOperation
@@ -29,7 +30,8 @@ def plain(value):
 
 def unavailable(reason):return dict(available=False,complete=False,reason=reason)
 
-def fresh(observed,now,limit=500):
+def fresh(observed,now,limit=None):
+    if limit is None:limit=freshness_limit_ms()
     age=number(now)-number(observed)
     return 0<=age<=limit
 

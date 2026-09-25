@@ -1,6 +1,7 @@
 """Public persistent WS book, strict identity/generation and source timestamps.
 Independent of BTC V1 signal implementation. No REST snapshot-as-stream claim.
 """
+from .freshness_policy import freshness_limit_ms
 import asyncio
 import json
 import copy
@@ -91,7 +92,7 @@ class StreamBook(BookStateSource):
             if not (type(raw_stamp) is int or isinstance(raw_stamp,str) and raw_stamp.isascii() and raw_stamp.isdigit()):
                 raise ValueError('AMBIGUOUS_TIMESTAMP')
             stamp=int(raw_stamp);self.last_wire_event_ms=stamp
-            if not 0<=self.clock()-stamp<=500:raise ValueError('STALE_WIRE_EVENT')
+            if not 0<=self.clock()-stamp<=freshness_limit_ms():raise ValueError('STALE_WIRE_EVENT')
             # Check every affected token before any depth mutation (including
             # a multi-token delta). Timestamp order alone is not supersession proof.
             candidates=[event['asset_id']] if kind=='book' else [c['asset_id'] for c in event['price_changes']]
@@ -173,7 +174,7 @@ class StreamBook(BookStateSource):
             self.diagnostics['local_processing_ms']=self.clock()-received_ms
             self.diagnostics['freshness_cause']=(
                 'LOCAL_PROCESSING_DELAY' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'}
-                    and age_at_receipt is not None and 0<=age_at_receipt<=500 else
+                    and age_at_receipt is not None and 0<=age_at_receipt<=freshness_limit_ms() else
                 'WIRE_EVENT_STALE_AT_RECEIPT' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'} else
                 'BOOK_INVALIDATED')
             # A local rejection is not a TCP disconnect. Invalidate both tokens;
@@ -201,7 +202,7 @@ class StreamBook(BookStateSource):
                 'last_wire_event_source_ms':self.last_wire_event_ms,'last_wire_event_received_ms':self.last_wire_received_ms,
                 'last_valid_book_source_ms':self.last_valid_book_ms,'last_valid_book_received_ms':self.last_valid_received_ms,
                 'last_frame_received_ms':self.last_frame_received_ms,'last_pong_received_ms':self.last_pong_received_ms,
-                'no_new_wire_event_over_500ms':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>500}
+                'freshness_limit_ms':freshness_limit_ms(),'no_new_wire_event_over_limit':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>freshness_limit_ms()}
 
     async def run(self,*,connect_factory=None):
         from websockets.asyncio.client import connect

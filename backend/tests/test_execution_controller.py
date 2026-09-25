@@ -219,3 +219,43 @@ def test_partial_depth_exit_preserves_open_inventory(build):
     with pytest.raises(ExecutionBlocked,match='EXIT_INCOMPLETE'):asyncio.run(f.run())
     assert f.exit_requests[0]['size']==4
     assert f.store.load()['bought']-f.store.load()['sold']==6
+
+
+def test_restart_after_final_account_failure_reconciles_known_completed_cycle(build):
+    f=build();original=f.account
+    async def failed_final_read():
+        if f.exit_sent:raise OSError('simulated offline')
+        return await original()
+    f.controller.account_reader=failed_final_read
+    with pytest.raises(OSError):asyncio.run(f.run())
+    assert f.store.load()['phase']=='RECOVERY_REQUIRED'
+    calls=list(f.calls)
+    restarted=ExecutionController(f.store,f,original,lambda:f.gate,clock=lambda:1000)
+    asyncio.run(restarted.recover())
+    assert restarted.reconciled
+    assert f.store.load()['phase']=='CLOSED'
+    assert f.calls==calls
+    assert f.store.db.execute('select event from execution_events order by id desc limit 1').fetchone()[0]=='RECOVERY_FLAT_VERIFIED'
+
+
+def test_recovery_never_assumes_absent_asset_is_zero(build):
+    f=build();asyncio.run(f.run())
+    state=f.store.load();state['phase']='RECOVERY_REQUIRED';f.store.write('SIMULATED_FAILURE',state)
+    async def incomplete_asset():return dict(complete=True,observed_ms=1000,open_order_ids=[],balances={})
+    restarted=ExecutionController(f.store,f,incomplete_asset,lambda:f.gate,clock=lambda:1000)
+    with pytest.raises(ExecutionBlocked,match='RECOVERY_REQUIRED'):asyncio.run(restarted.recover())
+    assert not restarted.reconciled
+
+
+def test_recovery_requires_terminal_status_even_if_remote_balance_flat(build):
+    f=build();asyncio.run(f.run())
+    state=f.store.load();state['phase']='RECOVERY_REQUIRED';f.store.write('SIMULATED_FAILURE',state)
+    original=f.get_order
+    async def live_status(order_id):
+        result=await original(order_id)
+        result['response']['status']='LIVE'
+        return result
+    f.get_order=live_status
+    restarted=ExecutionController(f.store,f,f.account,lambda:f.gate,clock=lambda:1000)
+    with pytest.raises(ExecutionBlocked,match='RECOVERY_REQUIRED'):asyncio.run(restarted.recover())
+    assert not restarted.reconciled

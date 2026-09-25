@@ -1,0 +1,36 @@
+{
+  "sdk_source": "polymarket/clients/async_secure.py",
+  "methods": [
+    {
+      "name": "list_positions",
+      "parameters": "self, *, user: str | None=None, condition_id: str | Sequence[str] | None=None, status: PositionStatusFilter | None=None, event_id: int | Sequence[int] | None=None, filter_type: PositionFilterType | None=None, filter_amount: float | None=None, include_archived: bool | None=None, sort_by: PositionSortBy | None=None, sort_direction: SortDirection | None=None, start: int | datetime | None=None, end: int | datetime | None=None, full_history: bool=False, page_size: int=100",
+      "returns": "AsyncPaginator[Position]",
+      "line": 429
+    },
+    {
+      "name": "list_open_orders",
+      "parameters": "self, *, asset_id: str | None=None, token_id: str | None=None, id: str | None=None, market: str | None=None",
+      "returns": "AsyncPaginator[OpenOrder]",
+      "line": 2303
+    },
+    {
+      "name": "list_account_trades",
+      "parameters": "self, *, asset_id: str | None=None, token_id: str | None=None, id: str | None=None, market: str | None=None, maker_address: str | None=None, after: str | None=None, before: str | None=None",
+      "returns": "AsyncPaginator[ClobTrade]",
+      "line": 2333
+    },
+    {
+      "name": "get_balance_allowance",
+      "parameters": "self, *, asset_type: AssetType, asset_id: str | None=None, token_id: str | None=None",
+      "returns": "BalanceAllowance",
+      "line": 2382
+    }
+  ],
+  "inspection": "AST_ONLY_NO_CLIENT_CONSTRUCTION",
+  "archive_rpc_configured_in_process": false,
+  "secrets_loaded": false,
+  "authenticated_network_calls": 0,
+  "completeness_conclusion": "NO_COMMON_BLOCK_BOUND_PARAMETER_IN_THE_INSPECTED_ACCOUNT_METHODS",
+  "official_user_stream_reference": "https://docs.polymarket.com/trading/realtime-order-updates",
+  "official_user_stream_limit": "Reviewed order/trade event schemas do not document a shared CTF/indexer completeness watermark; this is not proof that no other API can provide one."
+}

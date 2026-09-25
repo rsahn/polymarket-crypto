@@ -15,6 +15,7 @@ from app.live.forward_readiness import evaluate_baseline,ObservationSource,Forwa
 from app.live.readonly_book_stream import StreamBook
 from app.live.production_readonly import now_ms,drain,plain,units,GeoBlockSource,BookStateSource
 from app.live.readiness import ProductionReadinessCheck
+from app.live.freshness_policy import freshness_policy,freshness_limit_ms,stale_reason
 from app.live.latency_trace import diagnose, measured_await
 from app.live.network_readonly import GetOnlyTransport,ReadOnlyClient
 from app.live.collateral_onchain import PublicRPC,validate_rpc_endpoint,CONTRACT
@@ -191,7 +192,7 @@ def inventory_completeness(inventory):
         inventory_through_C_proven=proof.get('inventory_through_C_proven') is True,
         current_inventory_proven=proof.get('current_inventory_proven') is True,
         post_C_completeness='UNPROVEN_NO_COMMON_WATERMARK' if proof else 'NO_BOUNDARY_EVIDENCE',
-        generation_stale=proof.get('reason')=='GENERATION_STALE_500MS',
+        generation_stale=proof.get('reason')==stale_reason('GENERATION'),
         boundary_verdict=proof.get('reason'),latency_fix_sufficient=False)
 
 
@@ -204,7 +205,7 @@ def annotate(readiness):
         details[name]={'status':'PASS' if passed else 'BLOCKED','source':o.get('provenance',o.get('source',source)),
             'observed_ms':o.get('observed_ms'),'evaluated_ms':at,
             'reason':'INVARIANT_SATISFIED' if passed else o.get('reason') or 'MISSING_STALE_OR_UNRECONCILED',
-            'freshness_limit_ms':60000 if name=='geoblock' else 500 if source!='local' else None}
+            'freshness_limit_ms':60000 if name=='geoblock' else freshness_limit_ms() if source!='local' else None}
     readiness['check_details']=details
     for obs in readiness['observations'].values():
         for key in ('wallet','open_order_ids','balances','books'):obs.pop(key,None)
@@ -362,7 +363,7 @@ async def run(target=False,*,health_contract=False):
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
     except Exception as exc:
-        allowed={'READ_ONLY_WARMUP_FAILED','BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        allowed={'READ_ONLY_WARMUP_FAILED','BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','GENERATION_STALE_1300MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
         if stage=='POST_GENESIS_CTF_DISCOVERY' and preparation_rpc is not None and preparation_rpc.failure:
             reason=preparation_rpc.failure
@@ -441,12 +442,20 @@ async def run(target=False,*,health_contract=False):
 
 def main():
     args=sys.argv[1:]
+    limit=500
+    if '--freshness-ms' in args:
+        i=args.index('--freshness-ms')
+        if i+1>=len(args) or args[i+1] not in ('500','1300'):return 2
+        limit=int(args[i+1]);args=args[:i]+args[i+2:]
     diagnostic='--diagnostics' in args
     if diagnostic:args=[a for a in args if a!='--diagnostics']
     if args not in (['--offline'],['--target-machine'],['--target-machine','--health-contract']):return 2
     if diagnostic and args!=['--target-machine','--health-contract']:return 2
     runner=diagnose(run) if diagnostic else run
-    try:report=asyncio.run(runner(args[0]=='--target-machine',health_contract='--health-contract' in args))
+    try:
+        with freshness_policy(limit):
+            report=asyncio.run(runner(args[0]=='--target-machine',health_contract='--health-contract' in args))
+        report['freshness_limit_ms']=limit
     except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False}
     path=ROOT/('D6_POST_GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)

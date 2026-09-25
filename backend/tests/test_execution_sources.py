@@ -30,3 +30,20 @@ def test_stale_geo_cannot_pass():
         market_slug="m",token_id="t",book_ms=1000,risk_ms=1000,signal_ms=1000,geo_ms=0,expiry_ms=200000,
         open_positions=0,session_pnl=0,available_usdc=100,fillable_shares=20)
     assert not staging_gate(lambda:value,StagedLimitOrder("s","m","t","BUY",5,.5,10,.01,1),now_ms=1000)["allow"]
+
+
+def test_exit_source_preserves_book_snapshot_and_explicit_policy():
+    from app.live.execution_sources import ExecutionStateSources
+    book={'books':{'t':{'bids':[(.4,10)],'asks':[(.5,10)]}},'generation':3,'observed_ms':1000}
+    src=ExecutionStateSources(book=lambda:book,risk=lambda:{},geo=lambda:{},signal=lambda:{},position=lambda:{},exit_policy=lambda:{'max_slippage_bps':25})
+    snap=src()
+    assert snap['max_exit_slippage_bps']==25
+    assert snap['exit_book']['generation']==3
+    book['books']['t']['bids'].clear()
+    assert snap['exit_book']['books']['t']['bids']==[(.4,10)]
+
+
+def test_missing_exit_policy_never_gets_an_optimistic_default():
+    from app.live.execution_sources import ExecutionStateSources
+    src=ExecutionStateSources(book=lambda:{},risk=lambda:{},geo=lambda:{},signal=lambda:{},position=lambda:{})
+    assert src()['max_exit_slippage_bps'] is None
