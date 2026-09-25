@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'backend'))
 from app.live.genesis_ledger import expected_wallet,create_genesis,read_genesis,digest,LIMITS
-from app.live.genesis_discovery import conditional_snapshot
+from app.live.genesis_discovery import conditional_snapshot,DiscoveryBlocked
 from app.live.genesis_readonly import read_local_ledger
 from app.live.collateral_onchain import PublicRPC,CONTRACT
 from app.live.deposit_qualification import FLAGS,CLOB,DATA,write_report
@@ -111,6 +111,9 @@ async def run(network=False):
                 risk=Observed({'available':True,'observed_ms':now,'allow':Decimal(raw)/1000000>=25,
                     'session_pnl':'0','open_positions':0,'source':'NEW_SESSION_START_FROM_VERIFIED_EMPTY_GENESIS',
                     'prior_history_pnl_not_claimed':True})
+        except DiscoveryBlocked as exc:
+            decision={'created':False,'phase':'GENESIS_PENDING','reasons':[exc.reason],
+                      'discovery':exc.diagnostics}
         except RecoveryDetected:
             decision={'created':False,'phase':'RECOVERY_REQUIRED','reasons':['UNEXPLAINED_ORDER_POSITION_TRADE_OR_LOCAL_RECOVERY']}
         except Exception:
