@@ -13,6 +13,7 @@ from dataclasses import asdict
 from pathlib import Path
 from .clob_transport import extract_order_id, normalize_order_status
 from .clob_staged import ExecutionInvariantGuard
+from .exit_policy import plan_exit
 
 
 class ExecutionBlocked(RuntimeError):
@@ -183,6 +184,11 @@ class ExecutionController:
                     raise ExecutionBlocked("UNEXPECTED_INVENTORY")
                 if state["bought"]:
                     await asyncio.sleep(hold_seconds)
+                    evidence = await self.account()
+                    if evidence['balances'].get(order.token_id) != state['bought']-state['sold']:
+                        raise ExecutionBlocked('EXIT_INVENTORY_MISMATCH')
+                    if any(q != 0 for token,q in evidence['balances'].items() if token != order.token_id):
+                        raise ExecutionBlocked('UNEXPECTED_INVENTORY')
                     gate = self.gate_reader()
                     if gate.get("connected") is not True or gate.get("book_synced") is not True:
                         raise ExecutionBlocked("EXIT_BOOK_UNAVAILABLE")
@@ -190,10 +196,19 @@ class ExecutionController:
                         raise ExecutionBlocked("EXIT_MARKET_ROTATION")
                     age=self.clock()-finite(gate.get("book_ms"))
                     if age<0 or age>500:raise ExecutionBlocked("EXIT_BOOK_STALE")
-                    state["exit_size"] = state["bought"]
+                    # The pre-hold argument is never a source of executable pricing.
+                    # Snapshot and explicit slippage must come from the current gate.
+                    plan = plan_exit(gate.get('exit_book') or {}, token_id=order.token_id,
+                        market_slug=order.market_slug, confirmed_shares=evidence['balances'][order.token_id],
+                        requested_shares=state['bought']-state['sold'], tick_size=order.tick_size,
+                        max_slippage_bps=gate.get('max_exit_slippage_bps'), now_ms=self.clock())
+                    if plan['state'] != 'EXIT_PLANNED':
+                        raise ExecutionBlocked('EXIT_BOOK_OR_POLICY_INVALID')
+                    state['exit_plan'] = plan
+                    state["exit_size"] = float(plan['quantity'])
                     state["phase"] = "EXIT_SUBMIT_PENDING"
                     self.store.write("EXIT_INTENT",state)
-                    event = await asyncio.wait_for(self.transport.submit_exit_limit(token_id=order.token_id,price=exit_price,size=state["exit_size"]),self.timeout)
+                    event = await asyncio.wait_for(self.transport.submit_exit_limit(token_id=order.token_id,price=float(plan["limit_price"]),size=state["exit_size"]),self.timeout)
                     state["exit_id"] = extract_order_id(event)
                     if not state["exit_id"]: raise ExecutionBlocked("EXIT_ACK_UNKNOWN")
                     state["phase"] = "EXIT_ACKED"

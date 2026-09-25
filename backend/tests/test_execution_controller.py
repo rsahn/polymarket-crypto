@@ -15,6 +15,10 @@ class Fixture:
         self.gate=dict(connected=True,book_synced=True,signal_valid=True,recovery_complete=True,
             geoblock_blocked=False,market_slug="market",token_id="token",book_ms=1000,risk_ms=1000,
             signal_ms=1000,geo_ms=1000,expiry_ms=200000,session_pnl=0,open_positions=0,available_usdc=109.16,fillable_shares=20)
+        self.gate['exit_book']=dict(available=True,connected=True,book_synced=True,market_slug='market',
+            observed_ms=1000,generation=1,books={'token':dict(observed_ms=1000,bids=[(.60,20)],asks=[(.61,20)])})
+        self.gate['max_exit_slippage_bps']=100
+        self.exit_requests=[]
         self.controller=ExecutionController(self.store,self,self.account,lambda:dict(self.gate),timeout=.03,clock=lambda:1000)
     async def account(self):
         quantity=0
@@ -26,7 +30,7 @@ class Fixture:
         self.calls.append("entry")
         return {"response":{} if self.mode=="ambiguous" else {"order_id":"entry"}}
     async def submit_exit_limit(self,**kwargs):
-        self.calls.append(("exit",kwargs["size"]));self.exit_sent=True
+        self.exit_requests.append(kwargs);self.calls.append(("exit",kwargs["size"]));self.exit_sent=True
         return {"response":{"order_id":"exit"}}
     async def cancel_order(self,**kwargs):self.calls.append("cancel");self.cancelled=True;return {"response":{"success":True}}
     async def get_order(self,order_id):
@@ -171,3 +175,47 @@ def test_local_cancellation_during_submit_preserves_ambiguous_remote_state(build
             await f.controller.recover()
     asyncio.run(scenario())
     assert f.calls == ["entry"]
+
+
+def test_exit_price_is_derived_from_current_book_not_pre_hold_argument(build):
+    f=build();asyncio.run(f.run())
+    assert f.exit_requests[0]['price']==.60
+
+
+@pytest.mark.parametrize('invalid',['missing','empty','stale','unsynced'])
+def test_invalid_exit_snapshot_never_submits_exit(build,invalid):
+    f=build()
+    if invalid=='missing':f.gate.pop('exit_book')
+    elif invalid=='empty':f.gate['exit_book']['books']['token']['bids']=[]
+    elif invalid=='stale':f.gate['exit_book']['observed_ms']=0
+    else:f.gate['exit_book']['book_synced']=False
+    with pytest.raises(ExecutionBlocked):asyncio.run(f.run())
+    assert not f.exit_requests
+    assert f.store.load()['phase']=='RECOVERY_REQUIRED'
+
+
+def test_inventory_changes_during_hold_no_exit_is_submitted(build):
+    f=build();original=f.account;held_reads=0
+    async def account():
+        nonlocal held_reads
+        value=await original()
+        if f.calls and not f.exit_sent:
+            held_reads+=1
+            if held_reads>=2:value['balances']['token']=9
+        return value
+    f.controller.account_reader=account
+    with pytest.raises(ExecutionBlocked,match='EXIT_INVENTORY_MISMATCH'):asyncio.run(f.run())
+    assert not f.exit_requests
+
+
+def test_partial_depth_exit_preserves_open_inventory(build):
+    f=build('partial_exit');f.gate['exit_book']['books']['token']['bids']=[(.60,4)]
+    original=f.get_order
+    async def status(order_id):
+        value=await original(order_id)
+        if order_id=='exit':value['response'].update(original_size=4,size_matched=4,status='MATCHED')
+        return value
+    f.get_order=status
+    with pytest.raises(ExecutionBlocked,match='EXIT_INCOMPLETE'):asyncio.run(f.run())
+    assert f.exit_requests[0]['size']==4
+    assert f.store.load()['bought']-f.store.load()['sold']==6
