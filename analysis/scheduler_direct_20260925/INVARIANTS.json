@@ -1,0 +1,21 @@
+{
+  "protected_unchanged": {
+    "analysis/d6/paper_live.py": true,
+    "backend/app/live/fixed_boundary.py": true,
+    "backend/app/live/production_readonly.py": true,
+    "backend/app/live/readonly_book_stream.py": true,
+    "backend/app/live/clob_transport.py": true,
+    "analysis/qualify_post_b_proofs.py": true
+  },
+  "genesis_unchanged": true,
+  "event_count": 0,
+  "leak_scan": {
+    "scope": "changed source/tests and logs; pattern scan not global proof",
+    "files": 8,
+    "hits": 0
+  },
+  "target_run": false,
+  "passed": 628,
+  "failed": 0,
+  "sdk_monetary_attempts": 0
+}
