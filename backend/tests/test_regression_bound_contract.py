@@ -27,7 +27,9 @@ def test_same_token_regression_has_exact_sanitized_evidence(kind,capsys):
         source_timestamp_ms=1000,previous_accepted_source_timestamp_ms=1001,
         received_timestamp_ms=1071,delta_ms=-1,generation=1,
         comparison="source_timestamp_ms < same_token_accepted_source_timestamp_ms",
-        reason="BOOK_REGRESSION",watermark_scope="TOKEN_WITHIN_CONNECTION_GENERATION")
+        reason="BOOK_REGRESSION",watermark_scope="TOKEN_WITHIN_CONNECTION_GENERATION",
+        reference_full_book_ms=1001,accepted_deltas_since_full_book=0,supersession_proven=False,
+        classification="FULL_BOOK_REGRESSION" if kind=="book" else "PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN")
     assert not r["available"] and r["state"]=="INVALID_BOOK"
     assert "TOKEN_A" not in json.dumps(d)
     assert capsys.readouterr().out==""

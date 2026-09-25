@@ -18,7 +18,7 @@ class StreamBook(BookStateSource):
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
             'resync_complete_generation':None,'regression_event':None,'transitions':[],'tokens':[]}
-        self.first_full_books={};self.events_seen=0
+        self.first_full_books={};self.events_seen=0;self.snapshot_refs={}
         self.last_books={};self.last_wire_event_ms=None;self.last_valid_book_ms=None;self.attempted_books={}
     def transition(self,kind):
         self.diagnostics['transitions'].append({'kind':kind,'generation':self.generation,'at_ms':self.clock(),'reason':self.failure})
@@ -29,7 +29,7 @@ class StreamBook(BookStateSource):
         self.failure=None;self.last_books={};self.attempted_books={};self.last_valid_book_ms=None;self.last_wire_event_ms=None
         self.diagnostics['resync_complete_generation']=None
         self.diagnostics['regression_event']=None
-        self.first_full_books={};self.events_seen=0
+        self.first_full_books={};self.events_seen=0;self.snapshot_refs={}
         self.transition('CONNECTED_AWAITING_TWO_FULL_BOOKS')
     def disconnect(self):
         if self.connected:self.transition('DISCONNECTED')
@@ -49,6 +49,27 @@ class StreamBook(BookStateSource):
                 'best_ask':str(min(ask)) if ask else None,'source_timestamp_ms':int(event['timestamp']),
                 'generation':self.generation}
         except (KeyError,TypeError,ValueError):return
+    def reject_regression_before_mutation(self,token,stamp,kind,received_ms):
+        previous=self.books.get(token)
+        if previous is None or stamp>=previous['observed_ms']:return
+        ref=self.snapshot_refs.get(token,{})
+        count=ref.get('accepted_deltas',0)
+        classification=('FULL_BOOK_REGRESSION' if kind=='book' else
+            'REGRESSION_AFTER_ACCEPTED_DELTA' if count else
+            'PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN' if ref.get('generation')==self.generation
+                and stamp<ref.get('source_ms',-1) else 'TEMPORAL_REGRESSION_UNPROVEN')
+        self.diagnostics['regression_event']={
+            'event_type':kind,'token_index':self.expected_tokens.index(token),
+            'token_sha256':hashlib.sha256(token.encode()).hexdigest(),
+            'source_timestamp_ms':stamp,'previous_accepted_source_timestamp_ms':previous['observed_ms'],
+            'received_timestamp_ms':received_ms,'delta_ms':stamp-previous['observed_ms'],
+            'generation':self.generation,'reason':'BOOK_REGRESSION',
+            'comparison':'source_timestamp_ms < same_token_accepted_source_timestamp_ms',
+            'watermark_scope':'TOKEN_WITHIN_CONNECTION_GENERATION',
+            'reference_full_book_ms':ref.get('source_ms'),'accepted_deltas_since_full_book':count,
+            'classification':classification,'supersession_proven':False}
+        raise ValueError('BOOK_REGRESSION')
+
     def ingest(self,event):
         received_ms=self.clock()
         self.events_seen+=1
@@ -60,8 +81,17 @@ class StreamBook(BookStateSource):
             if kind not in ('book','price_change'):
                 if kind in ('last_trade_price','tick_size_change'):return
                 raise ValueError('UNREVIEWED_MARKET_EVENT')
-            stamp=int(event['timestamp']);self.last_wire_event_ms=stamp
+            raw_stamp=event['timestamp']
+            if not (type(raw_stamp) is int or isinstance(raw_stamp,str) and raw_stamp.isascii() and raw_stamp.isdigit()):
+                raise ValueError('AMBIGUOUS_TIMESTAMP')
+            stamp=int(raw_stamp);self.last_wire_event_ms=stamp
             if not 0<=self.clock()-stamp<=500:raise ValueError('STALE_WIRE_EVENT')
+            # Check every affected token before any depth mutation (including
+            # a multi-token delta). Timestamp order alone is not supersession proof.
+            candidates=[event['asset_id']] if kind=='book' else [c['asset_id'] for c in event['price_changes']]
+            for candidate in candidates:
+                if candidate not in self.tokens:raise ValueError('TOKEN_IDENTITY')
+                self.reject_regression_before_mutation(candidate,stamp,kind,received_ms)
             touched=set()
             if kind=='book':
                 token=event['asset_id']
@@ -110,6 +140,9 @@ class StreamBook(BookStateSource):
                             'comparison':'source_timestamp_ms < same_token_accepted_source_timestamp_ms',
                             'watermark_scope':'TOKEN_WITHIN_CONNECTION_GENERATION'}
                     raise
+            for token in touched:
+                if kind=='book':self.snapshot_refs[token]={'source_ms':stamp,'generation':self.generation,'accepted_deltas':0}
+                elif token in self.snapshot_refs:self.snapshot_refs[token]['accepted_deltas']+=1
             self.messages+=1
             if touched:self.last_valid_book_ms=stamp
             for token in touched:
@@ -121,14 +154,14 @@ class StreamBook(BookStateSource):
         except Exception as exc:
             reasons={'NOT_CONNECTED_OR_EXPIRED','MARKET_IDENTITY','UNREVIEWED_MARKET_EVENT','STALE_WIRE_EVENT',
                      'TOKEN_IDENTITY','DEPTH_SCHEMA','DEPTH_LEVEL','DELTA_LEVEL','STALE_BOOK','EMPTY_BOOK','CROSSED_BOOK',
-                     'BOOK_REGRESSION','INVALID_DEPTH','DUPLICATE_PRICE'}
+                     'BOOK_REGRESSION','INVALID_DEPTH','DUPLICATE_PRICE','AMBIGUOUS_TIMESTAMP'}
             reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in reasons else 'BOOK_SCHEMA_OR_DEPTH_INVALID'
             self.diagnostics['parser_reason']=reason
             self.diagnostics['rejected_message_age_ms']=self.clock()-stamp if 'stamp' in locals() else None
             self.failure=reason
             # A local rejection is not a TCP disconnect. Invalidate both tokens;
             # only two new full snapshots may establish a usable book again.
-            self.books={};self.depth={};self.diagnostics['resync_complete_generation']=None
+            self.books={};self.depth={};self.snapshot_refs={};self.diagnostics['resync_complete_generation']=None
             self.transition('INVALIDATED_AWAITING_TWO_FULL_BOOKS')
             raise ValueError(reason) from None
     def read(self):
