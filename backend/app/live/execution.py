@@ -48,10 +48,14 @@ class ExecutionStore:
                 raise ExecutionBlocked("POSITION_OR_RECOVERY_PENDING")
             self.db.execute("INSERT INTO execution_events(ts_ms,event,value) VALUES(?,?,?)", (int(time.time()*1000),event,payload))
             self.db.execute("INSERT INTO execution_state VALUES(1,?) ON CONFLICT(id) DO UPDATE SET value=excluded.value", (payload,))
+            self._after_event_write()
             self.db.execute("COMMIT")
         except BaseException:
             self.db.execute("ROLLBACK")
             raise
+
+    def _after_event_write(self):
+        """Subclass metadata participates in the same transaction as the state."""
 
     def close(self):
         self.db.close()
