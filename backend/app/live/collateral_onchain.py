@@ -87,6 +87,8 @@ class PublicRPC:
     def __init__(self,wallet,*,endpoint=RPC,allow_finalized=False):
         if not re.fullmatch('0x[0-9a-fA-F]{40}',wallet):raise ValueError('WALLET')
         self._endpoint=validate_rpc_endpoint(endpoint)
+        import threading
+        self._counter_lock=threading.Lock()
         self.wallet=wallet;self.calls=[];self.counter=0
         self.allow_finalized=allow_finalized is True
     def call(self,method,params):
@@ -109,10 +111,12 @@ class PublicRPC:
                    and 0<=int(q['toBlock'],16)-int(q['fromBlock'],16)<500
                    and topics==[signatures,None,None,'0x'+self.wallet[2:].lower().rjust(64,'0')])
         if not valid:raise ValueError('RPC_METHOD_OR_PARAMS_FORBIDDEN')
-        self.counter+=1
-        payload={'jsonrpc':'2.0','id':self.counter,'method':method,'params':params}
+        with self._counter_lock:
+            self.counter+=1
+            request_id=self.counter
+        payload={'jsonrpc':'2.0','id':request_id,'method':method,'params':params}
         request=urllib.request.Request(self._endpoint,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
-        entry={'rpc_method':method,'id':self.counter,'started_ms':time.time_ns()//1000000}
+        entry={'rpc_method':method,'id':request_id,'started_ms':time.time_ns()//1000000}
         if method=='eth_getLogs':
             entry.update(from_block=int(params[0]['fromBlock'],16),to_block=int(params[0]['toBlock'],16))
         try:
@@ -124,7 +128,7 @@ class PublicRPC:
                 if len(raw)>1000000:
                     entry['error_category']='RESPONSE_TOO_LARGE';raise ValueError()
                 value=json.loads(raw)
-            if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=self.counter:
+            if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=request_id:
                 entry['error_category']='RPC_ENVELOPE_INVALID';raise ValueError()
             if 'error' in value:
                 entry.update(rpc_error_metadata(value['error']));raise ValueError()
@@ -134,7 +138,7 @@ class PublicRPC:
         except Exception as exc:
             if isinstance(exc,urllib.error.HTTPError):
                 entry.update(http_status=exc.code,error_category='HTTP_ERROR')
-                entry.update(http_error_metadata(exc,self.counter))
+                entry.update(http_error_metadata(exc,request_id))
                 exc.close()
             elif isinstance(exc,TimeoutError) or (isinstance(exc,urllib.error.URLError) and isinstance(exc.reason,TimeoutError)):
                 entry['error_category']='TIMEOUT'
@@ -142,7 +146,10 @@ class PublicRPC:
             elif isinstance(exc,json.JSONDecodeError):entry['error_category']='INVALID_JSON'
             entry.setdefault('error_category','UNCLASSIFIED_READ_ERROR')
             entry['status']='FAILED';raise RuntimeError('PUBLIC_RPC_READ_FAILED') from None
-        finally:self.calls.append(entry)
+        finally:
+            entry['finished_ms']=time.time_ns()//1000000
+            entry['elapsed_ms']=entry['finished_ms']-entry['started_ms']
+            self.calls.append(entry)
 
 
 def qualify_collateral(rpc,*,clock=time.time):

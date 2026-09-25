@@ -1,0 +1,56 @@
+{
+  "source_report": "D6_POST_GENESIS_READINESS_20260925_155542_053884.json",
+  "historical_work_outside_final_window": true,
+  "cursor_previous": 94430390,
+  "B": 94431050,
+  "C": 94431065,
+  "tail_ranges": [
+    [
+      94431051,
+      94431060
+    ],
+    [
+      94431061,
+      94431065
+    ]
+  ],
+  "scan_start_to_seal_ms": 2961,
+  "seal_to_account_complete_ms": 301,
+  "account_complete_to_final_evaluation_ms": 460,
+  "scan_start_to_final_evaluation_ms": 3722,
+  "independent_GETs": [
+    {
+      "component": "balance-allowance",
+      "started_ms": 1790351741288,
+      "duration_ms": 259,
+      "age_at_evaluation_ms": 761
+    },
+    {
+      "component": "trades",
+      "started_ms": 1790351741289,
+      "duration_ms": 259,
+      "age_at_evaluation_ms": 760
+    },
+    {
+      "component": "orders",
+      "started_ms": 1790351741288,
+      "duration_ms": 263,
+      "age_at_evaluation_ms": 761
+    },
+    {
+      "component": "positions",
+      "started_ms": 1790351741290,
+      "duration_ms": 299,
+      "age_at_evaluation_ms": 759
+    }
+  ],
+  "book": {
+    "source_ms": 1790351740782,
+    "last_valid_received_ms": 1790351741283,
+    "sample_time_separately_measured": false,
+    "evaluation_ms": 1790351742049
+  },
+  "rpc_duration_limit": "Old report stores request starts only. Adjacent differences are not isolated RPC durations. New report adds finished_ms and elapsed_ms.",
+  "intrinsic_source_latency_impossibility_proven": false,
+  "same_run_with_500ms_pass_demonstrated": false
+}

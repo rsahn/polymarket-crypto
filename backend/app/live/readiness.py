@@ -38,8 +38,9 @@ class ProductionReadinessCheck:
         except Exception:local_ok=False
         # Re-read the stream after awaited sources and local ledger validation.
         # Capture the evaluation clock only after these reads, never before disk I/O.
-        _,values['book']=await read_source('book',self.sources['book'])
         locked=transport_locked()
+        book_sample_started_ms=self.clock()
+        _,values['book']=await read_source('book',self.sources['book'])
         now=self.clock()
         def valid(name,limit=500):
             v=values[name]
@@ -81,7 +82,7 @@ class ProductionReadinessCheck:
         health_checks['book_stream_health']=book_health
         system_ready=all(health_checks.values())
         market_eligible=checks['book_freshness'] and b.get('market_eligible') is True
-        return dict(evaluated_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
+        return dict(evaluated_ms=now,book_sample_started_ms=book_sample_started_ms,book_sample_finished_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
             health_checks=health_checks,operating_state="SYSTEM_BLOCKED" if not system_ready else "ELIGIBLE_BUT_LOCKED" if market_eligible else "NO_TRADE",checks=checks,observations=values,flags=flags,
             ready_for_arm=system_ready and market_eligible and all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
 

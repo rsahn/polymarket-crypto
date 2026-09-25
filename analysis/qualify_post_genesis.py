@@ -177,7 +177,7 @@ async def acquire_final_views(client,geo_reader,rpc,prior,inventory,*,checkpoint
 def inventory_metadata(inventory):
     return {k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance',
         'scan_observed_ms','head_witness_started_ms','head_witness_finished_ms','head_block_timestamp_ms',
-        'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash','boundary_evidence','cursor_previous','anchor_catchup_ranges') if k in inventory}
+        'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash','critical_path','boundary_evidence','cursor_previous','anchor_catchup_ranges') if k in inventory}
 
 
 def annotate(readiness):
@@ -203,6 +203,7 @@ async def run(target=False,*,health_contract=False):
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
+    pending_inventory_checkpoint=None
     attempts=[];qualified=None;clock_diagnostic={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
@@ -227,6 +228,7 @@ async def run(target=False,*,health_contract=False):
                     'accuracy_500ms_proven':False,'timestamps_adjusted':False}
             stage='POST_GENESIS_CTF_DISCOVERY'
             rpc=PublicRPC(wallet,endpoint=endpoint,allow_finalized=health_contract);rpc.log_window=10
+            rpc.parallel_inventory_reads=health_contract
             inventory=load_inventory_cursor(ROOT,prior)
             if health_contract:
                 from analysis.qualify_post_b_proofs import prepare_finalized_inventory,acquire_post_b
@@ -275,7 +277,7 @@ async def run(target=False,*,health_contract=False):
                 stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
                 if health_contract:
                     observed,geoval,inventory=await acquire_post_b(client,geo_reader,rpc,inventory,qualified,attempts=attempts)
-                    save_inventory_cursor(ROOT,prior,inventory)
+                    pending_inventory_checkpoint=inventory
                 else:
                     observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
                 inventory_meta=inventory_metadata(inventory)
@@ -331,13 +333,20 @@ async def run(target=False,*,health_contract=False):
     try:
         readiness=await ProductionReadinessCheck(account=account,positions=positions,book=book,geo=geo,risk=risk,
             local_reader=final_local,collateral_unit='pUSD',generation=generation).run()
+        # Persist only after the decision snapshot; disk I/O cannot age its sources.
+        checkpoint_status='NOT_PENDING'
+        if pending_inventory_checkpoint is not None:
+            try:
+                save_inventory_cursor(ROOT,prior,pending_inventory_checkpoint)
+                checkpoint_status='SAVED_AFTER_EVALUATION'
+            except Exception:checkpoint_status='SAVE_FAILED_NO_GENESIS_CHANGE'
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
-            'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
+            'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report

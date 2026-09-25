@@ -1,0 +1,28 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______________ test_parallel_rpc_response_ids_are_request_local _______________
+backend\tests\test_post_genesis_timing.py:23: in test_parallel_rpc_response_ids_are_request_local
+    assert [f.result() for f in futures]==['0x89','0x89']
+            ^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py:460: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\_base.py:402: in __get_result
+    raise self._exception
+..\..\AppData\Local\Programs\Python\Python313\Lib\concurrent\futures\thread.py:59: in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\collateral_onchain.py:144: in call
+    entry['status']='FAILED';raise RuntimeError('PUBLIC_RPC_READ_FAILED') from None
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   RuntimeError: PUBLIC_RPC_READ_FAILED
+___________ test_final_boundary_rechecks_overlap_and_preserve_clock ___________
+backend\tests\test_post_genesis_timing.py:40: in test_final_boundary_rechecks_overlap_and_preserve_clock
+    check,anchor,timing=asyncio.run(p.recheck_fixed_boundary(RPC(),12,10))
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'analysis.qualify_post_b_proofs' has no attribute 'recheck_fixed_boundary'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_post_genesis_timing.py::test_parallel_rpc_response_ids_are_request_local
+FAILED backend/tests/test_post_genesis_timing.py::test_final_boundary_rechecks_overlap_and_preserve_clock
+2 failed in 0.64s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
