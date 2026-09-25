@@ -299,7 +299,9 @@ async def run(target=False,*,health_contract=False):
                     else:
                         connection_warmup={'status':'SKIPPED_NO_PERSISTENT_POOLS'}
                 try:
-                    book=await discover_book(audit);task=asyncio.create_task(book.run())
+                    book=await discover_book(audit)
+                    from app.live.ws_recovery import run_with_recovery
+                    task=asyncio.create_task(run_with_recovery(book) if health_contract else book.run())
                     # A bounded warmup does not refresh any source timestamp.
                     deadline=time.monotonic()+8
                     while not task.done() and not book.read()['synchronized'] and time.monotonic()<deadline:await asyncio.sleep(.05)
