@@ -1,5 +1,5 @@
 """D6 V1 live paper trading. Public feeds only; NEVER sends real orders."""
-import argparse,asyncio,json,types,sys,os
+import argparse,asyncio,json,types,sys,os,time
 from collections import deque
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -7,6 +7,7 @@ sys.path.insert(0,str(ROOT/"backend"))
 from d6.paper_live import PaperLedger,V1
 from app.d5.live import run as collect_live
 from app.live.pipeline import DryRunPipeline
+from app.live.execution_sources import staging_gate
 from app.live.clob_staged import StagedClobExecutor,ExecutionInvariantGuard,LifecycleJournal,simulate_lifecycle
 
 def fill(asks,budget):
@@ -95,15 +96,15 @@ async def main_async(a):
    if snap:
     q=snap.get(side.lower()) or {};ask=q.get("ask");token=q.get("token_id")
     if ask is not None and token:
-     expiry=snap.get("expiry_ts_ms") or 0;remaining=(expiry-tick.recv_ts_ms)/1000 if expiry else 999
-     gate=guard.validate_entry(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=remaining)
+     # No monetary state is fabricated from a paper portfolio. Missing readers reject.
+     order=staged.prepare_buy(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),token_id=str(token),notional=25.0,best_ask=float(ask),tick_size=0.01,min_order_size=5.0)
+     gate=staging_gate(getattr(a,"execution_gate_reader",None),order,now_ms=int(time.time()*1000))
      if not gate["allow"]:
-      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps({"signal_id":str(tick.recv_ts_ms),"status":"STAGING_REJECT","reasons":gate["reasons"],"submit_allowed":False},sort_keys=True)+"\\n")
+      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps({"signal_id":str(tick.recv_ts_ms),"status":"STAGING_REJECT","reasons":gate["reasons"],"submit_allowed":False},sort_keys=True)+"\n")
       print("D6 LIVE STAGING REJECT",side,gate["reasons"],flush=True)
      else:
-      order=staged.prepare_buy(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),token_id=str(token),notional=25.0,best_ask=float(ask),tick_size=0.01,min_order_size=5.0)
       event=await staged.stage(order)
-      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps(event,sort_keys=True)+"\\n")
+      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps(event,sort_keys=True)+"\n")
       await simulate_lifecycle(order=order,entry_fill_ratio=1.0,exit_price=float(ask),journal=life_journal)
       print("D6 LIVE STAGING",side,event["mode"],"submit_allowed=",event["submit_allowed"],flush=True)
   task=asyncio.create_task(execute_signal(tick.recv_ts_ms,move,side));pending.add(task);task.add_done_callback(pending.discard)
