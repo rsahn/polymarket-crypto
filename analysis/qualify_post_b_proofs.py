@@ -138,6 +138,15 @@ def prepare_finalized_inventory(rpc,prior,cursor):
         'cursor_previous':cursor['to_block'],'anchor_catchup_ranges':ranges},qualified
 
 
+async def recheck_fixed_boundary(rpc,c_number,b_number):
+    """Both numeric rechecks start AFTER account completion; neither selects latest."""
+    started=now_ms()
+    check,anchor=await asyncio.gather(
+        asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c_number),False]),
+        asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(b_number),False]))
+    return header(check),header(anchor),{'started_ms':started,'finished_ms':now_ms()}
+
+
 async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=None):
     """Select C once. Seal numerically before GETs; recheck numerically after them.
 
@@ -152,14 +161,18 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
     c=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',['latest',False]))
     if anchored['to_block']!=b['number'] or c['number']<b['number']:
         raise ValueError('CURSOR_BOUNDARY_INCOHERENT')
+    scan_dispatch_ms=now_ms()
     tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,c)
+    scan_finished_ms=now_ms()
+    seal_started_ms=now_ms()
     seal=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c['number']),False]))
     sealed_ms=now_ms()
     if seal!=c:raise ValueError('BOUNDARY_REORG')
+    account_started_ms=now_ms()
     observed=await fresh_views(client)
-    rechecked_ms=now_ms()
-    check=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c['number']),False]))
-    anchor_check=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(b['number']),False]))
+    account_finished_ms=now_ms()
+    check,anchor_check,recheck_timing=await recheck_fixed_boundary(rpc,c['number'],b['number'])
+    rechecked_ms=recheck_timing['started_ms']
     if check!=c:raise ValueError('BOUNDARY_REORG')
     if anchor_check['number']!=b['number']:raise ValueError('ANCHOR_REORG')
     e=dict(generation=1,finalized_qualified=True,cursor_previous=anchored['cursor_previous'],
@@ -169,7 +182,8 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
         events_count=tail['events_count'],balances=tail['balances'],scan_observed_ms=tail['observed_ms'],
         sealed_ms=sealed_ms,rechecked_ms=rechecked_ms,
         account={k:dict(generation=1,complete=True,observed_ms=v[1]) for k,v in observed.items()})
-    proof=evaluate_boundary(e,now=now_ms())
+    evaluated_ms=now_ms()
+    proof=evaluate_boundary(e,now=evaluated_ms)
     if not proof['inventory_through_C_proven']:raise ValueError(proof['reason'])
     # Real acquisition times are retained, including a slow scan. No retiming.
     metadata={k:v for k,v in e.items() if k not in ('balances',)}
@@ -177,6 +191,11 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
         watermark_block=c['number'],account_complete=set(observed)=={'balance','orders','trades','positions'},post_b=proof))
     return observed,geoval,{**tail,'from_block':anchored['from_block'],
         'scan_observed_ms':tail['observed_ms'],'generation_attempt':1,'post_b_proof':proof,
+        'critical_path':{'scan_dispatch_ms':scan_dispatch_ms,'scan_observed_ms':tail['observed_ms'],
+            'scan_finished_ms':scan_finished_ms,'seal_started_ms':seal_started_ms,'sealed_ms':sealed_ms,
+            'account_started_ms':account_started_ms,'account_finished_ms':account_finished_ms,
+            'recheck_started_ms':rechecked_ms,'recheck_finished_ms':recheck_timing['finished_ms'],
+            'boundary_evaluated_ms':evaluated_ms},
         'boundary_evidence':metadata,'cursor_previous':anchored['cursor_previous'],
         'anchor_catchup_ranges':anchored['anchor_catchup_ranges'],
         'provenance':'FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY',

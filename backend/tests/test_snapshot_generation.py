@@ -130,7 +130,8 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
     monkeypatch.setattr(q,'now_ms',lambda:1000)
     monkeypatch.setattr(q,'incremental_inventory',lambda *a:inv)
     monkeypatch.setattr(q,'load_inventory_cursor',lambda *a:inv)
-    monkeypatch.setattr(q,'save_inventory_cursor',lambda *a:None)
+    checkpoint_events=[]
+    monkeypatch.setattr(q,'save_inventory_cursor',lambda *a:checkpoint_events.append('save'))
     monkeypatch.setattr(q,'advance_inventory',lambda *a:inv)
     monkeypatch.setattr(q,'witness_inventory',lambda *a:inv)
     class RPC:
@@ -167,11 +168,18 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
     s=Active('slug','condition',('1','2'),5000,clock=lambda:1000)
     async def discover(*a):return s
     monkeypatch.setattr(q,'discover_book',discover)
-    monkeypatch.setattr(q,'ProductionReadinessCheck',lambda **kw:ProductionReadinessCheck(**kw,clock=lambda:1000))
+    class TimedCheck(ProductionReadinessCheck):
+        async def run(self):
+            checkpoint_events.append('evaluate')
+            return await super().run()
+    monkeypatch.setattr(q,'ProductionReadinessCheck',lambda **kw:TimedCheck(**kw,clock=lambda:1000))
     r=asyncio.run(q.run(True,health_contract=health_contract))
     assert r['readiness']['ready_for_arm'] is (not empty and not health_contract),r['reconciliation']
     assert r['readiness']['SYSTEM_READY'] is (not health_contract)
-    if health_contract:assert r['reconciliation']['reason']=='POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'
+    if health_contract:
+        assert r['reconciliation']['reason']=='POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'
+        assert checkpoint_events[-2:]==['evaluate','save']
+        assert r['inventory_checkpoint_status']=='SAVED_AFTER_EVALUATION'
     assert r['readiness']['MARKET_ELIGIBLE_NOW'] is (not empty)
     assert r['readiness']['observations']['book']['connected']
     assert stopped and not s.connected and not r['readiness']['submit_allowed']

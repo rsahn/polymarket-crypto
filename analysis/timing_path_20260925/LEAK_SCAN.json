@@ -1,0 +1,6 @@
+{
+  "detected": false,
+  "files_checked": 16,
+  "scope": "Changed code/tests and timing evidence; static secret-pattern scan only. No dotenv, credential store, Git history or terminal history read.",
+  "global_absence_proven": false
+}
