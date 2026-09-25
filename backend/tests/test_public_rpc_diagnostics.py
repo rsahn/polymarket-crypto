@@ -61,3 +61,28 @@ def test_mismatched_response_id_never_trusts_error(monkeypatch):
     with pytest.raises(RuntimeError):rpc.call('eth_chainId',[])
     assert rpc.calls[-1]['error_category']=='RPC_ENVELOPE_INVALID'
     assert 'rpc_error_code' not in rpc.calls[-1]
+
+@pytest.mark.parametrize('body,expected',[
+    ({'jsonrpc':'2.0','id':1,'error':{'code':-32602,'message':'invalid params SECRET','data':'SECRET'}},'INVALID_PARAMS'),
+    ({'error':{'code':-32000,'message':'free tier SECRET'}},'PLAN_RESTRICTION')])
+def test_http400_json_body_is_classified_without_retaining_it(monkeypatch,body,expected):
+    import io
+    error=urllib.error.HTTPError('https://secret.invalid',400,'SECRET',{},io.BytesIO(json.dumps(body).encode()))
+    install(monkeypatch,error=error)
+    rpc=PublicRPC(WALLET)
+    with pytest.raises(RuntimeError) as caught:rpc.call('eth_chainId',[])
+    entry=rpc.calls[-1]
+    assert entry['http_status']==400 and entry['status']=='FAILED'
+    assert entry.get('http_error_body_status')=='JSON_ERROR_CLASSIFIED'
+    assert entry.get('provider_error',{}).get('error_category')==expected
+    assert 'SECRET' not in json.dumps(entry)+str(caught.value)
+
+@pytest.mark.parametrize('body,status',[(b'<html>SECRET</html>','NON_JSON'),(b'x'*16385,'OVERSIZED')],ids=['html','oversized'])
+def test_http_error_body_is_bounded_and_redacted(monkeypatch,body,status):
+    import io
+    error=urllib.error.HTTPError('https://secret.invalid',400,'SECRET',{},io.BytesIO(body))
+    install(monkeypatch,error=error)
+    rpc=PublicRPC(WALLET)
+    with pytest.raises(RuntimeError):rpc.call('eth_chainId',[])
+    assert rpc.calls[-1].get('http_error_body_status')==status
+    assert 'SECRET' not in json.dumps(rpc.calls)
