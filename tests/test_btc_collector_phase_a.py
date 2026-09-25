@@ -1,71 +1,42 @@
-import os
+"""Historical Phase A intent, migrated to the tracked app collector/storage API.
+The original imports never existed in the initial tracked tree (7cb0198).
+"""
+import asyncio
+import json
 import sqlite3
-import uuid
-import unittest
-
-from backend.collectors.binance.btc_collector import BinanceBTCCollector
-from backend.storage.sqlite_store import SqliteStore
+import pytest
+from app.collectors.binance import BinanceCollector
+from app.storage.db import Database
 
 
-class TestPhaseABTCCollector(unittest.TestCase):
-    def _create_db_path(self):
-        base_dir = os.path.dirname(__file__)
-        return os.path.join(base_dir, f'phase_a_test_{uuid.uuid4().hex}.db')
-
-    def test_db_initializes_required_tables(self):
-        db_path = self._create_db_path()
-        store = SqliteStore(db_path)
-
-        try:
-            with sqlite3.connect(db_path) as conn:
-                tables = conn.execute(
-                    "SELECT name FROM sqlite_master WHERE type='table' AND name IN ('btc_ticks','market_ticks','orderbook_snapshots')"
-                ).fetchall()
-            self.assertEqual({row[0] for row in tables}, {'btc_ticks', 'market_ticks', 'orderbook_snapshots'})
-        finally:
-            store.close()
-
-    def test_trade_and_booktick_are_normalized(self):
-        db_path = self._create_db_path()
-        if os.path.exists(db_path):
-            os.unlink(db_path)
-        store = SqliteStore(db_path)
-        collector = BinanceBTCCollector(store)
-
-        trade = {
-            'e': 'trade',
-            'E': 1700000000000,
-            's': 'BTCUSDT',
-            'p': '64000.00',
-            'q': '0.75',
-            'T': 1700000000100,
-        }
-        book = {
-            'u': 123,
-            's': 'BTCUSDT',
-            'b': '63998.50',
-            'B': '1.5',
-            'a': '64001.50',
-            'A': '2.1',
-        }
-
-        collector.process_trade_event(trade)
-        collector.process_bookticker_event(book)
-
-        try:
-            with sqlite3.connect(db_path) as conn:
-                rows = conn.execute('SELECT event_type, symbol, price, quantity, bid, ask FROM btc_ticks ORDER BY id').fetchall()
-
-            self.assertEqual(rows[0][0], 'trade')
-            self.assertEqual(rows[0][1], 'BTCUSDT')
-            self.assertEqual(float(rows[0][2]), 64000.0)
-            self.assertEqual(float(rows[0][3]), 0.75)
-            self.assertEqual(rows[1][0], 'bookTicker')
-            self.assertEqual(float(rows[1][4]), 63998.5)
-            self.assertEqual(float(rows[1][5]), 64001.5)
-        finally:
-            store.close()
+def test_db_initializes_required_tables(tmp_path):
+    path=tmp_path/"phase_a.db"
+    asyncio.run(Database(str(path)).init())
+    with sqlite3.connect(path) as db:
+        tables={row[0] for row in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    assert {"btc_ticks","poly_quotes","signals","paper_trades"}<=tables
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_trade_and_booktick_are_normalized(tmp_path,monkeypatch):
+    path=tmp_path/"phase_a.db"
+    messages=[dict(b="63998.50",B="1.5",a="64001.50",A="2.1"),
+              dict(e="aggTrade",E=1700000000000,p="64000.00",a=123)]
+    class Socket:
+        async def __aenter__(self):return self
+        async def __aexit__(self,*args):return False
+        def __aiter__(self):return self
+        async def __anext__(self):
+            if not messages:raise StopAsyncIteration
+            return json.dumps({"data":messages.pop(0)})
+    monkeypatch.setattr("app.collectors.binance.websockets.connect",lambda *a,**k:Socket())
+    async def run():
+        store=Database(str(path));await store.init()
+        async def tick(value):
+            assert value.trade_id==123
+            await store.insert_btc(value)
+            raise asyncio.CancelledError()
+        with pytest.raises(asyncio.CancelledError):await BinanceCollector("BTCUSDT",tick).run()
+    asyncio.run(run())
+    with sqlite3.connect(path) as db:
+        rows=db.execute("SELECT source,symbol,event_ts_ms,price,bid,ask,bid_qty,ask_qty FROM btc_ticks").fetchall()
+    assert rows==[("binance","btcusdt",1700000000000,64000.0,63998.5,64001.5,1.5,2.1)]
