@@ -6,6 +6,7 @@ import json
 import time
 import urllib.request
 import urllib.parse
+from .latency_trace import measured_thread
 from types import SimpleNamespace
 from importlib.metadata import version
 from .production_readonly import BookStateSource, now_ms
@@ -60,7 +61,7 @@ class GetOnlyTransport:
                 entry["elapsed_ms"]=entry["finished_ms"]-started
                 entry["thread_cpu_ms"]=(time.thread_time_ns()-cpu_started)/1000000
                 self.audit.append(entry)
-        return await asyncio.to_thread(read)
+        return await measured_thread('get:'+path, read)
 
 
 class ReadOnlyClient:

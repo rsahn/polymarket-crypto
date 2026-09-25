@@ -1,0 +1,46 @@
+[
+  {
+    "variant": "HEAD",
+    "synthetic_only": true,
+    "events": 2000,
+    "wall_ms": 3608.804500196129,
+    "thread_cpu_ms": 3609.375,
+    "available": true,
+    "worker_resume_ms": 3595.9514,
+    "worker_ms": 13.1229,
+    "dropped": 0
+  },
+  {
+    "variant": "existing_ws_fix",
+    "synthetic_only": true,
+    "events": 2000,
+    "wall_ms": 1394.631200004369,
+    "thread_cpu_ms": 1390.625,
+    "available": true,
+    "worker_resume_ms": 1387.8036,
+    "worker_ms": 7.0495,
+    "dropped": 0
+  },
+  {
+    "variant": "HEAD",
+    "synthetic_only": true,
+    "events": 2000,
+    "wall_ms": 3715.561799937859,
+    "thread_cpu_ms": 3656.25,
+    "available": true,
+    "worker_resume_ms": 3703.4329,
+    "worker_ms": 12.3205,
+    "dropped": 0
+  },
+  {
+    "variant": "existing_ws_fix",
+    "synthetic_only": true,
+    "events": 2000,
+    "wall_ms": 1377.3523999843746,
+    "thread_cpu_ms": 1375.0,
+    "available": true,
+    "worker_resume_ms": 1357.9985,
+    "worker_ms": 19.5429,
+    "dropped": 0
+  }
+]

@@ -1,0 +1,72 @@
+
+=================================== ERRORS ====================================
+____________ ERROR collecting analysis/d6/pipeline/test_convert.py ____________
+ImportError while importing test module 'C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\pipeline\test_convert.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\pipeline\test_convert.py:4: in <module>
+    from convert import convert
+analysis\d6\pipeline\convert.py:6: in <module>
+    import pyarrow.parquet as pq
+E   ModuleNotFoundError: No module named 'pyarrow.parquet'
+________ ERROR collecting analysis/d6/pipeline/test_finish_features.py ________
+ImportError while importing test module 'C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\pipeline\test_finish_features.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\pipeline\test_finish_features.py:2: in <module>
+    from convert import convert
+analysis\d6\pipeline\convert.py:6: in <module>
+    import pyarrow.parquet as pq
+E   ModuleNotFoundError: No module named 'pyarrow.parquet'
+_________ ERROR collecting analysis/d6/research/test_context_join.py __________
+ImportError while importing test module 'C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\test_context_join.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\research\test_context_join.py:2: in <module>
+    from context_join import pick_btc,select_context,pa
+analysis\d6\research\context_join.py:3: in <module>
+    from offline import connect,save,pa,pq,D6,HERE
+analysis\d6\research\offline.py:5: in <module>
+    import duckdb,pyarrow as pa,pyarrow.parquet as pq
+E   ModuleNotFoundError: No module named 'pyarrow.parquet'
+____________ ERROR collecting analysis/d6/research/test_offline.py ____________
+ImportError while importing test module 'C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\test_offline.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\research\test_offline.py:3: in <module>
+    import offline
+analysis\d6\research\offline.py:5: in <module>
+    import duckdb,pyarrow as pa,pyarrow.parquet as pq
+E   ModuleNotFoundError: No module named 'pyarrow.parquet'
+______________ ERROR collecting analysis/test_c3_d4_analysis.py _______________
+analysis\test_c3_d4_analysis.py:4: in <module>
+    import pandas as pd
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\__init__.py:38: in <module>
+    from pandas.compat import (
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\compat\__init__.py:29: in <module>
+    from pandas.compat.pyarrow import (
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\compat\pyarrow.py:10: in <module>
+    _palv = Version(Version(pa.__version__).base_version)
+                            ^^^^^^^^^^^^^^
+E   AttributeError: module 'pyarrow' has no attribute '__version__'
+=========================== short test summary info ===========================
+ERROR analysis/d6/pipeline/test_convert.py
+ERROR analysis/d6/pipeline/test_finish_features.py
+ERROR analysis/d6/research/test_context_join.py
+ERROR analysis/d6/research/test_offline.py
+ERROR analysis/test_c3_d4_analysis.py - AttributeError: module 'pyarrow' has ...
+!!!!!!!!!!!!!!!!!!! Interrupted: 5 errors during collection !!!!!!!!!!!!!!!!!!!
+5 errors in 2.54s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

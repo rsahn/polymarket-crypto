@@ -1,0 +1,15 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_______________ test_latency_cannot_resolve_post_c_completeness _______________
+backend\tests\test_completeness_diagnostic.py:4: in test_latency_cannot_resolve_post_c_completeness
+    from analysis.qualify_post_genesis import inventory_completeness
+E   ImportError: cannot import name 'inventory_completeness' from 'analysis.qualify_post_genesis' (C:\Users\Ramy\Documents\polymarket-crypto\analysis\qualify_post_genesis.py)
+_______________ test_missing_proof_is_not_presented_as_coverage _______________
+backend\tests\test_completeness_diagnostic.py:16: in test_missing_proof_is_not_presented_as_coverage
+    from analysis.qualify_post_genesis import inventory_completeness
+E   ImportError: cannot import name 'inventory_completeness' from 'analysis.qualify_post_genesis' (C:\Users\Ramy\Documents\polymarket-crypto\analysis\qualify_post_genesis.py)
+=========================== short test summary info ===========================
+FAILED backend/tests/test_completeness_diagnostic.py::test_latency_cannot_resolve_post_c_completeness
+FAILED backend/tests/test_completeness_diagnostic.py::test_missing_proof_is_not_presented_as_coverage
+2 failed in 0.44s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

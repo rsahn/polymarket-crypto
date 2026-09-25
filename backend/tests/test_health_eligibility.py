@@ -59,7 +59,10 @@ def test_post_b_preserves_original_scan_time(monkeypatch,scan_time,reason):
         def call(self,m,p):
             calls.append(p[0])
             return dict(number="0x16" if p[0]=="0x16" else "0x18",hash="0x"+("a" if p[0]=="0x16" else "b")*64,timestamp="0x1")
-    async def views(client):return {k:([],1000) for k in ("balance","orders","trades","positions")}
+    async def views(client):
+        assert calls==['latest','0x18']  # selection and seal before account
+        calls.append('account_complete')
+        return {k:([],1000) for k in ("balance","orders","trades","positions")}
     class Geo:
         async def read(self):return {"available":True}
     tail=dict(to_block=24,block_hash="0x"+"b"*64,balances={},events_count=0,observed_ms=scan_time,assets_checked=0)
@@ -71,4 +74,6 @@ def test_post_b_preserves_original_scan_time(monkeypatch,scan_time,reason):
     assert not inv["post_b_proof"]["current_inventory_proven"]
     assert inv["post_b_proof"]["reason"]==reason
     assert inv["observed_ms"]==scan_time and inv["scan_observed_ms"]==scan_time
-    assert calls==["latest","0x18","0x18","0x16"] and len(obs)==4
+    # B/C are parallel; their worker start order is not a causal guarantee.
+    assert calls[:3]==["latest","0x18","account_complete"]
+    assert sorted(calls[3:])==["0x16","0x18"] and len(obs)==4
