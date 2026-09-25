@@ -1,0 +1,14 @@
+{
+  "chain_id": 137,
+  "environment": "production Polygon",
+  "expected_signer": "NOT_CONFIGURED",
+  "nonce": 0,
+  "eip712_domain": {
+    "name": "ClobAuthDomain",
+    "version": "1",
+    "chainId": 137
+  },
+  "eip712_type": "ClobAuth",
+  "endpoint": "https://clob.polymarket.com/auth/derive-api-key",
+  "method": "GET"
+}

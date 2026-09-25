@@ -1,0 +1,26 @@
+{
+  "status": "PASS_PREVIEW_ONLY",
+  "imports": [
+    "app.live.l2_recovery_preparation",
+    "argparse",
+    "dataclasses",
+    "json",
+    "os",
+    "pathlib",
+    "re",
+    "sys"
+  ],
+  "network_implementation": false,
+  "signature_implementation": false,
+  "credential_loader": false,
+  "execution_mode": false,
+  "report_creation": "exclusive x; no overwrite",
+  "BTC_V1_unchanged_since": "4cb928c",
+  "preview_signer": "NOT_CONFIGURED",
+  "preview_exit_code": 2,
+  "limitation": "HTTP rejection and derive budget tested as offline policy only; no execution transport implemented",
+  "hashes": {
+    "analysis/l2_existing_credential_recovery.py": "ef3afba94455fb9cad467810e36fa9b993a5b39d37776ab5203e73c0f5b78310",
+    "backend/app/live/l2_recovery_preparation.py": "3df569266d182ce42f40dd443c9b44980e28c9dcf1c53f1a1ad0008a0035ae20"
+  }
+}
