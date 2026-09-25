@@ -1,0 +1,29 @@
+...............................FF                                        [100%]
+================================== FAILURES ===================================
+___________ test_cli_preview_does_not_touch_private_key_or_network ____________
+backend\tests\test_l2_recovery_runtime.py:199: in test_cli_preview_does_not_touch_private_key_or_network
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:1019: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1156: in get_code
+    ???
+<frozen importlib._bootstrap_external>:1214: in get_data
+    ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\recover_existing_l2_local.py'
+__________________ test_cli_rejects_secret_bearing_arguments __________________
+backend\tests\test_l2_recovery_runtime.py:212: in test_cli_rejects_secret_bearing_arguments
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap_external>:1019: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1156: in get_code
+    ???
+<frozen importlib._bootstrap_external>:1214: in get_data
+    ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\recover_existing_l2_local.py'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_l2_recovery_runtime.py::test_cli_preview_does_not_touch_private_key_or_network
+FAILED backend/tests/test_l2_recovery_runtime.py::test_cli_rejects_secret_bearing_arguments
+2 failed, 31 passed in 1.12s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

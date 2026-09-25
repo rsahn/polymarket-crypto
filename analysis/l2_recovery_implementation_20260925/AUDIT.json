@@ -1,0 +1,18 @@
+{
+  "status": "PASS_STATIC",
+  "files_sha256": {
+    "analysis/recover_existing_l2_local.py": "b392ca02ce4a680293041fb1cb14ba48b25f73e4d2ffb411cff4876c7fee2485",
+    "backend/app/live/l2_recovery_runtime.py": "f7338c1c9d605579b05b0ad0916e594332fb66939508e3ac5bd4478cef4e5081",
+    "backend/app/live/l2_windows_storage.py": "a27818ca42b0206be0d064e423eae703e661e5ea0086a5ba1555d0000468b113"
+  },
+  "real_recovery_executed": false,
+  "real_private_key_used": false,
+  "real_clobauth_signature_produced": false,
+  "monetary_transport_changed": false,
+  "BTC_V1_changed": false,
+  "storage_path": "C:\\Users\\Ramy\\AppData\\Local\\PolymarketD6L2\\credential.dpapi",
+  "credential_file_exists": false,
+  "production_network_qualification": "NOT_EXECUTED",
+  "signature_tests": "fake Account only",
+  "storage_tests": "real Windows DPAPI with synthetic plaintext; ACL and no-replace verified"
+}
