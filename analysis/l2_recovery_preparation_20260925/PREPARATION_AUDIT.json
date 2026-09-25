@@ -1,0 +1,14 @@
+{
+  "phase": "L2_EXISTING_CREDENTIAL_RECOVERY",
+  "execution_enabled": false,
+  "preview_has_no_key_loader": true,
+  "network_implementation_present": false,
+  "signing_implementation_present": false,
+  "credential_storage_implementation_present": false,
+  "protected_storage_required_before_future_execution": true,
+  "expected_signer_configured": false,
+  "hashes": {
+    "backend/app/live/l2_recovery_preparation.py": "3df569266d182ce42f40dd443c9b44980e28c9dcf1c53f1a1ad0008a0035ae20",
+    "analysis/l2_existing_credential_recovery.py": "d1f6dbc0f8158d761154fd5789823503babfd79cf9c27bae06a052eacd691df3"
+  }
+}

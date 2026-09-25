@@ -1,0 +1,21 @@
+{
+  "red_failed": 29,
+  "new_cases": 32,
+  "full_passed": 369,
+  "failed": 0,
+  "errors": 0,
+  "subtests_passed": 25,
+  "sdk_monetary_attempts": 0,
+  "network_recovery_executed": false,
+  "preview_exit_code": 2,
+  "reason": "EXPECTED_SIGNER_NOT_CONFIGURED",
+  "files": {
+    "EXECUTION_GATE.md": "8ba5929798d9af9d0c075d5c2170e3d922ed63d4fc8b9569645543d9ca886396",
+    "FULL_TESTS.log": "6ef416024389892c1cc437a1ef3534dbab029eb7df47d76a71fd22c3970ab010",
+    "GREEN.log": "41512106e2083b2d1006d98ea3b90ff2d655fa3fb63be38ec34176cc623a5177",
+    "PREPARATION_AUDIT.json": "344a5944c8b02d2e25eda97a35d61f7707d9abe9a8c97472c4a23b913936af38",
+    "PREVIEW.json": "2f6e98529a1e34d9d1141b1d57bf7be5ac63d7c399b552df081b6f53be5ff0e3",
+    "RED.log": "72b819486d936c3b52cbf75373f6e82bdb03e2c8e72bee52bef1993ce5a27751",
+    "STATIC_AUDIT.log": "3beb8e8d249588c8a2f4dae7a215d4762e502ee226e9a8ca5254fbf710f8b419"
+  }
+}
