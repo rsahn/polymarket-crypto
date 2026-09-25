@@ -1,0 +1,25 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+________ test_preparation_spaces_all_reads_without_changing_final_rpc _________
+backend\tests\test_preparation_rate_limit.py:12: in test_preparation_spaces_all_reads_without_changing_final_rpc
+    from app.live.preparation_rpc import PreparationRPC
+E   ModuleNotFoundError: No module named 'app.live.preparation_rpc'
+___________ test_preparation_budget_stops_before_extra_remote_read ____________
+backend\tests\test_preparation_rate_limit.py:30: in test_preparation_budget_stops_before_extra_remote_read
+    from app.live.preparation_rpc import PreparationRPC
+E   ModuleNotFoundError: No module named 'app.live.preparation_rpc'
+________ test_preparation_429_stops_without_retry_or_leaking_exception ________
+backend\tests\test_preparation_rate_limit.py:42: in test_preparation_429_stops_without_retry_or_leaking_exception
+    from app.live.preparation_rpc import PreparationRPC
+E   ModuleNotFoundError: No module named 'app.live.preparation_rpc'
+_________ test_early_failure_does_not_republish_old_generation_timing _________
+backend\tests\test_preparation_rate_limit.py:86: in test_early_failure_does_not_republish_old_generation_timing
+    assert report['scheduler_timing']['measured_scan_resume_delay_ms'] is None
+E   assert 176 is None
+=========================== short test summary info ===========================
+FAILED backend/tests/test_preparation_rate_limit.py::test_preparation_spaces_all_reads_without_changing_final_rpc
+FAILED backend/tests/test_preparation_rate_limit.py::test_preparation_budget_stops_before_extra_remote_read
+FAILED backend/tests/test_preparation_rate_limit.py::test_preparation_429_stops_without_retry_or_leaking_exception
+FAILED backend/tests/test_preparation_rate_limit.py::test_early_failure_does_not_republish_old_generation_timing
+4 failed in 0.42s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

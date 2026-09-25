@@ -216,6 +216,7 @@ async def run(target=False,*,health_contract=False):
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
     pending_inventory_checkpoint=None;inventory=None
+    preparation_rpc=None;current_generation_inventory=None
     attempts=[];qualified=None;clock_diagnostic={};reconciliation_timing={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
@@ -244,7 +245,9 @@ async def run(target=False,*,health_contract=False):
             inventory=load_inventory_cursor(ROOT,prior)
             if health_contract:
                 from analysis.qualify_post_b_proofs import prepare_finalized_inventory,acquire_post_b
-                inventory,qualified=await asyncio.to_thread(prepare_finalized_inventory,rpc,prior,inventory)
+                from app.live.preparation_rpc import PreparationRPC
+                preparation_rpc=PreparationRPC(rpc)
+                inventory,qualified=await asyncio.to_thread(prepare_finalized_inventory,preparation_rpc,prior,inventory)
             else:
                 anchor=await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(prior['snapshot']['block_number']),False])
                 if anchor['hash']!=prior['snapshot']['block_hash']:raise ValueError('GENESIS_ANCHOR_CHANGED')
@@ -299,6 +302,7 @@ async def run(target=False,*,health_contract=False):
                     pending_inventory_checkpoint=inventory
                 else:
                     observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
+                current_generation_inventory=inventory
                 # Metadata formatting is deferred until after evaluation.
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
@@ -345,6 +349,8 @@ async def run(target=False,*,health_contract=False):
     except Exception as exc:
         allowed={'BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
+        if stage=='POST_GENESIS_CTF_DISCOVERY' and preparation_rpc is not None and preparation_rpc.failure:
+            reason=preparation_rpc.failure
         reconciliation={'phase':'RECOVERY_REQUIRED' if reason=='RECOVERY_REQUIRED' else 'BLOCKED','reconciled':False,'reason':reason,'failed_stage':stage}
     def final_local():
         current=read_genesis(LEDGER)
@@ -356,7 +362,11 @@ async def run(target=False,*,health_contract=False):
         readiness=await ProductionReadinessCheck(account=account,positions=positions,book=book,geo=geo,risk=risk,
             local_reader=final_local,collateral_unit='pUSD',generation=generation).run()
         if inventory is not None:inventory_meta=inventory_metadata(inventory)
-        path=inventory_meta.get('critical_path',{}) if inventory_meta else {}
+        if current_generation_inventory is None:
+            # Retain cursor facts, but never label a previous run's proof/timings as current.
+            inventory_meta={k:v for k,v in inventory_meta.items() if k in (
+                'from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance')}
+        path=(current_generation_inventory or {}).get('critical_path',{})
         evaluated=readiness['evaluated_ms']
         account_obs=readiness.get('observations',{}).get('account',{}).get('observed_ms')
         book_obs=readiness.get('observations',{}).get('book',{}).get('observed_ms')
@@ -395,7 +405,9 @@ async def run(target=False,*,health_contract=False):
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
-            'inventory_completeness':inventory_completeness(inventory) if health_contract else None,
+            'inventory_completeness':inventory_completeness(current_generation_inventory) if health_contract else None,
+            'inventory_evidence_origin':'CURRENT_GENERATION' if current_generation_inventory is not None else 'PREPARATION_OR_PRIOR_CURSOR',
+            'preparation_rpc_policy':preparation_rpc.report() if preparation_rpc is not None else None,
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
