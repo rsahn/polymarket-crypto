@@ -29,6 +29,7 @@ def geoblock():
  with urllib.request.urlopen(req,timeout=10) as r:return json.loads(r.read().decode())
 
 async def main(a):
+ if a.execute:raise RuntimeError("USER_APPROVAL_REQUIRED: execution controller validation pending")
  load_env()
  from polymarket import AsyncSecureClient
  key=os.getenv("SIGNER_PRIVATE_KEY")
