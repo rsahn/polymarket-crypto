@@ -102,13 +102,13 @@ def test_night_cycle_multi_fill_weighted_pnl():
 def test_position_state_store_blocks_unclosed_restart(tmp_path):
  from app.live.clob_staged import PositionStateStore,PersistedPositionState
  store=PositionStateStore(tmp_path/"position.json")
- assert store.assert_flat_or_recover()["allow_new_entry"]
+ assert not store.assert_flat_or_recover()["allow_new_entry"]
  s=PersistedPositionState("sig","slug","token",state="FILLED",filled_shares=10)
  store.save(s)
  loaded=store.load()
  assert loaded.open_shares==10
  gate=store.assert_flat_or_recover()
- assert not gate["allow_new_entry"] and gate["reason"]=="RECOVERY_REQUIRED"
+ assert not gate["allow_new_entry"] and gate["reason"]=="REMOTE_RECONCILIATION_REQUIRED"
 
 def test_position_state_store_allows_closed_restart(tmp_path):
  from app.live.clob_staged import PositionStateStore,PersistedPositionState
@@ -116,17 +116,17 @@ def test_position_state_store_allows_closed_restart(tmp_path):
  s=PersistedPositionState("sig","slug","token",state="CLOSED",filled_shares=10,sold_shares=10)
  store.save(s)
  gate=store.assert_flat_or_recover()
- assert gate["allow_new_entry"] and gate["reason"]=="FLAT"
+ assert not gate["allow_new_entry"] and gate["reason"]=="REMOTE_RECONCILIATION_REQUIRED"
 
 
-def test_reconciler_closed_local_allows():
+def test_reconciler_closed_local_requires_remote():
  import asyncio
  from app.live.clob_staged import RecoveryReconciler,PersistedPositionState
  class C:
   async def get_order(self,**kw):raise AssertionError("must not query")
  s=PersistedPositionState("s","slug","t",state="CLOSED",filled_shares=5,sold_shares=5)
  r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
- assert r["allow_new_entry"] and r["reason"]=="LOCAL_FLAT"
+ assert not r["allow_new_entry"] and r["reason"]=="ORDER_ID_MISSING"
 
 def test_reconciler_unknown_remote_fails_closed():
  import asyncio
@@ -135,7 +135,7 @@ def test_reconciler_unknown_remote_fails_closed():
   async def get_order(self,**kw):raise RuntimeError("network")
  s=PersistedPositionState("s","slug","t",state="FILLED",entry_order_id="oid",filled_shares=5)
  r=asyncio.run(RecoveryReconciler(C()).reconcile(s))
- assert not r["allow_new_entry"] and r["reason"]=="REMOTE_LOOKUP_FAILED"
+ assert not r["allow_new_entry"] and r["reason"]=="RECOVERY_REQUIRED"
 
 def test_reconciler_remote_state_requires_review():
  import asyncio

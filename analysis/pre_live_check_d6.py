@@ -259,18 +259,18 @@ async def main():
                     await out
 
     try:
-        balance_value = float(result["collateral_balance"]) if result["collateral_balance"] is not None else 0.0
+        balance_value = float(result["collateral_balance_usdc"]) if result["collateral_balance_usdc"] is not None else 0.0
     except (TypeError, ValueError):
         balance_value = 0.0
     allowance_values = result["allowance"].values() if isinstance(result["allowance"], dict) else []
-    allowance_ok = any(float(v) >= DEFAULT_NOTIONAL for v in allowance_values)
+    allowance_ok = any(float(v) / 1_000_000 >= DEFAULT_NOTIONAL for v in allowance_values)
 
     if balance_value < DEFAULT_NOTIONAL:
         result["reasons"].append("COLLATERAL_BALANCE_BELOW_25")
     if not allowance_ok:
         result["reasons"].append("COLLATERAL_ALLOWANCE_BELOW_25")
 
-    result["ready_for_live"] = (
+    result["account_precheck_passed"] = (
         result["authenticated_wallet"]
         and not result["real_orders_enabled"]
         and result["risk_manager_25"]

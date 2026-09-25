@@ -7,6 +7,7 @@ a later, explicitly armed adapter after this staging path is validated.
 from __future__ import annotations
 
 import inspect
+import math
 import os
 import time
 from dataclasses import asdict, dataclass, is_dataclass
@@ -51,7 +52,11 @@ class StagedClobExecutor:
         n = Decimal(str(notional))
         ask = Decimal(str(best_ask))
         tick = Decimal(str(tick_size))
-        if n <= 0 or ask <= 0 or ask >= 1 or tick <= 0:
+        minimum = Decimal(str(min_order_size))
+        slippage = Decimal(str(max_slippage_bps))
+        if not all(x.is_finite() for x in (n,ask,tick,minimum,slippage)):
+            raise ValueError("non-finite staged inputs")
+        if n <= 0 or n > 25 or ask <= 0 or ask >= 1 or tick <= 0 or tick >= 1 or minimum <= 0 or slippage < 0:
             raise ValueError("invalid staged order inputs")
         cap = ask * (Decimal(1) + Decimal(str(max_slippage_bps))/Decimal(10000))
         ticks = (cap/tick).to_integral_value(rounding=ROUND_DOWN)
@@ -249,7 +254,8 @@ class BookFreshnessGate:
         if not self.synced:reasons.append("BOOK_NOT_SYNCED")
         if self.last_book_update_ms is None:reasons.append("BOOK_TIMESTAMP_MISSING")
         else:
-            age=max(0,now-self.last_book_update_ms)
+            age=now-self.last_book_update_ms
+            if age < 0:reasons.append("BOOK_FROM_FUTURE")
             if age>self.max_book_age_ms:reasons.append("BOOK_STALE")
         return {"allow":not reasons,"reasons":reasons,
                 "book_age_ms":None if self.last_book_update_ms is None else max(0,now-self.last_book_update_ms)}
@@ -313,7 +319,9 @@ class PositionStateStore:
         state.updated_ms=int(time.time()*1000)
         payload=asdict(state)
         tmp=self.path.with_suffix(self.path.suffix+".tmp")
-        tmp.write_text(json.dumps(payload,sort_keys=True,indent=2),encoding="utf-8")
+        with tmp.open("w", encoding="utf-8") as fh:
+            fh.write(json.dumps(payload,sort_keys=True,indent=2,allow_nan=False))
+            fh.flush();os.fsync(fh.fileno())
         os.replace(tmp,self.path)
         return payload
 
@@ -324,10 +332,8 @@ class PositionStateStore:
 
     def assert_flat_or_recover(self):
         state=self.load()
-        if state is None:return {"allow_new_entry":True,"reason":"NO_STATE"}
-        if state.open_shares>1e-9 or state.state not in {"CLOSED","CANCELLED"}:
-            return {"allow_new_entry":False,"reason":"RECOVERY_REQUIRED","state":asdict(state)}
-        return {"allow_new_entry":True,"reason":"FLAT","state":asdict(state)}
+        return {"allow_new_entry":False,"reason":"REMOTE_RECONCILIATION_REQUIRED",
+                "state":None if state is None else asdict(state)}
 
 
 class RecoveryReconciler:
@@ -340,17 +346,15 @@ class RecoveryReconciler:
 
     async def reconcile(self, state):
         if state is None:
-            return {"allow_new_entry":True,"reason":"NO_LOCAL_POSITION"}
-        if state.state=="CLOSED" and state.open_shares<=1e-9:
-            return {"allow_new_entry":True,"reason":"LOCAL_FLAT"}
+            return {"allow_new_entry":False,"reason":"REMOTE_RECONCILIATION_REQUIRED"}
         order_id=state.exit_order_id or state.entry_order_id
         if not order_id:
             return {"allow_new_entry":False,"reason":"ORDER_ID_MISSING"}
         try:
             remote=await self.client.get_order(order_id=str(order_id))
         except Exception as exc:
-            return {"allow_new_entry":False,"reason":"REMOTE_LOOKUP_FAILED",
-                    "error":f"{type(exc).__name__}:{exc}"}
+            return {"allow_new_entry":False,"reason":"RECOVERY_REQUIRED",
+                    "cause":"REMOTE_LOOKUP_FAILED","error_type":type(exc).__name__}
         data=_plain(remote)
         return {"allow_new_entry":False,"reason":"REMOTE_REVIEW_REQUIRED",
                 "order_id":str(order_id),"remote":data,"local":asdict(state)}
@@ -361,29 +365,34 @@ class RemoteStateProjector:
     TERMINAL_CANCEL={"CANCELLED","CANCELED","EXPIRED"}
     FULL={"FILLED","MATCHED"}
 
-    def apply(self, state, normalized):
+    def apply(self, state, normalized, *, leg="entry"):
         if not normalized or not normalized.get("known"):
             return {"ok":False,"reason":"UNKNOWN_REMOTE_STATUS","state":state}
-        status=str(normalized.get("status") or "").upper()
-        filled=float(normalized.get("filled_size") or 0)
-        original=float(normalized.get("original_size") or 0)
-        remaining=normalized.get("remaining_size")
-        if filled<0 or (original>0 and filled>original+1e-9):
+        status=normalized.get("status")
+        if status not in self.FULL | self.TERMINAL_CANCEL | {"LIVE","OPEN","PENDING"}:
+            return {"ok":False,"reason":"UNMAPPED_REMOTE_STATUS","state":state}
+        try:
+            filled=float(normalized["filled_size"]);original=float(normalized["original_size"])
+            previous=state.sold_shares if leg=="exit" else state.filled_shares
+            if leg not in {"entry","exit"} or not all(math.isfinite(x) for x in (filled,original,previous)):
+                raise ValueError()
+            if original<=0 or filled<previous or filled>original or filled<0:raise ValueError()
+            if status in self.FULL and filled!=original:raise ValueError()
+            if leg=="exit" and filled>state.filled_shares:raise ValueError()
+        except (KeyError,TypeError,ValueError,OverflowError):
             return {"ok":False,"reason":"INVALID_REMOTE_SIZES","state":state}
-        if filled>state.filled_shares:
-            state.filled_shares=filled
-        if status in self.FULL or (remaining is not None and remaining<=1e-9 and filled>0):
-            state.state="FILLED"
-        elif filled>0:
-            state.state="PARTIAL"
-        elif status in self.TERMINAL_CANCEL:
-            state.state="CANCELLED"
-        elif status in {"LIVE","OPEN","PENDING"}:
-            state.state="ACKED"
+        if leg=="exit":
+            state.sold_shares=filled
+            state.state="FLAT_PENDING_VERIFICATION" if state.open_shares==0 else "EXIT_PARTIAL"
         else:
-            return {"ok":False,"reason":"UNMAPPED_REMOTE_STATUS","status":status,"state":state}
+            state.filled_shares=filled
+            if status in self.TERMINAL_CANCEL:
+                state.state="CANCELLED_PARTIAL" if filled else "CANCELLED"
+            elif status in self.FULL:state.state="FILLED"
+            else:state.state="PARTIAL" if filled else "ACKED"
         state.updated_ms=int(time.time()*1000)
         return {"ok":True,"reason":"PROJECTED","state":state}
+
 
 
 class ReadOnlyPositionSynchronizer:
@@ -404,7 +413,7 @@ class ReadOnlyPositionSynchronizer:
         except Exception as exc:
             return {"ok":False,"reason":"GET_ORDER_FAILED","error":f"{type(exc).__name__}:{exc}"}
         normalized=normalize_order_status({"response":_plain(raw)})
-        projected=self.projector.apply(state,normalized)
+        projected=self.projector.apply(state,normalized,leg="exit" if state.exit_order_id else "entry")
         if not projected.get("ok"):
             return {"ok":False,"reason":projected.get("reason"),"normalized":normalized}
         saved=self.store.save(state)
