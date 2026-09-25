@@ -3,6 +3,7 @@ No per-generation event loop, thread handoff, retry, cache, or retiming.
 """
 import asyncio
 import time
+from .latency_trace import mark
 
 
 def clock_ms():return time.time_ns()//1000000
@@ -15,6 +16,7 @@ async def run_generation_worker(factory):
         timing['generation_started_ms']=clock_ms()
         value=await factory()
         timing['generation_result_ready_ms']=clock_ms()
+        mark('generation.result_ready')
         return value
     task=asyncio.create_task(execute())
     try:
@@ -28,6 +30,7 @@ async def run_generation_worker(factory):
         if task.done() and not task.cancelled():task.exception()
         raise
     timing['runner_continued_ms']=clock_ms()
+    mark('generation.runner_continued')
     timing['dispatch_delay_ms']=timing['generation_started_ms']-timing['submitted_ms']
     timing['continuation_delay_ms']=timing['runner_continued_ms']-timing['generation_result_ready_ms']
     return value,timing

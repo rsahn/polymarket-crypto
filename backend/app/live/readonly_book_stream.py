@@ -6,6 +6,8 @@ import json
 import copy
 import hashlib
 from contextlib import suppress
+from .latency_trace import sync_span
+decode_frame = sync_span('ws.decode')(json.loads)
 from .production_readonly import BookStateSource,number,now_ms
 
 WS='wss://ws-subscriptions-clob.polymarket.com/ws/market'
@@ -72,6 +74,7 @@ class StreamBook(BookStateSource):
             'classification':classification,'supersession_proven':False}
         raise ValueError('BOOK_REGRESSION')
 
+    @sync_span('ws.ingest')
     def ingest(self,event,*,wire_received_ms=None):
         received_ms=self.clock() if wire_received_ms is None else wire_received_ms
         self.last_wire_received_ms=received_ms
@@ -221,7 +224,7 @@ class StreamBook(BookStateSource):
                         wire_received_ms=self.clock();self.last_frame_received_ms=wire_received_ms
                         if raw=='PONG':
                             self.last_pong_received_ms=wire_received_ms;continue
-                        try:values=json.loads(raw)
+                        try:values=decode_frame(raw)
                         except (ValueError,TypeError):
                             self.diagnostics['parser_reason']='WS_INVALID_JSON';self.failure='WS_INVALID_JSON'
                             raise ValueError('WS_INVALID_JSON') from None

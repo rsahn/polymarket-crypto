@@ -12,6 +12,7 @@ from app.live.collateral_onchain import PublicRPC,validate_rpc_endpoint
 from app.live.genesis_ledger import read_genesis,expected_wallet
 from app.live.ctf_inventory_probe import scan_ctf
 from app.live.production_readonly import now_ms
+from app.live.latency_trace import measured_thread, measured_await
 from app.live.deposit_qualification import write_report
 from analysis.qualify_post_genesis import load_inventory_cursor,discover_book
 
@@ -143,8 +144,8 @@ async def recheck_fixed_boundary(rpc,c_number,b_number):
     """Both numeric rechecks start AFTER account completion; neither selects latest."""
     started=now_ms()
     check,anchor=await asyncio.gather(
-        asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c_number),False]),
-        asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(b_number),False]))
+        measured_thread('recheck.C',rpc.call,'eth_getBlockByNumber',[hex(c_number),False]),
+        measured_thread('recheck.B',rpc.call,'eth_getBlockByNumber',[hex(b_number),False]))
     return header(check),header(anchor),{'started_ms':started,'finished_ms':now_ms()}
 
 
@@ -158,7 +159,7 @@ async def seal_tail(rpc,tail,target):
         if header(witness['header'])!=target:raise ValueError('BOUNDARY_REORG')
         return start,end,'SCAN_FINAL_NUMERIC_WITNESS'
     start=now_ms()
-    seal=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(target['number']),False]))
+    seal=header(await measured_thread('seal.C',rpc.call,'eth_getBlockByNumber',[hex(target['number']),False]))
     end=now_ms()
     if seal!=target:raise ValueError('BOUNDARY_REORG')
     return start,end,'EXPLICIT_NUMERIC_READ'
@@ -175,17 +176,17 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
     geoval=await geo_reader.read()
     if qualified.get('status')!='PASS_PROVIDER_FINALIZED_READ':raise ValueError('FINALIZED_UNPROVEN')
     b=qualified['anchor']
-    c=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',['latest',False]))
+    c=header(await measured_thread('select.C',rpc.call,'eth_getBlockByNumber',['latest',False]))
     if anchored['to_block']!=b['number'] or c['number']<b['number']:
         raise ValueError('CURSOR_BOUNDARY_INCOHERENT')
     scan_dispatch_ms=now_ms()
-    tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,c)
+    tail,ranges=await measured_thread('scan.fixed',fixed_scan,rpc,anchored,c)
     scan_finished_ms=now_ms()
     seal_started_ms,sealed_ms,seal_provenance=await seal_tail(rpc,tail,c)
     account_started_ms=now_ms()
-    observed=await fresh_views(client)
+    observed=await measured_await('account.phase',fresh_views(client))
     account_finished_ms=now_ms()
-    check,anchor_check,recheck_timing=await recheck_fixed_boundary(rpc,c['number'],b['number'])
+    check,anchor_check,recheck_timing=await measured_await('recheck.phase',recheck_fixed_boundary(rpc,c['number'],b['number']))
     rechecked_ms=recheck_timing['started_ms']
     if check!=c:raise ValueError('BOUNDARY_REORG')
     if anchor_check['number']!=b['number']:raise ValueError('ANCHOR_REORG')

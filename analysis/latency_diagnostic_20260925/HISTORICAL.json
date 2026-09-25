@@ -1,0 +1,22 @@
+{
+  "historical_phase_envelopes": {
+    "account": {
+      "phase_ms": 844,
+      "last_logged_worker_finish_to_phase_end_ms": 454,
+      "longest_logged_request_ms": 385,
+      "attribution": "UNATTRIBUTED_WITHOUT_OVERLAPPING_TRACE"
+    },
+    "recheck": {
+      "phase_ms": 623,
+      "last_logged_worker_finish_to_phase_end_ms": 371,
+      "longest_logged_request_ms": 249,
+      "attribution": "UNATTRIBUTED_WITHOUT_OVERLAPPING_TRACE"
+    }
+  },
+  "workers": [],
+  "phases": [],
+  "generation_continuation": null,
+  "max_loop_lag_ms": null,
+  "dropped_events": null,
+  "scope": "CPU_OVERLAP_IS_MEASURED_ONLY_FOR_FULLY_CONTAINED_SPANS; NO_GIL_OR_NETWORK_ARRIVAL_CLAIM"
+}

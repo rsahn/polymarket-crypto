@@ -6,6 +6,7 @@ import os
 import time
 from .production_readonly import number,fresh
 from .clob_transport import LiveClobTransport
+from .latency_trace import measured_await
 
 
 def transport_locked():
@@ -31,7 +32,7 @@ class ProductionReadinessCheck:
                 if inspect.isawaitable(value):value=await value
                 return name,value if isinstance(value,dict) else {}
             except Exception:return name,{}
-        values=dict(await asyncio.gather(*(read_source(n,s) for n,s in self.sources.items())))
+        values=dict(await measured_await('readiness.sources',asyncio.gather(*(read_source(n,s) for n,s in self.sources.items()))))
         try:
             local=self.local_reader()
             local_ok=isinstance(local,dict) and (local.get("phase")=="CLOSED" or (local.get("phase")=="GENESIS_RECONCILED" and local.get("integrity_verified") is True and local.get("reconciled_now") is True))

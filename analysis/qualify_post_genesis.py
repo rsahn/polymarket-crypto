@@ -15,6 +15,7 @@ from app.live.forward_readiness import evaluate_baseline,ObservationSource,Forwa
 from app.live.readonly_book_stream import StreamBook
 from app.live.production_readonly import now_ms,drain,plain,units,GeoBlockSource,BookStateSource
 from app.live.readiness import ProductionReadinessCheck
+from app.live.latency_trace import diagnose, measured_await
 from app.live.network_readonly import GetOnlyTransport,ReadOnlyClient
 from app.live.collateral_onchain import PublicRPC,validate_rpc_endpoint,CONTRACT
 from app.live.ctf_inventory_probe import scan_ctf
@@ -125,13 +126,13 @@ async def discover_book(audit):
 
 
 async def fresh_views(client):
-    async def observed(coro):
-        started=now_ms();value=await coro
+    async def observed(label,coro):
+        started=now_ms();value=await measured_await('account.'+label,coro)
         return value,started
     values=await asyncio.gather(
-        observed(client.get_balance_allowance(asset_type='COLLATERAL')),
-        observed(drain(client.list_open_orders())),observed(drain(client.list_account_trades())),
-        observed(drain(client.list_positions(user=client.wallet,full_history=True,include_archived=True,filter_type='TOKENS',filter_amount=0))))
+        observed('balance',client.get_balance_allowance(asset_type='COLLATERAL')),
+        observed('orders',drain(client.list_open_orders())),observed('trades',drain(client.list_account_trades())),
+        observed('positions',drain(client.list_positions(user=client.wallet,full_history=True,include_archived=True,filter_type='TOKENS',filter_amount=0))))
     return dict(zip(('balance','orders','trades','positions'),values))
 
 
@@ -178,6 +179,17 @@ def inventory_metadata(inventory):
     return {k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance',
         'scan_observed_ms','head_witness_started_ms','head_witness_finished_ms','head_block_timestamp_ms',
         'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash','critical_path','boundary_evidence','cursor_previous','anchor_catchup_ranges') if k in inventory}
+
+
+def inventory_completeness(inventory):
+    """Report the missing scope proof independently of the latency verdict."""
+    proof=(inventory or {}).get('post_b_proof',{})
+    return dict(evidence_available=bool(proof),
+        inventory_through_C_proven=proof.get('inventory_through_C_proven') is True,
+        current_inventory_proven=proof.get('current_inventory_proven') is True,
+        post_C_completeness='UNPROVEN_NO_COMMON_WATERMARK' if proof else 'NO_BOUNDARY_EVIDENCE',
+        generation_stale=proof.get('reason')=='GENERATION_STALE_500MS',
+        boundary_verdict=proof.get('reason'),latency_fix_sufficient=False)
 
 
 def annotate(readiness):
@@ -383,6 +395,7 @@ async def run(target=False,*,health_contract=False):
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
+            'inventory_completeness':inventory_completeness(inventory) if health_contract else None,
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
@@ -399,8 +412,13 @@ async def run(target=False,*,health_contract=False):
 
 
 def main():
-    if sys.argv[1:] not in (['--offline'],['--target-machine'],['--target-machine','--health-contract']):return 2
-    try:report=asyncio.run(run(sys.argv[1]=='--target-machine',health_contract='--health-contract' in sys.argv[1:]))
+    args=sys.argv[1:]
+    diagnostic='--diagnostics' in args
+    if diagnostic:args=[a for a in args if a!='--diagnostics']
+    if args not in (['--offline'],['--target-machine'],['--target-machine','--health-contract']):return 2
+    if diagnostic and args!=['--target-machine','--health-contract']:return 2
+    runner=diagnose(run) if diagnostic else run
+    try:report=asyncio.run(runner(args[0]=='--target-machine',health_contract='--health-contract' in args))
     except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False}
     path=ROOT/('D6_POST_GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)
