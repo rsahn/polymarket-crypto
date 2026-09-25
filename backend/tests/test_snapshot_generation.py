@@ -128,10 +128,13 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch):
     monkeypatch.setattr(q,'expected_wallet',lambda:'wallet')
     monkeypatch.setattr(q,'now_ms',lambda:1000)
     monkeypatch.setattr(q,'incremental_inventory',lambda *a:inv)
+    monkeypatch.setattr(q,'load_inventory_cursor',lambda *a:inv)
+    monkeypatch.setattr(q,'save_inventory_cursor',lambda *a:None)
     monkeypatch.setattr(q,'advance_inventory',lambda *a:inv)
     monkeypatch.setattr(q,'witness_inventory',lambda *a:inv)
     class RPC:
         def __init__(self,*a,**k):self.calls=[]
+        def call(self,*a):return {"hash":"d"*64}
     monkeypatch.setattr(q,'PublicRPC',RPC)
     monkeypatch.setattr(q,'load_existing',lambda *a:({'apiKey':'FAKE_SENTINEL_KEY','secret':'FAKE_SENTINEL_SECRET','passphrase':'FAKE_SENTINEL_PASS'},{'storage_validated':True}))
     class Get:
