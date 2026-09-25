@@ -26,7 +26,7 @@ def header(value):
 
 def qualify_finalized(rpc,*,diagnostics=None):
     started=now_ms();d=diagnostics if diagnostics is not None else {}
-    d.update(reads=[],reason='RPC_OR_SCHEMA_FAILURE',stage='chain_id')
+    d.update(reads=[],reason='RPC_OR_SCHEMA_FAILURE',stage='chain_id',clock_source='LOCAL_TIME_TIME_NS_UTC',clock_accuracy_proven=False)
     def reject(reason):
         d['reason']=reason;raise ValueError('FINALIZED_UNPROVEN')
     def read(tag,label):
@@ -34,8 +34,9 @@ def qualify_finalized(rpc,*,diagnostics=None):
         value=header(rpc.call('eth_getBlockByNumber',[tag,False]));received=now_ms()
         d['reads'].append(dict(label=label,requested_tag=tag,number=value['number'],
             block_hash=value['hash'],block_timestamp_ms=value['timestamp']*1000,
-            request_started_ms=request_start,response_received_ms=received))
-        if value['timestamp']*1000>received:reject('HEADER_TIMESTAMP_IN_FUTURE')
+            request_started_ms=request_start,response_received_ms=received,block_minus_receive_ms=value['timestamp']*1000-received,block_minus_request_ms=value['timestamp']*1000-request_start))
+        # Consensus timestamp is not local acquisition time. Record skew, do not
+        # invent a tolerance or use it to refresh a 500 ms observation.
         return value
     try:
         if rpc.call('eth_chainId',[])!='0x89':reject('CHAIN_MISMATCH')
@@ -124,6 +125,43 @@ def public_inventory(rpc,prior,cursor,qualified):
     return dict(cursor_previous=cursor['to_block'],anchor_catchup_ranges=pre_ranges,
                 proof=e,evaluation=evaluate_post_b(e,now=now_ms()),
                 account_status='NOT_ACQUIRED_PUBLIC_PROOF_PHASE',attempts=1)
+
+
+def prepare_finalized_inventory(rpc,prior,cursor):
+    qualified=qualify_finalized(rpc)
+    base=prior['snapshot']
+    if header(rpc.call('eth_getBlockByNumber',[hex(base['block_number']),False]))['hash']!=base['block_hash']:
+        raise ValueError('GENESIS_ANCHOR_CHANGED')
+    if cursor['events_count'] or any(int(v) for v in cursor['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
+    anchored,ranges=fixed_scan(rpc,cursor,qualified['anchor'])
+    return {**anchored,'from_block':cursor['from_block']},qualified
+
+
+async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=None):
+    from analysis.qualify_post_genesis import fresh_views
+    geoval=await geo_reader.read()
+    b=qualified['anchor']
+    h=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',['latest',False]))
+    tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,h)
+    def witness():
+        started=now_ms();w=header(rpc.call('eth_getBlockByNumber',['latest',False]))
+        checked_at=now_ms();check=header(rpc.call('eth_getBlockByNumber',[hex(b['number']),False]))
+        return started,w,checked_at,check
+    # Hash B and latest H reads are serial on one RPC object; account GETs run in parallel.
+    observed,(started,w,checked_at,check)=await asyncio.gather(fresh_views(client),asyncio.to_thread(witness))
+    e=dict(anchored_inventory_proven=True,anchor_number=b['number'],anchor_hash=b['hash'],
+        anchor_rechecked_hash=check['hash'],tail_end=h['number'],tail_hash=h['hash'],ranges=ranges,
+        tail_complete=True,witness_number=w['number'],witness_hash=w['hash'],scan_observed_ms=tail['observed_ms'],
+        witness_observed_ms=started,anchor_observed_ms=checked_at,generation=1,
+        account={k:dict(generation=1,complete=True,observed_ms=v[1]) for k,v in observed.items()})
+    proof=evaluate_post_b(e,now=now_ms())
+    if attempts is not None:attempts.append(dict(attempt=1,reason=proof['reason'],watermark_block=h['number'],
+        witness_block=w['number'],account_complete=True,post_b=proof))
+    if not proof['current_inventory_proven']:raise ValueError(proof['reason'])
+    return observed,geoval,{**tail,'from_block':anchored['from_block'],'observed_ms':started,
+        'scan_observed_ms':tail['observed_ms'],'generation_attempt':1,'post_b_proof':proof,
+        'provenance':'FINALIZED_B_CONTIGUOUS_TAIL_H_FRESH_CANONICAL_WITNESS_AND_ACCOUNT',
+        'finalized_block':b['number'],'finalized_hash':b['hash']}
 
 
 async def capture_ws(audit):

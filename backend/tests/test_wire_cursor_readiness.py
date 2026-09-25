@@ -8,9 +8,9 @@ def event(t='1',asks=None):
         'bids':[{'price':'.4','size':'2'}],'asks':[{'price':'.6','size':'2'}] if asks is None else asks}
 
 
-def test_first_wire_book_recorded_before_empty_rejection():
+def test_first_wire_book_recorded_with_empty_market_ineligible():
     s=StreamBook('m','c',('1','2'),5000,clock=lambda:1000);s.connected_generation()
-    with pytest.raises(ValueError,match='EMPTY_BOOK'):s.ingest(event(asks=[]))
+    s.ingest(event(asks=[]));assert not s.read()['market_eligible']
     first=s.read()['diagnostics']['first_full_books'][0]
     assert first['bids_count']==1 and first['asks_count']==0 and first['source_timestamp_ms']==1000
     assert first['token_index']==0 and first['identity_matches'] and first['message_kind']=='book'
@@ -77,12 +77,13 @@ def test_cursor_atomic_roundtrip_and_tamper(tmp_path):
 
 def test_wire_sides_and_token_mapping_never_cross_fill():
     s=StreamBook('m','c',('1','2'),5000,clock=lambda:1000);s.connected_generation()
-    with pytest.raises(ValueError):s.ingest(event(asks=[]))
+    s.ingest(event(asks=[]))
     x=event('2');x['bids']=[]
-    with pytest.raises(ValueError):s.ingest(x)
-    r=s.read();assert r['state']=='INVALID_BOOK' and not r['available']
+    s.ingest(x)
+    r=s.read();assert r['state']=='SYNCHRONIZED' and not r['available']
     assert [x['token_index'] for x in r['diagnostics']['first_full_books']]==[0,1]
-    assert not r['diagnostics']['resync_complete_generation']
+    assert r['diagnostics']['resync_complete_generation']==1
+    assert not r['market_eligible'] and r['reason']=='EMPTY_BOOK'
 
 
 def test_pre_snapshot_delta_is_not_applied():

@@ -153,8 +153,7 @@ class BookStateSource:
         try:
             if not fresh(observed_ms,self.clock()):raise ValueError("STALE_BOOK")
             bid,ask=levels(bids,True),levels(asks,False)
-            if not bid or not ask:raise ValueError("EMPTY_BOOK")
-            if bid[0][0]>=ask[0][0]:raise ValueError("CROSSED_BOOK")
+            if bid and ask and bid[0][0]>=ask[0][0]:raise ValueError("CROSSED_BOOK")
             previous=self.books.get(token)
             if previous and observed_ms<previous["observed_ms"]:raise ValueError("BOOK_REGRESSION")
             self.books[token]=dict(bids=bid,asks=ask,observed_ms=observed_ms)
@@ -165,9 +164,10 @@ class BookStateSource:
     def read(self):
         synchronized=self.connected and len(self.books)==2
         is_fresh=synchronized and all(fresh(b["observed_ms"],self.clock()) for b in self.books.values())
-        ready=synchronized and is_fresh
-        reason="WS_DISCONNECTED" if not self.connected else self.invalid_reason or ("RESYNC_INCOMPLETE" if not synchronized else "STALE_BOOK" if not is_fresh else None)
-        return deepcopy(dict(reason=reason,available=ready,connected=self.connected,synchronized=synchronized,fresh=is_fresh,book_synced=ready,market_slug=self.market,
+        liquid=synchronized and all(b["bids"] and b["asks"] for b in self.books.values())
+        ready=synchronized and is_fresh and liquid
+        reason="WS_DISCONNECTED" if not self.connected else self.invalid_reason or ("RESYNC_INCOMPLETE" if not synchronized else "STALE_BOOK" if not is_fresh else "EMPTY_BOOK" if not liquid else None)
+        return deepcopy(dict(reason=reason,market_eligible=ready,available=ready,connected=self.connected,synchronized=synchronized,fresh=is_fresh,book_synced=ready,market_slug=self.market,
             generation=self.generation,books=self.books,observed_ms=min((b["observed_ms"] for b in self.books.values()),default=None)))
 
 

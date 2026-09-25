@@ -13,7 +13,11 @@ def test_book_connection_sync_freshness_separate():
 @pytest.mark.parametrize('bid,ask,reason', [([],[], 'EMPTY_BOOK'),([('.7','1')],[('.6','1')],'CROSSED_BOOK')])
 def test_exact_book_reason(bid,ask,reason):
     b=BookStateSource(clock=lambda:1000);b.connect('m',('1','2'),1)
-    with pytest.raises(ValueError,match='^'+reason+'$'):b.update('1',bid,ask,1000,1)
+    if reason=='EMPTY_BOOK':
+        b.update('1',bid,ask,1000,1);b.update('2',bid,ask,1000,1)
+        assert b.read()['reason']=='EMPTY_BOOK' and b.read()['synchronized']
+    else:
+        with pytest.raises(ValueError,match='^'+reason+'$'):b.update('1',bid,ask,1000,1)
     assert b.connected and not b.read()['available']
 
 
@@ -80,7 +84,8 @@ def test_head_advance_retries_whole_generation_only(monkeypatch):
 def test_empty_cause_depth_diagnostics_and_resync():
     s=StreamBook('m','c',('1','2'),5000,clock=lambda:1000);s.connected_generation()
     def event(t,bids,asks):return {'event_type':'book','market':'c','asset_id':t,'timestamp':'1000','bids':bids,'asks':asks}
-    with pytest.raises(ValueError,match='EMPTY_BOOK'):s.ingest(event('1',[],[]))
+    s.ingest(event('1',[],[]))
+    assert not s.read()['available']
     d=s.read()['diagnostics']['tokens'][0]
     assert d['bids_count']==0 and d['asks_count']==0 and d['best_bid'] is None
     for t in ('1','2'):
