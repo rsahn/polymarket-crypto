@@ -13,7 +13,7 @@ sys.path.insert(0,str(ROOT/'backend'))
 from app.live.genesis_ledger import expected_wallet,create_genesis,read_genesis,digest,LIMITS
 from app.live.genesis_discovery import conditional_snapshot,segmented_snapshot,DiscoveryBlocked
 from app.live.genesis_readonly import read_local_ledger
-from app.live.collateral_onchain import PublicRPC,CONTRACT
+from app.live.collateral_onchain import PublicRPC,CONTRACT,validate_rpc_endpoint
 from app.live.deposit_qualification import FLAGS,CLOB,DATA,write_report
 from app.live.network_readonly import GetOnlyTransport,ReadOnlyClient
 from app.live.production_readonly import drain,plain,BookStateSource,GeoBlockSource,SessionRiskSource
@@ -39,7 +39,18 @@ def qualification():
     raise ValueError('QUALIFIED_COLLATERAL_REPORT_MISSING')
 
 
-async def run(network=False,chunked_ctf=False):
+def genesis_rpc(wallet,archive_rpc=False):
+    if not archive_rpc:return PublicRPC(wallet)
+    endpoint=os.getenv('POLYGON_ARCHIVE_RPC_URL')
+    if not endpoint or not endpoint.strip():raise DiscoveryBlocked('POLYGON_ARCHIVE_RPC_URL_NOT_CONFIGURED')
+    try:validate_rpc_endpoint(endpoint)
+    except ValueError:raise DiscoveryBlocked('POLYGON_ARCHIVE_RPC_URL_INVALID') from None
+    rpc=PublicRPC(wallet,endpoint=endpoint)
+    rpc.log_window=10
+    return rpc
+
+
+async def run(network=False,chunked_ctf=False,archive_rpc=False):
     old,qualification_hash=qualification();wallet=expected_wallet();creds=None;audit=[]
     c=old['collateral'];old_views=old['inventory']['remote_views']
     account={'available':True,'authenticated':True,'observed_ms':c['observed_ms'],
@@ -58,9 +69,9 @@ async def run(network=False,chunked_ctf=False):
             from polymarket._internal.environment import PRODUCTION_CONFIG as env
             from polymarket._internal.hmac import build_hmac_signature
             if version('polymarket-client')!='0.11.0':raise ValueError()
+            rpc=genesis_rpc(wallet,archive_rpc)
             stamp=await GetOnlyTransport(CLOB,('/time',),audit=audit).get_json('/time')
             if type(stamp) is not int or abs(time.time()-stamp)>5:raise ValueError()
-            rpc=PublicRPC(wallet)
             old_local,known=read_local_ledger(os.getenv('READONLY_EXECUTION_STATE_DB'))
             if old_local.get('recovery_pending'):raise RecoveryDetected()
             if old_local.get('configured'):raise ValueError('EXISTING_LEDGER_REQUIRES_EXPLICIT_IMPORT')
@@ -128,6 +139,8 @@ async def run(network=False,chunked_ctf=False):
     readiness['observations']['account'].pop('open_order_ids',None)
     readiness['observations']['positions'].pop('balances',None)
     report={'phase':'D6_GENESIS_AND_FULL_READINESS','genesis':decision,'readiness':readiness,
+        'rpc_source':'POLYGON_ARCHIVE_RPC_URL' if archive_rpc else 'PINNED_DRPC',
+        'ctf_log_window_blocks':10 if archive_rpc else 500,
         'network_executed':network,'get_requests':audit,'rpc_calls':rpc.calls if rpc else [],
         'prior_history_globally_known':False,'coverage_limitations':LIMITS,
         'book_source':'ACTUAL_ADAPTER_DISCONNECTED_NO_PRODUCTION_STREAM',
@@ -139,10 +152,10 @@ async def run(network=False,chunked_ctf=False):
 
 
 def main():
-    if sys.argv[1:] not in (['--offline'],['--target-machine'],['--target-machine','--chunked-ctf']):print('Use --offline or --target-machine [--chunked-ctf].');return 2
+    if sys.argv[1:] not in (['--offline'],['--target-machine'],['--target-machine','--chunked-ctf'],['--target-machine','--chunked-ctf','--archive-rpc']):print('Use --offline or --target-machine [--chunked-ctf [--archive-rpc]].');return 2
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError()
-        report=asyncio.run(run(sys.argv[1]=='--target-machine','--chunked-ctf' in sys.argv))
+        report=asyncio.run(run(sys.argv[1]=='--target-machine','--chunked-ctf' in sys.argv,'--archive-rpc' in sys.argv))
     except BaseException:report={'phase':'D6_GENESIS_AND_FULL_READINESS','status':'BLOCKED','ready_for_arm':False}
     p=ROOT/('GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(p,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+p.name)
