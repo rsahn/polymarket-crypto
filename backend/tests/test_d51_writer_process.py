@@ -17,9 +17,9 @@ class WriterProcessTests(unittest.IsolatedAsyncioTestCase):
     def tick(self):return {'kind':'BTC','received_ts_ms':1000,'tick':{'recv_ts_ms':1000,'event_ts_ms':999,'price':50000.}}
     def rows(self,sql):
         with closing(sqlite3.connect(self.path.as_uri()+'?mode=ro',uri=True)) as db:return db.execute(sql).fetchall()
-    async def test_default_transport_uses_large_batches_with_same_admission_bound(self):
+    async def test_default_transport_uses_expanded_burst_headroom(self):
         w=await self.start()
-        self.assertEqual(w.batch_size,256);self.assertEqual(w.max_items,8192);self.assertEqual(w.max_bytes,64*1024*1024)
+        self.assertEqual(w.batch_size,256);self.assertEqual(w.max_items,65536);self.assertEqual(w.max_bytes,256*1024*1024)
         await w.stop()
     async def test_batch_boundaries_and_drain(self):
         for n in (0,1,31,32,33):
