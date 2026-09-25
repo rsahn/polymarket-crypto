@@ -125,14 +125,17 @@ async def discover_book(audit):
     return StreamBook(slug,ident.condition_id,(ident.token_up,ident.token_down),ident.expiry_ts_ms)
 
 
-async def fresh_views(client):
+async def fresh_views(client,*,drain_errors=False):
     async def observed(label,coro):
         started=now_ms();value=await measured_await('account.'+label,coro)
         return value,started
     values=await asyncio.gather(
         observed('balance',client.get_balance_allowance(asset_type='COLLATERAL')),
         observed('orders',drain(client.list_open_orders())),observed('trades',drain(client.list_account_trades())),
-        observed('positions',drain(client.list_positions(user=client.wallet,full_history=True,include_archived=True,filter_type='TOKENS',filter_amount=0))))
+        observed('positions',drain(client.list_positions(user=client.wallet,full_history=True,include_archived=True,filter_type='TOKENS',filter_amount=0))),
+        return_exceptions=drain_errors)
+    for value in values:
+        if isinstance(value,BaseException):raise value
     return dict(zip(('balance','orders','trades','positions'),values))
 
 
@@ -217,6 +220,7 @@ async def run(target=False,*,health_contract=False):
     generation=None
     pending_inventory_checkpoint=None;inventory=None
     preparation_rpc=None;current_generation_inventory=None
+    connection_warmup={'status':'NOT_RUN'}
     attempts=[];qualified=None;clock_diagnostic={};reconciliation_timing={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
@@ -285,6 +289,15 @@ async def run(target=False,*,health_contract=False):
                 client=ReadOnlyClient(wallet=wallet,signature_type=3,
                     clob=transport(CLOB,('/balance-allowance','/data/orders','/data/trades'),headers=headers,audit=audit),
                     data=transport(DATA,('/v2/positions',),audit=audit))
+                if health_contract:
+                    stage='READ_ONLY_CONNECTION_WARMUP'
+                    if (getattr(rpc,'pool',None) is not None and
+                            getattr(getattr(client,'clob',None),'pool',None) is not None and
+                            getattr(getattr(client,'data',None),'pool',None) is not None):
+                        from app.live.readonly_warmup import warm_readonly
+                        connection_warmup=await warm_readonly(rpc,lambda:fresh_views(client,drain_errors=True))
+                    else:
+                        connection_warmup={'status':'SKIPPED_NO_PERSISTENT_POOLS'}
                 try:
                     book=await discover_book(audit);task=asyncio.create_task(book.run())
                     # A bounded warmup does not refresh any source timestamp.
@@ -347,7 +360,7 @@ async def run(target=False,*,health_contract=False):
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
     except Exception as exc:
-        allowed={'BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        allowed={'READ_ONLY_WARMUP_FAILED','BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
         if stage=='POST_GENESIS_CTF_DISCOVERY' and preparation_rpc is not None and preparation_rpc.failure:
             reason=preparation_rpc.failure
@@ -408,6 +421,7 @@ async def run(target=False,*,health_contract=False):
             'inventory_completeness':inventory_completeness(current_generation_inventory) if health_contract else None,
             'inventory_evidence_origin':'CURRENT_GENERATION' if current_generation_inventory is not None else 'PREPARATION_OR_PRIOR_CURSOR',
             'preparation_rpc_policy':preparation_rpc.report() if preparation_rpc is not None else None,
+            'connection_warmup':connection_warmup,
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
