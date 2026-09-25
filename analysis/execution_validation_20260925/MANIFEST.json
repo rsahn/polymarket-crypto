@@ -1,0 +1,25 @@
+{
+  "baseline": "4cb928c562cdd0844d49c6591f71e2c77f71db34",
+  "validated_head": "00e6b49df6476fbf7c025f0c862da6a5a8662da9",
+  "verdict": "OFFLINE_PHASE_VALIDATED_NOT_READY_FOR_LIVE",
+  "btc_v1_module_unchanged": true,
+  "btc_signal_logic_unchanged": true,
+  "new_pytest_cases": 35,
+  "backend_passed": 176,
+  "project_passed": 293,
+  "project_failed": 0,
+  "collection_errors": 1,
+  "subtests_passed": 25,
+  "files": {
+    "backend/app/live/execution.py": "6e3ffd7ea8e3fa3cb2706417790af71087978f8c8f27172d18989985fec1e594",
+    "backend/app/live/execution_sources.py": "ffe3566f56091732cdc2b9ad1dc7425a55f1a3372c70e8883e7531696572b06c",
+    "backend/app/live/clob_transport.py": "1b2fa59413c55642e33c9d804fd6027a39aca2a48856377e7403b66eafa548c5",
+    "backend/app/live/clob_staged.py": "9ec435edb8c0506012a4762446fe3196470880e1f7c7f2b748c5459c3359258f",
+    "backend/app/live/risk.py": "54b70a6dd0c6cc526c654277ffc12f8f35f984ab79880ba1dfe7ca06edb2d343",
+    "analysis/pre_live_check_d6.py": "fa98dea5e12c46a7a0ec99a92a04ef4e92bdc19de572c74a9fa861f1a102f6f9",
+    "analysis/audit_live_boundary.py": "bf8e583cd99bf4a6a02fa8ca926b428792839fef06225625b51eb6e2e7657bfd",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+    "analysis/run_d6_one_shot_live_smoke.py": "4f311de0f0be7c4389470c56b670e403889589ac201254df9efd10d92ce5c49a",
+    "analysis/validate_execution.py": "74aff26e6bbb91abc934f69604c6241e8168cb46bb6f701c4274a0d840342244"
+  }
+}
