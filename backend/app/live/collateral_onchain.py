@@ -116,6 +116,7 @@ class PublicRPC:
             request_id=self.counter
         payload={'jsonrpc':'2.0','id':request_id,'method':method,'params':params}
         request=urllib.request.Request(self._endpoint,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
+        cpu_started=time.thread_time_ns()
         entry={'rpc_method':method,'id':request_id,'started_ms':time.time_ns()//1000000}
         if method=='eth_getLogs':
             entry.update(from_block=int(params[0]['fromBlock'],16),to_block=int(params[0]['toBlock'],16))
@@ -123,11 +124,13 @@ class PublicRPC:
             with urllib.request.build_opener(NoRedirect()).open(request,timeout=10) as response:
                 entry['http_status']=response.status
                 raw=response.read(1000001)
+                entry['response_received_ms']=time.time_ns()//1000000
                 if response.status!=200:
                     entry['error_category']='HTTP_ERROR';raise ValueError()
                 if len(raw)>1000000:
                     entry['error_category']='RESPONSE_TOO_LARGE';raise ValueError()
                 value=json.loads(raw)
+                entry['parse_complete_ms']=time.time_ns()//1000000
             if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=request_id:
                 entry['error_category']='RPC_ENVELOPE_INVALID';raise ValueError()
             if 'error' in value:
@@ -147,6 +150,7 @@ class PublicRPC:
             entry.setdefault('error_category','UNCLASSIFIED_READ_ERROR')
             entry['status']='FAILED';raise RuntimeError('PUBLIC_RPC_READ_FAILED') from None
         finally:
+            entry['thread_cpu_ms']=(time.thread_time_ns()-cpu_started)/1000000
             entry['finished_ms']=time.time_ns()//1000000
             entry['elapsed_ms']=entry['finished_ms']-entry['started_ms']
             self.calls.append(entry)

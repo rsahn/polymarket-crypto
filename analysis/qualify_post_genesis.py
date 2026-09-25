@@ -204,7 +204,7 @@ async def run(target=False,*,health_contract=False):
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
     pending_inventory_checkpoint=None
-    attempts=[];qualified=None;clock_diagnostic={}
+    attempts=[];qualified=None;clock_diagnostic={};reconciliation_timing={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError('FLAGS')
@@ -283,6 +283,7 @@ async def run(target=False,*,health_contract=False):
                 inventory_meta=inventory_metadata(inventory)
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
+                reconciliation_started=now_ms();reconciliation_cpu=time.thread_time_ns()
                 bal=plain(observed['balance'][0]);raw=str(bal['balance'])
                 allowed=[v for k,v in bal['allowances'].items() if k.lower()==env.standard_exchange.lower()]
                 if len(allowed)!=1:raise ValueError('ALLOWANCE_SPENDER')
@@ -317,6 +318,8 @@ async def run(target=False,*,health_contract=False):
                 positions=ObservationSource({'available':True,'observed_ms':remote['observed_ms'],'balances':inventory['balances'],
                     'complete':complete,'provenance':'GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER','reason':reconciliation.get('reason')})
                 local={**current,'reconciled_now':complete}
+                reconciliation_timing={'started_ms':reconciliation_started,'finished_ms':now_ms(),
+                    'thread_cpu_ms':(time.thread_time_ns()-reconciliation_cpu)/1000000}
             if reconciliation['phase']=='RECOVERY_REQUIRED' and not health_contract:
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
@@ -346,7 +349,7 @@ async def run(target=False,*,health_contract=False):
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
-            'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
+            'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report

@@ -1,0 +1,17 @@
+FF.                                                                      [100%]
+================================== FAILURES ===================================
+________________ test_rpc_reports_receive_parse_and_thread_cpu ________________
+backend\tests\test_final_dag.py:17: in test_rpc_reports_receive_parse_and_thread_cpu
+    assert e['started_ms']<=e['response_received_ms']<=e['parse_complete_ms']<=e['finished_ms']
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'response_received_ms'
+________________ test_get_reports_receive_parse_and_thread_cpu ________________
+backend\tests\test_final_dag.py:34: in test_get_reports_receive_parse_and_thread_cpu
+    assert e['started_ms']<=e['response_received_ms']<=e['parse_complete_ms']<=e['finished_ms']
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'response_received_ms'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_final_dag.py::test_rpc_reports_receive_parse_and_thread_cpu
+FAILED backend/tests/test_final_dag.py::test_get_reports_receive_parse_and_thread_cpu
+2 failed, 1 passed in 0.42s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

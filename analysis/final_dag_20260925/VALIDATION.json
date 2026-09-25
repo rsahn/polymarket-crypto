@@ -1,0 +1,33 @@
+{
+  "baseline_commit": "1da508d212a7432f1b0c58a8538d1af6f4180c68",
+  "tests_passed": 611,
+  "tests_failed": 0,
+  "tests_errors": 0,
+  "subtests_passed": 8,
+  "warnings": 3,
+  "audit": "PASS",
+  "genesis_unchanged": true,
+  "protected_files_unchanged": {
+    "analysis/d6/paper_live.py": true,
+    "backend/app/live/fixed_boundary.py": true,
+    "backend/app/live/readonly_book_stream.py": true,
+    "backend/app/live/production_readonly.py": true,
+    "backend/app/live/clob_transport.py": true,
+    "analysis/qualify_post_b_proofs.py": true
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false
+  },
+  "sdk_monetary_attempts": 0,
+  "external_test_connections": 0,
+  "target_network_run": false,
+  "latency_500ms_demonstrated_on_target": false,
+  "ws_supersession_proven": false,
+  "leak_scan": {
+    "detected": false,
+    "files_checked": 13,
+    "scope": "Changed files and phase evidence; static pattern scan, no secret store/dotenv/history read.",
+    "global_absence_proven": false
+  }
+}

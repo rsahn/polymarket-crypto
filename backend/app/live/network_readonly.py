@@ -25,6 +25,7 @@ class GetOnlyTransport:
         supplied=await self.headers(path) if self.headers else {}
         supplied.update(headers or {})
         def read():
+            cpu_started=time.thread_time_ns()
             started=now_ms();entry=dict(method="GET",endpoint=self.base+path,started_ms=started)
             try:
                 query=urllib.parse.urlencode({k: (str(v).lower() if type(v) is bool else v) for k,v in (params or {}).items()})
@@ -32,8 +33,10 @@ class GetOnlyTransport:
                 with urllib.request.build_opener(NoRedirect()).open(request,timeout=8) as response:
                     entry["http_status"]=response.status
                     payload=response.read(4_000_001)
+                    entry["response_received_ms"]=now_ms()
                     if len(payload)>4_000_000:raise ValueError("RESPONSE_LIMIT")
                     value=json.loads(payload)
+                    entry["parse_complete_ms"]=now_ms()
                     entry["shape"]=type(value).__name__
                     return value
             except Exception as exc:
@@ -41,7 +44,9 @@ class GetOnlyTransport:
                 if hasattr(exc,"code"):entry["http_status"]=exc.code
                 raise RuntimeError("READ_FAILED") from None
             finally:
-                entry["elapsed_ms"]=now_ms()-started
+                entry["finished_ms"]=now_ms()
+                entry["elapsed_ms"]=entry["finished_ms"]-started
+                entry["thread_cpu_ms"]=(time.thread_time_ns()-cpu_started)/1000000
                 self.audit.append(entry)
         return await asyncio.to_thread(read)
 

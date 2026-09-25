@@ -19,17 +19,18 @@ def stream():
     s.connected_generation();s.ingest(book());s.ingest(book("b"));return s
 
 
-def test_exact_observed_pre_snapshot_delta_never_reaches_mutation_or_update(monkeypatch):
+@pytest.mark.parametrize("offset",[15,16])
+def test_exact_observed_pre_snapshot_delta_never_reaches_mutation_or_update(monkeypatch,offset):
     s=stream();before=copy.deepcopy(s.depth)
     calls=[]
     original=s.update
     def watch(*a,**kw):
         calls.append(copy.deepcopy(s.depth));return original(*a,**kw)
     monkeypatch.setattr(s,"update",watch)
-    with pytest.raises(ValueError,match="^BOOK_REGRESSION$"):s.ingest(delta())
+    with pytest.raises(ValueError,match="^BOOK_REGRESSION$"):s.ingest(delta(S-offset))
     assert calls==[]
     d=s.read()["diagnostics"]["regression_event"]
-    assert d["delta_ms"]==-16 and d["reference_full_book_ms"]==S
+    assert d["delta_ms"]==-offset and d["reference_full_book_ms"]==S
     assert d["accepted_deltas_since_full_book"]==0
     assert d["classification"]=="PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN"
     assert d["supersession_proven"] is False and not s.read()["available"]
