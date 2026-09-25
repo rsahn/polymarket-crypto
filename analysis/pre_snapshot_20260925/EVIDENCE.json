@@ -1,0 +1,20 @@
+{
+  "tests_passed": 563,
+  "failed": 0,
+  "errors": 0,
+  "new_tests": 15,
+  "subtests_passed": 8,
+  "audit": "PASS_110_FILES",
+  "genesis_unchanged": true,
+  "btc_v1_unchanged": true,
+  "stale_pre_snapshot_delta_ignore_enabled": false,
+  "supersession_proven": false,
+  "finalized_target_qualified": false,
+  "network_run_performed": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "sdk_monetary_attempts": 0,
+  "external_connections": 0,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false
+}

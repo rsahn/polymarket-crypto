@@ -1,0 +1,13 @@
+# Real pre-snapshot regression and finalized diagnostics
+
+Evidence: D6_POST_B_WS_PROOFS_20260925_145717_004330.json and user confirmation. Token0 book source 1790348236333 followed by same-token price_change 1790348236317: -16 ms. Arrival reordering is demonstrated. Inclusion of that delta in the full-book is not demonstrated.
+
+Official schema inspected 2026-09-25: https://docs.polymarket.com/market-data/realtime-data describes per-asset book and price_change timestamps/hash fields. No explicit causal sequence, snapshot inclusion watermark, or guarantee to discard older timestamp deltas was found. The old market-channel URL redirects to this page. Thus STALE_PRE_SNAPSHOT_DELTA_IGNORED is NOT enabled: doing so would turn a timestamp heuristic into an unproven inclusion guarantee. A documented causal inclusion rule or independently validated snapshot/delta sequence is still needed. Identical hash semantics also must not be assumed.
+
+The parser now checks all affected token timestamps before mutating any depth. This corrects the prior mutate-then-reject order without weakening readiness. Diagnostics distinguish FULL_BOOK_REGRESSION, REGRESSION_AFTER_ACCEPTED_DELTA and PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN. Accepted full-book reference timestamp and subsequent accepted delta count are recorded per token/generation. Boolean/fractional timestamps fail instead of int coercion. Equality follows the existing non-regression contract; it does not trigger an ignore exception. No missing side is synthesized.
+
+Finalized report contained five HTTP-200 successful RPC envelopes. Previous code discarded returned header metadata and compared later latest block time with the beginning of the whole operation. An intervening new block could therefore fail locally. This defect is reproduced with a fake clock and corrected by testing each block timestamp against its own response receipt. Original acquisition timestamp remains unchanged. This does NOT establish the cause of the historical failure: its returned headers were not retained.
+
+New diagnostic stores only labels, requested block tags/numbers, hashes, block timestamps and local request/receipt times, plus exact safe failure stage/reason. No URL, provider raw errors or account identity. The --target-machine --finalized-only mode runs only this qualification: no WS, no inventory, no credentials. Existing default probe still gates post-B on successful finalized qualification. Real target support remains pending; D6_POST_GENESIS_READINESS is not rerun before prerequisites pass.
+
+Genesis, BTC V1, monetary lock and freshness 500 ms unchanged. No network qualification was run in this development turn.

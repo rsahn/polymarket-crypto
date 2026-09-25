@@ -24,19 +24,33 @@ def header(value):
     return {'number':int(value['number'],16),'hash':value['hash'].lower(),'timestamp':int(value['timestamp'],16)}
 
 
-def qualify_finalized(rpc):
-    started=now_ms()
+def qualify_finalized(rpc,*,diagnostics=None):
+    started=now_ms();d=diagnostics if diagnostics is not None else {}
+    d.update(reads=[],reason='RPC_OR_SCHEMA_FAILURE',stage='chain_id')
+    def reject(reason):
+        d['reason']=reason;raise ValueError('FINALIZED_UNPROVEN')
+    def read(tag,label):
+        d['stage']=label;request_start=now_ms()
+        value=header(rpc.call('eth_getBlockByNumber',[tag,False]));received=now_ms()
+        d['reads'].append(dict(label=label,requested_tag=tag,number=value['number'],
+            block_hash=value['hash'],block_timestamp_ms=value['timestamp']*1000,
+            request_started_ms=request_start,response_received_ms=received))
+        if value['timestamp']*1000>received:reject('HEADER_TIMESTAMP_IN_FUTURE')
+        return value
     try:
-        if rpc.call('eth_chainId',[])!='0x89':raise ValueError()
-        b=header(rpc.call('eth_getBlockByNumber',['finalized',False]))
-        h=header(rpc.call('eth_getBlockByNumber',['latest',False]))
-        check=header(rpc.call('eth_getBlockByNumber',[hex(b['number']),False]))
-        second=header(rpc.call('eth_getBlockByNumber',['finalized',False]))
-        if h['number']<b['number'] or check!=b or second['number']<b['number']:raise ValueError()
-        if second['number']==b['number'] and second!=b:raise ValueError()
-        if any(x['timestamp']*1000>started for x in (b,h,check)):raise ValueError()
+        if rpc.call('eth_chainId',[])!='0x89':reject('CHAIN_MISMATCH')
+        b=read('finalized','finalized_first')
+        h=read('latest','latest')
+        check=read(hex(b['number']),'anchor_recheck')
+        second=read('finalized','finalized_second')
+        if h['number']<b['number']:reject('LATEST_BEHIND_FINALIZED')
+        if check!=b:reject('FINALIZED_ANCHOR_CHANGED')
+        if second['number']<b['number']:reject('FINALIZED_HEIGHT_REGRESSION')
+        if second['number']==b['number'] and second!=b:reject('FINALIZED_SAME_HEIGHT_CHANGED')
+        d.update(reason='FINALIZED_QUALIFIED',stage='complete')
         return dict(status='PASS_PROVIDER_FINALIZED_READ',chain_id=137,anchor=b,
-                    observed_ms=started,finished_ms=now_ms(),independent_consensus_proven=False)
+                    observed_ms=started,finished_ms=now_ms(),independent_consensus_proven=False,
+                    diagnostics=d)
     except Exception:raise ValueError('FINALIZED_UNPROVEN') from None
 
 
@@ -131,7 +145,7 @@ async def capture_ws(audit):
             except asyncio.CancelledError:pass
 
 
-async def run(target=False):
+async def run(target=False,*,finalized_only=False):
     flags={k:os.getenv(k,'false').strip().lower() for k in ('REAL_ORDERS_ENABLED','LIVE_EXECUTION_ARMED')}
     report=dict(phase='D6_POST_B_AND_WS_PROOFS',flags=flags,ready_for_arm=False,submit_allowed=False,
                 credentials_loaded=False,private_key_loaded=False,genesis_created=False,
@@ -144,12 +158,13 @@ async def run(target=False):
         prior=read_genesis(ROOT/'runtime/d6_genesis.db')
         rpc=PublicRPC(expected_wallet(),endpoint=endpoint,allow_finalized=True);rpc.log_window=10
         # WS is independent of provider finalized support and uses no credentials.
-        ws_task=asyncio.create_task(capture_ws(audit))
+        if not finalized_only:ws_task=asyncio.create_task(capture_ws(audit))
+        finalized_diagnostics={}
         try:
-            qualified=await asyncio.to_thread(qualify_finalized,rpc);report['finalized']=qualified
+            qualified=await asyncio.to_thread(qualify_finalized,rpc,diagnostics=finalized_diagnostics);report['finalized']=qualified
         except ValueError:
-            report['finalized']={'status':'BLOCKED','reason':'FINALIZED_UNPROVEN'}
-        if report['finalized']['status']=='PASS_PROVIDER_FINALIZED_READ':
+            report['finalized']={'status':'BLOCKED','reason':'FINALIZED_UNPROVEN','diagnostics':finalized_diagnostics}
+        if not finalized_only and report['finalized']['status']=='PASS_PROVIDER_FINALIZED_READ':
             try:
                 cursor=load_inventory_cursor(ROOT,prior)
                 report['inventory']=await asyncio.to_thread(public_inventory,rpc,prior,cursor,qualified)
@@ -158,7 +173,7 @@ async def run(target=False):
                          'GENESIS_ANCHOR_CHANGED','INVENTORY_CURSOR_REQUIRED','CURSOR_INTEGRITY','CURSOR_CONFLICT'}
                 reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'PUBLIC_INVENTORY_PROOF_FAILED'
                 report['inventory']={'status':'BLOCKED','reason':reason}
-        report['book']=await ws_task
+        if ws_task:report['book']=await ws_task
         report['genesis_unchanged']=read_genesis(ROOT/'runtime/d6_genesis.db')['last_hash']==prior['last_hash']
     except Exception:report['reason']='LOCAL_CONFIGURATION_OR_PROOF_FAILED'
     finally:
@@ -172,8 +187,8 @@ async def run(target=False):
 
 
 def main():
-    if sys.argv[1:]!=['--target-machine']:return 2
-    report=asyncio.run(run(True))
+    if sys.argv[1:] not in (['--target-machine'],['--target-machine','--finalized-only']):return 2
+    report=asyncio.run(run(True,finalized_only='--finalized-only' in sys.argv[1:]))
     path=ROOT/('D6_POST_B_WS_PROOFS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)
 
