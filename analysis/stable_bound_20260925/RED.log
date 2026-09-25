@@ -1,0 +1,127 @@
+FF.FFFFFFFFFFFFFF                                                        [100%]
+================================== FAILURES ===================================
+________ test_same_token_regression_has_exact_sanitized_evidence[book] ________
+backend\tests\test_regression_bound_contract.py:25: in test_same_token_regression_has_exact_sanitized_evidence
+    r=s.read();d=r["diagnostics"]["regression_event"]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'regression_event'
+____ test_same_token_regression_has_exact_sanitized_evidence[price_change] ____
+backend\tests\test_regression_bound_contract.py:25: in test_same_token_regression_has_exact_sanitized_evidence
+    r=s.read();d=r["diagnostics"]["regression_event"]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'regression_event'
+_ test_regression_diagnostic_survives_disconnect_and_resets_on_new_generation _
+backend\tests\test_regression_bound_contract.py:48: in test_regression_diagnostic_survives_disconnect_and_resets_on_new_generation
+    d=s.read()["diagnostics"]["regression_event"]
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'regression_event'
+_ test_new_head_does_not_invalidate_anchored_scope_but_never_proves_current_inventory _
+backend\tests\test_regression_bound_contract.py:72: in test_new_head_does_not_invalidate_anchored_scope_but_never_proves_current_inventory
+    r=evaluate(e)
+      ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+_________ test_anchored_contract_fails_closed[<lambda>-ANCHOR_REORG] __________
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+___ test_anchored_contract_fails_closed[<lambda>-COVERAGE_GAP_OR_OVERLAP0] ____
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+___ test_anchored_contract_fails_closed[<lambda>-COVERAGE_GAP_OR_OVERLAP1] ____
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+____ test_anchored_contract_fails_closed[<lambda>-GENERATION_STALE_500MS] _____
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+______ test_anchored_contract_fails_closed[<lambda>-GENERATION_PARTIAL0] ______
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+______ test_anchored_contract_fails_closed[<lambda>-GENERATION_PARTIAL1] ______
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+___ test_anchored_contract_fails_closed[<lambda>-ANCHOR_SCOPE_INCOMPLETE0] ____
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+___ test_anchored_contract_fails_closed[<lambda>-ANCHOR_SCOPE_INCOMPLETE1] ____
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+_ test_anchored_contract_fails_closed[<lambda>-FINALIZED_SELECTION_REQUIRED] __
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+________ test_anchored_contract_fails_closed[<lambda>-CHAIN_MISMATCH] _________
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+_________ test_anchored_contract_fails_closed[<lambda>-CURSOR_REORG] __________
+backend\tests\test_regression_bound_contract.py:94: in test_anchored_contract_fails_closed
+    e=evidence();mutation(e);r=evaluate(e)
+                               ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+_______________ test_exact_500_ms_boundary_and_future_rejection _______________
+backend\tests\test_regression_bound_contract.py:100: in test_exact_500_ms_boundary_and_future_rejection
+    e=evidence();e["inventory_observed_ms"]=500;assert evaluate(e)["anchored_valid"]
+                                                       ^^^^^^^^^^^
+backend\tests\test_regression_bound_contract.py:66: in evaluate
+    from analysis.stable_bound_20260925.contract_model import evaluate_anchor
+E   ModuleNotFoundError: No module named 'analysis.stable_bound_20260925.contract_model'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_regression_bound_contract.py::test_same_token_regression_has_exact_sanitized_evidence[book]
+FAILED backend/tests/test_regression_bound_contract.py::test_same_token_regression_has_exact_sanitized_evidence[price_change]
+FAILED backend/tests/test_regression_bound_contract.py::test_regression_diagnostic_survives_disconnect_and_resets_on_new_generation
+FAILED backend/tests/test_regression_bound_contract.py::test_new_head_does_not_invalidate_anchored_scope_but_never_proves_current_inventory
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-ANCHOR_REORG]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-COVERAGE_GAP_OR_OVERLAP0]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-COVERAGE_GAP_OR_OVERLAP1]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-GENERATION_STALE_500MS]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-GENERATION_PARTIAL0]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-GENERATION_PARTIAL1]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-ANCHOR_SCOPE_INCOMPLETE0]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-ANCHOR_SCOPE_INCOMPLETE1]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-FINALIZED_SELECTION_REQUIRED]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-CHAIN_MISMATCH]
+FAILED backend/tests/test_regression_bound_contract.py::test_anchored_contract_fails_closed[<lambda>-CURSOR_REORG]
+FAILED backend/tests/test_regression_bound_contract.py::test_exact_500_ms_boundary_and_future_rejection
+16 failed, 1 passed in 0.51s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
