@@ -27,7 +27,7 @@ class GetOnlyTransport:
         def read():
             started=now_ms();entry=dict(method="GET",endpoint=self.base+path,started_ms=started)
             try:
-                query=urllib.parse.urlencode(params or {})
+                query=urllib.parse.urlencode({k: (str(v).lower() if type(v) is bool else v) for k,v in (params or {}).items()})
                 request=urllib.request.Request(self.base+path+("?"+query if query else ""),headers={"User-Agent":"Mozilla/5.0","Accept":"application/json",**supplied},method="GET")
                 with urllib.request.build_opener(NoRedirect()).open(request,timeout=8) as response:
                     entry["http_status"]=response.status

@@ -41,6 +41,8 @@ async def qualify(config,*,transport=GetOnlyTransport,client_factory=ReadOnlyCli
     from polymarket._internal.environment import PRODUCTION_CONFIG as env
     from polymarket._internal.hmac import build_hmac_signature
     signer=config['READONLY_SIGNER_ADDRESS'];wallet=config['POLYMARKET_WALLET_ADDRESS']
+    from .readonly_diagnostics import request_diagnostics
+    report['request_diagnostics']=request_diagnostics(signer,wallet)
     routes=('/balance-allowance','/data/orders','/data/trades')
     public=transport(CLOB,('/time',),audit=audit)
     async def headers(path):
@@ -103,8 +105,11 @@ async def qualify(config,*,transport=GetOnlyTransport,client_factory=ReadOnlyCli
     try:
         state=local_snapshot(config.get('READONLY_EXECUTION_STATE_DB'))
         if state is not None:
-            phase=state.get('phase');opened=number(state['open_shares'])
-            if phase not in {'CLOSED','RECOVERY_REQUIRED','OPEN','ENTRY_PENDING','EXIT_PENDING','EXIT_REQUIRED'} or opened<0:raise ValueError()
+            phase=state.get('phase');bought=number(state['bought']);sold=number(state['sold'])
+            opened=bought-sold
+            if bought<0 or sold<0 or opened<0:raise ValueError()
+            if phase not in {'CLOSED','RECOVERY_REQUIRED','ENTRY_SUBMIT_PENDING','ENTRY_ACKED','ENTRY_CANCEL_PENDING','EXIT_SUBMIT_PENDING','EXIT_ACKED','EXIT_CANCEL_PENDING'}:raise ValueError()
+            if phase=='CLOSED' and opened!=0:raise ValueError()
             q['reconciliation']={'status':'BLOCKED','complete':False,'local_state_read':True,
                 'local_closed':phase=='CLOSED','local_has_open_shares':opened>0,
                 'remote_views_available':all(k in rows for k in ('orders','trades','positions')),
