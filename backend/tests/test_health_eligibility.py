@@ -49,41 +49,26 @@ def test_finalized_positive_skew_is_metadata_not_freshness(monkeypatch):
     assert d["clock_accuracy_proven"] is False
 
 
-def test_post_b_account_acquisition_complete_and_fresh(monkeypatch):
+@pytest.mark.parametrize('scan_time,reason',[(100,'GENERATION_STALE_500MS'),(900,'POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN')])
+def test_post_b_preserves_original_scan_time(monkeypatch,scan_time,reason):
     import analysis.qualify_post_b_proofs as q
     import analysis.qualify_post_genesis as runner
-    now=1000;monkeypatch.setattr(q,"now_ms",lambda:now)
+    monkeypatch.setattr(q,"now_ms",lambda:1000)
     calls=[]
     class RPC:
         def call(self,m,p):
             calls.append(p[0])
             return dict(number="0x16" if p[0]=="0x16" else "0x18",hash="0x"+("a" if p[0]=="0x16" else "b")*64,timestamp="0x1")
-    async def views(client):return {k:([] if k!="balance" else {},900) for k in ("balance","orders","trades","positions")}
+    async def views(client):return {k:([],1000) for k in ("balance","orders","trades","positions")}
     class Geo:
         async def read(self):return {"available":True}
-    tail=dict(to_block=24,block_hash="0x"+"b"*64,balances={},events_count=0,observed_ms=100,assets_checked=0)
+    tail=dict(to_block=24,block_hash="0x"+"b"*64,balances={},events_count=0,observed_ms=scan_time,assets_checked=0)
     monkeypatch.setattr(q,"fixed_scan",lambda *a:(dict(tail),[[23,24]]))
     monkeypatch.setattr(runner,"fresh_views",views)
-    prior={"from_block":11};qualified={"anchor":dict(number=22,hash="0x"+"a"*64)}
+    prior={"from_block":11,"to_block":22,"cursor_previous":20,"anchor_catchup_ranges":[[21,22]]}
+    qualified={"status":"PASS_PROVIDER_FINALIZED_READ","anchor":dict(number=22,hash="0x"+"a"*64)}
     obs,geo,inv=asyncio.run(q.acquire_post_b(None,Geo(),RPC(),prior,qualified))
-    assert inv["post_b_proof"]["current_inventory_proven"]
-    assert inv["observed_ms"]==1000 and inv["scan_observed_ms"]==100
-    assert calls==["latest","latest","0x16"] and len(obs)==4
-
-
-def test_post_b_head_advances_blocks_without_retry(monkeypatch):
-    import analysis.qualify_post_b_proofs as q
-    import analysis.qualify_post_genesis as runner
-    calls=[]
-    class RPC:
-        def call(self,m,p):
-            calls.append(p[0]);n=22 if p[0]=="0x16" else 24 if len(calls)==1 else 25
-            return dict(number=hex(n),hash="0x"+("a" if n==22 else "b")*64,timestamp="0x1")
-    async def views(c):return {k:([],1000) for k in ("balance","orders","trades","positions")}
-    class Geo:
-        async def read(self):return {}
-    monkeypatch.setattr(q,"fixed_scan",lambda *a:(dict(to_block=24,observed_ms=1),[[23,24]]))
-    monkeypatch.setattr(runner,"fresh_views",views)
-    with pytest.raises(ValueError,match="POST_B_TAIL_ADVANCED"):
-        asyncio.run(q.acquire_post_b(None,Geo(),RPC(),{"from_block":1},{"anchor":dict(number=22,hash="0x"+"a"*64)}))
-    assert calls==["latest","latest","0x16"]
+    assert not inv["post_b_proof"]["current_inventory_proven"]
+    assert inv["post_b_proof"]["reason"]==reason
+    assert inv["observed_ms"]==scan_time and inv["scan_observed_ms"]==scan_time
+    assert calls==["latest","0x18","0x18","0x16"] and len(obs)==4

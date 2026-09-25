@@ -177,7 +177,7 @@ async def acquire_final_views(client,geo_reader,rpc,prior,inventory,*,checkpoint
 def inventory_metadata(inventory):
     return {k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance',
         'scan_observed_ms','head_witness_started_ms','head_witness_finished_ms','head_block_timestamp_ms',
-        'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash') if k in inventory}
+        'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash','boundary_evidence','cursor_previous','anchor_catchup_ranges') if k in inventory}
 
 
 def annotate(readiness):
@@ -287,18 +287,26 @@ async def run(target=False,*,health_contract=False):
                 a_stamp=min(observed[n][1] for n in ('balance','orders','trades'))
                 remote={'wallet':wallet,'balance_raw':raw,'orders':observed['orders'][0],'trades':observed['trades'][0],
                     'positions':observed['positions'][0],'balances':inventory['balances'],'events_count':inventory['events_count'],
-                    'complete':True,'observed_ms':min(a_stamp,observed['positions'][1],inventory['observed_ms'])}
+                    'complete':(not health_contract or inventory.get('post_b_proof',{}).get('current_inventory_proven') is True),'observed_ms':min(a_stamp,observed['positions'][1],inventory['observed_ms'])}
                 current=read_genesis(LEDGER)
                 if current['last_hash']!=prior['last_hash']:raise ValueError('LEDGER_CHANGED_DURING_READ')
                 generation_id=inventory.get('generation_attempt',1)
                 generation={'id':generation_id,'ledger_hash':current['last_hash'],
                     'watermark':{'block_number':inventory['to_block'],'block_hash':inventory['block_hash']},
                     'components':{n:{'generation':generation_id,'observed_ms':observed[n][1],'complete':True} for n in observed}}
-                generation['components']['inventory']={'generation':generation_id,'observed_ms':inventory['observed_ms'],'complete':True}
+                generation['components']['inventory']={'generation':generation_id,'observed_ms':inventory['observed_ms'],'complete':remote['complete']}
                 reconciliation=evaluate_baseline(current,remote,now=now_ms())
+                if health_contract and (any(remote[n] for n in ('orders','trades','positions'))
+                        or remote['balance_raw']!=current['snapshot']['collateral']['balance_raw']
+                        or remote['events_count'] or any(int(v) for v in remote['balances'].values())):
+                    reconciliation={'phase':'RECOVERY_REQUIRED','reconciled':False,'reason':'REMOTE_ACTIVITY_UNEXPLAINED'}
                 gate=validate_generation(generation,now_ms())
                 if not gate['complete'] and reconciliation['phase']!='RECOVERY_REQUIRED':
                     reconciliation={'phase':'BLOCKED','reconciled':False,'reason':gate['reason'],'generation':gate}
+                if health_contract and not remote['complete'] and reconciliation['phase']!='RECOVERY_REQUIRED':
+                    reconciliation={'phase':'BLOCKED','reconciled':False,
+                        'reason':inventory.get('post_b_proof',{}).get('reason','POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'),
+                        'boundary_proof':inventory.get('post_b_proof',{})}
                 complete=reconciliation['reconciled']
                 account=ObservationSource({'available':True,'authenticated':True,'observed_ms':a_stamp,'balance_collateral':str(units(raw)),
                     'allowance_collateral':str(units(allowed[0])),'collateral_symbol':'pUSD','open_order_ids':[] if not remote['orders'] else ['REDACTED'],
@@ -311,9 +319,9 @@ async def run(target=False,*,health_contract=False):
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
     except Exception as exc:
-        allowed={'FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        allowed={'BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
-        reconciliation={'phase':'BLOCKED','reconciled':False,'reason':reason,'failed_stage':stage}
+        reconciliation={'phase':'RECOVERY_REQUIRED' if reason=='RECOVERY_REQUIRED' else 'BLOCKED','reconciled':False,'reason':reason,'failed_stage':stage}
     def final_local():
         current=read_genesis(LEDGER)
         if not prior or current['last_hash']!=local.get('last_hash'):
