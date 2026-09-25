@@ -51,6 +51,27 @@ def rpc_error_metadata(error):
     return result
 
 
+def http_error_metadata(response,request_id):
+    """Bounded diagnostic only: never accept an HTTP error as a read result."""
+    try:
+        raw=response.read(16385)
+        if len(raw)>16384:return {'http_error_body_status':'OVERSIZED'}
+        try:value=json.loads(raw)
+        except (ValueError,UnicodeError):return {'http_error_body_status':'NON_JSON'}
+        if not isinstance(value,dict):return {'http_error_body_status':'UNRECOGNIZED_JSON'}
+        if 'id' in value and value['id'] is not None and (type(value['id']) is not int or value['id']!=request_id):
+            return {'http_error_body_status':'RESPONSE_ID_MISMATCH'}
+        error=value.get('error')
+        if isinstance(error,str):error={'message':error}
+        if not isinstance(error,dict):
+            if isinstance(value.get('message'),str):error={'message':value['message']}
+            else:return {'http_error_body_status':'UNRECOGNIZED_JSON'}
+        return {'http_error_body_status':'JSON_ERROR_CLASSIFIED',
+                'error_response_id_matches':type(value.get('id')) is int and value['id']==request_id,
+                'provider_error':rpc_error_metadata(error)}
+    except Exception:return {'http_error_body_status':'BODY_READ_FAILED'}
+
+
 class PublicRPC:
     def __init__(self,wallet):
         if not re.fullmatch('0x[0-9a-fA-F]{40}',wallet):raise ValueError('WALLET')
@@ -100,6 +121,7 @@ class PublicRPC:
         except Exception as exc:
             if isinstance(exc,urllib.error.HTTPError):
                 entry.update(http_status=exc.code,error_category='HTTP_ERROR')
+                entry.update(http_error_metadata(exc,self.counter))
                 exc.close()
             elif isinstance(exc,TimeoutError) or (isinstance(exc,urllib.error.URLError) and isinstance(exc.reason,TimeoutError)):
                 entry['error_category']='TIMEOUT'
