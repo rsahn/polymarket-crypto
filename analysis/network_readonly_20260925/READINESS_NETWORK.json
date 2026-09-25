@@ -1,0 +1,172 @@
+{
+  "status": "REAL_NETWORK_READ_ONLY_QUALIFICATION_NOT_READY",
+  "checks": {
+    "wallet_auth": false,
+    "balance_usdc": false,
+    "allowance_usdc": false,
+    "geoblock": false,
+    "book_freshness": false,
+    "account_reconciliation": false,
+    "open_orders": false,
+    "inventory": false,
+    "local_recovery_state": false,
+    "session_risk": false,
+    "transport_lock": true,
+    "live_flags_disabled": true
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "blockers": [
+    "wallet_auth",
+    "balance_usdc",
+    "allowance_usdc",
+    "geoblock",
+    "book_freshness",
+    "account_reconciliation",
+    "open_orders",
+    "inventory",
+    "local_recovery_state",
+    "session_risk"
+  ],
+  "provenance": {
+    "wallet_auth": {
+      "source": "CLOB /time HTTP 403; credential derivation and authenticated reads NOT attempted",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "balance_usdc": {
+      "source": "No authenticated balance; configured collateral is not labeled USDC",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "allowance_usdc": {
+      "source": "No authenticated allowance or account-to-collateral binding",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "geoblock": {
+      "source": "GET https://polymarket.com/api/geoblock HTTP 403; blocked status unknown",
+      "evaluated_ms": 1790326048823,
+      "status": "UNAVAILABLE"
+    },
+    "book_freshness": {
+      "source": "GET https://gamma-api.polymarket.com/markets HTTP 403; no book fetched",
+      "evaluated_ms": 1790326048823,
+      "status": "UNAVAILABLE"
+    },
+    "account_reconciliation": {
+      "source": "No authenticated account or exhaustive inventory; complete=false",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "open_orders": {
+      "source": "Authenticated /data/orders NOT requested; credential scope remains unproven globally",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "inventory": {
+      "source": "Data API and conditional balances NOT requested after bootstrap rejection",
+      "evaluated_ms": 1790326048823,
+      "status": "NOT_DEMONSTRATED"
+    },
+    "local_recovery_state": {
+      "source": "No verified local live state supplied to readiness check",
+      "evaluated_ms": 1790326048823,
+      "status": "UNAVAILABLE"
+    },
+    "session_risk": {
+      "source": "No reconciled real ledger supplied; no paper PnL substituted",
+      "evaluated_ms": 1790326048823,
+      "status": "UNAVAILABLE"
+    },
+    "transport_lock": {
+      "source": "AST of LiveClobTransport three unconditional entry raises; STATIC_AUDIT.log",
+      "evaluated_ms": 1790326048823,
+      "status": "PASS"
+    },
+    "live_flags_disabled": {
+      "source": "local_config verifies .env and process flags before any GET; report flags false",
+      "evaluated_ms": 1790326048823,
+      "status": "PASS"
+    }
+  },
+  "qualification": {
+    "sdk_paths": {
+      "create": "51fda954fbac9e88081bc868d173dbb52f2286b318868d512d24f9956d13c086",
+      "_create": "aee303cd753bab993ccb5950c2a4eaa2c7951e78ae0f89b684eaac23dba72449",
+      "_ensure_wallet_ready": "23fc18b465e08ec030dad73329f16adb81cdcdc6f7e112d546b50307995d3a80"
+    },
+    "collateral": {
+      "asset_type": "COLLATERAL",
+      "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+      "chain_id": 137,
+      "environment_provenance": "installed polymarket-client 0.11.0 PRODUCTION_CONFIG",
+      "symbol_documented": "pUSD",
+      "decimals_documented": 6,
+      "onchain_verified": false,
+      "account_binding_verified": false,
+      "documentation": [
+        "https://docs.polymarket.com/resources/contracts",
+        "https://docs.polymarket.com/concepts/pusd"
+      ],
+      "verification_level": "SDK configuration plus official documentation; no on-chain call and no authenticated account binding"
+    },
+    "geo": {
+      "available": false,
+      "complete": false,
+      "reason": "RuntimeError"
+    },
+    "account_qualification": {
+      "available": false,
+      "complete": false,
+      "error_type": "RuntimeError",
+      "reason": "AUTH_OR_WALLET_READ_UNQUALIFIED_NO_CREATION_FALLBACK"
+    },
+    "book": {
+      "available": false,
+      "error_type": "RuntimeError"
+    }
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790326048285,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 236
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790326048525,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 147
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "started_ms": 1790326048672,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 148
+    }
+  ],
+  "safety": {
+    "network_methods": [
+      "GET"
+    ],
+    "secure_client_constructed": false,
+    "order_signatures": 0,
+    "transactions": 0,
+    "monetary_sdk_calls": 0,
+    "read_only_routes_enforced": true,
+    "evidence": "Only three allowlisted GET attempts; /time rejection precedes ClobAuth signing. No authenticated request, SDK client, deployment or monetary transport call reached. Static audit and offline test harness retained separately."
+  },
+  "complete": false
+}
