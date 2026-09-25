@@ -197,7 +197,7 @@ def annotate(readiness):
 
 
 async def run(target=False,*,health_contract=False):
-    audit=[];rpc=None;creds=None;task=None;prior=None
+    audit=[];rpc=None;creds=None;task=None;prior=None;pooled_transports=[]
     account=ObservationSource({'available':False,'reason':'FRESH_AUTHENTICATED_READ_REQUIRED'})
     positions=ObservationSource({'available':False,'reason':'POST_GENESIS_INVENTORY_READ_REQUIRED'})
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
@@ -227,7 +227,7 @@ async def run(target=False,*,health_contract=False):
                     'offset_interval_ms':[server*1000-clock_end,(server+1)*1000-clock_start],
                     'accuracy_500ms_proven':False,'timestamps_adjusted':False}
             stage='POST_GENESIS_CTF_DISCOVERY'
-            rpc=PublicRPC(wallet,endpoint=endpoint,allow_finalized=health_contract);rpc.log_window=10
+            rpc=PublicRPC(wallet,endpoint=endpoint,allow_finalized=health_contract,pooled=health_contract);rpc.log_window=10
             rpc.parallel_inventory_reads=health_contract
             inventory=load_inventory_cursor(ROOT,prior)
             if health_contract:
@@ -264,9 +264,12 @@ async def run(target=False,*,health_contract=False):
                     stamp=int(time.time())
                     return {'POLY_ADDRESS':EXPECTED,'POLY_API_KEY':creds['apiKey'],'POLY_PASSPHRASE':creds['passphrase'],
                             'POLY_TIMESTAMP':str(stamp),'POLY_SIGNATURE':build_hmac_signature(secret=creds['secret'],timestamp=stamp,method='GET',path=path,body=None)}
+                def transport(base,routes,**kw):
+                    t=GetOnlyTransport(base,routes,pooled=health_contract,**kw)
+                    pooled_transports.append(t);return t
                 client=ReadOnlyClient(wallet=wallet,signature_type=3,
-                    clob=GetOnlyTransport(CLOB,('/balance-allowance','/data/orders','/data/trades'),headers=headers,audit=audit),
-                    data=GetOnlyTransport(DATA,('/v2/positions',),audit=audit))
+                    clob=transport(CLOB,('/balance-allowance','/data/orders','/data/trades'),headers=headers,audit=audit),
+                    data=transport(DATA,('/v2/positions',),audit=audit))
                 try:
                     book=await discover_book(audit);task=asyncio.create_task(book.run())
                     # A bounded warmup does not refresh any source timestamp.
@@ -354,6 +357,9 @@ async def run(target=False,*,health_contract=False):
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report
     finally:
+        for transport in pooled_transports:
+            if hasattr(transport,'close'):transport.close()
+        if rpc and hasattr(rpc,'close'):rpc.close()
         if task:
             task.cancel();await asyncio.gather(task,return_exceptions=True)
 
