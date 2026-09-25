@@ -103,3 +103,37 @@ def test_flag_conflict_cannot_be_overridden(tmp_path):
     m=module();p=tmp_path/".env";p.write_text("REAL_ORDERS_ENABLED=true\n")
     config=m.read_config(p,{"REAL_ORDERS_ENABLED":"false"})
     assert config["REAL_ORDERS_ENABLED"]!="false"
+
+
+def test_public_only_calls_three_routes_without_config():
+    m=module();Fake.calls=[]
+    r=asyncio.run(m.qualify_public(transport=Fake,clock=lambda:1000000,environ={}))
+    assert [p for _,p in Fake.calls]==["/time","/api/geoblock","/markets"]
+    assert r["mode"]=="public-only" and r["credentials_loaded"] is False
+    assert len(r["checks"])==12
+
+
+def test_public_only_cli_never_reads_dotenv(monkeypatch,tmp_path):
+    m=module();output=tmp_path/"new.json"
+    def forbidden(*a,**k):raise AssertionError("CONFIG_MUST_NOT_LOAD")
+    monkeypatch.setattr(m,"read_config",forbidden)
+    async def public():return {"mode":"public-only","credentials_loaded":False}
+    monkeypatch.setattr(m,"qualify_public",public)
+    monkeypatch.setattr("sys.argv",["probe","--public-only","--output",str(output)])
+    assert m.main()==0 and json.loads(output.read_text())["credentials_loaded"] is False
+
+
+def test_public_default_output_preserves_old_report(monkeypatch,tmp_path):
+    m=module();monkeypatch.setattr(m,"ROOT",tmp_path)
+    old=tmp_path/"READINESS_LOCAL_NETWORK.json";old.write_text("original")
+    async def public():return {"mode":"public-only"}
+    monkeypatch.setattr(m,"qualify_public",public)
+    monkeypatch.setattr("sys.argv",["probe","--public-only"])
+    assert m.main()==0 and old.read_text()=="original"
+    assert len(list(tmp_path.glob("READINESS_LOCAL_NETWORK_PUBLIC_*.json")))==1
+
+
+def test_public_flags_reject_before_get():
+    m=module();Fake.calls=[]
+    r=asyncio.run(m.qualify_public(transport=Fake,environ={"LIVE_EXECUTION_ARMED":"true"}))
+    assert not Fake.calls and not r["checks"]["live_flags_disabled"]

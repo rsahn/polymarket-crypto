@@ -35,3 +35,11 @@ Le collateral est identifié comme CONFIG_ONLY par la configuration SDK; symbole
 
 ## Validation hors réseau
 Tests ciblés: backend/tests/test_local_network_probe.py. Parcours avec et sans credentials simulés, erreurs, version SDK, flags contradictoires, secrets expurgés, interdiction du constructeur et protection contre écrasement. Les tests utilisent un transport factice; aucune nouvelle sonde réseau n'a été exécutée depuis Codex.
+
+
+## Diagnostic public uniquement
+`python -B .\analysis\qualify_local_readonly.py --public-only`
+
+Ce mode ne lit pas .env et ne charge aucun credential ni wallet. Il lit uniquement les deux flags du processus pour rejeter un armement existant; .env reste intact. Exactement trois routes possibles: CLOB /time, geoblock /api/geoblock et Gamma /markets?limit=1. Aucun carnet, Data API, bootstrap ou compte authentifié. Sortie exclusive horodatée READINESS_LOCAL_NETWORK_PUBLIC_<date_UTC>_<heure_microsecondes>.json; ancien rapport conservé. Retourner uniquement ce nouveau JSON.
+
+Le transport ajoute explicitement User-Agent: Mozilla/5.0 comme la requête manuelle réussie. Aucune modification de proxy/VPN/environnement et aucun essai réseau Codex. Accept: application/json conservé; redirects toujours rejetés.

@@ -50,3 +50,25 @@ def test_error_audit_never_logs_secret_or_query(monkeypatch):
 def test_invalid_base_rejected(base):
     from app.live.network_readonly import GetOnlyTransport
     with pytest.raises(ValueError):GetOnlyTransport(base,{"/time"})
+
+
+def test_user_agent_differential_403_vs_working_request(monkeypatch):
+    import urllib.request,urllib.error
+    from app.live.network_readonly import GetOnlyTransport
+    class Response:
+        status=200
+        def __enter__(self):return self
+        def __exit__(self,*args):pass
+        def read(self,n):return b"1790000000"
+    class Edge:
+        def open(self,request,timeout):
+            # Reproduce the reported differential, not a live server diagnosis.
+            if request.get_header("User-agent")!="Mozilla/5.0":
+                raise urllib.error.HTTPError(request.full_url,403,"Forbidden",{},None)
+            assert request.full_url=="https://clob.polymarket.com/time"
+            assert request.get_method()=="GET" and request.data is None
+            return Response()
+    monkeypatch.setattr(urllib.request,"build_opener",lambda *a:Edge())
+    control=urllib.request.Request("https://clob.polymarket.com/time",headers={"User-Agent":"Mozilla/5.0"})
+    assert Edge().open(control,8).status==200
+    assert asyncio.run(GetOnlyTransport("https://clob.polymarket.com",{"/time"}).get_json("/time"))==1790000000

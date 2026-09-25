@@ -1,0 +1,17 @@
+{
+  "red_failed": 3,
+  "red_passed": 17,
+  "targeted_green_passed": 20,
+  "full_passed": 337,
+  "full_failed": 0,
+  "full_errors": 0,
+  "subtests_passed": 25,
+  "network_run_in_codex": false,
+  "sdk_monetary_attempts": 0,
+  "logs": {
+    "FULL_TESTS.log": "e678f14e029e5377f79bde20cf7997df32452e472934df82048e4b6a91ea0c91",
+    "GREEN.log": "091321a7ca057e8bbcb5e62a0daa03612f76880ad5f29bce5d2617825983b7a0",
+    "RED.log": "c84f734fc73ce944a33058f1d9c55d7db0d337c88f48452661d56c7bf6a0dcaf",
+    "STATIC_AUDIT.log": "a077e6b2a3e3552b98e928b2525b4a4f0d9ab6e74260c3b2264c5256af8fe1fa"
+  }
+}

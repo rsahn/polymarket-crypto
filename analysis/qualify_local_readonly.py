@@ -168,12 +168,64 @@ async def qualify(config,*,transport=GetOnlyTransport,clock=None):
     return report
 
 
+async def qualify_public(*,transport=GetOnlyTransport,clock=None,environ=None):
+    """No .env, account configuration, wallet, SDK or credential loader."""
+    clock=clock or (lambda:time.time_ns()//1_000_000)
+    environ=os.environ if environ is None else environ
+    report=await ProductionReadinessCheck(clock=clock).run()
+    report.pop("observations",None)
+    report.update(mode="public-only",status="PUBLIC_ONLY_NOT_READY",complete=False,credentials_loaded=False,
+        dotenv_read=False,qualification={},requests=[],previous_codex_403_not_generalized=True)
+    report["flags"]={n:environ.get(n,"false").strip().lower() for n in FLAGS}
+    report["checks"]["live_flags_disabled"]=all(v=="false" for v in report["flags"].values())
+    report["transport_profile"]={"method":"GET","user_agent":"Mozilla/5.0","accept":"application/json",
+        "redirects":"rejected","proxy_policy":"urllib default discovery; no override or environment changes",
+        "url_normalization":"base.rstrip('/') + exact allowlisted path","query_encoding":"urllib.parse.urlencode",
+        "request_body":None,"timeout_seconds":8}
+    report["provenance"]={k:"NOT_QUALIFIED_IN_PUBLIC_ONLY" for k in report["checks"]}
+    report["provenance"].update(transport_lock="local AST guard",live_flags_disabled="process flags only; .env deliberately not read")
+    if not report["checks"]["live_flags_disabled"]:
+        report["status"]="BLOCKED_LIVE_FLAGS"
+        report["blockers"]=[k for k,v in report["checks"].items() if not v]
+        return report
+    specs=(("time","https://clob.polymarket.com","/time",None),
+           ("geo","https://polymarket.com","/api/geoblock",None),
+           ("gamma","https://gamma-api.polymarket.com","/markets",{"limit":1}))
+    for name,base,path,params in specs:
+        started=clock()
+        try:
+            value=await transport(base,{path},audit=report["requests"]).get_json(path,params=params)
+            received=clock()
+            row={"status":"PASS","received_ms":received,"round_trip_ms":received-started}
+            if name=="time":
+                if type(value) is not int:raise ValueError()
+                row.update(server_seconds=value,coarse_skew_ms=received-value*1000,ntp_qualified=False)
+                if abs(row["coarse_skew_ms"])>5000:row["status"]="BLOCKED_CLOCK_DIFFERENCE"
+            elif name=="geo":
+                if not isinstance(value,dict) or type(value.get("blocked")) is not bool:raise ValueError()
+                row["blocked"]=value["blocked"]
+                report["checks"]["geoblock"]=value["blocked"] is False and 0<=received-started<=60000
+            else:
+                if not isinstance(value,list) or any(not isinstance(v,dict) for v in value):raise ValueError()
+                row["market_count"]=len(value)
+            report["qualification"][name]=row
+        except Exception:report["qualification"][name]=blocked("GET_OR_SCHEMA_FAILED; see sanitized request metadata")
+    report["provenance"]["geoblock"]="GET /api/geoblock; explicit boolean required"
+    report["blockers"]=[k for k,v in report["checks"].items() if not v]
+    return report
+
+
 def main():
     import argparse
-    parser=argparse.ArgumentParser();parser.add_argument("--output",type=Path,default=ROOT/"READINESS_LOCAL_NETWORK.json")
+    parser=argparse.ArgumentParser();parser.add_argument("--output",type=Path)
+    parser.add_argument("--public-only",action="store_true")
     args=parser.parse_args()
+    if args.output is None:
+        from datetime import datetime,timezone
+        stamp=datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S_%f")
+        args.output=ROOT/(f"READINESS_LOCAL_NETWORK_PUBLIC_{stamp}.json" if args.public_only else "READINESS_LOCAL_NETWORK.json")
     if args.output.exists():print("BLOCKED: output exists; preserve or rename it before another run.");return 2
-    try:report=asyncio.run(qualify(read_config(ROOT/".env")))
+    try:report=asyncio.run(qualify_public() if args.public_only else qualify(read_config(ROOT/".env")))
     except Exception:report={"status":"BLOCKED_LOCAL_RUNTIME","complete":False,"ready_for_arm":False,"submit_allowed":False,"reason":"Local dependency or runtime failure; no exception text logged"}
     write_report(args.output,report)
     print("Redacted report written: "+str(args.output));return 0
