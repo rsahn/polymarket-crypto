@@ -9,6 +9,8 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
             'global_coverage_proven':False,'scope':'CTF_INCOMING_EVENTS_REQUESTED_RANGE_ONLY'}
     try:
         if type(start) is not int or type(end) is not int or not 0<=start<=end or end-start>=50000:raise ValueError()
+        window=getattr(rpc,'log_window',500)
+        if type(window) is not int or not 1<=window<=500:raise ValueError()
         if rpc.call('eth_chainId',[])!='0x89':raise ValueError()
         block=hex(end);anchor=rpc.call('eth_getBlockByNumber',[block,False])
         if anchor['number']!=block:raise ValueError()
@@ -16,8 +18,8 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
         if code in ('0x','0x00') or not code.startswith('0x'):raise ValueError()
         sigs=['0x'+keccak(text=x).hex() for x in ('TransferSingle(address,address,address,uint256,uint256)','TransferBatch(address,address,address,uint256[],uint256[])')]
         wallet_topic='0x'+rpc.wallet[2:].lower().rjust(64,'0');assets=set(known);seen=set()
-        for low in range(start,end+1,500):
-            high=min(low+499,end)
+        for low in range(start,end+1,window):
+            high=min(low+window-1,end)
             rows=rpc.call('eth_getLogs',[{'address':CTF,'fromBlock':hex(low),'toBlock':hex(high),'topics':[sigs,None,None,wallet_topic]}])
             if not isinstance(rows,list) or len(rows)>=10000:raise ValueError()
             for row in rows:
