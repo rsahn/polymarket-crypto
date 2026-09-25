@@ -1,0 +1,19 @@
+{"events": 2000, "profiled_wall_seconds": 3.3319236000534147, "available": true, "synthetic_offline_only": true}
+         3670001 function calls in 3.301 seconds
+
+   Ordered by: cumulative time
+   List reduced from 21 to 12 due to restriction <12>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    0.070    0.000    3.301    0.002 readonly_book_stream.py:75(ingest)
+     2000    0.014    0.000    3.181    0.002 production_readonly.py:143(update)
+     4000    1.012    0.000    3.150    0.001 production_readonly.py:145(levels)
+   800000    1.501    0.000    2.025    0.000 production_readonly.py:13(number)
+  1604000    0.388    0.000    0.388    0.000 {built-in method builtins.isinstance}
+   800000    0.136    0.000    0.136    0.000 {method 'is_finite' of 'decimal.Decimal' objects}
+   396000    0.094    0.000    0.094    0.000 {method 'append' of 'list' objects}
+     6000    0.041    0.000    0.041    0.000 {built-in method builtins.sorted}
+     2000    0.004    0.000    0.016    0.000 production_readonly.py:32(fresh)
+     2000    0.013    0.000    0.013    0.000 {built-in method builtins.min}
+     2000    0.011    0.000    0.011    0.000 {built-in method builtins.max}
+    12000    0.004    0.000    0.004    0.000 {method 'get' of 'dict' objects}

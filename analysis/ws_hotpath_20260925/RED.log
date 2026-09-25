@@ -1,0 +1,12 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+_____________ test_ingest_does_not_materialize_decision_snapshot ______________
+backend\tests\test_ws_hotpath.py:9: in test_ingest_does_not_materialize_decision_snapshot
+    s.ingest(dict(event_type='book',market='c',asset_id=t,timestamp='1000',bids=[dict(price='.4',size='1')],asks=[dict(price='.6',size='1')]))
+backend\app\live\readonly_book_stream.py:178: in ingest
+    raise ValueError(reason) from None
+E   ValueError: BOOK_SCHEMA_OR_DEPTH_INVALID
+=========================== short test summary info ===========================
+FAILED backend/tests/test_ws_hotpath.py::test_ingest_does_not_materialize_decision_snapshot
+1 failed in 0.36s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

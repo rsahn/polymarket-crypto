@@ -1,0 +1,15 @@
+{
+  "protected_unchanged": {
+    "analysis/d6/paper_live.py": true,
+    "backend/app/live/fixed_boundary.py": true,
+    "backend/app/live/production_readonly.py": true,
+    "backend/app/live/clob_transport.py": true
+  },
+  "genesis_unchanged": true,
+  "genesis_events": 0,
+  "leak_scan": {
+    "scope": "changed files and logs; pattern-only not global absence proof",
+    "hits": 0
+  },
+  "network_qualification": false
+}
