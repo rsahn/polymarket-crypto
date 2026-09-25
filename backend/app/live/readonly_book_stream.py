@@ -18,6 +18,7 @@ class StreamBook(BookStateSource):
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
             'resync_complete_generation':None,'regression_event':None,'transitions':[],'tokens':[]}
+        self.last_wire_received_ms=None;self.last_valid_received_ms=None;self.last_frame_received_ms=None;self.last_pong_received_ms=None
         self.first_full_books={};self.events_seen=0;self.snapshot_refs={}
         self.last_books={};self.last_wire_event_ms=None;self.last_valid_book_ms=None;self.attempted_books={}
     def transition(self,kind):
@@ -29,6 +30,7 @@ class StreamBook(BookStateSource):
         self.failure=None;self.last_books={};self.attempted_books={};self.last_valid_book_ms=None;self.last_wire_event_ms=None
         self.diagnostics['resync_complete_generation']=None
         self.diagnostics['regression_event']=None
+        self.last_wire_received_ms=None;self.last_valid_received_ms=None;self.last_frame_received_ms=None;self.last_pong_received_ms=None
         self.first_full_books={};self.events_seen=0;self.snapshot_refs={}
         self.transition('CONNECTED_AWAITING_TWO_FULL_BOOKS')
     def disconnect(self):
@@ -70,8 +72,9 @@ class StreamBook(BookStateSource):
             'classification':classification,'supersession_proven':False}
         raise ValueError('BOOK_REGRESSION')
 
-    def ingest(self,event):
-        received_ms=self.clock()
+    def ingest(self,event,*,wire_received_ms=None):
+        received_ms=self.clock() if wire_received_ms is None else wire_received_ms
+        self.last_wire_received_ms=received_ms
         self.events_seen+=1
         self.capture_first_book(event)
         try:
@@ -144,11 +147,12 @@ class StreamBook(BookStateSource):
                 if kind=='book':self.snapshot_refs[token]={'source_ms':stamp,'generation':self.generation,'accepted_deltas':0}
                 elif token in self.snapshot_refs:self.snapshot_refs[token]['accepted_deltas']+=1
             self.messages+=1
-            if touched:self.last_valid_book_ms=stamp
+            if touched:
+                self.last_valid_book_ms=stamp;self.last_valid_received_ms=received_ms
             for token in touched:
                 self.last_books[token]={'last_valid_book_ms':stamp,'bids_present':bool(self.depth[token]['bids']),
                                         'asks_present':bool(self.depth[token]['asks']),'generation':self.generation}
-            self.diagnostics['last_valid_message']={'kind':kind,'source_ms':stamp,'received_ms':self.clock(),'generation':self.generation}
+            self.diagnostics['last_valid_message']={'kind':kind,'source_ms':stamp,'received_ms':received_ms,'generation':self.generation}
             if super().read()['synchronized'] and self.diagnostics['resync_complete_generation']!=self.generation:
                 self.diagnostics['resync_complete_generation']=self.generation;self.failure=None;self.transition('RESYNC_COMPLETE')
         except Exception as exc:
@@ -159,6 +163,14 @@ class StreamBook(BookStateSource):
             self.diagnostics['parser_reason']=reason
             self.diagnostics['rejected_message_age_ms']=self.clock()-stamp if 'stamp' in locals() else None
             self.failure=reason
+            age_at_receipt=received_ms-stamp if 'stamp' in locals() else None
+            self.diagnostics['source_age_at_receipt_ms']=age_at_receipt
+            self.diagnostics['local_processing_ms']=self.clock()-received_ms
+            self.diagnostics['freshness_cause']=(
+                'LOCAL_PROCESSING_DELAY' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'}
+                    and age_at_receipt is not None and 0<=age_at_receipt<=500 else
+                'WIRE_EVENT_STALE_AT_RECEIPT' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'} else
+                'BOOK_INVALIDATED')
             # A local rejection is not a TCP disconnect. Invalidate both tokens;
             # only two new full snapshots may establish a usable book again.
             self.books={};self.depth={};self.snapshot_refs={};self.diagnostics['resync_complete_generation']=None
@@ -180,7 +192,12 @@ class StreamBook(BookStateSource):
             for i,t in enumerate(self.expected_tokens)]
         return {**base,'state':state,'diagnostics':d,'source':'PUBLIC_CLOB_PERSISTENT_WS','condition_verified':True,
                 'messages_received':self.messages,'reason':self.failure or super().read()['reason'],
-                'last_wire_event_ms':self.last_wire_event_ms,'last_valid_book_ms':self.last_valid_book_ms}
+                'last_wire_event_ms':self.last_wire_event_ms,'last_valid_book_ms':self.last_valid_book_ms,
+                'last_wire_event_source_ms':self.last_wire_event_ms,'last_wire_event_received_ms':self.last_wire_received_ms,
+                'last_valid_book_source_ms':self.last_valid_book_ms,'last_valid_book_received_ms':self.last_valid_received_ms,
+                'last_frame_received_ms':self.last_frame_received_ms,'last_pong_received_ms':self.last_pong_received_ms,
+                'no_new_wire_event_over_500ms':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>500}
+
     async def run(self,*,connect_factory=None):
         from websockets.asyncio.client import connect
         class FixedConnect(connect):
@@ -199,15 +216,17 @@ class StreamBook(BookStateSource):
                 try:
                     while self.clock()<self.expiry:
                         raw=await asyncio.wait_for(ws.recv(),25)
-                        if raw=='PONG':continue
+                        wire_received_ms=self.clock();self.last_frame_received_ms=wire_received_ms
+                        if raw=='PONG':
+                            self.last_pong_received_ms=wire_received_ms;continue
                         try:values=json.loads(raw)
                         except (ValueError,TypeError):
                             self.diagnostics['parser_reason']='WS_INVALID_JSON';self.failure='WS_INVALID_JSON'
                             raise ValueError('WS_INVALID_JSON') from None
                         for event in values if isinstance(values,list) else [values]:
-                            try:self.ingest(event)
+                            try:self.ingest(event,wire_received_ms=wire_received_ms)
                             except ValueError:
-                                if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT'}:raise
+                                if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT','STALE_BOOK'}:raise
                                 # Remain connected but unusable pending full resync.
                                 continue
                 finally:

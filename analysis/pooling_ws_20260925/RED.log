@@ -1,0 +1,27 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+____ test_stale_during_processing_does_not_stop_reader_before_full_resync _____
+backend\tests\test_pooling_ws.py:30: in test_stale_during_processing_does_not_stop_reader_before_full_resync
+    asyncio.run(go())
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:196: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:119: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:726: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+backend\tests\test_pooling_ws.py:29: in go
+    with pytest.raises(asyncio.CancelledError):await s.run(connect_factory=lambda *a,**k:Socket())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE CancelledError
+____ test_persistent_pool_reuses_one_client_and_forbids_redirect_and_post _____
+backend\tests\test_pooling_ws.py:37: in test_persistent_pool_reuses_one_client_and_forbids_redirect_and_post
+    from app.live.readonly_pool import ReadOnlyPool
+E   ModuleNotFoundError: No module named 'app.live.readonly_pool'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_pooling_ws.py::test_stale_during_processing_does_not_stop_reader_before_full_resync
+FAILED backend/tests/test_pooling_ws.py::test_persistent_pool_reuses_one_client_and_forbids_redirect_and_post
+2 failed in 0.40s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
