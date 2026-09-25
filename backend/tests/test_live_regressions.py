@@ -78,3 +78,7 @@ def test_precheck_compares_usdc_not_raw_units():
 ])
 def test_ambiguous_sizes_rejected(report):
     assert normalize_order_status({"response":report})["known"] is False
+
+
+def test_conflicting_ack_ids_are_ambiguous():
+    assert clob_transport.extract_order_id({"response":{"order_id":"first","id":"second"}}) is None
