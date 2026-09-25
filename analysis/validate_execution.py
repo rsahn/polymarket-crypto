@@ -1,5 +1,6 @@
 """Offline pytest harness: production monetary calls forbidden, no external sockets."""
 from pathlib import Path
+import functools
 import ipaddress
 import json
 import os
@@ -32,6 +33,7 @@ def main():
     # Keep lock regression tests meaningful; wrap original locked methods and count attempts.
     for name,method in original.items():
         def wrap(name,method):
+            @functools.wraps(method)
             async def locked(self,*args,**kwargs):
                 calls.append(name)
                 return await method(self,*args,**kwargs)

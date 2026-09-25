@@ -1,0 +1,43 @@
+{
+  "status": "READ_ONLY_READINESS",
+  "checks": {
+    "wallet_auth": false,
+    "balance_usdc": false,
+    "allowance_usdc": false,
+    "geoblock": false,
+    "book_freshness": false,
+    "account_reconciliation": false,
+    "open_orders": false,
+    "inventory": false,
+    "local_recovery_state": false,
+    "session_risk": false,
+    "transport_lock": true,
+    "live_flags_disabled": true
+  },
+  "observations": {
+    "account": {},
+    "positions": {},
+    "book": {},
+    "geo": {},
+    "risk": {}
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "blockers": [
+    "wallet_auth",
+    "balance_usdc",
+    "allowance_usdc",
+    "geoblock",
+    "book_freshness",
+    "account_reconciliation",
+    "open_orders",
+    "inventory",
+    "local_recovery_state",
+    "session_risk"
+  ],
+  "integration_status": "UNBOUND_NOT_READY_FOR_LIVE"
+}
