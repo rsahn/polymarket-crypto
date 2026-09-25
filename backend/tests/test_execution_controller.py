@@ -133,3 +133,41 @@ def test_execution_uses_invariant_guard(build,monkeypatch):
     f=build()
     with pytest.raises(ExecutionBlocked,match="FIXTURE_GATE_REJECT"):asyncio.run(f.run())
     assert seen and seen[0]["session_pnl"]==f.gate["session_pnl"] and f.calls==[]
+
+
+def test_submit_timeout_persists_intent_without_resubmit(build):
+    f = build()
+    async def ambiguous_submit(**kwargs):
+        f.calls.append("entry")
+        await asyncio.Future()
+    f.submit_limit = ambiguous_submit
+    async def scenario():
+        with pytest.raises(TimeoutError): await f.run()
+        assert f.store.load()["phase"] == "RECOVERY_REQUIRED"
+        restarted = ExecutionController(f.store, f, f.account, lambda: f.gate)
+        with pytest.raises(ExecutionBlocked, match="RECOVERY_REQUIRED"):
+            await restarted.recover()
+        with pytest.raises(ExecutionBlocked, match="RECOVERY_REQUIRED"):
+            await restarted.run(order(), exit_price=.49)
+    asyncio.run(scenario())
+    assert f.calls == ["entry"]
+
+
+def test_local_cancellation_during_submit_preserves_ambiguous_remote_state(build):
+    f = build()
+    async def scenario():
+        submitted = asyncio.Event()
+        async def ambiguous_submit(**kwargs):
+            f.calls.append("entry")
+            submitted.set()
+            await asyncio.Future()
+        f.submit_limit = ambiguous_submit
+        task = asyncio.create_task(f.run())
+        await asyncio.wait_for(submitted.wait(), 1)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError): await task
+        assert f.store.load()["phase"] == "RECOVERY_REQUIRED"
+        with pytest.raises(ExecutionBlocked, match="RECOVERY_REQUIRED"):
+            await f.controller.recover()
+    asyncio.run(scenario())
+    assert f.calls == ["entry"]
