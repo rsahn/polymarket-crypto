@@ -11,7 +11,7 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 sys.path.insert(0,str(ROOT/'backend'))
 from app.live.genesis_ledger import read_genesis,append_activity,expected_wallet,LIMITS
-from app.live.forward_readiness import evaluate_baseline,ObservationSource,ForwardSessionRiskSource
+from app.live.forward_readiness import evaluate_baseline,ObservationSource,ForwardSessionRiskSource,validate_generation
 from app.live.readonly_book_stream import StreamBook
 from app.live.production_readonly import now_ms,drain,plain,units,GeoBlockSource,BookStateSource
 from app.live.readiness import ProductionReadinessCheck
@@ -83,10 +83,18 @@ async def fresh_views(client):
     return dict(zip(('balance','orders','trades','positions'),values))
 
 
+async def acquire_final_views(client,geo_reader,rpc,prior,inventory):
+    # Slow preparation must finish before starting the 500 ms account window.
+    # Inventory retains its original chain watermark and timestamp, even if stale.
+    geoval,inventory=await asyncio.gather(geo_reader.read(),asyncio.to_thread(advance_inventory,rpc,prior,inventory))
+    observed=await fresh_views(client)
+    return observed,geoval,inventory
+
+
 def annotate(readiness):
     source_for={'wallet_auth':'account','balance_pusd':'account','allowance_pusd':'account','open_orders':'account',
         'inventory':'positions','account_reconciliation':'positions','session_risk':'risk','book_freshness':'book','geoblock':'geo'}
-    at=now_ms();details={}
+    at=readiness['evaluated_ms'];details={}
     for name,passed in readiness['checks'].items():
         source=source_for.get(name,'local');o=readiness['observations'].get(source,{})
         details[name]={'status':'PASS' if passed else 'BLOCKED','source':o.get('provenance',o.get('source',source)),
@@ -105,6 +113,7 @@ async def run(target=False):
     positions=ObservationSource({'available':False,'reason':'POST_GENESIS_INVENTORY_READ_REQUIRED'})
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
+    generation=None
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError('FLAGS')
@@ -148,8 +157,8 @@ async def run(target=False):
                     while not task.done() and not book.read()['available'] and time.monotonic()<deadline:await asyncio.sleep(.05)
                 except Exception:book=BookStateSource()
                 geo_reader=GeoBlockSource(fetch=lambda:GetOnlyTransport('https://polymarket.com',('/api/geoblock',),audit=audit).get_json('/api/geoblock'))
-                stage='PARALLEL_ACCOUNT_POSITION_AND_CTF_READS'
-                observed,geoval,inventory=await asyncio.gather(fresh_views(client),geo_reader.read(),asyncio.to_thread(advance_inventory,rpc,prior,inventory))
+                stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
+                observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory)
                 inventory_meta={k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance')}
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
@@ -162,7 +171,14 @@ async def run(target=False):
                     'complete':True,'observed_ms':min(a_stamp,observed['positions'][1],inventory['observed_ms'])}
                 current=read_genesis(LEDGER)
                 if current['last_hash']!=prior['last_hash']:raise ValueError('LEDGER_CHANGED_DURING_READ')
+                generation={'id':1,'ledger_hash':current['last_hash'],
+                    'watermark':{'block_number':inventory['to_block'],'block_hash':inventory['block_hash']},
+                    'components':{n:{'generation':1,'observed_ms':observed[n][1],'complete':True} for n in observed}}
+                generation['components']['inventory']={'generation':1,'observed_ms':inventory['observed_ms'],'complete':True}
                 reconciliation=evaluate_baseline(current,remote,now=now_ms())
+                gate=validate_generation(generation,now_ms())
+                if not gate['complete'] and reconciliation['phase']!='RECOVERY_REQUIRED':
+                    reconciliation={'phase':'BLOCKED','reconciled':False,'reason':gate['reason'],'generation':gate}
                 complete=reconciliation['reconciled']
                 account=ObservationSource({'available':True,'authenticated':True,'observed_ms':a_stamp,'balance_collateral':str(units(raw)),
                     'allowance_collateral':str(units(allowed[0])),'collateral_symbol':'pUSD','open_order_ids':[] if not remote['orders'] else ['REDACTED'],
@@ -176,10 +192,15 @@ async def run(target=False):
                 local=read_genesis(LEDGER)
     except Exception:
         reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK','failed_stage':stage}
+    def final_local():
+        current=read_genesis(LEDGER)
+        if not prior or current['last_hash']!=local.get('last_hash'):
+            return {'phase':'RECOVERY_REQUIRED','reconciled_now':False}
+        return {**current,'reconciled_now':local.get('reconciled_now') is True}
     risk=ForwardSessionRiskSource(reconciliation,now_ms)
     try:
         readiness=await ProductionReadinessCheck(account=account,positions=positions,book=book,geo=geo,risk=risk,
-            local_reader=lambda:local,collateral_unit='pUSD').run()
+            local_reader=final_local,collateral_unit='pUSD',generation=generation).run()
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),

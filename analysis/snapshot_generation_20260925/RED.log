@@ -1,0 +1,77 @@
+FFFFFFFFFFFF                                                             [100%]
+================================== FAILURES ===================================
+________________________ test_generation_age[499-True] ________________________
+backend\tests\test_snapshot_generation.py:15: in test_generation_age
+    assert f.validate_generation(generation(),1000+age)['complete'] is ok
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+_______________________ test_generation_age[501-False] ________________________
+backend\tests\test_snapshot_generation.py:15: in test_generation_age
+    assert f.validate_generation(generation(),1000+age)['complete'] is ok
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+_______________________ test_generation_age[2759-False] _______________________
+backend\tests\test_snapshot_generation.py:15: in test_generation_age
+    assert f.validate_generation(generation(),1000+age)['complete'] is ok
+           ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+_____________________ test_generation_incomplete[missing] _____________________
+backend\tests\test_snapshot_generation.py:25: in test_generation_incomplete
+    assert not f.validate_generation(g,1100)['complete']
+               ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+_____________________ test_generation_incomplete[partial] _____________________
+backend\tests\test_snapshot_generation.py:25: in test_generation_incomplete
+    assert not f.validate_generation(g,1100)['complete']
+               ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+______________________ test_generation_incomplete[mixed] ______________________
+backend\tests\test_snapshot_generation.py:25: in test_generation_incomplete
+    assert not f.validate_generation(g,1100)['complete']
+               ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+_____________________ test_generation_incomplete[future] ______________________
+backend\tests\test_snapshot_generation.py:25: in test_generation_incomplete
+    assert not f.validate_generation(g,1100)['complete']
+               ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+____________________ test_generation_incomplete[watermark] ____________________
+backend\tests\test_snapshot_generation.py:25: in test_generation_incomplete
+    assert not f.validate_generation(g,1100)['complete']
+               ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'app.live.forward_readiness' has no attribute 'validate_generation'
+__________________________ test_ws_states_and_resync __________________________
+backend\tests\test_snapshot_generation.py:45: in test_ws_states_and_resync
+    assert s.read()['diagnostics']['resync_complete_generation']==s.generation
+           ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'diagnostics'
+___________________ test_parser_cause_survives_run_cleanup ____________________
+backend\tests\test_snapshot_generation.py:57: in test_parser_cause_survives_run_cleanup
+    asyncio.run(s.run(connect_factory=lambda *a,**k:Socket()))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: StreamBook.run() got an unexpected keyword argument 'connect_factory'
+_______________ test_valid_depth_diagnostics_survive_disconnect _______________
+backend\tests\test_snapshot_generation.py:66: in test_valid_depth_diagnostics_survive_disconnect
+    d=s.read()['diagnostics']
+      ^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'diagnostics'
+_______________ test_slow_inventory_is_prepared_before_account ________________
+backend\tests\test_snapshot_generation.py:81: in test_slow_inventory_is_prepared_before_account
+    _,_,inv=asyncio.run(q.acquire_final_views(None,Geo(),None,None,None))
+                        ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: module 'analysis.qualify_post_genesis' has no attribute 'acquire_final_views'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_snapshot_generation.py::test_generation_age[499-True]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_age[501-False]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_age[2759-False]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_incomplete[missing]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_incomplete[partial]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_incomplete[mixed]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_incomplete[future]
+FAILED backend/tests/test_snapshot_generation.py::test_generation_incomplete[watermark]
+FAILED backend/tests/test_snapshot_generation.py::test_ws_states_and_resync
+FAILED backend/tests/test_snapshot_generation.py::test_parser_cause_survives_run_cleanup
+FAILED backend/tests/test_snapshot_generation.py::test_valid_depth_diagnostics_survive_disconnect
+FAILED backend/tests/test_snapshot_generation.py::test_slow_inventory_is_prepared_before_account
+12 failed in 0.49s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
