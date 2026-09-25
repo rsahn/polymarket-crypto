@@ -1,0 +1,24 @@
+{
+  "real_orders_enabled_expected": false,
+  "files": {
+    "backend/app/live/clob_transport.py": [
+      {
+        "method": "place_limit_order",
+        "line": 24
+      },
+      {
+        "method": "cancel_order",
+        "line": 40
+      },
+      {
+        "method": "place_limit_order",
+        "line": 45
+      }
+    ]
+  },
+  "transport_boundary_only": true,
+  "monetary_methods_hard_locked": true,
+  "files_scanned": 112
+}
+AUDIT_OK: submission/cancel calls are isolated to clob_transport.py
+NO_SUBMIT_AUDIT_ONLY
