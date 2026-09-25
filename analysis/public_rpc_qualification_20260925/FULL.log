@@ -1,0 +1,21 @@
+........................................................................ [  9%]
+................................................................ [ 18%]
+........................................................................ [ 28%]
+........................................................................ [ 38%]
+........................................................................ [ 48%]
+........................................................................ [ 58%]
+........................................................................ [ 68%]
+........................................................................ [ 78%]
+.................................................................. [ 87%]
+............................................................. [ 95%]
+..............................                                           [100%]
+============================== warnings summary ===============================
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+  C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.
+    return c.execute(query).fetch_arrow_table().to_pylist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+725 passed, 3 warnings, 25 subtests passed in 39.72s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 3, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
