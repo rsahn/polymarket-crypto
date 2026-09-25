@@ -1,0 +1,21 @@
+# D6 post-genesis read-only readiness
+
+Baseline: existing runtime/d6_genesis.db only. No create_genesis import or call, no event rescan at/before the genesis block. Baseline hash is checked again in the report. Incremental CTF discovery is bounded at 50,000 new blocks and 10 blocks/request on the configured archive RPC; its original anchor and incremental anchors are checked. Known assets are carried forward; no IDs fabricated. After public discovery, final incremental catch-up runs alongside account/indexer reads. Historical block timestamps remain unchanged. If anchor age cannot satisfy 500 ms, inventory/reconciliation stay BLOCKED; no freshness threshold is relaxed.
+
+Manual source binding: validated existing DPAPI L2, confirmed signer/beacon, Polygon137 SDK production config, type3 COLLATERAL pUSD/6 decimals from existing qualified identity. No metadata requalification. Balance, allowance for the identified exchange, paginated credential orders/trades and paginated indexer positions are fetched concurrently. Scope remains the documented forward baseline, not global wallet history.
+
+Reconciliation supports the CURRENT untouched genesis: zero local events, no remote orders/trades/positions or incoming conditional events, all known balances zero, collateral exactly equal to baseline. Only those proofs justify initial net PnL/fees/reservations/exposure zero and actual cash from collateral. Nonzero ledger activity is deliberately fail-closed until an explicit event projection can explain it; arbitrary payloads in the journal are not a trusted accounting schema. Confirmed unexplained activity appends RECOVERY_REQUIRED to the event journal without changing the genesis snapshot. Stale or incomplete data cannot become PASS and is not itself recorded as a monetary divergence.
+
+BTC V1 signal file is unchanged. Discovery follows existing Gamma btc-updown-5m route/outcome mapping and MarketIdentity, checking current window and expiry. New independent public WebSocket adapter uses the existing market protocol, no REST-as-stream claim: two full books, immutable condition/tokens, monotone connection generation, source timestamps, strict levels, incremental changes, heartbeat and immediate state invalidation on parser/connection failure. No automatic reconnect loop; rerun requires a new synchronized generation. Provider redirects rejected. No SDK SecureClient, no order API, no credential creation, no Polygon transaction.
+
+One ProductionReadinessCheck evaluates all 12 gates, with per-check source/time/reason and existing 500 ms freshness (geo60s). submit_allowed is always false. Reports omit wallet, order IDs, balances by token, depth and credentials; only summarized scoped observations remain. Fixed-size V1 limit remains25; no sizing change.
+
+Offline run preserves genesis and intentionally has only transport_lock/live_flags_disabled PASS; all ten source-dependent checks BLOCKED pending manual target readings. The offline report does NOT supersede the successful historical genesis. No readiness success is claimed before network measurements.
+
+Manual command in the SAME PowerShell holding POLYGON_ARCHIVE_RPC_URL:
+python -B .\analysis\qualify_post_genesis.py --target-machine
+Return only D6_POST_GENESIS_READINESS_<UTC>.json. No genesis reconstruction command. Existing L2 only. No secret should be copied into conversation.
+
+Validation: RED initial new modules missing, then GREEN and additional stale/identity/depth/reorg tests. See TESTS.log and AUDIT.log. Monetary/network audit hook forbids external sockets and SDK monetary methods. Source and fixture secret scan covers staged task files only, not global Git history or runtime secrets. Genesis snapshot and BTC V1 hash are checked without logging identifiers or keys.
+
+Final validation: 476 passed, 8 subtests passed, 0 failed/errors, 3 existing deprecation warnings. 22 tests cover the new adapters/reconciliation. Harness: 0 external sockets attempted, 0 SDK monetary attempts, 16 SDK monetary methods guarded, 3 production hard-lock regression calls rejected. Live-boundary AUDIT_OK. Staged source secret-pattern scan:0 hits; runtime/.env not staged. BTC V1 matches HEAD. Offline actual-ledger report confirms genesis_unchanged=true; network target execution remains pending.
