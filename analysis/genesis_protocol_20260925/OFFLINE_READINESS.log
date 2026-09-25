@@ -1,0 +1,100 @@
+{
+  "phase": "D6_GENESIS_AND_FULL_READINESS",
+  "genesis": {
+    "created": false,
+    "phase": "GENESIS_PENDING",
+    "reasons": [
+      "FRESH_CTF_DISCOVERY_AND_BRACKETED_ACCOUNT_SNAPSHOT_REQUIRED"
+    ]
+  },
+  "readiness": {
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": true,
+        "authenticated": true,
+        "observed_ms": 1790336286402,
+        "balance_collateral": "109.160000",
+        "collateral_symbol": "pUSD",
+        "complete": false,
+        "reason": "PRIOR_OBSERVATION_REQUIRES_FRESH_ACCOUNT_READ"
+      },
+      "positions": {
+        "available": true,
+        "observed_ms": 1790336286816,
+        "complete": false,
+        "reason": "INDEX_VIEW_ONLY_NO_CONDITIONAL_DISCOVERY"
+      },
+      "book": {
+        "available": false,
+        "connected": false,
+        "book_synced": false,
+        "market_slug": null,
+        "generation": null,
+        "books": {},
+        "observed_ms": null
+      },
+      "geo": {
+        "available": false,
+        "reason": "NO_FRESH_GEOBLOCK_IN_OFFLINE_MODE"
+      },
+      "risk": {
+        "available": false,
+        "complete": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "geoblock",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ]
+  },
+  "network_executed": false,
+  "get_requests": [],
+  "rpc_calls": [],
+  "prior_history_globally_known": false,
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "book_source": "ACTUAL_ADAPTER_DISCONNECTED_NO_PRODUCTION_STREAM",
+  "future_execution_binding_ready": false,
+  "execution_binding_reason": "RUNNER_REMAINS_DISCONNECTED_MUST_JOURNAL_BEFORE_ANY_FUTURE_UNLOCK",
+  "ledger_path": "runtime/d6_genesis.db",
+  "private_key_loaded": false,
+  "l1_signature_produced": false
+}
+REPORT_FILE=GENESIS_READINESS_20260925_114953_736112.json

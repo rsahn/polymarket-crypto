@@ -2,7 +2,7 @@
 from .collateral_onchain import CTF,uint_word
 
 
-def scan_ctf(rpc,start,end,known):
+def scan_ctf(rpc,start,end,known,*,capture=None):
     from eth_utils import keccak
     from eth_abi import decode
     report={'complete':False,'status':'BLOCKED','contract':CTF,'from_block':start,'to_block':end,
@@ -33,12 +33,13 @@ def scan_ctf(rpc,start,end,known):
                 else:raise ValueError()
                 assets.update(str(x) for x in ids)
                 if len(assets)>10000:raise ValueError()
-        nonzero=0
+        nonzero=0;balances={}
         for token in sorted(assets):
             if not token.isdigit() or not 0<=int(token)<2**256:raise ValueError()
             data='0x00fdd58e'+rpc.wallet[2:].lower().rjust(64,'0')+hex(int(token))[2:].rjust(64,'0')
-            nonzero+=uint_word(rpc.call('eth_call',[{'to':CTF,'data':data},block]))>0
+            raw=uint_word(rpc.call('eth_call',[{'to':CTF,'data':data},block]));balances[token]=str(raw);nonzero+=raw>0
         if rpc.call('eth_getBlockByNumber',[block,False])['hash']!=anchor['hash']:raise ValueError()
+        if capture is not None:capture.update(balances=balances)
         report.update(status='PASS_SCOPED_READS',events_count=len(seen),assets_checked=len(assets),nonzero_assets=nonzero,
             discovered_outside_local_journal=len(assets-set(known)),block_hash=anchor['hash'],
             blockers=['DEPLOYMENT_START_AND_ARCHIVE_COMPLETENESS_NOT_ATTESTED','OTHER_POSITION_PROTOCOLS_NOT_COVERED','CREDENTIAL_ORDER_SCOPE_NOT_GLOBAL'])
