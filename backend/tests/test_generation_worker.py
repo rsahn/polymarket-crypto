@@ -3,18 +3,18 @@ import threading
 import pytest
 
 
-def test_generation_runs_on_isolated_loop_and_preserves_observation():
+def test_generation_runs_on_runner_loop_and_preserves_observation():
     from app.live.generation_worker import run_generation_worker
     async def go():
         main_loop=asyncio.get_running_loop();main_thread=threading.get_ident()
         async def work():
-            assert asyncio.get_running_loop() is not main_loop
-            assert threading.get_ident()!=main_thread
+            assert asyncio.get_running_loop() is main_loop
+            assert threading.get_ident()==main_thread
             return {'observed_ms':1000}
         value,timing=await run_generation_worker(work)
         assert value=={'observed_ms':1000}
-        assert timing['submitted_ms']<=timing['worker_started_ms']<=timing['worker_result_ready_ms']<=timing['worker_finished_ms']<=timing['main_resumed_ms']
-        assert timing['main_resume_delay_ms']>=0
+        assert timing['submitted_ms']<=timing['generation_started_ms']<=timing['generation_result_ready_ms']<=timing['runner_continued_ms']
+        assert timing['continuation_delay_ms']>=0
     asyncio.run(go())
 
 

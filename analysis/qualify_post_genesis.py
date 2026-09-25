@@ -203,7 +203,7 @@ async def run(target=False,*,health_contract=False):
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
-    pending_inventory_checkpoint=None
+    pending_inventory_checkpoint=None;inventory=None
     attempts=[];qualified=None;clock_diagnostic={};reconciliation_timing={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
@@ -287,7 +287,7 @@ async def run(target=False,*,health_contract=False):
                     pending_inventory_checkpoint=inventory
                 else:
                     observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
-                inventory_meta=inventory_metadata(inventory)
+                # Metadata formatting is deferred until after evaluation.
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
                 reconciliation_started=now_ms();reconciliation_cpu=time.thread_time_ns()
@@ -343,6 +343,7 @@ async def run(target=False,*,health_contract=False):
     try:
         readiness=await ProductionReadinessCheck(account=account,positions=positions,book=book,geo=geo,risk=risk,
             local_reader=final_local,collateral_unit='pUSD',generation=generation).run()
+        if inventory is not None:inventory_meta=inventory_metadata(inventory)
         path=inventory_meta.get('critical_path',{}) if inventory_meta else {}
         evaluated=readiness['evaluated_ms']
         account_obs=readiness.get('observations',{}).get('account',{}).get('observed_ms')
@@ -352,19 +353,40 @@ async def run(target=False,*,health_contract=False):
             'book_age_at_evaluation_ms':evaluated-book_obs if book_obs is not None else None,
             'critical_path_wall_ms':evaluated-path['scan_dispatch_ms'] if 'scan_dispatch_ms' in path else None}
         # Persist only after the decision snapshot; disk I/O cannot age its sources.
+        persistence_started_ms=now_ms()
         checkpoint_status='NOT_PENDING'
         if pending_inventory_checkpoint is not None:
             try:
                 save_inventory_cursor(ROOT,prior,pending_inventory_checkpoint)
                 checkpoint_status='SAVED_AFTER_EVALUATION'
             except Exception:checkpoint_status='SAVE_FAILED_NO_GENESIS_CHANGE'
+        persistence_finished_ms=now_ms()
+        scheduler_timing={
+            'generation_started_ms':worker_timing.get('generation_started_ms'),
+            'inventory_final_proof_ms':path.get('scan_worker_finished_ms'),
+            'account_started_ms':path.get('account_started_ms'),'account_finished_ms':path.get('account_finished_ms'),
+            'recheck_started_ms':path.get('recheck_started_ms'),'recheck_finished_ms':path.get('recheck_finished_ms'),
+            'join_finished_ms':worker_timing.get('generation_result_ready_ms'),
+            'reconciliation_started_ms':reconciliation_timing.get('started_ms'),
+            'reconciliation_finished_ms':reconciliation_timing.get('finished_ms'),
+            'book_sample_started_ms':readiness.get('book_sample_started_ms'),
+            'book_sample_finished_ms':readiness.get('book_sample_finished_ms'),
+            'evaluation_started_ms':readiness.get('evaluation_started_ms'),
+            'evaluation_finished_ms':readiness.get('evaluation_complete_ms'),
+            'post_evaluation_persistence_started_ms':persistence_started_ms,
+            'post_evaluation_persistence_finished_ms':persistence_finished_ms,
+            'account_recheck_execution':'SEQUENTIAL_POST_ACCOUNT_CANONICAL_WITNESS',
+            'scheduler_overhead_before_evaluation_ms':None,
+            'scheduler_overhead_scope':'TOTAL_NOT_ISOLATED_FROM_BUSINESS_CPU; SEE_MEASURED_RESUME_DELAYS',
+            'measured_scan_resume_delay_ms':path.get('scan_resume_delay_ms'),
+            'measured_generation_continuation_delay_ms':worker_timing.get('continuation_delay_ms')}
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
-            'generation_worker_timing':worker_timing,'final_timing_budget':final_budget,'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
+            'scheduler_timing':scheduler_timing,'generation_worker_timing':worker_timing,'final_timing_budget':final_budget,'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report
