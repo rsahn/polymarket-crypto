@@ -16,10 +16,16 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class GetOnlyTransport:
-    def __init__(self,base,routes,*,headers=None,audit=None):
+    def __init__(self,base,routes,*,headers=None,audit=None,pooled=False):
         parsed=urllib.parse.urlsplit(base)
         if parsed.scheme!="https" or parsed.username or parsed.password or parsed.query or parsed.fragment:raise ValueError("INVALID_BASE")
         self.base=base.rstrip("/");self.routes=frozenset(routes);self.headers=headers;self.audit=audit if audit is not None else []
+        self.pool=None
+        if pooled and not urllib.request.getproxies():
+            from .readonly_pool import ReadOnlyPool
+            self.pool=ReadOnlyPool(tuple(self.base+r for r in self.routes))
+    def close(self):
+        if self.pool:self.pool.close()
     async def get_json(self,path,params=None,headers=None):
         if path not in self.routes:raise ValueError("GET_ROUTE_NOT_ALLOWED")
         supplied=await self.headers(path) if self.headers else {}
@@ -30,15 +36,21 @@ class GetOnlyTransport:
             try:
                 query=urllib.parse.urlencode({k: (str(v).lower() if type(v) is bool else v) for k,v in (params or {}).items()})
                 request=urllib.request.Request(self.base+path+("?"+query if query else ""),headers={"User-Agent":"Mozilla/5.0","Accept":"application/json",**supplied},method="GET")
-                with urllib.request.build_opener(NoRedirect()).open(request,timeout=8) as response:
-                    entry["http_status"]=response.status
-                    payload=response.read(4_000_001)
-                    entry["response_received_ms"]=now_ms()
-                    if len(payload)>4_000_000:raise ValueError("RESPONSE_LIMIT")
-                    value=json.loads(payload)
-                    entry["parse_complete_ms"]=now_ms()
-                    entry["shape"]=type(value).__name__
-                    return value
+                if self.pool:
+                    status,payload=self.pool.read('GET',request.full_url,headers=dict(request.header_items()),
+                        limit=4000000,timeout=8,entry=entry)
+                    entry['http_status']=status
+                else:
+                    entry['transport']='URLLIB_NO_POOL'
+                    with urllib.request.build_opener(NoRedirect()).open(request,timeout=8) as response:
+                        entry['http_status']=response.status
+                        payload=response.read(4_000_001)
+                entry['response_received_ms']=now_ms()
+                if len(payload)>4_000_000:raise ValueError('RESPONSE_LIMIT')
+                value=json.loads(payload)
+                entry['parse_complete_ms']=now_ms()
+                entry['shape']=type(value).__name__
+                return value
             except Exception as exc:
                 entry["error_type"]=type(exc).__name__
                 if hasattr(exc,"code"):entry["http_status"]=exc.code

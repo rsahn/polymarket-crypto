@@ -84,13 +84,19 @@ def validate_rpc_endpoint(value):
 
 
 class PublicRPC:
-    def __init__(self,wallet,*,endpoint=RPC,allow_finalized=False):
+    def __init__(self,wallet,*,endpoint=RPC,allow_finalized=False,pooled=False):
         if not re.fullmatch('0x[0-9a-fA-F]{40}',wallet):raise ValueError('WALLET')
         self._endpoint=validate_rpc_endpoint(endpoint)
         import threading
         self._counter_lock=threading.Lock()
         self.wallet=wallet;self.calls=[];self.counter=0
         self.allow_finalized=allow_finalized is True
+        self.pool=None
+        if pooled and not urllib.request.getproxies():
+            from .readonly_pool import ReadOnlyPool
+            self.pool=ReadOnlyPool((self._endpoint,),rpc=True)
+    def close(self):
+        if self.pool:self.pool.close()
     def call(self,method,params):
         block=lambda s:isinstance(s,str) and re.fullmatch('0x[0-9a-fA-F]+',s)
         valid=(method=='eth_chainId' and params==[])
@@ -121,16 +127,22 @@ class PublicRPC:
         if method=='eth_getLogs':
             entry.update(from_block=int(params[0]['fromBlock'],16),to_block=int(params[0]['toBlock'],16))
         try:
-            with urllib.request.build_opener(NoRedirect()).open(request,timeout=10) as response:
-                entry['http_status']=response.status
-                raw=response.read(1000001)
-                entry['response_received_ms']=time.time_ns()//1000000
-                if response.status!=200:
-                    entry['error_category']='HTTP_ERROR';raise ValueError()
-                if len(raw)>1000000:
-                    entry['error_category']='RESPONSE_TOO_LARGE';raise ValueError()
-                value=json.loads(raw)
-                entry['parse_complete_ms']=time.time_ns()//1000000
+            if self.pool:
+                status,raw=self.pool.read('POST',self._endpoint,headers=dict(request.header_items()),
+                    body=request.data,limit=1000000,timeout=10,entry=entry)
+                entry['http_status']=status
+            else:
+                entry['transport']='URLLIB_NO_POOL'
+                with urllib.request.build_opener(NoRedirect()).open(request,timeout=10) as response:
+                    entry['http_status']=response.status
+                    raw=response.read(1000001)
+            entry['response_received_ms']=time.time_ns()//1000000
+            if entry['http_status']!=200:
+                entry['error_category']='HTTP_ERROR';raise ValueError()
+            if len(raw)>1000000:
+                entry['error_category']='RESPONSE_TOO_LARGE';raise ValueError()
+            value=json.loads(raw)
+            entry['parse_complete_ms']=time.time_ns()//1000000
             if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=request_id:
                 entry['error_category']='RPC_ENVELOPE_INVALID';raise ValueError()
             if 'error' in value:
