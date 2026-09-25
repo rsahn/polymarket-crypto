@@ -197,7 +197,7 @@ def annotate(readiness):
 
 
 async def run(target=False,*,health_contract=False):
-    audit=[];rpc=None;creds=None;task=None;prior=None;pooled_transports=[]
+    audit=[];rpc=None;creds=None;task=None;prior=None;pooled_transports=[];worker_timing={}
     account=ObservationSource({'available':False,'reason':'FRESH_AUTHENTICATED_READ_REQUIRED'})
     positions=ObservationSource({'available':False,'reason':'POST_GENESIS_INVENTORY_READ_REQUIRED'})
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
@@ -279,7 +279,11 @@ async def run(target=False,*,health_contract=False):
                 geo_reader=GeoBlockSource(fetch=lambda:GetOnlyTransport('https://polymarket.com',('/api/geoblock',),audit=audit).get_json('/api/geoblock'))
                 stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
                 if health_contract:
-                    observed,geoval,inventory=await acquire_post_b(client,geo_reader,rpc,inventory,qualified,attempts=attempts)
+                    from app.live.generation_worker import run_generation_worker
+                    anchored_inventory=inventory
+                    values,worker_timing=await run_generation_worker(
+                        lambda:acquire_post_b(client,geo_reader,rpc,anchored_inventory,qualified,attempts=attempts))
+                    observed,geoval,inventory=values
                     pending_inventory_checkpoint=inventory
                 else:
                     observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
@@ -360,7 +364,7 @@ async def run(target=False,*,health_contract=False):
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
-            'final_timing_budget':final_budget,'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
+            'generation_worker_timing':worker_timing,'final_timing_budget':final_budget,'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report
