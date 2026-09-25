@@ -17,14 +17,14 @@ class StreamBook(BookStateSource):
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
             'resync_complete_generation':None,'transitions':[],'tokens':[]}
-        self.last_books={}
+        self.last_books={};self.last_wire_event_ms=None;self.last_valid_book_ms=None;self.attempted_books={}
     def transition(self,kind):
         self.diagnostics['transitions'].append({'kind':kind,'generation':self.generation,'at_ms':self.clock()})
         self.diagnostics['transitions']=self.diagnostics['transitions'][-32:]
     def connected_generation(self):
         self.depth={}
         self.connect(self.slug,self.expected_tokens,(self.generation or 0)+1)
-        self.failure=None;self.last_books={}
+        self.failure=None;self.last_books={};self.attempted_books={};self.last_valid_book_ms=None;self.last_wire_event_ms=None
         self.diagnostics['resync_complete_generation']=None
         self.transition('CONNECTED_AWAITING_TWO_FULL_BOOKS')
     def disconnect(self):
@@ -38,7 +38,7 @@ class StreamBook(BookStateSource):
             if kind not in ('book','price_change'):
                 if kind in ('last_trade_price','tick_size_change'):return
                 raise ValueError('UNREVIEWED_MARKET_EVENT')
-            stamp=int(event['timestamp'])
+            stamp=int(event['timestamp']);self.last_wire_event_ms=stamp
             if not 0<=self.clock()-stamp<=500:raise ValueError('STALE_WIRE_EVENT')
             touched=set()
             if kind=='book':
@@ -68,32 +68,42 @@ class StreamBook(BookStateSource):
                     touched.add(token)
             for token in touched:
                 b=self.depth[token]
+                self.attempted_books[token]={'bids_count':len(b['bids']),'asks_count':len(b['asks']),
+                    'best_bid':str(max(b['bids'])) if b['bids'] else None,
+                    'best_ask':str(min(b['asks'])) if b['asks'] else None,'generation':self.generation}
                 self.update(token,list(b['bids'].items()),list(b['asks'].items()),stamp,self.generation)
             self.messages+=1
+            if touched:self.last_valid_book_ms=stamp
             for token in touched:
                 self.last_books[token]={'last_valid_book_ms':stamp,'bids_present':bool(self.depth[token]['bids']),
                                         'asks_present':bool(self.depth[token]['asks']),'generation':self.generation}
             self.diagnostics['last_valid_message']={'kind':kind,'source_ms':stamp,'received_ms':self.clock(),'generation':self.generation}
             if super().read()['book_synced'] and self.diagnostics['resync_complete_generation']!=self.generation:
-                self.diagnostics['resync_complete_generation']=self.generation;self.transition('RESYNC_COMPLETE')
+                self.diagnostics['resync_complete_generation']=self.generation;self.failure=None;self.transition('RESYNC_COMPLETE')
         except Exception as exc:
             reasons={'NOT_CONNECTED_OR_EXPIRED','MARKET_IDENTITY','UNREVIEWED_MARKET_EVENT','STALE_WIRE_EVENT',
-                     'TOKEN_IDENTITY','DEPTH_SCHEMA','DEPTH_LEVEL','DELTA_LEVEL','STALE_BOOK','EMPTY_OR_CROSSED_BOOK',
+                     'TOKEN_IDENTITY','DEPTH_SCHEMA','DEPTH_LEVEL','DELTA_LEVEL','STALE_BOOK','EMPTY_BOOK','CROSSED_BOOK',
                      'BOOK_REGRESSION','INVALID_DEPTH','DUPLICATE_PRICE'}
             reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in reasons else 'BOOK_SCHEMA_OR_DEPTH_INVALID'
             self.diagnostics['parser_reason']=reason
             self.diagnostics['rejected_message_age_ms']=self.clock()-stamp if 'stamp' in locals() else None
-            self.failure=reason;self.disconnect();raise ValueError(reason) from None
+            self.failure=reason
+            # A local rejection is not a TCP disconnect. Invalidate both tokens;
+            # only two new full snapshots may establish a usable book again.
+            self.books={};self.depth={};self.diagnostics['resync_complete_generation']=None
+            self.transition('INVALIDATED_AWAITING_TWO_FULL_BOOKS')
+            raise ValueError(reason) from None
     def read(self):
         if self.clock()>=self.expiry:
             self.failure=self.failure or 'MARKET_EXPIRED';self.disconnect()
         d=copy.deepcopy(self.diagnostics)
-        d['tokens']=[{'token_index':i,**self.last_books.get(t,{}),
+        d['tokens']=[{'token_index':i,**self.last_books.get(t,{}),**self.attempted_books.get(t,{}),
             'last_valid_book_age_ms':self.clock()-self.last_books[t]['last_valid_book_ms'] if t in self.last_books else None,
             'current_generation_synced':self.connected and t in self.depth and t in self.books}
             for i,t in enumerate(self.expected_tokens)]
         return {**super().read(),'diagnostics':d,'source':'PUBLIC_CLOB_PERSISTENT_WS','condition_verified':True,
-                'messages_received':self.messages,'reason':self.failure}
+                'messages_received':self.messages,'reason':self.failure or super().read()['reason'],
+                'last_wire_event_ms':self.last_wire_event_ms,'last_valid_book_ms':self.last_valid_book_ms}
     async def run(self,*,connect_factory=None):
         from websockets.asyncio.client import connect
         class FixedConnect(connect):
@@ -117,7 +127,12 @@ class StreamBook(BookStateSource):
                         except (ValueError,TypeError):
                             self.diagnostics['parser_reason']='WS_INVALID_JSON';self.failure='WS_INVALID_JSON'
                             raise ValueError('WS_INVALID_JSON') from None
-                        for event in values if isinstance(values,list) else [values]:self.ingest(event)
+                        for event in values if isinstance(values,list) else [values]:
+                            try:self.ingest(event)
+                            except ValueError:
+                                if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT'}:raise
+                                # Remain connected but unusable pending full resync.
+                                continue
                 finally:
                     ping.cancel()
                     with suppress(asyncio.CancelledError):await ping

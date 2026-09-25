@@ -1,0 +1,6 @@
+{
+  "files_checked": 12,
+  "detected": false,
+  "scope": "Changed source/tests and phase artifacts only; static patterns plus fake-secret output redaction regression tests. No credential store accessed.",
+  "global_absence_proven": false
+}
