@@ -152,7 +152,7 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
     monkeypatch.setattr(q,'fresh_views',views)
     import analysis.qualify_post_b_proofs as proof
     monkeypatch.setattr(proof,'prepare_finalized_inventory',lambda *a:(inv,{'status':'PASS_PROVIDER_FINALIZED_READ'}))
-    async def acquired(client,geo,*a,**kw):return await views(),await geo.read(),inv
+    async def acquired(client,geo,*a,**kw):return await views(),await geo.read(),{**inv,'post_b_proof':{'current_inventory_proven':False,'reason':'POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'}}
     monkeypatch.setattr(proof,'acquire_post_b',acquired)
     stopped=[]
     class Active(StreamBook):
@@ -169,8 +169,9 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
     monkeypatch.setattr(q,'discover_book',discover)
     monkeypatch.setattr(q,'ProductionReadinessCheck',lambda **kw:ProductionReadinessCheck(**kw,clock=lambda:1000))
     r=asyncio.run(q.run(True,health_contract=health_contract))
-    assert r['readiness']['ready_for_arm'] is (not empty),r['reconciliation']
-    assert r['readiness']['SYSTEM_READY']
+    assert r['readiness']['ready_for_arm'] is (not empty and not health_contract),r['reconciliation']
+    assert r['readiness']['SYSTEM_READY'] is (not health_contract)
+    if health_contract:assert r['reconciliation']['reason']=='POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'
     assert r['readiness']['MARKET_ELIGIBLE_NOW'] is (not empty)
     assert r['readiness']['observations']['book']['connected']
     assert stopped and not s.connected and not r['readiness']['submit_allowed']

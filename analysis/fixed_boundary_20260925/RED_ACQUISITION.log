@@ -1,0 +1,25 @@
+...................F                                                     [100%]
+================================== FAILURES ===================================
+________ test_acquisition_selects_c_once_and_never_refreshes_scan_time ________
+backend\tests\test_fixed_boundary.py:85: in test_acquisition_selects_c_once_and_never_refreshes_scan_time
+    obs,geo,inv=asyncio.run(p.acquire_post_b(None,Geo(),RPC(),anchored,
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:196: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:119: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:726: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+analysis\qualify_post_b_proofs.py:151: in acquire_post_b
+    observed,(started,w,checked_at,check)=await asyncio.gather(fresh_views(client),asyncio.to_thread(witness))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_fixed_boundary.py:77: in views
+    assert '0xc' in calls  # numeric seal must precede every account request
+    ^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: assert '0xc' in ['latest']
+=========================== short test summary info ===========================
+FAILED backend/tests/test_fixed_boundary.py::test_acquisition_selects_c_once_and_never_refreshes_scan_time
+1 failed, 19 passed in 0.49s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

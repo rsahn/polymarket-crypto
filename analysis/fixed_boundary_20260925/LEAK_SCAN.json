@@ -1,0 +1,6 @@
+{
+  "detected": false,
+  "files_checked": 15,
+  "scope": "Changed implementation/tests and phase evidence; static credential patterns only. No secret store, dotenv, Git history or terminal history read. Not a global absence proof.",
+  "global_absence_proven": false
+}

@@ -93,7 +93,7 @@ def evaluate_post_b(e,*,now):
 def fixed_scan(rpc,previous,target):
     """Single bounded range, no head reselection and no Genesis fallback."""
     check=header(rpc.call('eth_getBlockByNumber',[hex(previous['to_block']),False]))
-    if check['hash']!=previous['block_hash']:raise ValueError('CURSOR_REORG')
+    if check['number']!=previous['to_block'] or check['hash']!=previous['block_hash']:raise ValueError('CURSOR_REORG')
     end=target['number'];start=previous['to_block']+1
     if end<previous['to_block']:raise ValueError('CURSOR_AHEAD_OF_FINALIZED')
     if end==previous['to_block']:
@@ -134,33 +134,52 @@ def prepare_finalized_inventory(rpc,prior,cursor):
         raise ValueError('GENESIS_ANCHOR_CHANGED')
     if cursor['events_count'] or any(int(v) for v in cursor['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
     anchored,ranges=fixed_scan(rpc,cursor,qualified['anchor'])
-    return {**anchored,'from_block':cursor['from_block']},qualified
+    return {**anchored,'from_block':cursor['from_block'],
+        'cursor_previous':cursor['to_block'],'anchor_catchup_ranges':ranges},qualified
 
 
 async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=None):
+    """Select C once. Seal numerically before GETs; recheck numerically after them.
+
+    Proof through C is useful but cannot establish later current inventory with
+    credential-scoped GETs and an indexer without a common completeness watermark.
+    """
     from analysis.qualify_post_genesis import fresh_views
+    from app.live.fixed_boundary import evaluate_boundary
     geoval=await geo_reader.read()
+    if qualified.get('status')!='PASS_PROVIDER_FINALIZED_READ':raise ValueError('FINALIZED_UNPROVEN')
     b=qualified['anchor']
-    h=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',['latest',False]))
-    tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,h)
-    def witness():
-        started=now_ms();w=header(rpc.call('eth_getBlockByNumber',['latest',False]))
-        checked_at=now_ms();check=header(rpc.call('eth_getBlockByNumber',[hex(b['number']),False]))
-        return started,w,checked_at,check
-    # Hash B and latest H reads are serial on one RPC object; account GETs run in parallel.
-    observed,(started,w,checked_at,check)=await asyncio.gather(fresh_views(client),asyncio.to_thread(witness))
-    e=dict(anchored_inventory_proven=True,anchor_number=b['number'],anchor_hash=b['hash'],
-        anchor_rechecked_hash=check['hash'],tail_end=h['number'],tail_hash=h['hash'],ranges=ranges,
-        tail_complete=True,witness_number=w['number'],witness_hash=w['hash'],scan_observed_ms=tail['observed_ms'],
-        witness_observed_ms=started,anchor_observed_ms=checked_at,generation=1,
+    c=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',['latest',False]))
+    if anchored['to_block']!=b['number'] or c['number']<b['number']:
+        raise ValueError('CURSOR_BOUNDARY_INCOHERENT')
+    tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,c)
+    seal=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c['number']),False]))
+    sealed_ms=now_ms()
+    if seal!=c:raise ValueError('BOUNDARY_REORG')
+    observed=await fresh_views(client)
+    rechecked_ms=now_ms()
+    check=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c['number']),False]))
+    anchor_check=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(b['number']),False]))
+    if check!=c:raise ValueError('BOUNDARY_REORG')
+    if anchor_check['number']!=b['number']:raise ValueError('ANCHOR_REORG')
+    e=dict(generation=1,finalized_qualified=True,cursor_previous=anchored['cursor_previous'],
+        anchor_number=b['number'],boundary_number=c['number'],anchor_hash=b['hash'],
+        anchor_rechecked_hash=anchor_check['hash'],boundary_hash=c['hash'],boundary_rechecked_hash=check['hash'],
+        anchor_ranges=anchored['anchor_catchup_ranges'],tail_ranges=ranges,rpc_complete=True,
+        events_count=tail['events_count'],balances=tail['balances'],scan_observed_ms=tail['observed_ms'],
+        sealed_ms=sealed_ms,rechecked_ms=rechecked_ms,
         account={k:dict(generation=1,complete=True,observed_ms=v[1]) for k,v in observed.items()})
-    proof=evaluate_post_b(e,now=now_ms())
-    if attempts is not None:attempts.append(dict(attempt=1,reason=proof['reason'],watermark_block=h['number'],
-        witness_block=w['number'],account_complete=True,post_b=proof))
-    if not proof['current_inventory_proven']:raise ValueError(proof['reason'])
-    return observed,geoval,{**tail,'from_block':anchored['from_block'],'observed_ms':started,
+    proof=evaluate_boundary(e,now=now_ms())
+    if not proof['inventory_through_C_proven']:raise ValueError(proof['reason'])
+    # Real acquisition times are retained, including a slow scan. No retiming.
+    metadata={k:v for k,v in e.items() if k not in ('balances',)}
+    if attempts is not None:attempts.append(dict(attempt=1,reason=proof['reason'],
+        watermark_block=c['number'],account_complete=set(observed)=={'balance','orders','trades','positions'},post_b=proof))
+    return observed,geoval,{**tail,'from_block':anchored['from_block'],
         'scan_observed_ms':tail['observed_ms'],'generation_attempt':1,'post_b_proof':proof,
-        'provenance':'FINALIZED_B_CONTIGUOUS_TAIL_H_FRESH_CANONICAL_WITNESS_AND_ACCOUNT',
+        'boundary_evidence':metadata,'cursor_previous':anchored['cursor_previous'],
+        'anchor_catchup_ranges':anchored['anchor_catchup_ranges'],
+        'provenance':'FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY',
         'finalized_block':b['number'],'finalized_hash':b['hash']}
 
 

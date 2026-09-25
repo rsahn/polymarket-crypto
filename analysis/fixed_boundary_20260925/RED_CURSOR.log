@@ -1,0 +1,21 @@
+......................FF                                                 [100%]
+================================== FAILURES ===================================
+_____ test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header[9] _____
+backend\tests\test_fixed_boundary.py:111: in test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header
+    with pytest.raises(ValueError,match='CURSOR_REORG'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Regex pattern did not match.
+E     Expected regex: 'CURSOR_REORG'
+E     Actual message: 'TAIL_SCAN_FAILED'
+____ test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header[13] _____
+backend\tests\test_fixed_boundary.py:111: in test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header
+    with pytest.raises(ValueError,match='CURSOR_REORG'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: Regex pattern did not match.
+E     Expected regex: 'CURSOR_REORG'
+E     Actual message: 'TAIL_SCAN_FAILED'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_fixed_boundary.py::test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header[9]
+FAILED backend/tests/test_fixed_boundary.py::test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header[13]
+2 failed, 22 passed in 0.42s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
