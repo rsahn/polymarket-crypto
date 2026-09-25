@@ -1,0 +1,25 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+__________ test_warmup_discards_account_values_and_reads_chain_only ___________
+backend\tests\test_readonly_warmup.py:6: in test_warmup_discards_account_values_and_reads_chain_only
+    from app.live.readonly_warmup import warm_readonly
+E   ModuleNotFoundError: No module named 'app.live.readonly_warmup'
+__ test_warmup_failure_drains_all_reads_and_never_returns_evidence[account] ___
+backend\tests\test_readonly_warmup.py:22: in test_warmup_failure_drains_all_reads_and_never_returns_evidence
+    from app.live.readonly_warmup import warm_readonly
+E   ModuleNotFoundError: No module named 'app.live.readonly_warmup'
+___ test_warmup_failure_drains_all_reads_and_never_returns_evidence[chain] ____
+backend\tests\test_readonly_warmup.py:22: in test_warmup_failure_drains_all_reads_and_never_returns_evidence
+    from app.live.readonly_warmup import warm_readonly
+E   ModuleNotFoundError: No module named 'app.live.readonly_warmup'
+____________ test_final_reads_are_new_and_preserve_their_own_time _____________
+backend\tests\test_readonly_warmup.py:37: in test_final_reads_are_new_and_preserve_their_own_time
+    from app.live.readonly_warmup import warm_readonly
+E   ModuleNotFoundError: No module named 'app.live.readonly_warmup'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_readonly_warmup.py::test_warmup_discards_account_values_and_reads_chain_only
+FAILED backend/tests/test_readonly_warmup.py::test_warmup_failure_drains_all_reads_and_never_returns_evidence[account]
+FAILED backend/tests/test_readonly_warmup.py::test_warmup_failure_drains_all_reads_and_never_returns_evidence[chain]
+FAILED backend/tests/test_readonly_warmup.py::test_final_reads_are_new_and_preserve_their_own_time
+4 failed in 0.39s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
