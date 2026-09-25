@@ -1,0 +1,66 @@
+{
+  "status": "PRODUCTION_READINESS_PHASE_CHECK",
+  "scope": "COLLATERAL_AND_INITIAL_INVENTORY_ONLY",
+  "checks": {
+    "collateral_identity_and_binding": false,
+    "inventory_reconciliation": false,
+    "transport_lock": true,
+    "live_flags_disabled": true
+  },
+  "blockers": [
+    "collateral_identity_and_binding",
+    "inventory_reconciliation"
+  ],
+  "provenance": {
+    "prior_network_report_sha256": "0b5245dfbbb87f0e9f78c0d1904de7351d3911da0649ed8f8b30ea92044765f4",
+    "new_network_observations": false
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "other_live_checks": "NOT_REEVALUATED_IN_THIS_PHASE",
+  "collateral": {
+    "status": "TARGET_RPC_OBSERVATION_PENDING",
+    "conversion_allowed": false
+  },
+  "inventory": {
+    "phase": "GENESIS_RECONCILIATION_PENDING",
+    "complete": false,
+    "ledger_created": false,
+    "remote_views": {
+      "positions": {
+        "status": "PASS_PREVIOUS_OBSERVATION",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false
+      },
+      "orders": {
+        "status": "USER_REPORTED_CREDENTIAL_VIEW",
+        "count": 0,
+        "complete": false
+      },
+      "trades": {
+        "status": "USER_REPORTED_CREDENTIAL_VIEW",
+        "count": 0,
+        "complete": false
+      }
+    },
+    "local_state": {
+      "configured": false,
+      "readable": false,
+      "session_history_proven": false,
+      "known_assets_count": null
+    },
+    "known_asset_scope": "EXPLICIT_LOCAL_EXECUTION_EVENTS_ONLY",
+    "global_coverage_proven": false,
+    "blockers": [
+      "GLOBAL_ASSET_DISCOVERY_AND_CONDITIONAL_BALANCES_UNPROVEN",
+      "GLOBAL_OPEN_ORDER_SCOPE_UNPROVEN",
+      "SESSION_HISTORY_AND_GENESIS_PROVENANCE_UNPROVEN",
+      "AUTHORITATIVE_LOCAL_LEDGER_NOT_AVAILABLE"
+    ]
+  }
+}

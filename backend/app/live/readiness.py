@@ -55,3 +55,15 @@ class ProductionReadinessCheck:
             transport_lock=transport_locked(),live_flags_disabled=all(v=="false" for v in flags.values()))
         return dict(status="READ_ONLY_READINESS",checks=checks,observations=values,flags=flags,
             ready_for_arm=all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
+
+    @staticmethod
+    def qualification_snapshot(collateral,inventory,*,provenance):
+        """Two-blocker phase report, explicitly not a full live-arm assessment."""
+        flags={k:os.getenv(k,'false').strip().lower() for k in ('REAL_ORDERS_ENABLED','LIVE_EXECUTION_ARMED')}
+        checks={'collateral_identity_and_binding':collateral.get('conversion_allowed') is True,
+                'inventory_reconciliation':inventory.get('complete') is True,
+                'transport_lock':transport_locked(),'live_flags_disabled':all(v=='false' for v in flags.values())}
+        return {'status':'PRODUCTION_READINESS_PHASE_CHECK','scope':'COLLATERAL_AND_INITIAL_INVENTORY_ONLY',
+                'checks':checks,'blockers':[k for k,v in checks.items() if not v],
+                'provenance':provenance,'flags':flags,'ready_for_arm':False,'submit_allowed':False,
+                'other_live_checks':'NOT_REEVALUATED_IN_THIS_PHASE'}
