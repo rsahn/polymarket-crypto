@@ -1,0 +1,48 @@
+"""Strict read-only reconciliation of an untouched forward genesis.
+Unmodelled D6 activity is rejected, never assigned invented PnL or fees.
+"""
+from decimal import Decimal
+from .production_readonly import fresh
+
+
+def evaluate_baseline(prior,remote,*,now):
+    blocked=lambda reason:{'phase':'BLOCKED','reconciled':False,'reason':reason}
+    recovery=lambda reason:{'phase':'RECOVERY_REQUIRED','reconciled':False,'reason':reason}
+    try:
+        if prior.get('integrity_verified') is not True:return blocked('LEDGER_INTEGRITY_UNPROVEN')
+        if prior.get('phase')!='GENESIS_RECONCILED':return recovery('LOCAL_RECOVERY_REQUIRED')
+        if prior['event_count']!=0:return recovery('LEDGER_ACTIVITY_REQUIRES_EXPLICIT_EVENT_PROJECTION')
+        base=prior['snapshot']
+        if remote.get('complete') is not True:return blocked('REMOTE_SCOPE_INCOMPLETE')
+        if remote['wallet'].lower()!=base['wallet'].lower():return recovery('WALLET_MISMATCH')
+        if remote['balance_raw']!=base['collateral']['balance_raw']:return recovery('COLLATERAL_DELTA_UNEXPLAINED')
+        if any(remote[n] for n in ('orders','trades','positions')) or remote['events_count']!=0:
+            return recovery('REMOTE_ACTIVITY_UNEXPLAINED')
+        if not set(base['conditional_assets']['balances'])<=set(remote['balances']):return blocked('KNOWN_ASSET_NOT_OBSERVED')
+        if any(not isinstance(v,str) or not v.isdigit() for v in remote['balances'].values()):return blocked('BALANCE_SCHEMA')
+        if any(int(v)>0 for v in remote['balances'].values()):return recovery('CONDITIONAL_INVENTORY_UNEXPLAINED')
+        if not fresh(remote['observed_ms'],now):return blocked('RECONCILIATION_STALE_500MS')
+        raw=remote['balance_raw']
+        if not isinstance(raw,str) or not raw.isdigit():return blocked('COLLATERAL_SCHEMA')
+        return {'phase':'RECONCILED','reconciled':True,'observed_ms':remote['observed_ms'],
+                'cash_collateral':str(Decimal(raw)/1000000),'collateral_symbol':'pUSD',
+                'reserved_collateral':'0','net_pnl':'0','fees_collateral':'0','exposure_collateral':'0',
+                'open_positions':0,'scope':'D6_FORWARD_LEDGER_SCOPED_BASELINE',
+                'provenance':'UNCHANGED_GENESIS_CASH_AND_NO_LOCAL_OR_REMOTE_ACTIVITY',
+                'prior_history_globally_known':False}
+    except (KeyError,ValueError,TypeError,AttributeError):return blocked('RECONCILIATION_SCHEMA_INVALID')
+
+
+class ObservationSource:
+    def __init__(self,value):self.value=value
+    def read(self):return dict(self.value)
+
+
+class ForwardSessionRiskSource:
+    def __init__(self,reconciliation,clock):self.reconciliation=reconciliation;self.clock=clock
+    def read(self):
+        r=self.reconciliation
+        if r.get('reconciled') is not True or not fresh(r['observed_ms'],self.clock()):
+            return {'available':False,'reason':'SESSION_LEDGER_UNRECONCILED_OR_STALE'}
+        return {**r,'available':True,'session_pnl':r['net_pnl'],
+                'allow':Decimal(r['cash_collateral'])-Decimal(r['reserved_collateral'])>=25 and r['open_positions']==0}
