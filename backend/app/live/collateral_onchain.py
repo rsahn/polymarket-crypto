@@ -5,6 +5,7 @@ import time
 import hashlib
 from decimal import Decimal
 import urllib.request
+import urllib.error
 from .network_readonly import NoRedirect
 
 RPC='https://polygon.drpc.org'
@@ -26,6 +27,27 @@ def symbol_string(value):
     if not 1<=n<=32 or len(raw)!=96 or any(raw[64+n:]):raise ValueError('ABI_LENGTH')
     result=raw[64:64+n].decode('ascii')
     if result!='pUSD':raise ValueError('SYMBOL_MISMATCH')
+    return result
+
+
+def rpc_error_metadata(error):
+    """Classify untrusted provider text without retaining it or error.data."""
+    result={'error_category':'UNCLASSIFIED_RPC_ERROR'}
+    if not isinstance(error,dict):return result
+    code=error.get('code')
+    if type(code) is int and -(2**31)<=code<2**31:result['rpc_error_code']=code
+    message=error.get('message')
+    text=message.lower() if isinstance(message,str) else ''
+    if code==-32601 or 'method not found' in text:category='METHOD_UNAVAILABLE'
+    elif code==-32602:category='INVALID_PARAMS'
+    elif 'rate limit' in text or 'too many requests' in text:category='RATE_LIMIT'
+    elif any(x in text for x in ('upgrade','paid plan','free tier','subscription')):category='PLAN_RESTRICTION'
+    elif 'range' in text and any(x in text for x in ('limit','maximum','exceed','large')):category='RANGE_LIMIT'
+    elif any(x in text for x in ('missing trie','historical state','archive')):category='ARCHIVE_UNAVAILABLE'
+    elif 'not supported' in text or 'unsupported' in text:category='METHOD_UNSUPPORTED'
+    else:category='UNCLASSIFIED_RPC_ERROR'
+    result['error_category']=category
+    result['classification_basis']='PROVIDER_ERROR_CODE_OR_MESSAGE_PATTERN_NOT_INDEPENDENTLY_VERIFIED'
     return result
 
 
@@ -57,14 +79,33 @@ class PublicRPC:
         payload={'jsonrpc':'2.0','id':self.counter,'method':method,'params':params}
         request=urllib.request.Request(RPC,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json','User-Agent':'Mozilla/5.0'},method='POST')
         entry={'rpc_method':method,'id':self.counter,'started_ms':time.time_ns()//1000000}
+        if method=='eth_getLogs':
+            entry.update(from_block=int(params[0]['fromBlock'],16),to_block=int(params[0]['toBlock'],16))
         try:
             with urllib.request.build_opener(NoRedirect()).open(request,timeout=10) as response:
+                entry['http_status']=response.status
                 raw=response.read(1000001)
-                if response.status!=200 or len(raw)>1000000:raise ValueError()
+                if response.status!=200:
+                    entry['error_category']='HTTP_ERROR';raise ValueError()
+                if len(raw)>1000000:
+                    entry['error_category']='RESPONSE_TOO_LARGE';raise ValueError()
                 value=json.loads(raw)
-            if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=self.counter or 'error' in value or 'result' not in value:raise ValueError()
+            if not isinstance(value,dict) or value.get('jsonrpc')!='2.0' or type(value.get('id')) is not int or value['id']!=self.counter:
+                entry['error_category']='RPC_ENVELOPE_INVALID';raise ValueError()
+            if 'error' in value:
+                entry.update(rpc_error_metadata(value['error']));raise ValueError()
+            if 'result' not in value:
+                entry['error_category']='RPC_RESULT_MISSING';raise ValueError()
             entry['status']='PASS';return value['result']
-        except Exception:
+        except Exception as exc:
+            if isinstance(exc,urllib.error.HTTPError):
+                entry.update(http_status=exc.code,error_category='HTTP_ERROR')
+                exc.close()
+            elif isinstance(exc,TimeoutError) or (isinstance(exc,urllib.error.URLError) and isinstance(exc.reason,TimeoutError)):
+                entry['error_category']='TIMEOUT'
+            elif isinstance(exc,urllib.error.URLError):entry['error_category']='CONNECTION_ERROR'
+            elif isinstance(exc,json.JSONDecodeError):entry['error_category']='INVALID_JSON'
+            entry.setdefault('error_category','UNCLASSIFIED_READ_ERROR')
             entry['status']='FAILED';raise RuntimeError('PUBLIC_RPC_READ_FAILED') from None
         finally:self.calls.append(entry)
 
