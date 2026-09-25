@@ -70,7 +70,7 @@ def test_local_closed_is_not_remote_proof(tmp_path):
     p=tmp_path/'state.db'
     with sqlite3.connect(p) as db:
         db.execute('CREATE TABLE execution_state (id INTEGER PRIMARY KEY,value TEXT)')
-        db.execute('INSERT INTO execution_state VALUES(1,?)',(json.dumps({'phase':'CLOSED','open_shares':0}),))
+        db.execute('INSERT INTO execution_state VALUES(1,?)',(json.dumps({'phase':'CLOSED','bought':0.0,'sold':0.0}),))
     before=p.read_bytes()
     r,c=run(local=str(p))
     stage=r['qualification']['reconciliation']

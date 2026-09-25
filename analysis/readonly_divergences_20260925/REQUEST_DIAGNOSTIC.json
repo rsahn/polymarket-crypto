@@ -1,0 +1,69 @@
+{
+  "environment": "production",
+  "chain_id": 137,
+  "sdk_version": "0.11.0",
+  "signer_masked": "0x9348...203a",
+  "configured_wallet_masked": "0x9348...203a",
+  "balance_current": {
+    "method": "GET",
+    "endpoint": "/balance-allowance",
+    "query": {
+      "asset_type": "COLLATERAL",
+      "signature_type": 0
+    },
+    "wallet_kind": "EOA",
+    "signer_header_source": "confirmed signer, POLY_ADDRESS",
+    "wallet_query_sent": false,
+    "spender_query_sent": false,
+    "asset_id_sent": false,
+    "token_id_sent": false
+  },
+  "balance_historical_code": {
+    "method": "GET",
+    "endpoint": "/balance-allowance",
+    "query": {
+      "asset_type": "COLLATERAL",
+      "signature_type": 3
+    },
+    "wallet_kind": "DEPOSIT_WALLET",
+    "wallet_resolution": "wallet omitted: legacy UUPS if deployed, otherwise beacon",
+    "resolved_wallet_historically_proven": false,
+    "raw_balance_user_reported": "109160000",
+    "signer_header_source": "same signer, POLY_ADDRESS",
+    "wallet_query_sent": false,
+    "spender_query_sent": false,
+    "asset_id_sent": false,
+    "token_id_sent": false
+  },
+  "deposit_candidates_public_computation_only": {
+    "legacy_masked": "0x96f9...A1d4",
+    "beacon_masked": "0x871d...9DE9",
+    "deployment_or_balance_verified": false
+  },
+  "spender_selected_from_response": "0xE111180000d2663C0091e4f400237545B87B996B",
+  "collateral_contract_sdk": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "balance_zero_does_not_explain_historical_balance": true,
+  "positions": {
+    "endpoint": "/v2/positions",
+    "first_page_query_redacted": {
+      "user": "0x9348...203a",
+      "filter_type": "TOKENS",
+      "filter_amount": 0,
+      "include_archived": "true",
+      "limit": 100
+    },
+    "sdk_and_corrected_boolean_wire": "include_archived=true",
+    "previous_boolean_wire": "include_archived=True",
+    "full_history_sent": false,
+    "pagination": "opaque cursor; initial limit=100",
+    "http_400_root_cause_confirmed": false
+  },
+  "collateral_proof": {
+    "symbol_source": "official documentation identifies SDK contract as pUSD",
+    "symbol_verified_onchain": false,
+    "decimals_verified_onchain": false,
+    "account_binding_verified": false,
+    "reason": "CLOB response has balance/allowances, no contract/decimals/account binding attestation; no on-chain read performed",
+    "conversion_allowed": false
+  }
+}
