@@ -153,7 +153,9 @@ class StreamBook(BookStateSource):
                 self.last_books[token]={'last_valid_book_ms':stamp,'bids_present':bool(self.depth[token]['bids']),
                                         'asks_present':bool(self.depth[token]['asks']),'generation':self.generation}
             self.diagnostics['last_valid_message']={'kind':kind,'source_ms':stamp,'received_ms':received_ms,'generation':self.generation}
-            if super().read()['synchronized'] and self.diagnostics['resync_complete_generation']!=self.generation:
+            # Same synchronization predicate as BookStateSource.read, without
+            # materializing/deep-copying both books on every wire event.
+            if self.connected and len(self.books)==2 and self.diagnostics['resync_complete_generation']!=self.generation:
                 self.diagnostics['resync_complete_generation']=self.generation;self.failure=None;self.transition('RESYNC_COMPLETE')
         except Exception as exc:
             reasons={'NOT_CONNECTED_OR_EXPIRED','MARKET_IDENTITY','UNREVIEWED_MARKET_EVENT','STALE_WIRE_EVENT',
@@ -191,7 +193,7 @@ class StreamBook(BookStateSource):
             'current_generation_synced':self.connected and t in self.depth and t in self.books}
             for i,t in enumerate(self.expected_tokens)]
         return {**base,'state':state,'diagnostics':d,'source':'PUBLIC_CLOB_PERSISTENT_WS','condition_verified':True,
-                'messages_received':self.messages,'reason':self.failure or super().read()['reason'],
+                'messages_received':self.messages,'reason':self.failure or base['reason'],
                 'last_wire_event_ms':self.last_wire_event_ms,'last_valid_book_ms':self.last_valid_book_ms,
                 'last_wire_event_source_ms':self.last_wire_event_ms,'last_wire_event_received_ms':self.last_wire_received_ms,
                 'last_valid_book_source_ms':self.last_valid_book_ms,'last_valid_book_received_ms':self.last_valid_received_ms,

@@ -1,0 +1,19 @@
+{"events": 2000, "profiled_wall_seconds": 12.840400099987164, "available": true, "synthetic_offline_only": true}
+         20834001 function calls (18376001 primitive calls) in 12.793 seconds
+
+   Ordered by: cumulative time
+   List reduced from 37 to 12 due to restriction <12>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    0.108    0.000   12.793    0.006 readonly_book_stream.py:75(ingest)
+     2000    0.020    0.000    9.596    0.005 production_readonly.py:164(read)
+2454000/2000    4.306    0.000    9.528    0.005 copy.py:119(deepcopy)
+8000/2000    0.047    0.000    9.519    0.005 copy.py:218(_deepcopy_dict)
+     8000    0.516    0.000    9.259    0.001 copy.py:192(_deepcopy_list)
+   792000    1.930    0.000    6.840    0.000 copy.py:201(_deepcopy_tuple)
+     2000    0.014    0.000    3.026    0.002 production_readonly.py:143(update)
+     4000    0.946    0.000    2.993    0.001 production_readonly.py:145(levels)
+   808000    1.483    0.000    1.966    0.000 production_readonly.py:13(number)
+  4918000    1.083    0.000    1.083    0.000 {method 'get' of 'dict' objects}
+  3280000    0.558    0.000    0.558    0.000 {built-in method builtins.id}
+  1620000    0.349    0.000    0.349    0.000 {built-in method builtins.isinstance}
