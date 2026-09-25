@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'backend'))
 from app.live.genesis_ledger import expected_wallet,create_genesis,read_genesis,digest,LIMITS
-from app.live.genesis_discovery import conditional_snapshot,DiscoveryBlocked
+from app.live.genesis_discovery import conditional_snapshot,segmented_snapshot,DiscoveryBlocked
 from app.live.genesis_readonly import read_local_ledger
 from app.live.collateral_onchain import PublicRPC,CONTRACT
 from app.live.deposit_qualification import FLAGS,CLOB,DATA,write_report
@@ -39,7 +39,7 @@ def qualification():
     raise ValueError('QUALIFIED_COLLATERAL_REPORT_MISSING')
 
 
-async def run(network=False):
+async def run(network=False,chunked_ctf=False):
     old,qualification_hash=qualification();wallet=expected_wallet();creds=None;audit=[]
     c=old['collateral'];old_views=old['inventory']['remote_views']
     account={'available':True,'authenticated':True,'observed_ms':c['observed_ms'],
@@ -64,7 +64,7 @@ async def run(network=False):
             old_local,known=read_local_ledger(os.getenv('READONLY_EXECUTION_STATE_DB'))
             if old_local.get('recovery_pending'):raise RecoveryDetected()
             if old_local.get('configured'):raise ValueError('EXISTING_LEDGER_REQUIRES_EXPLICIT_IMPORT')
-            discovered=await asyncio.to_thread(conditional_snapshot,rpc,known)
+            discovered=await asyncio.to_thread(segmented_snapshot if chunked_ctf else conditional_snapshot,rpc,known)
             if any(int(v)>0 for v in discovered['balances'].values()):raise RecoveryDetected()
             creds,storage=load_existing(ROOT)
             if not creds or storage.get('storage_validated') is not True:raise ValueError()
@@ -99,6 +99,9 @@ async def run(network=False):
                 'views':{n:{'rows':first[n],'pagination_complete':True,'observed_ms':first_ms,'repeat_sha256':digest(second[n])} for n in first},
                 'conditional_assets':discovered,'journal_assets':sorted(known),'coverage_limitations':LIMITS}
             decision=create_genesis(LEDGER,snapshot)
+            if chunked_ctf:
+                decision['discovery']={k:discovered[k] for k in
+                    ('from_block','to_block','block_hash','chunk_manifest','chunk_manifest_sha256','segment_policy')}
             account={'available':True,'authenticated':True,'observed_ms':min(second_ms,balance_ms),'collateral_symbol':'pUSD',
                 'balance_collateral':str(Decimal(raw)/1000000),'allowance_collateral':str(Decimal(allowances[0])/1000000),
                 'open_order_ids':[r['id'] for r in second['orders']],
@@ -136,10 +139,10 @@ async def run(network=False):
 
 
 def main():
-    if sys.argv[1:] not in (['--offline'],['--target-machine']):print('Use --offline or --target-machine.');return 2
+    if sys.argv[1:] not in (['--offline'],['--target-machine'],['--target-machine','--chunked-ctf']):print('Use --offline or --target-machine [--chunked-ctf].');return 2
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError()
-        report=asyncio.run(run(sys.argv[1]=='--target-machine'))
+        report=asyncio.run(run(sys.argv[1]=='--target-machine','--chunked-ctf' in sys.argv))
     except BaseException:report={'phase':'D6_GENESIS_AND_FULL_READINESS','status':'BLOCKED','ready_for_arm':False}
     p=ROOT/('GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(p,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+p.name)
