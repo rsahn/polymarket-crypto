@@ -1,0 +1,58 @@
+F.....FFF.....................                                           [100%]
+================================== FAILURES ===================================
+_____________________ test_atomic_genesis_hash_and_limits _____________________
+backend\app\live\genesis_ledger.py:79: in create_genesis
+    with open(temp,'rb') as handle:os.fsync(handle.fileno())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+backend\tests\test_genesis_ledger.py:19: in test_atomic_genesis_hash_and_limits
+    p=tmp_path/'ledger.db';s=evidence();r=create_genesis(p,s,now_ms=1001)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\genesis_ledger.py:85: in create_genesis
+    if os.path.exists(temp):os.unlink(temp)
+                            ^^^^^^^^^^^^^^^
+E   PermissionError: [WinError 32] Le processus ne peut pas acc�der au fichier car ce fichier est utilis� par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\pytest-of-Ramy\\pytest-62\\test_atomic_genesis_hash_and_l0\\genesis-8ul15m1a.tmp'
+_____________ test_interruption_before_publish_leaves_no_partial ______________
+backend\tests\test_genesis_ledger.py:42: in test_interruption_before_publish_leaves_no_partial
+    assert list(tmp_path.iterdir())==[]
+E   AssertionError: assert [WindowsPath(...ve7mn2e.tmp')] == []
+E     
+E     Left contains one more item: WindowsPath('C:/Users/Ramy/AppData/Local/Temp/pytest-of-Ramy/pytest-62/test_interruption_before_publi0/genesis-nve7mn2e.tmp')
+E     Use -v to get more diff
+____________________________ test_tamper_detected _____________________________
+backend\app\live\genesis_ledger.py:79: in create_genesis
+    with open(temp,'rb') as handle:os.fsync(handle.fileno())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+backend\tests\test_genesis_ledger.py:46: in test_tamper_detected
+    p=tmp_path/'ledger.db';create_genesis(p,evidence(),now_ms=1001)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\genesis_ledger.py:85: in create_genesis
+    if os.path.exists(temp):os.unlink(temp)
+                            ^^^^^^^^^^^^^^^
+E   PermissionError: [WinError 32] Le processus ne peut pas acc�der au fichier car ce fichier est utilis� par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\pytest-of-Ramy\\pytest-62\\test_tamper_detected0\\genesis-od895shd.tmp'
+_______________ test_activity_chained_and_divergence_persisted ________________
+backend\app\live\genesis_ledger.py:79: in create_genesis
+    with open(temp,'rb') as handle:os.fsync(handle.fileno())
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+backend\tests\test_genesis_ledger.py:52: in test_activity_chained_and_divergence_persisted
+    p=tmp_path/'ledger.db';create_genesis(p,evidence(),now_ms=1001)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\genesis_ledger.py:85: in create_genesis
+    if os.path.exists(temp):os.unlink(temp)
+                            ^^^^^^^^^^^^^^^
+E   PermissionError: [WinError 32] Le processus ne peut pas acc�der au fichier car ce fichier est utilis� par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\pytest-of-Ramy\\pytest-62\\test_activity_chained_and_dive0\\genesis-drcd718f.tmp'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_genesis_ledger.py::test_atomic_genesis_hash_and_limits
+FAILED backend/tests/test_genesis_ledger.py::test_interruption_before_publish_leaves_no_partial
+FAILED backend/tests/test_genesis_ledger.py::test_tamper_detected - Permissio...
+FAILED backend/tests/test_genesis_ledger.py::test_activity_chained_and_divergence_persisted
+4 failed, 26 passed in 0.66s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
