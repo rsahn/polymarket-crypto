@@ -105,7 +105,7 @@ def fixed_scan(rpc,previous,target):
     if result['events_count'] or any(int(v) for v in captured['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
     ranges=[[i,min(i+rpc.log_window-1,end)] for i in range(start,end+1,rpc.log_window)]
     return {**result,'balances':captured['balances'],'observed_ms':started,
-        'final_numeric_witness':captured.get('final_numeric_witness')},ranges
+        'final_numeric_witness':captured.get('final_numeric_witness'),'scan_worker_finished_ms':now_ms()},ranges
 
 
 def public_inventory(rpc,prior,cursor,qualified):
@@ -206,7 +206,10 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
     return observed,geoval,{**tail,'from_block':anchored['from_block'],
         'scan_observed_ms':tail['observed_ms'],'generation_attempt':1,'post_b_proof':proof,
         'critical_path':{'scan_dispatch_ms':scan_dispatch_ms,'scan_observed_ms':tail['observed_ms'],
-            'scan_finished_ms':scan_finished_ms,'seal_started_ms':seal_started_ms,'sealed_ms':sealed_ms,
+            'scan_finished_ms':scan_finished_ms,
+              'scan_worker_finished_ms':tail.get('scan_worker_finished_ms'),
+              'scan_resume_delay_ms':scan_finished_ms-tail['scan_worker_finished_ms'] if 'scan_worker_finished_ms' in tail else None,
+              'seal_started_ms':seal_started_ms,'sealed_ms':sealed_ms,
               'seal_provenance':seal_provenance,
             'account_started_ms':account_started_ms,'account_finished_ms':account_finished_ms,
             'recheck_started_ms':rechecked_ms,'recheck_finished_ms':recheck_timing['finished_ms'],
