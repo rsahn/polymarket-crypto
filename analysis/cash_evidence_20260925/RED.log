@@ -1,0 +1,17 @@
+
+=================================== ERRORS ====================================
+____________ ERROR collecting backend/tests/test_cash_evidence.py _____________
+ImportError while importing test module 'C:\Users\Ramy\Documents\polymarket-crypto\backend\tests\test_cash_evidence.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_cash_evidence.py:3: in <module>
+    from app.live.cash_evidence import reconcile_cash_delta,TRANSFER_TOPIC
+E   ModuleNotFoundError: No module named 'app.live.cash_evidence'
+=========================== short test summary info ===========================
+ERROR backend/tests/test_cash_evidence.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.46s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

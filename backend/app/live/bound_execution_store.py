@@ -112,6 +112,44 @@ class BoundExecutionStore(ExecutionStore):
         self.db.execute('INSERT INTO execution_chain VALUES(?,?,?)',
                         (row[0],previous,digest(self._item(row,previous))))
 
+    def record_cash_observation(self, evidence, *, expected_transactions, now_ms):
+        """Journal a bounded cash comparison, not a fee or current-inventory proof."""
+        from copy import deepcopy
+        from .cash_evidence import reconcile_cash_delta
+        prior_state = self.load()
+        if not prior_state or prior_state.get('phase') != 'CLOSED':
+            raise ExecutionBlocked('CASH_OBSERVATION_REQUIRES_CLOSED_CYCLE')
+        genesis = read_genesis(self.genesis_path)['snapshot']
+        before = evidence.get('before',{})
+        if (before.get('block_number') != genesis['block_number']
+                or before.get('block_hash') != genesis['block_hash']
+                or before.get('balance_raw') != genesis['collateral']['balance_raw']):
+            raise ExecutionBlocked('CASH_BASELINE_MISMATCH')
+        result = reconcile_cash_delta(evidence,expected_wallet=genesis['wallet'],
+            expected_contract=genesis['collateral']['contract'],
+            expected_transactions=expected_transactions,now_ms=now_ms)
+        if result['status'] != 'CASH_DELTA_MATCHED':
+            raise ExecutionBlocked('CASH_EVIDENCE_INVALID')
+        # Retain only the public proof schema, never arbitrary caller metadata.
+        clean = {k:deepcopy(evidence[k]) for k in ('chain_id','wallet','collateral_contract','canonical_observed_ms')}
+        clean['before'] = {k:before[k] for k in ('block_number','block_hash','balance_raw')}
+        clean['after'] = {k:evidence['after'][k] for k in ('block_number','block_hash','balance_raw','observed_ms')}
+        blocks = {str(before['block_number']),str(evidence['after']['block_number'])}
+        clean['receipts'] = []
+        for wrapper in evidence['receipts']:
+            r = wrapper['receipt']
+            blocks.add(str(int(r['blockNumber'],16)))
+            receipt = {k:r[k] for k in ('status','transactionHash','blockNumber','blockHash')}
+            receipt['logs'] = [{k:deepcopy(log[k]) for k in
+                ('address','topics','data','transactionHash','blockNumber','blockHash','logIndex','removed') if k in log}
+                for log in r['logs']]
+            clean['receipts'].append(dict(observed_ms=wrapper['observed_ms'],receipt=receipt))
+        clean['canonical_blocks'] = {k:evidence['canonical_blocks'][k] for k in blocks}
+        state = deepcopy(prior_state)
+        state['cash_observation'] = dict(result=result,evidence=clean,expected_transactions=list(expected_transactions))
+        self.write('CASH_DELTA_OBSERVATION',state,expected_state=prior_state)
+        return result
+
     def projection(self):
         state = self.load()
         quantity = None
@@ -120,7 +158,8 @@ class BoundExecutionStore(ExecutionStore):
             if not bought.is_finite() or not sold.is_finite() or not 0 <= sold <= bought:
                 raise ExecutionBlocked('SESSION_QUANTITY_INVALID')
             quantity = str(bought-sold)
-        return dict(phase=state['phase'] if state else 'NO_EXECUTION_RECORDED',
+        return dict(cash_delta_status=(state or {}).get('cash_observation',{}).get('result',{}).get('status'),
+                    phase=state['phase'] if state else 'NO_EXECUTION_RECORDED',
                     open_shares=quantity,quantity_basis='LAST_REPORTED_FILLS_NOT_CURRENT_REMOTE_INVENTORY',
                     genesis_hash=self.binding['genesis_hash'],cash_reconciled=False,
                     pnl=None,fees=None,current_inventory_proven=False,submit_allowed=False)
