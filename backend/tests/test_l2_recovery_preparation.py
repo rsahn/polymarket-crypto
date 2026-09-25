@@ -132,3 +132,13 @@ def test_unknown_cli_argument_does_not_echo_secret(capsys):
     out=capsys.readouterr()
     assert "NEVER_ECHO_THIS" not in out.out+out.err
 
+
+@pytest.mark.parametrize("signer", ["", "0x1234", "0x"+"g"*40, "0x"+"1"*64, " "+SIGNER])
+def test_invalid_expected_signer_blocks_preview_and_policy(monkeypatch,tmp_path,capsys,signer):
+    import json
+    from app.live.l2_recovery_preparation import RecoveryPolicy
+    m=load_preview_module();monkeypatch.setattr(m,"ROOT",tmp_path)
+    monkeypatch.setenv("L2_RECOVERY_EXPECTED_SIGNER",signer)
+    assert m.main(["--preview"])==2
+    assert json.loads(capsys.readouterr().out)["expected_signer"]=="NOT_CONFIGURED"
+    with pytest.raises(ValueError):RecoveryPolicy(signer)
