@@ -1,6 +1,6 @@
 """Live CLOB transport using the installed polymarket SDK.
 
-Submission is possible only when the external LiveArmGate is satisfied.
+All monetary methods are hard-locked pending explicit user approval.
 This module does not enable or arm live mode by itself.
 """
 from __future__ import annotations
@@ -50,11 +50,12 @@ class LiveClobTransport:
 
 def extract_order_id(event):
     """Best-effort extraction from SDK AcceptedOrder payload; fail closed if absent."""
-    data=(event or {}).get("response") or {}
-    for key in ("order_id","orderID","id"):
-        value=data.get(key) if isinstance(data,dict) else None
-        if value:return str(value)
-    return None
+    data=event.get("response") if isinstance(event,dict) else None
+    if not isinstance(data,dict):return None
+    values=[data[k] for k in ("order_id","orderID","id") if k in data]
+    if not values or any(not isinstance(v,str) or not v.strip() for v in values):return None
+    return values[0] if len(set(values))==1 else None
+
 
 def normalize_order_status(event):
     """Reject unknown, incomplete, conflicting and non-finite remote reports."""
