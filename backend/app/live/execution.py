@@ -27,6 +27,9 @@ def finite(value):
     return value
 
 
+_UNSET = object()
+
+
 class ExecutionStore:
     """Snapshot and append-only transitions commit in the same durable transaction."""
     def __init__(self, path):
@@ -39,11 +42,13 @@ class ExecutionStore:
         row = self.db.execute("SELECT value FROM execution_state WHERE id=1").fetchone()
         return json.loads(row[0]) if row else None
 
-    def write(self, event, state, *, reserve=False):
+    def write(self, event, state, *, reserve=False, expected_state=_UNSET):
         payload = json.dumps(state, sort_keys=True, allow_nan=False)
         self.db.execute("BEGIN IMMEDIATE")
         try:
             previous = self.load()
+            if expected_state is not _UNSET and previous != expected_state:
+                raise ExecutionBlocked('SESSION_CHANGED')
             if reserve and previous and previous["phase"] != "CLOSED":
                 raise ExecutionBlocked("POSITION_OR_RECOVERY_PENDING")
             self.db.execute("INSERT INTO execution_events(ts_ms,event,value) VALUES(?,?,?)", (int(time.time()*1000),event,payload))

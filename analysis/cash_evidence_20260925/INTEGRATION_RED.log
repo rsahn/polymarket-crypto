@@ -1,0 +1,17 @@
+............FF                                                           [100%]
+================================== FAILURES ===================================
+_____ test_cash_observation_is_journaled_without_inventing_risk_clearance _____
+backend\tests\test_bound_execution_store.py:116: in test_cash_observation_is_journaled_without_inventing_risk_clearance
+    result=store.record_cash_observation(e,expected_transactions=[TX],now_ms=1100)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'BoundExecutionStore' object has no attribute 'record_cash_observation'
+____________ test_cash_recording_requires_a_closed_recorded_cycle _____________
+backend\tests\test_bound_execution_store.py:127: in test_cash_recording_requires_a_closed_recorded_cycle
+    with pytest.raises(ExecutionBlocked):store.record_cash_observation({},expected_transactions=[],now_ms=1000)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'BoundExecutionStore' object has no attribute 'record_cash_observation'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_bound_execution_store.py::test_cash_observation_is_journaled_without_inventing_risk_clearance
+FAILED backend/tests/test_bound_execution_store.py::test_cash_recording_requires_a_closed_recorded_cycle
+2 failed, 12 passed in 1.38s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
