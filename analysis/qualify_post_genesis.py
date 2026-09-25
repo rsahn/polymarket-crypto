@@ -40,20 +40,72 @@ def incremental_inventory(rpc,prior):
             'provenance':'POST_GENESIS_CTF_INCOMING_EVENTS_AND_ANCHORED_BALANCES'}
 
 
+def load_inventory_cursor(root,prior):
+    """Resume local evidence only. Missing/unusable cursor never triggers genesis scan.
+    Legacy redacted reports can seed only a proven empty scoped inventory.
+    """
+    candidates=[]
+    paths=list((root/'runtime/d6_inventory_cursors').glob('*.json'))+list(root.glob('D6_POST_GENESIS_READINESS_*.json'))
+    for path in paths:
+        try:
+            r=json.loads(path.read_text(encoding='utf-8-sig'))
+            if r.get('genesis_snapshot_sha256')!=prior['snapshot_sha256'] or r.get('genesis_unchanged') is not True:continue
+            x=r['inventory_incremental']
+            if r.get('cursor_schema')==1:
+                from app.live.genesis_ledger import digest
+                if digest(x)!=r['inventory_sha256']:raise ValueError('CURSOR_INTEGRITY')
+            else:
+                if r.get('network_mode')!='MANUAL_TARGET' or x['events_count']!=0 or x['assets_checked']!=0:continue
+                x={**x,'balances':{},'status':'PASS_SCOPED_READS'}
+            if x.get('status')!='PASS_SCOPED_READS':continue
+            if type(x['from_block']) is not int or x['from_block']!=prior['snapshot']['block_number']+1:continue
+            if type(x['to_block']) is not int or x['to_block']<x['from_block']:continue
+            if type(x['observed_ms']) is not int or not isinstance(x['balances'],dict):continue
+            if len(x['block_hash'])!=66 or not x['block_hash'].startswith('0x'):continue
+            int(x['block_hash'][2:],16)
+            candidates.append(x)
+        except (KeyError,TypeError,ValueError):
+            if path.parent.name=='d6_inventory_cursors':raise ValueError('CURSOR_INTEGRITY') from None
+            continue
+    if not candidates:raise ValueError('INVENTORY_CURSOR_REQUIRED')
+    highest=max(x['to_block'] for x in candidates)
+    top=[x for x in candidates if x['to_block']==highest]
+    if len({x['block_hash'] for x in top})!=1:raise ValueError('CURSOR_CONFLICT')
+    return max(top,key=lambda x:x['observed_ms'])
+
+
+def save_inventory_cursor(root,prior,inventory):
+    import tempfile
+    import uuid
+    from app.live.genesis_ledger import digest
+    folder=root/'runtime/d6_inventory_cursors';folder.mkdir(parents=True,exist_ok=True)
+    value={'cursor_schema':1,'genesis_snapshot_sha256':prior['snapshot_sha256'],'genesis_unchanged':True,
+           'inventory_incremental':inventory,'inventory_sha256':digest(inventory)}
+    target=folder/(str(inventory['to_block'])+'_'+uuid.uuid4().hex+'.json')
+    fd,tmp=tempfile.mkstemp(dir=folder,suffix='.tmp')
+    try:
+        with os.fdopen(fd,'w',encoding='utf-8') as f:
+            json.dump(value,f);f.flush();os.fsync(f.fileno())
+        os.link(tmp,target)  # atomic publication, no overwrite
+    finally:os.unlink(tmp)
+
+
 def advance_inventory(rpc,prior,previous):
-    """Continue at the already verified cursor; never rescan the baseline."""
-    anchor=rpc.call('eth_getBlockByNumber',[hex(prior['snapshot']['block_number']),False])
-    if anchor['hash']!=prior['snapshot']['block_hash']:raise ValueError('GENESIS_ANCHOR_CHANGED')
-    current=rpc.call('eth_getBlockByNumber',['latest',False])
-    if int(current['number'],16)==previous['to_block']:
+    """Fix the final block ONCE; scan only cursor+1..that block."""
+    anchor=rpc.call('eth_getBlockByNumber',[hex(previous['to_block']),False])
+    if anchor['hash']!=previous['block_hash']:raise ValueError('CURSOR_REORG')
+    current=rpc.call('eth_getBlockByNumber',['latest',False]);end=int(current['number'],16)
+    if end<previous['to_block']:raise ValueError('HEAD_REGRESSION')
+    if end==previous['to_block']:
         if current['hash']!=previous['block_hash']:raise ValueError('CURSOR_REORG')
         return previous
-    virtual={'snapshot':{**prior['snapshot'],'block_number':previous['to_block'],'block_hash':previous['block_hash'],
-                        'conditional_assets':{'balances':previous['balances']}}}
-    result=incremental_inventory(rpc,virtual)
-    result['from_block']=previous['from_block']
-    result['events_count']+=previous['events_count']
-    return result
+    captured={};started=now_ms()
+    result=scan_ctf(rpc,previous['to_block']+1,end,set(previous['balances']),capture=captured)
+    if result['status']!='PASS_SCOPED_READS' or result['block_hash']!=current['hash']:raise ValueError('INCREMENTAL_SCAN_FAILED')
+    return {**result,'from_block':previous['from_block'],'balances':captured['balances'],
+            'events_count':previous['events_count']+result['events_count'],
+            'observed_ms':min(started,int(current['timestamp'],16)*1000),
+            'provenance':'POST_GENESIS_CTF_INCOMING_EVENTS_AND_ANCHORED_BALANCES'}
 
 
 async def discover_book(audit):
@@ -102,13 +154,19 @@ def witness_inventory(rpc,inventory):
             'provenance':'NEW_LATEST_HEAD_READ_MATCHES_COMPLETE_SCANNED_CTF_WATERMARK'}
 
 
-async def acquire_final_views(client,geo_reader,rpc,prior,inventory):
+async def acquire_final_views(client,geo_reader,rpc,prior,inventory,*,checkpoint=None,attempts=None):
     # Catch-up is preparation. The final remote head witness runs alongside GETs.
     geoval=await geo_reader.read()
     for attempt in range(1,4):
         inventory=await asyncio.to_thread(advance_inventory,rpc,prior,inventory)
+        if checkpoint:checkpoint(inventory)
         results=await asyncio.gather(fresh_views(client),asyncio.to_thread(witness_inventory,rpc,inventory),return_exceptions=True)
         observed,witness=results
+        known={'HEAD_ADVANCED','HEAD_REGRESSION','CURSOR_REORG','FUTURE_BLOCK'}
+        reason=witness.args[0] if isinstance(witness,ValueError) and witness.args and witness.args[0] in known else 'INVENTORY_WITNESS_FAILED' if isinstance(witness,BaseException) else 'WITNESS_MATCHED'
+        if attempts is not None:attempts.append({'attempt':attempt,'watermark_block':inventory['to_block'],
+            'watermark_hash':inventory['block_hash'],'scan_observed_ms':inventory['observed_ms'],'reason':reason,
+            'account_complete':not isinstance(observed,BaseException)})
         if isinstance(observed,BaseException):raise ValueError('ACCOUNT_GENERATION_FAILED') from None
         if isinstance(witness,ValueError) and witness.args==('HEAD_ADVANCED',):continue
         if isinstance(witness,BaseException):raise ValueError('INVENTORY_WITNESS_FAILED') from None
@@ -145,6 +203,7 @@ async def run(target=False):
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
+    attempts=[]
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError('FLAGS')
@@ -158,7 +217,11 @@ async def run(target=False):
             if prior['phase']!='GENESIS_RECONCILED' or prior['event_count']!=0:raise ValueError('LEDGER_REQUIRES_EVENT_PROJECTION_OR_RECOVERY')
             stage='POST_GENESIS_CTF_DISCOVERY'
             rpc=PublicRPC(wallet,endpoint=endpoint);rpc.log_window=10
-            inventory=await asyncio.to_thread(incremental_inventory,rpc,prior)
+            inventory=load_inventory_cursor(ROOT,prior)
+            anchor=await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(prior['snapshot']['block_number']),False])
+            if anchor['hash']!=prior['snapshot']['block_hash']:raise ValueError('GENESIS_ANCHOR_CHANGED')
+            inventory=await asyncio.to_thread(advance_inventory,rpc,prior,inventory)
+            save_inventory_cursor(ROOT,prior,inventory)
             inventory_meta=inventory_metadata(inventory)
             if inventory['events_count'] or any(int(x)>0 for x in inventory['balances'].values()):
                 reconciliation={'phase':'RECOVERY_REQUIRED','reconciled':False,'reason':'POST_GENESIS_CONDITIONAL_ACTIVITY_UNEXPLAINED'}
@@ -189,7 +252,7 @@ async def run(target=False):
                 except Exception:book=BookStateSource()
                 geo_reader=GeoBlockSource(fetch=lambda:GetOnlyTransport('https://polymarket.com',('/api/geoblock',),audit=audit).get_json('/api/geoblock'))
                 stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
-                observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory)
+                observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
                 inventory_meta=inventory_metadata(inventory)
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
@@ -222,8 +285,10 @@ async def run(target=False):
             if reconciliation['phase']=='RECOVERY_REQUIRED':
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
-    except Exception:
-        reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK','failed_stage':stage}
+    except Exception as exc:
+        allowed={'HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
+        reconciliation={'phase':'BLOCKED','reconciled':False,'reason':reason,'failed_stage':stage}
     def final_local():
         current=read_genesis(LEDGER)
         if not prior or current['last_hash']!=local.get('last_hash'):
@@ -236,7 +301,7 @@ async def run(target=False):
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
-            'inventory_incremental':inventory_meta,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
+            'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}

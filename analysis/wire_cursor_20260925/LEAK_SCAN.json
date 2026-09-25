@@ -1,0 +1,6 @@
+{
+  "files_checked": 10,
+  "detected": false,
+  "scope": "Changed files and phase evidence; static patterns, no credential store loaded; excludes Git/terminal history.",
+  "global_absence_proven": false
+}

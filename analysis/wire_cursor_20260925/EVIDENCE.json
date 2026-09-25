@@ -1,0 +1,13 @@
+{
+  "genesis_unchanged": true,
+  "genesis_events": 0,
+  "btc_v1_unchanged": true,
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+  "resume_cursor_block": 94426992,
+  "resume_cursor_observed_ms": 1790345628000,
+  "resume_next_scan_from": 94426993,
+  "cursor_remote_anchor_reverification": "REQUIRED_BEFORE_SCAN",
+  "sdk_fixture_empty_side_accepted": true,
+  "network_qualification_executed": false,
+  "submit_allowed": false
+}

@@ -4,6 +4,7 @@ Independent of BTC V1 signal implementation. No REST snapshot-as-stream claim.
 import asyncio
 import json
 import copy
+import hashlib
 from contextlib import suppress
 from .production_readonly import BookStateSource,number,now_ms
 
@@ -17,20 +18,39 @@ class StreamBook(BookStateSource):
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
             'resync_complete_generation':None,'transitions':[],'tokens':[]}
+        self.first_full_books={};self.events_seen=0
         self.last_books={};self.last_wire_event_ms=None;self.last_valid_book_ms=None;self.attempted_books={}
     def transition(self,kind):
-        self.diagnostics['transitions'].append({'kind':kind,'generation':self.generation,'at_ms':self.clock()})
+        self.diagnostics['transitions'].append({'kind':kind,'generation':self.generation,'at_ms':self.clock(),'reason':self.failure})
         self.diagnostics['transitions']=self.diagnostics['transitions'][-32:]
     def connected_generation(self):
         self.depth={}
         self.connect(self.slug,self.expected_tokens,(self.generation or 0)+1)
         self.failure=None;self.last_books={};self.attempted_books={};self.last_valid_book_ms=None;self.last_wire_event_ms=None
         self.diagnostics['resync_complete_generation']=None
+        self.first_full_books={};self.events_seen=0
         self.transition('CONNECTED_AWAITING_TWO_FULL_BOOKS')
     def disconnect(self):
         if self.connected:self.transition('DISCONNECTED')
         super().disconnect();self.depth={}
+    def capture_first_book(self,event):
+        if not isinstance(event,dict) or event.get('event_type')!='book':return
+        token=event.get('asset_id')
+        if token not in self.expected_tokens or token in self.first_full_books:return
+        try:
+            bids,asks=event['bids'],event['asks']
+            if not isinstance(bids,list) or not isinstance(asks,list):return
+            bid=[number(x['price']) for x in bids];ask=[number(x['price']) for x in asks]
+            self.first_full_books[token]={'token_index':self.expected_tokens.index(token),
+                'token_sha256':hashlib.sha256(token.encode()).hexdigest(),
+                'identity_matches':event.get('market')==self.condition,'message_kind':'book',
+                'bids_count':len(bids),'asks_count':len(asks),'best_bid':str(max(bid)) if bid else None,
+                'best_ask':str(min(ask)) if ask else None,'source_timestamp_ms':int(event['timestamp']),
+                'generation':self.generation}
+        except (KeyError,TypeError,ValueError):return
     def ingest(self,event):
+        self.events_seen+=1
+        self.capture_first_book(event)
         try:
             if not self.connected or self.clock()>=self.expiry:raise ValueError('NOT_CONNECTED_OR_EXPIRED')
             if event.get('market')!=self.condition:raise ValueError('MARKET_IDENTITY')
@@ -96,12 +116,18 @@ class StreamBook(BookStateSource):
     def read(self):
         if self.clock()>=self.expiry:
             self.failure=self.failure or 'MARKET_EXPIRED';self.disconnect()
+        base=super().read()
+        state=('DISCONNECTED' if not self.connected else
+               'STALE' if self.failure in ('STALE_WIRE_EVENT','STALE_BOOK') or (base['synchronized'] and not base['fresh']) else
+               'INVALID_BOOK' if self.failure else 'SYNCHRONIZED' if base['available'] else
+               'CONNECTED' if not self.events_seen else 'INITIAL_SNAPSHOT_PENDING')
         d=copy.deepcopy(self.diagnostics)
+        d['first_full_books']=copy.deepcopy(list(self.first_full_books.values()))
         d['tokens']=[{'token_index':i,**self.last_books.get(t,{}),**self.attempted_books.get(t,{}),
             'last_valid_book_age_ms':self.clock()-self.last_books[t]['last_valid_book_ms'] if t in self.last_books else None,
             'current_generation_synced':self.connected and t in self.depth and t in self.books}
             for i,t in enumerate(self.expected_tokens)]
-        return {**super().read(),'diagnostics':d,'source':'PUBLIC_CLOB_PERSISTENT_WS','condition_verified':True,
+        return {**base,'state':state,'diagnostics':d,'source':'PUBLIC_CLOB_PERSISTENT_WS','condition_verified':True,
                 'messages_received':self.messages,'reason':self.failure or super().read()['reason'],
                 'last_wire_event_ms':self.last_wire_event_ms,'last_valid_book_ms':self.last_valid_book_ms}
     async def run(self,*,connect_factory=None):
