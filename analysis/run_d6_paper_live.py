@@ -98,7 +98,7 @@ async def main_async(a):
      expiry=snap.get("expiry_ts_ms") or 0;remaining=(expiry-tick.recv_ts_ms)/1000 if expiry else 999
      gate=guard.validate_entry(open_positions=0,session_pnl=0,geoblock_blocked=False,market_rotated=False,book_available=True,seconds_remaining=remaining)
      if not gate["allow"]:
-      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps({"signal_id":str(tick.recv_ts_ms),"status":"STAGING_REJECT","reasons":gate["reasons"],"submit_allowed":False},sort_keys=True)+"\\n")
+      with staged_journal.open("a",encoding="utf-8") as fh:fh.write(json.dumps({"signal_id":str(tick.recv_ts_ms),"status":"STAGING_REJECT","reasons":gate["reasons"],"submit_allowed":False},sort_keys=True)+"\n")
       print("D6 LIVE STAGING REJECT",side,gate["reasons"],flush=True)
      else:
       order=staged.prepare_buy(signal_id=str(tick.recv_ts_ms),market_slug=snap.get("market_slug",""),token_id=str(token),notional=25.0,best_ask=float(ask),tick_size=0.01,min_order_size=5.0)
