@@ -149,7 +149,7 @@ class StreamBook(BookStateSource):
                 self.last_books[token]={'last_valid_book_ms':stamp,'bids_present':bool(self.depth[token]['bids']),
                                         'asks_present':bool(self.depth[token]['asks']),'generation':self.generation}
             self.diagnostics['last_valid_message']={'kind':kind,'source_ms':stamp,'received_ms':self.clock(),'generation':self.generation}
-            if super().read()['book_synced'] and self.diagnostics['resync_complete_generation']!=self.generation:
+            if super().read()['synchronized'] and self.diagnostics['resync_complete_generation']!=self.generation:
                 self.diagnostics['resync_complete_generation']=self.generation;self.failure=None;self.transition('RESYNC_COMPLETE')
         except Exception as exc:
             reasons={'NOT_CONNECTED_OR_EXPIRED','MARKET_IDENTITY','UNREVIEWED_MARKET_EVENT','STALE_WIRE_EVENT',
@@ -170,7 +170,7 @@ class StreamBook(BookStateSource):
         base=super().read()
         state=('DISCONNECTED' if not self.connected else
                'STALE' if self.failure in ('STALE_WIRE_EVENT','STALE_BOOK') or (base['synchronized'] and not base['fresh']) else
-               'INVALID_BOOK' if self.failure else 'SYNCHRONIZED' if base['available'] else
+               'INVALID_BOOK' if self.failure else 'SYNCHRONIZED' if base['synchronized'] else
                'CONNECTED' if not self.events_seen else 'INITIAL_SNAPSHOT_PENDING')
         d=copy.deepcopy(self.diagnostics)
         d['first_full_books']=copy.deepcopy(list(self.first_full_books.values()))

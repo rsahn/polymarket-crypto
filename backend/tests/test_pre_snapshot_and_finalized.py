@@ -73,7 +73,7 @@ def test_finalized_later_head_is_compared_to_its_own_receipt(monkeypatch):
     assert d["reason"]=="FINALIZED_QUALIFIED" and len(d["reads"])==4
 
 
-def test_finalized_future_header_and_diagnostic_redaction(monkeypatch):
+def test_finalized_consensus_timestamp_is_explicit_diagnostic_metadata(monkeypatch):
     import analysis.qualify_post_b_proofs as q
     monkeypatch.setattr(q,"now_ms",lambda:1000)
     class RPC:
@@ -81,8 +81,9 @@ def test_finalized_future_header_and_diagnostic_redaction(monkeypatch):
             if m=="eth_chainId":return "0x89"
             return dict(number="0x16",hash="0x"+"a"*64,timestamp="0x2",extra="SECRET_SENTINEL")
     d={}
-    with pytest.raises(ValueError,match="^FINALIZED_UNPROVEN$"):q.qualify_finalized(RPC(),diagnostics=d)
-    assert d["reason"]=="HEADER_TIMESTAMP_IN_FUTURE"
+    assert q.qualify_finalized(RPC(),diagnostics=d)["status"]=="PASS_PROVIDER_FINALIZED_READ"
+    assert d["reads"][0]["block_minus_receive_ms"]==1000
+    assert d["clock_accuracy_proven"] is False
     assert "SECRET_SENTINEL" not in str(d)
 
 

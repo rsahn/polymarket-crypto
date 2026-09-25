@@ -115,7 +115,8 @@ def test_remote_close_code_and_reason_redacted():
     assert d['remote_close_reason_present'] and 'SECRET_SENTINEL' not in json.dumps(r)
 
 
-def test_qualifier_evaluates_before_ws_shutdown(monkeypatch):
+@pytest.mark.parametrize("health_contract,empty",[(False,False),(True,False),(True,True)])
+def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empty):
     import analysis.qualify_post_genesis as q
     from app.live.readiness import ProductionReadinessCheck
     from polymarket._internal.environment import PRODUCTION_CONFIG as env
@@ -149,18 +150,28 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch):
     async def views(*a):return {'balance':({'balance':'109160000','allowances':{env.standard_exchange:'109160000'}},1000),
                                'orders':([],1000),'trades':([],1000),'positions':([],1000)}
     monkeypatch.setattr(q,'fresh_views',views)
+    import analysis.qualify_post_b_proofs as proof
+    monkeypatch.setattr(proof,'prepare_finalized_inventory',lambda *a:(inv,{'status':'PASS_PROVIDER_FINALIZED_READ'}))
+    async def acquired(client,geo,*a,**kw):return await views(),await geo.read(),inv
+    monkeypatch.setattr(proof,'acquire_post_b',acquired)
     stopped=[]
     class Active(StreamBook):
         async def run(self):
-            self.connected_generation();self.ingest(event());self.ingest(event('2'))
+            self.connected_generation()
+            for token in ('1','2'):
+                e=event(token)
+                if empty:e['asks']=[]
+                self.ingest(e)
             try:await asyncio.Future()
             finally:stopped.append(True);self.disconnect()
     s=Active('slug','condition',('1','2'),5000,clock=lambda:1000)
     async def discover(*a):return s
     monkeypatch.setattr(q,'discover_book',discover)
     monkeypatch.setattr(q,'ProductionReadinessCheck',lambda **kw:ProductionReadinessCheck(**kw,clock=lambda:1000))
-    r=asyncio.run(q.run(True))
-    assert r['readiness']['ready_for_arm'],r['reconciliation']
+    r=asyncio.run(q.run(True,health_contract=health_contract))
+    assert r['readiness']['ready_for_arm'] is (not empty),r['reconciliation']
+    assert r['readiness']['SYSTEM_READY']
+    assert r['readiness']['MARKET_ELIGIBLE_NOW'] is (not empty)
     assert r['readiness']['observations']['book']['connected']
     assert stopped and not s.connected and not r['readiness']['submit_allowed']
     assert 'FAKE_SENTINEL' not in json.dumps(r)

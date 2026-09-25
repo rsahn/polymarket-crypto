@@ -73,8 +73,17 @@ class ProductionReadinessCheck:
             if not generation_check['complete']:
                 for name in ('account_reconciliation','inventory','open_orders','local_recovery_state','session_risk'):
                     checks[name]=False
-        return dict(evaluated_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",checks=checks,observations=values,flags=flags,
-            ready_for_arm=all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
+        try:book_time_fresh=fresh(b.get('observed_ms'),now)
+        except (TypeError,ValueError):book_time_fresh=False
+        book_health=(b.get('connected') is True and b.get('synchronized') is True and b.get('fresh') is True
+                     and book_time_fresh and b.get('reason') in (None,'EMPTY_BOOK'))
+        health_checks={k:v for k,v in checks.items() if k!='book_freshness'}
+        health_checks['book_stream_health']=book_health
+        system_ready=all(health_checks.values())
+        market_eligible=checks['book_freshness'] and b.get('market_eligible') is True
+        return dict(evaluated_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
+            health_checks=health_checks,operating_state="SYSTEM_BLOCKED" if not system_ready else "ELIGIBLE_BUT_LOCKED" if market_eligible else "NO_TRADE",checks=checks,observations=values,flags=flags,
+            ready_for_arm=system_ready and market_eligible and all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
 
     @staticmethod
     def qualification_snapshot(collateral,inventory,*,provenance):

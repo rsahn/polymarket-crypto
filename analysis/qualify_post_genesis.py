@@ -177,7 +177,7 @@ async def acquire_final_views(client,geo_reader,rpc,prior,inventory,*,checkpoint
 def inventory_metadata(inventory):
     return {k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance',
         'scan_observed_ms','head_witness_started_ms','head_witness_finished_ms','head_block_timestamp_ms',
-        'head_unchanged_verified','generation_attempt') if k in inventory}
+        'head_unchanged_verified','generation_attempt','post_b_proof','finalized_block','finalized_hash') if k in inventory}
 
 
 def annotate(readiness):
@@ -196,14 +196,14 @@ def annotate(readiness):
     return readiness
 
 
-async def run(target=False):
+async def run(target=False,*,health_contract=False):
     audit=[];rpc=None;creds=None;task=None;prior=None
     account=ObservationSource({'available':False,'reason':'FRESH_AUTHENTICATED_READ_REQUIRED'})
     positions=ObservationSource({'available':False,'reason':'POST_GENESIS_INVENTORY_READ_REQUIRED'})
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
-    attempts=[]
+    attempts=[];qualified=None;clock_diagnostic={}
     local={};inventory_meta={};storage_ok=False;stage='LOCAL_LEDGER_VALIDATION'
     try:
         if any(os.getenv(k,'false').strip().lower()!='false' for k in FLAGS):raise ValueError('FLAGS')
@@ -215,12 +215,26 @@ async def run(target=False):
             wallet=expected_wallet()
             if prior['snapshot']['wallet'].lower()!=wallet.lower() or prior['snapshot']['collateral']['contract']!=CONTRACT:raise ValueError('BASELINE_BINDING')
             if prior['phase']!='GENESIS_RECONCILED' or prior['event_count']!=0:raise ValueError('LEDGER_REQUIRES_EVENT_PROJECTION_OR_RECOVERY')
+            if health_contract:
+                clock_start=now_ms()
+                server=await GetOnlyTransport(CLOB,('/time',),audit=audit).get_json('/time')
+                clock_end=now_ms()
+                if type(server) is not int:raise ValueError('CLOCK')
+                clock_diagnostic={'source':'LOCAL_TIME_TIME_NS_UTC','clob_server_seconds':server,
+                    'request_started_ms':clock_start,'response_received_ms':clock_end,
+                    'server_second_minus_local_receive_ms':server*1000-clock_end,
+                    'offset_interval_ms':[server*1000-clock_end,(server+1)*1000-clock_start],
+                    'accuracy_500ms_proven':False,'timestamps_adjusted':False}
             stage='POST_GENESIS_CTF_DISCOVERY'
-            rpc=PublicRPC(wallet,endpoint=endpoint);rpc.log_window=10
+            rpc=PublicRPC(wallet,endpoint=endpoint,allow_finalized=health_contract);rpc.log_window=10
             inventory=load_inventory_cursor(ROOT,prior)
-            anchor=await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(prior['snapshot']['block_number']),False])
-            if anchor['hash']!=prior['snapshot']['block_hash']:raise ValueError('GENESIS_ANCHOR_CHANGED')
-            inventory=await asyncio.to_thread(advance_inventory,rpc,prior,inventory)
+            if health_contract:
+                from analysis.qualify_post_b_proofs import prepare_finalized_inventory,acquire_post_b
+                inventory,qualified=await asyncio.to_thread(prepare_finalized_inventory,rpc,prior,inventory)
+            else:
+                anchor=await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(prior['snapshot']['block_number']),False])
+                if anchor['hash']!=prior['snapshot']['block_hash']:raise ValueError('GENESIS_ANCHOR_CHANGED')
+                inventory=await asyncio.to_thread(advance_inventory,rpc,prior,inventory)
             save_inventory_cursor(ROOT,prior,inventory)
             inventory_meta=inventory_metadata(inventory)
             if inventory['events_count'] or any(int(x)>0 for x in inventory['balances'].values()):
@@ -234,7 +248,14 @@ async def run(target=False):
                 from polymarket._internal.environment import PRODUCTION_CONFIG as env
                 if env.chain_id!=137 or env.collateral_token!=CONTRACT:raise ValueError('SDK_ENVIRONMENT_MISMATCH')
                 stage='CLOB_TIME_PREFLIGHT'
+                clock_start=now_ms()
                 stamp=await GetOnlyTransport(CLOB,('/time',),audit=audit).get_json('/time')
+                clock_end=now_ms()
+                clock_diagnostic={'source':'LOCAL_TIME_TIME_NS_UTC','clob_server_seconds':stamp if type(stamp) is int else None,
+                    'request_started_ms':clock_start,'response_received_ms':clock_end,'accuracy_500ms_proven':False,
+                    'server_second_minus_local_receive_ms':stamp*1000-clock_end if type(stamp) is int else None,
+                    'offset_interval_ms':[stamp*1000-clock_end,(stamp+1)*1000-clock_start] if type(stamp) is int else None,
+                    'note':'CLOB integer-second reading is diagnostic, not a subsecond clock calibration; no timestamps adjusted'}
                 if type(stamp) is not int or abs(time.time()-stamp)>5:raise ValueError('CLOCK')
                 async def headers(path):
                     if path not in ('/balance-allowance','/data/orders','/data/trades'):raise ValueError('GET_ROUTE')
@@ -248,11 +269,15 @@ async def run(target=False):
                     book=await discover_book(audit);task=asyncio.create_task(book.run())
                     # A bounded warmup does not refresh any source timestamp.
                     deadline=time.monotonic()+8
-                    while not task.done() and not book.read()['available'] and time.monotonic()<deadline:await asyncio.sleep(.05)
+                    while not task.done() and not book.read()['synchronized'] and time.monotonic()<deadline:await asyncio.sleep(.05)
                 except Exception:book=BookStateSource()
                 geo_reader=GeoBlockSource(fetch=lambda:GetOnlyTransport('https://polymarket.com',('/api/geoblock',),audit=audit).get_json('/api/geoblock'))
                 stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
-                observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
+                if health_contract:
+                    observed,geoval,inventory=await acquire_post_b(client,geo_reader,rpc,inventory,qualified,attempts=attempts)
+                    save_inventory_cursor(ROOT,prior,inventory)
+                else:
+                    observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory,checkpoint=lambda x:save_inventory_cursor(ROOT,prior,x),attempts=attempts)
                 inventory_meta=inventory_metadata(inventory)
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
@@ -282,11 +307,11 @@ async def run(target=False):
                 positions=ObservationSource({'available':True,'observed_ms':remote['observed_ms'],'balances':inventory['balances'],
                     'complete':complete,'provenance':'GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER','reason':reconciliation.get('reason')})
                 local={**current,'reconciled_now':complete}
-            if reconciliation['phase']=='RECOVERY_REQUIRED':
+            if reconciliation['phase']=='RECOVERY_REQUIRED' and not health_contract:
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
     except Exception as exc:
-        allowed={'HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        allowed={'FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
         reconciliation={'phase':'BLOCKED','reconciled':False,'reason':reason,'failed_stage':stage}
     def final_local():
@@ -303,6 +328,7 @@ async def run(target=False):
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
+            'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
             'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
@@ -313,8 +339,8 @@ async def run(target=False):
 
 
 def main():
-    if sys.argv[1:] not in (['--offline'],['--target-machine']):return 2
-    try:report=asyncio.run(run(sys.argv[1]=='--target-machine'))
+    if sys.argv[1:] not in (['--offline'],['--target-machine'],['--target-machine','--health-contract']):return 2
+    try:report=asyncio.run(run(sys.argv[1]=='--target-machine',health_contract='--health-contract' in sys.argv[1:]))
     except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False}
     path=ROOT/('D6_POST_GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)
