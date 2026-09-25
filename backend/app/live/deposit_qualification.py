@@ -81,7 +81,9 @@ def write_report(path,report):
 async def qualify_deposit(load,*,transport=ProbeTransport,clock=None):
     clock=clock or (lambda:time.time_ns()//1000000)
     audit=[]
-    report={'phase':'DEPOSIT_WALLET_READ_ONLY','deposit_wallet_proven':False,'deposit_kind':None,
+    report={'phase':'DEPOSIT_WALLET_READ_ONLY','deposit_wallet_proven':False,'deposit_kind':'unknown',
+            'wallet_proof':{'source':'NOT_OBSERVED','onchain_verified':False},
+            'balance_type0_raw':None,'positions_http_status':None,'positions_count':None,'positions_400_cause':None,
             'balance_type3_raw':None,'historical_raw':'109160000','historical_comparison':'NOT_MEASURED',
             'positions_status':'BLOCKED_IDENTITY','conversion_allowed':False,'complete':False,
             'ready_for_arm':False,'submit_allowed':False,'private_key_loaded':False,'l1_signature_produced':False,
@@ -105,8 +107,12 @@ async def qualify_deposit(load,*,transport=ProbeTransport,clock=None):
             if type(value) is not dict or type(value.get('deployed')) is not bool:raise ValueError()
             deployed[kind]=value['deployed']
         report['deployment_observations']=deployed
+        report['wallet_proof']={'source':'SDK_CREATE2_AND_RELAYER_GET_DEPLOYED',
+            'observed_ms':clock(),'deployment_observations':deployed,'onchain_verified':False,
+            'scope':'PUBLIC_SIGNER_CANDIDATE_ASSOCIATION_AND_RELAYER_DEPLOYMENT_ONLY'}
         selected=[k for k,v in deployed.items() if v]
         if len(selected)!=1:
+            report['deposit_kind']='none' if not selected else 'unknown'
             report['blockers'].append('NO_UNIQUE_DEPLOYED_CANDIDATE');return report
         kind=selected[0];wallet=candidates[kind]
         report.update(deposit_wallet_proven=True,deposit_kind=kind,wallet_masked=wallet[:6]+'...'+wallet[-4:],
@@ -122,16 +128,18 @@ async def qualify_deposit(load,*,transport=ProbeTransport,clock=None):
                 stamp=clock()//1000
                 return {'POLY_ADDRESS':EXPECTED,'POLY_API_KEY':creds['apiKey'],'POLY_PASSPHRASE':creds['passphrase'],
                         'POLY_TIMESTAMP':str(stamp),'POLY_SIGNATURE':build_hmac_signature(secret=creds['secret'],timestamp=stamp,method='GET',path=path,body=None)}
-            value=await transport(CLOB,('/balance-allowance',),headers=headers,audit=audit).get_json('/balance-allowance',params={'asset_type':'COLLATERAL','signature_type':3})
-            raw=number(value['balance'])
-            if raw<0 or raw!=raw.to_integral_value() or not isinstance(value['allowances'],dict):raise ValueError()
-            allowance=value['allowances'].get(env.standard_exchange)
-            if allowance is not None:
-                allowance=number(allowance)
-                if allowance<0 or allowance!=allowance.to_integral_value():raise ValueError()
-            report['allowance_selected_raw']=None if allowance is None else str(allowance)
-            report['balance_type3_raw']=str(raw)
-            report['historical_comparison']='EQUAL_RAW_UNITS_NOT_ATTESTED' if raw==109160000 else 'DIFFERENT_RAW_IDENTITY_TIME_NOT_ATTESTED'
+            for signature_type in (0,3):
+                value=await transport(CLOB,('/balance-allowance',),headers=headers,audit=audit).get_json('/balance-allowance',params={'asset_type':'COLLATERAL','signature_type':signature_type})
+                raw=number(value['balance'])
+                if raw<0 or raw!=raw.to_integral_value() or not isinstance(value['allowances'],dict):raise ValueError()
+                allowance=value['allowances'].get(env.standard_exchange)
+                if allowance is not None:
+                    allowance=number(allowance)
+                    if allowance<0 or allowance!=allowance.to_integral_value():raise ValueError()
+                report[f'allowance_type{signature_type}_selected_raw']=None if allowance is None else str(allowance)
+                report[f'balance_type{signature_type}_raw']=str(raw)
+                if signature_type==3:
+                    report['historical_comparison']='EQUAL_RAW_UNITS_NOT_ATTESTED' if raw==109160000 else 'DIFFERENT_RAW_IDENTITY_TIME_NOT_ATTESTED'
         except Exception:report['blockers'].append('BALANCE_OR_STORAGE_FAILED_NO_RETRY')
         try:
             from .network_readonly import ReadOnlyClient
@@ -144,6 +152,11 @@ async def qualify_deposit(load,*,transport=ProbeTransport,clock=None):
         except Exception:
             report['positions_status']='BLOCKED_HTTP_OR_SCHEMA'
             report['blockers'].append('POSITIONS_FAILED_SEE_SANITIZED_REQUEST_DIAGNOSTIC')
+        position_requests=[r for r in audit if r.get('endpoint')==DATA+'/v2/positions']
+        if position_requests:
+            report['positions_http_status']=position_requests[-1].get('http_status')
+            if report['positions_http_status']==400:
+                report['positions_400_cause']=position_requests[-1].get('validation',{'exact_cause_proven':False})
         report['blockers'].extend(['COLLATERAL_CONTRACT_DECIMALS_AND_ACCOUNT_BINDING_UNPROVEN','GLOBAL_INVENTORY_AND_LOCAL_RECONCILIATION_UNPROVEN'])
     except Exception:report['blockers'].append('PREFLIGHT_OR_DEPLOYMENT_PROOF_FAILED')
     if creds and any(v in json.dumps(report) for v in creds.values()):

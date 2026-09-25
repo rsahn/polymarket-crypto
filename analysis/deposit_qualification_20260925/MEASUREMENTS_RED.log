@@ -1,0 +1,30 @@
+F............FFF                                                         [100%]
+================================== FAILURES ===================================
+_____________ test_unique_legacy_proof_gates_type3_and_comparison _____________
+backend\tests\test_deposit_qualification.py:36: in test_unique_legacy_proof_gates_type3_and_comparison
+    assert [x[0] for x in c]==['/time','/deployed','/deployed','/balance-allowance','/balance-allowance','/v2/positions']
+E   AssertionError: assert ['/time', '/d...v2/positions'] == ['/time', '/d...v2/positions']
+E     
+E     At index 4 diff: '/v2/positions' != '/balance-allowance'
+E     Right contains one more item: '/v2/positions'
+E     Use -v to get more diff
+__________________ test_requested_measurement_fields_present __________________
+backend\tests\test_deposit_qualification.py:123: in test_requested_measurement_fields_present
+    assert r['balance_type0_raw']=='0'
+           ^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'balance_type0_raw'
+___________ test_nonproven_kind_has_explicit_value[deployed0-none] ____________
+backend\tests\test_deposit_qualification.py:134: in test_nonproven_kind_has_explicit_value
+    assert r['deposit_kind']==kind
+E   AssertionError: assert None == 'none'
+__________ test_nonproven_kind_has_explicit_value[deployed1-unknown] __________
+backend\tests\test_deposit_qualification.py:134: in test_nonproven_kind_has_explicit_value
+    assert r['deposit_kind']==kind
+E   AssertionError: assert None == 'unknown'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_deposit_qualification.py::test_unique_legacy_proof_gates_type3_and_comparison
+FAILED backend/tests/test_deposit_qualification.py::test_requested_measurement_fields_present
+FAILED backend/tests/test_deposit_qualification.py::test_nonproven_kind_has_explicit_value[deployed0-none]
+FAILED backend/tests/test_deposit_qualification.py::test_nonproven_kind_has_explicit_value[deployed1-unknown]
+4 failed, 12 passed in 0.59s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

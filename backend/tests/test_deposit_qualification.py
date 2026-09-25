@@ -5,7 +5,7 @@ from app.live.deposit_qualification import qualify_deposit, positions_error, wri
 from app.live.l2_existing_reader import EXPECTED
 
 
-def run_case(deployed=(True,False),balance='109160000',fail_balance=False):
+def run_case(deployed=(True,False),balance='109160000',fail_balance=False,fail_positions=False):
     calls=[];loads=[]
     class Fake:
         def __init__(self,base,routes,**kw):self.base=base;self.kw=kw
@@ -14,12 +14,17 @@ def run_case(deployed=(True,False),balance='109160000',fail_balance=False):
             if path=='/time':return 1000
             if path=='/deployed':return {'deployed':deployed[sum(p=='/deployed' for p,_ in calls)-1]}
             if path=='/balance-allowance':
-                assert params=={'asset_type':'COLLATERAL','signature_type':3}
+                assert params['asset_type']=='COLLATERAL' and params['signature_type'] in (0,3)
                 assert self.kw['headers']
                 await self.kw['headers'](path)
-                if fail_balance:raise RuntimeError('private failure detail')
-                return {'balance':balance,'allowances':{}}
-            if path=='/v2/positions':return {'data':[], 'pagination':{'has_more':False,'next_cursor':None}}
+                if fail_balance is True or fail_balance==str(params['signature_type']):raise RuntimeError('private failure detail')
+                return {'balance':balance if params['signature_type']==3 else '0','allowances':{}}
+            if path=='/v2/positions':
+                if fail_positions:
+                    self.kw['audit'].append({'endpoint':self.base+path,'http_status':400,'validation':{'exact_cause_proven':False}})
+                    raise RuntimeError('untrusted text')
+                self.kw['audit'].append({'endpoint':self.base+path,'http_status':200})
+                return {'data':[], 'pagination':{'has_more':False,'next_cursor':None}}
             raise AssertionError(path)
     def load():loads.append(1);return {'apiKey':'fake-api-key','secret':'c2VjcmV0','passphrase':'fake-passphrase'},{'storage_validated':True}
     result=asyncio.run(qualify_deposit(load,transport=Fake,clock=lambda:1000000))
@@ -31,7 +36,7 @@ def test_unique_legacy_proof_gates_type3_and_comparison():
     assert r['deposit_wallet_proven'] is True and r['deposit_kind']=='legacy'
     assert r['balance_type3_raw']=='109160000' and r['historical_comparison']=='EQUAL_RAW_UNITS_NOT_ATTESTED'
     assert r['positions_status']=='PASS_INDEX_ONLY' and len(l)==1
-    assert [x[0] for x in c]==['/time','/deployed','/deployed','/balance-allowance','/v2/positions']
+    assert [x[0] for x in c]==['/time','/deployed','/deployed','/balance-allowance','/balance-allowance','/v2/positions']
     assert r['conversion_allowed'] is False and r['complete'] is False
     out=json.dumps(r)
     assert all(x not in out for x in [EXPECTED,'fake-api-key','c2VjcmV0','fake-passphrase','private failure detail'])
@@ -114,3 +119,34 @@ def test_stale_time_never_checks_deployment_or_loads_credentials():
     def load():raise AssertionError('must not load')
     r=asyncio.run(qualify_deposit(load,transport=Fake,clock=lambda:1000000))
     assert calls==['/time'] and not r['deposit_wallet_proven']
+
+
+def test_requested_measurement_fields_present():
+    r,c,_=run_case()
+    assert r['balance_type0_raw']=='0'
+    assert r['balance_type3_raw']=='109160000'
+    assert r['positions_http_status']==200 and r['positions_count']==0
+    assert r['positions_400_cause'] is None
+    assert r['wallet_proof']['source']=='SDK_CREATE2_AND_RELAYER_GET_DEPLOYED'
+    assert [q['signature_type'] for p,q in c if p=='/balance-allowance']==[0,3]
+
+
+@pytest.mark.parametrize('deployed,kind',[((False,False),'none'),((True,True),'unknown')])
+def test_nonproven_kind_has_explicit_value(deployed,kind):
+    r,_,_=run_case(deployed)
+    assert r['deposit_kind']==kind
+    assert r['balance_type0_raw'] is None and r['positions_http_status'] is None
+
+
+def test_positions_400_is_exposed_without_invented_cause():
+    r,_,_=run_case(fail_positions=True)
+    assert r['positions_http_status']==400 and r['positions_count'] is None
+    assert r['positions_400_cause']=={'exact_cause_proven':False}
+    assert 'untrusted text' not in json.dumps(r)
+
+
+def test_type3_failure_preserves_measured_type0_no_retry():
+    r,c,_=run_case(fail_balance='3')
+    assert r['balance_type0_raw']=='0' and r['balance_type3_raw'] is None
+    assert [q['signature_type'] for p,q in c if p=='/balance-allowance']==[0,3]
+    assert r['historical_comparison']=='NOT_MEASURED'

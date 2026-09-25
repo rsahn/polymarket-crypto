@@ -11,7 +11,7 @@ Sequence: public CLOB /time (freshness <=5s), two public GETs to relayer-v2.poly
 
 Proof scope: deterministic signer/factory association plus official relayer deployment observation. deposit_wallet_proven is scoped to that evidence, NOT an independent eth_getCode/owner reading, NOT proof of the exact historical snapshot. onchain_verified=false and historical_instance_proven=false remain explicit. If the relayer is inaccessible or contradictory, keep false and stop. No speculative GET RPC or JSON-RPC POST is attempted; an independently documented public on-chain GET source would need a separate probe if required.
 
-After proof: existing DPAPI L2 validation/read only, one GET /balance-allowance with asset_type=COLLATERAL and signature_type=3. No wallet/token/spender query and no fallback. Compare integer raw with historical 109160000 without denomination conversion. Allowance selection is informational only; no update endpoint. Contract/decimals/account binding flags stay false.
+After proof: existing DPAPI L2 validation/read only, one GET /balance-allowance for signature_type=0, followed by one for signature_type=3, both asset_type=COLLATERAL. No wallet/token/spender query and no fallback. Compare integer raw with historical 109160000 without denomination conversion. Allowance selection is informational only; no update endpoint. Contract/decimals/account binding flags stay false.
 
 Positions: corrected SDK /v2/positions request, lower-case include_archived=true, selected wallet as user, bounded pagination. HTTP 400 reports only allowlisted structured validation codes/parameter names and a body fingerprint; no arbitrary server message, input, address, credential or order ID is written. A recognized query validation issue is server-declared evidence, not a claim about deeper server behavior. If the body is unstructured, exact_cause_proven remains false. No endpoint fallback or speculative retry. Positions remain an index view, complete=false.
 
@@ -25,3 +25,5 @@ Sources inspected:
 - https://docs.polymarket.com/trading/wallets-auth.
 
 Validation offline: 13 new tests; full suite 459 passed, 25 subtests passed, 0 failed/errors, 3 warnings. Static audit AUDIT_OK; 16 SDK monetary methods guarded, sdk_monetary_attempts=0. Both flags false. BTC V1 and the previous comparative report have no diff. RED.log records the initial missing-module test-first state, not a reproduced pre-existing bug. No real network observations produced in this phase.
+
+Measurement extension: explicit deposit_kind=legacy/beacon/none/unknown; wallet_proof; balance_type0_raw and balance_type3_raw; positions_http_status (last attempted page), positions_count only on fully validated success, positions_400_cause only from a real captured HTTP 400. Either authenticated failure aborts remaining authenticated reads; independent positions GET still runs. No static comparison report regeneration.
