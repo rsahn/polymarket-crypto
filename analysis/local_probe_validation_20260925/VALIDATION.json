@@ -1,0 +1,21 @@
+{
+  "result": "OFFLINE_VALIDATED_MANUAL_RUN_PENDING",
+  "passed": 332,
+  "failed": 0,
+  "errors": 0,
+  "subtests_passed": 25,
+  "new_tests": 8,
+  "audit_files": 86,
+  "sdk_monetary_attempts": 0,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "network_probe_run_in_codex": false,
+  "logs": {
+    "FULL_TESTS.log": "1973b73c7182ac92ac6ce9bfaf54c44d128acdf15e3dcb6416128c118553c5e1",
+    "GREEN.log": "a54b093210a6d86253c55703a15b4530a417211be7eb73c8f50fb66b01872790",
+    "RED.log": "84e65e28b61446462319ddce24cc5b880e398b6190125885a3793e4615be2615",
+    "STATIC_AUDIT.log": "a077e6b2a3e3552b98e928b2525b4a4f0d9ab6e74260c3b2264c5256af8fe1fa"
+  }
+}
