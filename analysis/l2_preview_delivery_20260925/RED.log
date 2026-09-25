@@ -1,0 +1,95 @@
+................................FFFF                                     [100%]
+================================== FAILURES ===================================
+_____________ test_preview_writes_only_whitelisted_public_fields ______________
+backend\tests\test_l2_recovery_preparation.py:106: in test_preview_writes_only_whitelisted_public_fields
+    data=json.loads((tmp_path/"L2_RECOVERY_PREVIEW.json").read_text())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\pytest-of-Ramy\\pytest-33\\test_preview_writes_only_white0\\L2_RECOVERY_PREVIEW.json'
+---------------------------- Captured stdout call -----------------------------
+{
+  "chain_id": 137,
+  "environment": "production Polygon",
+  "expected_signer": "0x1111...1111",
+  "nonce": 0,
+  "eip712_domain": {
+    "name": "ClobAuthDomain",
+    "version": "1",
+    "chainId": 137
+  },
+  "eip712_type": "ClobAuth",
+  "endpoint": "https://clob.polymarket.com/auth/derive-api-key",
+  "method": "GET"
+}
+____________________ test_preview_never_overwrites_report _____________________
+backend\tests\test_l2_recovery_preparation.py:116: in test_preview_never_overwrites_report
+    assert m.main(["--preview"])==4
+E   AssertionError: assert 0 == 4
+E    +  where 0 = <function main at 0x000001FC09857100>(['--preview'])
+E    +    where <function main at 0x000001FC09857100> = <module 'recovery_preview' from 'C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\l2_existing_credential_recovery.py'>.main
+---------------------------- Captured stdout call -----------------------------
+{
+  "chain_id": 137,
+  "environment": "production Polygon",
+  "expected_signer": "0x1111...1111",
+  "nonce": 0,
+  "eip712_domain": {
+    "name": "ClobAuthDomain",
+    "version": "1",
+    "chainId": 137
+  },
+  "eip712_type": "ClobAuth",
+  "endpoint": "https://clob.polymarket.com/auth/derive-api-key",
+  "method": "GET"
+}
+_________ test_missing_signer_emits_blocked_preview_without_fallback __________
+backend\tests\test_l2_recovery_preparation.py:126: in test_missing_signer_emits_blocked_preview_without_fallback
+    assert json.loads((tmp_path/"L2_RECOVERY_PREVIEW.json").read_text())["expected_signer"]=="NOT_CONFIGURED"
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:546: in read_text
+    return PathBase.read_text(self, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_abc.py:632: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\pathlib\_local.py:537: in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\pytest-of-Ramy\\pytest-33\\test_missing_signer_emits_bloc0\\L2_RECOVERY_PREVIEW.json'
+---------------------------- Captured stdout call -----------------------------
+{
+  "chain_id": 137,
+  "environment": "production Polygon",
+  "expected_signer": "NOT_CONFIGURED",
+  "nonce": 0,
+  "eip712_domain": {
+    "name": "ClobAuthDomain",
+    "version": "1",
+    "chainId": 137
+  },
+  "eip712_type": "ClobAuth",
+  "endpoint": "https://clob.polymarket.com/auth/derive-api-key",
+  "method": "GET"
+}
+_______________ test_unknown_cli_argument_does_not_echo_secret ________________
+backend\tests\test_l2_recovery_preparation.py:133: in test_unknown_cli_argument_does_not_echo_secret
+    assert "NEVER_ECHO_THIS" not in out.out+out.err
+E   AssertionError: assert 'NEVER_ECHO_THIS' not in 'usage: vali..._ECHO_THIS\n'
+E     
+E     'NEVER_ECHO_THIS' is contained here:
+E       ivate-key NEVER_ECHO_THIS
+=========================== short test summary info ===========================
+FAILED backend/tests/test_l2_recovery_preparation.py::test_preview_writes_only_whitelisted_public_fields
+FAILED backend/tests/test_l2_recovery_preparation.py::test_preview_never_overwrites_report
+FAILED backend/tests/test_l2_recovery_preparation.py::test_missing_signer_emits_blocked_preview_without_fallback
+FAILED backend/tests/test_l2_recovery_preparation.py::test_unknown_cli_argument_does_not_echo_secret
+4 failed, 32 passed in 0.60s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
