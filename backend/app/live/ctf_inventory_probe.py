@@ -56,7 +56,12 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
         balance_results=read_many(balance_queries) if parallel and balance_queries else [rpc.call(*q) for q in balance_queries]
         for token,value in zip(tokens,balance_results):
             raw=uint_word(value);balances[token]=str(raw);nonzero+=raw>0
-        if rpc.call('eth_getBlockByNumber',[block,False])['hash']!=anchor['hash']:raise ValueError()
+        import time
+        witness_started=time.time_ns()//1000000
+        witness=rpc.call('eth_getBlockByNumber',[block,False])
+        witness_received=time.time_ns()//1000000
+        if witness['hash']!=anchor['hash']:raise ValueError()
+        if capture is not None:capture['final_numeric_witness']={'header':witness,'started_ms':witness_started,'received_ms':witness_received}
         if capture is not None:capture.update(balances=balances)
         report.update(status='PASS_SCOPED_READS',events_count=len(seen),assets_checked=len(assets),nonzero_assets=nonzero,
             discovered_outside_local_journal=len(assets-set(known)),block_hash=anchor['hash'],

@@ -1,0 +1,21 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+_______________ test_scan_exposes_actual_final_numeric_witness ________________
+backend\tests\test_seal_reuse.py:18: in test_scan_exposes_actual_final_numeric_witness
+    assert captured['final_numeric_witness']=={'header':{'number':'0xc','hash':'0x'+'a'*64,'timestamp':'0x1'},'started_ms':1040,'received_ms':1050}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'final_numeric_witness'
+_____________ test_reuse_witness_does_not_reread_or_retime[False] _____________
+backend\tests\test_seal_reuse.py:24: in test_reuse_witness_does_not_reread_or_retime
+    from analysis.qualify_post_b_proofs import seal_tail
+E   ImportError: cannot import name 'seal_tail' from 'analysis.qualify_post_b_proofs' (C:\Users\Ramy\Documents\polymarket-crypto\analysis\qualify_post_b_proofs.py)
+_____________ test_reuse_witness_does_not_reread_or_retime[True] ______________
+backend\tests\test_seal_reuse.py:24: in test_reuse_witness_does_not_reread_or_retime
+    from analysis.qualify_post_b_proofs import seal_tail
+E   ImportError: cannot import name 'seal_tail' from 'analysis.qualify_post_b_proofs' (C:\Users\Ramy\Documents\polymarket-crypto\analysis\qualify_post_b_proofs.py)
+=========================== short test summary info ===========================
+FAILED backend/tests/test_seal_reuse.py::test_scan_exposes_actual_final_numeric_witness
+FAILED backend/tests/test_seal_reuse.py::test_reuse_witness_does_not_reread_or_retime[False]
+FAILED backend/tests/test_seal_reuse.py::test_reuse_witness_does_not_reread_or_retime[True]
+3 failed in 0.39s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

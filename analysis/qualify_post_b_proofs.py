@@ -98,13 +98,14 @@ def fixed_scan(rpc,previous,target):
     if end<previous['to_block']:raise ValueError('CURSOR_AHEAD_OF_FINALIZED')
     if end==previous['to_block']:
         if target['hash']!=previous['block_hash']:raise ValueError('CURSOR_REORG')
-        return previous,[]
+        return {k:v for k,v in previous.items() if k!='final_numeric_witness'},[]
     captured={};started=now_ms()
     result=scan_ctf(rpc,start,end,set(previous['balances']),capture=captured)
     if result['status']!='PASS_SCOPED_READS' or result['block_hash']!=target['hash']:raise ValueError('TAIL_SCAN_FAILED')
     if result['events_count'] or any(int(v) for v in captured['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
     ranges=[[i,min(i+rpc.log_window-1,end)] for i in range(start,end+1,rpc.log_window)]
-    return {**result,'balances':captured['balances'],'observed_ms':started},ranges
+    return {**result,'balances':captured['balances'],'observed_ms':started,
+        'final_numeric_witness':captured.get('final_numeric_witness')},ranges
 
 
 def public_inventory(rpc,prior,cursor,qualified):
@@ -147,6 +148,22 @@ async def recheck_fixed_boundary(rpc,c_number,b_number):
     return header(check),header(anchor),{'started_ms':started,'finished_ms':now_ms()}
 
 
+async def seal_tail(rpc,tail,target):
+    # Reuse only the final numeric read AFTER all logs/balances of this scan.
+    witness=tail.get('final_numeric_witness')
+    if witness is not None:
+        start=witness['started_ms'];end=witness['received_ms']
+        if not (type(start) is int and type(end) is int and tail['observed_ms']<=start<=end):
+            raise ValueError('BOUNDARY_SCHEMA_INVALID')
+        if header(witness['header'])!=target:raise ValueError('BOUNDARY_REORG')
+        return start,end,'SCAN_FINAL_NUMERIC_WITNESS'
+    start=now_ms()
+    seal=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(target['number']),False]))
+    end=now_ms()
+    if seal!=target:raise ValueError('BOUNDARY_REORG')
+    return start,end,'EXPLICIT_NUMERIC_READ'
+
+
 async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=None):
     """Select C once. Seal numerically before GETs; recheck numerically after them.
 
@@ -164,10 +181,7 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
     scan_dispatch_ms=now_ms()
     tail,ranges=await asyncio.to_thread(fixed_scan,rpc,anchored,c)
     scan_finished_ms=now_ms()
-    seal_started_ms=now_ms()
-    seal=header(await asyncio.to_thread(rpc.call,'eth_getBlockByNumber',[hex(c['number']),False]))
-    sealed_ms=now_ms()
-    if seal!=c:raise ValueError('BOUNDARY_REORG')
+    seal_started_ms,sealed_ms,seal_provenance=await seal_tail(rpc,tail,c)
     account_started_ms=now_ms()
     observed=await fresh_views(client)
     account_finished_ms=now_ms()
@@ -193,6 +207,7 @@ async def acquire_post_b(client,geo_reader,rpc,anchored,qualified,*,attempts=Non
         'scan_observed_ms':tail['observed_ms'],'generation_attempt':1,'post_b_proof':proof,
         'critical_path':{'scan_dispatch_ms':scan_dispatch_ms,'scan_observed_ms':tail['observed_ms'],
             'scan_finished_ms':scan_finished_ms,'seal_started_ms':seal_started_ms,'sealed_ms':sealed_ms,
+              'seal_provenance':seal_provenance,
             'account_started_ms':account_started_ms,'account_finished_ms':account_finished_ms,
             'recheck_started_ms':rechecked_ms,'recheck_finished_ms':recheck_timing['finished_ms'],
             'boundary_evaluated_ms':evaluated_ms},

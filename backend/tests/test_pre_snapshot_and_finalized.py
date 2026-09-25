@@ -19,7 +19,7 @@ def stream():
     s.connected_generation();s.ingest(book());s.ingest(book("b"));return s
 
 
-@pytest.mark.parametrize("offset",[15,16])
+@pytest.mark.parametrize("offset",[2,15,16])
 def test_exact_observed_pre_snapshot_delta_never_reaches_mutation_or_update(monkeypatch,offset):
     s=stream();before=copy.deepcopy(s.depth)
     calls=[]

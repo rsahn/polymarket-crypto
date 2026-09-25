@@ -1,0 +1,17 @@
+{
+  "protected_unchanged": {
+    "analysis/d6/paper_live.py": true,
+    "backend/app/live/fixed_boundary.py": true,
+    "backend/app/live/production_readonly.py": true,
+    "backend/app/live/readonly_book_stream.py": true,
+    "backend/app/live/clob_transport.py": true
+  },
+  "genesis_unchanged": true,
+  "event_count": 0,
+  "leak_scan": {
+    "scope": "changed code and evidence logs; pattern-only, not global absence proof",
+    "files": 9,
+    "hits": 0
+  },
+  "network_run": false
+}

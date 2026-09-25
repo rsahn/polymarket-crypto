@@ -339,6 +339,14 @@ async def run(target=False,*,health_contract=False):
     try:
         readiness=await ProductionReadinessCheck(account=account,positions=positions,book=book,geo=geo,risk=risk,
             local_reader=final_local,collateral_unit='pUSD',generation=generation).run()
+        path=inventory_meta.get('critical_path',{}) if inventory_meta else {}
+        evaluated=readiness['evaluated_ms']
+        account_obs=readiness.get('observations',{}).get('account',{}).get('observed_ms')
+        book_obs=readiness.get('observations',{}).get('book',{}).get('observed_ms')
+        final_budget={'inventory_age_at_evaluation_ms':evaluated-path['scan_observed_ms'] if 'scan_observed_ms' in path else None,
+            'account_age_at_evaluation_ms':evaluated-account_obs if account_obs is not None else None,
+            'book_age_at_evaluation_ms':evaluated-book_obs if book_obs is not None else None,
+            'critical_path_wall_ms':evaluated-path['scan_dispatch_ms'] if 'scan_dispatch_ms' in path else None}
         # Persist only after the decision snapshot; disk I/O cannot age its sources.
         checkpoint_status='NOT_PENDING'
         if pending_inventory_checkpoint is not None:
@@ -352,7 +360,7 @@ async def run(target=False,*,health_contract=False):
             'inventory_incremental':inventory_meta,'generation_attempts':attempts,'coverage_limitations':LIMITS,'rpc_calls':rpc.calls if rpc else [],'get_requests':audit,
             'storage_binding_verified':storage_ok,'private_key_loaded':False,'l1_signature_produced':False,
             'finalized_qualification':qualified,'clock_diagnostic':clock_diagnostic,'health_contract':health_contract,
-            'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
+            'final_timing_budget':final_budget,'reconciliation_timing':reconciliation_timing,'inventory_checkpoint_status':checkpoint_status,'future_execution_binding_ready':False,'network_mode':'MANUAL_TARGET' if target else 'OFFLINE',
             'btc_v1_sha256':hashlib.sha256((ROOT/'analysis/d6/paper_live.py').read_bytes()).hexdigest()}
         if creds and any(v in json.dumps(report) for v in creds.values()):raise ValueError('REDACTION_FAILED')
         return report
