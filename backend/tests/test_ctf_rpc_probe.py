@@ -3,10 +3,11 @@ from analysis import diagnose_ctf_rpc as q
 
 @pytest.mark.parametrize('failure',[False,True])
 def test_exactly_one_log_read_no_fallback(monkeypatch,failure):
+    monkeypatch.setenv('POLYGON_ARCHIVE_RPC_URL','https://example.com/test')
     seen=[]
     class RPC:
         calls=[]
-        def __init__(self,wallet):self.wallet=wallet
+        def __init__(self,wallet,*,endpoint):self.wallet=wallet
         def call(self,m,p):
             seen.append((m,p))
             if m=='eth_chainId':return '0x89'
