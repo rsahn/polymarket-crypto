@@ -17,7 +17,7 @@ class StreamBook(BookStateSource):
         self.depth={};self.messages=0;self.failure=None
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
-            'resync_complete_generation':None,'transitions':[],'tokens':[]}
+            'resync_complete_generation':None,'regression_event':None,'transitions':[],'tokens':[]}
         self.first_full_books={};self.events_seen=0
         self.last_books={};self.last_wire_event_ms=None;self.last_valid_book_ms=None;self.attempted_books={}
     def transition(self,kind):
@@ -28,6 +28,7 @@ class StreamBook(BookStateSource):
         self.connect(self.slug,self.expected_tokens,(self.generation or 0)+1)
         self.failure=None;self.last_books={};self.attempted_books={};self.last_valid_book_ms=None;self.last_wire_event_ms=None
         self.diagnostics['resync_complete_generation']=None
+        self.diagnostics['regression_event']=None
         self.first_full_books={};self.events_seen=0
         self.transition('CONNECTED_AWAITING_TWO_FULL_BOOKS')
     def disconnect(self):
@@ -49,6 +50,7 @@ class StreamBook(BookStateSource):
                 'generation':self.generation}
         except (KeyError,TypeError,ValueError):return
     def ingest(self,event):
+        received_ms=self.clock()
         self.events_seen+=1
         self.capture_first_book(event)
         try:
@@ -86,12 +88,28 @@ class StreamBook(BookStateSource):
                     if q==0:self.depth[token][side].pop(p,None)
                     else:self.depth[token][side][p]=q
                     touched.add(token)
-            for token in touched:
+            for token in sorted(touched,key=self.expected_tokens.index):
                 b=self.depth[token]
                 self.attempted_books[token]={'bids_count':len(b['bids']),'asks_count':len(b['asks']),
                     'best_bid':str(max(b['bids'])) if b['bids'] else None,
                     'best_ask':str(min(b['asks'])) if b['asks'] else None,'generation':self.generation}
-                self.update(token,list(b['bids'].items()),list(b['asks'].items()),stamp,self.generation)
+                # update clears both books on failure. Preserve the accepted per-token
+                # watermark BEFORE calling it; never retain raw wire payloads or IDs.
+                previous=self.books.get(token)
+                previous_stamp=previous['observed_ms'] if previous else None
+                try:
+                    self.update(token,list(b['bids'].items()),list(b['asks'].items()),stamp,self.generation)
+                except ValueError as exc:
+                    if exc.args==('BOOK_REGRESSION',):
+                        self.diagnostics['regression_event']={
+                            'event_type':kind,'token_index':self.expected_tokens.index(token),
+                            'token_sha256':hashlib.sha256(token.encode()).hexdigest(),
+                            'source_timestamp_ms':stamp,'previous_accepted_source_timestamp_ms':previous_stamp,
+                            'received_timestamp_ms':received_ms,'delta_ms':stamp-previous_stamp,
+                            'generation':self.generation,'reason':'BOOK_REGRESSION',
+                            'comparison':'source_timestamp_ms < same_token_accepted_source_timestamp_ms',
+                            'watermark_scope':'TOKEN_WITHIN_CONNECTION_GENERATION'}
+                    raise
             self.messages+=1
             if touched:self.last_valid_book_ms=stamp
             for token in touched:

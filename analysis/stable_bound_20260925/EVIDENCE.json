@@ -1,0 +1,57 @@
+{
+  "phase": "D6_POST_GENESIS_REGRESSION_AND_STABLE_BOUND_CONTRACT",
+  "network_run_performed": false,
+  "production_inventory_contract_changed": false,
+  "tests": {
+    "red_failed": 16,
+    "red_passed": 1,
+    "new_green_passed": 17,
+    "suite_passed": 529,
+    "suite_failed": 0,
+    "suite_errors": 0,
+    "subtests_passed": 8
+  },
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "genesis_event_count": 0,
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+  "btc_v1_unchanged": true,
+  "report_checks_not_rerun": {
+    "wallet_auth": false,
+    "geoblock": false,
+    "book_freshness": false,
+    "account_reconciliation": false,
+    "open_orders": false,
+    "inventory": false,
+    "local_recovery_state": false,
+    "session_risk": false,
+    "transport_lock": true,
+    "live_flags_disabled": true,
+    "balance_pusd": false,
+    "allowance_pusd": false
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "blocks_attempted": [
+    94427878,
+    94427880,
+    94427881
+  ],
+  "historical_rejected_message_identity": "NOT_RECORDED_CANNOT_RECONSTRUCT",
+  "historical_regression_delta_ms": -1,
+  "blockers": [
+    "REJECTED_WIRE_TYPE_AND_TOKEN_NOT_RECORDED_IN_HISTORICAL_REPORT",
+    "SAME_TOKEN_REGRESSION_ACCEPTANCE_NOT_JUSTIFIED",
+    "FINALIZED_TAG_NOT_QUALIFIED_ON_TARGET_PROVIDER",
+    "POST_ANCHOR_CURRENT_INVENTORY_COVERAGE_UNPROVEN",
+    "PRODUCTION_500MS_ACQUISITION_NOT_DEMONSTRATED"
+  ],
+  "external_connections": 0,
+  "sdk_monetary_attempts": 0,
+  "transport_hard_locked": true,
+  "audit": "PASS_109_FILES"
+}
