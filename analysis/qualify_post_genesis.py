@@ -83,12 +83,43 @@ async def fresh_views(client):
     return dict(zip(('balance','orders','trades','positions'),values))
 
 
+def witness_inventory(rpc,inventory):
+    """A NEW remote observation, not a refresh of the cached scan.
+    Same canonical latest head proves its scanned CTF state is still current.
+    Does not cover pending transactions or credential-global off-chain activity.
+    """
+    started=now_ms()
+    head=rpc.call('eth_getBlockByNumber',['latest',False])
+    number=int(head['number'],16)
+    if number<inventory['to_block']:raise ValueError('HEAD_REGRESSION')
+    if number>inventory['to_block']:raise ValueError('HEAD_ADVANCED')
+    if head['hash']!=inventory['block_hash']:raise ValueError('CURSOR_REORG')
+    block_time=int(head['timestamp'],16)*1000
+    if block_time>started:raise ValueError('FUTURE_BLOCK')
+    return {**inventory,'scan_observed_ms':inventory.get('scan_observed_ms',inventory['observed_ms']),
+            'observed_ms':started,'head_witness_started_ms':started,'head_witness_finished_ms':now_ms(),
+            'head_block_timestamp_ms':block_time,'head_unchanged_verified':True,
+            'provenance':'NEW_LATEST_HEAD_READ_MATCHES_COMPLETE_SCANNED_CTF_WATERMARK'}
+
+
 async def acquire_final_views(client,geo_reader,rpc,prior,inventory):
-    # Slow preparation must finish before starting the 500 ms account window.
-    # Inventory retains its original chain watermark and timestamp, even if stale.
-    geoval,inventory=await asyncio.gather(geo_reader.read(),asyncio.to_thread(advance_inventory,rpc,prior,inventory))
-    observed=await fresh_views(client)
-    return observed,geoval,inventory
+    # Catch-up is preparation. The final remote head witness runs alongside GETs.
+    geoval=await geo_reader.read()
+    for attempt in range(1,4):
+        inventory=await asyncio.to_thread(advance_inventory,rpc,prior,inventory)
+        results=await asyncio.gather(fresh_views(client),asyncio.to_thread(witness_inventory,rpc,inventory),return_exceptions=True)
+        observed,witness=results
+        if isinstance(observed,BaseException):raise ValueError('ACCOUNT_GENERATION_FAILED') from None
+        if isinstance(witness,ValueError) and witness.args==('HEAD_ADVANCED',):continue
+        if isinstance(witness,BaseException):raise ValueError('INVENTORY_WITNESS_FAILED') from None
+        return observed,geoval,{**witness,'generation_attempt':attempt}
+    raise ValueError('HEAD_ADVANCED_GENERATION_RETRY_LIMIT')
+
+
+def inventory_metadata(inventory):
+    return {k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance',
+        'scan_observed_ms','head_witness_started_ms','head_witness_finished_ms','head_block_timestamp_ms',
+        'head_unchanged_verified','generation_attempt') if k in inventory}
 
 
 def annotate(readiness):
@@ -128,7 +159,7 @@ async def run(target=False):
             stage='POST_GENESIS_CTF_DISCOVERY'
             rpc=PublicRPC(wallet,endpoint=endpoint);rpc.log_window=10
             inventory=await asyncio.to_thread(incremental_inventory,rpc,prior)
-            inventory_meta={k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance')}
+            inventory_meta=inventory_metadata(inventory)
             if inventory['events_count'] or any(int(x)>0 for x in inventory['balances'].values()):
                 reconciliation={'phase':'RECOVERY_REQUIRED','reconciled':False,'reason':'POST_GENESIS_CONDITIONAL_ACTIVITY_UNEXPLAINED'}
             else:
@@ -159,7 +190,7 @@ async def run(target=False):
                 geo_reader=GeoBlockSource(fetch=lambda:GetOnlyTransport('https://polymarket.com',('/api/geoblock',),audit=audit).get_json('/api/geoblock'))
                 stage='PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION'
                 observed,geoval,inventory=await acquire_final_views(client,geo_reader,rpc,prior,inventory)
-                inventory_meta={k:inventory[k] for k in ('from_block','to_block','block_hash','events_count','assets_checked','observed_ms','provenance')}
+                inventory_meta=inventory_metadata(inventory)
                 geo=ObservationSource(geoval)
                 stage='REMOTE_LOCAL_RECONCILIATION'
                 bal=plain(observed['balance'][0]);raw=str(bal['balance'])
@@ -171,10 +202,11 @@ async def run(target=False):
                     'complete':True,'observed_ms':min(a_stamp,observed['positions'][1],inventory['observed_ms'])}
                 current=read_genesis(LEDGER)
                 if current['last_hash']!=prior['last_hash']:raise ValueError('LEDGER_CHANGED_DURING_READ')
-                generation={'id':1,'ledger_hash':current['last_hash'],
+                generation_id=inventory.get('generation_attempt',1)
+                generation={'id':generation_id,'ledger_hash':current['last_hash'],
                     'watermark':{'block_number':inventory['to_block'],'block_hash':inventory['block_hash']},
-                    'components':{n:{'generation':1,'observed_ms':observed[n][1],'complete':True} for n in observed}}
-                generation['components']['inventory']={'generation':1,'observed_ms':inventory['observed_ms'],'complete':True}
+                    'components':{n:{'generation':generation_id,'observed_ms':observed[n][1],'complete':True} for n in observed}}
+                generation['components']['inventory']={'generation':generation_id,'observed_ms':inventory['observed_ms'],'complete':True}
                 reconciliation=evaluate_baseline(current,remote,now=now_ms())
                 gate=validate_generation(generation,now_ms())
                 if not gate['complete'] and reconciliation['phase']!='RECOVERY_REQUIRED':

@@ -43,7 +43,7 @@ def test_foreign_identity_invalidates_stream():
     s=StreamBook('slug','condition',('1','2'),5000,clock=lambda:1000)
     s.connected_generation()
     with pytest.raises(ValueError):s.ingest({'event_type':'book','market':'other'})
-    assert not s.read()['connected']
+    assert s.read()['connected'] and not s.read()['available']
 
 
 def test_partial_delta_never_bootstraps_a_book():
@@ -55,7 +55,7 @@ def test_partial_delta_never_bootstraps_a_book():
 def test_old_or_future_wire_timestamp_fails_closed(stamp):
     s=StreamBook('slug','condition',('1','2'),5000,clock=lambda:1000);s.connected_generation()
     with pytest.raises(ValueError):s.ingest({'event_type':'book','market':'condition','asset_id':'1','timestamp':str(stamp),'bids':[],'asks':[]})
-    assert not s.read()['connected']
+    assert s.read()['connected'] and not s.read()['available']
 
 
 def test_forward_risk_requires_reconciled_fresh_ledger():
@@ -98,7 +98,7 @@ def test_offline_full_report_does_not_load_credentials_or_network(monkeypatch):
 def test_crossed_or_duplicate_depth_invalidates(bad):
     s=StreamBook('slug','condition',('1','2'),5000,clock=lambda:1000);s.connected_generation()
     with pytest.raises(ValueError):s.ingest({'event_type':'book','market':'condition','asset_id':'1','timestamp':'1000',**bad})
-    assert not s.read()['connected']
+    assert s.read()['connected'] and not s.read()['available']
 
 
 def test_reconnect_generation_is_monotone():

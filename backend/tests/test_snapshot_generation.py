@@ -46,8 +46,12 @@ def test_ws_states_and_resync():
 
 
 class Socket:
+    calls=0
     async def send(self,value):pass
-    async def recv(self):return json.dumps(event(stamp=499))
+    async def recv(self):
+        self.calls+=1
+        if self.calls>1:raise OSError('fixture disconnect')
+        return json.dumps(event(stamp=499))
     async def __aenter__(self):return self
     async def __aexit__(self,*args):pass
 
@@ -78,6 +82,7 @@ def test_slow_inventory_is_prepared_before_account(monkeypatch):
     class Geo:
         async def read(self):calls.append('geo');return {}
     monkeypatch.setattr(q,'advance_inventory',advance);monkeypatch.setattr(q,'fresh_views',views)
+    monkeypatch.setattr(q,'witness_inventory',lambda *a:{'observed_ms':1})
     _,_,inv=asyncio.run(q.acquire_final_views(None,Geo(),None,None,None))
     assert calls.index('inventory')<calls.index('account') and calls.index('geo')<calls.index('account')
     assert inv['observed_ms']==1
@@ -124,6 +129,7 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch):
     monkeypatch.setattr(q,'now_ms',lambda:1000)
     monkeypatch.setattr(q,'incremental_inventory',lambda *a:inv)
     monkeypatch.setattr(q,'advance_inventory',lambda *a:inv)
+    monkeypatch.setattr(q,'witness_inventory',lambda *a:inv)
     class RPC:
         def __init__(self,*a,**k):self.calls=[]
     monkeypatch.setattr(q,'PublicRPC',RPC)

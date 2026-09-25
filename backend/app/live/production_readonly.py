@@ -133,13 +133,13 @@ class PositionSource:
 
 class BookStateSource:
     def __init__(self,*,clock=now_ms):
-        self.clock=clock;self.connected=False;self.generation=None;self.market=None;self.tokens=();self.books={}
+        self.clock=clock;self.connected=False;self.generation=None;self.market=None;self.tokens=();self.books={};self.invalid_reason=None
     def connect(self,market,tokens,generation):
         if isinstance(generation,bool) or not isinstance(generation,int) or (self.generation is not None and generation<=self.generation):raise ValueError("GENERATION_REGRESSION")
         if len(tokens)!=2 or len(set(tokens))!=2:raise ValueError("TWO_OUTCOMES_REQUIRED")
         self.market,self.tokens,self.generation=market,tuple(tokens),generation
-        self.books={};self.connected=True
-    def disconnect(self):self.connected=False;self.books={}
+        self.books={};self.connected=True;self.invalid_reason="RESYNC_INCOMPLETE"
+    def disconnect(self):self.connected=False;self.books={};self.invalid_reason="WS_DISCONNECTED"
     def update(self,token,bids,asks,observed_ms,generation):
         if not self.connected or generation!=self.generation or token not in self.tokens:return
         def levels(rows,reverse):
@@ -153,15 +153,21 @@ class BookStateSource:
         try:
             if not fresh(observed_ms,self.clock()):raise ValueError("STALE_BOOK")
             bid,ask=levels(bids,True),levels(asks,False)
-            if not bid or not ask or bid[0][0]>=ask[0][0]:raise ValueError("EMPTY_OR_CROSSED_BOOK")
+            if not bid or not ask:raise ValueError("EMPTY_BOOK")
+            if bid[0][0]>=ask[0][0]:raise ValueError("CROSSED_BOOK")
             previous=self.books.get(token)
             if previous and observed_ms<previous["observed_ms"]:raise ValueError("BOOK_REGRESSION")
             self.books[token]=dict(bids=bid,asks=ask,observed_ms=observed_ms)
-        except Exception:
+            self.invalid_reason=None if len(self.books)==2 else "RESYNC_INCOMPLETE"
+        except Exception as exc:
+            self.invalid_reason=exc.args[0] if exc.args and exc.args[0] in {"EMPTY_BOOK","CROSSED_BOOK","STALE_BOOK","BOOK_REGRESSION","INVALID_DEPTH","DUPLICATE_PRICE"} else "INVALID_BOOK"
             self.books={};raise
     def read(self):
-        ready=self.connected and len(self.books)==2 and all(fresh(b["observed_ms"],self.clock()) for b in self.books.values())
-        return deepcopy(dict(available=ready,connected=self.connected,book_synced=ready,market_slug=self.market,
+        synchronized=self.connected and len(self.books)==2
+        is_fresh=synchronized and all(fresh(b["observed_ms"],self.clock()) for b in self.books.values())
+        ready=synchronized and is_fresh
+        reason="WS_DISCONNECTED" if not self.connected else self.invalid_reason or ("RESYNC_INCOMPLETE" if not synchronized else "STALE_BOOK" if not is_fresh else None)
+        return deepcopy(dict(reason=reason,available=ready,connected=self.connected,synchronized=synchronized,fresh=is_fresh,book_synced=ready,market_slug=self.market,
             generation=self.generation,books=self.books,observed_ms=min((b["observed_ms"] for b in self.books.values()),default=None)))
 
 
