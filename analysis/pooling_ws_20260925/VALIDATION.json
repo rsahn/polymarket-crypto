@@ -1,0 +1,26 @@
+{
+  "tests_passed": 617,
+  "tests_failed": 0,
+  "subtests_passed": 8,
+  "warnings": 3,
+  "protected_unchanged": {
+    "analysis/d6/paper_live.py": true,
+    "backend/app/live/fixed_boundary.py": true,
+    "backend/app/live/production_readonly.py": true,
+    "backend/app/live/clob_transport.py": true
+  },
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_event_count": 0,
+  "genesis_unchanged": true,
+  "leak_scan": {
+    "scope": "changed source/tests and validation logs; pattern scan only, no credentials loaded; not global proof",
+    "files_checked": 11,
+    "pattern_hits": 0
+  },
+  "network_qualification_run": false,
+  "sdk_monetary_attempts": 0,
+  "flags": {
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false
+  }
+}
