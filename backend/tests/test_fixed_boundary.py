@@ -117,3 +117,9 @@ def test_actual_scanner_never_rewinds_or_accepts_wrong_cursor_header(monkeypatch
     with pytest.raises(ValueError,match='CURSOR_REORG'):
         p.fixed_scan(RPC(),{'to_block':10,'block_hash':'0x'+'a'*64,'balances':{}},
                      {'number':12,'hash':'0x'+'b'*64})
+
+@pytest.mark.parametrize('key', ['scan_observed_ms','sealed_ms','rechecked_ms'])
+def test_future_boundary_timestamp_never_admissible(key):
+    e=evidence();e[key]=1301
+    r=evaluate_boundary(e,now=1300)
+    assert not r['boundary_generation_complete'] and not r['current_inventory_proven']
