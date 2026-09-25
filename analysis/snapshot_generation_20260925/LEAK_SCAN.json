@@ -1,0 +1,6 @@
+{
+  "files_checked": 13,
+  "detected": false,
+  "scope": "Selected changed source, tests and phase reports/logs; static secret patterns and fake-secret WS/report redaction tests. No secret store or private key loaded. Git history and terminal history excluded.",
+  "global_absence_proven": false
+}

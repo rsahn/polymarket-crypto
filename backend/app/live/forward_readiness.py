@@ -46,3 +46,26 @@ class ForwardSessionRiskSource:
             return {'available':False,'reason':'SESSION_LEDGER_UNRECONCILED_OR_STALE'}
         return {**r,'available':True,'session_pnl':r['net_pnl'],
                 'allow':Decimal(r['cash_collateral'])-Decimal(r['reserved_collateral'])>=25 and r['open_positions']==0}
+
+
+def validate_generation(generation, now):
+    """All five observations belong to one sealed acquisition, at original times.
+    The on-chain watermark is evidence, never refreshed by sealing the envelope.
+    """
+    result={'complete':False,'reason':'GENERATION_PARTIAL_OR_INVALID','evaluated_ms':now}
+    try:
+        g=generation;parts=g['components'];required={'balance','orders','trades','positions','inventory'}
+        if type(g['id']) is not int or g['id']<1 or set(parts)!=required:return result
+        w=g['watermark']
+        if type(w['block_number']) is not int or w['block_number']<0:return result
+        for value in (g['ledger_hash'],w['block_hash']):
+            if not isinstance(value,str) or len(value.removeprefix('0x'))!=64:return result
+            int(value.removeprefix('0x'),16)
+        if any(p.get('generation')!=g['id'] or p.get('complete') is not True for p in parts.values()):return result
+        ages={n:now-p['observed_ms'] for n,p in parts.items()}
+        if any(type(p['observed_ms']) is not int for p in parts.values()):return result
+        stale=[n for n,p in parts.items() if not fresh(p['observed_ms'],now)]
+        return {**result,'id':g['id'],'watermark':dict(w),'component_age_ms':ages,
+                'complete':not stale,'reason':'GENERATION_FRESH' if not stale else 'GENERATION_STALE_500MS',
+                'stale_components':sorted(stale)}
+    except (KeyError,ValueError,TypeError,AttributeError):return result
