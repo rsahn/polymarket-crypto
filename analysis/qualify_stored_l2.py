@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'backend'))
 from app.live.l2_existing_reader import load_existing, EXPECTED
-from qualify_local_readonly import qualify, FLAGS
+from app.live.stored_l2_qualification import qualify, FLAGS
 
 
 def leak_check(creds):
@@ -36,8 +36,13 @@ def leak_check(creds):
             'global_absence_proven':False}
 
 
+class SafeParser(argparse.ArgumentParser):
+    def error(self, message):
+        self.exit(2, 'INVALID_ARGUMENTS; no secrets accepted on CLI.\n')
+
+
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--network',action='store_true');args=parser.parse_args()
+    parser=SafeParser();parser.add_argument('--network',action='store_true');parser.add_argument('--target-machine',action='store_true');args=parser.parse_args()
     report={'phase':'AUTHENTICATED_READ_ONLY','complete':False,'ready_for_arm':False,'submit_allowed':False,
             'private_key_loaded':False,'l1_signature_produced':False,'derive_attempted':False,
             'flags':{k:os.environ.get(k,'false').strip().lower() for k in FLAGS}}
@@ -57,12 +62,11 @@ def main():
             config={**{k:'false' for k in FLAGS},'READONLY_SIGNER_ADDRESS':EXPECTED,'POLYMARKET_WALLET_ADDRESS':EXPECTED,
                     'READONLY_SIGNATURE_TYPE':str(signature_type_for(identity.wallet_type)),
                     'READONLY_CLOB_API_KEY':creds['apiKey'],'READONLY_CLOB_API_SECRET':creds['secret'],
-                    'READONLY_CLOB_API_PASSPHRASE':creds['passphrase']}
+                    'READONLY_CLOB_API_PASSPHRASE':creds['passphrase'], 'READONLY_EXECUTION_STATE_DB':os.environ.get('READONLY_EXECUTION_STATE_DB')}
             report['network']=asyncio.run(qualify(config))
-            report['network']['execution_context']='LOCAL_PROCESS_NETWORK_CONTEXT_REQUIRES_ATTRIBUTION'
+            report['network']['execution_context']='MANUAL_TARGET_POWERSHELL' if args.target_machine else 'LOCAL_PROCESS_NETWORK_CONTEXT_REQUIRES_ATTRIBUTION'
             report['network']['provenance']['live_flags_disabled']['source']='process flags only; dotenv deliberately not read'
-            if report['network']['qualification'].get('time',{}).get('status')!='PASS':
-                report['network']['qualification']['account']['reason']='PUBLIC_TIME_PREFLIGHT_FAILED; existing L2 loaded, authenticated GET not attempted'
+
             report['status']='AUTHENTICATED_READ_ONLY_NOT_READY'
         report['reconciliation']={'complete':False,'status':'BLOCKED','reason':'GLOBAL_SCOPE_AND_LOCAL_LEDGER_NOT_PROVEN'}
     except BaseException:
@@ -74,10 +78,12 @@ def main():
     try:
         with path.open('x',encoding='utf-8') as handle:handle.write(serialized+'\n')
     except OSError:
-        pass  # Restricted hosts may emit the sanitized report without persisting it.
+        print('{"status":"REPORT_WRITE_FAILED","complete":false}')
+        return 2
     print(serialized)
 
-if __name__=='__main__':main()
+if __name__=='__main__':raise SystemExit(main())
+
 
 
 
