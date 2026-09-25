@@ -1,5 +1,6 @@
 """Explicit readers for future execution; no optimistic default risk state."""
 from dataclasses import dataclass
+from copy import deepcopy
 from typing import Callable
 from .execution import ExecutionController, ExecutionBlocked
 
@@ -11,12 +12,15 @@ class ExecutionStateSources:
     geo: Callable
     signal: Callable
     position: Callable
+    exit_policy: Callable | None = None
 
     def __call__(self):
         book,risk,geo,signal,position = (read() for read in (self.book,self.risk,self.geo,self.signal,self.position))
         if not all(isinstance(x,dict) for x in (book,risk,geo,signal,position)):
             raise ExecutionBlocked("SOURCE_UNAVAILABLE")
-        return dict(connected=book.get("connected"),book_synced=book.get("book_synced"),
+        policy = self.exit_policy() if self.exit_policy is not None else {}
+        if not isinstance(policy,dict):raise ExecutionBlocked('EXIT_POLICY_UNAVAILABLE')
+        return dict(exit_book=deepcopy(book),max_exit_slippage_bps=policy.get('max_slippage_bps'),connected=book.get("connected"),book_synced=book.get("book_synced"),
             market_slug=book.get("market_slug"),token_id=book.get("token_id"),book_ms=book.get("observed_ms"),
             expiry_ms=book.get("expiry_ms"),fillable_shares=book.get("fillable_shares"),
             risk_ms=risk.get("observed_ms"),session_pnl=risk.get("session_pnl"),available_usdc=risk.get("available_usdc"),

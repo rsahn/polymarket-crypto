@@ -14,6 +14,7 @@ from pathlib import Path
 from .clob_transport import extract_order_id, normalize_order_status
 from .clob_staged import ExecutionInvariantGuard
 from .exit_policy import plan_exit
+from .freshness_policy import freshness_limit_ms
 
 
 class ExecutionBlocked(RuntimeError):
@@ -71,7 +72,7 @@ class ExecutionController:
         if not isinstance(evidence, dict) or evidence.get("complete") is not True:
             raise ExecutionBlocked("ACCOUNT_EVIDENCE_INCOMPLETE")
         age = self.clock()-finite(evidence.get("observed_ms"))
-        if age < 0 or age > 500: raise ExecutionBlocked("ACCOUNT_EVIDENCE_STALE")
+        if age < 0 or age > freshness_limit_ms(): raise ExecutionBlocked("ACCOUNT_EVIDENCE_STALE")
         orders, balances = evidence.get("open_order_ids"), evidence.get("balances")
         if not isinstance(orders,list) or not isinstance(balances,dict):
             raise ExecutionBlocked("ACCOUNT_EVIDENCE_INVALID")
@@ -89,10 +90,35 @@ class ExecutionController:
         async with self.lock:
             self.reconciled = False
             state = self.store.load()
-            # Ambiguous submission IDs cannot safely be guessed or resubmitted.
+            # Recover only a fully explained terminal cycle. No inferred order ID,
+            # no retry, cancellation or new submission is permitted here.
             if state and state["phase"] != "CLOSED":
-                raise ExecutionBlocked("RECOVERY_REQUIRED")
-            self.flat(await self.account())
+                try:
+                    if not state.get('entry_id'):
+                        raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    terminal = {'FILLED','MATCHED','CANCELLED','CANCELED','EXPIRED'}
+                    entry = await self.status(state, 'entry')
+                    if entry['status'] not in terminal:
+                        raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    if state.get('exit_id'):
+                        exit_status = await self.status(state, 'exit')
+                        if exit_status['status'] not in terminal:
+                            raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    elif state['bought'] or state['exit_size']:
+                        raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    if state['bought'] != state['sold']:
+                        raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    evidence = await self.account()
+                    token = state['order']['token_id']
+                    if token not in evidence['balances']:
+                        raise ExecutionBlocked('RECOVERY_REQUIRED')
+                    self.flat(evidence)
+                    state['phase'] = 'CLOSED'
+                    self.store.write('RECOVERY_FLAT_VERIFIED', state)
+                except Exception:
+                    raise ExecutionBlocked('RECOVERY_REQUIRED') from None
+            else:
+                self.flat(await self.account())
             self.reconciled = True
 
     def gates(self, order):
@@ -106,7 +132,7 @@ class ExecutionController:
         now = self.clock()
         for name in ("book_ms", "risk_ms", "signal_ms", "geo_ms"):
             age = now-finite(gate.get(name))
-            if age < 0 or age > 500: raise ExecutionBlocked("STALE_"+name.upper())
+            if age < 0 or age > freshness_limit_ms(): raise ExecutionBlocked("STALE_"+name.upper())
         invariant = ExecutionInvariantGuard().validate_entry(
             open_positions=gate.get("open_positions"), session_pnl=finite(gate.get("session_pnl")),
             geoblock_blocked=gate.get("geoblock_blocked"),
@@ -195,7 +221,7 @@ class ExecutionController:
                     if gate.get("market_slug") != order.market_slug or gate.get("token_id") != order.token_id:
                         raise ExecutionBlocked("EXIT_MARKET_ROTATION")
                     age=self.clock()-finite(gate.get("book_ms"))
-                    if age<0 or age>500:raise ExecutionBlocked("EXIT_BOOK_STALE")
+                    if age<0 or age>freshness_limit_ms():raise ExecutionBlocked("EXIT_BOOK_STALE")
                     # The pre-hold argument is never a source of executable pricing.
                     # Snapshot and explicit slippage must come from the current gate.
                     plan = plan_exit(gate.get('exit_book') or {}, token_id=order.token_id,

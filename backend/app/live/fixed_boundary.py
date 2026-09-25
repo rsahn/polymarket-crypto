@@ -4,6 +4,7 @@ No remote source currently supplies a common post-C completeness watermark.
 This evaluator can certify a bounded observation, never current inventory.
 """
 import re
+from .freshness_policy import freshness_limit_ms, stale_reason
 
 
 def evaluate_boundary(e, *, now):
@@ -53,8 +54,8 @@ def evaluate_boundary(e, *, now):
                or p['generation'] != e['generation'] for p in account.values()):
             return fail('ACCOUNT_GENERATION_PARTIAL')
         times = [e['scan_observed_ms'], e['sealed_ms'], e['rechecked_ms']] + [p['observed_ms'] for p in account.values()]
-        if any(type(t) is not int or not 0 <= now-t <= 500 for t in times):
-            return fail('GENERATION_STALE_500MS')
+        if any(type(t) is not int or not 0 <= now-t <= freshness_limit_ms() for t in times):
+            return fail(stale_reason('GENERATION'))
         if not e['scan_observed_ms'] <= e['sealed_ms'] <= min(p['observed_ms'] for p in account.values()) or e['rechecked_ms'] < e['sealed_ms']:
             return fail('ACQUISITION_ORDER_INVALID')
         return {**result, 'boundary_generation_complete': True,
