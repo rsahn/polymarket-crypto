@@ -1,0 +1,31 @@
+{
+  "phase": "POST_B_AND_WS_PUBLIC_PROOFS_PREPARED",
+  "tests_passed": 548,
+  "tests_failed": 0,
+  "tests_errors": 0,
+  "new_tests_passed": 19,
+  "subtests_passed": 8,
+  "audit": "PASS_110_FILES",
+  "network_run_performed": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "production_readiness_gate_changed": false,
+  "genesis_unchanged": true,
+  "btc_v1_unchanged": true,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "sdk_monetary_attempts": 0,
+  "external_connections": 0,
+  "credentials_loaded": false,
+  "pending_target_evidence": [
+    "RPC_FINALIZED_SUPPORT",
+    "ACTUAL_POST_B_TAIL_AND_WITNESS",
+    "NEXT_REAL_BOOK_REGRESSION"
+  ],
+  "account_gets_in_probe": false,
+  "probe_readiness_always_blocked": true,
+  "command": "python -B .\\analysis\\qualify_post_b_proofs.py --target-machine",
+  "report_pattern": "D6_POST_B_WS_PROOFS_*.json"
+}

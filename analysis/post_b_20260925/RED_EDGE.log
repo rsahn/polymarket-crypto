@@ -1,0 +1,21 @@
+..............FF...                                                      [100%]
+================================== FAILURES ===================================
+_________________ test_finalized_transport_is_explicit_opt_in _________________
+backend\tests\test_post_b_proof.py:67: in test_finalized_transport_is_explicit_opt_in
+    with pytest.raises(ValueError,match="FORBIDDEN"):rpc.call("eth_getBlockByNumber",["finalized",False])
+                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\collateral_onchain.py:95: in call
+    valid|=(method=='eth_getBlockByNumber' and len(params)==2 and (params[0]=='latest' or (self.allow_finalized and params[0]=='finalized') or block(params[0])) and params[1] is False)
+E   TypeError: unsupported operand type(s) for |=: 'bool' and 'NoneType'
+__________ test_anchor_precondition_and_partial_generation_rejected ___________
+backend\tests\test_post_b_proof.py:80: in test_anchor_precondition_and_partial_generation_rejected
+    assert evaluate_post_b(e,now=1000)["reason"]=="ANCHORED_INVENTORY_UNPROVEN"
+E   AssertionError: assert 'SCOPED_HEAD_WITNESS_PROVEN' == 'ANCHORED_INVENTORY_UNPROVEN'
+E     
+E     - ANCHORED_INVENTORY_UNPROVEN
+E     + SCOPED_HEAD_WITNESS_PROVEN
+=========================== short test summary info ===========================
+FAILED backend/tests/test_post_b_proof.py::test_finalized_transport_is_explicit_opt_in
+FAILED backend/tests/test_post_b_proof.py::test_anchor_precondition_and_partial_generation_rejected
+2 failed, 17 passed in 0.54s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

@@ -84,14 +84,15 @@ def validate_rpc_endpoint(value):
 
 
 class PublicRPC:
-    def __init__(self,wallet,*,endpoint=RPC):
+    def __init__(self,wallet,*,endpoint=RPC,allow_finalized=False):
         if not re.fullmatch('0x[0-9a-fA-F]{40}',wallet):raise ValueError('WALLET')
         self._endpoint=validate_rpc_endpoint(endpoint)
         self.wallet=wallet;self.calls=[];self.counter=0
+        self.allow_finalized=allow_finalized is True
     def call(self,method,params):
         block=lambda s:isinstance(s,str) and re.fullmatch('0x[0-9a-fA-F]+',s)
         valid=(method=='eth_chainId' and params==[])
-        valid|=(method=='eth_getBlockByNumber' and len(params)==2 and (params[0]=='latest' or block(params[0])) and params[1] is False)
+        valid|=(method=='eth_getBlockByNumber' and len(params)==2 and (params[0]=='latest' or (self.allow_finalized and params[0]=='finalized') or bool(block(params[0]))) and params[1] is False)
         valid|=(method=='eth_getCode' and len(params)==2 and params[0] in (CONTRACT,CTF,self.wallet) and bool(block(params[1])))
         if method=='eth_call' and len(params)==2 and isinstance(params[0],dict) and set(params[0])=={'to','data'} and block(params[1]):
             target,data=params[0]['to'],params[0]['data']
