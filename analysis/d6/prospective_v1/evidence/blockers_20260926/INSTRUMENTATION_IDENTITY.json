@@ -1,0 +1,18 @@
+{
+  "version": "OBSERVABILITY_V1_R1",
+  "result": "OBSERVABILITY_ONLY_V1_REVISION_REQUIRED",
+  "hook_required": true,
+  "adopted": false,
+  "baseline_runner_sha256": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+  "instrumented_ast_sha256": "ceaa1974edd442eedb94c038940cdcd0a8e987139b58a55316a8cc855680d6ef",
+  "hash_representation": "ast.dump(include_attributes=False), UTF-8",
+  "python": "3.13.15 (tags/v3.13.15:4061bc4, Aug  5 2026, 13:05:39) [MSC v.1944 64 bit (AMD64)]",
+  "zlib_version": "1.3.1",
+  "zlib_runtime": "1.3.1",
+  "production_binding_status": "REAL_V1_BINDING_NOT_QUALIFIED",
+  "limitations": [
+    "Synthetic bounded recorder is not a durable real causal binding.",
+    "V1 repeats displayed liquidity; existing adapter rejects excess persistent liquidity and may not resize V1.",
+    "Additional calls preserve logical sleeps and tested economics; wall-clock scheduling overhead is not zero."
+  ]
+}

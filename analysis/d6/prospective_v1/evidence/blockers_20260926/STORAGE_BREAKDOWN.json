@@ -1,0 +1,246 @@
+{
+  "source": "data\\d51\\d51_smoke_20260922_194254.db",
+  "source_stat_unchanged": true,
+  "physical": {
+    "page_size": 4096,
+    "pages": 1172037,
+    "bytes": 4800663552,
+    "by_object": {
+      "sqlite_schema": 12288,
+      "schema_info": 4096,
+      "sessions": 4096,
+      "sqlite_autoindex_sessions_1": 4096,
+      "markets": 61440,
+      "sqlite_autoindex_markets_1": 4096,
+      "sqlite_autoindex_markets_2": 4096,
+      "sqlite_autoindex_markets_3": 4096,
+      "events": 2551357440,
+      "sqlite_sequence": 4096,
+      "idx_d5_events_session": 75018240,
+      "idx_d5_events_market": 56524800,
+      "book_sides": 2058412032,
+      "sqlite_autoindex_book_sides_1": 48062464,
+      "anchors": 10231808,
+      "sqlite_autoindex_anchors_1": 94208,
+      "hedge_attempts": 4096,
+      "idx_d5_anchor_lifecycle": 851968,
+      "SQLITE_BYTE_LOCK_PAGE": 4096,
+      "UNATTRIBUTED": 0
+    }
+  },
+  "table_counts": {
+    "schema_info": 1,
+    "sessions": 1,
+    "markets": 9,
+    "events": 1336887,
+    "sqlite_sequence": 2,
+    "book_sides": 2631230,
+    "anchors": 5156,
+    "hedge_attempts": 0
+  },
+  "logical": {
+    "event_payload_by_kind_duration": [
+      {
+        "kind": "ACTIVATE",
+        "duration": "15m",
+        "events": 4,
+        "stored_payload_bytes": 1507
+      },
+      {
+        "kind": "ACTIVATE",
+        "duration": "5m",
+        "events": 6,
+        "stored_payload_bytes": 2249
+      },
+      {
+        "kind": "BOOK",
+        "duration": "15m",
+        "events": 433068,
+        "stored_payload_bytes": 457791648
+      },
+      {
+        "kind": "BOOK",
+        "duration": "5m",
+        "events": 882547,
+        "stored_payload_bytes": 938068588
+      },
+      {
+        "kind": "BTC",
+        "duration": null,
+        "events": 19074,
+        "stored_payload_bytes": 4409468
+      },
+      {
+        "kind": "BTC_CONNECTED",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 2
+      },
+      {
+        "kind": "CLOCK_SAMPLE",
+        "duration": null,
+        "events": 44,
+        "stored_payload_bytes": 2640
+      },
+      {
+        "kind": "COLLECTION_STOP",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 38
+      },
+      {
+        "kind": "EXPIRE",
+        "duration": "15m",
+        "events": 2,
+        "stored_payload_bytes": 45
+      },
+      {
+        "kind": "EXPIRE",
+        "duration": "5m",
+        "events": 5,
+        "stored_payload_bytes": 110
+      },
+      {
+        "kind": "RECONNECT",
+        "duration": "15m",
+        "events": 2,
+        "stored_payload_bytes": 44
+      },
+      {
+        "kind": "REJECT",
+        "duration": "15m",
+        "events": 203,
+        "stored_payload_bytes": 99124
+      },
+      {
+        "kind": "REJECT",
+        "duration": "5m",
+        "events": 1919,
+        "stored_payload_bytes": 1009706
+      },
+      {
+        "kind": "ROTATION",
+        "duration": null,
+        "events": 7,
+        "stored_payload_bytes": 699
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 166
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": "15m",
+        "events": 1,
+        "stored_payload_bytes": 22
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": "5m",
+        "events": 1,
+        "stored_payload_bytes": 21
+      },
+      {
+        "kind": "WS_ERROR",
+        "duration": "15m",
+        "events": 1,
+        "stored_payload_bytes": 109
+      }
+    ],
+    "book_side_count": 2631230,
+    "bid_depth_bytes": 665002341,
+    "ask_depth_bytes": 665002343,
+    "anchors": 5156,
+    "anchor_features_bytes": 5780830,
+    "adjacent_duplicate_depth_rows": 455086,
+    "adjacent_duplicate_depth_bytes": 220496792,
+    "duplicate_scope": "per token, consecutive byte-identical stored bids+asks; subset of depth, NOT additive"
+  },
+  "side_files": [
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_after_1790100346933927900.json",
+      "bytes": 9054
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099318792398500.json",
+      "bytes": 9073
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099623590818000.json",
+      "bytes": 9075
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099928504760500.json",
+      "bytes": 9064
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790100233243784900.json",
+      "bytes": 9063
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_gate_1_1790098979155697100.json",
+      "bytes": 9061
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_gate_2_1790099013797897600.json",
+      "bytes": 9064
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\COLLECTION_RESULT.json",
+      "bytes": 980
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\LAUNCH_MANIFEST.json",
+      "bytes": 1284
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\status.json",
+      "bytes": 4046
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\AUDIT_NEXT_REPORT.json",
+      "bytes": 9426
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\DATA_QUALITY_REPORT.json",
+      "bytes": 11062
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\FOREIGN_KEY_CHECK.json",
+      "bytes": 2
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\INTEGRITY_CHECK.json",
+      "bytes": 24
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\metadata_projection.db",
+      "bytes": 1166061568
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\progress.json",
+      "bytes": 2197
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\progress.jsonl",
+      "bytes": 2004350
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\REPLAY_1.json",
+      "bytes": 6509
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\RUN_MANIFEST.json",
+      "bytes": 2778
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\VERDICT.json",
+      "bytes": 228
+    }
+  ],
+  "source_mutation": false,
+  "economic_metrics_computed": false,
+  "audit_wall_seconds": 367.0257083000615
+}

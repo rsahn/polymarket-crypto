@@ -1,0 +1,71 @@
+{
+  "status": "REPLAY_CAPACITY_UNPROVEN",
+  "fixture": "SYNTHETIC_MARK_ONLY",
+  "real_partition_opened": false,
+  "synthetic_schema_partition_label": "TRAIN",
+  "limitation": "Small synthetic MARK history; real books, trades, fee annotations and 168h are not qualified. Journal and accounting retain O(N) records; observe copies accumulated state.",
+  "journal_allowance": null,
+  "checkpoint_allowance": null,
+  "results": [
+    {
+      "events": 101,
+      "bytes": 54789,
+      "bytes_per_event": 542.4653465346535,
+      "append_fsync_seconds": 0.24887229991145432,
+      "state_copy_samples_seconds": [
+        0.0016099999193102121,
+        0.0014541998971253633,
+        0.0013788000214844942,
+        0.0012815999798476696,
+        0.0010834999848157167
+      ],
+      "observe_seconds": 0.002911200048401952,
+      "journal_recovery_seconds": 0.01584409992210567,
+      "journal_recovery_events_per_second": 6374.612663170908,
+      "adapter_replay_seconds": 0.0013722002040594816,
+      "peak_process_rss_bytes": 22376448,
+      "recovery": "PASS"
+    },
+    {
+      "events": 1001,
+      "bytes": 548895,
+      "bytes_per_event": 548.3466533466534,
+      "append_fsync_seconds": 3.162773999851197,
+      "state_copy_samples_seconds": [
+        0.012669599847868085,
+        0.010568700032308698,
+        0.010473599890246987,
+        0.010499900206923485,
+        0.012846799800172448
+      ],
+      "observe_seconds": 0.015140400035306811,
+      "journal_recovery_seconds": 0.04862469993531704,
+      "journal_recovery_events_per_second": 20586.2452895664,
+      "adapter_replay_seconds": 0.014657400082796812,
+      "peak_process_rss_bytes": 26664960,
+      "recovery": "PASS"
+    },
+    {
+      "events": 5001,
+      "bytes": 2768895,
+      "bytes_per_event": 553.6682663467307,
+      "append_fsync_seconds": 14.571789799956605,
+      "state_copy_samples_seconds": [
+        0.05967040010727942,
+        0.06160330004058778,
+        0.06149029987864196,
+        0.05933619989082217,
+        0.05823149997740984
+      ],
+      "observe_seconds": 0.06111579993739724,
+      "journal_recovery_seconds": 0.2043145999778062,
+      "journal_recovery_events_per_second": 24476.958575369732,
+      "adapter_replay_seconds": 0.07588159991428256,
+      "peak_process_rss_bytes": 45551616,
+      "recovery": "PASS"
+    }
+  ],
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false
+}

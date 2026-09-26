@@ -1,0 +1,312 @@
+{
+  "status": "SYNTHETIC_DIFFERENTIAL_PASS",
+  "original_ast_preserved_after_removing_hooks": true,
+  "cases": [
+    {
+      "fixture": "normal",
+      "economic_record_and_sleeps_identical": true,
+      "old_economic_record": [
+        [
+          "fill",
+          [
+            "FIXED25",
+            {
+              "signal_ts_ms": 1,
+              "side": "UP",
+              "btc_move": 0.001,
+              "slug": "same",
+              "entry_vwap": 0.5357142857142857,
+              "cost": 25.0,
+              "shares": 46.66666666666667,
+              "exit_vwap": 0.48999999999999994,
+              "exit_sold_shares": 46.66666666666667,
+              "exit_remaining_shares": 0.0,
+              "proceeds": 22.866666666666667,
+              "realized_cost": 25.0,
+              "exit_complete": true
+            },
+            -2.133333333333333
+          ]
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "instrumented_economic_record": [
+        [
+          "fill",
+          [
+            "FIXED25",
+            {
+              "signal_ts_ms": 1,
+              "side": "UP",
+              "btc_move": 0.001,
+              "slug": "same",
+              "entry_vwap": 0.5357142857142857,
+              "cost": 25.0,
+              "shares": 46.66666666666667,
+              "exit_vwap": 0.48999999999999994,
+              "exit_sold_shares": 46.66666666666667,
+              "exit_remaining_shares": 0.0,
+              "proceeds": 22.866666666666667,
+              "realized_cost": 25.0,
+              "exit_complete": true
+            },
+            -2.133333333333333
+          ]
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "logical_sleep_seconds": [
+        0.25,
+        0.5
+      ],
+      "observation_kinds": [
+        "ENTRY_INTENT",
+        "ENTRY_BOOK",
+        "ENTRY_CALC",
+        "FILL_LEVEL",
+        "FILL_LEVEL",
+        "ENTRY_RESULT",
+        "EXIT_BOOK",
+        "EXIT_CALC",
+        "FILL_LEVEL",
+        "EXIT_RESULT"
+      ]
+    },
+    {
+      "fixture": "partial",
+      "economic_record_and_sleeps_identical": true,
+      "old_economic_record": [
+        [
+          "fill",
+          [
+            "FIXED25",
+            {
+              "signal_ts_ms": 1,
+              "side": "UP",
+              "btc_move": 0.001,
+              "slug": "same",
+              "entry_vwap": 0.5357142857142857,
+              "cost": 25.0,
+              "shares": 46.66666666666667,
+              "exit_vwap": 0.49000000000000005,
+              "exit_sold_shares": 10.0,
+              "exit_remaining_shares": 36.66666666666667,
+              "proceeds": 4.9,
+              "realized_cost": 5.357142857142857,
+              "exit_complete": false
+            },
+            -0.4571428571428564
+          ]
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "instrumented_economic_record": [
+        [
+          "fill",
+          [
+            "FIXED25",
+            {
+              "signal_ts_ms": 1,
+              "side": "UP",
+              "btc_move": 0.001,
+              "slug": "same",
+              "entry_vwap": 0.5357142857142857,
+              "cost": 25.0,
+              "shares": 46.66666666666667,
+              "exit_vwap": 0.49000000000000005,
+              "exit_sold_shares": 10.0,
+              "exit_remaining_shares": 36.66666666666667,
+              "proceeds": 4.9,
+              "realized_cost": 5.357142857142857,
+              "exit_complete": false
+            },
+            -0.4571428571428564
+          ]
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "logical_sleep_seconds": [
+        0.25,
+        0.5
+      ],
+      "observation_kinds": [
+        "ENTRY_INTENT",
+        "ENTRY_BOOK",
+        "ENTRY_CALC",
+        "FILL_LEVEL",
+        "FILL_LEVEL",
+        "ENTRY_RESULT",
+        "EXIT_BOOK",
+        "EXIT_CALC",
+        "FILL_LEVEL",
+        "EXIT_RESULT"
+      ]
+    },
+    {
+      "fixture": "no_exit",
+      "economic_record_and_sleeps_identical": true,
+      "old_economic_record": [
+        [
+          "skip",
+          {
+            "signal_ts_ms": 1,
+            "side": "UP",
+            "reason": "NO_EXIT_DEPTH",
+            "slug": "same"
+          }
+        ]
+      ],
+      "instrumented_economic_record": [
+        [
+          "skip",
+          {
+            "signal_ts_ms": 1,
+            "side": "UP",
+            "reason": "NO_EXIT_DEPTH",
+            "slug": "same"
+          }
+        ]
+      ],
+      "logical_sleep_seconds": [
+        0.25,
+        0.5
+      ],
+      "observation_kinds": [
+        "ENTRY_INTENT",
+        "ENTRY_BOOK",
+        "ENTRY_CALC",
+        "FILL_LEVEL",
+        "FILL_LEVEL",
+        "ENTRY_RESULT",
+        "EXIT_BOOK",
+        "SKIP"
+      ]
+    },
+    {
+      "fixture": "rotation",
+      "economic_record_and_sleeps_identical": true,
+      "old_economic_record": [
+        [
+          "skip",
+          {
+            "signal_ts_ms": 1,
+            "side": "UP",
+            "reason": "MARKET_ROTATION",
+            "slug": "same"
+          }
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "instrumented_economic_record": [
+        [
+          "skip",
+          {
+            "signal_ts_ms": 1,
+            "side": "UP",
+            "reason": "MARKET_ROTATION",
+            "slug": "same"
+          }
+        ],
+        [
+          "snapshot"
+        ]
+      ],
+      "logical_sleep_seconds": [
+        0.25,
+        0.5
+      ],
+      "observation_kinds": [
+        "ENTRY_INTENT",
+        "ENTRY_BOOK",
+        "ENTRY_CALC",
+        "FILL_LEVEL",
+        "FILL_LEVEL",
+        "ENTRY_RESULT",
+        "EXIT_BOOK",
+        "SKIP"
+      ]
+    }
+  ],
+  "old_signals": [
+    {
+      "ts_ms": 200,
+      "btc_move": 0.0009999999999998899,
+      "side": "UP"
+    },
+    {
+      "ts_ms": 1300,
+      "btc_move": -0.0009999999999998899,
+      "side": "DOWN"
+    },
+    {
+      "ts_ms": 2500,
+      "btc_move": 0.0009999999999998899,
+      "side": "UP"
+    }
+  ],
+  "instrumented_signals": [
+    {
+      "ts_ms": 200,
+      "btc_move": 0.0009999999999998899,
+      "side": "UP"
+    },
+    {
+      "ts_ms": 1300,
+      "btc_move": -0.0009999999999998899,
+      "side": "DOWN"
+    },
+    {
+      "ts_ms": 2500,
+      "btc_move": 0.0009999999999998899,
+      "side": "UP"
+    }
+  ],
+  "old_execution_order": [
+    [
+      200,
+      0.0009999999999998899,
+      "UP"
+    ],
+    [
+      1300,
+      -0.0009999999999998899,
+      "DOWN"
+    ],
+    [
+      2500,
+      0.0009999999999998899,
+      "UP"
+    ]
+  ],
+  "instrumented_execution_order": [
+    [
+      200,
+      0.0009999999999998899,
+      "UP"
+    ],
+    [
+      1300,
+      -0.0009999999999998899,
+      "DOWN"
+    ],
+    [
+      2500,
+      0.0009999999999998899,
+      "UP"
+    ]
+  ],
+  "decision_threshold_unchanged": true,
+  "entry_quantities_prices_and_exit_residuals": "record_fill arguments identical in fixtures",
+  "wall_clock_equivalence": "NOT CLAIMED; observation calls have nonzero cost",
+  "adopted": false
+}

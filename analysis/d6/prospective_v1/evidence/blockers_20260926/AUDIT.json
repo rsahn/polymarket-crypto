@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "scope": "new files for three demonstrated blockers only; NOT protocol readiness",
+  "protected_before": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+    "runtime/d6_genesis.db": "5365085da95cecb49fa4c922b890e9803ef223fdefef541505c2dc5a3de7814f",
+    "analysis/d6/prospective_v1/criteria.json": "869a386b9112a572247e3fb61ffbf4a27afb20493a791929e72f52bc0d9cd06a",
+    "analysis/d6/prospective_v1/evidence/harness_20260926/REPORT.md": "b555471dbef10d5af3c1a6fb0b325e1bea976a821d52822398754e2f353c4d00"
+  },
+  "protected_after": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+    "runtime/d6_genesis.db": "5365085da95cecb49fa4c922b890e9803ef223fdefef541505c2dc5a3de7814f",
+    "analysis/d6/prospective_v1/criteria.json": "869a386b9112a572247e3fb61ffbf4a27afb20493a791929e72f52bc0d9cd06a",
+    "analysis/d6/prospective_v1/evidence/harness_20260926/REPORT.md": "b555471dbef10d5af3c1a6fb0b325e1bea976a821d52822398754e2f353c4d00"
+  },
+  "protected_unchanged": true,
+  "validation_log_hash_verified": true,
+  "validated_source_hashes_verified": true,
+  "leak_scan": "PASS",
+  "leak_rules": [
+    "private_key_pem",
+    "literal_private_key",
+    "github_token",
+    "openai_key",
+    "aws_key"
+  ],
+  "leak_hits": [],
+  "prohibited_monetary_calls_in_added_python": [],
+  "sdk_monetary_attempts": 0,
+  "network_proof": "Full suite external connections attempted=0, 16 monetary SDK methods guarded",
+  "D6_prior_state": {
+    "SYSTEM_READY": false,
+    "current_inventory_proven": false,
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false,
+    "submit_allowed": false
+  },
+  "D6_mutations": false,
+  "source_files": {
+    "analysis/d6/prospective_v1/archive_codec.py": "5ad21034703df72cf3ef4e8ce5eb977f3f49e196625686a321d3eabb682276be",
+    "analysis/d6/prospective_v1/fee_diagnostics.py": "723e054c3b3036cd730307f8a825cc521ed4a94c4ea5d1a50e25bc7bcd2e87b8",
+    "analysis/d6/prospective_v1/observability_v2.py": "b7c74bf0ed56f347a03d8f490f8dde2dd6e8f8cfebbd594fb2f661bfcff2f2f2",
+    "analysis/d6/prospective_v1/replay_probe.py": "5ce4bed13befa542f260bfc05b3ee0b1c11f9e582e3425a4f708547d8cc7b310",
+    "analysis/d6/prospective_v1/storage_audit.py": "45c150e87fa4e025b6fd5a9398cd81fa71892f2c7a04a3d7df66131ce3549588",
+    "analysis/d6/prospective_v1/storage_smoke.py": "323e3223b8264903357aeb888c234c90f8533d4134c5f70507b3a1ae2858ef3c",
+    "analysis/d6/prospective_v1/test_blockers.py": "f830d1336e7d172db97c571be0f348fb6d6cdab3b9517d75a5d748dd05f619b1"
+  },
+  "review": [
+    "Old V1 sources and economic criteria unchanged; AST revision non-adopted and observation-only.",
+    "Real binding, exact fees and weekly storage/replay remain blocked; no gate was weakened.",
+    "Archive row stream comparison exhaustive; no timestamp/value rewriting.",
+    "Archive and synthetic probe data stay local, excluded from delivery.",
+    "Existing three modified files, including older REPORT.md, excluded."
+  ],
+  "test_development_note": "First durable-depth fixture lacked required cash reservation; corrected fixture and file cleanup only. Final targeted/full suites green. Existing production code unchanged.",
+  "final_delivery_leak_scan": "PASS",
+  "final_delivery_scan_files": [
+    "analysis/d6/prospective_v1/archive_codec.py",
+    "analysis/d6/prospective_v1/fee_diagnostics.py",
+    "analysis/d6/prospective_v1/observability_v2.py",
+    "analysis/d6/prospective_v1/replay_probe.py",
+    "analysis/d6/prospective_v1/storage_audit.py",
+    "analysis/d6/prospective_v1/storage_smoke.py",
+    "analysis/d6/prospective_v1/test_blockers.py",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/AUDIT.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/BASELINE.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/DIFFERENTIAL.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_QUALIFICATION.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_QUALIFICATION.md",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_SOURCE_AUDIT.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FULL_SUITE.log",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/INSTRUMENTATION_IDENTITY.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/REPLAY_PROBE.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/REPORT.md",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_AND_REPLAY.md",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_BREAKDOWN.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_BREAKDOWN.md",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_SMOKE.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/TARGETED_TESTS.log",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/VALIDATION.json",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/VERDICT.json"
+  ]
+}

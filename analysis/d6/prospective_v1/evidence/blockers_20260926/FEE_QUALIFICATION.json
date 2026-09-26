@@ -1,0 +1,47 @@
+{
+  "tokens": [
+    {
+      "market_id": "4961058",
+      "token_id": "102067552089188071550736838331466322763287403984940874913410531086786921237623",
+      "fee_enabled": true,
+      "fee_rate": "0.07",
+      "fee_source": "https://gamma-api.polymarket.com/markets/4961058",
+      "fee_schedule_version": "2026-09-26T21:11:17.661876+00:00/3a45e9713c51656088f499cba084b1936d596da1a97e92e329a68793ec2513bf",
+      "rounding_rule": "UNKNOWN",
+      "qualification_status": "MARKET_FEE_UNQUALIFIED",
+      "evidence_hash": "756a0dcf8a52391906d44b1bc157d0c1d679a6a7caa67daab12d2b8dc8ba0feb",
+      "reasons": [
+        "ROUNDING_AND_AGGREGATION_UNPROVEN"
+      ],
+      "public_sources_agree": true,
+      "clob_version_field": "v1",
+      "exact_aggregation": "UNPROVEN",
+      "exact_partial_fill_rounding": "UNPROVEN"
+    },
+    {
+      "market_id": "4961058",
+      "token_id": "97297816434940446198630864241729366886112921814692795601175750244784426937091",
+      "fee_enabled": true,
+      "fee_rate": "0.07",
+      "fee_source": "https://gamma-api.polymarket.com/markets/4961058",
+      "fee_schedule_version": "2026-09-26T21:11:17.661876+00:00/3a45e9713c51656088f499cba084b1936d596da1a97e92e329a68793ec2513bf",
+      "rounding_rule": "UNKNOWN",
+      "qualification_status": "MARKET_FEE_UNQUALIFIED",
+      "evidence_hash": "756a0dcf8a52391906d44b1bc157d0c1d679a6a7caa67daab12d2b8dc8ba0feb",
+      "reasons": [
+        "ROUNDING_AND_AGGREGATION_UNPROVEN"
+      ],
+      "public_sources_agree": true,
+      "clob_version_field": "v1",
+      "exact_aggregation": "UNPROVEN",
+      "exact_partial_fill_rounding": "UNPROVEN"
+    }
+  ],
+  "rounding_ambiguity": {
+    "raw_per_fill": "0.0000350",
+    "two_fills_round_each_half_even": "0.00008",
+    "two_fills_aggregate_then_half_even": "0.00007",
+    "round_down_per_fill": "0.00003",
+    "production_rule": "UNPROVEN"
+  }
+}

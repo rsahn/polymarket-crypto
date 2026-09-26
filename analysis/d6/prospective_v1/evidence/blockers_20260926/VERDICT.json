@@ -1,0 +1,45 @@
+{
+  "status": "BTC_V1_PROSPECTIVE_PROTOCOL_BLOCKED",
+  "blockers": [
+    {
+      "id": "REAL_V1_BINDING_NOT_QUALIFIED",
+      "observation_result": "OBSERVABILITY_ONLY_V1_REVISION_REQUIRED",
+      "reason": "Candidate hook exposes missing entry on synthetic fixtures; not adopted. V1 fills may exceed protocol persistent depth, which adapter correctly rejects. No economic resizing or real binding qualification."
+    },
+    {
+      "id": "MARKET_FEE_UNQUALIFIED",
+      "reason": "Both tokens agree on market/rate/exponent/taker applicability, but exact match rounding, aggregation and partial allocation remain unproven."
+    },
+    {
+      "id": "DISK_CAPACITY_UNPROVEN / DISK_SPACE_INSUFFICIENT",
+      "reason": "Lossless archive smoke passes but reserve exceeds free space; real journal/checkpoint allowances unproven.",
+      "replay_status": "REPLAY_CAPACITY_UNPROVEN",
+      "storage_status": "STORAGE_UNQUALIFIED"
+    }
+  ],
+  "full_suite_passed": 980,
+  "subtests_passed": 65,
+  "full_suite_failures": 0,
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false,
+  "sdk_monetary_attempts": 0,
+  "collection_started": false,
+  "TRAIN_opened": false,
+  "VALIDATION_opened": false,
+  "OOS_opened": false,
+  "economic_edge_claimed": false,
+  "criteria_unchanged": true,
+  "durations_hours": [
+    72,
+    48,
+    48
+  ],
+  "embargo_ms": 60000,
+  "storage_required_lower_bound": 369587887649,
+  "additional_bytes_lower_bound": 321886600737,
+  "journal_allowance": null,
+  "checkpoint_allowance": null
+}
