@@ -2,7 +2,8 @@
 Never construct/authenticate a wallet or create an order. Caller supplies an already
 validated SDK client. Credential-scoped data is not full-wallet flatness evidence.
 """
-from .freshness_policy import freshness_limit_ms
+from .temporal_contract import ACCOUNT_READ_GUARD_MS, POSITIONS_READ_GUARD_MS, SESSION_RISK_GUARD_MS
+from .temporal_contract import BOOK_MAX_AGE_MS
 import asyncio
 import time
 from decimal import Decimal, InvalidOperation
@@ -31,7 +32,7 @@ def plain(value):
 def unavailable(reason):return dict(available=False,complete=False,reason=reason)
 
 def fresh(observed,now,limit=None):
-    if limit is None:limit=freshness_limit_ms()
+    if limit is None:limit=BOOK_MAX_AGE_MS
     age=number(now)-number(observed)
     return 0<=age<=limit
 
@@ -79,7 +80,7 @@ class AccountStateSource:
                     if not isinstance(tid,str) or not tid or tid in trade_ids:raise ValueError("TRADE_DUPLICATE_OR_INVALID")
                     trade_ids.add(tid)
                     if trade["status"] not in {"CONFIRMED","FAILED"}:raise ValueError("TRADE_SETTLEMENT_PENDING")
-                if not fresh(started,self.clock()):raise ValueError("ACCOUNT_READ_TOO_OLD")
+                if not fresh(started,self.clock(),ACCOUNT_READ_GUARD_MS):raise ValueError("ACCOUNT_READ_TOO_OLD")
                 return dict(available=True,authenticated=True,wallet=self.wallet,observed_ms=started,
                     balance_collateral=str(balance),allowance_collateral=str(matches[0]),collateral_symbol=self.symbol,
                     balance_usdc=str(balance) if self.symbol=="USDC" else None,
@@ -125,7 +126,7 @@ class PositionSource:
                     if token in balances and balances[token]!=held:raise ValueError("INVENTORY_MISMATCH")
                     if token not in balances and held!=0:raise ValueError("INDEXER_MISSING_INVENTORY")
                     balances[token]=held
-                if not fresh(started,self.clock()):raise ValueError("POSITIONS_TOO_OLD")
+                if not fresh(started,self.clock(),POSITIONS_READ_GUARD_MS):raise ValueError("POSITIONS_TOO_OLD")
                 return dict(available=True,observed_ms=started,balances={k:str(v) for k,v in balances.items()},
                     pagination_complete=True,complete=False,scope="enumerated_assets",
                     reason="GLOBAL_INVENTORY_ATOMICITY_UNPROVEN")
@@ -153,7 +154,7 @@ class BookStateSource:
             if len({p for p,q in result})!=len(result):raise ValueError("DUPLICATE_PRICE")
             return sorted(result,reverse=reverse)
         try:
-            if not fresh(observed_ms,self.clock()):raise ValueError("STALE_BOOK")
+            if not fresh(observed_ms,self.clock(),BOOK_MAX_AGE_MS):raise ValueError("STALE_BOOK")
             bid,ask=levels(bids,True),levels(asks,False)
             if bid and ask and bid[0][0]>=ask[0][0]:raise ValueError("CROSSED_BOOK")
             previous=self.books.get(token)
@@ -165,7 +166,7 @@ class BookStateSource:
             self.books={};raise
     def read(self):
         synchronized=self.connected and len(self.books)==2
-        is_fresh=synchronized and all(fresh(b["observed_ms"],self.clock()) for b in self.books.values())
+        is_fresh=synchronized and all(fresh(b["observed_ms"],self.clock(),BOOK_MAX_AGE_MS) for b in self.books.values())
         liquid=synchronized and all(b["bids"] and b["asks"] for b in self.books.values())
         ready=synchronized and is_fresh and liquid
         reason="WS_DISCONNECTED" if not self.connected else self.invalid_reason or ("RESYNC_INCOMPLETE" if not synchronized else "STALE_BOOK" if not is_fresh else "EMPTY_BOOK" if not liquid else None)
@@ -200,7 +201,7 @@ class SessionRiskSource:
             ledger=self.reader()
             if not isinstance(ledger,dict) or ledger.get("reconciled") is not True or ledger.get("mode")!="REAL_CONFIRMED":
                 return unavailable("SESSION_LEDGER_UNRECONCILED")
-            if not fresh(ledger["observed_ms"],self.clock()):return unavailable("SESSION_RISK_STALE")
+            if not fresh(ledger["observed_ms"],self.clock(),SESSION_RISK_GUARD_MS):return unavailable("SESSION_RISK_STALE")
             pnl=number(ledger["realized_net_pnl"]);reserved=number(ledger["reserved_usdc"])
             balance=number(ledger["balance_usdc"]);positions=number(ledger["open_positions"])
             if min(reserved,balance,positions)<0 or reserved>balance or positions!=int(positions):raise ValueError("RISK_INVALID")

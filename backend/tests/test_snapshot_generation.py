@@ -101,7 +101,9 @@ def test_full_readiness_generation_gate(age,partial,expected,monkeypatch):
         positions=source(complete=True,balances={}),book=s,geo=source(blocked=False),risk=source(allow=True),
         local_reader=lambda:{'phase':'GENESIS_RECONCILED','integrity_verified':True,'reconciled_now':True},
         clock=lambda:1000+age,generation=g).run())
-    assert len(r['checks'])==12 and r['ready_for_arm'] is expected and not r['submit_allowed']
+    assert len(r['checks'])==12 and r['legacy_health_ready'] is expected
+    assert not r['ready_for_arm'] and not r['SYSTEM_READY'] and not r['submit_allowed']
+    assert r['domain_details']['inventory']['reason']=='INVENTORY_UNPROVEN'
 
 
 def test_remote_close_code_and_reason_redacted():
@@ -174,8 +176,8 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
             return await super().run()
     monkeypatch.setattr(q,'ProductionReadinessCheck',lambda **kw:TimedCheck(**kw,clock=lambda:1000))
     r=asyncio.run(q.run(True,health_contract=health_contract))
-    assert r['readiness']['ready_for_arm'] is (not empty and not health_contract),r['reconciliation']
-    assert r['readiness']['SYSTEM_READY'] is (not health_contract)
+    assert not r['readiness']['ready_for_arm'] and not r['readiness']['SYSTEM_READY']
+    assert r['readiness']['legacy_health_ready'] is (not health_contract)
     if health_contract:
         assert r['reconciliation']['reason']=='POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN'
         assert checkpoint_events[-2:]==['evaluate','save']

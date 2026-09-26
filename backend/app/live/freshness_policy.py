@@ -1,8 +1,6 @@
-"""Explicit task-scoped freshness policy; no environment/secret loading.
-
-500ms preserves historical qualification behavior. 1300ms is the newly
-user-authorized policy, selected explicitly for a complete qualification.
-Neither policy establishes remote completeness or enables submissions.
+"""Deprecated compatibility context for historical callers/tests only.
+Production domain guards no longer consume this global value. In particular,
+1300 cannot relax the book or create readiness. Use temporal_contract policies.
 """
 from contextlib import contextmanager
 from contextvars import ContextVar

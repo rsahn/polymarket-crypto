@@ -25,8 +25,8 @@ def test_health_true_empty_market_false_never_submit():
     r=asyncio.run(ProductionReadinessCheck(account=src(authenticated=True,balance_usdc="100",allowance_usdc="100",complete=True,open_order_ids=[]),
         positions=src(complete=True,balances={}),book=s,geo=src(blocked=False),risk=src(allow=True),
         local_reader=lambda:{"phase":"CLOSED"},clock=lambda:1000).run())
-    assert r["SYSTEM_READY"] and not r["MARKET_ELIGIBLE_NOW"]
-    assert r["operating_state"]=="NO_TRADE" and not r["submit_allowed"] and not r["ready_for_arm"]
+    assert r["legacy_health_ready"] and not r["SYSTEM_READY"] and not r["MARKET_ELIGIBLE_NOW"]
+    assert r["operating_state"]=="SYSTEM_BLOCKED" and not r["submit_allowed"] and not r["ready_for_arm"]
 
 
 def test_crossed_remains_invalid():

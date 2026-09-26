@@ -15,7 +15,8 @@ from app.live.forward_readiness import evaluate_baseline,ObservationSource,Forwa
 from app.live.readonly_book_stream import StreamBook
 from app.live.production_readonly import now_ms,drain,plain,units,GeoBlockSource,BookStateSource
 from app.live.readiness import ProductionReadinessCheck
-from app.live.freshness_policy import freshness_policy,freshness_limit_ms,stale_reason
+from app.live.temporal_contract import domain_policy, inventory_stale_reason as stale_reason
+from app.live.shadow_calibration import ShadowCalibration, calibration_session, current_calibration
 from app.live.latency_trace import diagnose, measured_await
 from app.live.network_readonly import GetOnlyTransport,ReadOnlyClient
 from app.live.collateral_onchain import PublicRPC,validate_rpc_endpoint,CONTRACT
@@ -205,7 +206,18 @@ def annotate(readiness):
         details[name]={'status':'PASS' if passed else 'BLOCKED','source':o.get('provenance',o.get('source',source)),
             'observed_ms':o.get('observed_ms'),'evaluated_ms':at,
             'reason':'INVARIANT_SATISFIED' if passed else o.get('reason') or 'MISSING_STALE_OR_UNRECONCILED',
-            'freshness_limit_ms':60000 if name=='geoblock' else freshness_limit_ms() if source!='local' else None}
+            'legacy_guard_only':True}
+    domains=readiness.get('domain_details',{})
+    mapping={'wallet_auth':'authentication','balance_pusd':'balance','balance_usdc':'balance',
+        'allowance_pusd':'allowance','allowance_usdc':'allowance','open_orders':'orders',
+        'inventory':'inventory','account_reconciliation':'account_reconciliation','session_risk':'session_risk',
+        'book_freshness':'book','geoblock':'geoblock','local_recovery_state':'recovery'}
+    for name,domain in mapping.items():
+        if name in details and domain in domains:
+            d=domains[domain]
+            details[name].update(status='PASS' if d['ready'] else 'BLOCKED',reason=d['reason'],
+                semantic_domain=domain,limit_ms=d['limit_ms'],calibration=d['calibration'],
+                observation_valid=d['observation_valid'],legacy_guard_only=False)
     readiness['check_details']=details
     for obs in readiness['observations'].values():
         for key in ('wallet','open_order_ids','balances','books'):obs.pop(key,None)
@@ -352,7 +364,7 @@ async def run(target=False,*,health_contract=False):
                 complete=reconciliation['reconciled']
                 account=ObservationSource({'available':True,'authenticated':True,'observed_ms':a_stamp,'balance_collateral':str(units(raw)),
                     'allowance_collateral':str(units(allowed[0])),'collateral_symbol':'pUSD','open_order_ids':[] if not remote['orders'] else ['REDACTED'],
-                    'complete':complete,'pagination_complete':True,'provenance':'EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS',
+                    'complete':complete,'reconciled':complete,'pagination_complete':True,'provenance':'EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS',
                     'scope':'CREDENTIAL_VIEW_WITH_SCOPED_GENESIS','reason':reconciliation.get('reason')})
                 positions=ObservationSource({'available':True,'observed_ms':remote['observed_ms'],'balances':inventory['balances'],
                     'complete':complete,'provenance':'GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER','reason':reconciliation.get('reason')})
@@ -418,6 +430,11 @@ async def run(target=False,*,health_contract=False):
             'scheduler_overhead_scope':'TOTAL_NOT_ISOLATED_FROM_BUSINESS_CPU; SEE_MEASURED_RESUME_DELAYS',
             'measured_scan_resume_delay_ms':path.get('scan_resume_delay_ms'),
             'measured_generation_continuation_delay_ms':worker_timing.get('continuation_delay_ms')}
+        recorder=current_calibration()
+        if recorder is not None:
+            timestamps={n:part.get('observed_ms') for n,part in (generation or {}).get('components',{}).items()}
+            timestamps['book']=book_obs
+            recorder.generation((generation or {}).get('id'),evaluated,timestamps)
         report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
@@ -442,20 +459,29 @@ async def run(target=False,*,health_contract=False):
 
 def main():
     args=sys.argv[1:]
-    limit=500
     if '--freshness-ms' in args:
-        i=args.index('--freshness-ms')
-        if i+1>=len(args) or args[i+1] not in ('500','1300'):return 2
-        limit=int(args[i+1]);args=args[:i]+args[i+2:]
+        print('GLOBAL_FRESHNESS_OVERRIDE_RETIRED: use --shadow-calibration with --calibration-shares; no SLA is fitted.')
+        return 2
+    shadow='--shadow-calibration' in args
+    if shadow:args.remove('--shadow-calibration')
+    shares=None
+    if '--calibration-shares' in args:
+        i=args.index('--calibration-shares')
+        if not shadow or i+1>=len(args):return 2
+        shares=args[i+1];args=args[:i]+args[i+2:]
+    if shadow and shares is None:return 2
     diagnostic='--diagnostics' in args
     if diagnostic:args=[a for a in args if a!='--diagnostics']
     if args not in (['--offline'],['--target-machine'],['--target-machine','--health-contract']):return 2
     if diagnostic and args!=['--target-machine','--health-contract']:return 2
+    if shadow and args not in (['--offline'],['--target-machine','--health-contract']):return 2
     runner=diagnose(run) if diagnostic else run
     try:
-        with freshness_policy(limit):
+        recorder=ShadowCalibration(shares=shares) if shadow else None
+        with calibration_session(recorder):
             report=asyncio.run(runner(args[0]=='--target-machine',health_contract='--health-contract' in args))
-        report['freshness_limit_ms']=limit
+        report['temporal_contract']='D6_SEMANTIC_V1'
+        if recorder is not None:report['shadow_calibration']=recorder.report()
     except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False}
     path=ROOT/('D6_POST_GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)

@@ -2,7 +2,7 @@
 Unmodelled D6 activity is rejected, never assigned invented PnL or fees.
 """
 from decimal import Decimal
-from .freshness_policy import stale_reason
+from .temporal_contract import inventory_stale_reason as stale_reason, RECONCILIATION_GUARD_MS, SESSION_RISK_GUARD_MS, ACCOUNT_READ_GUARD_MS
 from .production_readonly import fresh
 
 
@@ -22,7 +22,7 @@ def evaluate_baseline(prior,remote,*,now):
         if not set(base['conditional_assets']['balances'])<=set(remote['balances']):return blocked('KNOWN_ASSET_NOT_OBSERVED')
         if any(not isinstance(v,str) or not v.isdigit() for v in remote['balances'].values()):return blocked('BALANCE_SCHEMA')
         if any(int(v)>0 for v in remote['balances'].values()):return recovery('CONDITIONAL_INVENTORY_UNEXPLAINED')
-        if not fresh(remote['observed_ms'],now):return blocked(stale_reason('RECONCILIATION'))
+        if not fresh(remote['observed_ms'],now,RECONCILIATION_GUARD_MS):return blocked(stale_reason('RECONCILIATION'))
         raw=remote['balance_raw']
         if not isinstance(raw,str) or not raw.isdigit():return blocked('COLLATERAL_SCHEMA')
         return {'phase':'RECONCILED','reconciled':True,'observed_ms':remote['observed_ms'],
@@ -43,7 +43,7 @@ class ForwardSessionRiskSource:
     def __init__(self,reconciliation,clock):self.reconciliation=reconciliation;self.clock=clock
     def read(self):
         r=self.reconciliation
-        if r.get('reconciled') is not True or not fresh(r['observed_ms'],self.clock()):
+        if r.get('reconciled') is not True or not fresh(r['observed_ms'],self.clock(),SESSION_RISK_GUARD_MS):
             return {'available':False,'reason':'SESSION_LEDGER_UNRECONCILED_OR_STALE'}
         return {**r,'available':True,'session_pnl':r['net_pnl'],
                 'allow':Decimal(r['cash_collateral'])-Decimal(r['reserved_collateral'])>=25 and r['open_positions']==0}
@@ -65,7 +65,7 @@ def validate_generation(generation, now):
         if any(p.get('generation')!=g['id'] or p.get('complete') is not True for p in parts.values()):return result
         ages={n:now-p['observed_ms'] for n,p in parts.items()}
         if any(type(p['observed_ms']) is not int for p in parts.values()):return result
-        stale=[n for n,p in parts.items() if not fresh(p['observed_ms'],now)]
+        stale=[n for n,p in parts.items() if not fresh(p['observed_ms'],now,ACCOUNT_READ_GUARD_MS)]
         return {**result,'id':g['id'],'watermark':dict(w),'component_age_ms':ages,
                 'complete':not stale,'reason':'GENERATION_FRESH' if not stale else stale_reason('GENERATION'),
                 'stale_components':sorted(stale)}

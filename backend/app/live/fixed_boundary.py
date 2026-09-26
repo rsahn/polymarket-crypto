@@ -4,7 +4,7 @@ No remote source currently supplies a common post-C completeness watermark.
 This evaluator can certify a bounded observation, never current inventory.
 """
 import re
-from .freshness_policy import freshness_limit_ms, stale_reason
+from .temporal_contract import inventory_observation_limit_ms as freshness_limit_ms, inventory_stale_reason as stale_reason
 
 
 def evaluate_boundary(e, *, now):

@@ -1,5 +1,6 @@
 """Single read-only readiness report. Never arms or submits."""
-from .freshness_policy import freshness_limit_ms
+from .temporal_contract import retained_guards, BOOK_MAX_AGE_MS, ACCOUNT_READ_GUARD_MS, POSITIONS_READ_GUARD_MS, SESSION_RISK_GUARD_MS
+from .temporal_contract import assess_domains
 import inspect
 import asyncio
 import ast
@@ -20,11 +21,11 @@ def transport_locked():
 
 
 class ProductionReadinessCheck:
-    def __init__(self,*,account=None,positions=None,book=None,geo=None,risk=None,local_reader=None,clock=None,collateral_unit="USDC",generation=None):
+    def __init__(self,*,account=None,positions=None,book=None,geo=None,risk=None,local_reader=None,clock=None,collateral_unit="USDC",generation=None,signal=None):
         if collateral_unit not in {"USDC","pUSD"}:raise ValueError("COLLATERAL_UNIT")
         self.generation=generation
         self.collateral_unit=collateral_unit
-        self.sources=dict(account=account,positions=positions,book=book,geo=geo,risk=risk)
+        self.sources=dict(account=account,positions=positions,book=book,geo=geo,risk=risk,signal=signal)
         self.local_reader=local_reader;self.clock=clock or (lambda:time.time_ns()//1_000_000)
     async def run(self):
         async def read_source(name,source):
@@ -37,7 +38,7 @@ class ProductionReadinessCheck:
         try:
             local=self.local_reader()
             local_ok=isinstance(local,dict) and (local.get("phase")=="CLOSED" or (local.get("phase")=="GENESIS_RECONCILED" and local.get("integrity_verified") is True and local.get("reconciled_now") is True))
-        except Exception:local_ok=False
+        except Exception:local={};local_ok=False
         # Re-read the stream after awaited sources and local ledger validation.
         # Capture the evaluation clock only after these reads, never before disk I/O.
         locked=transport_locked()
@@ -46,6 +47,7 @@ class ProductionReadinessCheck:
         now=self.clock()
         evaluation_cpu_started=time.thread_time_ns()
         def valid(name,limit=None):
+            if limit is None:limit={"account":ACCOUNT_READ_GUARD_MS,"positions":POSITIONS_READ_GUARD_MS,"risk":SESSION_RISK_GUARD_MS,"book":BOOK_MAX_AGE_MS}[name]
             v=values[name]
             try:return v.get("available") is True and fresh(v.get("observed_ms"),now,limit)
             except (ValueError,TypeError):return False
@@ -83,11 +85,20 @@ class ProductionReadinessCheck:
                      and book_time_fresh and b.get('reason') in (None,'EMPTY_BOOK'))
         health_checks={k:v for k,v in checks.items() if k!='book_freshness'}
         health_checks['book_stream_health']=book_health
-        system_ready=all(health_checks.values())
+        domains=assess_domains(values,now=now,local=local,generation=self.generation,collateral_unit=self.collateral_unit)
+        legacy_health_ready=all(health_checks.values())
+        system_ready=legacy_health_ready and all(d['ready'] for d in domains.values())
         market_eligible=checks['book_freshness'] and b.get('market_eligible') is True
-        return dict(freshness_limit_ms=freshness_limit_ms(),evaluated_ms=now,evaluation_started_ms=now,evaluation_complete_ms=self.clock(),evaluation_thread_cpu_ms=(time.thread_time_ns()-evaluation_cpu_started)/1000000,book_sample_started_ms=book_sample_started_ms,book_sample_finished_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
-            health_checks=health_checks,operating_state="SYSTEM_BLOCKED" if not system_ready else "ELIGIBLE_BUT_LOCKED" if market_eligible else "NO_TRADE",checks=checks,observations=values,flags=flags,
-            ready_for_arm=system_ready and market_eligible and all(checks.values()),submit_allowed=False,blockers=[k for k,v in checks.items() if not v])
+        legacy_checks=dict(checks)
+        mapping={'wallet_auth':'authentication','balance_usdc':'balance','balance_pusd':'balance',
+            'allowance_usdc':'allowance','allowance_pusd':'allowance','geoblock':'geoblock','book_freshness':'book',
+            'account_reconciliation':'account_reconciliation','open_orders':'orders','inventory':'inventory',
+            'local_recovery_state':'recovery','session_risk':'session_risk'}
+        checks={k:(domains[mapping[k]]['ready'] if k in mapping else v) for k,v in checks.items()}
+
+        return dict(temporal_contract='D6_SEMANTIC_V1',domain_details=domains,legacy_checks=legacy_checks,legacy_health_ready=legacy_health_ready,retained_guard_policies=retained_guards(),evaluated_ms=now,evaluation_started_ms=now,evaluation_complete_ms=self.clock(),evaluation_thread_cpu_ms=(time.thread_time_ns()-evaluation_cpu_started)/1000000,book_sample_started_ms=book_sample_started_ms,book_sample_finished_ms=now,generation=generation_check,collateral_unit=self.collateral_unit,status="READ_ONLY_READINESS",SYSTEM_READY=system_ready,MARKET_ELIGIBLE_NOW=market_eligible,
+            legacy_health_checks=health_checks,health_checks={**{k:d['ready'] for k,d in domains.items()},'transport_lock':locked,'live_flags_disabled':checks['live_flags_disabled']},operating_state="SYSTEM_BLOCKED" if not system_ready else "ELIGIBLE_BUT_LOCKED" if market_eligible else "NO_TRADE",checks=checks,observations=values,flags=flags,
+            ready_for_arm=system_ready and market_eligible and all(checks.values()),submit_allowed=False,blockers=[d['reason'] for d in domains.values() if not d['ready']],legacy_blockers=[k for k,v in legacy_checks.items() if not v])
 
     @staticmethod
     def qualification_snapshot(collateral,inventory,*,provenance):
