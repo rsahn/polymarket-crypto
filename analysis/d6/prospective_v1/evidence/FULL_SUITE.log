@@ -1,0 +1,115 @@
+......................................FFF..................................................... [ 10%]
+........................................................................ [ 18%]
+........................................................................ [ 26%]
+................................................................ [ 33%]
+........................................................................ [ 41%]
+........................................................................ [ 49%]
+........................................................................ [ 56%]
+........................................................................ [ 64%]
+........................................................................ [ 72%]
+........................................................................ [ 80%]
+........................................................................ [ 88%]
+........................................................................ [ 96%]
+...............................                                          [100%]
+================================== FAILURES ===================================
+_ DepthCacheTests.test_bytes_exact_for_both_schemas_mutation_and_signed_zero __
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:11: in test_bytes_exact_for_both_schemas_mutation_and_signed_zero
+    self.assertEqual(s.pack_depth(v),expected);self.assertEqual(s.pack_depth(v),expected)
+                     ^^^^^^^^^^^^
+E   AttributeError: 'Store' object has no attribute 'pack_depth'
+
+During handling of the above exception, another exception occurred:
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:625: in _rmtree_unsafe
+    os.unlink(fullname)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmpq0wrd4d6\\new.db'
+
+During handling of the above exception, another exception occurred:
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:6: in test_bytes_exact_for_both_schemas_mutation_and_signed_zero
+    with tempfile.TemporaryDirectory() as d:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:952: in __exit__
+    self.cleanup()
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:956: in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:936: in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:790: in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:629: in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:911: in onexc
+    _os.unlink(path)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmpq0wrd4d6\\new.db'
+______________ DepthCacheTests.test_capacity_eviction_and_clear _______________
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:18: in test_capacity_eviction_and_clear
+    for i in range(300):self.assertEqual(s.pack_depth([[.5,i]]),s.pack([[.5,i]]))
+                                         ^^^^^^^^^^^^
+E   AttributeError: 'Store' object has no attribute 'pack_depth'
+
+During handling of the above exception, another exception occurred:
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:625: in _rmtree_unsafe
+    os.unlink(fullname)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmp5711f2lo\\new.db'
+
+During handling of the above exception, another exception occurred:
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:16: in test_capacity_eviction_and_clear
+    with tempfile.TemporaryDirectory() as d:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:952: in __exit__
+    self.cleanup()
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:956: in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:936: in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:790: in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:629: in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:911: in onexc
+    _os.unlink(path)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmp5711f2lo\\new.db'
+________ DepthCacheTests.test_nonfinite_still_rejected_and_not_cached _________
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:25: in test_nonfinite_still_rejected_and_not_cached
+    with self.assertRaises(ValueError):s.pack_depth([[.5,value]])
+                                       ^^^^^^^^^^^^
+E   AttributeError: 'Store' object has no attribute 'pack_depth'
+
+During handling of the above exception, another exception occurred:
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:625: in _rmtree_unsafe
+    os.unlink(fullname)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmpojuewk42\\new.db'
+
+During handling of the above exception, another exception occurred:
+analysis\d51\depth_cache_candidate_not_adopted\test_d51_depth_cache.py:22: in test_nonfinite_still_rejected_and_not_cached
+    with tempfile.TemporaryDirectory() as d:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:952: in __exit__
+    self.cleanup()
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:956: in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:936: in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:790: in rmtree
+    return _rmtree_unsafe(path, onexc)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\shutil.py:629: in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+..\..\AppData\Local\Programs\Python\Python313\Lib\tempfile.py:911: in onexc
+    _os.unlink(path)
+E   PermissionError: [WinError 32] Le processus ne peut pas accéder au fichier car ce fichier est utilisé par un autre processus: 'C:\\Users\\Ramy\\AppData\\Local\\Temp\\tmpojuewk42\\new.db'
+============================== warnings summary ===============================
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+  C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.
+    return c.execute(query).fetch_arrow_table().to_pylist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED analysis/d51/depth_cache_candidate_not_adopted/test_d51_depth_cache.py::DepthCacheTests::test_bytes_exact_for_both_schemas_mutation_and_signed_zero
+FAILED analysis/d51/depth_cache_candidate_not_adopted/test_d51_depth_cache.py::DepthCacheTests::test_capacity_eviction_and_clear
+FAILED analysis/d51/depth_cache_candidate_not_adopted/test_d51_depth_cache.py::DepthCacheTests::test_nonfinite_still_rejected_and_not_cached
+3 failed, 906 passed, 3 warnings, 58 subtests passed in 58.08s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 3, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

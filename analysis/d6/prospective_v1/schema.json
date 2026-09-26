@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "required_event_fields": [
+    "event_id",
+    "session_id",
+    "market_slug",
+    "condition_id",
+    "token_id",
+    "side",
+    "generation",
+    "source_ts_ms",
+    "receive_ts_ms",
+    "available_ts_ms",
+    "decision_ts_ms",
+    "book_observation_ts_ms",
+    "entry_attempt_ts_ms",
+    "entry_fill_ts_ms",
+    "exit_attempt_ts_ms",
+    "exit_fill_ts_ms",
+    "monotonic_ns",
+    "kind",
+    "raw_payload_hash",
+    "previous_event_hash"
+  ],
+  "timestamp_rules": "Unused stage fields null; mandatory for their event type. Source/receive/available evidence unretimed, decisions use actual availability; all actual attempts/fills logged. Clock uncertainty => unqualified segment, never fabricate timestamps.",
+  "data_required": [
+    "raw BTC",
+    "complete UP/DOWN book payload and depth",
+    "market identity",
+    "public resolution evidence",
+    "fee evidence",
+    "collector state and gaps",
+    "decision/attempt/fill/residual ledger"
+  ],
+  "compression": "Lossless only; no BOOK.payload_json omission; equivalence audit required.",
+  "economic_partitions_sealed": true,
+  "telemetry_allowlist": [
+    "bytes",
+    "event_count",
+    "disk_free",
+    "clock_offset",
+    "queue_depth",
+    "gaps",
+    "errors"
+  ],
+  "telemetry_forbidden": [
+    "pnl",
+    "win_rate",
+    "equity",
+    "expectancy",
+    "profit_direction",
+    "economic_samples"
+  ],
+  "flags": {
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false,
+    "submit_allowed": false
+  }
+}
