@@ -1,0 +1,165 @@
+{
+  "complete": false,
+  "status": "PASS_SCOPED_READS",
+  "contract": "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
+  "from_block": 94492370,
+  "to_block": 94492389,
+  "global_coverage_proven": false,
+  "scope": "CTF_INCOMING_EVENTS_REQUESTED_RANGE_ONLY",
+  "diagnostics": {
+    "stage": "complete",
+    "cause": null,
+    "ranges_planned": [
+      [
+        94492370,
+        94492379
+      ],
+      [
+        94492380,
+        94492389
+      ]
+    ],
+    "ranges_completed": [
+      [
+        94492370,
+        94492379
+      ],
+      [
+        94492380,
+        94492389
+      ]
+    ],
+    "first_failed_range": null
+  },
+  "events_count": 0,
+  "assets_checked": 0,
+  "nonzero_assets": 0,
+  "discovered_outside_local_journal": 0,
+  "block_hash": "0x045f8dd00628006cb3bd5a83bae4c9515109f973b2bb7167921454b87742a102",
+  "blockers": [
+    "DEPLOYMENT_START_AND_ARCHIVE_COMPLETENESS_NOT_ATTESTED",
+    "OTHER_POSITION_PROTOCOLS_NOT_COVERED",
+    "CREDENTIAL_ORDER_SCOPE_NOT_GLOBAL"
+  ],
+  "rpc_requests": 6,
+  "retries": 0,
+  "rate_limits": 0,
+  "range_splits": 0,
+  "pacing_wait_ms": 285.0675997324288,
+  "max_in_flight": 1,
+  "min_start_interval_ms": 200,
+  "tranche_dispatch_budget_seconds": 120,
+  "max_attempts": 3,
+  "measurement_scope": "TWO_WINDOWS_ONLY_NO_CHECKPOINT_NOT_FULL_CATCHUP",
+  "wall_ms": 1097.0781000796705,
+  "rpc_latency_p50_ms": 123.0,
+  "rpc_latency_p95_ms": null,
+  "rpc_latency_samples": 6,
+  "blocks_per_second": 18.230242676932104,
+  "ranges_per_second": 1.8230242676932105,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790444215876,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790444216062,
+      "parse_complete_ms": 1790444216062,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790444216062,
+      "elapsed_ms": 186
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790444216077,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790444216171,
+      "parse_complete_ms": 1790444216171,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790444216171,
+      "elapsed_ms": 94
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 3,
+      "started_ms": 1790444216277,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790444216404,
+      "parse_complete_ms": 1790444216405,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790444216405,
+      "elapsed_ms": 128
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 4,
+      "started_ms": 1790444216478,
+      "from_block": 94492370,
+      "to_block": 94492379,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790444216665,
+      "parse_complete_ms": 1790444216665,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790444216665,
+      "elapsed_ms": 187
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 5,
+      "started_ms": 1790444216679,
+      "from_block": 94492380,
+      "to_block": 94492389,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790444216797,
+      "parse_complete_ms": 1790444216797,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790444216797,
+      "elapsed_ms": 118
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790444216879,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790444216972,
+      "parse_complete_ms": 1790444216973,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790444216973,
+      "elapsed_ms": 94
+    }
+  ],
+  "submit_allowed": false,
+  "current_inventory_proven": false,
+  "cursor_advanced": false
+}

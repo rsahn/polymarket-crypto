@@ -54,7 +54,10 @@ def load_inventory_cursor(root,prior):
             r=json.loads(path.read_text(encoding='utf-8-sig'))
             if r.get('genesis_snapshot_sha256')!=prior['snapshot_sha256'] or r.get('genesis_unchanged') is not True:continue
             x=r['inventory_incremental']
-            if r.get('cursor_schema')==1:
+            if r.get('cursor_schema')==2:
+                from app.live.inventory_catchup import validate_checkpoint
+                validate_checkpoint(r,prior)
+            elif r.get('cursor_schema')==1:
                 from app.live.genesis_ledger import digest
                 if digest(x)!=r['inventory_sha256']:raise ValueError('CURSOR_INTEGRITY')
             else:
@@ -71,9 +74,17 @@ def load_inventory_cursor(root,prior):
             if path.parent.name=='d6_inventory_cursors':raise ValueError('CURSOR_INTEGRITY') from None
             continue
     if not candidates:raise ValueError('INVENTORY_CURSOR_REQUIRED')
+    from app.live.genesis_ledger import digest
+    by_hash={digest(x):x for x in candidates}
+    for x in candidates:
+        e=x.get('catchup_evidence')
+        if e:
+            parent=by_hash.get(e['parent_inventory_sha256'])
+            if parent is None or parent['to_block']!=e['parent_block'] or parent['block_hash']!=e['parent_hash']:
+                raise ValueError('CURSOR_INTEGRITY')
     highest=max(x['to_block'] for x in candidates)
     top=[x for x in candidates if x['to_block']==highest]
-    if len({x['block_hash'] for x in top})!=1:raise ValueError('CURSOR_CONFLICT')
+    if len({(x['block_hash'],digest(x['balances']),x['events_count']) for x in top})!=1:raise ValueError('CURSOR_CONFLICT')
     return max(top,key=lambda x:x['observed_ms'])
 
 
@@ -231,6 +242,7 @@ async def run(target=False,*,health_contract=False):
     geo=ObservationSource({'available':False,'reason':'FRESH_GEOBLOCK_REQUIRED'})
     book=BookStateSource();reconciliation={'phase':'BLOCKED','reconciled':False,'reason':'MANUAL_TARGET_REQUIRED'}
     generation=None
+    inventory_catchup=None
     pending_inventory_checkpoint=None;inventory=None
     preparation_rpc=None;current_generation_inventory=None
     connection_warmup={'status':'NOT_RUN'}
@@ -375,7 +387,8 @@ async def run(target=False,*,health_contract=False):
                 append_activity(LEDGER,'RECOVERY_REQUIRED',{'reason':reconciliation['reason']})
                 local=read_genesis(LEDGER)
     except Exception as exc:
-        allowed={'READ_ONLY_WARMUP_FAILED','BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','GENERATION_STALE_1300MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
+        inventory_catchup=getattr(exc,'inventory_catchup',None)
+        allowed={'READ_ONLY_WARMUP_FAILED','BOUNDARY_SCHEMA_INVALID','COVERAGE_GAP_OR_OVERLAP','RPC_PARTIAL','BOUNDARY_REORG','CURSOR_BOUNDARY_INCOHERENT','FINALIZED_UNPROVEN','CURSOR_AHEAD_OF_FINALIZED','RECOVERY_REQUIRED','TAIL_SCAN_FAILED','BOOTSTRAP_CATCHUP_REQUIRED','POST_B_TAIL_ADVANCED','TAIL_REORG','ANCHOR_REORG','GENERATION_STALE_500MS','GENERATION_STALE_1300MS','ACCOUNT_GENERATION_PARTIAL','HEAD_ADVANCED_GENERATION_RETRY_LIMIT','INVENTORY_CURSOR_REQUIRED','CURSOR_CONFLICT','CURSOR_INTEGRITY','CURSOR_REORG','GENESIS_ANCHOR_CHANGED','ACCOUNT_GENERATION_FAILED','INVENTORY_WITNESS_FAILED','INCREMENTAL_SCAN_FAILED','HEAD_REGRESSION'}
         reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else 'SOURCE_OR_LEDGER_UNAVAILABLE_NO_FALLBACK'
         if stage=='POST_GENESIS_CTF_DISCOVERY' and preparation_rpc is not None and preparation_rpc.failure:
             reason=preparation_rpc.failure
@@ -431,11 +444,13 @@ async def run(target=False,*,health_contract=False):
             'measured_scan_resume_delay_ms':path.get('scan_resume_delay_ms'),
             'measured_generation_continuation_delay_ms':worker_timing.get('continuation_delay_ms')}
         recorder=current_calibration()
-        if recorder is not None:
+        if recorder is not None and generation is not None:
             timestamps={n:part.get('observed_ms') for n,part in (generation or {}).get('components',{}).items()}
             timestamps['book']=book_obs
             recorder.generation((generation or {}).get('id'),evaluated,timestamps)
-        report={'phase':'D6_POST_GENESIS_READ_ONLY','readiness':annotate(readiness),'reconciliation':reconciliation,
+        report={'phase':'D6_POST_GENESIS_READ_ONLY','inventory_catchup':inventory_catchup,
+            'TAIL_SCAN_ROOT_CAUSE':(inventory_catchup or {}).get('TAIL_SCAN_ROOT_CAUSE'),
+            'generation_created':generation is not None,'downstream_checks_qualified':generation is not None,'readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
             'genesis_unchanged':bool(prior and read_genesis(LEDGER)['snapshot_sha256']==prior['snapshot_sha256']),
             'inventory_completeness':inventory_completeness(current_generation_inventory) if health_contract else None,

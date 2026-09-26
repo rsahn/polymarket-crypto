@@ -7,14 +7,20 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
     from eth_abi import decode
     report={'complete':False,'status':'BLOCKED','contract':CTF,'from_block':start,'to_block':end,
             'global_coverage_proven':False,'scope':'CTF_INCOMING_EVENTS_REQUESTED_RANGE_ONLY'}
+    stage='range_validation';active=None
+    diagnostics=dict(stage=stage,cause=None,ranges_planned=[],ranges_completed=[],first_failed_range=None)
+    report['diagnostics']=diagnostics
     try:
-        if type(start) is not int or type(end) is not int or not 0<=start<=end or end-start>=50000:raise ValueError()
+        if type(start) is not int or type(end) is not int or not 0<=start<=end  :raise ValueError('SCAN_RANGE_INVALID')
+        if end-start>=50000:raise ValueError('SCAN_TOTAL_BLOCK_LIMIT')
         window=getattr(rpc,'log_window',500)
-        if type(window) is not int or not 1<=window<=500:raise ValueError()
+        if type(window) is not int or not 1<=window<=500:raise ValueError('SCAN_WINDOW_INVALID')
         block=hex(end)
         sigs=['0x'+keccak(text=x).hex() for x in ('TransferSingle(address,address,address,uint256,uint256)','TransferBatch(address,address,address,uint256[],uint256[])')]
         wallet_topic='0x'+rpc.wallet[2:].lower().rjust(64,'0');assets=set(known);seen=set()
         chunks=[(low,min(low+window-1,end)) for low in range(start,end+1,window)]
+        diagnostics['ranges_planned']=[list(x) for x in chunks]
+        stage='rpc_acquisition'
         queries=[('eth_getLogs',[{'address':CTF,'fromBlock':hex(low),'toBlock':hex(high),'topics':[sigs,None,None,wallet_topic]}]) for low,high in chunks]
         parallel=getattr(rpc,'parallel_inventory_reads',False) is True
         def read_many(requests):
@@ -29,13 +35,15 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
             chain=rpc.call('eth_chainId',[])
             anchor=rpc.call('eth_getBlockByNumber',[block,False])
             code=rpc.call('eth_getCode',[CTF,block])
-        if chain!='0x89' or anchor['number']!=block:raise ValueError()
-        if code in ('0x','0x00') or not code.startswith('0x'):raise ValueError()
+        if chain!='0x89' or anchor['number']!=block:raise ValueError('CTF_CHAIN_OR_BOUNDARY_INVALID')
+        if code in ('0x','0x00') or not code.startswith('0x'):raise ValueError('CTF_CODE_UNPROVEN')
         for index,(low,high) in enumerate(chunks):
+            active=[low,high];stage='logs_validation'
             rows=log_results[index] if parallel else rpc.call(*queries[index])
-            if not isinstance(rows,list) or len(rows)>=10000:raise ValueError()
+            if not isinstance(rows,list) or len(rows)>=10000:raise ValueError('CTF_LOG_RESPONSE_INVALID_OR_TRUNCATED')
             for row in rows:
-                if row.get('removed') is not False or row['address'].lower()!=CTF.lower() or len(row['topics'])!=4 or row['topics'][3].lower()!=wallet_topic:raise ValueError()
+                if row.get('removed') is not False:raise ValueError('CTF_REMOVED_LOG_OR_FLAG_MISSING')
+                if row['address'].lower()!=CTF.lower() or len(row['topics'])!=4 or row['topics'][3].lower()!=wallet_topic:raise ValueError()
                 if not low<=int(row['blockNumber'],16)<=high:raise ValueError()
                 key=(row['transactionHash'],row['logIndex'])
                 if key in seen:raise ValueError()
@@ -47,6 +55,8 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
                 else:raise ValueError()
                 assets.update(str(x) for x in ids)
                 if len(assets)>10000:raise ValueError()
+            diagnostics['ranges_completed'].append([low,high])
+        active=None;stage='balances_and_canonical_witness'
         nonzero=0;balances={}
         tokens=sorted(assets);balance_queries=[]
         for token in tokens:
@@ -60,11 +70,16 @@ def scan_ctf(rpc,start,end,known,*,capture=None):
         witness_started=time.time_ns()//1000000
         witness=rpc.call('eth_getBlockByNumber',[block,False])
         witness_received=time.time_ns()//1000000
-        if witness['hash']!=anchor['hash']:raise ValueError()
+        if witness['hash']!=anchor['hash']:raise ValueError('CTF_CANONICAL_HASH_CHANGED')
         if capture is not None:capture['final_numeric_witness']={'header':witness,'started_ms':witness_started,'received_ms':witness_received}
         if capture is not None:capture.update(balances=balances)
         report.update(status='PASS_SCOPED_READS',events_count=len(seen),assets_checked=len(assets),nonzero_assets=nonzero,
             discovered_outside_local_journal=len(assets-set(known)),block_hash=anchor['hash'],
             blockers=['DEPLOYMENT_START_AND_ARCHIVE_COMPLETENESS_NOT_ATTESTED','OTHER_POSITION_PROTOCOLS_NOT_COVERED','CREDENTIAL_ORDER_SCOPE_NOT_GLOBAL'])
-    except Exception:report['reason']='CTF_READ_RANGE_SCHEMA_OR_CHAIN_FAILED'
+    except Exception as exc:
+        report['reason']='CTF_READ_RANGE_SCHEMA_OR_CHAIN_FAILED'
+        allowed={'SCAN_RANGE_INVALID','SCAN_TOTAL_BLOCK_LIMIT','SCAN_WINDOW_INVALID','CTF_CHAIN_OR_BOUNDARY_INVALID','CTF_CODE_UNPROVEN','CTF_LOG_RESPONSE_INVALID_OR_TRUNCATED','CTF_REMOVED_LOG_OR_FLAG_MISSING','CTF_CANONICAL_HASH_CHANGED','PREPARATION_RPC_BUDGET_EXCEEDED','PREPARATION_RPC_RATE_LIMITED','PREPARATION_RPC_READ_FAILED'}
+        cause=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in allowed else getattr(exc,'category','CTF_EVIDENCE_INVALID_OR_RPC_FAILED')
+        diagnostics.update(stage=stage,cause=cause,exception_type=type(exc).__name__,first_failed_range=active)
+    else:diagnostics.update(stage='complete',cause=None)
     return report

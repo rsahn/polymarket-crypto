@@ -1,0 +1,585 @@
+{
+  "cursor": {
+    "complete": false,
+    "status": "PASS_SCOPED_READS",
+    "contract": "0x4D97DCd97eC945f40cF65F87097ACe5EA0476045",
+    "from_block": 94424638,
+    "to_block": 94438341,
+    "global_coverage_proven": false,
+    "scope": "CTF_INCOMING_EVENTS_REQUESTED_RANGE_ONLY",
+    "events_count": 0,
+    "assets_checked": 0,
+    "nonzero_assets": 0,
+    "discovered_outside_local_journal": 0,
+    "block_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+    "blockers": [
+      "DEPLOYMENT_START_AND_ARCHIVE_COMPLETENESS_NOT_ATTESTED",
+      "OTHER_POSITION_PROTOCOLS_NOT_COVERED",
+      "CREDENTIAL_ORDER_SCOPE_NOT_GLOBAL"
+    ],
+    "balances": {},
+    "observed_ms": 1790362652551,
+    "final_numeric_witness": {
+      "header": {
+        "baseFeePerGas": "0x39dee0aaac",
+        "difficulty": "0x1",
+        "extraData": "0xd78301100883626f7288676f312e32362e35856c696e75780000000000000000c7808406acfc0040c6cc6ce0651139c3e4613e3a977d2fdf72ce03a0f5441b0f1d720211dc73936c70c777c5fb40d57194ffdfa889a71c62cff82c14d145f4e93a7cf39da66d965a01",
+        "gasLimit": "0x9896800",
+        "gasUsed": "0x23b50d1",
+        "hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+        "logsBloom": "0x0fa98c3fd3370c84ce1937e1adc35b1fc0271b445c413ae2a1e7d5a61ec766c51b09563fa598c98f21dd8890f6cf877ddbe588e490e6b5897ac8cb9b063920644538e4fe77fce9cbf1bfcbad36a6e4f3362d54601f627d0195ebe2ade0eab8cbdf45ac286af7db141f4bb84b4591c842da4483cc2bc27631eade4a5d632b90b1bdf3adf64dfcd906a775df69d7f318255917449936f8daf9c85963677d67be0d2b735bd35d0381a1a8aab701014ae746ce1ed7d88de3a9726ade325a452369f7ed1e6a53b2f4b80351a79dfa560f96a8f33e36e4f7ed97df1075ba1819443d88a0562cccdd90480057a19d46048eed31f715ee505ca1207ac55d3aa8d73fdd57",
+        "miner": "0x0000000000000000000000000000000000000000",
+        "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "nonce": "0x0000000000000000",
+        "number": "0x5a103c5",
+        "parentHash": "0xfd38d81ba02bfc21e62dd1f6c398b55c5172d767e0365204ea50d3630f3748b8",
+        "receiptsRoot": "0x9ed431257fb66fedc599849ad9856dcc5cdba8200ad60cc1de96cac2fae0ef6a",
+        "sha3Uncles": "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+        "size": "0x23409",
+        "stateRoot": "0xa71d1d63a90257dfba8f4a12970ff7448ef6798950556ffa81702675654c31f6",
+        "timestamp": "0x6ab6c41c",
+        "transactions": [
+          "0x39441ff4db47cdf60ef8346cad867375f58453735b1766d0db7e3ef4a49c2595",
+          "0x7c09cdd4387ce052398878535d87940dadc6ff315d059170579eb7f0c48e1da2",
+          "0x48bfa11dfe6c194974849e776e5ee5345dc8744a1ac96295c2194e1358b6d1ca",
+          "0x919977c840eb2639b27622e7ed90da3306a34c80ffe378d439d1d90a53ac8829",
+          "0x6125ad24ecd0e7147821d27971427fdc5d15f1d6d5df5de448da3b468a6ee7dc",
+          "0xee80b71ba0bfac55ef713df7dfcc1d1bb57e08fdec91a1ec48052e0e87021bcf",
+          "0x9d7d1e40ea95ee7b2210cedfa6cf0a189e387e970be6e02f5a0c33d0443d2b7d",
+          "0x75c491c4e727a92d8aae42cd3b65b04f5f43d9578cc23a230b21b81c830c380d",
+          "0x34dbfa3dc620fed0cee8b3598653cb756d71eb74b16d7aa0a96c39d67b469b9a",
+          "0xb3e772afdc0e8fb720e8264fe331f8d511132ab67b94f4a9c84fc045141acbf4",
+          "0xde520c9c6c7db1b5cbd637ebd67c69835648d8c1f424db3a443b16ff575f980a",
+          "0xa86bfdd8852296b7e93a4cac93695c7f8f3c015ae55b83f14bd4e8192d393d66",
+          "0xf51d93026cafd3a0f619612fbde96169576277b2dd105095d5bc409df7cb8d0f",
+          "0x6e09e40438221d6a2fdfea0d6a81db07cb5ea853a254812c100ebfcf8e4f6731",
+          "0xdf57da1192020af1696c427e166dfab87d47000cfe825da8216341db85331893",
+          "0x9f143d7d9b2f835e33102af3629336c8abb7f27a51f5938d7cb74614b1014d5c",
+          "0x6992b39a1d0923074e887922ab07de521c1473624f025e7b3a6b17225cde0104",
+          "0xb99e165e20f9fe41b1315be8f9f803cc19234bf3b8e86c7e958a908b2224e719",
+          "0xd0ac0e1b4153366ba08d85f3469202c94ddb130c8a03f9cb7dcab598fb1c7528",
+          "0xf86c895d73683ab0be351a7fd82baf33824e8fd6a880bf8cbe92697e9266fd57",
+          "0xdf2bc51a4e6b0dfd4a396732d1d5889a430b3defd03b4a8d6524ceeea3d1d1d8",
+          "0xd397ec0ce607100b72c43e1f8b916a01c6852de98224c506b7285618ac46aea5",
+          "0xb4d0bb876a84c4c6b4d24d948e9e5f4415a4f33c460aed88034dfbdb26f28b34",
+          "0x6cff3aaa8aecd6c17ac8446b60a24865744d079042b2471a4db7715f05072dec",
+          "0xc699bf9cd8c338170e8d977e68a16ca9424bfc4cc14ebfc8a90f53cc3610c49b",
+          "0x3df90435b443bfb35e2355c9509298a0d2ebe745a1bb5fd4d047a3be0f6464a6",
+          "0x08193485dba585e7a731dac25e266466f594d8cf99214ab4a2320ca8ff9a9f51",
+          "0xd7cdc3c4a3f852ccd32c9a414059128c2fbdae16bf19495814c609ce3299cc3b",
+          "0x72b65d78a19f9fb2787b6fee9867713c7221e48d4896bb4f58afc5834bedcbbb",
+          "0xa10802c7ee4e4f67e8fc488bd10ab13b0257816c773ca530633dc1de098ae749",
+          "0x5159b30fdb24a37e30a0768cc95d7c0dee312f3f8ee6c6c4a62a9dfb4f7dc7b0",
+          "0x78a6709a6c06451886570f877199e614dd3c968ea66c2e42e4aabaa1b3f3bc14",
+          "0xda5e0168f52bd68a49abef503197ede64c14b8b469275e18d17c0c1c2103f193",
+          "0x8b490be53558241730b78bcacd7c2ddf25973eacc479c20c59ff43d0c52c422d",
+          "0x9acfd4cdb4a8fc4ec49b7554b387ceb611444fcfb682783680502f564981244b",
+          "0x0c03b3798d1a764e07f9521dbced61dca20e9daa127dd0704a804a37e04a7a8c",
+          "0x06fc2da54e39a6f06adc40612fa333696fef3a98564c15df1202e58c97821e81",
+          "0x3556e20cc07d592673bb9961d7babd30e24f9e1ab7fdc3d6670f26cf742362b6",
+          "0x77217ae1ebc16edc0815debfca27a37b27eac1066828579decc0535608532245",
+          "0x4491d3735ae0fb57536b3979f296324f5ad9faaf478248c0ed068c0b59f70b98",
+          "0x79353f561670dfb8a0284bbbfa5a2d09a494bf37b9e5658ec79d041adbc7c44a",
+          "0x8f10ba07c35cbf68f03d45ce6cd0a0062e94cd3384e8aa4729aecd0204700b76",
+          "0xdae19a82f56fa8f841aade69024296c2a346e0bf2a54b5c936eeea7b40589f86",
+          "0x1a95daf1b2dd567999ee0b7f4ff7a75f35d41d23cb44104769ce3cc4607eb789",
+          "0x5de9427bb3dc91ccf3c0aa17709d6353f892681c7e8eb09e26025fda6713f3d6",
+          "0x2c7a5e1c841d4f651f27dd6f1333f63f8659425737035c2754d3548ece24e826",
+          "0xe523816e381e120b53d774509460e25ed79bdeebc94e826a43b34f8b0847033f",
+          "0x713a3c58801d748149288f70abf95899fffaf79acc32318262f4a7c4d30529b2",
+          "0xe396f235b9c3c584f99afdd3325023cc9a32434ec20b673014229edec80233fd",
+          "0xe5e756fe28db11310ca5e9b70eb3ab82e94e2e089653ac6c1a89035dbe9c9e40",
+          "0x5e04904f727a49853f5994c8f035d36751c03edeb47feadbac01585efc2d39d0",
+          "0xa8739553ef0b74b44c20fed381531653d72372e347110e882da358a07044bb00",
+          "0x77f7a2bfeaa125a79168808c07ec21be7152351d5391bb97a5310bd68a966504",
+          "0x1860ce94651670c95f90833c2f564372edd7c613734cf82ba1c6ccf5b528031c",
+          "0xec16f11b356164add182601f6574c4114e5c282dbd582b68d99ea410d54ba612",
+          "0x682c519307c751dbce43e56cc60fe1a42e473285df5955368060823d23044ca6",
+          "0x7785d701caa32577f3749291abf870505306f7ae511a5fd0c9e186e1b5d6ef9c",
+          "0x2c4ef0fdc8ffcaa2a6e32d1f55a5eae5b438eab993767047c905607719a13d41",
+          "0x483f8435f999e42d613a40d18bdb85310f5eda420734db977f49c8beadde43e8",
+          "0x2eec9669d240873fadd6708e4be41e414a1c356e69a422fc5fe7475e4725f928",
+          "0x6171e6ef9d8bdf6f19c9ace6b0320d5269148e6da20d903844dbbda14e2ef2d9",
+          "0xc8a16cc8a7478bf70dd6d3704df414928664275801babb744739c643d1fb4b92",
+          "0x8ce76fd59f45c3fe8e133d688c82ecab8017ecbcf0ae90e906af6ae04df68bfd",
+          "0x4d86ffee9779548415abf52ff3ac8895b98d38a31d3685c4a00899978367917b",
+          "0xe93cf0570fef6dc60de76f3df4b162399b93765b19e6ada46daf0f502f5ac330",
+          "0xa9d485506b23bb5d47b75c2693728f701937748ae1f4b68ab833e39d4d2caede",
+          "0x6d9a5f067f0ae4938fe5093fc5f7b732eea61a5f75054f84262eff93b6fe4f3e",
+          "0xea06af4fcdd5803b7a2de779c745b96c79a6b049ae925029caca4117c1c34af3",
+          "0x8c82a96f58f411ca849c08060df36bcf4ab8091e4f559c4f1295dcbb544e7883",
+          "0x07d73f5b8bebf8572526d6b8d5e15af0bf0106e6b420e2f110c2a0f59685b9d6",
+          "0xf70b1a4a5f9cb8143f7de730b29342af8d7da4d3e66475cad96e610ba83a5fa5",
+          "0xfc2cf54a4189b049c8267713c40da5fad847b50a83e8ec21a044e4d2d7993b90",
+          "0x5572796cc2fb987a017a9659f0d07eafe1f0faa65958ea1bfdb742603670401c",
+          "0x52652c63c524389ac59c2e3994ac8e29b0eb675a2980bd754ed05484a5b875b0",
+          "0x4ac20c80c054e85f0b7187c3e040923d722837f65cf0390fa6a52acb2bc25145",
+          "0xcf7e75a3f82e2bf52138ab0006c9d72168f60fca42a3095c433b57edbea7d303",
+          "0x24f56dd38512f6e4705c4077d3d52e33f617269598c2b6a5506a9c986d732dda",
+          "0xe22f3543e171ae380c053cd532a0d1ea8c23257a44a1594b3acd60a9ab63063b",
+          "0x8ca7a51f50b21de51bca45c4889eb7adb7b172cc3c43b67d77516fdcde1c5c73",
+          "0x5fe0084cefc52c145e6e21081ad830de677a90d77bd3e7de16fa488201d0dd5f",
+          "0x1bef6f680c0957946a20495bf34e403e38b56351a17d21d08aad14cfb7969c1d",
+          "0x2177e349936d6a016fb584426a3d866b46b56b4297e52cab4fa8259332b5feb7",
+          "0xbf28bc716830b64276d573d4ce7e4afaa6a8e29b5b8a903cd865db9ee7465dcc",
+          "0xcef264fb3afc07394629ffe6ec9cdad2c698ca71cba2013275586d333fde53d6",
+          "0xc3d91a96e520f84b66b646106a01610b9dffb4f38ecff44b7276a19e75c278c0",
+          "0x30b73a2af250c2d6ebe1774b8d404804b7893199e41048d08f90ea78c9772cc5",
+          "0x3df92e0a9fda5b11c75490ea2bf2e776b46a9907daf6a1575eb9d4fb35f3460f",
+          "0x3acd03fed5205ebf8623b873e6bb4adfe3191e8c8289dec5de9b86979b5e67be",
+          "0x3d2dcff6498f4bdd921d377a2d9cf68695b03401735bc472d4658eda4c99de32"
+        ],
+        "transactionsRoot": "0x7143b313675fbab4402e2e248e44b12aa1c3c81c3ae551dda9b00652270321a5",
+        "uncles": []
+      },
+      "started_ms": 1790362652686,
+      "received_ms": 1790362652769
+    },
+    "scan_worker_finished_ms": 1790362652769,
+    "scan_observed_ms": 1790362652551,
+    "generation_attempt": 1,
+    "post_b_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": true,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN"
+    },
+    "critical_path": {
+      "scan_dispatch_ms": 1790362652457,
+      "scan_observed_ms": 1790362652551,
+      "scan_finished_ms": 1790362652769,
+      "scan_worker_finished_ms": 1790362652769,
+      "scan_resume_delay_ms": 0,
+      "seal_started_ms": 1790362652686,
+      "sealed_ms": 1790362652769,
+      "seal_provenance": "SCAN_FINAL_NUMERIC_WITNESS",
+      "account_started_ms": 1790362652769,
+      "account_finished_ms": 1790362652905,
+      "recheck_started_ms": 1790362652905,
+      "recheck_finished_ms": 1790362653017,
+      "boundary_evaluated_ms": 1790362653017
+    },
+    "boundary_evidence": {
+      "generation": 1,
+      "finalized_qualified": true,
+      "cursor_previous": 94437884,
+      "anchor_number": 94438326,
+      "boundary_number": 94438341,
+      "anchor_hash": "0x13c1733cc672feac98d4675b9b63c81dcc8be1ac4b7c33835560346171e69ce1",
+      "anchor_rechecked_hash": "0x13c1733cc672feac98d4675b9b63c81dcc8be1ac4b7c33835560346171e69ce1",
+      "boundary_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+      "boundary_rechecked_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+      "anchor_ranges": [
+        [
+          94437885,
+          94437894
+        ],
+        [
+          94437895,
+          94437904
+        ],
+        [
+          94437905,
+          94437914
+        ],
+        [
+          94437915,
+          94437924
+        ],
+        [
+          94437925,
+          94437934
+        ],
+        [
+          94437935,
+          94437944
+        ],
+        [
+          94437945,
+          94437954
+        ],
+        [
+          94437955,
+          94437964
+        ],
+        [
+          94437965,
+          94437974
+        ],
+        [
+          94437975,
+          94437984
+        ],
+        [
+          94437985,
+          94437994
+        ],
+        [
+          94437995,
+          94438004
+        ],
+        [
+          94438005,
+          94438014
+        ],
+        [
+          94438015,
+          94438024
+        ],
+        [
+          94438025,
+          94438034
+        ],
+        [
+          94438035,
+          94438044
+        ],
+        [
+          94438045,
+          94438054
+        ],
+        [
+          94438055,
+          94438064
+        ],
+        [
+          94438065,
+          94438074
+        ],
+        [
+          94438075,
+          94438084
+        ],
+        [
+          94438085,
+          94438094
+        ],
+        [
+          94438095,
+          94438104
+        ],
+        [
+          94438105,
+          94438114
+        ],
+        [
+          94438115,
+          94438124
+        ],
+        [
+          94438125,
+          94438134
+        ],
+        [
+          94438135,
+          94438144
+        ],
+        [
+          94438145,
+          94438154
+        ],
+        [
+          94438155,
+          94438164
+        ],
+        [
+          94438165,
+          94438174
+        ],
+        [
+          94438175,
+          94438184
+        ],
+        [
+          94438185,
+          94438194
+        ],
+        [
+          94438195,
+          94438204
+        ],
+        [
+          94438205,
+          94438214
+        ],
+        [
+          94438215,
+          94438224
+        ],
+        [
+          94438225,
+          94438234
+        ],
+        [
+          94438235,
+          94438244
+        ],
+        [
+          94438245,
+          94438254
+        ],
+        [
+          94438255,
+          94438264
+        ],
+        [
+          94438265,
+          94438274
+        ],
+        [
+          94438275,
+          94438284
+        ],
+        [
+          94438285,
+          94438294
+        ],
+        [
+          94438295,
+          94438304
+        ],
+        [
+          94438305,
+          94438314
+        ],
+        [
+          94438315,
+          94438324
+        ],
+        [
+          94438325,
+          94438326
+        ]
+      ],
+      "tail_ranges": [
+        [
+          94438327,
+          94438336
+        ],
+        [
+          94438337,
+          94438341
+        ]
+      ],
+      "rpc_complete": true,
+      "events_count": 0,
+      "scan_observed_ms": 1790362652551,
+      "sealed_ms": 1790362652769,
+      "rechecked_ms": 1790362652905,
+      "account": {
+        "balance": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790362652769
+        },
+        "orders": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790362652770
+        },
+        "trades": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790362652770
+        },
+        "positions": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790362652770
+        }
+      }
+    },
+    "cursor_previous": 94437884,
+    "anchor_catchup_ranges": [
+      [
+        94437885,
+        94437894
+      ],
+      [
+        94437895,
+        94437904
+      ],
+      [
+        94437905,
+        94437914
+      ],
+      [
+        94437915,
+        94437924
+      ],
+      [
+        94437925,
+        94437934
+      ],
+      [
+        94437935,
+        94437944
+      ],
+      [
+        94437945,
+        94437954
+      ],
+      [
+        94437955,
+        94437964
+      ],
+      [
+        94437965,
+        94437974
+      ],
+      [
+        94437975,
+        94437984
+      ],
+      [
+        94437985,
+        94437994
+      ],
+      [
+        94437995,
+        94438004
+      ],
+      [
+        94438005,
+        94438014
+      ],
+      [
+        94438015,
+        94438024
+      ],
+      [
+        94438025,
+        94438034
+      ],
+      [
+        94438035,
+        94438044
+      ],
+      [
+        94438045,
+        94438054
+      ],
+      [
+        94438055,
+        94438064
+      ],
+      [
+        94438065,
+        94438074
+      ],
+      [
+        94438075,
+        94438084
+      ],
+      [
+        94438085,
+        94438094
+      ],
+      [
+        94438095,
+        94438104
+      ],
+      [
+        94438105,
+        94438114
+      ],
+      [
+        94438115,
+        94438124
+      ],
+      [
+        94438125,
+        94438134
+      ],
+      [
+        94438135,
+        94438144
+      ],
+      [
+        94438145,
+        94438154
+      ],
+      [
+        94438155,
+        94438164
+      ],
+      [
+        94438165,
+        94438174
+      ],
+      [
+        94438175,
+        94438184
+      ],
+      [
+        94438185,
+        94438194
+      ],
+      [
+        94438195,
+        94438204
+      ],
+      [
+        94438205,
+        94438214
+      ],
+      [
+        94438215,
+        94438224
+      ],
+      [
+        94438225,
+        94438234
+      ],
+      [
+        94438235,
+        94438244
+      ],
+      [
+        94438245,
+        94438254
+      ],
+      [
+        94438255,
+        94438264
+      ],
+      [
+        94438265,
+        94438274
+      ],
+      [
+        94438275,
+        94438284
+      ],
+      [
+        94438285,
+        94438294
+      ],
+      [
+        94438295,
+        94438304
+      ],
+      [
+        94438305,
+        94438314
+      ],
+      [
+        94438315,
+        94438324
+      ],
+      [
+        94438325,
+        94438326
+      ]
+    ],
+    "provenance": "FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY",
+    "finalized_block": 94438326,
+    "finalized_hash": "0x13c1733cc672feac98d4675b9b63c81dcc8be1ac4b7c33835560346171e69ce1"
+  },
+  "genesis_binding": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "cursor_hash_verified": false,
+  "endpoint_configured": false
+}

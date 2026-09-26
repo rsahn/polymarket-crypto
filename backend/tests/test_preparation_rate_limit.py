@@ -94,9 +94,9 @@ def test_early_failure_does_not_republish_old_generation_timing(monkeypatch):
     assert not report['readiness']['submit_allowed']
 
 
-def test_actual_catchup_keeps_every_ten_block_range_and_final_witness():
+def test_preparation_scanner_keeps_every_ten_block_range_outside_readiness():
     from app.live.preparation_rpc import PreparationRPC
-    from analysis.qualify_post_b_proofs import prepare_finalized_inventory
+    from analysis.qualify_post_b_proofs import qualify_finalized,fixed_scan
     clock=Clock();ranges=[];calls=[]
     class RPC:
         wallet='0x'+'1'*40
@@ -115,7 +115,8 @@ def test_actual_catchup_keeps_every_ten_block_range_and_final_witness():
     original=RPC();rpc=PreparationRPC(original,clock=clock.now,sleep=clock.sleep)
     cursor=dict(from_block=1,to_block=10,block_hash='0x'+'a'*64,balances={},events_count=0)
     prior={'snapshot':dict(block_number=0,block_hash='0x'+'a'*64)}
-    result,qualified=prepare_finalized_inventory(rpc,prior,cursor)
+    qualified=qualify_finalized(rpc)
+    result,_=fixed_scan(rpc,cursor,qualified['anchor'])
     assert ranges==[(i,min(i+9,1046)) for i in range(11,1047,10)]
     assert len(ranges)==104
     assert result['to_block']==1046 and qualified['anchor']['number']==1046

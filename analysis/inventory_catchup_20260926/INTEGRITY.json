@@ -1,0 +1,21 @@
+{
+  "protected_changes": {},
+  "preexisting_changes": [
+    "analysis/d5/resumed_review_20260920_214402/telemetry.json",
+    "analysis/d5/resumed_review_20260920_214402/telemetry.jsonl"
+  ],
+  "checkpoint_file": "runtime\\d6_inventory_cursors\\94438341_f0ecb179baf44aeb8e5598fe65463a7c.json",
+  "checkpoint_checksum_verified": true,
+  "genesis_binding_verified": true,
+  "old_boundary_proof_revalidated": {
+    "inventory_through_C_proven": true,
+    "boundary_generation_complete": true,
+    "current_inventory_proven": false,
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+    "reason": "POST_BOUNDARY_CURRENT_SCOPE_UNPROVEN"
+  },
+  "cursor_block": 94438341,
+  "cursor_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad"
+}
