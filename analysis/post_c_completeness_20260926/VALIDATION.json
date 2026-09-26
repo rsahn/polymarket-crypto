@@ -1,0 +1,24 @@
+{
+  "result": "CURRENT_INVENTORY_PROOF_IMPOSSIBLE_WITH_CURRENT_SOURCES",
+  "current_inventory_proven": false,
+  "full_suite": {
+    "passed": 871,
+    "subtests": 25,
+    "warnings": 3
+  },
+  "targeted_passed": 101,
+  "live_boundary_files": 125,
+  "hard_locks": 3,
+  "sdk_monetary_attempts": 0,
+  "STRATEGY_VALIDATION_STATUS": "INCOMPLETE_EVIDENCE",
+  "SYSTEM_READY": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "protected_unchanged": true,
+  "leak_findings": 0,
+  "genesis_sha256": "5365085da95cecb49fa4c922b890e9803ef223fdefef541505c2dc5a3de7814f",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+  "new_public_requests": "GET /v2/status and official documentation only",
+  "new_authenticated_requests": 0,
+  "new_worker_started": false
+}

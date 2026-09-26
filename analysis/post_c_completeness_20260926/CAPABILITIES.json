@@ -1,0 +1,127 @@
+{
+  "sdk_version": "0.11.0",
+  "builders_and_parsers": {
+    "build_list_open_orders_request": {
+      "signature": "(*, asset_id: str | None = None, token_id: str | None = None, id: str | None = None, market: str | None = None, cursor: str | None = None) -> tuple[str, dict[str, str | int | float | bool | tuple[str | int | float | bool, ...]]]",
+      "source_sha256": "376c2624212774fbdc3edca753bb75bb3909ddd73e65f2734b7b778a9846e3fa"
+    },
+    "build_list_account_trades_request": {
+      "signature": "(*, asset_id: str | None = None, token_id: str | None = None, id: str | None = None, market: str | None = None, maker_address: str | None = None, after: str | None = None, before: str | None = None, cursor: str | None = None) -> tuple[str, dict[str, str | int | float | bool | tuple[str | int | float | bool, ...]]]",
+      "source_sha256": "5e446988695dc33061109b9a789f47ddd0192847a095f0ec4cde0e99ab534a7e"
+    },
+    "build_balance_allowance_request": {
+      "signature": "(*, asset_type: Literal['COLLATERAL', 'CONDITIONAL', 'CONDITIONAL-V2'], asset_id: str | None = None, token_id: str | None = None, signature_type: int) -> tuple[str, dict[str, str | int | float | bool | tuple[str | int | float | bool, ...]]]",
+      "source_sha256": "72cb9efe65b9633e24b94c1209af7993b7f1c2b65de22aceb494f3b833b2db92"
+    },
+    "parse_open_orders_page": {
+      "signature": "(data: object) -> polymarket.pagination.Page[polymarket.models.clob.account.OpenOrder]",
+      "source_sha256": "2cdc2c101181d234b27334404fa04d9a1e9e78921702dd146c731c936d08924d"
+    },
+    "parse_account_trades_page": {
+      "signature": "(data: object) -> polymarket.pagination.Page[polymarket.models.clob.account.ClobTrade]",
+      "source_sha256": "d2036736469b7c1f0fc0abed785ed4a3c120f36d80f16ccdab7ef2ed6efc6f17"
+    },
+    "list_positions_spec": {
+      "signature": "(*, user: str | None = None, condition_id: str | collections.abc.Sequence[str] | None = None, status: Union[Literal['OPEN', 'REDEEMABLE', 'CLOSED'], polymarket.models.data.common.PositionStatus, NoneType] = None, event_id: int | collections.abc.Sequence[int] | None = None, filter_type: Optional[Literal['CASH', 'TOKENS']] = None, filter_amount: float | None = None, include_archived: bool | None = None, sort_by: Optional[Literal['CURRENT_VALUE', 'TOKENS', 'UNREALIZED_PNL', 'REALIZED_PNL', 'TOTAL_PNL', 'TIMESTAMP']] = None, sort_direction: Optional[Literal['ASC', 'DESC']] = None, start: int | datetime.datetime | None = None, end: int | datetime.datetime | None = None, full_history: bool = False) -> polymarket._internal.request.KeysetPaginatedSpec[polymarket.models.data.portfolio.Position]",
+      "source_sha256": "6a53dc67f06f50abfc9a54aac0d0b62c09079e8298331e580f685f11288f1547"
+    },
+    "parse_data_page": {
+      "signature": "(payload: object, parse_items: collections.abc.Callable[[object], tuple[~T, ...]]) -> polymarket._internal.request.KeysetPagePayload[~T]",
+      "source_sha256": "11b876a19411036721201dd63c34befc6b420a387eb17634ef7d68ea32a371f1"
+    }
+  },
+  "fields": {
+    "ClobTrade": [
+      "id",
+      "market",
+      "condition_id",
+      "asset_id",
+      "owner",
+      "maker_address",
+      "taker_order_id",
+      "side",
+      "trader_side",
+      "price",
+      "size",
+      "outcome",
+      "status",
+      "fee_rate_bps",
+      "bucket_index",
+      "transaction_hash",
+      "maker_orders",
+      "matched_at",
+      "updated_at"
+    ],
+    "OpenOrder": [
+      "id",
+      "market",
+      "condition_id",
+      "asset_id",
+      "owner",
+      "maker_address",
+      "side",
+      "price",
+      "original_size",
+      "size_matched",
+      "outcome",
+      "order_type",
+      "status",
+      "associate_trades",
+      "created_at",
+      "expires_at"
+    ],
+    "BalanceAllowance": [
+      "balance",
+      "allowances"
+    ],
+    "Position": [
+      "wallet",
+      "asset_id",
+      "condition_id",
+      "current_size",
+      "avg_price",
+      "entry_cost_usdc",
+      "entry_fees_usdc",
+      "total_cost_usdc",
+      "current_price",
+      "current_value",
+      "total_size",
+      "realized_pnl",
+      "unrealized_pnl",
+      "total_pnl",
+      "percent_pnl",
+      "percent_realized_pnl",
+      "status",
+      "redeemable",
+      "mergeable",
+      "negative_risk",
+      "archived",
+      "verified",
+      "title",
+      "slug",
+      "icon",
+      "event_slug",
+      "outcome",
+      "opposite_outcome",
+      "name",
+      "profile_image",
+      "event_id",
+      "outcome_index",
+      "opposite_asset_id",
+      "end_date",
+      "last_event_at"
+    ]
+  },
+  "public_status_observation": {
+    "url": "https://data-api.polymarket.com/v2/status",
+    "computed_at": "2026-09-26T18:51:31Z",
+    "age_seconds": 23,
+    "chain_id": 137,
+    "min_synced_block": 94495699,
+    "max_synced_block": 94495700,
+    "serving_lag_seconds": 1,
+    "is_common_cut_attestation": false
+  },
+  "worker_processes_matching_run_inventory_catchup": 0,
+  "worker_observation_method": "Get-CimInstance Win32_Process python.exe, read-only, no command lines exposed"
+}

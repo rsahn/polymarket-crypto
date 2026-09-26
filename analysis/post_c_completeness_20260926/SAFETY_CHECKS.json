@@ -1,0 +1,19 @@
+{
+  "protected_sha256_unchanged": {
+    "runtime/d6_genesis.db": true,
+    "backend/app/live/genesis_ledger.py": true,
+    "analysis/d6/paper_live.py": true,
+    "analysis/run_d6_paper_live.py": true,
+    "backend/app/live/risk.py": true,
+    "backend/app/live/readonly_book_stream.py": true,
+    "backend/app/live/temporal_contract.py": true,
+    "backend/app/live/readiness.py": true,
+    "backend/app/live/clob_staged.py": true,
+    "backend/app/live/execution.py": true
+  },
+  "leak_scan_scope": "six changed code/test files and new audit artifacts; no credential values loaded",
+  "files_scanned": 17,
+  "leak_findings": [],
+  "diff_check_exit_code": 0,
+  "diff_check": ""
+}

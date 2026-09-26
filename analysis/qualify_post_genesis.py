@@ -13,6 +13,7 @@ sys.path.insert(0,str(ROOT/'backend'))
 from app.live.genesis_ledger import read_genesis,append_activity,expected_wallet,LIMITS
 from app.live.forward_readiness import evaluate_baseline,ObservationSource,ForwardSessionRiskSource,validate_generation
 from app.live.readonly_book_stream import StreamBook
+from app.live.post_c_completeness import current_inventory_diagnostic
 from app.live.production_readonly import now_ms,drain,plain,units,GeoBlockSource,BookStateSource
 from app.live.readiness import ProductionReadinessCheck
 from app.live.temporal_contract import domain_policy, inventory_stale_reason as stale_reason
@@ -449,6 +450,7 @@ async def run(target=False,*,health_contract=False):
             timestamps['book']=book_obs
             recorder.generation((generation or {}).get('id'),evaluated,timestamps)
         report={'phase':'D6_POST_GENESIS_READ_ONLY','inventory_catchup':inventory_catchup,
+            'current_inventory_proof':current_inventory_diagnostic(current_generation_inventory),
             'TAIL_SCAN_ROOT_CAUSE':(inventory_catchup or {}).get('TAIL_SCAN_ROOT_CAUSE'),
             'generation_created':generation is not None,'downstream_checks_qualified':generation is not None,'readiness':annotate(readiness),'reconciliation':reconciliation,
             'genesis_created':False,'genesis_snapshot_sha256':prior['snapshot_sha256'] if prior else None,
@@ -497,7 +499,8 @@ def main():
             report=asyncio.run(runner(args[0]=='--target-machine',health_contract='--health-contract' in args))
         report['temporal_contract']='D6_SEMANTIC_V1'
         if recorder is not None:report['shadow_calibration']=recorder.report()
-    except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False}
+    except BaseException:report={'phase':'D6_POST_GENESIS_READ_ONLY','status':'BLOCKED','ready_for_arm':False,'submit_allowed':False,
+        'current_inventory_proof':current_inventory_diagnostic()}
     path=ROOT/('D6_POST_GENESIS_READINESS_'+datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S_%f')+'.json')
     write_report(path,report);print(json.dumps(report,indent=2));print('REPORT_FILE='+path.name)
 

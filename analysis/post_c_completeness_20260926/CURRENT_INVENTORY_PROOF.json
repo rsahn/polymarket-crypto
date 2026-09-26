@@ -1,0 +1,43 @@
+{
+  "source_report": "D6_INVENTORY_CATCHUP_20260926_182825_344562.json",
+  "source_sha256": "492bacd11f585fe6cb0c6c9981b9b6cebdf65db2e860d1e4c084e69671e99cf2",
+  "new_observation_performed": false,
+  "current_inventory_proof": {
+    "status": "CURRENT_INVENTORY_PROOF_IMPOSSIBLE_WITH_CURRENT_SOURCES",
+    "current_inventory_proven": false,
+    "SYSTEM_READY": false,
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "C": 94493874,
+    "W": null,
+    "C_hash": "0x813a7c5b0db6bf360d02bcc88a1ab573b69f8649fb9661eaa83ad9a53c6f0eb5",
+    "W_hash": null,
+    "onchain_coverage_start": 94438342,
+    "onchain_coverage_end": 94493874,
+    "gaps": "UNKNOWN",
+    "canonical_recheck": true,
+    "balance_block": 94493874,
+    "clob_boundary": null,
+    "trades_boundary": null,
+    "orders_boundary": null,
+    "positions_boundary": null,
+    "indexer_boundary": null,
+    "common_watermark": null,
+    "omitted_interval": {
+      "after_block": 94493874,
+      "through": "GENERATION_DECISION_UNKNOWN_CUT",
+      "remote_lower_bound": "UNKNOWN",
+      "closure": "UNPROVEN"
+    },
+    "proof_reason": "NO_COMMON_POST_C_COMPLETENESS_WATERMARK",
+    "missing_capabilities": [
+      "CLOB_SCOPE_COMPLETE_SEQUENCE_AND_CHAIN_SETTLEMENT_LINK",
+      "POSITIONS_PAGE_TO_SERVING_INGESTION_BOUNDARY_BINDING",
+      "POST_W_TO_DECISION_MUTATION_CLOSURE"
+    ],
+    "provenance": "BOOTSTRAP_SCOPED_C_NOT_A_DECISION_GENERATION",
+    "scope": "IDENTIFIED_CTF_ONLY_NOT_GLOBAL_INVENTORY",
+    "post_C_scan_performed": false,
+    "indexer_status_capability": "PUBLIC_V2_STATUS_EXISTS_NOT_A_COMMON_CUT"
+  }
+}
