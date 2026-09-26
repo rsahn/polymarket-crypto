@@ -1,0 +1,89 @@
+........................................................................ [  8%]
+................................................................... [ 17%]
+..................................................................... [ 25%]
+.............................................................F.......FF. [ 34%]
+FF...................F...............F....F............................. [ 43%]
+........................................................................ [ 52%]
+........................................................................ [ 60%]
+........................................................................ [ 69%]
+........................................................................ [ 78%]
+........F...F..................................................... [ 86%]
+............................................................. [ 94%]
+...............................................                          [100%]
+================================== FAILURES ===================================
+_________________ test_authorized_boundaries_and_no_retiming __________________
+backend\tests\test_freshness_policy.py:12: in test_authorized_boundaries_and_no_retiming
+    assert fresh(1000,2300)
+E   assert False
+E    +  where False = fresh(1000, 2300)
+__________________________ test_book_uses_same_limit __________________________
+backend\tests\test_freshness_policy.py:44: in test_book_uses_same_limit
+    for token in ('a','b'):book.update(token,[(.4,2)],[(.5,2)],1000,1)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\live\production_readonly.py:157: in update
+    if not fresh(observed_ms,self.clock(),BOOK_MAX_AGE_MS):raise ValueError("STALE_BOOK")
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   ValueError: STALE_BOOK
+____________ test_execution_and_staged_gate_share_selected_policy _____________
+backend\tests\test_freshness_policy.py:58: in test_execution_and_staged_gate_share_selected_policy
+    assert gate.max_book_age_ms==1300
+E   assert 500 == 1300
+E    +  where 500 = BookFreshnessGate(max_book_age_ms=500, connected=False, synced=False, last_book_update_ms=None).max_book_age_ms
+_______ test_manual_runner_explicit_policy_is_applied_and_reported[500] _______
+backend\tests\test_freshness_policy.py:95: in test_manual_runner_explicit_policy_is_applied_and_reported
+    assert len(rows)==1
+E   assert 0 == 1
+E    +  where 0 = len([])
+---------------------------- Captured stdout call -----------------------------
+GLOBAL_FRESHNESS_OVERRIDE_RETIRED: use --shadow-calibration with --calibration-shares; no SLA is fitted.
+______ test_manual_runner_explicit_policy_is_applied_and_reported[1300] _______
+backend\tests\test_freshness_policy.py:95: in test_manual_runner_explicit_policy_is_applied_and_reported
+    assert len(rows)==1
+E   assert 0 == 1
+E    +  where 0 = len([])
+---------------------------- Captured stdout call -----------------------------
+GLOBAL_FRESHNESS_OVERRIDE_RETIRED: use --shadow-calibration with --calibration-shares; no SLA is fitted.
+_____ test_full_readiness_pusd_and_genesis_requires_fresh_reconciliation ______
+backend\tests\test_genesis_ledger.py:65: in test_full_readiness_pusd_and_genesis_requires_fresh_reconciliation
+    assert len(r['checks'])==12 and r['checks']['balance_pusd']
+E   AssertionError: assert (12 == 12 and False)
+E    +  where 12 = len({'wallet_auth': True, 'geoblock': False, 'book_freshness': False, 'account_reconciliation': False, ...})
+______________ test_health_true_empty_market_false_never_submit _______________
+backend\tests\test_health_eligibility.py:28: in test_health_true_empty_market_false_never_submit
+    assert r["SYSTEM_READY"] and not r["MARKET_ELIGIBLE_NOW"]
+E   assert (False)
+________ test_unseen_post_boundary_transfer_cannot_be_certified_absent ________
+backend\tests\test_inventory_information_gap.py:17: in test_unseen_post_boundary_transfer_cannot_be_certified_absent
+    assert result['boundary_generation_complete']
+E   assert False
+_____________ test_full_readiness_generation_gate[499-False-True] _____________
+backend\tests\test_snapshot_generation.py:104: in test_full_readiness_generation_gate
+    assert len(r['checks'])==12 and r['ready_for_arm'] is expected and not r['submit_allowed']
+E   AssertionError: assert (12 == 12 and False is True)
+E    +  where 12 = len({'wallet_auth': True, 'balance_usdc': False, 'allowance_usdc': False, 'geoblock': True, ...})
+__________ test_qualifier_evaluates_before_ws_shutdown[False-False] ___________
+backend\tests\test_snapshot_generation.py:177: in test_qualifier_evaluates_before_ws_shutdown
+    assert r['readiness']['ready_for_arm'] is (not empty and not health_contract),r['reconciliation']
+E   AssertionError: {'phase': 'RECONCILED', 'reconciled': True, 'observed_ms': 1000, 'cash_collateral': '109.16', ...}
+E   assert False is ((not False and not False))
+============================== warnings summary ===============================
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+  C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.
+    return c.execute(query).fetch_arrow_table().to_pylist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend/tests/test_freshness_policy.py::test_authorized_boundaries_and_no_retiming
+FAILED backend/tests/test_freshness_policy.py::test_book_uses_same_limit - Va...
+FAILED backend/tests/test_freshness_policy.py::test_execution_and_staged_gate_share_selected_policy
+FAILED backend/tests/test_freshness_policy.py::test_manual_runner_explicit_policy_is_applied_and_reported[500]
+FAILED backend/tests/test_freshness_policy.py::test_manual_runner_explicit_policy_is_applied_and_reported[1300]
+FAILED backend/tests/test_genesis_ledger.py::test_full_readiness_pusd_and_genesis_requires_fresh_reconciliation
+FAILED backend/tests/test_health_eligibility.py::test_health_true_empty_market_false_never_submit
+FAILED backend/tests/test_inventory_information_gap.py::test_unseen_post_boundary_transfer_cannot_be_certified_absent
+FAILED backend/tests/test_snapshot_generation.py::test_full_readiness_generation_gate[499-False-True]
+FAILED backend/tests/test_snapshot_generation.py::test_qualifier_evaluates_before_ws_shutdown[False-False]
+10 failed, 804 passed, 3 warnings, 25 subtests passed in 47.72s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 3, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

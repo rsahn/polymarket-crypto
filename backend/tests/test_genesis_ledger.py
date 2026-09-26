@@ -62,7 +62,9 @@ def test_full_readiness_pusd_and_genesis_requires_fresh_reconciliation():
     class S:
         def read(self):return {'available':True,'observed_ms':1000,'authenticated':True,'collateral_symbol':'pUSD','balance_collateral':'109.16','allowance_collateral':'1000','complete':False}
     r=asyncio.run(ProductionReadinessCheck(account=S(),local_reader=lambda:{'phase':'GENESIS_RECONCILED','integrity_verified':True,'reconciled_now':False},clock=lambda:1000,collateral_unit='pUSD').run())
-    assert len(r['checks'])==12 and r['checks']['balance_pusd']
+    assert len(r['checks'])==12 and r['legacy_checks']['balance_pusd']
+    assert not r['checks']['balance_pusd']
+    assert r['domain_details']['balance']['reason']=='BALANCE_UNCALIBRATED'
     assert not r['checks']['local_recovery_state'] and not r['ready_for_arm']
 
 

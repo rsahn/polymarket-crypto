@@ -12,7 +12,7 @@ def test_unseen_post_boundary_transfer_cannot_be_certified_absent():
     transfer_after_C=deepcopy(quiet)
     with freshness_policy(1300):
         for observation in (quiet,transfer_after_C):
-            result=evaluate_boundary(observation,now=2000)
+            result=evaluate_boundary(observation,now=1300)
             assert result['inventory_through_C_proven']
             assert result['boundary_generation_complete']
             assert not result['current_inventory_proven']

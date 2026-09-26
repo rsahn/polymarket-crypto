@@ -1,7 +1,8 @@
 """Public persistent WS book, strict identity/generation and source timestamps.
 Independent of BTC V1 signal implementation. No REST snapshot-as-stream claim.
 """
-from .freshness_policy import freshness_limit_ms
+from .temporal_contract import BOOK_MAX_AGE_MS
+from .shadow_calibration import current_calibration
 import asyncio
 import json
 import copy
@@ -17,7 +18,7 @@ class StreamBook(BookStateSource):
     def __init__(self,slug,condition,tokens,expiry,*,clock=now_ms):
         super().__init__(clock=clock)
         self.slug,self.condition,self.expected_tokens,self.expiry=slug,condition,tuple(tokens),expiry
-        self.depth={};self.messages=0;self.failure=None
+        self.depth={};self.messages=0;self.failure=None;self.calibration=current_calibration()
         self.diagnostics={'parser_reason':None,'exception_category':None,'close_code':None,
             'close_reason_category':None,'remote_close_reason_present':False,'last_valid_message':None,
             'resync_complete_generation':None,'regression_event':None,'transitions':[],'tokens':[]}
@@ -92,7 +93,7 @@ class StreamBook(BookStateSource):
             if not (type(raw_stamp) is int or isinstance(raw_stamp,str) and raw_stamp.isascii() and raw_stamp.isdigit()):
                 raise ValueError('AMBIGUOUS_TIMESTAMP')
             stamp=int(raw_stamp);self.last_wire_event_ms=stamp
-            if not 0<=self.clock()-stamp<=freshness_limit_ms():raise ValueError('STALE_WIRE_EVENT')
+            if not 0<=self.clock()-stamp<=BOOK_MAX_AGE_MS:raise ValueError('STALE_WIRE_EVENT')
             # Check every affected token before any depth mutation (including
             # a multi-token delta). Timestamp order alone is not supersession proof.
             candidates=[event['asset_id']] if kind=='book' else [c['asset_id'] for c in event['price_changes']]
@@ -147,6 +148,13 @@ class StreamBook(BookStateSource):
                             'comparison':'source_timestamp_ms < same_token_accepted_source_timestamp_ms',
                             'watermark_scope':'TOKEN_WITHIN_CONNECTION_GENERATION'}
                     raise
+            if self.calibration is not None:
+                for token in touched:
+                    try:
+                        levels=self.books[token]
+                        self.calibration.book(self.slug,self.generation,self.expected_tokens.index(token),
+                            source_ms=stamp,received_ms=received_ms,decision_ms=self.clock(),bids=levels['bids'],asks=levels['asks'])
+                    except Exception:self.calibration.errors+=1
             for token in touched:
                 if kind=='book':self.snapshot_refs[token]={'source_ms':stamp,'generation':self.generation,'accepted_deltas':0}
                 elif token in self.snapshot_refs:self.snapshot_refs[token]['accepted_deltas']+=1
@@ -166,6 +174,7 @@ class StreamBook(BookStateSource):
                      'TOKEN_IDENTITY','DEPTH_SCHEMA','DEPTH_LEVEL','DELTA_LEVEL','STALE_BOOK','EMPTY_BOOK','CROSSED_BOOK',
                      'BOOK_REGRESSION','INVALID_DEPTH','DUPLICATE_PRICE','AMBIGUOUS_TIMESTAMP'}
             reason=exc.args[0] if exc.args and isinstance(exc.args[0],str) and exc.args[0] in reasons else 'BOOK_SCHEMA_OR_DEPTH_INVALID'
+            if self.calibration is not None:self.calibration.rejections[reason]+=1
             self.diagnostics['parser_reason']=reason
             self.diagnostics['rejected_message_age_ms']=self.clock()-stamp if 'stamp' in locals() else None
             self.failure=reason
@@ -174,7 +183,7 @@ class StreamBook(BookStateSource):
             self.diagnostics['local_processing_ms']=self.clock()-received_ms
             self.diagnostics['freshness_cause']=(
                 'LOCAL_PROCESSING_DELAY' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'}
-                    and age_at_receipt is not None and 0<=age_at_receipt<=freshness_limit_ms() else
+                    and age_at_receipt is not None and 0<=age_at_receipt<=BOOK_MAX_AGE_MS else
                 'WIRE_EVENT_STALE_AT_RECEIPT' if reason in {'STALE_BOOK','STALE_WIRE_EVENT'} else
                 'BOOK_INVALIDATED')
             # A local rejection is not a TCP disconnect. Invalidate both tokens;
@@ -202,7 +211,7 @@ class StreamBook(BookStateSource):
                 'last_wire_event_source_ms':self.last_wire_event_ms,'last_wire_event_received_ms':self.last_wire_received_ms,
                 'last_valid_book_source_ms':self.last_valid_book_ms,'last_valid_book_received_ms':self.last_valid_received_ms,
                 'last_frame_received_ms':self.last_frame_received_ms,'last_pong_received_ms':self.last_pong_received_ms,
-                'freshness_limit_ms':freshness_limit_ms(),'no_new_wire_event_over_limit':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>freshness_limit_ms()}
+                'freshness_limit_ms':BOOK_MAX_AGE_MS,'no_new_wire_event_over_limit':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>BOOK_MAX_AGE_MS}
 
     async def run(self,*,connect_factory=None):
         from websockets.asyncio.client import connect

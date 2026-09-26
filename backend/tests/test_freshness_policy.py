@@ -9,15 +9,17 @@ from test_fixed_boundary import evidence
 def test_authorized_boundaries_and_no_retiming():
     assert freshness_limit_ms()==500
     with freshness_policy(1300):
-        assert fresh(1000,2300)
+        assert fresh(1000,1500)
+        assert not fresh(1000,1501)
+        assert not fresh(1000,2300)
         assert not fresh(1000,2301)
         assert not fresh(1001,1000)
         e=evidence(); before=dict(e)
-        value=evaluate_boundary(e,now=2300)
+        value=evaluate_boundary(e,now=1500)
         assert value['boundary_generation_complete']
         assert not value['current_inventory_proven']
         assert e==before
-        assert evaluate_boundary(e,now=2301)['reason']=='GENERATION_STALE_1300MS'
+        assert evaluate_boundary(e,now=2301)['reason']=='GENERATION_STALE_500MS'
     assert not fresh(1000,1501)
 
 
@@ -37,17 +39,17 @@ def test_policy_propagates_to_workers_without_cross_task_contamination():
     assert freshness_limit_ms()==500
 
 
-def test_book_uses_same_limit():
+def test_book_retains_own_limit_despite_legacy_context():
     with freshness_policy(1300):
-        book=BookStateSource(clock=lambda:2300)
+        book=BookStateSource(clock=lambda:1500)
         book.connect('market',('a','b'),1)
         for token in ('a','b'):book.update(token,[(.4,2)],[(.5,2)],1000,1)
         assert book.read()['available']
-        book.clock=lambda:2301
+        book.clock=lambda:1501
         assert not book.read()['available']
 
 
-def test_execution_and_staged_gate_share_selected_policy(tmp_path):
+def test_execution_and_staged_gate_cannot_be_relaxed_by_legacy_policy(tmp_path):
     from test_execution_controller import Fixture, order
     from app.live.execution import ExecutionBlocked
     from app.live.clob_staged import BookFreshnessGate
@@ -55,11 +57,11 @@ def test_execution_and_staged_gate_share_selected_policy(tmp_path):
     try:
         with freshness_policy(1300):
             gate=BookFreshnessGate()
-            assert gate.max_book_age_ms==1300
-            f.controller.clock=lambda:2300
+            assert gate.max_book_age_ms==500
+            f.controller.clock=lambda:1500
             f.controller.gates(order())
             assert asyncio.run(f.controller.account())['observed_ms']==1000
-            f.controller.clock=lambda:2301
+            f.controller.clock=lambda:1501
             with pytest.raises(ExecutionBlocked):f.controller.gates(order())
             with pytest.raises(ExecutionBlocked):asyncio.run(f.controller.account())
     finally:f.store.close()
@@ -80,20 +82,13 @@ def test_account_completeness_is_not_relaxed_by_freshness(tmp_path):
 
 
 @pytest.mark.parametrize('limit',[500,1300])
-def test_manual_runner_explicit_policy_is_applied_and_reported(monkeypatch,tmp_path,capsys,limit):
+def test_manual_runner_rejects_global_policy_before_any_read(monkeypatch,tmp_path,capsys,limit):
     import analysis.qualify_post_genesis as q
-    import json
-    async def fake_run(target=False,*,health_contract=False):
-        assert target and health_contract
-        assert freshness_limit_ms()==limit
-        return dict(submit_allowed=False,ready_for_arm=False)
-    monkeypatch.setattr(q,'run',fake_run)
+    async def forbidden(*a,**kw):raise AssertionError('must not start qualification')
+    monkeypatch.setattr(q,'run',forbidden)
     monkeypatch.setattr(q,'ROOT',tmp_path)
     monkeypatch.setattr(q.sys,'argv',['probe','--target-machine','--health-contract','--freshness-ms',str(limit)])
-    q.main()
-    rows=list(tmp_path.glob('D6_POST_GENESIS_READINESS_*.json'))
-    assert len(rows)==1
-    result=json.loads(rows[0].read_text())
-    assert result['freshness_limit_ms']==limit and not result['submit_allowed']
+    assert q.main()==2
+    assert list(tmp_path.iterdir())==[]
+    assert 'GLOBAL_FRESHNESS_OVERRIDE_RETIRED' in capsys.readouterr().out
     assert freshness_limit_ms()==500
-    capsys.readouterr()

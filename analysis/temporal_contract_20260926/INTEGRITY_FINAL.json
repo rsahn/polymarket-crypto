@@ -1,0 +1,20 @@
+{
+  "protected_files": 8,
+  "protected_changes": {},
+  "preexisting_files": 224,
+  "preexisting_changes": {
+    "analysis/d5/resumed_review_20260920_214402/telemetry.json": {
+      "before": "7c32ed30199b05cb60935bbbb146c84f4a2723ab3e6bf8d2b9d11d238119e72e",
+      "after": "0ea6a12fa1e9516d41b49009cd13be8fdf021b856c145168751a21274b8eabde"
+    },
+    "analysis/d5/resumed_review_20260920_214402/telemetry.jsonl": {
+      "before": "c50e58e4c3d32feaa5081a6d31e7a410dc5aeed87d3b0185917b0ad18de89229",
+      "after": "688008283a114b706a282a7701412a175d69a0fafe497db500ef21c2d11428db"
+    }
+  },
+  "fixed_boundary_ast_unchanged_except_imports": true,
+  "process_flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  }
+}

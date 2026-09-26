@@ -14,7 +14,7 @@ from pathlib import Path
 from .clob_transport import extract_order_id, normalize_order_status
 from .clob_staged import ExecutionInvariantGuard
 from .exit_policy import plan_exit
-from .freshness_policy import freshness_limit_ms
+from .temporal_contract import BOOK_MAX_AGE_MS, SIGNAL_MAX_AGE_MS, ACCOUNT_READ_GUARD_MS, SESSION_RISK_GUARD_MS, EXECUTION_GEO_GUARD_MS
 
 
 class ExecutionBlocked(RuntimeError):
@@ -81,7 +81,7 @@ class ExecutionController:
         if not isinstance(evidence, dict) or evidence.get("complete") is not True:
             raise ExecutionBlocked("ACCOUNT_EVIDENCE_INCOMPLETE")
         age = self.clock()-finite(evidence.get("observed_ms"))
-        if age < 0 or age > freshness_limit_ms(): raise ExecutionBlocked("ACCOUNT_EVIDENCE_STALE")
+        if age < 0 or age > ACCOUNT_READ_GUARD_MS: raise ExecutionBlocked("ACCOUNT_EVIDENCE_STALE")
         orders, balances = evidence.get("open_order_ids"), evidence.get("balances")
         if not isinstance(orders,list) or not isinstance(balances,dict):
             raise ExecutionBlocked("ACCOUNT_EVIDENCE_INVALID")
@@ -139,9 +139,9 @@ class ExecutionController:
         if gate.get("market_slug") != order.market_slug or gate.get("token_id") != order.token_id:
             raise ExecutionBlocked("MARKET_ROTATION")
         now = self.clock()
-        for name in ("book_ms", "risk_ms", "signal_ms", "geo_ms"):
+        for name, limit in (("book_ms",BOOK_MAX_AGE_MS),("risk_ms",SESSION_RISK_GUARD_MS),("signal_ms",SIGNAL_MAX_AGE_MS),("geo_ms",EXECUTION_GEO_GUARD_MS)):
             age = now-finite(gate.get(name))
-            if age < 0 or age > freshness_limit_ms(): raise ExecutionBlocked("STALE_"+name.upper())
+            if age < 0 or age > limit: raise ExecutionBlocked("STALE_"+name.upper())
         invariant = ExecutionInvariantGuard().validate_entry(
             open_positions=gate.get("open_positions"), session_pnl=finite(gate.get("session_pnl")),
             geoblock_blocked=gate.get("geoblock_blocked"),
@@ -230,7 +230,7 @@ class ExecutionController:
                     if gate.get("market_slug") != order.market_slug or gate.get("token_id") != order.token_id:
                         raise ExecutionBlocked("EXIT_MARKET_ROTATION")
                     age=self.clock()-finite(gate.get("book_ms"))
-                    if age<0 or age>freshness_limit_ms():raise ExecutionBlocked("EXIT_BOOK_STALE")
+                    if age<0 or age>BOOK_MAX_AGE_MS:raise ExecutionBlocked("EXIT_BOOK_STALE")
                     # The pre-hold argument is never a source of executable pricing.
                     # Snapshot and explicit slippage must come from the current gate.
                     plan = plan_exit(gate.get('exit_book') or {}, token_id=order.token_id,

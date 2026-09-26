@@ -11,7 +11,7 @@ import math
 import os
 import time
 from dataclasses import asdict, dataclass, is_dataclass, field
-from .freshness_policy import freshness_limit_ms
+from .temporal_contract import BOOK_MAX_AGE_MS
 from decimal import Decimal, ROUND_DOWN
 
 
@@ -229,7 +229,7 @@ class ExecutionInvariantGuard:
 @dataclass
 class BookFreshnessGate:
     """Fail closed after disconnect until a full book sync and fresh update."""
-    max_book_age_ms: int = field(default_factory=freshness_limit_ms)
+    max_book_age_ms: int = BOOK_MAX_AGE_MS
     connected: bool = False
     synced: bool = False
     last_book_update_ms: int | None = None

@@ -6,6 +6,7 @@ A matching net delta does not prove global history or identify fees/profit.
 """
 import re
 from .production_readonly import fresh
+from .temporal_contract import CASH_EVIDENCE_GUARD_MS
 
 TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
 
@@ -45,7 +46,7 @@ def reconcile_cash_delta(evidence, *, expected_wallet, expected_contract, expect
         for observation in (before,after):
             if _hex(canonical[str(observation['block_number'])],64)!=_hex(observation['block_hash'],64):raise ValueError()
         for stamp in (after['observed_ms'],evidence['canonical_observed_ms']):
-            if type(stamp) is not int or not fresh(stamp,now_ms):raise ValueError()
+            if type(stamp) is not int or not fresh(stamp,now_ms,CASH_EVIDENCE_GUARD_MS):raise ValueError()
         start,end=_raw(before['balance_raw']),_raw(after['balance_raw'])
         if not isinstance(expected_transactions,list) or len(expected_transactions)>1000:raise ValueError()
         expected={_hex(tx,64) for tx in expected_transactions}
@@ -55,7 +56,7 @@ def reconcile_cash_delta(evidence, *, expected_wallet, expected_contract, expect
         seen=set();log_ids=set();delta=0;transfers=0
         for wrapper in receipts:
             stamp=wrapper['observed_ms']
-            if type(stamp) is not int or not fresh(stamp,now_ms):raise ValueError()
+            if type(stamp) is not int or not fresh(stamp,now_ms,CASH_EVIDENCE_GUARD_MS):raise ValueError()
             receipt=wrapper['receipt'];tx=_hex(receipt['transactionHash'],64)
             block=_quantity(receipt['blockNumber']);block_hash=_hex(receipt['blockHash'],64)
             if tx not in expected or tx in seen or not low<block<=high or receipt['status']!='0x1':raise ValueError()
