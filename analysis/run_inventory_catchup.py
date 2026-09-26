@@ -16,6 +16,7 @@ from app.live.inventory_catchup import CatchupRPC,catch_up,CatchupBlocked
 from analysis.qualify_post_genesis import load_inventory_cursor
 from analysis.qualify_post_b_proofs import qualify_finalized
 from app.live.deposit_qualification import write_report
+from app.live.post_c_completeness import current_inventory_diagnostic
 
 @contextmanager
 def worker_lock(root):
@@ -56,6 +57,7 @@ def cycle(root,endpoint):
   if rpc:rpc.close()
   report['genesis_unchanged']=hashlib.sha256(path.read_bytes()).hexdigest()==before
   if not report['genesis_unchanged']:report.update(status='BLOCKED',inventory_through_C_proven=False,TAIL_SCAN_ROOT_CAUSE='GENESIS_CHANGED_DURING_CATCHUP')
+ report['current_inventory_proof']=current_inventory_diagnostic(catchup=report)
  return report
 
 def main():

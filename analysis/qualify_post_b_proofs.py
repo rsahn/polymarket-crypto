@@ -86,7 +86,8 @@ def evaluate_post_b(e,*,now):
         times=[e['witness_observed_ms'],e['anchor_observed_ms']]+[p['observed_ms'] for p in account.values()]
         if any(type(t) is not int or not 0<=now-t<=500 for t in times):return fail('GENERATION_STALE_500MS')
         if e['scan_observed_ms']>min(times):return fail('ACQUISITION_ORDER_INVALID')
-        return {**r,'current_inventory_proven':True,'reason':'SCOPED_HEAD_WITNESS_PROVEN',
+        return {**r,'current_inventory_proven':False,'scoped_head_witness_proven':True,
+                'reason':'NO_COMMON_POST_C_COMPLETENESS_WATERMARK',
                 'scan_observed_ms':e['scan_observed_ms'],'witness_observed_ms':e['witness_observed_ms']}
     except (KeyError,ValueError,TypeError,AttributeError):return r
 

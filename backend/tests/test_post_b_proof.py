@@ -40,7 +40,8 @@ def proof():
 def test_fresh_same_head_witness_preserves_old_scan_without_retiming():
     from analysis.qualify_post_b_proofs import evaluate_post_b
     e=proof();old=copy.deepcopy(e);r=evaluate_post_b(e,now=1000)
-    assert r["current_inventory_proven"] and e==old and r["scan_observed_ms"]==100
+    assert not r["current_inventory_proven"] and e==old and r["scan_observed_ms"]==100
+    assert r["reason"]=="NO_COMMON_POST_C_COMPLETENESS_WATERMARK"
     assert r["witness_observed_ms"]==900 and not r["ready_for_arm"] and not r["submit_allowed"]
 
 

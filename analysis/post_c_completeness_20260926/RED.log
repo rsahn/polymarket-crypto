@@ -1,0 +1,130 @@
+....F..............FFFFFFFFFFFFFFFFFFFFFFFF.                             [100%]
+================================== FAILURES ===================================
+______ test_fresh_same_head_witness_preserves_old_scan_without_retiming _______
+backend\tests\test_post_b_proof.py:43: in test_fresh_same_head_witness_preserves_old_scan_without_retiming
+    assert not r["current_inventory_proven"] and e==old and r["scan_observed_ms"]==100
+E   assert (not True)
+___________ test_unbound_claims_never_create_current_proof[claim0] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim1] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim2] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim3] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim4] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim5] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim6] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim7] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim8] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim9] ____________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim10] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim11] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim12] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim13] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim14] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+___________ test_unbound_claims_never_create_current_proof[claim15] ___________
+backend\tests\test_post_c_completeness.py:28: in test_unbound_claims_never_create_current_proof
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+______________ test_schema_preserves_known_C_without_inventing_W ______________
+backend\tests\test_post_c_completeness.py:39: in test_schema_preserves_known_C_without_inventing_W
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+____________ test_no_generation_does_not_relabel_preparation[None] ____________
+backend\tests\test_post_c_completeness.py:52: in test_no_generation_does_not_relabel_preparation
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+_____________ test_no_generation_does_not_relabel_preparation[e1] _____________
+backend\tests\test_post_c_completeness.py:52: in test_no_generation_does_not_relabel_preparation
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+_____________ test_no_generation_does_not_relabel_preparation[e2] _____________
+backend\tests\test_post_c_completeness.py:52: in test_no_generation_does_not_relabel_preparation
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+_____________ test_no_generation_does_not_relabel_preparation[e3] _____________
+backend\tests\test_post_c_completeness.py:52: in test_no_generation_does_not_relabel_preparation
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+_____________ test_no_generation_does_not_relabel_preparation[e4] _____________
+backend\tests\test_post_c_completeness.py:52: in test_no_generation_does_not_relabel_preparation
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+______________________ test_catchup_keeps_success_scoped ______________________
+backend\tests\test_post_c_completeness.py:58: in test_catchup_keeps_success_scoped
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+____________________ test_changed_C_hash_is_not_canonical _____________________
+backend\tests\test_post_c_completeness.py:69: in test_changed_C_hash_is_not_canonical
+    from app.live.post_c_completeness import current_inventory_diagnostic
+E   ModuleNotFoundError: No module named 'app.live.post_c_completeness'
+=========================== short test summary info ===========================
+FAILED backend/tests/test_post_b_proof.py::test_fresh_same_head_witness_preserves_old_scan_without_retiming
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim0]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim1]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim2]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim3]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim4]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim5]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim6]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim7]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim8]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim9]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim10]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim11]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim12]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim13]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim14]
+FAILED backend/tests/test_post_c_completeness.py::test_unbound_claims_never_create_current_proof[claim15]
+FAILED backend/tests/test_post_c_completeness.py::test_schema_preserves_known_C_without_inventing_W
+FAILED backend/tests/test_post_c_completeness.py::test_no_generation_does_not_relabel_preparation[None]
+FAILED backend/tests/test_post_c_completeness.py::test_no_generation_does_not_relabel_preparation[e1]
+FAILED backend/tests/test_post_c_completeness.py::test_no_generation_does_not_relabel_preparation[e2]
+FAILED backend/tests/test_post_c_completeness.py::test_no_generation_does_not_relabel_preparation[e3]
+FAILED backend/tests/test_post_c_completeness.py::test_no_generation_does_not_relabel_preparation[e4]
+FAILED backend/tests/test_post_c_completeness.py::test_catchup_keeps_success_scoped
+FAILED backend/tests/test_post_c_completeness.py::test_changed_C_hash_is_not_canonical
+25 failed, 19 passed in 0.95s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}
