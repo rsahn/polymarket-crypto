@@ -91,6 +91,12 @@ def evaluate_post_b(e,*,now):
     except (KeyError,ValueError,TypeError,AttributeError):return r
 
 
+class TailScanFailure(ValueError):
+    def __init__(self,reason,diagnostics):
+        self.inventory_catchup=diagnostics
+        super().__init__(reason)
+
+
 def fixed_scan(rpc,previous,target):
     """Single bounded range, no head reselection and no Genesis fallback."""
     check=header(rpc.call('eth_getBlockByNumber',[hex(previous['to_block']),False]))
@@ -102,7 +108,20 @@ def fixed_scan(rpc,previous,target):
         return {k:v for k,v in previous.items() if k!='final_numeric_witness'},[]
     captured={};started=now_ms()
     result=scan_ctf(rpc,start,end,set(previous['balances']),capture=captured)
-    if result['status']!='PASS_SCOPED_READS' or result['block_hash']!=target['hash']:raise ValueError('TAIL_SCAN_FAILED')
+    if result['status']!='PASS_SCOPED_READS' or result['block_hash']!=target['hash']:
+        d=result.get('diagnostics',{})
+        cause=d.get('cause') or ('BOUNDARY_HASH_MISMATCH' if result['status']=='PASS_SCOPED_READS' else 'SCANNER_FAILURE_UNCLASSIFIED')
+        completed=d.get('ranges_completed',[])
+        import math
+        details=dict(mode='READINESS_PREPARATION',cursor_start=previous['to_block'],cursor_end=previous['to_block'],target_boundary=target,
+            backlog_blocks=end-previous['to_block'],ranges_planned=math.ceil((end-start+1)/rpc.log_window),ranges_completed=len(completed),
+            ranges_failed=1 if d.get('first_failed_range') else 0,first_failed_range=d.get('first_failed_range'),
+            first_unexecuted_range=[start,min(start+rpc.log_window-1,end)] if not completed else None,
+            last_successful_range=completed[-1] if completed else None,cursor_hash_verified=True,
+            checkpoint_start=previous['to_block'],checkpoint_end=previous['to_block'],TAIL_SCAN_ROOT_CAUSE=cause,scanner_diagnostics=d,
+            rpc_requests=len(getattr(rpc,'calls',[])),retries=0,rate_limits=sum(c.get('http_status')==429 for c in getattr(rpc,'calls',[])),
+            wall_ms=now_ms()-started,blocks_per_second=0,inventory_through_C_proven=False,current_inventory_proven=False,submit_allowed=False)
+        raise TailScanFailure('BOOTSTRAP_CATCHUP_REQUIRED' if cause=='SCAN_TOTAL_BLOCK_LIMIT' else 'TAIL_SCAN_FAILED',details)
     if result['events_count'] or any(int(v) for v in captured['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
     ranges=[[i,min(i+rpc.log_window-1,end)] for i in range(start,end+1,rpc.log_window)]
     return {**result,'balances':captured['balances'],'observed_ms':started,
@@ -135,6 +154,20 @@ def prepare_finalized_inventory(rpc,prior,cursor):
     if header(rpc.call('eth_getBlockByNumber',[hex(base['block_number']),False]))['hash']!=base['block_hash']:
         raise ValueError('GENESIS_ANCHOR_CHANGED')
     if cursor['events_count'] or any(int(v) for v in cursor['balances'].values()):raise ValueError('RECOVERY_REQUIRED')
+    backlog=qualified['anchor']['number']-cursor['to_block']
+    if backlog>500:
+        # Preparation belongs to the resumable worker, not the decision path.
+        # This routes work, never truncates it or grants a PASS.
+        verify=header(rpc.call('eth_getBlockByNumber',[hex(cursor['to_block']),False]))
+        if verify['number']!=cursor['to_block'] or verify['hash']!=cursor['block_hash']:raise ValueError('CURSOR_REORG')
+        import math
+        raise TailScanFailure('BOOTSTRAP_CATCHUP_REQUIRED',dict(mode='BOOTSTRAP_REQUIRED',
+            cursor_start=cursor['to_block'],cursor_end=cursor['to_block'],target_boundary=qualified['anchor'],backlog_blocks=backlog,
+            ranges_planned=math.ceil(backlog/rpc.log_window),ranges_completed=0,ranges_failed=0,first_failed_range=None,
+            first_unexecuted_range=[cursor['to_block']+1,min(cursor['to_block']+rpc.log_window,qualified['anchor']['number'])],
+            checkpoint_start=cursor['to_block'],checkpoint_end=cursor['to_block'],cursor_hash_verified=True,
+            TAIL_SCAN_ROOT_CAUSE='PREPARATION_BACKLOG_REQUIRES_BOOTSTRAP',rpc_requests=len(getattr(rpc,'calls',[])),
+            retries=0,rate_limits=0,wall_ms=0,blocks_per_second=0,inventory_through_C_proven=False,current_inventory_proven=False,submit_allowed=False))
     anchored,ranges=fixed_scan(rpc,cursor,qualified['anchor'])
     return {**anchored,'from_block':cursor['from_block'],
         'cursor_previous':cursor['to_block'],'anchor_catchup_ranges':ranges},qualified

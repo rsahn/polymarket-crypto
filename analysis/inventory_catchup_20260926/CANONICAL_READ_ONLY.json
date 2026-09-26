@@ -1,0 +1,170 @@
+{
+  "configuration_source": "analysis/run_d6_public_readiness.ps1",
+  "cursor_block": 94438341,
+  "cursor_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+  "cursor_hash_verified": true,
+  "finalized": {
+    "status": "PASS_PROVIDER_FINALIZED_READ",
+    "chain_id": 137,
+    "anchor": {
+      "number": 94492389,
+      "hash": "0x045f8dd00628006cb3bd5a83bae4c9515109f973b2bb7167921454b87742a102",
+      "timestamp": 1790443724
+    },
+    "observed_ms": 1790443728286,
+    "finished_ms": 1790443728701,
+    "independent_consensus_proven": false,
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94492389,
+          "block_hash": "0x045f8dd00628006cb3bd5a83bae4c9515109f973b2bb7167921454b87742a102",
+          "block_timestamp_ms": 1790443724000,
+          "request_started_ms": 1790443728366,
+          "response_received_ms": 1790443728451,
+          "block_minus_receive_ms": -4451,
+          "block_minus_request_ms": -4366
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94492392,
+          "block_hash": "0xefa75f23eacde2c5f756808e6295ea0a3e9a84b8dba895f1d15c29ceea50f75a",
+          "block_timestamp_ms": 1790443728000,
+          "request_started_ms": 1790443728451,
+          "response_received_ms": 1790443728540,
+          "block_minus_receive_ms": -540,
+          "block_minus_request_ms": -451
+        },
+        {
+          "label": "anchor_recheck",
+          "requested_tag": "0x5a1d6e5",
+          "number": 94492389,
+          "block_hash": "0x045f8dd00628006cb3bd5a83bae4c9515109f973b2bb7167921454b87742a102",
+          "block_timestamp_ms": 1790443724000,
+          "request_started_ms": 1790443728540,
+          "response_received_ms": 1790443728619,
+          "block_minus_receive_ms": -4619,
+          "block_minus_request_ms": -4540
+        },
+        {
+          "label": "finalized_second",
+          "requested_tag": "finalized",
+          "number": 94492389,
+          "block_hash": "0x045f8dd00628006cb3bd5a83bae4c9515109f973b2bb7167921454b87742a102",
+          "block_timestamp_ms": 1790443724000,
+          "request_started_ms": 1790443728619,
+          "response_received_ms": 1790443728701,
+          "block_minus_receive_ms": -4701,
+          "block_minus_request_ms": -4619
+        }
+      ],
+      "reason": "FINALIZED_QUALIFIED",
+      "stage": "complete",
+      "clock_source": "LOCAL_TIME_TIME_NS_UTC",
+      "clock_accuracy_proven": false
+    }
+  },
+  "backlog_blocks": 54048,
+  "logs_ranges_10_blocks": 5405,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 1,
+      "started_ms": 1790443728084,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790443728285,
+      "parse_complete_ms": 1790443728285,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790443728285,
+      "elapsed_ms": 201
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 2,
+      "started_ms": 1790443728286,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443728366,
+      "parse_complete_ms": 1790443728366,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790443728366,
+      "elapsed_ms": 80
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790443728366,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443728451,
+      "parse_complete_ms": 1790443728451,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443728451,
+      "elapsed_ms": 85
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790443728451,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443728540,
+      "parse_complete_ms": 1790443728540,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443728540,
+      "elapsed_ms": 89
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790443728540,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443728619,
+      "parse_complete_ms": 1790443728619,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443728619,
+      "elapsed_ms": 79
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790443728619,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443728701,
+      "parse_complete_ms": 1790443728701,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443728701,
+      "elapsed_ms": 82
+    }
+  ]
+}
