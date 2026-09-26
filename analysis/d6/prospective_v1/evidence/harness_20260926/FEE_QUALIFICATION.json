@@ -1,0 +1,30 @@
+[
+  {
+    "market_id": "4961058",
+    "token_id": "102067552089188071550736838331466322763287403984940874913410531086786921237623",
+    "fee_enabled": true,
+    "fee_rate": "0.07",
+    "fee_source": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790454900",
+    "fee_schedule_version": "crypto_fees_v2@2026-09-26T20:37:00.316250+00:00#559c8ff9ea97ea733a52a717ddebe126622f710ee927aeace65f2eea9084d371",
+    "rounding_rule": "UNKNOWN",
+    "qualification_status": "MARKET_FEE_UNQUALIFIED",
+    "evidence_hash": "977b1337d5c6b2e52ff4d9e36ca209c5db6eab4b2c974b49c689dd7face560ef",
+    "reasons": [
+      "ROUNDING_AND_AGGREGATION_UNPROVEN"
+    ]
+  },
+  {
+    "market_id": "4961058",
+    "token_id": "97297816434940446198630864241729366886112921814692795601175750244784426937091",
+    "fee_enabled": true,
+    "fee_rate": "0.07",
+    "fee_source": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790454900",
+    "fee_schedule_version": "crypto_fees_v2@2026-09-26T20:37:00.316250+00:00#559c8ff9ea97ea733a52a717ddebe126622f710ee927aeace65f2eea9084d371",
+    "rounding_rule": "UNKNOWN",
+    "qualification_status": "MARKET_FEE_UNQUALIFIED",
+    "evidence_hash": "977b1337d5c6b2e52ff4d9e36ca209c5db6eab4b2c974b49c689dd7face560ef",
+    "reasons": [
+      "ROUNDING_AND_AGGREGATION_UNPROVEN"
+    ]
+  }
+]

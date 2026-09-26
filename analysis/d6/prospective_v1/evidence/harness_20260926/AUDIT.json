@@ -1,0 +1,129 @@
+{
+  "scope": "OFFLINE_COMPONENTS_AND_SAFE_BLOCKING_ONLY_NOT_PRODUCTION_READINESS",
+  "reviewed_imports": {
+    "engine.py": [
+      "__future__",
+      "copy",
+      "core",
+      "dataclasses",
+      "decimal",
+      "json",
+      "urllib.parse"
+    ],
+    "evaluator.py": [
+      "collections",
+      "core",
+      "decimal",
+      "engine",
+      "json",
+      "math",
+      "random"
+    ],
+    "journal.py": [
+      "__future__",
+      "core",
+      "fcntl",
+      "json",
+      "msvcrt",
+      "os",
+      "pathlib",
+      "time"
+    ],
+    "preflight.py": [
+      "argparse",
+      "core",
+      "decimal",
+      "hashlib",
+      "json",
+      "pathlib",
+      "prepare",
+      "shutil"
+    ],
+    "sealed.py": [
+      "core",
+      "hashlib",
+      "journal",
+      "json",
+      "pathlib"
+    ],
+    "test_harness.py": [
+      "ast",
+      "asyncio",
+      "copy",
+      "core",
+      "engine",
+      "errno",
+      "evaluator",
+      "journal",
+      "json",
+      "os",
+      "pathlib",
+      "preflight",
+      "prepare",
+      "sealed",
+      "subprocess",
+      "sys",
+      "tempfile",
+      "types",
+      "unittest",
+      "unittest.mock"
+    ]
+  },
+  "runtime_forbidden_imports": {
+    "engine.py": [],
+    "evaluator.py": [],
+    "journal.py": [],
+    "preflight.py": [],
+    "sealed.py": []
+  },
+  "protected_hashes": {
+    "analysis/d6/paper_live.py": {
+      "expected": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+      "actual": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364"
+    },
+    "analysis/run_d6_paper_live.py": {
+      "expected": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+      "actual": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+    }
+  },
+  "genesis_sha256": "5365085da95cecb49fa4c922b890e9803ef223fdefef541505c2dc5a3de7814f",
+  "leak_scan": {
+    "status": "PASS",
+    "hits": [],
+    "scope": [
+      "analysis/d6/prospective_v1/engine.py",
+      "analysis/d6/prospective_v1/evaluator.py",
+      "analysis/d6/prospective_v1/journal.py",
+      "analysis/d6/prospective_v1/preflight.py",
+      "analysis/d6/prospective_v1/sealed.py",
+      "analysis/d6/prospective_v1/test_harness.py",
+      "analysis/d6/prospective_v1/INTEGRATION_CONTRACT.md",
+      "analysis/d51/depth_cache_candidate_not_adopted/test_d51_depth_cache.py",
+      "analysis/d6/prospective_v1/evidence/harness_20260926/FEE_QUALIFICATION.json",
+      "analysis/d6/prospective_v1/evidence/harness_20260926/PUBLIC_FEE_EVIDENCE.json",
+      "analysis/d6/prospective_v1/evidence/harness_20260926/VALIDATION.json",
+      "analysis/d6/prospective_v1/evidence/harness_20260926/HISTORICAL_FAILURES.md"
+    ],
+    "limitation": "Targeted credential/private-key patterns; public token ids, condition ids and digests are not secrets."
+  },
+  "safety": {
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false,
+    "submit_allowed": false
+  },
+  "constraints": [
+    "No V1 edits",
+    "No production binding",
+    "No real partition opened",
+    "No real collection",
+    "No historical DB mutation",
+    "No SDK or feed runtime import"
+  ],
+  "findings_requiring_decision": [
+    "Missing V1 entry observations after exit failure",
+    "V1 depth reuse vs persistent consumption",
+    "Exact exchange fee rounding/aggregation unqualified",
+    "Weekly storage not qualified"
+  ],
+  "scope_audit": "PASS"
+}

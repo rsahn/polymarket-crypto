@@ -1,0 +1,67 @@
+{
+  "name": "BTC_V1_PROSPECTIVE_PREFLIGHT",
+  "status": "BLOCKED",
+  "reasons": [
+    "ABSOLUTE_BOUNDARIES_UNBOUND",
+    "CHECK_FAILED:causal_adapter",
+    "CHECK_FAILED:clock_sanity",
+    "CHECK_FAILED:dependency_seal",
+    "CHECK_FAILED:fee_qualification",
+    "CHECK_FAILED:freeze",
+    "CHECK_FAILED:ledger_production_binding",
+    "CHECK_FAILED:oos_lock_ready",
+    "CHECK_FAILED:partition_manifest",
+    "CURRENT_TWO_REFERENCE_CLOCK_EVIDENCE_MISSING",
+    "DISK_CAPACITY_UNPROVEN",
+    "DISK_SPACE_INSUFFICIENT",
+    "MARKET_FEE_UNQUALIFIED:ROUNDING_AND_FUTURE_MARKET_EVIDENCE",
+    "PRODUCTION_BINDING_AND_DEPENDENCY_SEAL_PENDING",
+    "V1_ENTRY_CALLBACK_MISSING_ON_EXIT_FAILURE",
+    "V1_OBSERVED_FILLS_MAY_REUSE_COUNTERFACTUAL_DEPTH"
+  ],
+  "checks": {
+    "analysis/d6/paper_live.py": true,
+    "analysis/run_d6_paper_live.py": true,
+    "criteria_hash": true,
+    "full_suite": true,
+    "validated_source_seal": true,
+    "ledger_synthetic_integration": true,
+    "journal_fsync_crash_recovery": true,
+    "monetary_sdk_zero": true,
+    "dependency_seal": false,
+    "fee_qualification": false,
+    "causal_adapter": false,
+    "ledger_production_binding": false,
+    "partition_manifest": false,
+    "freeze": false,
+    "oos_lock_ready": false,
+    "clock_sanity": false
+  },
+  "storage": {
+    "observed_bytes": 4800663552,
+    "observed_seconds": "1320.0542836000677",
+    "dataset_bytes": 2199486303194,
+    "free_bytes": 47996882944,
+    "journal_bytes": null,
+    "checkpoint_bytes": null,
+    "safety_factor": "2x observed + 20% margin",
+    "required_bytes_lower_bound": 5278767127666,
+    "reasons": [
+      "DISK_CAPACITY_UNPROVEN",
+      "DISK_SPACE_INSUFFICIENT"
+    ]
+  },
+  "storage_evidence_hashes": {
+    "analysis\\d51\\smoke_20260922_194254\\review\\RUN_MANIFEST.json": "70346081cb3c7543ba54b7440899fc0a6262757615c77b93106a9061cad16688",
+    "analysis\\d51\\smoke_20260922_194254\\COLLECTION_RESULT.json": "449c599a0b77cbb625da65fb9448dfbcaafabc8819ff677e6554f0321c0287aa"
+  },
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "collection_started": false,
+  "TRAIN_opened": false,
+  "VALIDATION_opened": false,
+  "OOS_opened": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false
+}

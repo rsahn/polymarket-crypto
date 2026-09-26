@@ -1,0 +1,49 @@
+{
+  "retrieved_at": "2026-09-26T20:37:00.316250+00:00",
+  "requests": [
+    {
+      "name": "market",
+      "url": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790454900",
+      "method": "GET",
+      "authentication": false,
+      "status": 200,
+      "sha256": "559c8ff9ea97ea733a52a717ddebe126622f710ee927aeace65f2eea9084d371",
+      "market": {
+        "id": "4961058",
+        "slug": "btc-updown-5m-1790454900",
+        "conditionId": "0x4d9f25cc3e2765ee85132c7ecfd48885fc861bce7c640f5de17fcaac6f0246fd",
+        "clobTokenIds": "[\"102067552089188071550736838331466322763287403984940874913410531086786921237623\", \"97297816434940446198630864241729366886112921814692795601175750244784426937091\"]",
+        "feesEnabled": true,
+        "feeSchedule": {
+          "exponent": 1,
+          "rate": 0.07,
+          "takerOnly": true,
+          "rebateRate": 0.2
+        },
+        "startDate": "2026-09-25T20:43:30.214484Z",
+        "endDate": "2026-09-26T20:40:00Z",
+        "feeType": "crypto_fees_v2",
+        "makerBaseFee": 1000,
+        "takerBaseFee": 1000
+      }
+    },
+    {
+      "name": "fees_docs",
+      "url": "https://docs.polymarket.com/trading/fees",
+      "method": "GET",
+      "authentication": false,
+      "status": 200,
+      "sha256": "59039ddebc39f72cd1af14cb051af8b93026e38b3f3672f5c89bd818cae00921",
+      "bytes": 460847
+    },
+    {
+      "name": "market_docs",
+      "url": "https://docs.polymarket.com/market-data/market-details",
+      "method": "GET",
+      "authentication": false,
+      "status": 200,
+      "sha256": "29cea00195b5a407f7f5fcdc0cbe4b2acf90f1fb3f7a5b52648d4bed2fcaca9c",
+      "bytes": 1020467
+    }
+  ]
+}
