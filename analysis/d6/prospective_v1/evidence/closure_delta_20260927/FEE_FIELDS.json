@@ -1,0 +1,205 @@
+{
+  "status": "MARKET_FEE_UNQUALIFIED",
+  "authoritative_fee_for_simulated_fill": "NOT_AVAILABLE",
+  "authoritative_fee_fields_detected": [
+    {
+      "class_name": "BuilderTrade",
+      "fields": [
+        "fee",
+        "fee_usdc"
+      ],
+      "applicable_to_V1_platform_fee": false,
+      "reason": "Builder-scoped actual matched trades; exact meaning, finality, platform/builder split and applicability not established. No real trade exists for an offline simulated fill."
+    }
+  ],
+  "standard_trade_field": "fee_rate_bps is a rate, not a charged amount",
+  "order_response": "making_amount/taking_amount have no qualified net-fee interpretation",
+  "final_fee_value_from_exchange": "Could account for a proven final real fill with matched identity, units, scope and amount; cannot supply counterfactual fees for no-order simulation.",
+  "exact_model": "NOT_PROVEN",
+  "conservative_bound": "NOT_PROVEN; prior conditional N*u requires known rounding operations and applicable rounding envelope",
+  "rounding_aggregation_partial_allocation": "UNSPECIFIED_FOR_APPLICABLE_MATCH_PATH",
+  "zero_fallback": false,
+  "SDK_classes": [
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\account.py",
+      "sha256": "d8d0359ab99268a801abcafd8d250ec5f7f4986ca39df79aabf56d8258015091",
+      "class_name": "OpenOrder",
+      "line": 44,
+      "end_line": 99,
+      "fields": [
+        "id",
+        "market",
+        "condition_id",
+        "asset_id",
+        "owner",
+        "maker_address",
+        "side",
+        "price",
+        "original_size",
+        "size_matched",
+        "outcome",
+        "order_type",
+        "status",
+        "associate_trades",
+        "created_at",
+        "expires_at"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\account.py",
+      "sha256": "d8d0359ab99268a801abcafd8d250ec5f7f4986ca39df79aabf56d8258015091",
+      "class_name": "MakerOrder",
+      "line": 102,
+      "end_line": 129,
+      "fields": [
+        "order_id",
+        "asset_id",
+        "maker_address",
+        "owner",
+        "side",
+        "price",
+        "matched_amount",
+        "outcome",
+        "fee_rate_bps"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\account.py",
+      "sha256": "d8d0359ab99268a801abcafd8d250ec5f7f4986ca39df79aabf56d8258015091",
+      "class_name": "ClobTrade",
+      "line": 132,
+      "end_line": 189,
+      "fields": [
+        "id",
+        "market",
+        "condition_id",
+        "asset_id",
+        "owner",
+        "maker_address",
+        "taker_order_id",
+        "side",
+        "trader_side",
+        "price",
+        "size",
+        "outcome",
+        "status",
+        "fee_rate_bps",
+        "bucket_index",
+        "transaction_hash",
+        "maker_orders",
+        "matched_at",
+        "updated_at"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\order_response.py",
+      "sha256": "53f5412a471b07a67cd7dd041d9509c562f890d9b8d94bf6f09a4c48e72ce8b8",
+      "class_name": "RawOrderResponse",
+      "line": 46,
+      "end_line": 59,
+      "fields": [
+        "error_msg",
+        "making_amount",
+        "order_id",
+        "status",
+        "success",
+        "taking_amount",
+        "trade_ids",
+        "transactions_hashes"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\order_response.py",
+      "sha256": "53f5412a471b07a67cd7dd041d9509c562f890d9b8d94bf6f09a4c48e72ce8b8",
+      "class_name": "AcceptedOrder",
+      "line": 62,
+      "end_line": 96,
+      "fields": [
+        "ok",
+        "order_id",
+        "status",
+        "making_amount",
+        "taking_amount",
+        "trade_ids",
+        "transactions_hashes"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\notifications.py",
+      "sha256": "2c5167e14a8760e0d9174001c68d028ecf94fd55215e47e49e8cd2993f303ad7",
+      "class_name": "OrderNotificationPayload",
+      "line": 58,
+      "end_line": 103,
+      "fields": [
+        "asset_id",
+        "condition_id",
+        "order_id",
+        "side",
+        "order_type",
+        "price",
+        "original_size",
+        "matched_size",
+        "remaining_size",
+        "outcome",
+        "outcome_index",
+        "transaction_hash",
+        "trade_id",
+        "question",
+        "market_slug",
+        "icon",
+        "image",
+        "event_slug",
+        "series_slug"
+      ]
+    },
+    {
+      "path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\models\\clob\\builder.py",
+      "sha256": "64e785c6ea3ef962956722dffa9ec85b516019d4097970d090b4b3e38604d127",
+      "class_name": "BuilderTrade",
+      "line": 43,
+      "end_line": 94,
+      "fields": [
+        "id",
+        "trade_type",
+        "taker_order_hash",
+        "builder",
+        "market",
+        "condition_id",
+        "asset_id",
+        "side",
+        "size",
+        "size_usdc",
+        "price",
+        "status",
+        "outcome",
+        "outcome_index",
+        "owner",
+        "maker",
+        "transaction_hash",
+        "matched_at",
+        "bucket_index",
+        "fee",
+        "fee_usdc",
+        "error_msg",
+        "created_at",
+        "updated_at"
+      ]
+    }
+  ],
+  "official_sources": [
+    {
+      "url": "https://docs.polymarket.com/trading/manage-orders",
+      "lines": "677-706,822-824,991-1014",
+      "finding": "Standard account trades carry fee rate; builder trades expose fee and fee_usdc for matched attributed orders."
+    },
+    {
+      "url": "https://docs.polymarket.com/programs/builders/fees",
+      "lines": "100-121,244-251",
+      "finding": "Builder fees are additional to platform fees; fee service computes fees at match time."
+    }
+  ],
+  "account_requests": 0,
+  "orders": 0,
+  "signatures": 0,
+  "SDK_clients": 0
+}

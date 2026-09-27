@@ -1,0 +1,49 @@
+{
+  "units": "shares; asks .5 x 50, requests FIXED25",
+  "economic_selection_metrics_used": false,
+  "same_state_twice": {
+    "MODEL_A_V1_REUSABLE_SNAPSHOT": [
+      50,
+      50
+    ],
+    "MODEL_B_PERSISTENT_CONSUMPTION": [
+      50,
+      0
+    ],
+    "MODEL_C_RESET_ON_PROVEN_NEW_BOOK_STATE": [
+      50,
+      0
+    ]
+  },
+  "identical_content_distinct_proven_event": {
+    "MODEL_A_V1_REUSABLE_SNAPSHOT": [
+      50,
+      50
+    ],
+    "MODEL_B_PERSISTENT_CONSUMPTION": [
+      50,
+      0
+    ],
+    "MODEL_C_RESET_ON_PROVEN_NEW_BOOK_STATE": [
+      50,
+      50
+    ]
+  },
+  "time_only_same_state": {
+    "MODEL_A_V1_REUSABLE_SNAPSHOT": [
+      50,
+      50
+    ],
+    "MODEL_B_PERSISTENT_CONSUMPTION": [
+      50,
+      0
+    ],
+    "MODEL_C_RESET_ON_PROVEN_NEW_BOOK_STATE": [
+      50,
+      0
+    ]
+  },
+  "empirical_effect_on_V1_opportunities": null,
+  "classification": "DEPTH_MODEL_NOT_IDENTIFIABLE_FROM_CURRENT_EVIDENCE",
+  "reason": "New external observation is distinguishable, but cannot identify counterfactual replenishment or missing actual V1 entry clocks. C would also change V1 decisions on same-state reuse."
+}

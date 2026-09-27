@@ -1,0 +1,1 @@
+{"marks_events":100000,"marks_replay_seconds":24.719,"failure":"Duplicate notional kwarg in synthetic generator, before second replay; source and scratch preserved under prospective_disk_stress_20260927; first run metrics were not persisted. Generator corrected, new directory required."}

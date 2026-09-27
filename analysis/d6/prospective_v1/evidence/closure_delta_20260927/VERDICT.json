@@ -1,0 +1,18 @@
+{
+  "verdict": "BTC_V1_PROSPECTIVE_PROTOCOL_BLOCKED",
+  "depth": "DEPTH_MODEL_NOT_IDENTIFIABLE_FROM_CURRENT_EVIDENCE",
+  "binding": "REAL_V1_BINDING_NOT_QUALIFIED",
+  "fees": "MARKET_FEE_UNQUALIFIED",
+  "journal": "JOURNAL_168H_BOUND_UNPROVEN",
+  "checkpoints": "CHECKPOINT_168H_BOUND_UNPROVEN",
+  "replay": "REPLAY_CAPACITY_UNQUALIFIED",
+  "storage": "STORAGE_UNQUALIFIED",
+  "strategy_changed": false,
+  "candidate_adopted": false,
+  "push": "PUSH_PENDING_AUTHORIZATION",
+  "flags": {
+    "REAL_ORDERS_ENABLED": false,
+    "LIVE_EXECUTION_ARMED": false,
+    "submit_allowed": false
+  }
+}
