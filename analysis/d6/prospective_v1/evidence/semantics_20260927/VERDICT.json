@@ -1,0 +1,24 @@
+{
+  "status": "BTC_V1_PROSPECTIVE_PROTOCOL_BLOCKED",
+  "depth": "DEPTH_MODEL_NOT_IDENTIFIABLE_FROM_CURRENT_EVIDENCE",
+  "binding": "REAL_V1_BINDING_BLOCKED_BY_UNIDENTIFIED_DEPTH_SEMANTICS",
+  "observability_candidate": "OBSERVABILITY_V1_R1_NOT_ADOPTED",
+  "fees": "MARKET_FEE_UNQUALIFIED",
+  "lossless_archive": "LOSSLESS_STORAGE_QUALIFIED_PREVIOUS_EVIDENCE",
+  "storage": "STORAGE_UNQUALIFIED",
+  "replay": "REPLAY_CAPACITY_UNQUALIFIED",
+  "blockers": [
+    "Unidentified depth semantics and real binding",
+    "Exact fees or applicable proven conservative bound unavailable",
+    "Journal/checkpoint bounds, bounded economic replay and disk shortfall"
+  ],
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false,
+  "monetary_sdk_attempts": 0,
+  "real_collection": false,
+  "real_partitions_opened": false,
+  "push": "PUSH_PENDING_AUTHORIZATION"
+}

@@ -1,0 +1,22 @@
+{
+  "events": 5001,
+  "last_hash": "716d75f9e0fc89d424a0478bae3437a7a986814ad077d6af66b2fc620e0bdad8",
+  "journal_input_streaming": true,
+  "economic_state_bounded": false,
+  "replay_seconds": 0.5367745999246836,
+  "events_per_second": 9316.759773472339,
+  "bytes_per_second": 5158394.231747389,
+  "peak_process_rss_bytes": 34873344,
+  "peak_measured_before_reference_materialization": true,
+  "source": "data\\d6\\prospective_replay_probe_20260926\\synthetic_5000.jsonl",
+  "source_sha256": "b84431e038e4c96fa340fa53778da2afbf7465dd02f30ffa5ec2fb00893d6056",
+  "source_unchanged": true,
+  "duplicate_index_bytes": 110592,
+  "canonical_state_sha256": "ce394b8e99244b1aca29cc7d09dc17b0e887da320bc48ddc8d7cdde85e1bfec4",
+  "reference_state_sha256": "ce394b8e99244b1aca29cc7d09dc17b0e887da320bc48ddc8d7cdde85e1bfec4",
+  "equivalence": "PASS",
+  "fixture": "EXISTING_SYNTHETIC_MARK_ONLY_NOT_WEEK_PROJECTION",
+  "retained_accounting_records": 5001,
+  "state_copy": "No per-event copy in recovery; live observe unchanged",
+  "real_partition_opened": false
+}

@@ -1,0 +1,96 @@
+...................................................................F..................... [  8%]
+................................................................. [ 15%]
+............................................................... [ 21%]
+........................................................................ [ 29%]
+................................................FF...................................................................................... [ 42%]
+........................................................................ [ 50%]
+........................................................................ [ 57%]
+........................................................................ [ 64%]
+........................................................................ [ 71%]
+........................................................................ [ 79%]
+........................................................................ [ 86%]
+........................................................................ [ 93%]
+............................................................... [ 99%]
+.                                                                        [100%]
+================================== FAILURES ===================================
+_________ RuntimeTests.test_critical_feed_failure_closes_and_reports __________
+analysis\d6\paper_runtime\test_runtime.py:22: in test_critical_feed_failure_closes_and_reports
+    async def test_critical_feed_failure_closes_and_reports(self):await self.run_fixture(FailedFeed,True)
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\paper_runtime\test_runtime.py:15: in run_fixture
+    with self.assertRaisesRegex(ValueError,'CROSS_MARKET'):await runtime.run(out,.15)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: ValueError not raised
+------------------------------ Captured log call ------------------------------
+WARNING  asyncio:base_events.py:2056 Executing <Task pending name='Task-2' coro=<RuntimeTests.test_critical_feed_failure_closes_and_reports() running at C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\paper_runtime\test_runtime.py:22> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:460> cb=[_run_until_complete_cb() at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:181] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:101> took 0.112 seconds
+WARNING  asyncio:base_events.py:2056 Executing <Task pending name='Task-5' coro=<run.<locals>.markets() running at C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\paper_runtime\runtime.py:92> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:460> created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py:410> took 0.101 seconds
+______ StopFenceTests.test_requested_stop_fences_ready_sibling_callbacks ______
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py:507: in wait_for
+    return await fut
+           ^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\locks.py:213: in wait
+    await fut
+E   asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+backend\tests\test_d51_stop_fence.py:55: in test_requested_stop_fences_ready_sibling_callbacks
+    async def test_requested_stop_fences_ready_sibling_callbacks(self):await self.exercise(True)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_d51_stop_fence.py:42: in exercise
+    task=asyncio.create_task(trigger());result=await run(args);await task
+                                                               ^^^^^^^^^^
+backend\tests\test_d51_stop_fence.py:36: in trigger
+    await asyncio.wait_for(ready.wait(),1)
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py:506: in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\timeouts.py:117: in __aexit__
+    raise TimeoutError from exc_val
+E   TimeoutError
+---------------------------- Captured stdout call -----------------------------
+D5 SHADOW session=a2cd5625-27ed-4175-9a37-ff8be259d9fe db=C:\Users\Ramy\AppData\Local\Temp\tmpqxja1lpa\fixture.db REAL_ORDERS=DISABLED
+D5 SHADOW stopped, buffers committed.
+------------------------------ Captured log call ------------------------------
+WARNING  asyncio:base_events.py:2056 Executing <Task pending name='Task-89' coro=<StopFenceTests.test_requested_stop_fences_ready_sibling_callbacks() running at C:\Users\Ramy\Documents\polymarket-crypto\backend\tests\test_d51_stop_fence.py:55> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:460> cb=[_run_until_complete_cb() at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:181] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:101> took 0.660 seconds
+_________ StopFenceTests.test_timeout_fences_ready_sibling_callbacks __________
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py:507: in wait_for
+    return await fut
+           ^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\locks.py:213: in wait
+    await fut
+E   asyncio.exceptions.CancelledError
+
+The above exception was the direct cause of the following exception:
+backend\tests\test_d51_stop_fence.py:56: in test_timeout_fences_ready_sibling_callbacks
+    async def test_timeout_fences_ready_sibling_callbacks(self):await self.exercise(False)
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_d51_stop_fence.py:42: in exercise
+    task=asyncio.create_task(trigger());result=await run(args);await task
+                                                               ^^^^^^^^^^
+backend\tests\test_d51_stop_fence.py:36: in trigger
+    await asyncio.wait_for(ready.wait(),1)
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\tasks.py:506: in wait_for
+    async with timeouts.timeout(timeout):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\timeouts.py:117: in __aexit__
+    raise TimeoutError from exc_val
+E   TimeoutError
+---------------------------- Captured stdout call -----------------------------
+D5 SHADOW session=514fb587-469e-46a5-889e-0d01a62c2074 db=C:\Users\Ramy\AppData\Local\Temp\tmp93zli5fe\fixture.db REAL_ORDERS=DISABLED
+D5 SHADOW stopped, buffers committed.
+------------------------------ Captured log call ------------------------------
+WARNING  asyncio:base_events.py:2056 Executing <Task pending name='Task-103' coro=<StopFenceTests.test_timeout_fences_ready_sibling_callbacks() running at C:\Users\Ramy\Documents\polymarket-crypto\backend\tests\test_d51_stop_fence.py:56> wait_for=<Future pending cb=[Task.task_wakeup()] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:460> cb=[_run_until_complete_cb() at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:181] created at C:\Users\Ramy\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:101> took 0.101 seconds
+============================== warnings summary ===============================
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+  C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.
+    return c.execute(query).fetch_arrow_table().to_pylist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED analysis/d6/paper_runtime/test_runtime.py::RuntimeTests::test_critical_feed_failure_closes_and_reports
+FAILED backend/tests/test_d51_stop_fence.py::StopFenceTests::test_requested_stop_fences_ready_sibling_callbacks
+FAILED backend/tests/test_d51_stop_fence.py::StopFenceTests::test_timeout_fences_ready_sibling_callbacks
+3 failed, 990 passed, 3 warnings, 88 subtests passed in 77.48s (0:01:17)
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 3, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

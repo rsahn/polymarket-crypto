@@ -1,0 +1,37 @@
+{
+  "status": "MARKET_FEE_UNQUALIFIED",
+  "rounding": "UNSPECIFIED_FOR_APPLICABLE_MATCH_PATH",
+  "aggregation": "UNSPECIFIED_FOR_APPLICABLE_MATCH_PATH",
+  "partial_fill_allocation": "UNSPECIFIED_FOR_APPLICABLE_MATCH_PATH",
+  "client_role": "CLIENT_DEFINED order amount rounding and spend provision only; not exact fee settlement",
+  "sdk_path": "C:\\Users\\Ramy\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\polymarket\\_internal\\actions\\orders\\market.py",
+  "sdk_sha256": "1e373ee5207426201cff4687c7dbaf4b2094483c4fda094da4c20065b0cd9fe0",
+  "sdk_fee_function_lines": [
+    409,
+    422
+  ],
+  "official_additional_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/exchange-fee-module/main/src/FeeModule.sol",
+      "lines": [
+        30,
+        54,
+        94,
+        112
+      ],
+      "finding": "Operator supplies fee amounts to match/refund path; deployment to sampled market unproven"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange/main/src/exchange/libraries/CalculatorHelper.sol",
+      "lines": [
+        18,
+        46
+      ],
+      "finding": "Integer division of legacy min(p,1-p) curve; not proof for sampled p*(1-p) schedule"
+    }
+  ],
+  "upper_bound_status": "NOT_PROVEN_FOR_APPLICABLE_MARKET",
+  "conditional_bound": "If every monetary match fee differs from raw curve by at most u=1e-5 and N matches is known, sum(fee)<=sum(raw)+N*u. Neither match grouping/count nor applicability of that rounding bound is established here.",
+  "rejected_shortcut": "ceil(sum(raw),5dp) not an upper bound on the sum of separately rounded fees",
+  "no_zero_fallback": true
+}

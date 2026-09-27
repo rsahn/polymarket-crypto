@@ -1,0 +1,784 @@
+{
+  "summary": {
+    "opportunities_examined": 15,
+    "identified_entry_books": 0,
+    "same_book_reuse_count": null,
+    "same_book_reuse_rate": null,
+    "same_book_same_token_count": null,
+    "overlapping_lifetime_count": null,
+    "new_update_between_opportunities_count": null,
+    "unknown_cases": 15,
+    "classification": "DEPTH_MODEL_NOT_IDENTIFIABLE_FROM_CURRENT_EVIDENCE"
+  },
+  "opportunities": [
+    {
+      "opportunity_id": "1790114588262:DOWN",
+      "signal_ts": 1790114588262,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": "53924041326550668408053800445484087668298522208736430926609839374939354235445",
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": null,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005005142691254516,
+        "cost": 25.0,
+        "entry_vwap": 0.96,
+        "exit_price": 0.97,
+        "pnl": 0.26041666666666785,
+        "portfolio": "fixed_25",
+        "shares": 26.041666666666668,
+        "side": "DOWN",
+        "signal_ts_ms": 1790114588262,
+        "slug": "btc-updown-5m-1790114400"
+      },
+      "nominal_target_ms": 1790114588512,
+      "nominal_diagnostics": [
+        {
+          "database": "data\\d6\\d6_paper_test2.db",
+          "candidate_count": 2762,
+          "brackets": [
+            {
+              "event_id": 120605,
+              "local_sequence": 120605,
+              "source_ts": 1790114588481,
+              "receive_ts": 1790114588508,
+              "envelope_receive_ts": 1790114588508,
+              "persistence_available_ts": 1790114588631,
+              "generation": 1,
+              "source_hash": "e8c55dc145ec4e50ab20a9fb4bd30d6632823038",
+              "sequence": null,
+              "token": "53924041326550668408053800445484087668298522208736430926609839374939354235445",
+              "wire_hash": "77332f90776f395e5ea1d80b9a0d07e2788e680dc7d959688607bbc17e6e292b",
+              "connection_generation": 1,
+              "source_metadata": [
+                {
+                  "event_type": "price_change",
+                  "market": "0x8417cbda667800b575ec37eb25af6392b981d736b8410e3fd4e0059037394a28",
+                  "timestamp": "1790114588481"
+                }
+              ],
+              "bids": [
+                [
+                  0.92,
+                  9.0
+                ],
+                [
+                  0.9,
+                  123.13
+                ],
+                [
+                  0.89,
+                  60.0
+                ],
+                [
+                  0.88,
+                  59.0
+                ],
+                [
+                  0.87,
+                  222.09
+                ],
+                [
+                  0.86,
+                  2068.76
+                ],
+                [
+                  0.85,
+                  644.12
+                ],
+                [
+                  0.84,
+                  662.3
+                ],
+                [
+                  0.83,
+                  401.39
+                ],
+                [
+                  0.82,
+                  667.6
+                ],
+                [
+                  0.81,
+                  660.92
+                ],
+                [
+                  0.8,
+                  545.3
+                ],
+                [
+                  0.79,
+                  573.7
+                ],
+                [
+                  0.78,
+                  632.2
+                ],
+                [
+                  0.77,
+                  530.7
+                ],
+                [
+                  0.76,
+                  525.3
+                ],
+                [
+                  0.75,
+                  623.9
+                ],
+                [
+                  0.74,
+                  518.5
+                ],
+                [
+                  0.73,
+                  529.2
+                ],
+                [
+                  0.72,
+                  629.9
+                ]
+              ],
+              "asks": [
+                [
+                  0.96,
+                  225.19
+                ],
+                [
+                  0.97,
+                  1553.64
+                ],
+                [
+                  0.98,
+                  1094.8
+                ],
+                [
+                  0.99,
+                  9624.42
+                ]
+              ]
+            },
+            {
+              "event_id": 120645,
+              "local_sequence": 120645,
+              "source_ts": 1790114588487,
+              "receive_ts": 1790114588518,
+              "envelope_receive_ts": 1790114588518,
+              "persistence_available_ts": 1790114588653,
+              "generation": 1,
+              "source_hash": "b23963b46c5258b7f677d7648128632d16b1ecfb",
+              "sequence": null,
+              "token": "53924041326550668408053800445484087668298522208736430926609839374939354235445",
+              "wire_hash": "df043157da752225a7557d00d0c101feba229743bb41cbcbfdd1a08134a82445",
+              "connection_generation": 1,
+              "source_metadata": [
+                {
+                  "event_type": "price_change",
+                  "market": "0x8417cbda667800b575ec37eb25af6392b981d736b8410e3fd4e0059037394a28",
+                  "timestamp": "1790114588487"
+                }
+              ],
+              "bids": [
+                [
+                  0.92,
+                  9.0
+                ],
+                [
+                  0.9,
+                  123.13
+                ],
+                [
+                  0.89,
+                  60.0
+                ],
+                [
+                  0.88,
+                  59.0
+                ],
+                [
+                  0.87,
+                  227.09
+                ],
+                [
+                  0.86,
+                  2068.76
+                ],
+                [
+                  0.85,
+                  644.12
+                ],
+                [
+                  0.84,
+                  662.3
+                ],
+                [
+                  0.83,
+                  401.39
+                ],
+                [
+                  0.82,
+                  667.6
+                ],
+                [
+                  0.81,
+                  660.92
+                ],
+                [
+                  0.8,
+                  545.3
+                ],
+                [
+                  0.79,
+                  573.7
+                ],
+                [
+                  0.78,
+                  632.2
+                ],
+                [
+                  0.77,
+                  530.7
+                ],
+                [
+                  0.76,
+                  525.3
+                ],
+                [
+                  0.75,
+                  623.9
+                ],
+                [
+                  0.74,
+                  518.5
+                ],
+                [
+                  0.73,
+                  529.2
+                ],
+                [
+                  0.72,
+                  629.9
+                ]
+              ],
+              "asks": [
+                [
+                  0.96,
+                  225.19
+                ],
+                [
+                  0.97,
+                  1553.64
+                ],
+                [
+                  0.98,
+                  1094.8
+                ],
+                [
+                  0.99,
+                  9624.42
+                ]
+              ]
+            }
+          ],
+          "bracket_relation": "B",
+          "actual_entry_binding": false
+        }
+      ]
+    },
+    {
+      "opportunity_id": "1790114591349:DOWN",
+      "signal_ts": 1790114591349,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 3087,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": null,
+      "nominal_target_ms": 1790114591599,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790146922015:DOWN",
+      "signal_ts": 1790146922015,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 32330666,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005009259259258769,
+        "cost": 25.0,
+        "entry_vwap": 0.97,
+        "exit_price": 0.96,
+        "pnl": -0.2577319587628857,
+        "portfolio": "fixed_25",
+        "shares": 25.77319587628866,
+        "side": "DOWN",
+        "signal_ts_ms": 1790146922015,
+        "slug": "btc-updown-5m-1790146800"
+      },
+      "nominal_target_ms": 1790146922265,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790148986759:DOWN",
+      "signal_ts": 1790148986759,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 2064744,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005009248780896147,
+        "cost": 25.0,
+        "entry_vwap": 0.94,
+        "exit_price": 0.9299999999999999,
+        "pnl": -0.2659574468085104,
+        "portfolio": "fixed_25",
+        "shares": 26.595744680851066,
+        "side": "DOWN",
+        "signal_ts_ms": 1790148986759,
+        "slug": "btc-updown-5m-1790148900"
+      },
+      "nominal_target_ms": 1790148987009,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790149469409:DOWN",
+      "signal_ts": 1790149469409,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 482650,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "portfolio": null,
+        "reason": "NO_DEPTH",
+        "side": "DOWN",
+        "signal_ts_ms": 1790149469409,
+        "slug": "btc-updown-5m-1790149200",
+        "status": "SKIP"
+      },
+      "nominal_target_ms": 1790149469659,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790153242354:DOWN",
+      "signal_ts": 1790153242354,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 3772945,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005000154038692362,
+        "cost": 25.0,
+        "entry_vwap": 0.95,
+        "exit_price": 0.99,
+        "pnl": 1.05263157894737,
+        "portfolio": "fixed_25",
+        "shares": 26.315789473684212,
+        "side": "DOWN",
+        "signal_ts_ms": 1790153242354,
+        "slug": "btc-updown-5m-1790153100"
+      },
+      "nominal_target_ms": 1790153242604,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790153439857:DOWN",
+      "signal_ts": 1790153439857,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 197503,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005034912530620383,
+        "cost": 25.000000000000004,
+        "entry_vwap": 0.6,
+        "exit_price": 0.77,
+        "pnl": 7.083333333333332,
+        "portfolio": "fixed_25",
+        "shares": 41.66666666666667,
+        "side": "DOWN",
+        "signal_ts_ms": 1790153439857,
+        "slug": "btc-updown-5m-1790153400"
+      },
+      "nominal_target_ms": 1790153440107,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790155077358:DOWN",
+      "signal_ts": 1790155077358,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 1637501,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005117928658796567,
+        "cost": 25.0,
+        "entry_vwap": 0.21190406396677347,
+        "exit_price": 0.30000000000000004,
+        "pnl": 10.393375000000006,
+        "portfolio": "fixed_25",
+        "shares": 117.97791666666666,
+        "side": "DOWN",
+        "signal_ts_ms": 1790155077358,
+        "slug": "btc-updown-5m-1790154900"
+      },
+      "nominal_target_ms": 1790155077608,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790155297679:UP",
+      "signal_ts": 1790155297679,
+      "side": "UP",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 220321,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": 0.0005024756386653451,
+        "cost": 25.0,
+        "entry_vwap": 0.2120405082186901,
+        "exit_price": 0.33999999999999997,
+        "pnl": 15.086679999999994,
+        "portfolio": "fixed_25",
+        "shares": 117.90199999999999,
+        "side": "UP",
+        "signal_ts_ms": 1790155297679,
+        "slug": "btc-updown-5m-1790155200"
+      },
+      "nominal_target_ms": 1790155297929,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790155713265:DOWN",
+      "signal_ts": 1790155713265,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 415586,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.00050704098189569,
+        "cost": 25.0,
+        "entry_vwap": 0.97,
+        "exit_price": 0.98,
+        "pnl": 0.2577319587628857,
+        "portfolio": "fixed_25",
+        "shares": 25.77319587628866,
+        "side": "DOWN",
+        "signal_ts_ms": 1790155713265,
+        "slug": "btc-updown-5m-1790155500"
+      },
+      "nominal_target_ms": 1790155713515,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790157467092:DOWN",
+      "signal_ts": 1790157467092,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 1753827,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005015644644195127,
+        "cost": 25.0,
+        "entry_vwap": 0.01,
+        "exit_price": 0.08999999999999997,
+        "pnl": 199.99999999999991,
+        "portfolio": "fixed_25",
+        "shares": 2500.0,
+        "side": "DOWN",
+        "signal_ts_ms": 1790157467092,
+        "slug": "btc-updown-5m-1790157300"
+      },
+      "nominal_target_ms": 1790157467342,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790157641312:UP",
+      "signal_ts": 1790157641312,
+      "side": "UP",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 174220,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": 0.0005007967909873567,
+        "cost": 25.0,
+        "entry_vwap": 0.65,
+        "exit_price": 0.79,
+        "pnl": 5.384615384615383,
+        "portfolio": "fixed_25",
+        "shares": 38.46153846153846,
+        "side": "UP",
+        "signal_ts_ms": 1790157641312,
+        "slug": "btc-updown-5m-1790157600"
+      },
+      "nominal_target_ms": 1790157641562,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790158951605:DOWN",
+      "signal_ts": 1790158951605,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 1310293,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": -0.0005000544931177409,
+        "cost": 25.0,
+        "entry_vwap": 0.87,
+        "exit_price": 0.94,
+        "pnl": 2.011494252873561,
+        "portfolio": "fixed_25",
+        "shares": 28.735632183908045,
+        "side": "DOWN",
+        "signal_ts_ms": 1790158951605,
+        "slug": "btc-updown-5m-1790158800"
+      },
+      "nominal_target_ms": 1790158951855,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790159004303:DOWN",
+      "signal_ts": 1790159004303,
+      "side": "DOWN",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 52698,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "portfolio": null,
+        "reason": "NO_DEPTH",
+        "side": "DOWN",
+        "signal_ts_ms": 1790159004303,
+        "slug": "btc-updown-5m-1790158800",
+        "status": "SKIP"
+      },
+      "nominal_target_ms": 1790159004553,
+      "nominal_diagnostics": []
+    },
+    {
+      "opportunity_id": "1790159645670:UP",
+      "signal_ts": 1790159645670,
+      "side": "UP",
+      "entry_decision_ts": null,
+      "token": null,
+      "book_identity": null,
+      "book_source_ts": null,
+      "book_receive_ts": null,
+      "last_book_update_before_entry": null,
+      "next_book_update_after_entry": null,
+      "depth_used": null,
+      "previous_opportunity_book_identity": null,
+      "same_book_as_previous": null,
+      "elapsed_since_previous_opportunity_ms": 641367,
+      "case": "C",
+      "reason": "Actual entry clock/book/levels absent from historical callback",
+      "historical_fill": {
+        "btc_move": 0.0005043700797964235,
+        "cost": 25.0,
+        "entry_vwap": 0.01,
+        "exit_price": 0.0,
+        "pnl": -25.0,
+        "portfolio": "fixed_25",
+        "shares": 2500.0,
+        "side": "UP",
+        "signal_ts_ms": 1790159645670,
+        "slug": "btc-updown-5m-1790159400"
+      },
+      "nominal_target_ms": 1790159645920,
+      "nominal_diagnostics": []
+    }
+  ],
+  "report_hashes": {
+    "analysis\\d6\\paper_live\\paper_20260922_235728.json": "cdff89118c11aaa1f083932ec53cd468a74b9a7859b54a5f9ac1af38c8fe4176",
+    "analysis\\d6\\paper_live\\paper_20260922_235749.json": "91e0f47b6f453707f3281af9b4d49e113d93f4a3d1fb06bdfac3cd784b5c9633",
+    "analysis\\d6\\paper_live\\paper_20260923_000624.json": "c8d6b4aebd72391e9c5f90d8011faaccea29972918f4442cc0e1d6c5f90e1f20",
+    "analysis\\d6\\paper_live\\paper_20260923_003011.json": "eaeb57ad77287ede0a616e14dff493516d63e4e26a452c1cc25c41f8d9bd4cac",
+    "analysis\\d6\\paper_live\\paper_20260923_081816.json": "1dd16e16f0741ee4b3165baf5c1054e0fb41abe260fd3baae5c0fd2682ed5730",
+    "analysis\\d6\\paper_live\\paper_20260923_081845.json": "c6ac3dbf066cb138ae7751555da332fdddcca0c270204f22d18a1547dcecbdeb",
+    "analysis\\d6\\paper_live\\paper_20260923_081855.json": "8de16be30726b7d29ce9a08493c12e9047e65d671b4e3a1dfe2b861a401f6eaf",
+    "analysis\\d6\\paper_live\\paper_20260923_082611.json": "d86e17d5bc85411970899c2f1b80ba12dd6063fadd5197a2814b345067555e3a",
+    "analysis\\d6\\paper_live\\paper_20260923_093016.json": "8664f468bf1ef178d65977f0f13f3eda178e1f0f909594fb59b9eaed399e2055",
+    "analysis\\d6\\paper_live\\paper_20260923_103017.json": "0f00c725eaadd4cbcc26d1d7712ee35d68f5fe31795bd2cfd9c9c7497172870b",
+    "analysis\\d6\\paper_live\\paper_20260923_113017.json": "4fab826e731147e89389734c11d2fb1292a60aa98b9df8e2533e1aef529e645d",
+    "analysis\\d6\\paper_live\\paper_20260923_123017.json": "6101554971b991ae29649171acb0e2d750e463157fd88931dc798d899cc2ef8a",
+    "analysis\\d6\\paper_live\\paper_20260923_130810.json": "3071e92f1899637fd146517243b5f256b2271fe16e43f6fd487952e58912a056"
+  },
+  "source_checks": [
+    {
+      "path": "data\\d6\\d6_paper_48h.db",
+      "size": 2978168832,
+      "mtime_ns": 1790116210969478200,
+      "unchanged": true
+    },
+    {
+      "path": "data\\d6\\d6_paper_live.db",
+      "size": 570585088,
+      "mtime_ns": 1790114248125814100,
+      "unchanged": true
+    },
+    {
+      "path": "data\\d6\\d6_paper_test2.db",
+      "size": 1165201408,
+      "mtime_ns": 1790114784882674100,
+      "unchanged": true
+    },
+    {
+      "path": "data\\d6\\d6_paper_test3.db",
+      "size": 17674240,
+      "mtime_ns": 1790144296253723300,
+      "unchanged": true
+    },
+    {
+      "path": "data\\d6\\d6_paper_test4.db",
+      "size": 799526912,
+      "mtime_ns": 1790144771679775600,
+      "unchanged": true
+    }
+  ],
+  "compact_windows": "No existing compact/window DB located under analysis or data; extractor is code only.",
+  "excluded": "Loose soak WAL/SHM without base DB not a recoverable causal capture; no repair attempted.",
+  "impact": {
+    "opportunities_affected": null,
+    "fills_affected": null,
+    "quantity_difference": null,
+    "pnl_difference": null,
+    "unresolved": 15,
+    "model_C": "Not admissibly demonstrated, not evaluated"
+  }
+}

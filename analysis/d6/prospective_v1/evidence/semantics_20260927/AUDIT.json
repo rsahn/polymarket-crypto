@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "scope": "new offline diagnostic/reader/tests/evidence only",
+  "protected_unchanged": true,
+  "prior_evidence_unchanged": true,
+  "tested_sources_unchanged": true,
+  "full_suite_final": "993 PASS / 88 subtests / 0 FAIL",
+  "first_full_suite_failures_preserved": 3,
+  "leak_scan": "PASS",
+  "production_changed": false,
+  "candidate_adopted": false,
+  "real_partition_opened": false,
+  "monetary_sdk_attempts": 0,
+  "flags_false": true
+}
