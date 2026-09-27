@@ -1,0 +1,119 @@
+{
+  "url": "https://archive.pendulumflow.com/pmxt/v2/polymarket_orderbook_2026-08-09T23.parquet",
+  "max_transfer_bytes": 33554432,
+  "max_rows": 4096,
+  "events_local": null,
+  "overlap": "None: local full-depth captures start September20; sample August09",
+  "matched_events": null,
+  "missing_source_events": null,
+  "missing_local_events": null,
+  "best_bid_match": null,
+  "best_ask_match": null,
+  "depth_match": null,
+  "timestamp_delta_ms": null,
+  "ordering_match": null,
+  "token_match": null,
+  "market_match": null,
+  "schema": "timestamp_received: timestamp[ms, tz=UTC] not null\ntimestamp: timestamp[ms, tz=UTC] not null\nmarket: fixed_size_binary[66] not null\nevent_type: string not null\nasset_id: string not null\nbids: string\nasks: string\nprice: decimal128(9, 4)\nsize: decimal128(18, 6)\nside: string\nbest_bid: decimal128(9, 4)\nbest_ask: decimal128(9, 4)\nfee_rate_bps: uint16\ntransaction_hash: string\nold_tick_size: decimal128(9, 4)\nnew_tick_size: decimal128(9, 4)",
+  "row_groups": 82,
+  "sample_obtained": true,
+  "events_source": 4096,
+  "distinct_market_tokens": 9,
+  "same_token_receive_timestamp_ties": 1754,
+  "book_snapshot_rows": 0,
+  "reconstruction_verdict": "NOT_QUALIFIED: no original local decision clock or global tie-breaker; sample cannot establish 24h completeness",
+  "sample_sha256": "c98d255e994d10f26ad41fc9cb427361042498d5d68b1ff5c5d2715b0b246605",
+  "transferred_bytes": 6650397,
+  "range_requests": [
+    {
+      "start": 507436288,
+      "end": 507501823,
+      "sha256": "6ed1120503eda1b3cb99f18e634c8c8e888d8d220476018e4e55b787fa5063ff"
+    },
+    {
+      "start": 507287737,
+      "end": 507501815,
+      "sha256": "5c63f79ea04f8eff4a9e89524256ff9242eb67c3c8ee2e4ed39ed46b55830b4f"
+    },
+    {
+      "start": 4,
+      "end": 1396757,
+      "sha256": "6fb9c64cec1c093866f42e4d6bcd551ab4bb13db6d51ff7bc451a2fab4388e09"
+    },
+    {
+      "start": 1396758,
+      "end": 3422503,
+      "sha256": "74b20d99e091ceb3f4ecd5b8bbd6335376b34719835e68f4423fb01706cfb0dc"
+    },
+    {
+      "start": 3422504,
+      "end": 3496858,
+      "sha256": "81648124fec05d5420631d97484d85c343e1281a2a2d9859a6274e0ebfb9b711"
+    },
+    {
+      "start": 3496859,
+      "end": 3503624,
+      "sha256": "4faa2a57cec5e2889d77f8cb62478a4620c1dd03a1e64e6fff735b36d92037d3"
+    },
+    {
+      "start": 3503625,
+      "end": 3648108,
+      "sha256": "202e773bbbdda403e68f814066e1ce4493c8c8974b6625d83a460e8831084d54"
+    },
+    {
+      "start": 3648109,
+      "end": 3709445,
+      "sha256": "a53a796c75a150382687578b6f5422ca31352261091637f29655c089515fc92b"
+    },
+    {
+      "start": 3709446,
+      "end": 3764916,
+      "sha256": "3629fd6ae2c6ef55c2b52d54d995da6a8c73847c042151dd112ff7b36d3fd90d"
+    },
+    {
+      "start": 3764917,
+      "end": 4689813,
+      "sha256": "bac82086c2be48db75edc4f0f7292ae98d52be858e1ba15394b768009ae51963"
+    },
+    {
+      "start": 4689814,
+      "end": 5968559,
+      "sha256": "d56bf1dbbcb14708595911a2240fe8697cd83ea46d2a2adf13229e7ecb80664e"
+    },
+    {
+      "start": 5968560,
+      "end": 6045121,
+      "sha256": "fc12a187b41b8932be7a0717580c19665eed885abcdf48888146ed2b5d323d7a"
+    },
+    {
+      "start": 6045122,
+      "end": 6190749,
+      "sha256": "dde21629b1da730a152a9ea342e92e090f290846d269448d217bc62d7451bc90"
+    },
+    {
+      "start": 6190750,
+      "end": 6336175,
+      "sha256": "00e771c4ee37b153e5154ad1d4cdd552011c6c3a6e6f2b031c4996fec173c76e"
+    },
+    {
+      "start": 6336176,
+      "end": 6340784,
+      "sha256": "754d9763c63e085383d67199a31d10a8da40b1135e0b93f23729877f180f5c59"
+    },
+    {
+      "start": 6340785,
+      "end": 6365625,
+      "sha256": "4ef44f7c2b0a94c368b3e56edb4f66d9661b73627b35f1be460512d8d35469fa"
+    },
+    {
+      "start": 6365626,
+      "end": 6368205,
+      "sha256": "4f8c08e8ac129808c890cf7cb31e5a33e6f3f3dcf1290067a51ef9431524a096"
+    },
+    {
+      "start": 6368206,
+      "end": 6370785,
+      "sha256": "31d6632078b985adb2ce65e6bd9ffce9e02b786c5bd49020a87616f6c060fd58"
+    }
+  ]
+}

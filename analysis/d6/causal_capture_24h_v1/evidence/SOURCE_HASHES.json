@@ -1,0 +1,17 @@
+{
+  "hashes": {
+    "analysis/d6/causal_capture_24h_v1/collector.py": "967b9abd60f0b9db158d336958d5574cc2bb873665dffe96853d6b6d96d360a1",
+    "analysis/d6/causal_capture_24h_v1/runner.py": "f22315aec9f97d326083963857698c874b053bf95300425b04988a5f0c072358",
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/d6/prospective_24h_v1/PROTOCOL.json": "ae8dfbd188fe21537ec64c233af0780ce13e3fa0b4e88d984c3ee193f436dfb6",
+    "analysis/d6/prospective_24h_v1/criteria.json": "e275857b535596aaecc33c842c3724ad855a3d3abe35c3414fd6a8ef9204d5c4",
+    "analysis/d6/prospective_v1/core.py": "a130ce9bb53de9280dc144573487eb10730c6357125b6456b5fa4abfb76341a7",
+    "analysis/d6/prospective_v1/observability_v2.py": "b7c74bf0ed56f347a03d8f490f8dde2dd6e8f8cfebbd594fb2f661bfcff2f2f2",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+    "backend/app/collectors/polymarket.py": "45a7daad4296334b04c97f78b1884711be927c4987c5a75123207a604f74a224",
+    "backend/app/collectors/polymarket_ws.py": "77198be2c611b9cf031038c1d3cad3089f1b399bf41acafd625445e665e391e3",
+    "backend/app/d5/clock51.py": "9e389e5234ffeb68a50f97a37ad3659ebb434441b33e2c32ac2c582547464f5c",
+    "backend/app/d5/protocol51.py": "4a5a5e3f57539f6d450290559e33d867ac89f64176567b18a9567aec1f77ba8e"
+  },
+  "seal_sha256": "ce71b7d750ec18a01db79846dae6624403c5ce4157bf4879e98dfda8be78cf51"
+}

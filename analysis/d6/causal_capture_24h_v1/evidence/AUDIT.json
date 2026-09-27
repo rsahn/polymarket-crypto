@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "protected_files": 139,
+  "protected_hash_mismatches": [],
+  "duplicate_payload_preserved_as_new_RAW": true,
+  "duplicate_accepted_state_identity_unchanged": true,
+  "offline_checkpoint_recovery": true,
+  "live_resume_allowed": false,
+  "economic_behavior_identical_on_fixtures": true,
+  "economic_equivalence_scope": "Original extracted V1 FIXED25 versus R2; no production wall-clock or statistical equivalence claim",
+  "transformed_ast_sha256": "1eef913e902a6ce31566e547e257ddfd0d507e8e8d644fd7521862e379781027",
+  "leak_scan": {
+    "status": "PASS",
+    "files_scanned": 26,
+    "findings": [],
+    "scope": "PEM private keys and literal secret assignments; public market/token IDs and hashes are expected. Not a universal guarantee."
+  },
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false,
+  "monetary_sdk_attempts": 0,
+  "capture_launched": false,
+  "TRAIN_VALIDATION_OOS_opened": false,
+  "historical_D5": "FAIL",
+  "final_mission_file_count": 33,
+  "final_text_leak_scan": "PASS",
+  "source_seal_matches_working_bytes": true
+}

@@ -1,0 +1,17 @@
+{
+  "status": "CAPTURE_24H_STORAGE_BLOCKED",
+  "archive_projection_bytes": 21999279027,
+  "enforced_byte_quotas": {
+    "RAW": 68719476736,
+    "BOOK_META": 17179869184,
+    "CAUSAL": 8589934592,
+    "CHECKPOINT": 268435456,
+    "CONTROL": 16777216
+  },
+  "scratch_recovery_bytes": 1073741824,
+  "engineering_margin_bytes": 19169647002,
+  "required_bytes": 115017882010,
+  "current_free_bytes": 45703360512,
+  "additional_bytes_required": 69314521498,
+  "qualification": "Quota-bounded capture, not a guarantee that unknown future traffic fits. Reaching any limit invalidates completeness and stops capture without dropping accepted data."
+}

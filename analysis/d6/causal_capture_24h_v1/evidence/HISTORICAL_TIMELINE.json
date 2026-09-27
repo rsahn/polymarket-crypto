@@ -1,0 +1,163 @@
+{
+  "events_source": 4096,
+  "token_timelines": [
+    {
+      "market": "0x000006537b4db4ba875970ffcf6d11d7ee38442f72a6d195e0138013110f2385",
+      "token": "107903056304354087460663076226338060368754714003070893661416060731388239814338",
+      "events": 67,
+      "book_anchors": 0,
+      "receive_ties": 3,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:02:34.557000+00:00",
+      "last_receive": "2026-08-09T23:56:41.953000+00:00",
+      "event_types": {
+        "price_change": 67
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x000006537b4db4ba875970ffcf6d11d7ee38442f72a6d195e0138013110f2385",
+      "token": "31861954771574632007762854914615757066574300827499264888689138001678845239268",
+      "events": 67,
+      "book_anchors": 0,
+      "receive_ties": 3,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:02:34.557000+00:00",
+      "last_receive": "2026-08-09T23:56:41.953000+00:00",
+      "event_types": {
+        "price_change": 67
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x00000977017fa72fb6b1908ae694000d3b51f442c2552656b10bdbbfd16ff707",
+      "token": "44554681108074793313893626424278471150091658237406724818592366780413111952248",
+      "events": 880,
+      "book_anchors": 0,
+      "receive_ties": 278,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:00:06.209000+00:00",
+      "last_receive": "2026-08-09T23:59:57.854000+00:00",
+      "event_types": {
+        "price_change": 880
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x00000977017fa72fb6b1908ae694000d3b51f442c2552656b10bdbbfd16ff707",
+      "token": "56914066788195652124819518509742797268065105214859208750975274268335607133892",
+      "events": 880,
+      "book_anchors": 0,
+      "receive_ties": 279,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:00:06.209000+00:00",
+      "last_receive": "2026-08-09T23:59:57.854000+00:00",
+      "event_types": {
+        "price_change": 880
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x0000c7fe300953933808d82cd4aa35dbc9f291f0b78ca9da43b0604883906c6c",
+      "token": "24473378447612899353575382165317011629536764151843413452585009431556652189881",
+      "events": 1,
+      "book_anchors": 0,
+      "receive_ties": 0,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:52:14.033000+00:00",
+      "last_receive": "2026-08-09T23:52:14.033000+00:00",
+      "event_types": {
+        "price_change": 1
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "NO_VERIFIED_SEQUENCE"
+    },
+    {
+      "market": "0x0000c7fe300953933808d82cd4aa35dbc9f291f0b78ca9da43b0604883906c6c",
+      "token": "54647080501201331455477326147811376064824100171608827092711080601004925467479",
+      "events": 1,
+      "book_anchors": 0,
+      "receive_ties": 0,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:52:14.033000+00:00",
+      "last_receive": "2026-08-09T23:52:14.033000+00:00",
+      "event_types": {
+        "price_change": 1
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "NO_VERIFIED_SEQUENCE"
+    },
+    {
+      "market": "0x0001cad91870dca67b4e5ea3fd3a04fb7ce2746ab6401149f2f1a020a3f30fbc",
+      "token": "10900531499512476234855307164402661601213940997436826713982582888785210558436",
+      "events": 263,
+      "book_anchors": 0,
+      "receive_ties": 62,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:00:57.408000+00:00",
+      "last_receive": "2026-08-09T23:58:41.113000+00:00",
+      "event_types": {
+        "price_change": 263
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x0001cad91870dca67b4e5ea3fd3a04fb7ce2746ab6401149f2f1a020a3f30fbc",
+      "token": "2120799138972620647403209755510803719586961392271719660456194224611138168899",
+      "events": 263,
+      "book_anchors": 0,
+      "receive_ties": 62,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:00:57.408000+00:00",
+      "last_receive": "2026-08-09T23:58:41.113000+00:00",
+      "event_types": {
+        "price_change": 263
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    },
+    {
+      "market": "0x0001cb8c0b39aeb614ab9a43867595317f06ede9c011661513065c638fbbefda",
+      "token": "37843096702983984154813593339817451110105539743235209768242171001456417281055",
+      "events": 1674,
+      "book_anchors": 0,
+      "receive_ties": 1067,
+      "receive_regressions": 0,
+      "first_receive": "2026-08-09T23:00:03.846000+00:00",
+      "last_receive": "2026-08-09T23:32:15.029000+00:00",
+      "event_types": {
+        "price_change": 1674
+      },
+      "state_at_first": "UNANCHORED",
+      "state_at_last": "UNANCHORED",
+      "depth_reconstruction": "NO_FULL_BOOK_ANCHOR",
+      "ordering": "UNQUALIFIED_RECEIVE_TIES"
+    }
+  ],
+  "state_at_T_proven": false,
+  "full_depth_available_in_sample": false,
+  "comparison": "NO_LOCAL_OVERLAP; all pairwise matching metrics remain null, never zero",
+  "historical_verdict": "NEW_24H_CAUSAL_CAPTURE_REQUIRED",
+  "scope": "This bounded accessible sample fails qualification; no assertion that every provider record lacks depth."
+}

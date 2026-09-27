@@ -1,0 +1,23 @@
+{
+  "url": "https://archive.pendulumflow.com/pmxt/v2/polymarket_orderbook_2026-08-09T23.parquet",
+  "method": "GET Range bytes=-8",
+  "max_bytes": 8192,
+  "status": 206,
+  "headers": {
+    "Date": "Sun, 27 Sep 2026 08:26:37 GMT",
+    "Content-Type": "binary/octet-stream",
+    "Content-Length": "8",
+    "Connection": "close",
+    "Content-Range": "bytes 507501816-507501823/507501824",
+    "Accept-Ranges": "bytes",
+    "Cache-Control": "public, max-age=31536000, immutable",
+    "ETag": "\"52fe7ad741e1fc561989ccb723a949e0-6\"",
+    "Last-Modified": "Wed, 19 Aug 2026 18:30:04 GMT",
+    "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=3%2BjxiWMnvGSVyDHuuPNkHVGLsxZQgeQZ0ln%2FIcvS%2B9U6sZJm0EEXkThzaEbywwv02FX%2BS6TYBqA3Z6k9MkKIyLh%2FwI3NhmWMNi3PUR5WGYnCvfniFv10Areu24JFgbWkwKWeTSUmXoSTvck%3D\"}]}",
+    "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "Server": "cloudflare",
+    "CF-RAY": "a4191fd8fd6eaa28-LIS",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "body_hex": "3f44030050415231"
+}

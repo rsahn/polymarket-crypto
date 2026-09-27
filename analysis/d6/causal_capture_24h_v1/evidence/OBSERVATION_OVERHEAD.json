@@ -1,0 +1,28 @@
+{
+  "fixture_only": true,
+  "market_payloads": 1001,
+  "opportunities": 1000,
+  "bytes_by_bucket": {
+    "CONTROL": 222,
+    "RAW": 244989,
+    "BOOK_META": 426365,
+    "CAUSAL": 3539699,
+    "CHECKPOINT": 223
+  },
+  "records_by_bucket": {
+    "CONTROL": 1,
+    "RAW": 1001,
+    "BOOK_META": 1002,
+    "CAUSAL": 11000,
+    "CHECKPOINT": 1
+  },
+  "metadata_bytes_per_state": 425.51397205588825,
+  "causal_bytes_per_opportunity": 3539.699,
+  "normalize_plus_metadata_fixture_seconds": 0.26963799982331693,
+  "new_metadata_disk_records": 1000,
+  "new_metadata_disk_bytes": 284543,
+  "new_metadata_disk_seconds": 0.09474069997668266,
+  "raw_archive_benchmark_repeated": false,
+  "realtime_capacity_proven": false,
+  "projection": "Not a traffic-rate bound. Hard bucket byte caps plus margin independently bound disk usage; cap hit makes capture incomplete."
+}

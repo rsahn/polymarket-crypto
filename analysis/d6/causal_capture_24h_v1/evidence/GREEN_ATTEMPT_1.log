@@ -1,0 +1,14 @@
+.F..........                                                             [100%]
+================================== FAILURES ===================================
+_________________ test_rotation_future_and_sequence_rejection _________________
+analysis\d6\causal_capture_24h_v1\test_capture.py:21: in test_rotation_future_and_sequence_rejection
+    b.ingest(books(201),202);assert not b.states
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+analysis\d6\causal_capture_24h_v1\collector.py:107: in ingest
+    q=snap[side];token=q['token_id']
+      ^^^^^^^^^^
+E   KeyError: 'up'
+=========================== short test summary info ===========================
+FAILED analysis/d6/causal_capture_24h_v1/test_capture.py::test_rotation_future_and_sequence_rejection
+1 failed, 11 passed in 2.17s
+OFFLINE_PROOF {"external_connections_blocked": 0, "production_transport_lock_tests": 0, "real_orders_enabled": "false", "live_execution_armed": "false", "sdk_monetary_attempts": 0, "sdk_methods_guarded": 16}

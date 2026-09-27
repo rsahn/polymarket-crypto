@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://r2v2.pmxt.dev/polymarket_orderbook_2026-09-09T17.parquet",
+    "utc": "2026-09-27T08:25:29.036641+00:00",
+    "request": "Range bytes=-8",
+    "max_read_bytes": 8192,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://archive.pmxt.dev/Polymarket/v2/polymarket_orderbook_2026-09-09T17.parquet",
+    "utc": "2026-09-27T08:25:29.224276+00:00",
+    "request": "Range bytes=-8",
+    "max_read_bytes": 8192,
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+  }
+]

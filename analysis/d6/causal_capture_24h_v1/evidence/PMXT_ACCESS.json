@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://archive.pmxt.dev/Polymarket/v2",
+    "utc": "2026-09-27T08:24:30.678971+00:00",
+    "limit_bytes": 262144,
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+  },
+  {
+    "url": "https://archive.pmxt.dev/docs/v2-data-overview",
+    "utc": "2026-09-27T08:24:34.103433+00:00",
+    "limit_bytes": 262144,
+    "error": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1032)>"
+  }
+]
