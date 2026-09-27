@@ -118,7 +118,7 @@
   "existing_tracked_status_unchanged": true,
   "leak_scan": {
     "status": "PASS",
-    "scope_files": 23,
+    "scope_files": 24,
     "findings": [],
     "method": "private-key PEM, credential assignments, GitHub token patterns; no credential/config files added"
   },
@@ -132,5 +132,6 @@
   "monetary_SDK_attempts": 0,
   "no_economic_partition_opened": true,
   "preparation_seal_verified": true,
-  "new_artifact_line_endings": "Folder-scoped -text preserves immutable byte hashes across checkout"
+  "new_artifact_line_endings": "Folder-scoped -text preserves immutable byte hashes across checkout",
+  "git_byte_preservation_correction": "Initial index entries retained earlier LF normalization after attributes changed. Follow-up uses scoped git add --renormalize and checks every blob against working bytes. Frozen protocol/criteria/manifest bytes unchanged."
 }

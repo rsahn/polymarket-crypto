@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "initial_check": "FAILED_INDEX_LINE_ENDING_MISMATCH",
+  "resolution": "Scoped renormalize under -text; protocol bytes and seals unchanged",
+  "verified_index_bytes_sha256": {
+    "analysis/d6/prospective_24h_v1/.gitattributes": "730a35ae3d558080083c3103d9ac8100c3f6561678092abe341701dfa331eb1d",
+    "analysis/d6/prospective_24h_v1/audit_local.py": "5bec3bdd1b165df891e74ad01f577ef8ad2e6d9d0f9511a15899999d85420557",
+    "analysis/d6/prospective_24h_v1/criteria.json": "e275857b535596aaecc33c842c3724ad855a3d3abe35c3414fd6a8ef9204d5c4",
+    "analysis/d6/prospective_24h_v1/OBSERVABILITY_CONTRACT.md": "93c79a4e3dd5493944f89725387ad25dce55afaa9bcb5668eee1b9012358ab2e",
+    "analysis/d6/prospective_24h_v1/PROTOCOL.json": "ae8dfbd188fe21537ec64c233af0780ce13e3fa0b4e88d984c3ee193f436dfb6",
+    "analysis/d6/prospective_24h_v1/protocol.py": "8b4a8cf7c409abe1efb5180edfcf337e7621f5f102dd4036c9d8389c5fd2ba72",
+    "analysis/d6/prospective_24h_v1/test_protocol.py": "93c852ebb8e9093bf5b3b01d486a09305c0c828b80e583eba74c95304eba926f",
+    "analysis/d6/prospective_24h_v1/evidence/AUDIT.json": "60fa95264e2d0e1d9882a8352db9c6eb93ae352f4cd414b4c97cfcb2ea16d5bb",
+    "analysis/d6/prospective_24h_v1/evidence/BASELINE.json": "09baf47c6a187cbbc2e27fc1c83bfb0ff87653a9352b4168769beb123b62a389",
+    "analysis/d6/prospective_24h_v1/evidence/CAPACITY_24H.json": "00831aae6b2b4fb22faa2d24b3f9a1920a64dcbdf513626f8a37f49be74a9d3a",
+    "analysis/d6/prospective_24h_v1/evidence/EXTERNAL_MINIMAL_REQUESTS.json": "d5d545e76c760f3b5e69eec4522658d368aac8478fba73bc65324c366cdb938b",
+    "analysis/d6/prospective_24h_v1/evidence/EXTERNAL_MINIMAL_REQUESTS_2.json": "136278d01b59bdc2db604824c31d3f49ad420a7d63a944d554da73aa2b8c73db",
+    "analysis/d6/prospective_24h_v1/evidence/EXTERNAL_SOURCES.md": "0ff86816577ef502e9f575ccaef2f73d0184814e4e6dd62dc3730db521994a6c",
+    "analysis/d6/prospective_24h_v1/evidence/FULL_SUITE.log": "6d534d35bb4f921c57c8d8617845378aedb176dd1831308eee52a7e2fcc2b9f7",
+    "analysis/d6/prospective_24h_v1/evidence/LOCAL_24H_DATA_MATRIX.json": "b25f64a7525e50ccdf689283e183b995431ea8f6639295d7d75b534b8d03c082",
+    "analysis/d6/prospective_24h_v1/evidence/LOCAL_DATA_AUDIT.json": "48f09ad79b40cfe9713f5124b5b5c55168207f192fdde031170a3fd39a0bc56d",
+    "analysis/d6/prospective_24h_v1/evidence/LOCAL_DERIVED_INVENTORY.json": "a9c1e3b25701ce5b747cd0ece7812434afbe07e25222249b859af12330209f17",
+    "analysis/d6/prospective_24h_v1/evidence/REPORT.md": "ad7421b2891589241111ed01765cdf74f31fc4d30c47703c397d13a32e5fd59c",
+    "analysis/d6/prospective_24h_v1/evidence/SAMPLE_FEASIBILITY.json": "b2d3a29a7de6ac04201000e0a8a332d70b2cbc3a4f7764cd2e9152975ea437c8",
+    "analysis/d6/prospective_24h_v1/evidence/VALIDATION.json": "e520521a5653a6034211ceb1609711797497ca1cd2c38501581919c10cd62528",
+    "analysis/d6/prospective_24h_v1/evidence/VERDICT.json": "3202be480b23053b37c0191cab5e24f17dfdcb3a0c62a70ce9cf1ed7cfe12f2d",
+    "analysis/d6/prospective_24h_v1/preparation/MANIFEST.json": "4339d6948f91c40297c3bd7a08b7cc3016ee1bdaf1915f528f2f6090c2b99117",
+    "analysis/d6/prospective_24h_v1/preparation/PREPARATION_SEAL.json": "aa5cc0aeb460f5a0828650b3e5403f1b10fb03df46b673cf0a4efcd7a3c7d627"
+  }
+}
