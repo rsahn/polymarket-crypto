@@ -1,0 +1,781 @@
+{
+  "mode": "TWO_AUTHORIZED_CANDIDATES_GET_ONLY_DIAGNOSTIC",
+  "started_ms": 1790512504870,
+  "candidates": {
+    "0x9348efd557a09e644795c8f114bcf0bef86f203a": {
+      "context": {
+        "account": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "EOA",
+        "balance_get_signature_type": 0,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      },
+      "balance_first": {
+        "status": "OBSERVED_TYPE_CONTEXT_BALANCE",
+        "balance_raw": "0",
+        "units": "BASE_UNITS",
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "documented_symbol": "pUSD",
+        "documented_decimals": 6,
+        "signature_type_query": 0,
+        "account_echoed": false,
+        "account_binding": "SDK_TYPE_CONTEXT_REQUIRES_INDEPENDENT_ADDRESS_CORROBORATION",
+        "allowance_fields_ignored": true,
+        "started_ms": 1790512506719,
+        "finished_ms": 1790512507099
+      },
+      "positions": {
+        "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+        "count": 0,
+        "nonzero_positions": 0,
+        "pages": 1,
+        "pagination_complete": true,
+        "window_start": null,
+        "window_end": null,
+        "oldest_trade_seconds": null,
+        "newest_trade_seconds": null,
+        "markets_count": 0,
+        "scope": "CURRENT_INDEX_POSITIONS_INCLUDING_ARCHIVED_MAX_100_ROWS",
+        "global_complete": false,
+        "indexer_asof_proven": false,
+        "started_ms": 1790512507099,
+        "finished_ms": 1790512507514
+      },
+      "history": {
+        "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+        "count": 0,
+        "nonzero_positions": null,
+        "pages": 1,
+        "pagination_complete": true,
+        "window_start": 1787920505,
+        "window_end": 1790512505,
+        "oldest_trade_seconds": null,
+        "newest_trade_seconds": null,
+        "markets_count": 0,
+        "scope": "ALL_MARKETS_LAST_30_DAYS_MAX_100_ROWS",
+        "global_complete": false,
+        "indexer_asof_proven": false,
+        "started_ms": 1790512507514,
+        "finished_ms": 1790512507828
+      },
+      "selected_market_clob_trades": {
+        "status": "OBSERVED_ATTRIBUTED",
+        "count": 0,
+        "count_scope": "VALIDATED_RETURNED_ROWS_ONLY",
+        "pages": 1,
+        "pagination_complete": true,
+        "scope": "CREDENTIAL_SELECTED_MARKET_SINCE_SLOT_START",
+        "status_counts": {},
+        "complete": false,
+        "atomic_frontier": null,
+        "settlement_finality_proven": false,
+        "fee_effects_proven": false,
+        "provenance": {
+          "validation_source": "RAW_CLOB_BEFORE_SDK_COERCION",
+          "market": "0x15e19118ca47bef5ea8f6e83e1d64bc70a600bd5b84251faa5a184a6f18c3a5f",
+          "window_start_seconds": 1790512500,
+          "window_end_ms": 1790512800000,
+          "response_digests": [
+            "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+          ]
+        },
+        "request_scope": "SHARED_SIGNER_CREDENTIAL_VIEW_WITH_MARKET_WINDOW_NOT_ADDRESS_FILTERED",
+        "started_ms": 1790512507831,
+        "finished_ms": 1790512508158
+      },
+      "explorer_balance": {
+        "status": "OBSERVED_EXPLORER_INDEX",
+        "balance_raw": null,
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "symbol": "pUSD",
+        "decimals": 6,
+        "absence_is_not_zero": true,
+        "scope": "EXPLICIT_ADDRESS_INDEXED_TOKEN_BALANCES",
+        "state_asof_proven": false,
+        "limitation": "No token-balance block/timestamp in this route; HTTP receive time is not state freshness",
+        "started_ms": 1790512508158,
+        "finished_ms": 1790512508586
+      },
+      "balance_second": {
+        "status": "OBSERVED_TYPE_CONTEXT_BALANCE",
+        "balance_raw": "0",
+        "units": "BASE_UNITS",
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "documented_symbol": "pUSD",
+        "documented_decimals": 6,
+        "signature_type_query": 0,
+        "account_echoed": false,
+        "account_binding": "SDK_TYPE_CONTEXT_REQUIRES_INDEPENDENT_ADDRESS_CORROBORATION",
+        "allowance_fields_ignored": true,
+        "started_ms": 1790512510330,
+        "finished_ms": 1790512510667
+      }
+    },
+    "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": {
+      "context": {
+        "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "DEPOSIT_WALLET",
+        "balance_get_signature_type": 3,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      },
+      "balance_first": {
+        "status": "OBSERVED_TYPE_CONTEXT_BALANCE",
+        "balance_raw": "109160000",
+        "units": "BASE_UNITS",
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "documented_symbol": "pUSD",
+        "documented_decimals": 6,
+        "signature_type_query": 3,
+        "account_echoed": false,
+        "account_binding": "SDK_TYPE_CONTEXT_REQUIRES_INDEPENDENT_ADDRESS_CORROBORATION",
+        "allowance_fields_ignored": true,
+        "started_ms": 1790512508586,
+        "finished_ms": 1790512508873
+      },
+      "positions": {
+        "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+        "count": 0,
+        "nonzero_positions": 0,
+        "pages": 1,
+        "pagination_complete": true,
+        "window_start": null,
+        "window_end": null,
+        "oldest_trade_seconds": null,
+        "newest_trade_seconds": null,
+        "markets_count": 0,
+        "scope": "CURRENT_INDEX_POSITIONS_INCLUDING_ARCHIVED_MAX_100_ROWS",
+        "global_complete": false,
+        "indexer_asof_proven": false,
+        "started_ms": 1790512508873,
+        "finished_ms": 1790512509275
+      },
+      "history": {
+        "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+        "count": 0,
+        "nonzero_positions": null,
+        "pages": 1,
+        "pagination_complete": true,
+        "window_start": 1787920505,
+        "window_end": 1790512505,
+        "oldest_trade_seconds": null,
+        "newest_trade_seconds": null,
+        "markets_count": 0,
+        "scope": "ALL_MARKETS_LAST_30_DAYS_MAX_100_ROWS",
+        "global_complete": false,
+        "indexer_asof_proven": false,
+        "started_ms": 1790512509275,
+        "finished_ms": 1790512509628
+      },
+      "selected_market_clob_trades": {
+        "status": "OBSERVED_ATTRIBUTED",
+        "count": 0,
+        "count_scope": "VALIDATED_RETURNED_ROWS_ONLY",
+        "pages": 1,
+        "pagination_complete": true,
+        "scope": "CREDENTIAL_SELECTED_MARKET_SINCE_SLOT_START",
+        "status_counts": {},
+        "complete": false,
+        "atomic_frontier": null,
+        "settlement_finality_proven": false,
+        "fee_effects_proven": false,
+        "provenance": {
+          "validation_source": "RAW_CLOB_BEFORE_SDK_COERCION",
+          "market": "0x15e19118ca47bef5ea8f6e83e1d64bc70a600bd5b84251faa5a184a6f18c3a5f",
+          "window_start_seconds": 1790512500,
+          "window_end_ms": 1790512800000,
+          "response_digests": [
+            "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+          ]
+        },
+        "request_scope": "SHARED_SIGNER_CREDENTIAL_VIEW_WITH_MARKET_WINDOW_NOT_ADDRESS_FILTERED",
+        "started_ms": 1790512509629,
+        "finished_ms": 1790512509932
+      },
+      "explorer_balance": {
+        "status": "OBSERVED_EXPLORER_INDEX",
+        "balance_raw": null,
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "symbol": "pUSD",
+        "decimals": 6,
+        "absence_is_not_zero": true,
+        "scope": "EXPLICIT_ADDRESS_INDEXED_TOKEN_BALANCES",
+        "state_asof_proven": false,
+        "limitation": "No token-balance block/timestamp in this route; HTTP receive time is not state freshness",
+        "started_ms": 1790512509932,
+        "finished_ms": 1790512510330
+      },
+      "balance_second": {
+        "status": "OBSERVED_TYPE_CONTEXT_BALANCE",
+        "balance_raw": "109160000",
+        "units": "BASE_UNITS",
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "documented_symbol": "pUSD",
+        "documented_decimals": 6,
+        "signature_type_query": 3,
+        "account_echoed": false,
+        "account_binding": "SDK_TYPE_CONTEXT_REQUIRES_INDEPENDENT_ADDRESS_CORROBORATION",
+        "allowance_fields_ignored": true,
+        "started_ms": 1790512510667,
+        "finished_ms": 1790512511135
+      }
+    }
+  },
+  "no_execution_guard_bypass": true,
+  "http_post_count": 0,
+  "submit_allowed": false,
+  "identity": {
+    "contexts": [
+      {
+        "account": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "EOA",
+        "balance_get_signature_type": 0,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      },
+      {
+        "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "DEPOSIT_WALLET",
+        "balance_get_signature_type": 3,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      }
+    ],
+    "strategy_hashes": {
+      "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+      "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+    },
+    "artifact_identity_confirmed": true,
+    "genesis_identity_confirmed": true,
+    "source_genesis_digest": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+    "startup_execution_conflict_preserved": true
+  },
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "data_service_status": {
+    "status": "OBSERVED_SERVICE_STATUS",
+    "public_status_metadata": {
+      "data": {
+        "computed_at": "2026-09-27T12:34:54Z",
+        "age_seconds": 11,
+        "serving": {
+          "lag_seconds": 4,
+          "worst": "activity_feed",
+          "mechanisms": [
+            {
+              "name": "activity_feed",
+              "age_seconds": 4
+            },
+            {
+              "name": "custody_balances",
+              "age_seconds": 0,
+              "blocks_behind": 1
+            },
+            {
+              "name": "pnl",
+              "age_seconds": 2,
+              "blocks_behind": 2
+            }
+          ]
+        },
+        "ingestion": {
+          "cursors": 162,
+          "network": "polygon",
+          "chain_id": 137,
+          "max_synced_block": 94538236,
+          "min_synced_block": 94538235,
+          "most_lagged": {
+            "source": "auto_redeem_binary_redemption",
+            "block": 94538235,
+            "behind_max": 1
+          },
+          "lagging": [
+            {
+              "source": "auto_redeem_binary_redemption",
+              "block": 94538235,
+              "behind_max": 1
+            },
+            {
+              "source": "auto_redeem_neg_risk_redemption",
+              "block": 94538235,
+              "behind_max": 1
+            },
+            {
+              "source": "auto_redeem_v2_binary_redemption",
+              "block": 94538235,
+              "behind_max": 1
+            },
+            {
+              "source": "auto_redeem_v2_neg_risk_redemption",
+              "block": 94538235,
+              "behind_max": 1
+            },
+            {
+              "source": "auto_redeem_v3_neg_risk_redemption",
+              "block": 94538235,
+              "behind_max": 1
+            }
+          ]
+        }
+      }
+    },
+    "response_digest": "4e273e0df691387fba8ebb4c13d1a95c3b52f768be2b9cd537cdc8b54831279e",
+    "schema_keys": [
+      "data"
+    ],
+    "per_account_ingestion_boundary_proven": false,
+    "started_ms": 1790512505733,
+    "finished_ms": 1790512506058
+  },
+  "selected_market": {
+    "market_duration": "5m",
+    "market_slug": "btc-updown-5m-1790512500",
+    "condition_id": "0x15e19118ca47bef5ea8f6e83e1d64bc70a600bd5b84251faa5a184a6f18c3a5f",
+    "token_up": "93345436882423729158273925276867800432065757486045441146087615664329221389355",
+    "token_down": "7146893724526569893888375483985371058373600745197257779597539544240147611044",
+    "expiry_ts_ms": 1790512800000
+  },
+  "orders": {
+    "status": "OBSERVED_CREDENTIAL_VIEW",
+    "candidate_counts": {
+      "0x9348efd557a09e644795c8f114bcf0bef86f203a": 0,
+      "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": 0
+    },
+    "pagination_complete": true,
+    "pages": 1,
+    "scope": "ONE_SIGNER_CREDENTIAL_VIEW_ATTRIBUTED_BY_RETURNED_MAKER_ADDRESS",
+    "wallet_global_scope_proven": false,
+    "started_ms": 1790512506349,
+    "finished_ms": 1790512506719
+  },
+  "verdict": {
+    "status": "CALIBRATION_BLOCKED",
+    "account": null,
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "reasons": [
+      "0x9348efd557a09e644795c8f114bcf0bef86f203a:NO_CONVERGENT_ADDRESS_COLLATERAL_BALANCE",
+      "0x9348efd557a09e644795c8f114bcf0bef86f203a:ADDRESS_BALANCE_FRESHNESS_UNPROVEN",
+      "0x9348efd557a09e644795c8f114bcf0bef86f203a:POSITION_INDEX_SCOPE_OR_FRESHNESS_UNPROVEN",
+      "0x871d37b430c42ddbd0bbd37c29c02a2974109de9:NO_CONVERGENT_ADDRESS_COLLATERAL_BALANCE",
+      "0x871d37b430c42ddbd0bbd37c29c02a2974109de9:ADDRESS_BALANCE_FRESHNESS_UNPROVEN",
+      "0x871d37b430c42ddbd0bbd37c29c02a2974109de9:POSITION_INDEX_SCOPE_OR_FRESHNESS_UNPROVEN",
+      "CLOB_ORDERS_CREDENTIAL_SCOPE_NOT_WALLET_GLOBAL"
+    ],
+    "live_ready": false,
+    "submit_allowed": false
+  },
+  "finished_ms": 1790512511135,
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790512505486,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512505732,
+      "parse_complete_ms": 1790512505732,
+      "shape": "int",
+      "finished_ms": 1790512505732,
+      "elapsed_ms": 246,
+      "thread_cpu_ms": 62.5
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/status",
+      "started_ms": 1790512505850,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512506057,
+      "parse_complete_ms": 1790512506057,
+      "shape": "dict",
+      "finished_ms": 1790512506057,
+      "elapsed_ms": 207,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "started_ms": 1790512506202,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512506347,
+      "parse_complete_ms": 1790512506348,
+      "shape": "list",
+      "finished_ms": 1790512506348,
+      "elapsed_ms": 146,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790512506561,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512506719,
+      "parse_complete_ms": 1790512506719,
+      "shape": "dict",
+      "finished_ms": 1790512506719,
+      "elapsed_ms": 158,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790512506915,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512507098,
+      "parse_complete_ms": 1790512507098,
+      "shape": "dict",
+      "finished_ms": 1790512507098,
+      "elapsed_ms": 183,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790512507270,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512507513,
+      "parse_complete_ms": 1790512507513,
+      "shape": "dict",
+      "finished_ms": 1790512507513,
+      "elapsed_ms": 243,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "started_ms": 1790512507625,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512507827,
+      "parse_complete_ms": 1790512507827,
+      "shape": "dict",
+      "finished_ms": 1790512507827,
+      "elapsed_ms": 202,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790512507986,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512508157,
+      "parse_complete_ms": 1790512508157,
+      "shape": "dict",
+      "finished_ms": 1790512508157,
+      "elapsed_ms": 171,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polygon.blockscout.com/api/v2/addresses/0x9348efd557a09e644795c8f114bcf0bef86f203a/token-balances",
+      "started_ms": 1790512508344,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512508585,
+      "parse_complete_ms": 1790512508586,
+      "shape": "list",
+      "finished_ms": 1790512508586,
+      "elapsed_ms": 242,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790512508701,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512508872,
+      "parse_complete_ms": 1790512508872,
+      "shape": "dict",
+      "finished_ms": 1790512508872,
+      "elapsed_ms": 171,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790512509059,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512509275,
+      "parse_complete_ms": 1790512509275,
+      "shape": "dict",
+      "finished_ms": 1790512509275,
+      "elapsed_ms": 216,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "started_ms": 1790512509416,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512509627,
+      "parse_complete_ms": 1790512509627,
+      "shape": "dict",
+      "finished_ms": 1790512509627,
+      "elapsed_ms": 211,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790512509774,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512509931,
+      "parse_complete_ms": 1790512509931,
+      "shape": "dict",
+      "finished_ms": 1790512509931,
+      "elapsed_ms": 157,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polygon.blockscout.com/api/v2/addresses/0x871d37b430c42ddbd0bbd37c29c02a2974109de9/token-balances",
+      "started_ms": 1790512510135,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512510329,
+      "parse_complete_ms": 1790512510329,
+      "shape": "list",
+      "finished_ms": 1790512510329,
+      "elapsed_ms": 194,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790512510497,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512510667,
+      "parse_complete_ms": 1790512510667,
+      "shape": "dict",
+      "finished_ms": 1790512510667,
+      "elapsed_ms": 170,
+      "thread_cpu_ms": 62.5
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790512510861,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512511135,
+      "parse_complete_ms": 1790512511135,
+      "shape": "dict",
+      "finished_ms": 1790512511135,
+      "elapsed_ms": 274,
+      "thread_cpu_ms": 31.25
+    }
+  ],
+  "provenance": [
+    {
+      "endpoint": "https://clob.polymarket.com/time",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512505482,
+      "received_ms": 1790512505733,
+      "response_digest": "3c060ce07770455c77c001ee54b42035e868719d6310f30c04b30c1c26a41ff3"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512506560,
+      "received_ms": 1790512506719,
+      "response_digest": "127a944a89f90b72234a563f1a1aa3c5d1cac9628395d3ce5aaa4b80ff77e5e1"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512506915,
+      "received_ms": 1790512507099,
+      "response_digest": "14305f26762077def1730cc852b1ceda3730ab27318827249c8f9c7f00158984"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "method": "GET",
+      "query": {
+        "market": "0x15e19118ca47bef5ea8f6e83e1d64bc70a600bd5b84251faa5a184a6f18c3a5f",
+        "after": "1790512500"
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512507986,
+      "received_ms": 1790512508157,
+      "response_digest": "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 3
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512508700,
+      "received_ms": 1790512508873,
+      "response_digest": "27ce7218d59ce0276fc9fe21f42e1e4f6898e4a156d4631f6f8ad8c07a0512b4"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "method": "GET",
+      "query": {
+        "market": "0x15e19118ca47bef5ea8f6e83e1d64bc70a600bd5b84251faa5a184a6f18c3a5f",
+        "after": "1790512500"
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512509774,
+      "received_ms": 1790512509932,
+      "response_digest": "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512510497,
+      "received_ms": 1790512510667,
+      "response_digest": "14305f26762077def1730cc852b1ceda3730ab27318827249c8f9c7f00158984"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 3
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512510861,
+      "received_ms": 1790512511135,
+      "response_digest": "27ce7218d59ce0276fc9fe21f42e1e4f6898e4a156d4631f6f8ad8c07a0512b4"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/status",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512505850,
+      "received_ms": 1790512506057,
+      "response_digest": "4e273e0df691387fba8ebb4c13d1a95c3b52f768be2b9cd537cdc8b54831279e"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "method": "GET",
+      "query": {
+        "user": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "limit": 50,
+        "include_archived": true,
+        "filter_type": "TOKENS",
+        "filter_amount": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512507269,
+      "received_ms": 1790512507514,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "method": "GET",
+      "query": {
+        "user": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "limit": 50,
+        "start": 1787920505,
+        "end": 1790512505,
+        "taker_only": false
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512507625,
+      "received_ms": 1790512507828,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "method": "GET",
+      "query": {
+        "user": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "limit": 50,
+        "include_archived": true,
+        "filter_type": "TOKENS",
+        "filter_amount": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512509059,
+      "received_ms": 1790512509275,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "method": "GET",
+      "query": {
+        "user": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "limit": 50,
+        "start": 1787920505,
+        "end": 1790512505,
+        "taker_only": false
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512509416,
+      "received_ms": 1790512509628,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    },
+    {
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512506201,
+      "received_ms": 1790512506348,
+      "response_digest": "9775da9a98d705528aec75372601ed706bb27c07e3e69559fa8460f4c68e5290"
+    },
+    {
+      "endpoint": "https://polygon.blockscout.com/api/v2/addresses/0x9348efd557a09e644795c8f114bcf0bef86f203a/token-balances",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512508344,
+      "received_ms": 1790512508586,
+      "response_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "endpoint": "https://polygon.blockscout.com/api/v2/addresses/0x871d37b430c42ddbd0bbd37c29c02a2974109de9/token-balances",
+      "method": "GET",
+      "query": {},
+      "cursor_supplied": false,
+      "started_ms": 1790512510135,
+      "received_ms": 1790512510329,
+      "response_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  ],
+  "limits": {
+    "get_limit": 30,
+    "get_count": 16,
+    "min_spacing_ms": 350,
+    "pagination_pages": 2,
+    "rows_per_data_page": 50,
+    "retries": 0,
+    "rate_limited": false
+  }
+}

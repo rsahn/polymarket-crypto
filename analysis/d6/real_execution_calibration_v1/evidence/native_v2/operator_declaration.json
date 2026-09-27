@@ -1,0 +1,15 @@
+{
+  "schema": "OPERATOR_DECLARATION/1",
+  "owner": "Ramy",
+  "owner_sid": "S-1-5-21-996557404-12191610-680381608-1002",
+  "operator_account": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "reconciliation_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "signature_type": 3,
+  "chain_id": 137,
+  "declared_no_other_producers": true,
+  "limitation": "DECLARATION_NOT_PROOF_OTHER_KEYS_ABSENT",
+  "scope": "EXPLICIT_EXPERIMENT_ASSETS_AND_INTENTS_NOT_FULL_WALLET",
+  "declared_ms": 1790552100000,
+  "declaration_source": "OPERATOR_TTY_CONFIRMATION",
+  "confirmation_phrase": "ACCEPT OPERATOR DECLARATION Ramy 0x871d37b430c42ddbd0bbd37c29c02a2974109de9 3 137"
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "BOUND_D6_CAPABILITY_ASSESSMENT/1",
+  "source_matrix": "qualification_matrix.json",
+  "observation_interval_ms": [
+    1790516561792,
+    1790516564123
+  ],
+  "identity_schema": "D6_RECONCILIATION_IDENTITY/1",
+  "identity_source_digest": "6ed8058913bc59f902e867b6b909ef97ba73c92b3de9703a2ef89e5cd1e2f561",
+  "historical_identity_is_not_cash": true,
+  "automatic_startup_override": false,
+  "calibration_ready": false,
+  "available_scoped_facts": {
+    "balance": {
+      "status": "AVAILABLE_SCOPED",
+      "scope": "AUTHENTICATED_TYPE3_BALANCE_WITH_VALIDATED_D6_IDENTITY",
+      "observed_ms": 1790516562697,
+      "valid_until_ms": 1790516567697,
+      "pagination_complete": null
+    },
+    "orders": {
+      "status": "AVAILABLE_SCOPED",
+      "scope": "ALL_MARKETS_AVAILABLE_SIGNER_CREDENTIAL_VIEW_ATTRIBUTED_D6",
+      "observed_ms": 1790516563023,
+      "valid_until_ms": 1790516568023,
+      "pagination_complete": true
+    },
+    "trades": {
+      "status": "OBSERVED_ATTRIBUTED",
+      "scope": "CREDENTIAL_SELECTED_MARKET_SINCE_SLOT_START",
+      "observed_ms": 1790516563427,
+      "valid_until_ms": 1790516568427,
+      "pagination_complete": true
+    },
+    "positions": {
+      "status": "AVAILABLE_SCOPED_INDEX",
+      "scope": "D6_CURRENT_INDEX_ALL_MARKETS_INCLUDING_ARCHIVED",
+      "observed_ms": 1790516563865,
+      "valid_until_ms": 1790516568865,
+      "pagination_complete": true
+    }
+  },
+  "existing_api_contract_limits": {
+    "wallet_completeness": "Neither one credential view nor drained Data-index pages certify a full wallet universe.",
+    "shared_atomic_frontier": "No shared wallet snapshot/mutation watermark or lineage is supplied by these queried GET contracts.",
+    "per_account_index_asof": "Service telemetry is available; a per-account snapshot boundary is not.",
+    "fine_clock": "Observed time uncertainty 1160ms does not meet the fine-clock requirement."
+  },
+  "not_qualified_by_this_batch": {
+    "native_fee_effects": "No sampled trades; status/rate and position totals are not independently final per-order cash/share fee effects.",
+    "round_trip_fee_ceiling": "Not a result of balance/order/trade/position GETs. Requires a separately reviewed fee policy/formula/rounding/price-risk bound.",
+    "execution_runtime": "Outside this read-only preparation; no monetary client or order signing.",
+    "custody": "Actual drill/attendance/specific-exposure acceptance not established."
+  },
+  "concrete_wiring": "Real ReadOnlyClient -> strict raw validators -> timestamp-preserving CachedReaders -> existing AccountAdapter.snapshot. No verifier/authority fabricated.",
+  "next_safe_work": "Offline API/SDK producer-contract audit and executable tests for baseline/coverage/lineage and native fee units/bounds. Identify a supportable reconciliation contract before any additional sampling; missing guarantees remain blocked. No intrinsic requirement for a new external backend asserted.",
+  "do_not_resample_to_manufacture_completeness": true
+}

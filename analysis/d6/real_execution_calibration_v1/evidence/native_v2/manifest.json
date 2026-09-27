@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/Polymarket/ctf-exchange-v2",
+  "commit": "ccc0596074f4dfd62c944fbca4de252893b82b4b",
+  "sha256": {
+    "ITrading.sol": "df0a14ff32cfdfe38feb6f469d1cf5012df4fd2f658d1f1a6ce765a5a7dc8954",
+    "Trading.sol": "dd8d18fca897e664583a93944b379435e6f70e84f4190c39d669b2be62596012",
+    "Events.sol": "50ec1ce60573fa46cf7776a9207aacbefa8881a899df706da2ce7275692c5f3b",
+    "Structs.sol": "533fe017a934e9f7500519961f1b7d350c2e76732ca66cb837bd82406854c8c2",
+    "contracts.md": "ed59020bd28a24cbca9dbd2f92624a2a8ad7e403f0f08b6ff1529e33860c99a6"
+  },
+  "documentation_url": "https://docs.polymarket.com/resources/contracts.md",
+  "retrieved_date": "2026-09-27",
+  "chain_id": 137,
+  "exchange_addresses": [
+    "0xE111180000d2663C0091e4f400237545B87B996B",
+    "0xe2222d279d744050d28e00520010520000310F59"
+  ],
+  "deployment_bytecode_match_proven": false,
+  "account_rpc_requests": 0
+}

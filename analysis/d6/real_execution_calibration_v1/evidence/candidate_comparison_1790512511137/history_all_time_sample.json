@@ -1,0 +1,105 @@
+{
+  "mode": "PUBLIC_GET_BOUNDED_ALL_TIME_HISTORY_SAMPLE",
+  "started_ms": 1790512777824,
+  "start_seconds": 1,
+  "end_seconds": 1790512777,
+  "per_candidate_page_cap": 2,
+  "per_page_limit": 50,
+  "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+  "candidates": {
+    "0x9348efd557a09e644795c8f114bcf0bef86f203a": {
+      "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+      "count": 0,
+      "nonzero_positions": null,
+      "pages": 1,
+      "pagination_complete": true,
+      "window_start": 1,
+      "window_end": 1790512777,
+      "oldest_trade_seconds": null,
+      "newest_trade_seconds": null,
+      "markets_count": 0,
+      "scope": "ALL_MARKETS_START_EPOCH_1_BOUNDED_RETURNED_HISTORY_NOT_GLOBAL_COMPLETENESS",
+      "global_complete": false,
+      "indexer_asof_proven": false
+    },
+    "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": {
+      "status": "OBSERVED_ADDRESS_SCOPED_INDEX",
+      "count": 0,
+      "nonzero_positions": null,
+      "pages": 1,
+      "pagination_complete": true,
+      "window_start": 1,
+      "window_end": 1790512777,
+      "oldest_trade_seconds": null,
+      "newest_trade_seconds": null,
+      "markets_count": 0,
+      "scope": "ALL_MARKETS_START_EPOCH_1_BOUNDED_RETURNED_HISTORY_NOT_GLOBAL_COMPLETENESS",
+      "global_complete": false,
+      "indexer_asof_proven": false
+    }
+  },
+  "current_economic_account_proven": false,
+  "http_post_count": 0,
+  "credentials_accessed": false,
+  "finished_ms": 1790512778591,
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "started_ms": 1790512777841,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512778184,
+      "parse_complete_ms": 1790512778184,
+      "shape": "dict",
+      "finished_ms": 1790512778184,
+      "elapsed_ms": 343,
+      "thread_cpu_ms": 62.5
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "started_ms": 1790512778326,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790512778590,
+      "parse_complete_ms": 1790512778590,
+      "shape": "dict",
+      "finished_ms": 1790512778590,
+      "elapsed_ms": 264,
+      "thread_cpu_ms": 31.25
+    }
+  ],
+  "provenance": [
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "method": "GET",
+      "query": {
+        "user": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "limit": 50,
+        "start": 1,
+        "end": 1790512777,
+        "taker_only": false
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512777825,
+      "received_ms": 1790512778185,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    },
+    {
+      "endpoint": "https://data-api.polymarket.com/v2/trades",
+      "method": "GET",
+      "query": {
+        "user": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "limit": 50,
+        "start": 1,
+        "end": 1790512777,
+        "taker_only": false
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790512778326,
+      "received_ms": 1790512778591,
+      "response_digest": "9d3f6e8afcefabfc66475a1ec36a14885d4a978f073d725782edcddec40af424"
+    }
+  ]
+}

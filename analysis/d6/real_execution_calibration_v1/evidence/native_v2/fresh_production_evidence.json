@@ -1,0 +1,40 @@
+{
+  "observed_ms": 1790544519304,
+  "credentials_source": "DPAPI",
+  "storage_report": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "server_time": 1790544519,
+  "clock_offset_ms": -1788753974785,
+  "balance_type3_raw": "109160000",
+  "allowance_type3": {
+    "0xE111180000d2663C0091e4f400237545B87B996B": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xe2222d279d744050d28e00520010520000310F59": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xe3333700cA9d93003F00f0F71f8515005F6c00Aa": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+  },
+  "balance_type3_ok": true,
+  "balance_type0_raw": "0",
+  "allowance_type0": {
+    "0xE111180000d2663C0091e4f400237545B87B996B": "0",
+    "0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296": "0",
+    "0xe2222d279d744050d28e00520010520000310F59": "0",
+    "0xe3333700cA9d93003F00f0F71f8515005F6c00Aa": "0"
+  },
+  "balance_type0_ok": true,
+  "orders": [],
+  "orders_count": 0,
+  "orders_ok": true,
+  "trades": [],
+  "trades_count": 0,
+  "trades_ok": true,
+  "rpc_block": 94559584,
+  "rpc_hash": "0xbeac38b2ccb7e90a79403123318a1842c89a37d2e599c42008bcdc6eea989293",
+  "rpc_recheck": true,
+  "finished_ms": 1790544521108
+}

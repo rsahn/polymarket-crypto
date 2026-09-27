@@ -1,0 +1,64 @@
+{
+  "status": "BLOCKED_ACCOUNT_CHOICE_AND_UNPROVEN_EXECUTION_EVIDENCE",
+  "live_observation_source": "evidence/readonly_1790509537391/qualification_matrix.json",
+  "corrected_selection_source": "evidence/readonly_1790510061659/qualification_matrix.json",
+  "observed_utc": "2026-09-27T11:45:32.362Z",
+  "finished_utc": "2026-09-27T11:45:37.389Z",
+  "read_counts": {
+    "get": 8,
+    "authenticated_get": 3,
+    "rpc": 8,
+    "retries": 0
+  },
+  "observation_account": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "canonical_d6_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "important_scope_correction": "Initial bounded reads followed .env EOA. Subsequent canonical runtime cross-check found a different D6 deposit wallet. These observations do NOT qualify the canonical D6 wallet. No wallet switch or further authenticated reads occurred. Corrected selection now blocks before credential access unless owner explicitly chooses.",
+  "observed_eoa": {
+    "collateral_raw": "0",
+    "allowance_raw": "0",
+    "orders": 0,
+    "selected_market_trades": 0,
+    "index_current_positions": 0,
+    "configured_eoa_budget_status": "BLOCKED_OBSERVED_ZERO_BALANCE_AND_ALLOWANCE"
+  },
+  "chain": {
+    "anchor_number": 94536261,
+    "anchor_hash": "0x033391b99d3934325c5f125bf9d8b123c54821f17a8cfad5f511207be83e349b",
+    "collateral_symbol": "pUSD",
+    "decimals": 6,
+    "collateral_raw": "0",
+    "ctf_scope": "LAST_20_FINALIZED_BLOCKS_INCOMING_CTF_ONLY",
+    "receipt_queries": 0,
+    "settlement": "NO_SELECTED_MARKET_TRADE_TRANSACTION_TO_QUALIFY",
+    "scope": "Configured EOA only; chain identity configured, not queried with eth_chainId"
+  },
+  "capability_gaps": [
+    "COMMON_ATOMIC_FRONTIER",
+    "GLOBAL_WALLET_COMPLETENESS",
+    "POST_OBSERVATION_MUTATION_CLOSURE",
+    "FINAL_ATTRIBUTED_CASH_AND_SHARE_FEES",
+    "ROUND_TRIP_FEE_UPPER_BOUND",
+    "SDK_ORDER_TRANSPORT_QUALIFICATION",
+    "SPECIFIC_EXPOSURE_OPERATOR_ACCEPTANCE"
+  ],
+  "operator": {
+    "designated_only": true,
+    "specific_exposure_receipt": false,
+    "recovery_drill": false,
+    "independent_process_watch_implemented": true,
+    "trust_boundary": "Windows CurrentUser protected filesystem and explicit human TTY action; not cryptographic human-presence attestation"
+  },
+  "next_user_decision": {
+    "question": "Which account is intended for subsequent read-only qualification?",
+    "choices": {
+      "configured-eoa": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "canonical-d6": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
+    },
+    "no_credentials_requested": true,
+    "no_config_edit_required": true
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "current_inventory_proven": false,
+  "observations_expired_for_live_use": true
+}

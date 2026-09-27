@@ -1,0 +1,343 @@
+{
+  "mode": "AUTHORIZED_PINNED_CASH_ACCOUNT_IDENTIFICATION",
+  "started_ms": 1790514967013,
+  "before": {
+    "0x9348efd557a09e644795c8f114bcf0bef86f203a": "0",
+    "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": "109160000"
+  },
+  "after": {
+    "0x9348efd557a09e644795c8f114bcf0bef86f203a": "0",
+    "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": "109160000"
+  },
+  "submit_allowed": false,
+  "identity": {
+    "contexts": [
+      {
+        "account": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "EOA",
+        "balance_get_signature_type": 0,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      },
+      {
+        "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "wallet_type": "DEPOSIT_WALLET",
+        "balance_get_signature_type": 3,
+        "semantics": "Explicit SDK-supported per-request wallet type; not a config mutation or echoed account proof"
+      }
+    ],
+    "strategy_hashes": {
+      "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+      "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+    },
+    "artifact_identity_confirmed": true,
+    "genesis_identity_confirmed": true,
+    "source_genesis_digest": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+    "startup_execution_conflict_preserved": true
+  },
+  "contract_confirmed_from_existing_artifacts": true,
+  "startup_selection": {
+    "selectors": {
+      "REAL_ORDERS_ENABLED": [
+        {
+          "source": ".env",
+          "value": "false"
+        }
+      ],
+      "POLYMARKET_WALLET_ADDRESS": [
+        {
+          "source": ".env",
+          "value": "0x9348efd557a09e644795c8f114bcf0bef86f203a"
+        }
+      ],
+      "LIVE_EXECUTION_ARMED": [
+        {
+          "source": ".env",
+          "value": "false"
+        }
+      ]
+    },
+    "canonical_runtime_account": {
+      "source": "runtime/d6_genesis.db (validated read-only)",
+      "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+      "snapshot_digest": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+      "phase": "GENESIS_RECONCILED"
+    },
+    "selected_wallet": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "explicit_read_only_account_choice": null,
+    "blockers": [
+      "CONFIG_EOA_AND_CANONICAL_D6_WALLET_CONFLICT_REQUIRES_OWNER_CHOICE"
+    ],
+    "existing_storage_signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "market_policy": "V1_BTC_5M_CURRENT_SLOT_FROM_EXISTING_QUALIFY_POST_GENESIS",
+    "selection_ready": false
+  },
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "rpc_provider": "EXISTING_REPOSITORY_PUBLIC_DEFAULT",
+  "chain": {
+    "status": "PINNED_CASH_OBSERVED",
+    "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+    "started_ms": 1790514968854,
+    "provider_trust": "EXISTING_HTTPS_RPC_NOT_INDEPENDENT_CONSENSUS_PROOF",
+    "chain_id": 137,
+    "block": {
+      "number": 94539886,
+      "number_hex": "0x5a2906e",
+      "hash": "0x89a0679e2afc2a92689c895c1b78f3d2e2c0379fe5c3acabe2e1f1b0db1f69f1",
+      "timestamp_ms": 1790514969000
+    },
+    "block_hash_rechecked": true,
+    "symbol": "pUSD",
+    "decimals": 6,
+    "name": "Polymarket USD",
+    "balances_raw": {
+      "0x9348efd557a09e644795c8f114bcf0bef86f203a": "0",
+      "0x871d37b430c42ddbd0bbd37c29c02a2974109de9": "109160000"
+    },
+    "balance_scope": "THIS_COLLATERAL_AT_ONE_EXPLICIT_BLOCK_ONLY",
+    "positions_proven": false,
+    "orders_complete": false,
+    "finished_ms": 1790514971125,
+    "requests": [
+      {
+        "id": 1,
+        "rpc_method": "eth_chainId",
+        "started_ms": 1790514968854,
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "b35c70d8656c80d027b63561359d5a21b6a2b58a8aff044c6bea6366f940a3ce",
+        "finished_ms": 1790514969083
+      },
+      {
+        "id": 2,
+        "rpc_method": "eth_getBlockByNumber",
+        "started_ms": 1790514969154,
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "ef30b06c6334791ee9b7b35e7aea7f4e50af51143de07f78ee402b0c47980b9f",
+        "finished_ms": 1790514969361
+      },
+      {
+        "id": 3,
+        "rpc_method": "eth_call",
+        "started_ms": 1790514969454,
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "selector": "0x95d89b41",
+        "account": null,
+        "block": "0x5a2906e",
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "897bcb90926edcc443aa590683abfdc908df3d5ee72240b7fecbc2569e16ff7f",
+        "finished_ms": 1790514969643
+      },
+      {
+        "id": 4,
+        "rpc_method": "eth_call",
+        "started_ms": 1790514969756,
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "selector": "0x313ce567",
+        "account": null,
+        "block": "0x5a2906e",
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "8f73309b10be3daafed3d69ef70ee3baa10f3f05970b421f5bfdfb021bad2c5e",
+        "finished_ms": 1790514969950
+      },
+      {
+        "id": 5,
+        "rpc_method": "eth_call",
+        "started_ms": 1790514970056,
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "selector": "0x06fdde03",
+        "account": null,
+        "block": "0x5a2906e",
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "e72e64a095f32451f5e8d941b49f06ac683c1a1dc4dacc5049210f6dacfd3867",
+        "finished_ms": 1790514970259
+      },
+      {
+        "id": 6,
+        "rpc_method": "eth_call",
+        "started_ms": 1790514970357,
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "selector": "0x70a08231",
+        "account": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+        "block": "0x5a2906e",
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "88700ae849c5ddd12e1d8a2c3221be6bec9061deee12e0a7aa7f7e8a0eda2d5f",
+        "finished_ms": 1790514970528
+      },
+      {
+        "id": 7,
+        "rpc_method": "eth_call",
+        "started_ms": 1790514970657,
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "selector": "0x70a08231",
+        "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "block": "0x5a2906e",
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "e6ca58c8ab5e91593c46cc88843cd9ec839abb6ff828c9b54ff963e780b089c7",
+        "finished_ms": 1790514970832
+      },
+      {
+        "id": 8,
+        "rpc_method": "eth_getBlockByNumber",
+        "started_ms": 1790514970957,
+        "http_status": 200,
+        "status": "PASS",
+        "result_digest": "ef30b06c6334791ee9b7b35e7aea7f4e50af51143de07f78ee402b0c47980b9f",
+        "finished_ms": 1790514971125
+      }
+    ]
+  },
+  "finished_ms": 1790514971638,
+  "verdict": {
+    "status": "ACCOUNT_IDENTIFIED",
+    "reconciliation_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "blockers": [],
+    "calibration_ready": false,
+    "submit_allowed": false,
+    "scope": "ECONOMIC_COLLATERAL_ACCOUNT_IDENTITY_NOT_EXECUTION_READINESS"
+  },
+  "explicit_context": {
+    "reconciliation_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "signature_type": 3,
+    "configured_signature_types": [],
+    "signature_type_conflict": false,
+    "legacy_eoa_readonly_signature_type": 0,
+    "legacy_eoa_context_conflict": true,
+    "legacy_context_source": "analysis/qualify_stored_l2.py EOA signer/wallet configuration",
+    "global_configuration_changed": false,
+    "execution_guard_preserved": true
+  },
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790514967635,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790514968327,
+      "parse_complete_ms": 1790514968327,
+      "shape": "int",
+      "finished_ms": 1790514968327,
+      "elapsed_ms": 692,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790514968328,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790514968504,
+      "parse_complete_ms": 1790514968504,
+      "shape": "dict",
+      "finished_ms": 1790514968504,
+      "elapsed_ms": 176,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790514968693,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790514968853,
+      "parse_complete_ms": 1790514968853,
+      "shape": "dict",
+      "finished_ms": 1790514968853,
+      "elapsed_ms": 160,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790514971125,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790514971279,
+      "parse_complete_ms": 1790514971279,
+      "shape": "dict",
+      "finished_ms": 1790514971279,
+      "elapsed_ms": 154,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790514971476,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790514971637,
+      "parse_complete_ms": 1790514971637,
+      "shape": "dict",
+      "finished_ms": 1790514971637,
+      "elapsed_ms": 161,
+      "thread_cpu_ms": 15.625
+    }
+  ],
+  "get_provenance": [
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790514968327,
+      "received_ms": 1790514968505,
+      "response_digest": "14305f26762077def1730cc852b1ceda3730ab27318827249c8f9c7f00158984"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 3
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790514968693,
+      "received_ms": 1790514968854,
+      "response_digest": "27ce7218d59ce0276fc9fe21f42e1e4f6898e4a156d4631f6f8ad8c07a0512b4"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 0
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790514971125,
+      "received_ms": 1790514971280,
+      "response_digest": "14305f26762077def1730cc852b1ceda3730ab27318827249c8f9c7f00158984"
+    },
+    {
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "method": "GET",
+      "query": {
+        "asset_type": "COLLATERAL",
+        "signature_type": 3
+      },
+      "cursor_supplied": false,
+      "started_ms": 1790514971476,
+      "received_ms": 1790514971638,
+      "response_digest": "27ce7218d59ce0276fc9fe21f42e1e4f6898e4a156d4631f6f8ad8c07a0512b4"
+    }
+  ]
+}

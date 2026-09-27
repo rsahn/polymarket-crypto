@@ -1,0 +1,118 @@
+{
+  "status": "PUBLIC_VERIFIED_ARTIFACTS_OBTAINED_RPC_ACCESS_BLOCKED",
+  "source_provider": "https://sourcify.dev/server/v2/contract/137/",
+  "http_requests_this_stage": 5,
+  "source_commit_full_tree_binding_proven": false,
+  "trusted_manifests_modified": false,
+  "local_compiler_executed": false,
+  "deployments": [
+    {
+      "address": "0xE111180000d2663C0091e4f400237545B87B996B",
+      "origin": "https://sourcify.dev/server/v2/contract/137/0xE111180000d2663C0091e4f400237545B87B996B",
+      "compiler": {
+        "language": "Solidity",
+        "compiler": "solc",
+        "compilerVersion": "0.8.34+commit.80d5c536",
+        "compilerSettings": {
+          "viaIR": false,
+          "metadata": {
+            "appendCBOR": true,
+            "bytecodeHash": "ipfs",
+            "useLiteralContent": false
+          },
+          "optimizer": {
+            "runs": 1000000,
+            "enabled": true
+          },
+          "evmVersion": "prague",
+          "remappings": [
+            "@solady/=lib/solady/",
+            "@forge-std/=lib/forge-std/",
+            "@ctf-exchange-v2/src/=src/",
+            "forge-std/=lib/forge-std/src/",
+            "solady/=lib/solady/src/"
+          ]
+        },
+        "name": "CTFExchange",
+        "fullyQualifiedName": "src/exchange/CTFExchange.sol:CTFExchange"
+      },
+      "deployment": {
+        "transactionHash": "0xd313453c195344b3eea2d91343fb840e51130ba5562fb9c9eda83fd0f82c6c97",
+        "blockNumber": "84902353",
+        "transactionIndex": "113",
+        "deployer": "0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1"
+      },
+      "match": "match",
+      "runtimeMatch": "match",
+      "verifiedAt": "2026-04-06T23:56:47Z",
+      "source_files": 36,
+      "pinned_source_byte_matches": {
+        "ITrading.sol": true,
+        "Trading.sol": true,
+        "Events.sol": true,
+        "Structs.sol": true
+      },
+      "runtime_bytes": 21037,
+      "runtime_sha256": "3e2ba43e59d19191f0d208e39b1ec16f920bdda30ebfa062330ea9fe8d8363f5",
+      "transformed_recompiled_bytes_match_provider_onchain": true,
+      "immutable_ids": 14,
+      "linked_libraries": {},
+      "cbor_metadata_replacement_required": true,
+      "current_independent_rpc_comparison": false
+    },
+    {
+      "address": "0xe2222d279d744050d28e00520010520000310F59",
+      "origin": "https://sourcify.dev/server/v2/contract/137/0xe2222d279d744050d28e00520010520000310F59",
+      "compiler": {
+        "language": "Solidity",
+        "compiler": "solc",
+        "compilerVersion": "0.8.34+commit.80d5c536",
+        "compilerSettings": {
+          "viaIR": false,
+          "metadata": {
+            "appendCBOR": true,
+            "bytecodeHash": "ipfs",
+            "useLiteralContent": false
+          },
+          "optimizer": {
+            "runs": 1000000,
+            "enabled": true
+          },
+          "evmVersion": "prague",
+          "remappings": [
+            "@solady/=lib/solady/",
+            "@forge-std/=lib/forge-std/",
+            "@ctf-exchange-v2/src/=src/",
+            "forge-std/=lib/forge-std/src/",
+            "solady/=lib/solady/src/"
+          ]
+        },
+        "name": "CTFExchange",
+        "fullyQualifiedName": "src/exchange/CTFExchange.sol:CTFExchange"
+      },
+      "deployment": {
+        "transactionHash": "0x81a5c04d0582967b4305b577a4f63a1d9bf5b1f6e0b9c385234540b154446ade",
+        "blockNumber": "85058176",
+        "transactionIndex": "53",
+        "deployer": "0xcA71EA69c54c163D17beB90BeB8D001E1Eb538A1"
+      },
+      "match": "match",
+      "runtimeMatch": "match",
+      "verifiedAt": "2026-04-07T18:15:56Z",
+      "source_files": 36,
+      "pinned_source_byte_matches": {
+        "ITrading.sol": true,
+        "Trading.sol": true,
+        "Events.sol": true,
+        "Structs.sol": true
+      },
+      "runtime_bytes": 21037,
+      "runtime_sha256": "49d7bc11d8ff890bb850d358f6dc36dd3ca63eac5f0cd6811b6033a2938f1646",
+      "transformed_recompiled_bytes_match_provider_onchain": true,
+      "immutable_ids": 14,
+      "linked_libraries": {},
+      "cbor_metadata_replacement_required": true,
+      "current_independent_rpc_comparison": false
+    }
+  ]
+}

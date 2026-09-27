@@ -1,0 +1,14 @@
+{
+  "status": "BLOCKED",
+  "endpoint": "https://polygon.drpc.org",
+  "calls": [
+    {
+      "method": "eth_chainId",
+      "params": []
+    }
+  ],
+  "observed_at_ms": 1790527997392,
+  "deployments": [],
+  "failure_type": "HTTPError",
+  "http_status": 403
+}

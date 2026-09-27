@@ -1,0 +1,35 @@
+{
+  "observed_ms": 1790544580365,
+  "storage_report": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "server_ms": 1790544580000,
+  "clock_offset_ms": -365,
+  "clock_rtt_ms": 336,
+  "balance_type3": "109160000",
+  "allowance_type3": {
+    "0xE111180000d2663C0091e4f400237545B87B996B": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xe2222d279d744050d28e00520010520000310F59": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    "0xe3333700cA9d93003F00f0F71f8515005F6c00Aa": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+  },
+  "balance_match_historical": true,
+  "balance_type0": "0",
+  "orders_count": 0,
+  "orders_empty": true,
+  "trades_count": 0,
+  "trades_empty": true,
+  "rpc_block": 94559626,
+  "rpc_hash": "0x1464da79136d7160f84ca0f6ddbeb2b0f207d21cbbb37b81413b61e77b49037e",
+  "rpc_recheck": true,
+  "code_e111_sha256": "3e2ba43e59d19191f0d208e39b1ec16f920bdda30ebfa062330ea9fe8d8363f5",
+  "code_e222_sha256": "49d7bc11d8ff890bb850d358f6dc36dd3ca63eac5f0cd6811b6033a2938f1646",
+  "code_e111_matches_sourcify": true,
+  "code_e222_matches_sourcify": true,
+  "finished_ms": 1790544582965
+}

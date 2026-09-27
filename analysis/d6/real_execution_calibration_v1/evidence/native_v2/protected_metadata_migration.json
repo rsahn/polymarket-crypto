@@ -1,0 +1,12 @@
+{
+  "schema": "PROTECTED_BOOK_CAUSAL_METADATA_MIGRATION/1",
+  "file": "backend/app/live/readonly_book_stream.py",
+  "original_sha256": "813005e2221209c97728e68a4ca8c47f7a863286c87f2eee0231cca6ccdd0441",
+  "metadata_augmented_sha256": "c116359e8e498752c4350956b60bd77c5c0bc454dd4dd75209cebfd996d7924c",
+  "historical_baseline_replaced": false,
+  "protected_runtime_file_modified_this_pass": false,
+  "verification": "Exact anchored four-line delta removal must reconstruct original bytes and original hash; all other protected paths exact historical hashes",
+  "purpose": "Per-token causal receive timestamp and state identity only; successful update branch, no gating or monetary behavior change",
+  "parent_review_required": true,
+  "production_qualification": false
+}

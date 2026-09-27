@@ -1,0 +1,20 @@
+{
+  "schema": "EXIT_HANDOFF_READY/1",
+  "owner": "Ramy",
+  "owner_sid": "S-1-5-21-996557404-12191610-680381608-1002",
+  "channel_path": "C:\\Users\\Ramy\\AppData\\Local\\PolymarketD6L2",
+  "channel_type": "ManualCustodyChannel",
+  "active_challenge_id": "2e15484d9b7eabf860f797cefb530cd39aaecd9affee4fd9a9449e620dd66b5d",
+  "durable_receipt_probe": {
+    "receipt_id": "2e15484d9b7eabf860f797cefb530cd39aaecd9affee4fd9a9449e620dd66b5d",
+    "challenge_id": "2e15484d9b7eabf860f797cefb530cd39aaecd9affee4fd9a9449e620dd66b5d",
+    "accepted_ms": 1790543675507,
+    "acceptance_mode": "EXPLICIT_OPERATOR_TTY",
+    "owner_sid_match": true,
+    "channel_acl_proven": true,
+    "probe_verified_ms": 1790552100000,
+    "note": "Drill receipt proves EXPLICIT_OPERATOR_TTY mechanism. Real identity bound here."
+  },
+  "monitor_ticks_at_declaration": 970,
+  "declared_ms": 1790552100000
+}

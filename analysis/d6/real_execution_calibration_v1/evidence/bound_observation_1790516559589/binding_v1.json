@@ -1,0 +1,43 @@
+{
+  "schema": "D6_RECONCILIATION_IDENTITY/1",
+  "schema_version": 1,
+  "legacy_input_profile": "ACCOUNT_IDENTITY_20260927_V0",
+  "legacy_binding_digest": "a9eb5b3d01072dd0e43aa9d5630b3c2be398bf8061372c91c53bd343d914ebca",
+  "source_digest": "6ed8058913bc59f902e867b6b909ef97ba73c92b3de9703a2ef89e5cd1e2f561",
+  "sdk_version": "0.11.0",
+  "strategy_hashes": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+  },
+  "identity_binding": {
+    "status": "ACCOUNT_IDENTIFIED",
+    "reconciliation_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "signature_type": 3,
+    "configured_signature_types": [],
+    "signature_type_conflict": false,
+    "legacy_eoa_readonly_signature_type": 0,
+    "legacy_eoa_context_conflict": true,
+    "legacy_context_source": "analysis/qualify_stored_l2.py EOA signer/wallet configuration",
+    "global_configuration_changed": false,
+    "execution_guard_preserved": true,
+    "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+    "chain_id": 137,
+    "source_evidence": "evidence.json",
+    "source_digest": "6ed8058913bc59f902e867b6b909ef97ba73c92b3de9703a2ef89e5cd1e2f561",
+    "block": {
+      "number": 94539886,
+      "number_hex": "0x5a2906e",
+      "hash": "0x89a0679e2afc2a92689c895c1b78f3d2e2c0379fe5c3acabe2e1f1b0db1f69f1",
+      "timestamp_ms": 1790514969000
+    },
+    "observed_ms": 1790514971638,
+    "cash_observation_valid_until_ms": 1790514976638,
+    "scope": "EXPLICIT_RECONCILIATION_IDENTITY_ONLY_REACQUIRE_CASH_FOR_LIVE_USE",
+    "calibration_ready": false,
+    "submit_allowed": false,
+    "automatic_startup_override": false
+  },
+  "role_scope": "IDENTITY_ONLY_NOT_CASH_OR_EXECUTION",
+  "automatic_override": false
+}
