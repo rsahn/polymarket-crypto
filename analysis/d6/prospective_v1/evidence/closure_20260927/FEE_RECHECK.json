@@ -1,0 +1,14 @@
+{
+  "checked_utc": "2026-09-27T00:32:54.543450+00:00",
+  "source": "https://docs.polymarket.com/trading/fees",
+  "official_formula": "C * feeRate * p * (1-p)",
+  "precision_decimal_places": 5,
+  "smallest_documented_fee_usdc": "0.00001",
+  "rounding_tie_breaking": "UNPROVEN",
+  "aggregation": "UNPROVEN",
+  "partial_fill_allocation": "UNPROVEN",
+  "official_table_is_display_precision_not_match_algorithm": true,
+  "result": "MARKET_FEE_UNQUALIFIED",
+  "previous_evidence": "blockers_20260926/FEE_SOURCE_AUDIT.json",
+  "quotation": null
+}

@@ -1,0 +1,10 @@
+{
+  "tests": 21,
+  "subtests": 18,
+  "failures": 0,
+  "source": "Captured validate_execution.py output in this task; full suite also includes both modules",
+  "command": "python -B analysis/validate_execution.py analysis/d6/prospective_v1/test_blocker_contracts.py analysis/d6/prospective_v1/test_blockers.py",
+  "sdk_monetary_attempts": 0,
+  "sdk_methods_guarded": 16,
+  "external_connections_blocked": 0
+}

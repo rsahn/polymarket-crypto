@@ -1,0 +1,471 @@
+{
+  "measurement_reused_from": "blockers_20260926/STORAGE_BREAKDOWN.json",
+  "original_measurement_hash": "5cda14fefc0cfa007c22111b66986596fa903e265dff71ce09ac58bf6a053333",
+  "source_db_total_bytes": 4800663552,
+  "additive_physical_rows": [
+    {
+      "SOURCE": "sqlite_schema",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_schema",
+      "BYTES": 12288,
+      "PERCENT_TOTAL": 0.00025596461545155996,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "schema_info",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::schema_info",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": 1,
+      "BYTES_PER_EVENT": 4096.0,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "sessions",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sessions",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": 1,
+      "BYTES_PER_EVENT": 4096.0,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "YES book/identity inputs",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_sessions_1",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_sessions_1",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "markets",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::markets",
+      "BYTES": 61440,
+      "PERCENT_TOTAL": 0.0012798230772577998,
+      "EVENT_COUNT": 9,
+      "BYTES_PER_EVENT": 6826.666666666667,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "YES book/identity inputs",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_markets_1",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_1",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_markets_2",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_2",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_markets_3",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_3",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "events",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::events",
+      "BYTES": 2551357440,
+      "PERCENT_TOTAL": 53.1459331062074,
+      "EVENT_COUNT": 1336887,
+      "BYTES_PER_EVENT": 1908.4316325912362,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "YES BTC subset",
+      "REQUIRED_FOR_FILL_REPLAY": "YES book subset",
+      "REQUIRED_FOR_LEDGER": "YES book/identity inputs",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "sqlite_sequence",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_sequence",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": 2,
+      "BYTES_PER_EVENT": 2048.0,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "idx_d5_events_session",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::idx_d5_events_session",
+      "BYTES": 75018240,
+      "PERCENT_TOTAL": 1.5626639773317736,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "idx_d5_events_market",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::idx_d5_events_market",
+      "BYTES": 56524800,
+      "PERCENT_TOTAL": 1.177437231077176,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "book_sides",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::book_sides",
+      "BYTES": 2058412032,
+      "PERCENT_TOTAL": 42.877656592752615,
+      "EVENT_COUNT": 2631230,
+      "BYTES_PER_EVENT": 782.3003051804669,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "YES book subset",
+      "REQUIRED_FOR_LEDGER": "YES book/identity inputs",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_book_sides_1",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_book_sides_1",
+      "BYTES": 48062464,
+      "PERCENT_TOTAL": 1.0011629325695348,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "anchors",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::anchors",
+      "BYTES": 10231808,
+      "PERCENT_TOTAL": 0.2131332031326656,
+      "EVENT_COUNT": 5156,
+      "BYTES_PER_EVENT": 1984.4468580294802,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "YES retained logical contents",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "sqlite_autoindex_anchors_1",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::sqlite_autoindex_anchors_1",
+      "BYTES": 94208,
+      "PERCENT_TOTAL": 0.0019623953851286265,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "hedge_attempts",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::hedge_attempts",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": 0,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "idx_d5_anchor_lifecycle",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::idx_d5_anchor_lifecycle",
+      "BYTES": 851968,
+      "PERCENT_TOTAL": 0.01774688000464149,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "YES representation"
+    },
+    {
+      "SOURCE": "SQLITE_BYTE_LOCK_PAGE",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::SQLITE_BYTE_LOCK_PAGE",
+      "BYTES": 4096,
+      "PERCENT_TOTAL": 8.532153848385332e-05,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    },
+    {
+      "SOURCE": "UNATTRIBUTED",
+      "PATH_PATTERN": "data\\d51\\d51_smoke_20260922_194254.db::UNATTRIBUTED",
+      "BYTES": 0,
+      "PERCENT_TOTAL": 0.0,
+      "EVENT_COUNT": null,
+      "BYTES_PER_EVENT": null,
+      "REQUIRED_FOR_SIGNAL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_FILL_REPLAY": "NO direct dependency",
+      "REQUIRED_FOR_LEDGER": "NO direct dependency",
+      "REQUIRED_FOR_CAUSAL_AUDIT": "schema retained; physical pages rebuildable",
+      "REDUNDANT_YES_NO": "NO demonstrated removable object"
+    }
+  ],
+  "non_additive_logical_subsets": {
+    "event_payload_by_kind_duration": [
+      {
+        "kind": "ACTIVATE",
+        "duration": "15m",
+        "events": 4,
+        "stored_payload_bytes": 1507
+      },
+      {
+        "kind": "ACTIVATE",
+        "duration": "5m",
+        "events": 6,
+        "stored_payload_bytes": 2249
+      },
+      {
+        "kind": "BOOK",
+        "duration": "15m",
+        "events": 433068,
+        "stored_payload_bytes": 457791648
+      },
+      {
+        "kind": "BOOK",
+        "duration": "5m",
+        "events": 882547,
+        "stored_payload_bytes": 938068588
+      },
+      {
+        "kind": "BTC",
+        "duration": null,
+        "events": 19074,
+        "stored_payload_bytes": 4409468
+      },
+      {
+        "kind": "BTC_CONNECTED",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 2
+      },
+      {
+        "kind": "CLOCK_SAMPLE",
+        "duration": null,
+        "events": 44,
+        "stored_payload_bytes": 2640
+      },
+      {
+        "kind": "COLLECTION_STOP",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 38
+      },
+      {
+        "kind": "EXPIRE",
+        "duration": "15m",
+        "events": 2,
+        "stored_payload_bytes": 45
+      },
+      {
+        "kind": "EXPIRE",
+        "duration": "5m",
+        "events": 5,
+        "stored_payload_bytes": 110
+      },
+      {
+        "kind": "RECONNECT",
+        "duration": "15m",
+        "events": 2,
+        "stored_payload_bytes": 44
+      },
+      {
+        "kind": "REJECT",
+        "duration": "15m",
+        "events": 203,
+        "stored_payload_bytes": 99124
+      },
+      {
+        "kind": "REJECT",
+        "duration": "5m",
+        "events": 1919,
+        "stored_payload_bytes": 1009706
+      },
+      {
+        "kind": "ROTATION",
+        "duration": null,
+        "events": 7,
+        "stored_payload_bytes": 699
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": null,
+        "events": 1,
+        "stored_payload_bytes": 166
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": "15m",
+        "events": 1,
+        "stored_payload_bytes": 22
+      },
+      {
+        "kind": "SESSION_END",
+        "duration": "5m",
+        "events": 1,
+        "stored_payload_bytes": 21
+      },
+      {
+        "kind": "WS_ERROR",
+        "duration": "15m",
+        "events": 1,
+        "stored_payload_bytes": 109
+      }
+    ],
+    "book_side_count": 2631230,
+    "bid_depth_bytes": 665002341,
+    "ask_depth_bytes": 665002343,
+    "anchors": 5156,
+    "anchor_features_bytes": 5780830,
+    "adjacent_duplicate_depth_rows": 455086,
+    "adjacent_duplicate_depth_bytes": 220496792,
+    "duplicate_scope": "per token, consecutive byte-identical stored bids+asks; subset of depth, NOT additive"
+  },
+  "side_files_outside_total": [
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_after_1790100346933927900.json",
+      "bytes": 9054
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099318792398500.json",
+      "bytes": 9073
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099623590818000.json",
+      "bytes": 9075
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790099928504760500.json",
+      "bytes": 9064
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_during_1790100233243784900.json",
+      "bytes": 9063
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_gate_1_1790098979155697100.json",
+      "bytes": 9061
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\clock_gate_2_1790099013797897600.json",
+      "bytes": 9064
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\COLLECTION_RESULT.json",
+      "bytes": 980
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\LAUNCH_MANIFEST.json",
+      "bytes": 1284
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\status.json",
+      "bytes": 4046
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\AUDIT_NEXT_REPORT.json",
+      "bytes": 9426
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\DATA_QUALITY_REPORT.json",
+      "bytes": 11062
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\FOREIGN_KEY_CHECK.json",
+      "bytes": 2
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\INTEGRITY_CHECK.json",
+      "bytes": 24
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\metadata_projection.db",
+      "bytes": 1166061568
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\progress.json",
+      "bytes": 2197
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\progress.jsonl",
+      "bytes": 2004350
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\REPLAY_1.json",
+      "bytes": 6509
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\RUN_MANIFEST.json",
+      "bytes": 2778
+    },
+    {
+      "path": "analysis\\d51\\smoke_20260922_194254\\review\\VERDICT.json",
+      "bytes": 228
+    }
+  ],
+  "note": "No repeated expensive scan. Raw wire not separately established. DuckDB not among measured source/side files. JSON punctuation not separately attributed; stored-column byte counts include serialization.",
+  "journal_checkpoints": "No qualified real prospective journal/checkpoint in this measurement; weekly allowance unknown"
+}

@@ -1,0 +1,32 @@
+{
+  "status": "BTC_V1_PROSPECTIVE_PROTOCOL_BLOCKED",
+  "gates": {
+    "REAL_V1_BINDING": "REAL_V1_BINDING_NOT_QUALIFIED",
+    "DEPTH_REUSE": "DEPTH_REUSE_UNQUALIFIED",
+    "FEE_MODEL": "MARKET_FEE_UNQUALIFIED",
+    "LOSSLESS_STORAGE": "LOSSLESS_STORAGE_QUALIFIED",
+    "STORAGE": "STORAGE_UNQUALIFIED",
+    "REPLAY_CAPACITY": "REPLAY_CAPACITY_UNQUALIFIED"
+  },
+  "lossless_scope": "Unchanged codec: exhaustive recorded table values and complete synthetic journal through final ledger. Not a qualification of missing real observations, real fees, or weekly capacity.",
+  "depth_scope": "Existing persistent adapter PASS; unchanged V1 and accepted protocol fills conflict on repeated book. Thus combined real binding UNQUALIFIED.",
+  "blockers": [
+    "REAL_V1_BINDING_NOT_QUALIFIED (includes unchanged-depth contract conflict)",
+    "MARKET_FEE_UNQUALIFIED (exact rounding/aggregation/partial allocation)",
+    "DISK_CAPACITY_UNPROVEN / DISK_SPACE_INSUFFICIENT + REPLAY_CAPACITY_UNQUALIFIED"
+  ],
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "REAL_ORDERS_ENABLED": false,
+  "LIVE_EXECUTION_ARMED": false,
+  "submit_allowed": false,
+  "collection_started": false,
+  "TRAIN_opened": false,
+  "VALIDATION_opened": false,
+  "OOS_opened": false,
+  "edge_claimed": false,
+  "full_suite_passed": 983,
+  "subtests_passed": 79,
+  "full_suite_failures": 0,
+  "sdk_monetary_attempts": 0
+}

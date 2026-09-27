@@ -1,0 +1,32 @@
+# STORAGE_BREAKDOWN
+
+Same exhaustive measured source, unchanged format; schema adapted to the requested columns. Every physical byte is attributed once. Logical depth duplicates and side files below are not additive to this total.
+
+| SOURCE | PATH_PATTERN | BYTES | PERCENT_TOTAL | EVENT_COUNT | BYTES_PER_EVENT | REQUIRED_FOR_SIGNAL_REPLAY | REQUIRED_FOR_FILL_REPLAY | REQUIRED_FOR_LEDGER | REQUIRED_FOR_CAUSAL_AUDIT | REDUNDANT_YES_NO |
+|---|---|---|---|---|---|---|---|---|---|---|
+| sqlite_schema | data\d51\d51_smoke_20260922_194254.db::sqlite_schema | 12288 | 0.00025596461545155996 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | NO demonstrated removable object |
+| schema_info | data\d51\d51_smoke_20260922_194254.db::schema_info | 4096 | 8.532153848385332e-05 | 1 | 4096.0 | NO direct dependency | NO direct dependency | NO direct dependency | YES retained logical contents | NO demonstrated removable object |
+| sessions | data\d51\d51_smoke_20260922_194254.db::sessions | 4096 | 8.532153848385332e-05 | 1 | 4096.0 | NO direct dependency | NO direct dependency | YES book/identity inputs | YES retained logical contents | NO demonstrated removable object |
+| sqlite_autoindex_sessions_1 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_sessions_1 | 4096 | 8.532153848385332e-05 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| markets | data\d51\d51_smoke_20260922_194254.db::markets | 61440 | 0.0012798230772577998 | 9 | 6826.666666666667 | NO direct dependency | NO direct dependency | YES book/identity inputs | YES retained logical contents | NO demonstrated removable object |
+| sqlite_autoindex_markets_1 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_1 | 4096 | 8.532153848385332e-05 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| sqlite_autoindex_markets_2 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_2 | 4096 | 8.532153848385332e-05 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| sqlite_autoindex_markets_3 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_markets_3 | 4096 | 8.532153848385332e-05 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| events | data\d51\d51_smoke_20260922_194254.db::events | 2551357440 | 53.1459331062074 | 1336887 | 1908.4316325912362 | YES BTC subset | YES book subset | YES book/identity inputs | YES retained logical contents | NO demonstrated removable object |
+| sqlite_sequence | data\d51\d51_smoke_20260922_194254.db::sqlite_sequence | 4096 | 8.532153848385332e-05 | 2 | 2048.0 | NO direct dependency | NO direct dependency | NO direct dependency | YES retained logical contents | NO demonstrated removable object |
+| idx_d5_events_session | data\d51\d51_smoke_20260922_194254.db::idx_d5_events_session | 75018240 | 1.5626639773317736 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| idx_d5_events_market | data\d51\d51_smoke_20260922_194254.db::idx_d5_events_market | 56524800 | 1.177437231077176 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| book_sides | data\d51\d51_smoke_20260922_194254.db::book_sides | 2058412032 | 42.877656592752615 | 2631230 | 782.3003051804669 | NO direct dependency | YES book subset | YES book/identity inputs | YES retained logical contents | YES representation |
+| sqlite_autoindex_book_sides_1 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_book_sides_1 | 48062464 | 1.0011629325695348 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| anchors | data\d51\d51_smoke_20260922_194254.db::anchors | 10231808 | 0.2131332031326656 | 5156 | 1984.4468580294802 | NO direct dependency | NO direct dependency | NO direct dependency | YES retained logical contents | NO demonstrated removable object |
+| sqlite_autoindex_anchors_1 | data\d51\d51_smoke_20260922_194254.db::sqlite_autoindex_anchors_1 | 94208 | 0.0019623953851286265 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| hedge_attempts | data\d51\d51_smoke_20260922_194254.db::hedge_attempts | 4096 | 8.532153848385332e-05 | 0 | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | NO demonstrated removable object |
+| idx_d5_anchor_lifecycle | data\d51\d51_smoke_20260922_194254.db::idx_d5_anchor_lifecycle | 851968 | 0.01774688000464149 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | YES representation |
+| SQLITE_BYTE_LOCK_PAGE | data\d51\d51_smoke_20260922_194254.db::SQLITE_BYTE_LOCK_PAGE | 4096 | 8.532153848385332e-05 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | NO demonstrated removable object |
+| UNATTRIBUTED | data\d51\d51_smoke_20260922_194254.db::UNATTRIBUTED | 0 | 0.0 | N/A | N/A | NO direct dependency | NO direct dependency | NO direct dependency | schema retained; physical pages rebuildable | NO demonstrated removable object |
+
+Detailed non-additive payload/depth duplicates and the exact 20 side-file paths/bytes are retained in STORAGE_BREAKDOWN.json and the previous measured report. No representation was deleted.
+
+Duplicate depth: 455086 rows, 220496792 stored bytes, included in book_sides, not extra bytes. Repeated event identities/times remain mandatory.
+
+Source DB/WAL: immutable SQLite DB; nonempty WAL/journal prohibited by audited reader. No DuckDB source file found in the measured inventory. Raw BTC/Polymarket wire completeness not asserted from normalized stored payloads. Telemetry, JSONL and diagnostics are enumerated in side_files_outside_total. No qualified prospective journal/checkpoint exists.

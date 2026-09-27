@@ -1,0 +1,15 @@
+{
+  "source_smoke": "blockers_20260926/STORAGE_SMOKE.json",
+  "new_smoke_run": false,
+  "reason": "Same codec and full-capture smoke already measured; no redundant second smoke.",
+  "projected_dataset_168h": 153994953187,
+  "projected_journal_168h": null,
+  "projected_checkpoints_168h": null,
+  "engineering_margin": "ceil((2*dataset + journal + checkpoints)*1.2)",
+  "total_required": null,
+  "required_lower_bound": 369587887649,
+  "actual_free_space": 47134601216,
+  "utc": "2026-09-27T00:32:54.548461+00:00",
+  "result": "STORAGE_UNQUALIFIED",
+  "shortfall_lower_bound": 322453286433
+}

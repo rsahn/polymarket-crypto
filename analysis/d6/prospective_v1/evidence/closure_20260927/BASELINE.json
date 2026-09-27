@@ -1,0 +1,42 @@
+{
+  "utc": "2026-09-27T00:31:12.489145+00:00",
+  "branch": "d6-live-execution-staging",
+  "HEAD": "e3afaea993438274187ea239567e477a38fed7ff",
+  "status": "M analysis/d5/resumed_review_20260920_214402/telemetry.json\n M analysis/d5/resumed_review_20260920_214402/telemetry.jsonl\n M analysis/d6/prospective_v1/evidence/harness_20260926/REPORT.md\n?? AUTHENTICATED_READ_ONLY_20260925_101428_937076.json\n?? AUTHENTICATED_READ_ONLY_20260925_102414_830503.json\n?? COLLATERAL_INVENTORY_READ_ONLY_20260925_113807_232947.json\n?? CTF_RPC_DIAGNOSTIC_20260925_121824_352142.json\n?? CTF_RPC_DIAGNOSTIC_20260925_123355_278467.json\n?? CTF_RPC_DIAGNOSTIC_20260925_123425_452085.json\n?? CTF_RPC_DIAGNOSTIC_20260925_123523_229326.json\n?? D6_INVENTORY_CATCHUP_20260926_182825_344562.json\n?? D6_POST_B_WS_PROOFS_20260925_145717_004330.json\n?? D6_POST_B_WS_PROOFS_20260925_150610_026561.json\n?? D6_POST_B_WS_PROOFS_20260925_151002_066454.json\n?? D6_POST_GENESIS_READINESS_20260925_133549_843197.json\n?? D6_POST_GENESIS_READINESS_20260925_134112_981226.json\n?? D6_POST_GENESIS_READINESS_20260925_140243_254125.json\n?? D6_POST_GENESIS_READINESS_20260925_140438_110572.json\n?? D6_POST_GENESIS_READINESS_20260925_141502_295752.json\n?? D6_POST_GENESIS_READINESS_20260925_143603_050876.json\n?? D6_POST_GENESIS_READINESS_20260925_152728_459294.json\n?? D6_POST_GENESIS_READINESS_20260925_153909_197770.json\n?? D6_POST_GENESIS_READINESS_20260925_155542_053884.json\n?? D6_POST_GENESIS_READINESS_20260925_162216_529805.json\n?? D6_POST_GENESIS_READINESS_20260925_163524_022208.json\n?? D6_POST_GENESIS_READINESS_20260925_164926_334174.json\n?? D6_POST_GENESIS_READINESS_20260925_170653_660563.json\n?? D6_POST_GENESIS_READINESS_20260925_171636_625980.json\n?? D6_POST_GENESIS_READINESS_20260925_173424_838443.json\n?? D6_POST_GENESIS_READINESS_20260925_175809_598833.json\n?? D6_POST_GENESIS_READINESS_20260925_180018_402488.json\n?? D6_POST_GENESIS_READINESS_20260925_182006_498792.json\n?? D6_POST_GENESIS_READINESS_20260925_182648_494531.json\n?? D6_POST_GENESIS_READINESS_20260925_183800_010711.json\n?? D6_POST_GENESIS_READINESS_20260925_183903_684857.json\n?? D6_POST_GENESIS_READINESS_20260925_184607_388761.json\n?? D6_POST_GENESIS_READINESS_20260925_185735_044830.json\n?? D6_POST_GENESIS_READINESS_20260926_172030_802647.json\n?? DEPOSIT_WALLET_READ_ONLY_20260925_112502_469886.json\n?? GENESIS_READINESS_20260925_114953_736112.json\n?? GENESIS_READINESS_20260925_115629_677741.json\n?? GENESIS_READINESS_20260925_120304_984090.json\n?? GENESIS_READINESS_20260925_120857_642668.json\n?? GENESIS_READINESS_20260925_121348_416804.json\n?? GENESIS_READINESS_20260925_131530_837033.json\n?? HYPOTHESIS_H1_LATENCY_CONVERGENCE.md\n?? L2_RECOVERY_20260925_100826_460083.json\n?? L2_RECOVERY_20260925_101103_407191.json\n?? L2_RECOVERY_PREVIEW.json\n?? READINESS_LOCAL_NETWORK.json\n?? READINESS_LOCAL_NETWORK_PUBLIC_20260925_091854_028622.json\n?? READINESS_LOCAL_NETWORK_previous.json\n?? analysis/d51/smoke_20260921_215154/\n?? analysis/d51/smoke_20260921_215617/\n?? analysis/d51/smoke_20260921_220723/\n?? analysis/d51/smoke_20260921_222151/\n?? analysis/d51/smoke_20260921_224445/\n?? analysis/d51/smoke_20260921_224605/\n?? analysis/d51/smoke_20260921_233413/\n?? analysis/d51/smoke_20260922_000153/\n?? analysis/d51/smoke_20260922_001452/\n?? analysis/d51/smoke_20260922_002810/\n?? analysis/d51/smoke_20260922_192845/\n?? analysis/d51/smoke_20260922_193032/\n?? analysis/d51/smoke_20260922_194254/\n?? analysis/d6/AUDIT_BIG_TRADE.json\n?? analysis/d6/AUDIT_BIG_TRADE_V2.json\n?? analysis/d6/AUDIT_BIG_TRADE_V3.json\n?? analysis/d6/D6_DEPTH_AWARE_REPLAY.json\n?? analysis/d6/D6_EXECUTION_500.json\n?? analysis/d6/D6_FIRST_REPORT.json\n?? analysis/d6/D6_SECOND_REPORT.json\n?? analysis/d6/D6_STRESS_REPORT.json\n?? analysis/d6/D6_THIRD_REPORT.json\n?? analysis/d6/live_dry_run/\n?? analysis/d6/paper_live/\n?? analysis/d6_replay_validation/\n?? analysis/execution_validation_20260925/baseline/\n?? analysis/l2_signer_identity_20260925/L2_RECOVERY_PREVIEW_CONFIRMED_20260925_095419_9538251.json\n?? data/d6/\n?? h1_latency_convergence_probe.py\n?? h1_probe_results.csv\n?? runtime/",
+  "log5": "e3afaea D6: measure prospective blockers and add lossless archive candidate\n6f13bec D6: add tested offline prospective harness; retain readiness blockers\n3b4a296 D6: prepare blocked prospective V1 ledger and validation protocol\n644d45e D6: characterize post-C inventory completeness boundary\n13d6afc D6: make inventory catchup resumable and observable",
+  "protected_hashes": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405",
+    "runtime/d6_genesis.db": "5365085da95cecb49fa4c922b890e9803ef223fdefef541505c2dc5a3de7814f",
+    "analysis/d6/prospective_v1/criteria.json": "869a386b9112a572247e3fb61ffbf4a27afb20493a791929e72f52bc0d9cd06a",
+    "analysis/d6/prospective_v1/evidence/harness_20260926/REPORT.md": "b555471dbef10d5af3c1a6fb0b325e1bea976a821d52822398754e2f353c4d00"
+  },
+  "prior_evidence_hashes": {
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/AUDIT.json": "b78f02e3ac2e20aef8b7230860ff4c9ac07e6dc83bc127db403e846e12d9d2d2",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/BASELINE.json": "09487c2202a82505217147013a22ed3b0fd88461360e3151d78e7b48f2fb5c1f",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/DIFFERENTIAL.json": "6a20bcde03e1bcd716256e70d8626b77c8e611d64dd3f827efd748352ac3acc6",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_QUALIFICATION.json": "750ff08a6be62168ca4140e2b7adf571a7ed03365d7601691f401c0ab0c4b8ed",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_QUALIFICATION.md": "9c42cf9591eabe5769087fdc59e132fa32cd0752cbb40738ec9e9e153e4cfc4c",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FEE_SOURCE_AUDIT.json": "3f2dd6c5ff0783c15d81871820ff2409fcee3fbb7f185f576fe86c1944f0aa9a",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/FULL_SUITE.log": "0be1303a33bad9fd5d7e22654052324e682e71d7f0983a7b73c0ac9f7b336f1a",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/INSTRUMENTATION_IDENTITY.json": "13ac09c09092a42e4095becd57b63ecc9d1fbaa4c0f2ba91ae1829d72a2c0d0f",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/REPLAY_PROBE.json": "c56da38cbac512177267114c9434ec7a50c0db8b52e9cb8490211bc69263ebd8",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/REPORT.md": "3c03951b357c6088f0e385715d323aaaf87104253b5229d3a4f2dfdfc1457e3e",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_AND_REPLAY.md": "1dd59bc1ad69355dc884b63b83750766a53d86a8910c13daaf49f49cb12005dc",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_BREAKDOWN.json": "5cda14fefc0cfa007c22111b66986596fa903e265dff71ce09ac58bf6a053333",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_BREAKDOWN.md": "7aff0ee54eaddf0c2e70813dec9d05cc7d849d317709d48f7d54c0bdf6963560",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/STORAGE_SMOKE.json": "dbf673fcb1c81efb86c8fb0503e615a96a62203acfa4fcad5bd96133574b1df7",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/TARGETED_TESTS.log": "10987a49b32b965227b0eb276c42381a5d95f1281a51e592cd2b463d46f10984",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/VALIDATION.json": "6e7060a67fc4f2e2b582c042bdd1c51131afdf31f1677af3fa60a10f12f6e871",
+    "analysis/d6/prospective_v1/evidence/blockers_20260926/VERDICT.json": "bb3d0408b25c54ea956bde85ec71c33f05811b03f08feb0021b5f8fef4383eaa"
+  },
+  "free_bytes": 47137210368,
+  "actual_test_baseline": {
+    "tests": 980,
+    "subtests": 65
+  },
+  "prompt_baseline_superseded": {
+    "tests": 962,
+    "subtests": 61
+  }
+}
