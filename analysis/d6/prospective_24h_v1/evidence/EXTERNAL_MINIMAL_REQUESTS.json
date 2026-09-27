@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://r2v2.pmxt.dev/polymarket_orderbook_2026-09-18T09.parquet",
+    "method": "GET Range bytes=-8",
+    "max_body_bytes": 1024,
+    "utc": "2026-09-27T07:55:03.824168+00:00",
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "url": "https://r2v2.pmxt.dev/polymarket_orderbook_2026-09-22T19.parquet",
+    "method": "GET Range bytes=-8",
+    "max_body_bytes": 1024,
+    "utc": "2026-09-27T07:55:04.173804+00:00",
+    "error": "HTTP Error 404: Not Found"
+  }
+]

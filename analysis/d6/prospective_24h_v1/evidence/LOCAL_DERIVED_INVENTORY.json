@@ -1,0 +1,20 @@
+[
+  {
+    "source": "analysis_bonereaper_snapshot.db",
+    "bytes": 3590758400,
+    "schemas": {
+      "benchmark_activity": "CREATE TABLE benchmark_activity (id integer primary key, benchmark text, wallet text, timestamp integer, condition_id text, type text, side text, outcome text, outcome_index integer, asset text, size real, price real, usdc_size real, transaction_hash text, title text, slug text, event_slug text, is_combo integer, raw_json text)"
+    },
+    "range": {}
+  },
+  {
+    "source": "analysis/c3_d4_results/snapshot.db",
+    "bytes": 152707072,
+    "schemas": {
+      "c3_shadow_observations": "CREATE TABLE c3_shadow_observations (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    anchor_ts_ms INTEGER NOT NULL,\n    hedge_ts_ms INTEGER NOT NULL,\n    delay_ms INTEGER NOT NULL,\n    market_key TEXT NOT NULL,\n    direction TEXT NOT NULL,\n    btc_price REAL,\n    first_ask REAL NOT NULL,\n    second_ask REAL NOT NULL,\n    first_ask_qty REAL NOT NULL,\n    second_ask_qty REAL NOT NULL,\n    executable_qty REAL NOT NULL,\n    pair_cost REAL NOT NULL,\n    gross_edge REAL NOT NULL,\n    net_edge_0 REAL NOT NULL,\n    net_edge_0025 REAL NOT NULL,\n    net_edge_005 REAL NOT NULL,\n    net_edge_01 REAL NOT NULL\n)",
+      "sqlite_sequence": "CREATE TABLE sqlite_sequence(name,seq)",
+      "c3_shadow_observations_v2": "CREATE TABLE c3_shadow_observations_v2 (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    anchor_ts_ms INTEGER NOT NULL,\n    hedge_ts_ms INTEGER NOT NULL,\n    delay_ms INTEGER NOT NULL,\n    market_key TEXT NOT NULL,\n    market_duration TEXT NOT NULL,\n    anchor_group INTEGER NOT NULL,\n    direction TEXT NOT NULL,\n\n    btc_price REAL,\n    btc_return_1s REAL,\n    btc_return_5s REAL,\n    btc_return_15s REAL,\n    time_remaining_ms INTEGER,\n\n    first_bid REAL NOT NULL,\n    first_ask REAL NOT NULL,\n    first_bid_qty REAL NOT NULL,\n    first_ask_qty REAL NOT NULL,\n    first_spread REAL NOT NULL,\n\n    opposite_bid REAL NOT NULL,\n    opposite_ask REAL NOT NULL,\n    opposite_bid_qty REAL NOT NULL,\n    opposite_ask_qty REAL NOT NULL,\n    opposite_spread REAL NOT NULL,\n    depth_imbalance REAL,\n\n    second_ask REAL NOT NULL,\n    second_ask_qty REAL NOT NULL,\n    executable_qty REAL NOT NULL,\n    pair_cost REAL NOT NULL,\n    gross_edge REAL NOT NULL,\n    net_edge_0 REAL NOT NULL,\n    net_edge_0025 REAL NOT NULL,\n    net_edge_005 REAL NOT NULL,\n    net_edge_01 REAL NOT NULL\n, market_slug TEXT, condition_id TEXT)"
+    },
+    "range": {}
+  }
+]

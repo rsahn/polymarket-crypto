@@ -1,0 +1,21 @@
+{
+  "version": "BTC_V1_24H_INITIAL_QUALIFICATION_V1",
+  "duration_hours": [
+    12,
+    6,
+    6
+  ],
+  "total_hours": 24,
+  "sizing": "FIXED25",
+  "universe": "BTC Polymarket UP/DOWN 5m",
+  "embargo_ms": 60000,
+  "whole_market_partitioning": true,
+  "purpose": "INITIAL_MICROLIVE_QUALIFICATION",
+  "NOT_LONG_HORIZON_STABILITY_PROOF": true,
+  "old_protocol": "analysis/d6/prospective_v1/criteria.json",
+  "T0": null,
+  "execution": "PREPARATION_ONLY",
+  "OOS": "Existing AccessGate unchanged; first access exclusive, TRAIN PASS then VALIDATION PASS; strategy and criteria seal unchanged throughout",
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false
+}

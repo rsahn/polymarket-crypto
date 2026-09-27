@@ -1,0 +1,35 @@
+{
+  "ARCHIVE_24H_BYTES": 21999279027,
+  "JOURNAL_24H_BOUND": null,
+  "CHECKPOINT_24H_BOUND": null,
+  "SCRATCH_REQUIREMENT": null,
+  "ENGINEERING_MARGIN": null,
+  "ENGINEERING_MARGIN_POLICY": "20 percent of all qualified components, rounded up",
+  "QUALIFIED_24H_REQUIRED_SPACE": null,
+  "CURRENT_FREE_SPACE": 45748113408,
+  "ADDITIONAL_SPACE_REQUIRED": null,
+  "status": "STORAGE_24H_UNQUALIFIED",
+  "projection_basis": "Measured lossless archive only: 254621.285030 B/s; no smoke rerun. Projection, not a proven future traffic upper bound.",
+  "bounds_reason": "No frozen journal record/event-count bound, checkpoint format/cadence or worst-case replay scratch bound. None means unknown, never zero.",
+  "replay": {
+    "status": "REPLAY_24H_UNQUALIFIED",
+    "missing": [
+      "full_event_mix",
+      "record_size_bound",
+      "active_positions_bound",
+      "runtime_24h_bound",
+      "scratch_24h_bound",
+      "causal_binding_qualified"
+    ]
+  },
+  "existing_measurements": {
+    "MARK_events": 100000,
+    "MARK_seconds": 24.1310274,
+    "MARK_peak_bytes": 34668544,
+    "book_events": 60000,
+    "book_seconds": 27.0876659,
+    "book_peak_bytes": 34672640,
+    "source": "analysis/d6/prospective_v1/evidence/closure_delta_20260927/STRESS.json",
+    "qualification_limit": "Synthetic cases do not bound full 24h event mix, active positions, record size, history scans, scratch or total wall time."
+  }
+}

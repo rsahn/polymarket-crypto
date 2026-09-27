@@ -1,0 +1,38 @@
+[
+  {
+    "url": "https://r2v2.pmxt.dev/polymarket_orderbook_2026-04-17T12.parquet",
+    "utc": "2026-09-27T07:58:04.048698+00:00",
+    "max_body_bytes": 8192,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://data-api.binance.vision/api/v3/aggTrades?symbol=BTCUSDT&startTime=1789721742000&endTime=1789721742999&limit=10",
+    "utc": "2026-09-27T07:58:04.239557+00:00",
+    "max_body_bytes": 8192,
+    "status": 200,
+    "headers": {
+      "Date": "Sun, 27 Sep 2026 07:58:05 GMT",
+      "Content-Type": "application/json;charset=UTF-8",
+      "Content-Length": "365",
+      "Connection": "close",
+      "Server": "nginx",
+      "Vary": "Accept-Encoding",
+      "x-mbx-uuid": "d1a85a99-64d9-4841-a0cf-2415696ab0de",
+      "x-mbx-used-weight": "4",
+      "x-mbx-used-weight-1m": "4",
+      "Strict-Transport-Security": "max-age=31536000; includeSubdomains",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-Xss-Protection": "1; mode=block",
+      "X-Content-Type-Options": "nosniff",
+      "Content-Security-Policy": "default-src 'self'",
+      "X-Content-Security-Policy": "default-src 'self'",
+      "X-WebKit-CSP": "default-src 'self'",
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Pragma": "no-cache",
+      "Expires": "0",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, HEAD, OPTIONS"
+    },
+    "body_hex": "[{\"a\":4066711742,\"p\":\"78105.00000000\",\"q\":\"0.00890000\",\"f\":6691264990,\"l\":6691264990,\"T\":1789721742137,\"m\":false,\"M\":true},{\"a\":4066711743,\"p\":\"78104.99000000\",\"q\":\"0.00194000\",\"f\":6691264991,\"l\":6691264991,\"T\":1789721742589,\"m\":true,\"M\":true},{\"a\":4066711744,\"p\":\"78104.99000000\",\"q\":\"0.01280000\",\"f\":6691264992,\"l\":6691264992,\"T\":1789721742623,\"m\":true,\"M\":true}]"
+  }
+]

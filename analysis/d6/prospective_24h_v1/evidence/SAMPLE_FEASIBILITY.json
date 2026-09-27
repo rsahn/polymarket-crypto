@@ -1,0 +1,31 @@
+{
+  "TRAIN": {
+    "hours": 12,
+    "max_active_6h_blocks": 2,
+    "verdict": "INCONCLUSIVE_INSUFFICIENT_SAMPLE",
+    "reasons": [
+      "ACTIVE_6H_BLOCKS_IMPOSSIBLE",
+      "INSUFFICIENT_SENSITIVITY_BLOCK_HOURS"
+    ]
+  },
+  "VALIDATION": {
+    "hours": 6,
+    "max_active_6h_blocks": 1,
+    "verdict": "INCONCLUSIVE_INSUFFICIENT_SAMPLE",
+    "reasons": [
+      "ACTIVE_6H_BLOCKS_IMPOSSIBLE",
+      "INSUFFICIENT_BLOCK_HOURS",
+      "INSUFFICIENT_SENSITIVITY_BLOCK_HOURS"
+    ]
+  },
+  "OOS": {
+    "hours": 6,
+    "max_active_6h_blocks": 1,
+    "verdict": "INCONCLUSIVE_INSUFFICIENT_SAMPLE",
+    "reasons": [
+      "ACTIVE_6H_BLOCKS_IMPOSSIBLE",
+      "INSUFFICIENT_BLOCK_HOURS",
+      "INSUFFICIENT_SENSITIVITY_BLOCK_HOURS"
+    ]
+  }
+}
