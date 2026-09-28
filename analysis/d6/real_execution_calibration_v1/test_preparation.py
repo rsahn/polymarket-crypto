@@ -50,7 +50,7 @@ def test_live_log_rotation_redaction_quota(tmp_path):
     now=[0];out=io.StringIO();log=LiveLog(tmp_path,'fixture',background=False,clock=lambda:now[0],console=out,max_bytes=4096)
     j=LoggedJournal(tmp_path/'j','fixture',log)
     try:
-        j.append('ARM_STATE',{'secret':'CANARY'});now[0]=7200;log.tick()
+        j.append('ARM_STATE',{'secret':'CANARY'});now[0]=18000;log.tick()
         j.append('EXPOSURE_CUSTODY_HANDOFF',{'acknowledged':False})
         assert log.part==1 and 'CANARY' not in out.getvalue() and 'SIMULATION_ONLY' not in out.getvalue()
         log.max_bytes=0
