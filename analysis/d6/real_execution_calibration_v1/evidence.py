@@ -26,13 +26,88 @@ def _make_record(check, payload, ctx, now_ms, valid_for_ms=5000):
     return record
 
 class SelfAttestingAuthority:
-    """Accepts self-attested records where source_digest == digest(payload)."""
+    """Accepts self-attested records where source_digest == digest(payload).
+    Production authority: verify_client and verify_bindings check real object
+    identities without exposing credentials or accepting generic True.
+    """
     def verify(self, record):
         if not isinstance(record, dict):
             return False
         payload = record.get("payload", {})
         expected = _digest(payload)
         if record.get("source_digest") != expected:
+            return False
+        return True
+
+    def verify_client(self, client, proof):
+        """Verify SDK client matches the qualified order path proof.
+        Accepts ReadOnlyClient (pre-arm) and AsyncSecureClient (post-arm).
+        The proof is the sdk_order_path_qualified record which carries
+        sdk_version, codec_digest, http_attempts and allowance_mutation.
+        Checks public identities only; never accesses credentials.
+        Fail-closed: returns False on any mismatch or unexpected type.
+        """
+        if not isinstance(proof, dict):
+            return False
+        payload = proof.get("payload", {})
+        if not isinstance(payload, dict):
+            return False
+        sdk_version = payload.get("sdk_version", "")
+        if sdk_version != "0.11.0":
+            return False
+        try:
+            from app.live.network_readonly import ReadOnlyClient
+            if isinstance(client, ReadOnlyClient):
+                # ReadOnlyClient : vérifie wallet D6 et signature_type
+                from .readonly_provider import address as _addr
+                expected_wallet = proof.get("account", "")
+                if not expected_wallet:
+                    return False
+                return (
+                    _addr(str(client.wallet)) == _addr(expected_wallet)
+                    and client.signature_type == 3
+                )
+            # AsyncSecureClient : vérification via SDKIdentityBinding
+            from importlib.metadata import version as _version
+            if _version("polymarket-client") != sdk_version:
+                return False
+            from analysis.d6.real_execution_calibration_v1.readonly_provider import SDKIdentityBinding
+            binding = SDKIdentityBinding.inspect(
+                client,
+                wallet=proof.get("account", ""),
+                signer=proof.get("account", ""),
+            )
+            return binding.matches(client)
+        except (ValueError, AttributeError, ImportError, TypeError):
+            return False
+
+    def verify_bindings(self, bindings, proof):
+        """Verify all 5 provider bindings are consistent with assembly proof.
+        bindings = (authority, channel, receipt_authority, evidence_source, evidence_authority)
+        Fail-closed: returns False on any mismatch or unexpected type.
+        """
+        if not isinstance(bindings, tuple) or len(bindings) != 5:
+            return False
+        _authority, channel, receipt_authority, _evidence_source, evidence_authority = bindings
+        if evidence_authority is not self:
+            return False
+        from .manual_custody import ManualCustodyChannel
+        if not isinstance(channel, ManualCustodyChannel):
+            return False
+        from .manual_custody import ManualReceiptAuthority
+        if not isinstance(receipt_authority, ManualReceiptAuthority):
+            return False
+        if not isinstance(proof, dict):
+            return False
+        exit_handoff = proof.get("exit_handoff_ready", {})
+        if not isinstance(exit_handoff, dict):
+            return False
+        payload = exit_handoff.get("payload", {})
+        if not isinstance(payload, dict):
+            return False
+        if payload.get("owner") != channel.owner:
+            return False
+        if payload.get("channel") != str(channel.directory):
             return False
         return True
 
