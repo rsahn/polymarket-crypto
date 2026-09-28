@@ -85,7 +85,7 @@ class AccountStateSource:
                     balance_collateral=str(balance),allowance_collateral=str(matches[0]),collateral_symbol=self.symbol,
                     balance_usdc=str(balance) if self.symbol=="USDC" else None,
                     allowance_usdc=str(matches[0]) if self.symbol=="USDC" else None,
-                    open_order_ids=ids,trade_count=len(trades),pagination_complete=True,
+                    open_order_ids=ids,trade_ids=sorted(trade_ids),trade_count=len(trades),pagination_complete=True,
                     complete=False,scope="credential",reason="FULL_WALLET_SCOPE_UNPROVEN")
             return await asyncio.wait_for(collect(),self.timeout)
         except Exception as exc:return unavailable(type(exc).__name__)
@@ -100,9 +100,9 @@ class AccountStateSource:
 
 
 class PositionSource:
-    def __init__(self,client,*,wallet,asset_types,clock=now_ms,timeout=5):
+    def __init__(self,client,*,wallet,asset_types,clock=now_ms,timeout=5,collateral_symbol=None):
         self.client,self.wallet,self.asset_types=client,wallet,dict(asset_types)
-        self.clock,self.timeout=clock,timeout
+        self.clock,self.timeout=clock,timeout;self.collateral_symbol=collateral_symbol
 
     async def read(self):
         started=self.clock()
@@ -127,7 +127,7 @@ class PositionSource:
                     if token not in balances and held!=0:raise ValueError("INDEXER_MISSING_INVENTORY")
                     balances[token]=held
                 if not fresh(started,self.clock(),POSITIONS_READ_GUARD_MS):raise ValueError("POSITIONS_TOO_OLD")
-                return dict(available=True,observed_ms=started,balances={k:str(v) for k,v in balances.items()},
+                return dict(available=True,wallet=self.wallet,collateral_symbol=self.collateral_symbol,observed_ms=started,balances={k:str(v) for k,v in balances.items()},
                     pagination_complete=True,complete=False,scope="enumerated_assets",
                     reason="GLOBAL_INVENTORY_ATOMICITY_UNPROVEN")
             return await asyncio.wait_for(collect(),self.timeout)

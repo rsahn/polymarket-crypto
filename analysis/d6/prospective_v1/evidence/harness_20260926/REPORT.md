@@ -24,7 +24,7 @@ No edge is claimed. Full-suite GREEN is a software result, not economic validati
    writes, fail-closed torn recovery. Actual subprocess crash/recovery tested.
 6. **Ledger integration:** transactional validate → fsync → apply; recovery replays
    depth and ledger. Fees, reservations, partial fills, residuals and settlement
-   tested. Unknown marks and outstanding positions are retained and prevent PASS.
+   tested. Unknown<<1rks and outstanding positions are retained and prevent PASS.
    Real causal marks and full observed fills remain unavailable.
 7. **Evaluator:** integrated with the sealed loader and immutable criteria file;
    deterministic 6h/12h bootstrap, 10,000 replicates, fixed seed, empty hours

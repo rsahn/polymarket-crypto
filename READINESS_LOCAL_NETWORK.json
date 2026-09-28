@@ -1,0 +1,229 @@
+{
+  "status": "LOCAL_NETWORK_READ_ONLY_NOT_READY",
+  "checks": {
+    "wallet_auth": false,
+    "balance_usdc": false,
+    "allowance_usdc": false,
+    "geoblock": false,
+    "book_freshness": false,
+    "account_reconciliation": false,
+    "open_orders": false,
+    "inventory": false,
+    "local_recovery_state": false,
+    "session_risk": false,
+    "transport_lock": true,
+    "live_flags_disabled": true
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "blockers": [
+    "wallet_auth",
+    "balance_usdc",
+    "allowance_usdc",
+    "geoblock",
+    "book_freshness",
+    "account_reconciliation",
+    "open_orders",
+    "inventory",
+    "local_recovery_state",
+    "session_risk"
+  ],
+  "complete": false,
+  "qualification": {
+    "collateral": {
+      "status": "CONFIG_ONLY",
+      "asset_type": "COLLATERAL",
+      "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+      "chain_id": 137,
+      "provenance": "installed SDK PRODUCTION_CONFIG",
+      "symbol_onchain": null,
+      "decimals_onchain": null,
+      "documentation_symbol": "pUSD",
+      "documentation_decimals": 6,
+      "account_binding_verified": false,
+      "documentation": [
+        "https://docs.polymarket.com/resources/contracts",
+        "https://docs.polymarket.com/concepts/pusd"
+      ]
+    },
+    "time": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "TIME_GET_OR_SCHEMA_FAILED"
+    },
+    "geo": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "GEOBLOCK_GET_OR_SCHEMA_FAILED"
+    },
+    "wallet": {
+      "status": "CONFIG_ONLY",
+      "configured_address_valid": true,
+      "authenticated_binding_verified": false,
+      "reason": "Configured expected address is not proof of account identity; never silently select another wallet"
+    },
+    "account": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "EXISTING_L2_CREDENTIALS_OR_VERIFIED_IDENTITY_CONFIG_MISSING; no SDK create/derive/bootstrap fallback",
+      "missing_fields": [
+        "READONLY_CLOB_API_KEY",
+        "READONLY_CLOB_API_SECRET",
+        "READONLY_CLOB_API_PASSPHRASE",
+        "READONLY_SIGNER_ADDRESS",
+        "READONLY_SIGNATURE_TYPE"
+      ]
+    },
+    "orders": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "AUTHENTICATED_CLIENT_UNAVAILABLE"
+    },
+    "trades": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "AUTHENTICATED_CLIENT_UNAVAILABLE"
+    },
+    "positions": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "INDEX_GET_PAGINATION_OR_MODEL_REJECTED"
+    },
+    "discovery": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "CURRENT_BTC_MARKET_UNAVAILABLE"
+    },
+    "book": {
+      "status": "BLOCKED",
+      "available": false,
+      "complete": false,
+      "reason": "BTC_BOOK_GET_OR_CONTRACT_REJECTED"
+    }
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790327513952,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 163
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790327514116,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 148
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790327514267,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 123
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "started_ms": 1790327514391,
+      "error_type": "HTTPError",
+      "http_status": 403,
+      "elapsed_ms": 147
+    }
+  ],
+  "execution_context": "MANUAL_TARGET_MACHINE",
+  "previous_codex_403_not_generalized": true,
+  "provenance": {
+    "wallet_auth": {
+      "source": "account",
+      "status": "BLOCKED"
+    },
+    "balance_usdc": {
+      "source": "account + collateral identity",
+      "status": "BLOCKED"
+    },
+    "allowance_usdc": {
+      "source": "account + collateral identity",
+      "status": "BLOCKED"
+    },
+    "geoblock": {
+      "source": "geo",
+      "status": "BLOCKED"
+    },
+    "book_freshness": {
+      "source": "book: REST cannot prove stream synchronization",
+      "status": "BLOCKED"
+    },
+    "account_reconciliation": {
+      "source": "account + positions + local recovery, completeness unproven",
+      "status": "BLOCKED"
+    },
+    "open_orders": {
+      "source": "orders; credential scope only",
+      "status": "BLOCKED"
+    },
+    "inventory": {
+      "source": "positions; orphan assets not ruled out",
+      "status": "BLOCKED"
+    },
+    "local_recovery_state": {
+      "source": "no verified local live state supplied",
+      "status": "BLOCKED"
+    },
+    "session_risk": {
+      "source": "no real reconciled session ledger supplied",
+      "status": "BLOCKED"
+    },
+    "transport_lock": {
+      "source": "local AST guard",
+      "status": "PASS"
+    },
+    "live_flags_disabled": {
+      "source": ".env and process preflight",
+      "status": "PASS"
+    }
+  },
+  "sdk_version": "0.11.0",
+  "policy": {
+    "http_methods": [
+      "GET"
+    ],
+    "routes": {
+      "https://clob.polymarket.com": [
+        "/balance-allowance",
+        "/book",
+        "/data/orders",
+        "/data/trades",
+        "/time"
+      ],
+      "https://gamma-api.polymarket.com": [
+        "/markets"
+      ],
+      "https://data-api.polymarket.com": [
+        "/v2/positions"
+      ],
+      "https://polymarket.com": [
+        "/api/geoblock"
+      ]
+    },
+    "credentials": "existing L2 only; GET HMAC in memory",
+    "private_keys_loaded": false,
+    "secure_client_constructor_used": false,
+    "complete_requires_global_evidence": true
+  }
+}

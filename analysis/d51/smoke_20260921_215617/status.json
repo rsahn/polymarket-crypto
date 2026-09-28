@@ -1,0 +1,107 @@
+{
+  "pid": 4232,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_215617.db",
+  "started_utc": "2026-09-21T19:56:17.121201+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T19:58:36.801005+00:00",
+  "session_id": "8bd8d3f5-0bff-4433-bd2e-9f83cc5366e2",
+  "elapsed_seconds": 90.93207310000435,
+  "counts": {
+    "CLOCK_SAMPLE": 3,
+    "ACTIVATE": 3,
+    "BOOK": 29396,
+    "BTC_CONNECTED": 1,
+    "BTC": 901,
+    "REJECT": 49,
+    "WS_ERROR": 1,
+    "RECONNECT": 2
+  },
+  "last_books": {
+    "5m": {
+      "slug": "btc-updown-5m-1790020500",
+      "received_ts_ms": 1790020707976
+    },
+    "15m": {
+      "slug": "btc-updown-15m-1790019900",
+      "received_ts_ms": 1790020708017
+    }
+  },
+  "writer": {
+    "submitted": 30721,
+    "sent_sequence": 30716,
+    "processed_sequence": 30716,
+    "committed_sequence": 30645,
+    "outstanding_items": 4,
+    "outstanding_bytes": 2593,
+    "high_water_items": 256,
+    "high_water_bytes": 661842,
+    "oldest_unacknowledged_age_seconds": 0.009768699994310737,
+    "pending_batches_items": 4,
+    "worker_pid": 22188,
+    "closed_ack": false,
+    "error": null
+  },
+  "free_bytes": 86054555648,
+  "feed_timing": {
+    "15m": {
+      "observations": 12320,
+      "wire_age_sum_ms": 402411,
+      "last_wire_age_ms": 23,
+      "max_wire_age_ms": 196,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790020708017
+    },
+    "5m": {
+      "observations": 17098,
+      "wire_age_sum_ms": 499699,
+      "last_wire_age_ms": 23,
+      "max_wire_age_ms": 412,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790020707976
+    }
+  },
+  "stage_timing": {
+    "15m:normalize": {
+      "calls": 12335,
+      "wall_ns": 2536914300,
+      "cpu_ns": 2359375000,
+      "max_wall_ns": 1892700,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "15m:callback_including_store": {
+      "calls": 12335,
+      "wall_ns": 720338700,
+      "cpu_ns": 750000000,
+      "max_wall_ns": 648000,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "5m:normalize": {
+      "calls": 17112,
+      "wall_ns": 3891239900,
+      "cpu_ns": 3375000000,
+      "max_wall_ns": 676100,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "5m:callback_including_store": {
+      "calls": 17112,
+      "wall_ns": 1014519500,
+      "cpu_ns": 953125000,
+      "max_wall_ns": 774000,
+      "over_5ms": 0,
+      "over_50ms": 0
+    }
+  },
+  "error": "BufferError('WRITER_CAPACITY_EXCEEDED: command not accepted')"
+}

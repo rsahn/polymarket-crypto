@@ -76,7 +76,8 @@ def test_protected_genesis_btc_risk_flags_unchanged():
     root=Path(__file__).resolve().parents[2]
     baseline=json.loads((root/"analysis/post_c_completeness_20260926/BASELINE.json").read_text())
     for name,expected in baseline["protected"].items():
-        assert hashlib.sha256((root/name).read_bytes()).hexdigest()==expected,name
+        from protected_book_migration import protected_match
+        assert protected_match(name,(root/name).read_bytes(),expected),name
     assert set(baseline["flags"].values())=={"false"}
 
 

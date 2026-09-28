@@ -1,0 +1,19 @@
+{
+  "btc_lookback_ms": 250,
+  "btc_threshold_bps": 5.0,
+  "cooldown_ms": 1000,
+  "dynamic_cap_eur": 100,
+  "dynamic_depth_fraction": 0.25,
+  "hold_ms": 500,
+  "initial_capital": 500.0,
+  "latency_ms": 250,
+  "market": "5m",
+  "mode": "PAPER",
+  "parallel_sizes_eur": [
+    25,
+    50,
+    100
+  ],
+  "real_orders": false,
+  "snapshot_hours": 1.0
+}

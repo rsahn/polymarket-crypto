@@ -1,0 +1,49 @@
+{
+  "session_id": "25eeb96a-14df-40b5-ac24-20cf68a853d0",
+  "elapsed_seconds": 1326.952901800163,
+  "collection_seconds": 1320.0045521000866,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 198,
+    "BOOK": 624251,
+    "BTC_CONNECTED": 22,
+    "BTC": 13520,
+    "REJECT": 1237,
+    "WS_ERROR": 191,
+    "RECONNECT": 382,
+    "BTC_RECONNECT": 21,
+    "EXPIRE": 5,
+    "ROTATION": 5,
+    "COLLECTION_STOP": 1,
+    "SESSION_END": 3
+  },
+  "status": "STOPPED",
+  "writer": {
+    "submitted": 645307,
+    "sent_sequence": 645306,
+    "processed_sequence": 645306,
+    "committed_sequence": 645306,
+    "outstanding_items": 0,
+    "outstanding_bytes": 0,
+    "high_water_items": 259,
+    "high_water_bytes": 774417,
+    "oldest_unacknowledged_age_seconds": 0.0,
+    "pending_batches_items": 0,
+    "control_pending_items": 0,
+    "worker_pid": 20644,
+    "capacity_rejections": 212,
+    "last_capacity_rejection": {
+      "kind": "BOOK",
+      "items": 256,
+      "bytes": 752855,
+      "command_bytes": 3015,
+      "processed_sequence": 577882,
+      "committed_sequence": 577882,
+      "sent_sequence": 578074,
+      "pending_items": 64,
+      "at_monotonic": 1056226.8375952
+    },
+    "closed_ack": true,
+    "error": null
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "contract": "D6_V1_PAPER_ONLY",
+  "errors": [],
+  "fill_count": 0,
+  "fills": [],
+  "portfolios": {
+    "dynamic_depth": {
+      "capital": 500.0,
+      "max_drawdown": 0.0,
+      "name": "dynamic_depth",
+      "peak": 500.0,
+      "pnl": 0.0,
+      "trades": 0
+    },
+    "fixed_100": {
+      "capital": 500.0,
+      "max_drawdown": 0.0,
+      "name": "fixed_100",
+      "peak": 500.0,
+      "pnl": 0.0,
+      "trades": 0
+    },
+    "fixed_25": {
+      "capital": 500.0,
+      "max_drawdown": 0.0,
+      "name": "fixed_25",
+      "peak": 500.0,
+      "pnl": 0.0,
+      "trades": 0
+    },
+    "fixed_50": {
+      "capital": 500.0,
+      "max_drawdown": 0.0,
+      "name": "fixed_50",
+      "peak": 500.0,
+      "pnl": 0.0,
+      "trades": 0
+    }
+  },
+  "signal_count": 0,
+  "signals": [],
+  "started_ms": 1790144270804,
+  "updated_ms": 1790144296440
+}

@@ -1,0 +1,38 @@
+{
+  "session_id": "bdaaf415-9ac1-4c1f-af8a-d590a064bde8",
+  "elapsed_seconds": 1327.3818040001206,
+  "collection_seconds": 1320.0542836000677,
+  "counts": {
+    "CLOCK_SAMPLE": 44,
+    "ACTIVATE": 10,
+    "BOOK": 1315615,
+    "REJECT": 2122,
+    "BTC_CONNECTED": 1,
+    "BTC": 19074,
+    "EXPIRE": 7,
+    "ROTATION": 7,
+    "WS_ERROR": 1,
+    "RECONNECT": 2,
+    "COLLECTION_STOP": 1,
+    "SESSION_END": 3
+  },
+  "status": "STOPPED",
+  "writer": {
+    "submitted": 1342116,
+    "sent_sequence": 1342115,
+    "processed_sequence": 1342115,
+    "committed_sequence": 1342115,
+    "outstanding_items": 0,
+    "outstanding_bytes": 0,
+    "high_water_items": 4437,
+    "high_water_bytes": 13281476,
+    "oldest_unacknowledged_age_seconds": 0.0,
+    "pending_batches_items": 0,
+    "control_pending_items": 0,
+    "worker_pid": 19704,
+    "capacity_rejections": 0,
+    "last_capacity_rejection": null,
+    "closed_ack": true,
+    "error": null
+  }
+}

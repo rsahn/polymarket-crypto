@@ -1,0 +1,565 @@
+{
+  "allocations": [
+    0.1,
+    0.25,
+    0.5,
+    1.0
+  ],
+  "capitals": [
+    100.0,
+    500.0,
+    1000.0
+  ],
+  "contract": "D6_FIXED_STRESS_MATRIX_RESEARCH_ONLY",
+  "hold_ms": 500,
+  "latencies_ms": [
+    100,
+    250,
+    500,
+    750,
+    1000
+  ],
+  "scenario_count": 60,
+  "scenarios": [
+    {
+      "allocation": 0.1,
+      "capital": 100.0,
+      "final_capital": 181.56413222545456,
+      "latency_ms": 100,
+      "pnl": 81.56413222545456,
+      "return_pct": 81.56413222545456,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 100.0,
+      "final_capital": 257.1881692708333,
+      "latency_ms": 100,
+      "pnl": 157.18816927083333,
+      "return_pct": 157.18816927083333,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 100.0,
+      "final_capital": 326.07392534113063,
+      "latency_ms": 100,
+      "pnl": 226.07392534113063,
+      "return_pct": 226.07392534113063,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 100.0,
+      "final_capital": 358.24084824736406,
+      "latency_ms": 100,
+      "pnl": 258.24084824736406,
+      "return_pct": 258.24084824736406,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 500.0,
+      "final_capital": 718.79980292,
+      "latency_ms": 100,
+      "pnl": 218.79980292000005,
+      "return_pct": 43.759960584000005,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 500.0,
+      "final_capital": 817.9716192272729,
+      "latency_ms": 100,
+      "pnl": 317.97161922727287,
+      "return_pct": 63.594323845454575,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 500.0,
+      "final_capital": 794.6955375000002,
+      "latency_ms": 100,
+      "pnl": 294.6955375000002,
+      "return_pct": 58.93910750000004,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 500.0,
+      "final_capital": 621.2790053763442,
+      "latency_ms": 100,
+      "pnl": 121.27900537634423,
+      "return_pct": 24.255801075268845,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 1000.0,
+      "final_capital": 1294.6394251178451,
+      "latency_ms": 100,
+      "pnl": 294.6394251178451,
+      "return_pct": 29.463942511784513,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 1000.0,
+      "final_capital": 1285.790911206897,
+      "latency_ms": 100,
+      "pnl": 285.7909112068969,
+      "return_pct": 28.579091120689693,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 1000.0,
+      "final_capital": 1121.7402705069126,
+      "latency_ms": 100,
+      "pnl": 121.74027050691257,
+      "return_pct": 12.174027050691256,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 1000.0,
+      "final_capital": 1043.6949,
+      "latency_ms": 100,
+      "pnl": 43.69489999999996,
+      "return_pct": 4.369489999999996,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 100.0,
+      "final_capital": 177.9258210272727,
+      "latency_ms": 250,
+      "pnl": 77.92582102727269,
+      "return_pct": 77.92582102727269,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 100.0,
+      "final_capital": 284.48197464615373,
+      "latency_ms": 250,
+      "pnl": 184.48197464615373,
+      "return_pct": 184.48197464615373,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 100.0,
+      "final_capital": 434.695150736607,
+      "latency_ms": 250,
+      "pnl": 334.695150736607,
+      "return_pct": 334.69515073660693,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 100.0,
+      "final_capital": 538.9012763157895,
+      "latency_ms": 250,
+      "pnl": 438.90127631578946,
+      "return_pct": 438.90127631578946,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 500.0,
+      "final_capital": 767.7154457009229,
+      "latency_ms": 250,
+      "pnl": 267.71544570092294,
+      "return_pct": 53.543089140184584,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 500.0,
+      "final_capital": 969.4983182835055,
+      "latency_ms": 250,
+      "pnl": 469.49831828350545,
+      "return_pct": 93.89966365670108,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 500.0,
+      "final_capital": 1040.8796481424147,
+      "latency_ms": 250,
+      "pnl": 540.8796481424147,
+      "return_pct": 108.17592962848293,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 500.0,
+      "final_capital": 1012.4507315304949,
+      "latency_ms": 250,
+      "pnl": 512.4507315304949,
+      "return_pct": 102.49014630609898,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 1000.0,
+      "final_capital": 1397.4289751755514,
+      "latency_ms": 250,
+      "pnl": 397.4289751755514,
+      "return_pct": 39.742897517555136,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 1000.0,
+      "final_capital": 1556.6530698823526,
+      "latency_ms": 250,
+      "pnl": 556.6530698823526,
+      "return_pct": 55.66530698823526,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 1000.0,
+      "final_capital": 1557.5134242424242,
+      "latency_ms": 250,
+      "pnl": 557.5134242424242,
+      "return_pct": 55.751342424242424,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 1000.0,
+      "final_capital": 1436.5615999999993,
+      "latency_ms": 250,
+      "pnl": 436.5615999999993,
+      "return_pct": 43.65615999999993,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 100.0,
+      "final_capital": 160.61674810356655,
+      "latency_ms": 500,
+      "pnl": 60.61674810356655,
+      "return_pct": 60.61674810356655,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 100.0,
+      "final_capital": 233.30392024993992,
+      "latency_ms": 500,
+      "pnl": 133.30392024993992,
+      "return_pct": 133.30392024993992,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 100.0,
+      "final_capital": 280.7787185941828,
+      "latency_ms": 500,
+      "pnl": 180.7787185941828,
+      "return_pct": 180.7787185941828,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 100.0,
+      "final_capital": 347.3152677562551,
+      "latency_ms": 500,
+      "pnl": 247.31526775625508,
+      "return_pct": 247.31526775625508,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 500.0,
+      "final_capital": 665.9647310343291,
+      "latency_ms": 500,
+      "pnl": 165.96473103432913,
+      "return_pct": 33.19294620686583,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 500.0,
+      "final_capital": 754.7003954586166,
+      "latency_ms": 500,
+      "pnl": 254.70039545861664,
+      "return_pct": 50.94007909172333,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 500.0,
+      "final_capital": 869.0545252083334,
+      "latency_ms": 500,
+      "pnl": 369.0545252083334,
+      "return_pct": 73.81090504166669,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 500.0,
+      "final_capital": 991.8525018605366,
+      "latency_ms": 500,
+      "pnl": 491.85250186053656,
+      "return_pct": 98.37050037210732,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 1000.0,
+      "final_capital": 1222.9985249022557,
+      "latency_ms": 500,
+      "pnl": 222.99852490225567,
+      "return_pct": 22.299852490225568,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 1000.0,
+      "final_capital": 1362.377235811688,
+      "latency_ms": 500,
+      "pnl": 362.377235811688,
+      "return_pct": 36.2377235811688,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 1000.0,
+      "final_capital": 1509.737492068829,
+      "latency_ms": 500,
+      "pnl": 509.73749206882894,
+      "return_pct": 50.97374920688289,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 1000.0,
+      "final_capital": 1546.2604358465603,
+      "latency_ms": 500,
+      "pnl": 546.2604358465603,
+      "return_pct": 54.62604358465603,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 100.0,
+      "final_capital": 110.681569962866,
+      "latency_ms": 750,
+      "pnl": 10.681569962866007,
+      "return_pct": 10.681569962866005,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 100.0,
+      "final_capital": 126.28362750702568,
+      "latency_ms": 750,
+      "pnl": 26.283627507025685,
+      "return_pct": 26.283627507025685,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 100.0,
+      "final_capital": 152.26207812351757,
+      "latency_ms": 750,
+      "pnl": 52.26207812351757,
+      "return_pct": 52.26207812351757,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 100.0,
+      "final_capital": 200.02124114923745,
+      "latency_ms": 750,
+      "pnl": 100.02124114923745,
+      "return_pct": 100.02124114923745,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 500.0,
+      "final_capital": 552.2495472885453,
+      "latency_ms": 750,
+      "pnl": 52.24954728854527,
+      "return_pct": 10.449909457709055,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 500.0,
+      "final_capital": 625.1921032984834,
+      "latency_ms": 750,
+      "pnl": 125.1921032984834,
+      "return_pct": 25.03842065969668,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 500.0,
+      "final_capital": 730.9036036959869,
+      "latency_ms": 750,
+      "pnl": 230.90360369598693,
+      "return_pct": 46.18072073919738,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 500.0,
+      "final_capital": 854.5110576917423,
+      "latency_ms": 750,
+      "pnl": 354.5110576917423,
+      "return_pct": 70.90221153834847,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 1000.0,
+      "final_capital": 1101.3319613868566,
+      "latency_ms": 750,
+      "pnl": 101.33196138685662,
+      "return_pct": 10.133196138685662,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 1000.0,
+      "final_capital": 1232.9207969077033,
+      "latency_ms": 750,
+      "pnl": 232.92079690770333,
+      "return_pct": 23.292079690770333,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 1000.0,
+      "final_capital": 1372.5801455704332,
+      "latency_ms": 750,
+      "pnl": 372.58014557043316,
+      "return_pct": 37.25801455704332,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 1000.0,
+      "final_capital": 1358.9627979194565,
+      "latency_ms": 750,
+      "pnl": 358.96279791945653,
+      "return_pct": 35.89627979194565,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 100.0,
+      "final_capital": 102.56084195637806,
+      "latency_ms": 1000,
+      "pnl": 2.560841956378056,
+      "return_pct": 2.560841956378056,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 100.0,
+      "final_capital": 106.22849332452083,
+      "latency_ms": 1000,
+      "pnl": 6.2284933245208265,
+      "return_pct": 6.2284933245208265,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 100.0,
+      "final_capital": 111.82388713639301,
+      "latency_ms": 1000,
+      "pnl": 11.823887136393012,
+      "return_pct": 11.823887136393012,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 100.0,
+      "final_capital": 120.24094314381267,
+      "latency_ms": 1000,
+      "pnl": 20.24094314381267,
+      "return_pct": 20.24094314381267,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 500.0,
+      "final_capital": 512.2139155268261,
+      "latency_ms": 1000,
+      "pnl": 12.2139155268261,
+      "return_pct": 2.44278310536522,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 500.0,
+      "final_capital": 526.5728330894649,
+      "latency_ms": 1000,
+      "pnl": 26.572833089464893,
+      "return_pct": 5.314566617892979,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 500.0,
+      "final_capital": 544.9752652173911,
+      "latency_ms": 1000,
+      "pnl": 44.9752652173911,
+      "return_pct": 8.995053043478219,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 500.0,
+      "final_capital": 564.2667130266917,
+      "latency_ms": 1000,
+      "pnl": 64.26671302669172,
+      "return_pct": 12.853342605338344,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.1,
+      "capital": 1000.0,
+      "final_capital": 1022.1985338210702,
+      "latency_ms": 1000,
+      "pnl": 22.198533821070214,
+      "return_pct": 2.219853382107021,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.25,
+      "capital": 1000.0,
+      "final_capital": 1046.2123135869565,
+      "latency_ms": 1000,
+      "pnl": 46.2123135869565,
+      "return_pct": 4.62123135869565,
+      "trade_count": 3
+    },
+    {
+      "allocation": 0.5,
+      "capital": 1000.0,
+      "final_capital": 1069.4920329412719,
+      "latency_ms": 1000,
+      "pnl": 69.49203294127187,
+      "return_pct": 6.949203294127187,
+      "trade_count": 3
+    },
+    {
+      "allocation": 1.0,
+      "capital": 1000.0,
+      "final_capital": 1045.6573446881087,
+      "latency_ms": 1000,
+      "pnl": 45.65734468810865,
+      "return_pct": 4.565734468810865,
+      "trade_count": 3
+    }
+  ]
+}

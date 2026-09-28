@@ -1,0 +1,8 @@
+{
+  "D5_DATA_QUALITY": "FAIL",
+  "duration_seconds": 271.24875279981643,
+  "failures": [
+    "KeyboardInterrupt()"
+  ],
+  "replay_hashes": "Only completed REPLAY_N.json are evidence; not fabricated for unexecuted steps"
+}

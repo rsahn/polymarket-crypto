@@ -1,0 +1,149 @@
+{
+  "phase": "AUTHENTICATED_READ_ONLY",
+  "complete": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "derive_attempted": false,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "leak_scan": {
+    "detected": false,
+    "files_checked": 2211,
+    "files_unchecked": 7,
+    "scope": "selected tracked working-tree text files and L2 reports/logs; excludes Git history, terminal history and inaccessible/large files",
+    "global_absence_proven": false
+  },
+  "status": "AUTHENTICATED_READ_ONLY_NOT_READY",
+  "network": {
+    "qualification": {
+      "time": {
+        "status": "PASS",
+        "server_seconds": 1790331854,
+        "complete": false,
+        "started_ms": 1790331853792,
+        "finished_ms": 1790331854110
+      },
+      "collateral": {
+        "status": "CONFIG_ONLY",
+        "asset_type": "COLLATERAL",
+        "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "chain_id": 137,
+        "provenance": "SDK 0.11.0 PRODUCTION_CONFIG",
+        "symbol_verified": false,
+        "decimals_verified": false,
+        "account_binding_verified": false
+      },
+      "balance_allowance": {
+        "status": "PASS_READ_ONLY",
+        "balance_raw": "0",
+        "allowance_raw": "0",
+        "units": "base_units",
+        "conversion": "BLOCKED_DECIMALS_NOT_VERIFIED",
+        "complete": false,
+        "started_ms": 1790331854110,
+        "finished_ms": 1790331854285
+      },
+      "orders": {
+        "status": "PASS_READ_ONLY",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false,
+        "scope": "credential_view_not_global_wallet",
+        "started_ms": 1790331854285,
+        "finished_ms": 1790331854457
+      },
+      "trades": {
+        "status": "PASS_READ_ONLY",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false,
+        "scope": "credential_view_not_global_wallet",
+        "started_ms": 1790331854457,
+        "finished_ms": 1790331854618
+      },
+      "positions": {
+        "status": "BLOCKED",
+        "complete": false,
+        "reason": "GET_OR_CONTRACT_FAILED",
+        "started_ms": 1790331854618,
+        "finished_ms": 1790331854829
+      },
+      "reconciliation": {
+        "status": "BLOCKED",
+        "complete": false,
+        "reason": "LOCAL_STATE_NOT_CONFIGURED"
+      }
+    },
+    "requests": [
+      {
+        "method": "GET",
+        "endpoint": "https://clob.polymarket.com/time",
+        "started_ms": 1790331853829,
+        "http_status": 200,
+        "shape": "int",
+        "elapsed_ms": 281
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://clob.polymarket.com/balance-allowance",
+        "started_ms": 1790331854110,
+        "http_status": 200,
+        "shape": "dict",
+        "elapsed_ms": 175
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://clob.polymarket.com/data/orders",
+        "started_ms": 1790331854285,
+        "http_status": 200,
+        "shape": "dict",
+        "elapsed_ms": 172
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://clob.polymarket.com/data/trades",
+        "started_ms": 1790331854457,
+        "http_status": 200,
+        "shape": "dict",
+        "elapsed_ms": 161
+      },
+      {
+        "method": "GET",
+        "endpoint": "https://data-api.polymarket.com/v2/positions",
+        "started_ms": 1790331854618,
+        "error_type": "HTTPError",
+        "http_status": 400,
+        "elapsed_ms": 210
+      }
+    ],
+    "complete": false,
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "provenance": {
+      "live_flags_disabled": {
+        "source": "process flags only; dotenv deliberately not read",
+        "status": "PASS"
+      }
+    },
+    "authenticated_get_attempts": 3,
+    "status": "AUTHENTICATED_READ_ONLY_NOT_READY",
+    "execution_context": "MANUAL_TARGET_POWERSHELL"
+  },
+  "reconciliation": {
+    "complete": false,
+    "status": "BLOCKED",
+    "reason": "GLOBAL_SCOPE_AND_LOCAL_LEDGER_NOT_PROVEN"
+  }
+}

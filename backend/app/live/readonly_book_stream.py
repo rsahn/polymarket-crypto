@@ -137,6 +137,10 @@ class StreamBook(BookStateSource):
                 previous_stamp=previous['observed_ms'] if previous else None
                 try:
                     self.update(token,list(b['bids'].items()),list(b['asks'].items()),stamp,self.generation)
+                    # Causal per-token metadata: never use another token or PONG receipt.
+                    self.books[token]['receive_ms']=received_ms
+                    self.books[token]['book_state_id']=hashlib.sha256(
+                        f'{self.condition}:{self.generation}:{token}:{self.events_seen}:{stamp}:{received_ms}'.encode()).hexdigest()
                 except ValueError as exc:
                     if exc.args==('BOOK_REGRESSION',):
                         self.diagnostics['regression_event']={

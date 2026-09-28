@@ -1,0 +1,2021 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "evaluated_ms": 1790351742049,
+    "generation": {
+      "complete": false,
+      "reason": "GENERATION_PARTIAL_OR_INVALID",
+      "evaluated_ms": 1790351742049
+    },
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "SYSTEM_READY": false,
+    "MARKET_ELIGIBLE_NOW": false,
+    "health_checks": {
+      "wallet_auth": false,
+      "geoblock": true,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false,
+      "book_stream_health": false
+    },
+    "operating_state": "SYSTEM_BLOCKED",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": true,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": true,
+        "authenticated": true,
+        "observed_ms": 1790351741288,
+        "balance_collateral": "109.16",
+        "allowance_collateral": "1.157920892373161954235709850E+71",
+        "collateral_symbol": "pUSD",
+        "complete": false,
+        "pagination_complete": true,
+        "provenance": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "scope": "CREDENTIAL_VIEW_WITH_SCOPED_GENESIS",
+        "reason": "GENERATION_STALE_500MS"
+      },
+      "positions": {
+        "available": true,
+        "observed_ms": 1790351738327,
+        "complete": false,
+        "provenance": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "reason": "GENERATION_STALE_500MS"
+      },
+      "book": {
+        "reason": "STALE_BOOK",
+        "market_eligible": false,
+        "available": false,
+        "connected": true,
+        "synchronized": false,
+        "fresh": false,
+        "book_synced": false,
+        "market_slug": "btc-updown-5m-1790351700",
+        "generation": 1,
+        "observed_ms": null,
+        "state": "STALE",
+        "diagnostics": {
+          "parser_reason": "STALE_BOOK",
+          "exception_category": null,
+          "close_code": null,
+          "close_reason_category": null,
+          "remote_close_reason_present": false,
+          "last_valid_message": {
+            "kind": "price_change",
+            "source_ms": 1790351740782,
+            "received_ms": 1790351741283,
+            "generation": 1
+          },
+          "resync_complete_generation": null,
+          "regression_event": null,
+          "transitions": [
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351738744,
+              "reason": "CROSSED_BOOK"
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790351738747,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740779,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740779,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740779,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740780,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740780,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790351740801,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351740992,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741010,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741010,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741010,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741011,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790351741019,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741076,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741076,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741076,
+              "reason": "STALE_WIRE_EVENT"
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790351741204,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790351741284,
+              "reason": "STALE_BOOK"
+            }
+          ],
+          "tokens": [
+            {
+              "token_index": 0,
+              "last_valid_book_ms": 1790351740782,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 73,
+              "asks_count": 23,
+              "best_bid": "0.73",
+              "best_ask": "0.77",
+              "last_valid_book_age_ms": 1265,
+              "current_generation_synced": false
+            },
+            {
+              "token_index": 1,
+              "last_valid_book_ms": 1790351740782,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 23,
+              "asks_count": 73,
+              "best_bid": "0.23",
+              "best_ask": "0.27",
+              "last_valid_book_age_ms": 1265,
+              "current_generation_synced": false
+            }
+          ],
+          "rejected_message_age_ms": 501,
+          "first_full_books": [
+            {
+              "token_index": 1,
+              "token_sha256": "d4ad5a317903e93f6b9f119c34b476bd4f4ea30fc1b4a32d173927431c4c0849",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 22,
+              "asks_count": 77,
+              "best_bid": "0.22",
+              "best_ask": "0.23",
+              "source_timestamp_ms": 1790351736974,
+              "generation": 1
+            },
+            {
+              "token_index": 0,
+              "token_sha256": "8f0eac4664042be0a12b03afd3a6371f6109dc0acc42c6e174ed926ffb5f2ca1",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 77,
+              "asks_count": 22,
+              "best_bid": "0.77",
+              "best_ask": "0.78",
+              "source_timestamp_ms": 1790351736974,
+              "generation": 1
+            }
+          ]
+        },
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "condition_verified": true,
+        "messages_received": 3200,
+        "last_wire_event_ms": 1790351740783,
+        "last_valid_book_ms": 1790351740782
+      },
+      "geo": {
+        "available": true,
+        "blocked": false,
+        "observed_ms": 1790351737094
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790351741288,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "geoblock": {
+        "status": "PASS",
+        "source": "geo",
+        "observed_ms": 1790351737094,
+        "evaluated_ms": 1790351742049,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": 60000
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "observed_ms": null,
+        "evaluated_ms": 1790351742049,
+        "reason": "STALE_BOOK",
+        "freshness_limit_ms": 500
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "observed_ms": 1790351738327,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790351741288,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "observed_ms": 1790351738327,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790351742049,
+        "reason": "MISSING_STALE_OR_UNRECONCILED",
+        "freshness_limit_ms": null
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790351742049,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE",
+        "freshness_limit_ms": 500
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790351742049,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790351742049,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790351741288,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790351741288,
+        "evaluated_ms": 1790351742049,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "GENERATION_STALE_500MS",
+    "boundary_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": false,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "GENERATION_STALE_500MS"
+    }
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94431065,
+    "block_hash": "0x7ab33e2d7cf1c0d390841558677a880cb45e174b7ff6a31a131954883f020eee",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790351738327,
+    "provenance": "FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY",
+    "scan_observed_ms": 1790351738327,
+    "generation_attempt": 1,
+    "post_b_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": false,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "GENERATION_STALE_500MS"
+    },
+    "finalized_block": 94431050,
+    "finalized_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+    "boundary_evidence": {
+      "generation": 1,
+      "finalized_qualified": true,
+      "cursor_previous": 94430390,
+      "anchor_number": 94431050,
+      "boundary_number": 94431065,
+      "anchor_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+      "anchor_rechecked_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+      "boundary_hash": "0x7ab33e2d7cf1c0d390841558677a880cb45e174b7ff6a31a131954883f020eee",
+      "boundary_rechecked_hash": "0x7ab33e2d7cf1c0d390841558677a880cb45e174b7ff6a31a131954883f020eee",
+      "anchor_ranges": [
+        [
+          94430391,
+          94430400
+        ],
+        [
+          94430401,
+          94430410
+        ],
+        [
+          94430411,
+          94430420
+        ],
+        [
+          94430421,
+          94430430
+        ],
+        [
+          94430431,
+          94430440
+        ],
+        [
+          94430441,
+          94430450
+        ],
+        [
+          94430451,
+          94430460
+        ],
+        [
+          94430461,
+          94430470
+        ],
+        [
+          94430471,
+          94430480
+        ],
+        [
+          94430481,
+          94430490
+        ],
+        [
+          94430491,
+          94430500
+        ],
+        [
+          94430501,
+          94430510
+        ],
+        [
+          94430511,
+          94430520
+        ],
+        [
+          94430521,
+          94430530
+        ],
+        [
+          94430531,
+          94430540
+        ],
+        [
+          94430541,
+          94430550
+        ],
+        [
+          94430551,
+          94430560
+        ],
+        [
+          94430561,
+          94430570
+        ],
+        [
+          94430571,
+          94430580
+        ],
+        [
+          94430581,
+          94430590
+        ],
+        [
+          94430591,
+          94430600
+        ],
+        [
+          94430601,
+          94430610
+        ],
+        [
+          94430611,
+          94430620
+        ],
+        [
+          94430621,
+          94430630
+        ],
+        [
+          94430631,
+          94430640
+        ],
+        [
+          94430641,
+          94430650
+        ],
+        [
+          94430651,
+          94430660
+        ],
+        [
+          94430661,
+          94430670
+        ],
+        [
+          94430671,
+          94430680
+        ],
+        [
+          94430681,
+          94430690
+        ],
+        [
+          94430691,
+          94430700
+        ],
+        [
+          94430701,
+          94430710
+        ],
+        [
+          94430711,
+          94430720
+        ],
+        [
+          94430721,
+          94430730
+        ],
+        [
+          94430731,
+          94430740
+        ],
+        [
+          94430741,
+          94430750
+        ],
+        [
+          94430751,
+          94430760
+        ],
+        [
+          94430761,
+          94430770
+        ],
+        [
+          94430771,
+          94430780
+        ],
+        [
+          94430781,
+          94430790
+        ],
+        [
+          94430791,
+          94430800
+        ],
+        [
+          94430801,
+          94430810
+        ],
+        [
+          94430811,
+          94430820
+        ],
+        [
+          94430821,
+          94430830
+        ],
+        [
+          94430831,
+          94430840
+        ],
+        [
+          94430841,
+          94430850
+        ],
+        [
+          94430851,
+          94430860
+        ],
+        [
+          94430861,
+          94430870
+        ],
+        [
+          94430871,
+          94430880
+        ],
+        [
+          94430881,
+          94430890
+        ],
+        [
+          94430891,
+          94430900
+        ],
+        [
+          94430901,
+          94430910
+        ],
+        [
+          94430911,
+          94430920
+        ],
+        [
+          94430921,
+          94430930
+        ],
+        [
+          94430931,
+          94430940
+        ],
+        [
+          94430941,
+          94430950
+        ],
+        [
+          94430951,
+          94430960
+        ],
+        [
+          94430961,
+          94430970
+        ],
+        [
+          94430971,
+          94430980
+        ],
+        [
+          94430981,
+          94430990
+        ],
+        [
+          94430991,
+          94431000
+        ],
+        [
+          94431001,
+          94431010
+        ],
+        [
+          94431011,
+          94431020
+        ],
+        [
+          94431021,
+          94431030
+        ],
+        [
+          94431031,
+          94431040
+        ],
+        [
+          94431041,
+          94431050
+        ]
+      ],
+      "tail_ranges": [
+        [
+          94431051,
+          94431060
+        ],
+        [
+          94431061,
+          94431065
+        ]
+      ],
+      "rpc_complete": true,
+      "events_count": 0,
+      "scan_observed_ms": 1790351738327,
+      "sealed_ms": 1790351741288,
+      "rechecked_ms": 1790351741589,
+      "account": {
+        "balance": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790351741288
+        },
+        "orders": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790351741288
+        },
+        "trades": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790351741289
+        },
+        "positions": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790351741289
+        }
+      }
+    },
+    "cursor_previous": 94430390,
+    "anchor_catchup_ranges": [
+      [
+        94430391,
+        94430400
+      ],
+      [
+        94430401,
+        94430410
+      ],
+      [
+        94430411,
+        94430420
+      ],
+      [
+        94430421,
+        94430430
+      ],
+      [
+        94430431,
+        94430440
+      ],
+      [
+        94430441,
+        94430450
+      ],
+      [
+        94430451,
+        94430460
+      ],
+      [
+        94430461,
+        94430470
+      ],
+      [
+        94430471,
+        94430480
+      ],
+      [
+        94430481,
+        94430490
+      ],
+      [
+        94430491,
+        94430500
+      ],
+      [
+        94430501,
+        94430510
+      ],
+      [
+        94430511,
+        94430520
+      ],
+      [
+        94430521,
+        94430530
+      ],
+      [
+        94430531,
+        94430540
+      ],
+      [
+        94430541,
+        94430550
+      ],
+      [
+        94430551,
+        94430560
+      ],
+      [
+        94430561,
+        94430570
+      ],
+      [
+        94430571,
+        94430580
+      ],
+      [
+        94430581,
+        94430590
+      ],
+      [
+        94430591,
+        94430600
+      ],
+      [
+        94430601,
+        94430610
+      ],
+      [
+        94430611,
+        94430620
+      ],
+      [
+        94430621,
+        94430630
+      ],
+      [
+        94430631,
+        94430640
+      ],
+      [
+        94430641,
+        94430650
+      ],
+      [
+        94430651,
+        94430660
+      ],
+      [
+        94430661,
+        94430670
+      ],
+      [
+        94430671,
+        94430680
+      ],
+      [
+        94430681,
+        94430690
+      ],
+      [
+        94430691,
+        94430700
+      ],
+      [
+        94430701,
+        94430710
+      ],
+      [
+        94430711,
+        94430720
+      ],
+      [
+        94430721,
+        94430730
+      ],
+      [
+        94430731,
+        94430740
+      ],
+      [
+        94430741,
+        94430750
+      ],
+      [
+        94430751,
+        94430760
+      ],
+      [
+        94430761,
+        94430770
+      ],
+      [
+        94430771,
+        94430780
+      ],
+      [
+        94430781,
+        94430790
+      ],
+      [
+        94430791,
+        94430800
+      ],
+      [
+        94430801,
+        94430810
+      ],
+      [
+        94430811,
+        94430820
+      ],
+      [
+        94430821,
+        94430830
+      ],
+      [
+        94430831,
+        94430840
+      ],
+      [
+        94430841,
+        94430850
+      ],
+      [
+        94430851,
+        94430860
+      ],
+      [
+        94430861,
+        94430870
+      ],
+      [
+        94430871,
+        94430880
+      ],
+      [
+        94430881,
+        94430890
+      ],
+      [
+        94430891,
+        94430900
+      ],
+      [
+        94430901,
+        94430910
+      ],
+      [
+        94430911,
+        94430920
+      ],
+      [
+        94430921,
+        94430930
+      ],
+      [
+        94430931,
+        94430940
+      ],
+      [
+        94430941,
+        94430950
+      ],
+      [
+        94430951,
+        94430960
+      ],
+      [
+        94430961,
+        94430970
+      ],
+      [
+        94430971,
+        94430980
+      ],
+      [
+        94430981,
+        94430990
+      ],
+      [
+        94430991,
+        94431000
+      ],
+      [
+        94431001,
+        94431010
+      ],
+      [
+        94431011,
+        94431020
+      ],
+      [
+        94431021,
+        94431030
+      ],
+      [
+        94431031,
+        94431040
+      ],
+      [
+        94431041,
+        94431050
+      ]
+    ]
+  },
+  "generation_attempts": [
+    {
+      "attempt": 1,
+      "reason": "GENERATION_STALE_500MS",
+      "watermark_block": 94431065,
+      "account_complete": true,
+      "post_b": {
+        "inventory_through_C_proven": true,
+        "boundary_generation_complete": false,
+        "current_inventory_proven": false,
+        "ready_for_arm": false,
+        "submit_allowed": false,
+        "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+        "reason": "GENERATION_STALE_500MS"
+      }
+    }
+  ],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790351718098,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790351718349,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790351718593,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790351718826,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790351719115,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790351719337,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 7,
+      "started_ms": 1790351719583,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 8,
+      "started_ms": 1790351719821,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 9,
+      "started_ms": 1790351720047,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 10,
+      "started_ms": 1790351720268,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 11,
+      "started_ms": 1790351720788,
+      "from_block": 94430391,
+      "to_block": 94430400,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 12,
+      "started_ms": 1790351721015,
+      "from_block": 94430401,
+      "to_block": 94430410,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 13,
+      "started_ms": 1790351721242,
+      "from_block": 94430411,
+      "to_block": 94430420,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 14,
+      "started_ms": 1790351721467,
+      "from_block": 94430421,
+      "to_block": 94430430,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 15,
+      "started_ms": 1790351721699,
+      "from_block": 94430431,
+      "to_block": 94430440,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 16,
+      "started_ms": 1790351721920,
+      "from_block": 94430441,
+      "to_block": 94430450,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 17,
+      "started_ms": 1790351722139,
+      "from_block": 94430451,
+      "to_block": 94430460,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 18,
+      "started_ms": 1790351722355,
+      "from_block": 94430461,
+      "to_block": 94430470,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 19,
+      "started_ms": 1790351722586,
+      "from_block": 94430471,
+      "to_block": 94430480,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 20,
+      "started_ms": 1790351722809,
+      "from_block": 94430481,
+      "to_block": 94430490,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 21,
+      "started_ms": 1790351723026,
+      "from_block": 94430491,
+      "to_block": 94430500,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 22,
+      "started_ms": 1790351723248,
+      "from_block": 94430501,
+      "to_block": 94430510,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 23,
+      "started_ms": 1790351723483,
+      "from_block": 94430511,
+      "to_block": 94430520,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 24,
+      "started_ms": 1790351723713,
+      "from_block": 94430521,
+      "to_block": 94430530,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 25,
+      "started_ms": 1790351723939,
+      "from_block": 94430531,
+      "to_block": 94430540,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 26,
+      "started_ms": 1790351724169,
+      "from_block": 94430541,
+      "to_block": 94430550,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 27,
+      "started_ms": 1790351724399,
+      "from_block": 94430551,
+      "to_block": 94430560,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 28,
+      "started_ms": 1790351724617,
+      "from_block": 94430561,
+      "to_block": 94430570,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 29,
+      "started_ms": 1790351724838,
+      "from_block": 94430571,
+      "to_block": 94430580,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 30,
+      "started_ms": 1790351725106,
+      "from_block": 94430581,
+      "to_block": 94430590,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 31,
+      "started_ms": 1790351725331,
+      "from_block": 94430591,
+      "to_block": 94430600,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 32,
+      "started_ms": 1790351725562,
+      "from_block": 94430601,
+      "to_block": 94430610,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 33,
+      "started_ms": 1790351725784,
+      "from_block": 94430611,
+      "to_block": 94430620,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 34,
+      "started_ms": 1790351726001,
+      "from_block": 94430621,
+      "to_block": 94430630,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 35,
+      "started_ms": 1790351726224,
+      "from_block": 94430631,
+      "to_block": 94430640,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 36,
+      "started_ms": 1790351726467,
+      "from_block": 94430641,
+      "to_block": 94430650,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 37,
+      "started_ms": 1790351726681,
+      "from_block": 94430651,
+      "to_block": 94430660,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 38,
+      "started_ms": 1790351726903,
+      "from_block": 94430661,
+      "to_block": 94430670,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 39,
+      "started_ms": 1790351727124,
+      "from_block": 94430671,
+      "to_block": 94430680,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 40,
+      "started_ms": 1790351727359,
+      "from_block": 94430681,
+      "to_block": 94430690,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 41,
+      "started_ms": 1790351727583,
+      "from_block": 94430691,
+      "to_block": 94430700,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 42,
+      "started_ms": 1790351727809,
+      "from_block": 94430701,
+      "to_block": 94430710,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 43,
+      "started_ms": 1790351728038,
+      "from_block": 94430711,
+      "to_block": 94430720,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 44,
+      "started_ms": 1790351728257,
+      "from_block": 94430721,
+      "to_block": 94430730,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 45,
+      "started_ms": 1790351728485,
+      "from_block": 94430731,
+      "to_block": 94430740,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 46,
+      "started_ms": 1790351728713,
+      "from_block": 94430741,
+      "to_block": 94430750,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 47,
+      "started_ms": 1790351728937,
+      "from_block": 94430751,
+      "to_block": 94430760,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 48,
+      "started_ms": 1790351729166,
+      "from_block": 94430761,
+      "to_block": 94430770,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 49,
+      "started_ms": 1790351729393,
+      "from_block": 94430771,
+      "to_block": 94430780,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 50,
+      "started_ms": 1790351729616,
+      "from_block": 94430781,
+      "to_block": 94430790,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 51,
+      "started_ms": 1790351729837,
+      "from_block": 94430791,
+      "to_block": 94430800,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 52,
+      "started_ms": 1790351730061,
+      "from_block": 94430801,
+      "to_block": 94430810,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 53,
+      "started_ms": 1790351730286,
+      "from_block": 94430811,
+      "to_block": 94430820,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 54,
+      "started_ms": 1790351730516,
+      "from_block": 94430821,
+      "to_block": 94430830,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 55,
+      "started_ms": 1790351730734,
+      "from_block": 94430831,
+      "to_block": 94430840,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 56,
+      "started_ms": 1790351730956,
+      "from_block": 94430841,
+      "to_block": 94430850,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 57,
+      "started_ms": 1790351731224,
+      "from_block": 94430851,
+      "to_block": 94430860,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 58,
+      "started_ms": 1790351731437,
+      "from_block": 94430861,
+      "to_block": 94430870,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 59,
+      "started_ms": 1790351731657,
+      "from_block": 94430871,
+      "to_block": 94430880,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 60,
+      "started_ms": 1790351731883,
+      "from_block": 94430881,
+      "to_block": 94430890,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 61,
+      "started_ms": 1790351732104,
+      "from_block": 94430891,
+      "to_block": 94430900,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 62,
+      "started_ms": 1790351732331,
+      "from_block": 94430901,
+      "to_block": 94430910,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 63,
+      "started_ms": 1790351732551,
+      "from_block": 94430911,
+      "to_block": 94430920,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 64,
+      "started_ms": 1790351732769,
+      "from_block": 94430921,
+      "to_block": 94430930,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 65,
+      "started_ms": 1790351732988,
+      "from_block": 94430931,
+      "to_block": 94430940,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 66,
+      "started_ms": 1790351733201,
+      "from_block": 94430941,
+      "to_block": 94430950,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 67,
+      "started_ms": 1790351733428,
+      "from_block": 94430951,
+      "to_block": 94430960,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 68,
+      "started_ms": 1790351733653,
+      "from_block": 94430961,
+      "to_block": 94430970,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 69,
+      "started_ms": 1790351733871,
+      "from_block": 94430971,
+      "to_block": 94430980,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 70,
+      "started_ms": 1790351734100,
+      "from_block": 94430981,
+      "to_block": 94430990,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 71,
+      "started_ms": 1790351734320,
+      "from_block": 94430991,
+      "to_block": 94431000,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 72,
+      "started_ms": 1790351734555,
+      "from_block": 94431001,
+      "to_block": 94431010,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 73,
+      "started_ms": 1790351734778,
+      "from_block": 94431011,
+      "to_block": 94431020,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 74,
+      "started_ms": 1790351735001,
+      "from_block": 94431021,
+      "to_block": 94431030,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 75,
+      "started_ms": 1790351735234,
+      "from_block": 94431031,
+      "to_block": 94431040,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 76,
+      "started_ms": 1790351735457,
+      "from_block": 94431041,
+      "to_block": 94431050,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 77,
+      "started_ms": 1790351735686,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 78,
+      "started_ms": 1790351737472,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 79,
+      "started_ms": 1790351737935,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 80,
+      "started_ms": 1790351738327,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 81,
+      "started_ms": 1790351738734,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 82,
+      "started_ms": 1790351739172,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 83,
+      "started_ms": 1790351739633,
+      "from_block": 94431051,
+      "to_block": 94431060,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 84,
+      "started_ms": 1790351740024,
+      "from_block": 94431061,
+      "to_block": 94431065,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 85,
+      "started_ms": 1790351740426,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 86,
+      "started_ms": 1790351740993,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 87,
+      "started_ms": 1790351741589,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 88,
+      "started_ms": 1790351741812,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790351717820,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 224
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790351736315,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 162
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790351700",
+      "started_ms": 1790351736492,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 125
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790351737094,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 288
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790351741288,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 259
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790351741289,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 259
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790351741288,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 263
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790351741290,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 299
+    }
+  ],
+  "storage_binding_verified": true,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "finalized_qualification": {
+    "status": "PASS_PROVIDER_FINALIZED_READ",
+    "chain_id": 137,
+    "anchor": {
+      "number": 94431050,
+      "hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+      "timestamp": 1790351715
+    },
+    "observed_ms": 1790351718098,
+    "finished_ms": 1790351719337,
+    "independent_consensus_proven": false,
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94431050,
+          "block_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+          "block_timestamp_ms": 1790351715000,
+          "request_started_ms": 1790351718349,
+          "response_received_ms": 1790351718593,
+          "block_minus_receive_ms": -3593,
+          "block_minus_request_ms": -3349
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94431052,
+          "block_hash": "0x40f53be63aff659f343de51095f4be7b3ce1364d94740f2d3d1e8c87b054372e",
+          "block_timestamp_ms": 1790351718000,
+          "request_started_ms": 1790351718593,
+          "response_received_ms": 1790351718826,
+          "block_minus_receive_ms": -826,
+          "block_minus_request_ms": -593
+        },
+        {
+          "label": "anchor_recheck",
+          "requested_tag": "0x5a0e74a",
+          "number": 94431050,
+          "block_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+          "block_timestamp_ms": 1790351715000,
+          "request_started_ms": 1790351718826,
+          "response_received_ms": 1790351719115,
+          "block_minus_receive_ms": -4115,
+          "block_minus_request_ms": -3826
+        },
+        {
+          "label": "finalized_second",
+          "requested_tag": "finalized",
+          "number": 94431050,
+          "block_hash": "0x292a7bc700af4e9acaac226ebd80d2f80ecc440d6f969f74e57dc86951f14039",
+          "block_timestamp_ms": 1790351715000,
+          "request_started_ms": 1790351719115,
+          "response_received_ms": 1790351719337,
+          "block_minus_receive_ms": -4337,
+          "block_minus_request_ms": -4115
+        }
+      ],
+      "reason": "FINALIZED_QUALIFIED",
+      "stage": "complete",
+      "clock_source": "LOCAL_TIME_TIME_NS_UTC",
+      "clock_accuracy_proven": false
+    }
+  },
+  "clock_diagnostic": {
+    "source": "LOCAL_TIME_TIME_NS_UTC",
+    "clob_server_seconds": 1790351736,
+    "request_started_ms": 1790351736315,
+    "response_received_ms": 1790351736478,
+    "accuracy_500ms_proven": false,
+    "server_second_minus_local_receive_ms": -478,
+    "offset_interval_ms": [
+      -478,
+      685
+    ],
+    "note": "CLOB integer-second reading is diagnostic, not a subsecond clock calibration; no timestamps adjusted"
+  },
+  "health_contract": true,
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364"
+}

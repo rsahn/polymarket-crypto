@@ -1,0 +1,122 @@
+{
+  "pid": 21132,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_220723.db",
+  "started_utc": "2026-09-21T20:07:23.211031+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T20:12:00.070906+00:00",
+  "session_id": "5d404923-1276-408f-be52-65a9683898f9",
+  "elapsed_seconds": 212.0062380998861,
+  "counts": {
+    "CLOCK_SAMPLE": 7,
+    "ACTIVATE": 17,
+    "BOOK": 105524,
+    "BTC_CONNECTED": 2,
+    "REJECT": 257,
+    "BTC": 1840,
+    "WS_ERROR": 14,
+    "RECONNECT": 28,
+    "EXPIRE": 1,
+    "ROTATION": 1,
+    "BTC_RECONNECT": 1
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1790020800",
+      "received_ts_ms": 1790021495373
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1790021400",
+      "received_ts_ms": 1790021495373
+    }
+  },
+  "writer": {
+    "submitted": 108560,
+    "sent_sequence": 108547,
+    "processed_sequence": 108547,
+    "committed_sequence": 108319,
+    "outstanding_items": 12,
+    "outstanding_bytes": 26729,
+    "high_water_items": 256,
+    "high_water_bytes": 765067,
+    "oldest_unacknowledged_age_seconds": 0.0035110998433083296,
+    "pending_batches_items": 12,
+    "worker_pid": 13456,
+    "capacity_rejections": 15,
+    "last_capacity_rejection": {
+      "kind": "BOOK",
+      "items": 256,
+      "bytes": 709847,
+      "command_bytes": 3016,
+      "processed_sequence": 107868,
+      "committed_sequence": 107128,
+      "sent_sequence": 108092,
+      "pending_items": 32,
+      "at_monotonic": 1052932.040086
+    },
+    "closed_ack": false,
+    "error": null
+  },
+  "free_bytes": 85700751360,
+  "feed_timing": {
+    "5m": {
+      "observations": 82848,
+      "wire_age_sum_ms": 3365382,
+      "last_wire_age_ms": 24,
+      "max_wire_age_ms": 367,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790021495373
+    },
+    "15m": {
+      "observations": 22735,
+      "wire_age_sum_ms": 723468,
+      "last_wire_age_ms": 25,
+      "max_wire_age_ms": 262,
+      "last_processing_ms": 1,
+      "last_received_ts_ms": 1790021495373
+    }
+  },
+  "stage_timing": {
+    "5m:normalize": {
+      "calls": 83058,
+      "wall_ns": 15240491800,
+      "cpu_ns": 14125000000,
+      "max_wall_ns": 17198000,
+      "over_5ms": 4,
+      "over_50ms": 0
+    },
+    "5m:callback_including_store": {
+      "calls": 83058,
+      "wall_ns": 4753850500,
+      "cpu_ns": 4656250000,
+      "max_wall_ns": 14298300,
+      "over_5ms": 1,
+      "over_50ms": 0
+    },
+    "15m:normalize": {
+      "calls": 22746,
+      "wall_ns": 4473126800,
+      "cpu_ns": 3875000000,
+      "max_wall_ns": 1969900,
+      "over_5ms": 0,
+      "over_50ms": 0
+    },
+    "15m:callback_including_store": {
+      "calls": 22746,
+      "wall_ns": 1342472800,
+      "cpu_ns": 1078125000,
+      "max_wall_ns": 3217400,
+      "over_5ms": 0,
+      "over_50ms": 0
+    }
+  },
+  "error": "BufferError(\"WRITER_CAPACITY_EXCEEDED: command not accepted; {'kind': 'EVENT', 'items': 256, 'bytes': 765911, 'command_bytes': 143, 'processed_sequence': 121320, 'committed_sequence': 121016, 'sent_sequence': 121448, 'pending_items': 128, 'at_monotonic': 1052950.7984206}\")"
+}

@@ -1,0 +1,655 @@
+{
+  "contract": "D6_V1_PAPER_ONLY",
+  "errors": [],
+  "fill_count": 46,
+  "fills": [
+    {
+      "btc_move": -0.0005009259259258769,
+      "cost": 25.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.96,
+      "pnl": -0.2577319587628857,
+      "portfolio": "fixed_25",
+      "shares": 25.77319587628866,
+      "side": "DOWN",
+      "signal_ts_ms": 1790146922015,
+      "slug": "btc-updown-5m-1790146800"
+    },
+    {
+      "btc_move": -0.0005009259259258769,
+      "cost": 50.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.96,
+      "pnl": -0.5154639175257714,
+      "portfolio": "fixed_50",
+      "shares": 51.54639175257732,
+      "side": "DOWN",
+      "signal_ts_ms": 1790146922015,
+      "slug": "btc-updown-5m-1790146800"
+    },
+    {
+      "btc_move": -0.0005009259259258769,
+      "cost": 100.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.96,
+      "pnl": -1.0309278350515427,
+      "portfolio": "fixed_100",
+      "shares": 103.09278350515464,
+      "side": "DOWN",
+      "signal_ts_ms": 1790146922015,
+      "slug": "btc-updown-5m-1790146800"
+    },
+    {
+      "btc_move": -0.0005009259259258769,
+      "cost": 100.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.96,
+      "pnl": -1.0309278350515427,
+      "portfolio": "dynamic_depth",
+      "shares": 103.09278350515464,
+      "side": "DOWN",
+      "signal_ts_ms": 1790146922015,
+      "slug": "btc-updown-5m-1790146800"
+    },
+    {
+      "btc_move": -0.0005009248780896147,
+      "cost": 25.0,
+      "entry_vwap": 0.94,
+      "exit_price": 0.9299999999999999,
+      "pnl": -0.2659574468085104,
+      "portfolio": "fixed_25",
+      "shares": 26.595744680851066,
+      "side": "DOWN",
+      "signal_ts_ms": 1790148986759,
+      "slug": "btc-updown-5m-1790148900"
+    },
+    {
+      "btc_move": -0.0005009248780896147,
+      "cost": 50.0,
+      "entry_vwap": 0.94,
+      "exit_price": 0.9299999999999999,
+      "pnl": -0.5319148936170208,
+      "portfolio": "fixed_50",
+      "shares": 53.19148936170213,
+      "side": "DOWN",
+      "signal_ts_ms": 1790148986759,
+      "slug": "btc-updown-5m-1790148900"
+    },
+    {
+      "btc_move": -0.0005009248780896147,
+      "cost": 100.0,
+      "entry_vwap": 0.94,
+      "exit_price": 0.9299999999999999,
+      "pnl": -1.0638297872340416,
+      "portfolio": "fixed_100",
+      "shares": 106.38297872340426,
+      "side": "DOWN",
+      "signal_ts_ms": 1790148986759,
+      "slug": "btc-updown-5m-1790148900"
+    },
+    {
+      "btc_move": -0.0005009248780896147,
+      "cost": 100.0,
+      "entry_vwap": 0.94,
+      "exit_price": 0.9299999999999999,
+      "pnl": -1.0638297872340416,
+      "portfolio": "dynamic_depth",
+      "shares": 106.38297872340426,
+      "side": "DOWN",
+      "signal_ts_ms": 1790148986759,
+      "slug": "btc-updown-5m-1790148900"
+    },
+    {
+      "portfolio": null,
+      "reason": "NO_DEPTH",
+      "side": "DOWN",
+      "signal_ts_ms": 1790149469409,
+      "slug": "btc-updown-5m-1790149200",
+      "status": "SKIP"
+    },
+    {
+      "btc_move": -0.0005000154038692362,
+      "cost": 25.0,
+      "entry_vwap": 0.95,
+      "exit_price": 0.99,
+      "pnl": 1.05263157894737,
+      "portfolio": "fixed_25",
+      "shares": 26.315789473684212,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153242354,
+      "slug": "btc-updown-5m-1790153100"
+    },
+    {
+      "btc_move": -0.0005000154038692362,
+      "cost": 50.0,
+      "entry_vwap": 0.95,
+      "exit_price": 0.99,
+      "pnl": 2.10526315789474,
+      "portfolio": "fixed_50",
+      "shares": 52.631578947368425,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153242354,
+      "slug": "btc-updown-5m-1790153100"
+    },
+    {
+      "btc_move": -0.0005000154038692362,
+      "cost": 100.0,
+      "entry_vwap": 0.95,
+      "exit_price": 0.99,
+      "pnl": 4.21052631578948,
+      "portfolio": "fixed_100",
+      "shares": 105.26315789473685,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153242354,
+      "slug": "btc-updown-5m-1790153100"
+    },
+    {
+      "btc_move": -0.0005000154038692362,
+      "cost": 100.0,
+      "entry_vwap": 0.95,
+      "exit_price": 0.99,
+      "pnl": 4.21052631578948,
+      "portfolio": "dynamic_depth",
+      "shares": 105.26315789473685,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153242354,
+      "slug": "btc-updown-5m-1790153100"
+    },
+    {
+      "btc_move": -0.0005034912530620383,
+      "cost": 25.000000000000004,
+      "entry_vwap": 0.6,
+      "exit_price": 0.77,
+      "pnl": 7.083333333333332,
+      "portfolio": "fixed_25",
+      "shares": 41.66666666666667,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153439857,
+      "slug": "btc-updown-5m-1790153400"
+    },
+    {
+      "btc_move": -0.0005034912530620383,
+      "cost": 50.00000000000001,
+      "entry_vwap": 0.6,
+      "exit_price": 0.77,
+      "pnl": 14.166666666666664,
+      "portfolio": "fixed_50",
+      "shares": 83.33333333333334,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153439857,
+      "slug": "btc-updown-5m-1790153400"
+    },
+    {
+      "btc_move": -0.0005034912530620383,
+      "cost": 100.0,
+      "entry_vwap": 0.6070624713980182,
+      "exit_price": 0.77,
+      "pnl": 26.840323076923084,
+      "portfolio": "fixed_100",
+      "shares": 164.7276923076923,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153439857,
+      "slug": "btc-updown-5m-1790153400"
+    },
+    {
+      "btc_move": -0.0005034912530620383,
+      "cost": 100.0,
+      "entry_vwap": 0.6070624713980182,
+      "exit_price": 0.77,
+      "pnl": 26.840323076923084,
+      "portfolio": "dynamic_depth",
+      "shares": 164.7276923076923,
+      "side": "DOWN",
+      "signal_ts_ms": 1790153439857,
+      "slug": "btc-updown-5m-1790153400"
+    },
+    {
+      "btc_move": -0.0005117928658796567,
+      "cost": 25.0,
+      "entry_vwap": 0.21190406396677347,
+      "exit_price": 0.30000000000000004,
+      "pnl": 10.393375000000006,
+      "portfolio": "fixed_25",
+      "shares": 117.97791666666666,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155077358,
+      "slug": "btc-updown-5m-1790154900"
+    },
+    {
+      "btc_move": -0.0005117928658796567,
+      "cost": 50.0,
+      "entry_vwap": 0.2285052708549144,
+      "exit_price": 0.30000000000000004,
+      "pnl": 15.644000000000005,
+      "portfolio": "fixed_50",
+      "shares": 218.81333333333333,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155077358,
+      "slug": "btc-updown-5m-1790154900"
+    },
+    {
+      "btc_move": -0.0005117928658796567,
+      "cost": 100.0,
+      "entry_vwap": 0.27262893875133,
+      "exit_price": 0.30000000000000004,
+      "pnl": 10.03967567567571,
+      "portfolio": "fixed_100",
+      "shares": 366.79891891891896,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155077358,
+      "slug": "btc-updown-5m-1790154900"
+    },
+    {
+      "btc_move": -0.0005117928658796567,
+      "cost": 46.63225,
+      "entry_vwap": 0.2259969378148455,
+      "exit_price": 0.30000000000000004,
+      "pnl": 15.269805555555557,
+      "portfolio": "dynamic_depth",
+      "shares": 206.34018518518516,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155077358,
+      "slug": "btc-updown-5m-1790154900"
+    },
+    {
+      "btc_move": 0.0005024756386653451,
+      "cost": 25.0,
+      "entry_vwap": 0.2120405082186901,
+      "exit_price": 0.33999999999999997,
+      "pnl": 15.086679999999994,
+      "portfolio": "fixed_25",
+      "shares": 117.90199999999999,
+      "side": "UP",
+      "signal_ts_ms": 1790155297679,
+      "slug": "btc-updown-5m-1790155200"
+    },
+    {
+      "btc_move": 0.0005024756386653451,
+      "cost": 50.00000000000001,
+      "entry_vwap": 0.25236672670891713,
+      "exit_price": 0.33999999999999997,
+      "pnl": 17.362287499999987,
+      "portfolio": "fixed_50",
+      "shares": 198.124375,
+      "side": "UP",
+      "signal_ts_ms": 1790155297679,
+      "slug": "btc-updown-5m-1790155200"
+    },
+    {
+      "btc_move": 0.0005024756386653451,
+      "cost": 100.00000000000001,
+      "entry_vwap": 0.28488946288839934,
+      "exit_price": 0.33999999999999997,
+      "pnl": 19.344533333333302,
+      "portfolio": "fixed_100",
+      "shares": 351.0133333333333,
+      "side": "UP",
+      "signal_ts_ms": 1790155297679,
+      "slug": "btc-updown-5m-1790155200"
+    },
+    {
+      "btc_move": 0.0005024756386653451,
+      "cost": 100.00000000000001,
+      "entry_vwap": 0.28488946288839934,
+      "exit_price": 0.33999999999999997,
+      "pnl": 19.344533333333302,
+      "portfolio": "dynamic_depth",
+      "shares": 351.0133333333333,
+      "side": "UP",
+      "signal_ts_ms": 1790155297679,
+      "slug": "btc-updown-5m-1790155200"
+    },
+    {
+      "btc_move": -0.00050704098189569,
+      "cost": 25.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.98,
+      "pnl": 0.2577319587628857,
+      "portfolio": "fixed_25",
+      "shares": 25.77319587628866,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155713265,
+      "slug": "btc-updown-5m-1790155500"
+    },
+    {
+      "btc_move": -0.00050704098189569,
+      "cost": 50.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.98,
+      "pnl": 0.5154639175257714,
+      "portfolio": "fixed_50",
+      "shares": 51.54639175257732,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155713265,
+      "slug": "btc-updown-5m-1790155500"
+    },
+    {
+      "btc_move": -0.00050704098189569,
+      "cost": 100.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.98,
+      "pnl": 1.0309278350515427,
+      "portfolio": "fixed_100",
+      "shares": 103.09278350515464,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155713265,
+      "slug": "btc-updown-5m-1790155500"
+    },
+    {
+      "btc_move": -0.00050704098189569,
+      "cost": 100.0,
+      "entry_vwap": 0.97,
+      "exit_price": 0.98,
+      "pnl": 1.0309278350515427,
+      "portfolio": "dynamic_depth",
+      "shares": 103.09278350515464,
+      "side": "DOWN",
+      "signal_ts_ms": 1790155713265,
+      "slug": "btc-updown-5m-1790155500"
+    },
+    {
+      "btc_move": -0.0005015644644195127,
+      "cost": 25.0,
+      "entry_vwap": 0.01,
+      "exit_price": 0.08999999999999997,
+      "pnl": 199.99999999999991,
+      "portfolio": "fixed_25",
+      "shares": 2500.0,
+      "side": "DOWN",
+      "signal_ts_ms": 1790157467092,
+      "slug": "btc-updown-5m-1790157300"
+    },
+    {
+      "btc_move": -0.0005015644644195127,
+      "cost": 50.0,
+      "entry_vwap": 0.011321220382272328,
+      "exit_price": 0.08999999999999997,
+      "pnl": 347.48364999999984,
+      "portfolio": "fixed_50",
+      "shares": 4416.485,
+      "side": "DOWN",
+      "signal_ts_ms": 1790157467092,
+      "slug": "btc-updown-5m-1790157300"
+    },
+    {
+      "btc_move": -0.0005015644644195127,
+      "cost": 100.0,
+      "entry_vwap": 0.018712734925020746,
+      "exit_price": 0.08999999999999997,
+      "pnl": 380.9558857142855,
+      "portfolio": "fixed_100",
+      "shares": 5343.954285714285,
+      "side": "DOWN",
+      "signal_ts_ms": 1790157467092,
+      "slug": "btc-updown-5m-1790157300"
+    },
+    {
+      "btc_move": -0.0005015644644195127,
+      "cost": 100.0,
+      "entry_vwap": 0.018712734925020746,
+      "exit_price": 0.08999999999999997,
+      "pnl": 380.9558857142855,
+      "portfolio": "dynamic_depth",
+      "shares": 5343.954285714285,
+      "side": "DOWN",
+      "signal_ts_ms": 1790157467092,
+      "slug": "btc-updown-5m-1790157300"
+    },
+    {
+      "btc_move": 0.0005007967909873567,
+      "cost": 25.0,
+      "entry_vwap": 0.65,
+      "exit_price": 0.79,
+      "pnl": 5.384615384615383,
+      "portfolio": "fixed_25",
+      "shares": 38.46153846153846,
+      "side": "UP",
+      "signal_ts_ms": 1790157641312,
+      "slug": "btc-updown-5m-1790157600"
+    },
+    {
+      "btc_move": 0.0005007967909873567,
+      "cost": 50.0,
+      "entry_vwap": 0.65,
+      "exit_price": 0.79,
+      "pnl": 10.769230769230766,
+      "portfolio": "fixed_50",
+      "shares": 76.92307692307692,
+      "side": "UP",
+      "signal_ts_ms": 1790157641312,
+      "slug": "btc-updown-5m-1790157600"
+    },
+    {
+      "btc_move": 0.0005007967909873567,
+      "cost": 100.00000000000001,
+      "entry_vwap": 0.6628656233284508,
+      "exit_price": 0.79,
+      "pnl": 19.179509722222235,
+      "portfolio": "fixed_100",
+      "shares": 150.8601388888889,
+      "side": "UP",
+      "signal_ts_ms": 1790157641312,
+      "slug": "btc-updown-5m-1790157600"
+    },
+    {
+      "btc_move": 0.0005007967909873567,
+      "cost": 100.00000000000001,
+      "entry_vwap": 0.6628656233284508,
+      "exit_price": 0.79,
+      "pnl": 19.179509722222235,
+      "portfolio": "dynamic_depth",
+      "shares": 150.8601388888889,
+      "side": "UP",
+      "signal_ts_ms": 1790157641312,
+      "slug": "btc-updown-5m-1790157600"
+    },
+    {
+      "btc_move": -0.0005000544931177409,
+      "cost": 25.0,
+      "entry_vwap": 0.87,
+      "exit_price": 0.94,
+      "pnl": 2.011494252873561,
+      "portfolio": "fixed_25",
+      "shares": 28.735632183908045,
+      "side": "DOWN",
+      "signal_ts_ms": 1790158951605,
+      "slug": "btc-updown-5m-1790158800"
+    },
+    {
+      "btc_move": -0.0005000544931177409,
+      "cost": 50.0,
+      "entry_vwap": 0.87,
+      "exit_price": 0.94,
+      "pnl": 4.022988505747122,
+      "portfolio": "fixed_50",
+      "shares": 57.47126436781609,
+      "side": "DOWN",
+      "signal_ts_ms": 1790158951605,
+      "slug": "btc-updown-5m-1790158800"
+    },
+    {
+      "btc_move": -0.0005000544931177409,
+      "cost": 100.0,
+      "entry_vwap": 0.8852921223435222,
+      "exit_price": 0.94,
+      "pnl": 6.179641304347825,
+      "portfolio": "fixed_100",
+      "shares": 112.9570652173913,
+      "side": "DOWN",
+      "signal_ts_ms": 1790158951605,
+      "slug": "btc-updown-5m-1790158800"
+    },
+    {
+      "btc_move": -0.0005000544931177409,
+      "cost": 100.0,
+      "entry_vwap": 0.8852921223435222,
+      "exit_price": 0.94,
+      "pnl": 6.179641304347825,
+      "portfolio": "dynamic_depth",
+      "shares": 112.9570652173913,
+      "side": "DOWN",
+      "signal_ts_ms": 1790158951605,
+      "slug": "btc-updown-5m-1790158800"
+    },
+    {
+      "portfolio": null,
+      "reason": "NO_DEPTH",
+      "side": "DOWN",
+      "signal_ts_ms": 1790159004303,
+      "slug": "btc-updown-5m-1790158800",
+      "status": "SKIP"
+    },
+    {
+      "btc_move": 0.0005043700797964235,
+      "cost": 25.0,
+      "entry_vwap": 0.01,
+      "exit_price": 0.0,
+      "pnl": -25.0,
+      "portfolio": "fixed_25",
+      "shares": 2500.0,
+      "side": "UP",
+      "signal_ts_ms": 1790159645670,
+      "slug": "btc-updown-5m-1790159400"
+    },
+    {
+      "btc_move": 0.0005043700797964235,
+      "cost": 50.0,
+      "entry_vwap": 0.01,
+      "exit_price": 0.0,
+      "pnl": -50.0,
+      "portfolio": "fixed_50",
+      "shares": 5000.0,
+      "side": "UP",
+      "signal_ts_ms": 1790159645670,
+      "slug": "btc-updown-5m-1790159400"
+    },
+    {
+      "btc_move": 0.0005043700797964235,
+      "cost": 100.0,
+      "entry_vwap": 0.016398789031423975,
+      "exit_price": 0.0,
+      "pnl": -100.0,
+      "portfolio": "fixed_100",
+      "shares": 6098.0112500000005,
+      "side": "UP",
+      "signal_ts_ms": 1790159645670,
+      "slug": "btc-updown-5m-1790159400"
+    },
+    {
+      "btc_move": 0.0005043700797964235,
+      "cost": 100.0,
+      "entry_vwap": 0.016398789031423975,
+      "exit_price": 0.0,
+      "pnl": -100.0,
+      "portfolio": "dynamic_depth",
+      "shares": 6098.0112500000005,
+      "side": "UP",
+      "signal_ts_ms": 1790159645670,
+      "slug": "btc-updown-5m-1790159400"
+    }
+  ],
+  "portfolios": {
+    "dynamic_depth": {
+      "capital": 870.9163952352228,
+      "max_drawdown": 100.0,
+      "name": "dynamic_depth",
+      "peak": 970.9163952352228,
+      "pnl": 370.9163952352229,
+      "trades": 11
+    },
+    "fixed_100": {
+      "capital": 865.686265355343,
+      "max_drawdown": 100.0,
+      "name": "fixed_100",
+      "peak": 965.686265355343,
+      "pnl": 365.68626535534315,
+      "trades": 11
+    },
+    "fixed_25": {
+      "capital": 715.746172102961,
+      "max_drawdown": 25.0,
+      "name": "fixed_25",
+      "peak": 740.746172102961,
+      "pnl": 215.74617210296105,
+      "trades": 11
+    },
+    "fixed_50": {
+      "capital": 861.022171705922,
+      "max_drawdown": 50.0,
+      "name": "fixed_50",
+      "peak": 911.022171705922,
+      "pnl": 361.0221717059221,
+      "trades": 11
+    }
+  },
+  "signal_count": 13,
+  "signals": [
+    {
+      "btc_move": -0.0005009259259258769,
+      "side": "DOWN",
+      "ts_ms": 1790146922015
+    },
+    {
+      "btc_move": -0.0005009248780896147,
+      "side": "DOWN",
+      "ts_ms": 1790148986759
+    },
+    {
+      "btc_move": -0.0005019041329403784,
+      "side": "DOWN",
+      "ts_ms": 1790149469409
+    },
+    {
+      "btc_move": -0.0005000154038692362,
+      "side": "DOWN",
+      "ts_ms": 1790153242354
+    },
+    {
+      "btc_move": -0.0005034912530620383,
+      "side": "DOWN",
+      "ts_ms": 1790153439857
+    },
+    {
+      "btc_move": -0.0005117928658796567,
+      "side": "DOWN",
+      "ts_ms": 1790155077358
+    },
+    {
+      "btc_move": 0.0005024756386653451,
+      "side": "UP",
+      "ts_ms": 1790155297679
+    },
+    {
+      "btc_move": -0.00050704098189569,
+      "side": "DOWN",
+      "ts_ms": 1790155713265
+    },
+    {
+      "btc_move": -0.0005015644644195127,
+      "side": "DOWN",
+      "ts_ms": 1790157467092
+    },
+    {
+      "btc_move": 0.0005007967909873567,
+      "side": "UP",
+      "ts_ms": 1790157641312
+    },
+    {
+      "btc_move": -0.0005000544931177409,
+      "side": "DOWN",
+      "ts_ms": 1790158951605
+    },
+    {
+      "btc_move": -0.0005019469546004851,
+      "side": "DOWN",
+      "ts_ms": 1790159004303
+    },
+    {
+      "btc_move": 0.0005043700797964235,
+      "side": "UP",
+      "ts_ms": 1790159645670
+    }
+  ],
+  "started_ms": 1790145016023,
+  "updated_ms": 1790161690322
+}

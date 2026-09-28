@@ -1,0 +1,2028 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "evaluated_ms": 1790354124009,
+    "evaluation_started_ms": 1790354124009,
+    "evaluation_complete_ms": 1790354124009,
+    "evaluation_thread_cpu_ms": 0.0,
+    "book_sample_started_ms": 1790354124009,
+    "book_sample_finished_ms": 1790354124009,
+    "generation": {
+      "complete": false,
+      "reason": "GENERATION_PARTIAL_OR_INVALID",
+      "evaluated_ms": 1790354124009
+    },
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "SYSTEM_READY": false,
+    "MARKET_ELIGIBLE_NOW": false,
+    "health_checks": {
+      "wallet_auth": false,
+      "geoblock": true,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false,
+      "book_stream_health": false
+    },
+    "operating_state": "SYSTEM_BLOCKED",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": true,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": true,
+        "authenticated": true,
+        "observed_ms": 1790354123438,
+        "balance_collateral": "109.16",
+        "allowance_collateral": "1.157920892373161954235709850E+71",
+        "collateral_symbol": "pUSD",
+        "complete": false,
+        "pagination_complete": true,
+        "provenance": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "scope": "CREDENTIAL_VIEW_WITH_SCOPED_GENESIS",
+        "reason": "GENERATION_STALE_500MS"
+      },
+      "positions": {
+        "available": true,
+        "observed_ms": 1790354122621,
+        "complete": false,
+        "provenance": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "reason": "GENERATION_STALE_500MS"
+      },
+      "book": {
+        "reason": "STALE_BOOK",
+        "market_eligible": false,
+        "available": false,
+        "connected": true,
+        "synchronized": false,
+        "fresh": false,
+        "book_synced": false,
+        "market_slug": "btc-updown-5m-1790354100",
+        "generation": 1,
+        "observed_ms": null,
+        "state": "STALE",
+        "diagnostics": {
+          "parser_reason": "STALE_BOOK",
+          "exception_category": null,
+          "close_code": null,
+          "close_reason_category": null,
+          "remote_close_reason_present": false,
+          "last_valid_message": {
+            "kind": "price_change",
+            "source_ms": 1790354121764,
+            "received_ms": 1790354122264,
+            "generation": 1
+          },
+          "resync_complete_generation": null,
+          "regression_event": null,
+          "transitions": [
+            {
+              "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790354121250,
+              "reason": null
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790354121328,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790354122086,
+              "reason": "CROSSED_BOOK"
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790354122088,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790354122265,
+              "reason": "STALE_BOOK"
+            }
+          ],
+          "tokens": [
+            {
+              "token_index": 0,
+              "last_valid_book_ms": 1790354121764,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 31,
+              "asks_count": 68,
+              "best_bid": "0.31",
+              "best_ask": "0.32",
+              "last_valid_book_age_ms": 2245,
+              "current_generation_synced": false
+            },
+            {
+              "token_index": 1,
+              "last_valid_book_ms": 1790354121764,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 68,
+              "asks_count": 31,
+              "best_bid": "0.68",
+              "best_ask": "0.69",
+              "last_valid_book_age_ms": 2245,
+              "current_generation_synced": false
+            }
+          ],
+          "rejected_message_age_ms": 501,
+          "first_full_books": [
+            {
+              "token_index": 1,
+              "token_sha256": "7953aeaee11df1c86624f8a57402905604369725274fa80092d9e62333e09d7d",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 70,
+              "asks_count": 29,
+              "best_bid": "0.7",
+              "best_ask": "0.71",
+              "source_timestamp_ms": 1790354121288,
+              "generation": 1
+            },
+            {
+              "token_index": 0,
+              "token_sha256": "26a998003b38a497daf890e9174ee119da099497abc5de10c7d7932b3ed2b41c",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 29,
+              "asks_count": 70,
+              "best_bid": "0.29",
+              "best_ask": "0.3",
+              "source_timestamp_ms": 1790354121288,
+              "generation": 1
+            }
+          ]
+        },
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "condition_verified": true,
+        "messages_received": 547,
+        "last_wire_event_ms": 1790354121764,
+        "last_valid_book_ms": 1790354121764
+      },
+      "geo": {
+        "available": true,
+        "blocked": false,
+        "observed_ms": 1790354121393
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790354123438,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "geoblock": {
+        "status": "PASS",
+        "source": "geo",
+        "observed_ms": 1790354121393,
+        "evaluated_ms": 1790354124009,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": 60000
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "observed_ms": null,
+        "evaluated_ms": 1790354124009,
+        "reason": "STALE_BOOK",
+        "freshness_limit_ms": 500
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "observed_ms": 1790354122621,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790354123438,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "GENESIS_PLUS_INCREMENTAL_CTF_AND_PAGINATED_INDEXER",
+        "observed_ms": 1790354122621,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790354124009,
+        "reason": "MISSING_STALE_OR_UNRECONCILED",
+        "freshness_limit_ms": null
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790354124009,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE",
+        "freshness_limit_ms": 500
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790354124009,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790354124009,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790354123438,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "EXISTING_BOUND_L2_SIGNATURE_TYPE_3_PARALLEL_GETS",
+        "observed_ms": 1790354123438,
+        "evaluated_ms": 1790354124009,
+        "reason": "GENERATION_STALE_500MS",
+        "freshness_limit_ms": 500
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "GENERATION_STALE_500MS",
+    "boundary_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": false,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "GENERATION_STALE_500MS"
+    }
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94432655,
+    "block_hash": "0xc7dfe276554188413ab1b23fd713561fa3abce14e5148646958a1ba3c56053e6",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790354122621,
+    "provenance": "FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY",
+    "scan_observed_ms": 1790354122621,
+    "generation_attempt": 1,
+    "post_b_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": false,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "GENERATION_STALE_500MS"
+    },
+    "finalized_block": 94432649,
+    "finalized_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+    "critical_path": {
+      "scan_dispatch_ms": 1790354122395,
+      "scan_observed_ms": 1790354122621,
+      "scan_finished_ms": 1790354123218,
+      "seal_started_ms": 1790354123218,
+      "sealed_ms": 1790354123438,
+      "account_started_ms": 1790354123438,
+      "account_finished_ms": 1790354123731,
+      "recheck_started_ms": 1790354123731,
+      "recheck_finished_ms": 1790354123998,
+      "boundary_evaluated_ms": 1790354123998
+    },
+    "boundary_evidence": {
+      "generation": 1,
+      "finalized_qualified": true,
+      "cursor_previous": 94432130,
+      "anchor_number": 94432649,
+      "boundary_number": 94432655,
+      "anchor_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+      "anchor_rechecked_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+      "boundary_hash": "0xc7dfe276554188413ab1b23fd713561fa3abce14e5148646958a1ba3c56053e6",
+      "boundary_rechecked_hash": "0xc7dfe276554188413ab1b23fd713561fa3abce14e5148646958a1ba3c56053e6",
+      "anchor_ranges": [
+        [
+          94432131,
+          94432140
+        ],
+        [
+          94432141,
+          94432150
+        ],
+        [
+          94432151,
+          94432160
+        ],
+        [
+          94432161,
+          94432170
+        ],
+        [
+          94432171,
+          94432180
+        ],
+        [
+          94432181,
+          94432190
+        ],
+        [
+          94432191,
+          94432200
+        ],
+        [
+          94432201,
+          94432210
+        ],
+        [
+          94432211,
+          94432220
+        ],
+        [
+          94432221,
+          94432230
+        ],
+        [
+          94432231,
+          94432240
+        ],
+        [
+          94432241,
+          94432250
+        ],
+        [
+          94432251,
+          94432260
+        ],
+        [
+          94432261,
+          94432270
+        ],
+        [
+          94432271,
+          94432280
+        ],
+        [
+          94432281,
+          94432290
+        ],
+        [
+          94432291,
+          94432300
+        ],
+        [
+          94432301,
+          94432310
+        ],
+        [
+          94432311,
+          94432320
+        ],
+        [
+          94432321,
+          94432330
+        ],
+        [
+          94432331,
+          94432340
+        ],
+        [
+          94432341,
+          94432350
+        ],
+        [
+          94432351,
+          94432360
+        ],
+        [
+          94432361,
+          94432370
+        ],
+        [
+          94432371,
+          94432380
+        ],
+        [
+          94432381,
+          94432390
+        ],
+        [
+          94432391,
+          94432400
+        ],
+        [
+          94432401,
+          94432410
+        ],
+        [
+          94432411,
+          94432420
+        ],
+        [
+          94432421,
+          94432430
+        ],
+        [
+          94432431,
+          94432440
+        ],
+        [
+          94432441,
+          94432450
+        ],
+        [
+          94432451,
+          94432460
+        ],
+        [
+          94432461,
+          94432470
+        ],
+        [
+          94432471,
+          94432480
+        ],
+        [
+          94432481,
+          94432490
+        ],
+        [
+          94432491,
+          94432500
+        ],
+        [
+          94432501,
+          94432510
+        ],
+        [
+          94432511,
+          94432520
+        ],
+        [
+          94432521,
+          94432530
+        ],
+        [
+          94432531,
+          94432540
+        ],
+        [
+          94432541,
+          94432550
+        ],
+        [
+          94432551,
+          94432560
+        ],
+        [
+          94432561,
+          94432570
+        ],
+        [
+          94432571,
+          94432580
+        ],
+        [
+          94432581,
+          94432590
+        ],
+        [
+          94432591,
+          94432600
+        ],
+        [
+          94432601,
+          94432610
+        ],
+        [
+          94432611,
+          94432620
+        ],
+        [
+          94432621,
+          94432630
+        ],
+        [
+          94432631,
+          94432640
+        ],
+        [
+          94432641,
+          94432649
+        ]
+      ],
+      "tail_ranges": [
+        [
+          94432650,
+          94432655
+        ]
+      ],
+      "rpc_complete": true,
+      "events_count": 0,
+      "scan_observed_ms": 1790354122621,
+      "sealed_ms": 1790354123438,
+      "rechecked_ms": 1790354123731,
+      "account": {
+        "balance": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790354123438
+        },
+        "orders": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790354123439
+        },
+        "trades": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790354123440
+        },
+        "positions": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790354123452
+        }
+      }
+    },
+    "cursor_previous": 94432130,
+    "anchor_catchup_ranges": [
+      [
+        94432131,
+        94432140
+      ],
+      [
+        94432141,
+        94432150
+      ],
+      [
+        94432151,
+        94432160
+      ],
+      [
+        94432161,
+        94432170
+      ],
+      [
+        94432171,
+        94432180
+      ],
+      [
+        94432181,
+        94432190
+      ],
+      [
+        94432191,
+        94432200
+      ],
+      [
+        94432201,
+        94432210
+      ],
+      [
+        94432211,
+        94432220
+      ],
+      [
+        94432221,
+        94432230
+      ],
+      [
+        94432231,
+        94432240
+      ],
+      [
+        94432241,
+        94432250
+      ],
+      [
+        94432251,
+        94432260
+      ],
+      [
+        94432261,
+        94432270
+      ],
+      [
+        94432271,
+        94432280
+      ],
+      [
+        94432281,
+        94432290
+      ],
+      [
+        94432291,
+        94432300
+      ],
+      [
+        94432301,
+        94432310
+      ],
+      [
+        94432311,
+        94432320
+      ],
+      [
+        94432321,
+        94432330
+      ],
+      [
+        94432331,
+        94432340
+      ],
+      [
+        94432341,
+        94432350
+      ],
+      [
+        94432351,
+        94432360
+      ],
+      [
+        94432361,
+        94432370
+      ],
+      [
+        94432371,
+        94432380
+      ],
+      [
+        94432381,
+        94432390
+      ],
+      [
+        94432391,
+        94432400
+      ],
+      [
+        94432401,
+        94432410
+      ],
+      [
+        94432411,
+        94432420
+      ],
+      [
+        94432421,
+        94432430
+      ],
+      [
+        94432431,
+        94432440
+      ],
+      [
+        94432441,
+        94432450
+      ],
+      [
+        94432451,
+        94432460
+      ],
+      [
+        94432461,
+        94432470
+      ],
+      [
+        94432471,
+        94432480
+      ],
+      [
+        94432481,
+        94432490
+      ],
+      [
+        94432491,
+        94432500
+      ],
+      [
+        94432501,
+        94432510
+      ],
+      [
+        94432511,
+        94432520
+      ],
+      [
+        94432521,
+        94432530
+      ],
+      [
+        94432531,
+        94432540
+      ],
+      [
+        94432541,
+        94432550
+      ],
+      [
+        94432551,
+        94432560
+      ],
+      [
+        94432561,
+        94432570
+      ],
+      [
+        94432571,
+        94432580
+      ],
+      [
+        94432581,
+        94432590
+      ],
+      [
+        94432591,
+        94432600
+      ],
+      [
+        94432601,
+        94432610
+      ],
+      [
+        94432611,
+        94432620
+      ],
+      [
+        94432621,
+        94432630
+      ],
+      [
+        94432631,
+        94432640
+      ],
+      [
+        94432641,
+        94432649
+      ]
+    ]
+  },
+  "generation_attempts": [
+    {
+      "attempt": 1,
+      "reason": "GENERATION_STALE_500MS",
+      "watermark_block": 94432655,
+      "account_complete": true,
+      "post_b": {
+        "inventory_through_C_proven": true,
+        "boundary_generation_complete": false,
+        "current_inventory_proven": false,
+        "ready_for_arm": false,
+        "submit_allowed": false,
+        "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+        "reason": "GENERATION_STALE_500MS"
+      }
+    }
+  ],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790354115856,
+      "http_status": 200,
+      "response_received_ms": 1790354116097,
+      "parse_complete_ms": 1790354116097,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354116097,
+      "elapsed_ms": 241
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790354116097,
+      "http_status": 200,
+      "response_received_ms": 1790354116339,
+      "parse_complete_ms": 1790354116339,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354116339,
+      "elapsed_ms": 242
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790354116340,
+      "http_status": 200,
+      "response_received_ms": 1790354116573,
+      "parse_complete_ms": 1790354116573,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354116573,
+      "elapsed_ms": 233
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790354116573,
+      "http_status": 200,
+      "response_received_ms": 1790354116814,
+      "parse_complete_ms": 1790354116814,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354116814,
+      "elapsed_ms": 241
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790354116814,
+      "http_status": 200,
+      "response_received_ms": 1790354117041,
+      "parse_complete_ms": 1790354117041,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354117041,
+      "elapsed_ms": 227
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790354117042,
+      "http_status": 200,
+      "response_received_ms": 1790354117269,
+      "parse_complete_ms": 1790354117269,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354117269,
+      "elapsed_ms": 227
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 7,
+      "started_ms": 1790354117269,
+      "http_status": 200,
+      "response_received_ms": 1790354117509,
+      "parse_complete_ms": 1790354117509,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354117509,
+      "elapsed_ms": 240
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 8,
+      "started_ms": 1790354117514,
+      "http_status": 200,
+      "response_received_ms": 1790354117846,
+      "parse_complete_ms": 1790354117846,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354117846,
+      "elapsed_ms": 332
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 9,
+      "started_ms": 1790354117514,
+      "http_status": 200,
+      "response_received_ms": 1790354117882,
+      "parse_complete_ms": 1790354117882,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354117882,
+      "elapsed_ms": 368
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 11,
+      "started_ms": 1790354117587,
+      "from_block": 94432131,
+      "to_block": 94432140,
+      "http_status": 200,
+      "response_received_ms": 1790354117915,
+      "parse_complete_ms": 1790354117915,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354117915,
+      "elapsed_ms": 328
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 10,
+      "started_ms": 1790354117565,
+      "http_status": 200,
+      "response_received_ms": 1790354117948,
+      "parse_complete_ms": 1790354117948,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354117948,
+      "elapsed_ms": 383
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 12,
+      "started_ms": 1790354117608,
+      "from_block": 94432141,
+      "to_block": 94432150,
+      "http_status": 200,
+      "response_received_ms": 1790354117978,
+      "parse_complete_ms": 1790354117979,
+      "status": "PASS",
+      "thread_cpu_ms": 62.5,
+      "finished_ms": 1790354117979,
+      "elapsed_ms": 371
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 14,
+      "started_ms": 1790354117659,
+      "from_block": 94432161,
+      "to_block": 94432170,
+      "http_status": 200,
+      "response_received_ms": 1790354117980,
+      "parse_complete_ms": 1790354117980,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354117980,
+      "elapsed_ms": 321
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 13,
+      "started_ms": 1790354117620,
+      "from_block": 94432151,
+      "to_block": 94432160,
+      "http_status": 200,
+      "response_received_ms": 1790354118019,
+      "parse_complete_ms": 1790354118019,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118019,
+      "elapsed_ms": 399
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 15,
+      "started_ms": 1790354117696,
+      "from_block": 94432171,
+      "to_block": 94432180,
+      "http_status": 200,
+      "response_received_ms": 1790354118030,
+      "parse_complete_ms": 1790354118030,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354118030,
+      "elapsed_ms": 334
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 18,
+      "started_ms": 1790354117915,
+      "from_block": 94432201,
+      "to_block": 94432210,
+      "http_status": 200,
+      "response_received_ms": 1790354118169,
+      "parse_complete_ms": 1790354118169,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118169,
+      "elapsed_ms": 254
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 17,
+      "started_ms": 1790354117883,
+      "from_block": 94432191,
+      "to_block": 94432200,
+      "http_status": 200,
+      "response_received_ms": 1790354118169,
+      "parse_complete_ms": 1790354118169,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118169,
+      "elapsed_ms": 286
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 16,
+      "started_ms": 1790354117846,
+      "from_block": 94432181,
+      "to_block": 94432190,
+      "http_status": 200,
+      "response_received_ms": 1790354118230,
+      "parse_complete_ms": 1790354118230,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354118230,
+      "elapsed_ms": 384
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 20,
+      "started_ms": 1790354117979,
+      "from_block": 94432221,
+      "to_block": 94432230,
+      "http_status": 200,
+      "response_received_ms": 1790354118323,
+      "parse_complete_ms": 1790354118323,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118323,
+      "elapsed_ms": 344
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 23,
+      "started_ms": 1790354118031,
+      "from_block": 94432251,
+      "to_block": 94432260,
+      "http_status": 200,
+      "response_received_ms": 1790354118324,
+      "parse_complete_ms": 1790354118324,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118324,
+      "elapsed_ms": 293
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 19,
+      "started_ms": 1790354117948,
+      "from_block": 94432211,
+      "to_block": 94432220,
+      "http_status": 200,
+      "response_received_ms": 1790354118367,
+      "parse_complete_ms": 1790354118367,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118367,
+      "elapsed_ms": 419
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 21,
+      "started_ms": 1790354117980,
+      "from_block": 94432231,
+      "to_block": 94432240,
+      "http_status": 200,
+      "response_received_ms": 1790354118379,
+      "parse_complete_ms": 1790354118379,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118379,
+      "elapsed_ms": 399
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 22,
+      "started_ms": 1790354118020,
+      "from_block": 94432241,
+      "to_block": 94432250,
+      "http_status": 200,
+      "response_received_ms": 1790354118380,
+      "parse_complete_ms": 1790354118380,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118380,
+      "elapsed_ms": 360
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 24,
+      "started_ms": 1790354118169,
+      "from_block": 94432261,
+      "to_block": 94432270,
+      "http_status": 200,
+      "response_received_ms": 1790354118526,
+      "parse_complete_ms": 1790354118526,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354118526,
+      "elapsed_ms": 357
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 25,
+      "started_ms": 1790354118169,
+      "from_block": 94432271,
+      "to_block": 94432280,
+      "http_status": 200,
+      "response_received_ms": 1790354118526,
+      "parse_complete_ms": 1790354118526,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354118526,
+      "elapsed_ms": 357
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 26,
+      "started_ms": 1790354118230,
+      "from_block": 94432281,
+      "to_block": 94432290,
+      "http_status": 200,
+      "response_received_ms": 1790354118575,
+      "parse_complete_ms": 1790354118575,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118575,
+      "elapsed_ms": 345
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 27,
+      "started_ms": 1790354118324,
+      "from_block": 94432291,
+      "to_block": 94432300,
+      "http_status": 200,
+      "response_received_ms": 1790354118673,
+      "parse_complete_ms": 1790354118673,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118673,
+      "elapsed_ms": 349
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 31,
+      "started_ms": 1790354118381,
+      "from_block": 94432331,
+      "to_block": 94432340,
+      "http_status": 200,
+      "response_received_ms": 1790354118674,
+      "parse_complete_ms": 1790354118674,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118674,
+      "elapsed_ms": 293
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 30,
+      "started_ms": 1790354118380,
+      "from_block": 94432321,
+      "to_block": 94432330,
+      "http_status": 200,
+      "response_received_ms": 1790354118674,
+      "parse_complete_ms": 1790354118674,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118674,
+      "elapsed_ms": 294
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 29,
+      "started_ms": 1790354118379,
+      "from_block": 94432311,
+      "to_block": 94432320,
+      "http_status": 200,
+      "response_received_ms": 1790354118734,
+      "parse_complete_ms": 1790354118734,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118734,
+      "elapsed_ms": 355
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 28,
+      "started_ms": 1790354118324,
+      "from_block": 94432301,
+      "to_block": 94432310,
+      "http_status": 200,
+      "response_received_ms": 1790354118735,
+      "parse_complete_ms": 1790354118735,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118735,
+      "elapsed_ms": 411
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 33,
+      "started_ms": 1790354118527,
+      "from_block": 94432351,
+      "to_block": 94432360,
+      "http_status": 200,
+      "response_received_ms": 1790354118864,
+      "parse_complete_ms": 1790354118864,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118864,
+      "elapsed_ms": 337
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 34,
+      "started_ms": 1790354118575,
+      "from_block": 94432361,
+      "to_block": 94432370,
+      "http_status": 200,
+      "response_received_ms": 1790354118888,
+      "parse_complete_ms": 1790354118888,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354118888,
+      "elapsed_ms": 313
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 32,
+      "started_ms": 1790354118527,
+      "from_block": 94432341,
+      "to_block": 94432350,
+      "http_status": 200,
+      "response_received_ms": 1790354118888,
+      "parse_complete_ms": 1790354118888,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118888,
+      "elapsed_ms": 361
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 37,
+      "started_ms": 1790354118675,
+      "from_block": 94432381,
+      "to_block": 94432390,
+      "http_status": 200,
+      "response_received_ms": 1790354118953,
+      "parse_complete_ms": 1790354118953,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354118953,
+      "elapsed_ms": 278
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 39,
+      "started_ms": 1790354118735,
+      "from_block": 94432411,
+      "to_block": 94432420,
+      "http_status": 200,
+      "response_received_ms": 1790354119000,
+      "parse_complete_ms": 1790354119000,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354119000,
+      "elapsed_ms": 265
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 38,
+      "started_ms": 1790354118734,
+      "from_block": 94432401,
+      "to_block": 94432410,
+      "http_status": 200,
+      "response_received_ms": 1790354119025,
+      "parse_complete_ms": 1790354119025,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119025,
+      "elapsed_ms": 291
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 35,
+      "started_ms": 1790354118674,
+      "from_block": 94432371,
+      "to_block": 94432380,
+      "http_status": 200,
+      "response_received_ms": 1790354119026,
+      "parse_complete_ms": 1790354119026,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119026,
+      "elapsed_ms": 352
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 36,
+      "started_ms": 1790354118674,
+      "from_block": 94432391,
+      "to_block": 94432400,
+      "http_status": 200,
+      "response_received_ms": 1790354119026,
+      "parse_complete_ms": 1790354119026,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119026,
+      "elapsed_ms": 352
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 41,
+      "started_ms": 1790354118888,
+      "from_block": 94432431,
+      "to_block": 94432440,
+      "http_status": 200,
+      "response_received_ms": 1790354119163,
+      "parse_complete_ms": 1790354119163,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119163,
+      "elapsed_ms": 275
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 43,
+      "started_ms": 1790354118953,
+      "from_block": 94432451,
+      "to_block": 94432460,
+      "http_status": 200,
+      "response_received_ms": 1790354119188,
+      "parse_complete_ms": 1790354119188,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119188,
+      "elapsed_ms": 235
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 42,
+      "started_ms": 1790354118889,
+      "from_block": 94432441,
+      "to_block": 94432450,
+      "http_status": 200,
+      "response_received_ms": 1790354119188,
+      "parse_complete_ms": 1790354119188,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354119188,
+      "elapsed_ms": 299
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 40,
+      "started_ms": 1790354118864,
+      "from_block": 94432421,
+      "to_block": 94432430,
+      "http_status": 200,
+      "response_received_ms": 1790354119188,
+      "parse_complete_ms": 1790354119188,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119188,
+      "elapsed_ms": 324
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 46,
+      "started_ms": 1790354119026,
+      "from_block": 94432481,
+      "to_block": 94432490,
+      "http_status": 200,
+      "response_received_ms": 1790354119334,
+      "parse_complete_ms": 1790354119334,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354119334,
+      "elapsed_ms": 308
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 45,
+      "started_ms": 1790354119025,
+      "from_block": 94432471,
+      "to_block": 94432480,
+      "http_status": 200,
+      "response_received_ms": 1790354119361,
+      "parse_complete_ms": 1790354119361,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119361,
+      "elapsed_ms": 336
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 44,
+      "started_ms": 1790354119000,
+      "from_block": 94432461,
+      "to_block": 94432470,
+      "http_status": 200,
+      "response_received_ms": 1790354119361,
+      "parse_complete_ms": 1790354119361,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119361,
+      "elapsed_ms": 361
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 47,
+      "started_ms": 1790354119026,
+      "from_block": 94432491,
+      "to_block": 94432500,
+      "http_status": 200,
+      "response_received_ms": 1790354119361,
+      "parse_complete_ms": 1790354119361,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119361,
+      "elapsed_ms": 335
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 48,
+      "started_ms": 1790354119164,
+      "from_block": 94432501,
+      "to_block": 94432510,
+      "http_status": 200,
+      "response_received_ms": 1790354119431,
+      "parse_complete_ms": 1790354119431,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354119431,
+      "elapsed_ms": 267
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 49,
+      "started_ms": 1790354119188,
+      "from_block": 94432511,
+      "to_block": 94432520,
+      "http_status": 200,
+      "response_received_ms": 1790354119498,
+      "parse_complete_ms": 1790354119498,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119498,
+      "elapsed_ms": 310
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 51,
+      "started_ms": 1790354119189,
+      "from_block": 94432531,
+      "to_block": 94432540,
+      "http_status": 200,
+      "response_received_ms": 1790354119523,
+      "parse_complete_ms": 1790354119523,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119523,
+      "elapsed_ms": 334
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 50,
+      "started_ms": 1790354119189,
+      "from_block": 94432521,
+      "to_block": 94432530,
+      "http_status": 200,
+      "response_received_ms": 1790354119524,
+      "parse_complete_ms": 1790354119524,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119524,
+      "elapsed_ms": 335
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 52,
+      "started_ms": 1790354119334,
+      "from_block": 94432541,
+      "to_block": 94432550,
+      "http_status": 200,
+      "response_received_ms": 1790354119640,
+      "parse_complete_ms": 1790354119640,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119640,
+      "elapsed_ms": 306
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 56,
+      "started_ms": 1790354119431,
+      "from_block": 94432581,
+      "to_block": 94432590,
+      "http_status": 200,
+      "response_received_ms": 1790354119664,
+      "parse_complete_ms": 1790354119664,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119664,
+      "elapsed_ms": 233
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 54,
+      "started_ms": 1790354119361,
+      "from_block": 94432561,
+      "to_block": 94432570,
+      "http_status": 200,
+      "response_received_ms": 1790354119665,
+      "parse_complete_ms": 1790354119665,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119665,
+      "elapsed_ms": 304
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 53,
+      "started_ms": 1790354119361,
+      "from_block": 94432571,
+      "to_block": 94432580,
+      "http_status": 200,
+      "response_received_ms": 1790354119665,
+      "parse_complete_ms": 1790354119665,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119665,
+      "elapsed_ms": 304
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 55,
+      "started_ms": 1790354119361,
+      "from_block": 94432551,
+      "to_block": 94432560,
+      "http_status": 200,
+      "response_received_ms": 1790354119711,
+      "parse_complete_ms": 1790354119711,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354119711,
+      "elapsed_ms": 350
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 57,
+      "started_ms": 1790354119498,
+      "from_block": 94432591,
+      "to_block": 94432600,
+      "http_status": 200,
+      "response_received_ms": 1790354119781,
+      "parse_complete_ms": 1790354119781,
+      "status": "PASS",
+      "thread_cpu_ms": 62.5,
+      "finished_ms": 1790354119781,
+      "elapsed_ms": 283
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 59,
+      "started_ms": 1790354119524,
+      "from_block": 94432611,
+      "to_block": 94432620,
+      "http_status": 200,
+      "response_received_ms": 1790354119783,
+      "parse_complete_ms": 1790354119783,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119783,
+      "elapsed_ms": 259
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 58,
+      "started_ms": 1790354119524,
+      "from_block": 94432601,
+      "to_block": 94432610,
+      "http_status": 200,
+      "response_received_ms": 1790354119784,
+      "parse_complete_ms": 1790354119784,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354119784,
+      "elapsed_ms": 260
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 60,
+      "started_ms": 1790354119640,
+      "from_block": 94432621,
+      "to_block": 94432630,
+      "http_status": 200,
+      "response_received_ms": 1790354119866,
+      "parse_complete_ms": 1790354119866,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119866,
+      "elapsed_ms": 226
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 62,
+      "started_ms": 1790354119665,
+      "from_block": 94432641,
+      "to_block": 94432649,
+      "http_status": 200,
+      "response_received_ms": 1790354119907,
+      "parse_complete_ms": 1790354119907,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354119907,
+      "elapsed_ms": 242
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 61,
+      "started_ms": 1790354119665,
+      "from_block": 94432631,
+      "to_block": 94432640,
+      "http_status": 200,
+      "response_received_ms": 1790354119907,
+      "parse_complete_ms": 1790354119908,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790354119908,
+      "elapsed_ms": 243
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 63,
+      "started_ms": 1790354119909,
+      "http_status": 200,
+      "response_received_ms": 1790354120132,
+      "parse_complete_ms": 1790354120132,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354120132,
+      "elapsed_ms": 223
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 64,
+      "started_ms": 1790354122095,
+      "http_status": 200,
+      "response_received_ms": 1790354122394,
+      "parse_complete_ms": 1790354122394,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354122394,
+      "elapsed_ms": 299
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 65,
+      "started_ms": 1790354122395,
+      "http_status": 200,
+      "response_received_ms": 1790354122621,
+      "parse_complete_ms": 1790354122621,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354122621,
+      "elapsed_ms": 226
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 67,
+      "started_ms": 1790354122623,
+      "http_status": 200,
+      "response_received_ms": 1790354122912,
+      "parse_complete_ms": 1790354122912,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354122912,
+      "elapsed_ms": 289
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 69,
+      "started_ms": 1790354122665,
+      "from_block": 94432650,
+      "to_block": 94432655,
+      "http_status": 200,
+      "response_received_ms": 1790354122917,
+      "parse_complete_ms": 1790354122918,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354122918,
+      "elapsed_ms": 253
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 68,
+      "started_ms": 1790354122624,
+      "http_status": 200,
+      "response_received_ms": 1790354122961,
+      "parse_complete_ms": 1790354122961,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790354122961,
+      "elapsed_ms": 337
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 66,
+      "started_ms": 1790354122622,
+      "http_status": 200,
+      "response_received_ms": 1790354123000,
+      "parse_complete_ms": 1790354123000,
+      "status": "PASS",
+      "thread_cpu_ms": 46.875,
+      "finished_ms": 1790354123000,
+      "elapsed_ms": 378
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 70,
+      "started_ms": 1790354123002,
+      "http_status": 200,
+      "response_received_ms": 1790354123217,
+      "parse_complete_ms": 1790354123217,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354123217,
+      "elapsed_ms": 215
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 71,
+      "started_ms": 1790354123218,
+      "http_status": 200,
+      "response_received_ms": 1790354123437,
+      "parse_complete_ms": 1790354123438,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354123438,
+      "elapsed_ms": 220
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 72,
+      "started_ms": 1790354123731,
+      "http_status": 200,
+      "response_received_ms": 1790354123994,
+      "parse_complete_ms": 1790354123994,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354123994,
+      "elapsed_ms": 263
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 73,
+      "started_ms": 1790354123731,
+      "http_status": 200,
+      "response_received_ms": 1790354123997,
+      "parse_complete_ms": 1790354123997,
+      "status": "PASS",
+      "thread_cpu_ms": 31.25,
+      "finished_ms": 1790354123997,
+      "elapsed_ms": 266
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790354115528,
+      "http_status": 200,
+      "response_received_ms": 1790354115793,
+      "parse_complete_ms": 1790354115793,
+      "shape": "int",
+      "finished_ms": 1790354115793,
+      "elapsed_ms": 265,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790354120635,
+      "http_status": 200,
+      "response_received_ms": 1790354120793,
+      "parse_complete_ms": 1790354120793,
+      "shape": "int",
+      "finished_ms": 1790354120794,
+      "elapsed_ms": 159,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790354100",
+      "started_ms": 1790354120810,
+      "http_status": 200,
+      "response_received_ms": 1790354120938,
+      "parse_complete_ms": 1790354120938,
+      "shape": "dict",
+      "finished_ms": 1790354120938,
+      "elapsed_ms": 128,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790354121402,
+      "http_status": 200,
+      "response_received_ms": 1790354121871,
+      "parse_complete_ms": 1790354121871,
+      "shape": "dict",
+      "finished_ms": 1790354121871,
+      "elapsed_ms": 469,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790354123440,
+      "http_status": 200,
+      "response_received_ms": 1790354123653,
+      "parse_complete_ms": 1790354123653,
+      "shape": "dict",
+      "finished_ms": 1790354123653,
+      "elapsed_ms": 213,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790354123440,
+      "http_status": 200,
+      "response_received_ms": 1790354123664,
+      "parse_complete_ms": 1790354123664,
+      "shape": "dict",
+      "finished_ms": 1790354123664,
+      "elapsed_ms": 224,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790354123441,
+      "http_status": 200,
+      "response_received_ms": 1790354123673,
+      "parse_complete_ms": 1790354123673,
+      "shape": "dict",
+      "finished_ms": 1790354123673,
+      "elapsed_ms": 232,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790354123485,
+      "http_status": 200,
+      "response_received_ms": 1790354123730,
+      "parse_complete_ms": 1790354123730,
+      "shape": "dict",
+      "finished_ms": 1790354123730,
+      "elapsed_ms": 245,
+      "thread_cpu_ms": 62.5
+    }
+  ],
+  "storage_binding_verified": true,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "finalized_qualification": {
+    "status": "PASS_PROVIDER_FINALIZED_READ",
+    "chain_id": 137,
+    "anchor": {
+      "number": 94432649,
+      "hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+      "timestamp": 1790354114
+    },
+    "observed_ms": 1790354115856,
+    "finished_ms": 1790354117041,
+    "independent_consensus_proven": false,
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94432649,
+          "block_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+          "block_timestamp_ms": 1790354114000,
+          "request_started_ms": 1790354116097,
+          "response_received_ms": 1790354116339,
+          "block_minus_receive_ms": -2339,
+          "block_minus_request_ms": -2097
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94432651,
+          "block_hash": "0x158f79e5fc352c30396cd7de2523a94e9219cfab50ab9c4531f84012a763b799",
+          "block_timestamp_ms": 1790354117000,
+          "request_started_ms": 1790354116339,
+          "response_received_ms": 1790354116573,
+          "block_minus_receive_ms": 427,
+          "block_minus_request_ms": 661
+        },
+        {
+          "label": "anchor_recheck",
+          "requested_tag": "0x5a0ed89",
+          "number": 94432649,
+          "block_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+          "block_timestamp_ms": 1790354114000,
+          "request_started_ms": 1790354116573,
+          "response_received_ms": 1790354116814,
+          "block_minus_receive_ms": -2814,
+          "block_minus_request_ms": -2573
+        },
+        {
+          "label": "finalized_second",
+          "requested_tag": "finalized",
+          "number": 94432649,
+          "block_hash": "0x2ced479a8d6cfa85351e20c354841c799143082ca5a3a7cda95c8b13ba8ae038",
+          "block_timestamp_ms": 1790354114000,
+          "request_started_ms": 1790354116814,
+          "response_received_ms": 1790354117041,
+          "block_minus_receive_ms": -3041,
+          "block_minus_request_ms": -2814
+        }
+      ],
+      "reason": "FINALIZED_QUALIFIED",
+      "stage": "complete",
+      "clock_source": "LOCAL_TIME_TIME_NS_UTC",
+      "clock_accuracy_proven": false
+    }
+  },
+  "clock_diagnostic": {
+    "source": "LOCAL_TIME_TIME_NS_UTC",
+    "clob_server_seconds": 1790354120,
+    "request_started_ms": 1790354120635,
+    "response_received_ms": 1790354120794,
+    "accuracy_500ms_proven": false,
+    "server_second_minus_local_receive_ms": -794,
+    "offset_interval_ms": [
+      -794,
+      365
+    ],
+    "note": "CLOB integer-second reading is diagnostic, not a subsecond clock calibration; no timestamps adjusted"
+  },
+  "health_contract": true,
+  "reconciliation_timing": {
+    "started_ms": 1790354123998,
+    "finished_ms": 1790354124003,
+    "thread_cpu_ms": 0.0
+  },
+  "inventory_checkpoint_status": "SAVED_AFTER_EVALUATION",
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364"
+}

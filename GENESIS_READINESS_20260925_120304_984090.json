@@ -1,0 +1,323 @@
+{
+  "phase": "D6_GENESIS_AND_FULL_READINESS",
+  "genesis": {
+    "created": false,
+    "phase": "GENESIS_PENDING",
+    "reasons": [
+      "CTF_RANGE_REQUIRES_REVIEWED_CHUNK_MANIFEST"
+    ],
+    "discovery": {
+      "logs_started": false,
+      "to_block": 94421758,
+      "block_hash": "0xfd39e6ebb9e003603eee89dd44ad99414d035410d44b5ba36533ce4c0bab25fd",
+      "from_block": 94331195,
+      "block_count": 90564,
+      "maximum_blocks": 50000
+    }
+  },
+  "readiness": {
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": true,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": true,
+        "authenticated": true,
+        "observed_ms": 1790336286402,
+        "balance_collateral": "109.160000",
+        "collateral_symbol": "pUSD",
+        "complete": false,
+        "reason": "PRIOR_OBSERVATION_REQUIRES_FRESH_ACCOUNT_READ"
+      },
+      "positions": {
+        "available": true,
+        "observed_ms": 1790336286816,
+        "complete": false,
+        "reason": "INDEX_VIEW_ONLY_NO_CONDITIONAL_DISCOVERY"
+      },
+      "book": {
+        "available": false,
+        "connected": false,
+        "book_synced": false,
+        "market_slug": null,
+        "generation": null,
+        "books": {},
+        "observed_ms": null
+      },
+      "geo": {
+        "available": true,
+        "blocked": false,
+        "observed_ms": 1790337784736
+      },
+      "risk": {
+        "available": false,
+        "complete": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ]
+  },
+  "network_executed": true,
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790337778101,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 308
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790337784736,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 243
+    }
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790337778410,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790337778608,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 3,
+      "started_ms": 1790337778779,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 4,
+      "started_ms": 1790337778955,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 5,
+      "started_ms": 1790337779151,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 6,
+      "started_ms": 1790337779344,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 7,
+      "started_ms": 1790337779532,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 8,
+      "started_ms": 1790337779713,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 9,
+      "started_ms": 1790337779890,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 10,
+      "started_ms": 1790337780069,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 11,
+      "started_ms": 1790337780311,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 12,
+      "started_ms": 1790337780497,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 13,
+      "started_ms": 1790337780702,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 14,
+      "started_ms": 1790337780884,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 15,
+      "started_ms": 1790337781075,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 16,
+      "started_ms": 1790337781247,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 17,
+      "started_ms": 1790337781422,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 18,
+      "started_ms": 1790337781598,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 19,
+      "started_ms": 1790337781779,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 20,
+      "started_ms": 1790337781958,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 21,
+      "started_ms": 1790337782141,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 22,
+      "started_ms": 1790337782333,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 23,
+      "started_ms": 1790337782563,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 24,
+      "started_ms": 1790337782765,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 25,
+      "started_ms": 1790337782969,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 26,
+      "started_ms": 1790337783174,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 27,
+      "started_ms": 1790337783365,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 28,
+      "started_ms": 1790337783551,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 29,
+      "started_ms": 1790337783746,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 30,
+      "started_ms": 1790337783936,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 31,
+      "started_ms": 1790337784118,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 32,
+      "started_ms": 1790337784307,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 33,
+      "started_ms": 1790337784533,
+      "status": "PASS"
+    }
+  ],
+  "prior_history_globally_known": false,
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "book_source": "ACTUAL_ADAPTER_DISCONNECTED_NO_PRODUCTION_STREAM",
+  "future_execution_binding_ready": false,
+  "execution_binding_reason": "RUNNER_REMAINS_DISCONNECTED_MUST_JOURNAL_BEFORE_ANY_FUTURE_UNLOCK",
+  "ledger_path": "runtime/d6_genesis.db",
+  "private_key_loaded": false,
+  "l1_signature_produced": false
+}

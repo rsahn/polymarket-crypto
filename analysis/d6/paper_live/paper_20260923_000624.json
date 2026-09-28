@@ -1,0 +1,104 @@
+{
+  "contract": "D6_V1_PAPER_ONLY",
+  "errors": [],
+  "fill_count": 4,
+  "fills": [
+    {
+      "btc_move": -0.0005005142691254516,
+      "cost": 25.0,
+      "entry_vwap": 0.96,
+      "exit_price": 0.97,
+      "pnl": 0.26041666666666785,
+      "portfolio": "fixed_25",
+      "shares": 26.041666666666668,
+      "side": "DOWN",
+      "signal_ts_ms": 1790114588262,
+      "slug": "btc-updown-5m-1790114400"
+    },
+    {
+      "btc_move": -0.0005005142691254516,
+      "cost": 50.0,
+      "entry_vwap": 0.96,
+      "exit_price": 0.97,
+      "pnl": 0.5208333333333357,
+      "portfolio": "fixed_50",
+      "shares": 52.083333333333336,
+      "side": "DOWN",
+      "signal_ts_ms": 1790114588262,
+      "slug": "btc-updown-5m-1790114400"
+    },
+    {
+      "btc_move": -0.0005005142691254516,
+      "cost": 100.0,
+      "entry_vwap": 0.96,
+      "exit_price": 0.97,
+      "pnl": 1.0416666666666714,
+      "portfolio": "fixed_100",
+      "shares": 104.16666666666667,
+      "side": "DOWN",
+      "signal_ts_ms": 1790114588262,
+      "slug": "btc-updown-5m-1790114400"
+    },
+    {
+      "btc_move": -0.0005005142691254516,
+      "cost": 100.0,
+      "entry_vwap": 0.96,
+      "exit_price": 0.97,
+      "pnl": 1.0416666666666714,
+      "portfolio": "dynamic_depth",
+      "shares": 104.16666666666667,
+      "side": "DOWN",
+      "signal_ts_ms": 1790114588262,
+      "slug": "btc-updown-5m-1790114400"
+    }
+  ],
+  "portfolios": {
+    "dynamic_depth": {
+      "capital": 501.0416666666667,
+      "max_drawdown": 0.0,
+      "name": "dynamic_depth",
+      "peak": 501.0416666666667,
+      "pnl": 1.0416666666666714,
+      "trades": 1
+    },
+    "fixed_100": {
+      "capital": 501.0416666666667,
+      "max_drawdown": 0.0,
+      "name": "fixed_100",
+      "peak": 501.0416666666667,
+      "pnl": 1.0416666666666714,
+      "trades": 1
+    },
+    "fixed_25": {
+      "capital": 500.2604166666667,
+      "max_drawdown": 0.0,
+      "name": "fixed_25",
+      "peak": 500.2604166666667,
+      "pnl": 0.26041666666666785,
+      "trades": 1
+    },
+    "fixed_50": {
+      "capital": 500.5208333333333,
+      "max_drawdown": 0.0,
+      "name": "fixed_50",
+      "peak": 500.5208333333333,
+      "pnl": 0.5208333333333357,
+      "trades": 1
+    }
+  },
+  "signal_count": 2,
+  "signals": [
+    {
+      "btc_move": -0.0005005142691254516,
+      "side": "DOWN",
+      "ts_ms": 1790114588262
+    },
+    {
+      "btc_move": -0.0005003721132759154,
+      "side": "DOWN",
+      "ts_ms": 1790114591349
+    }
+  ],
+  "started_ms": 1790114477915,
+  "updated_ms": 1790114784925
+}

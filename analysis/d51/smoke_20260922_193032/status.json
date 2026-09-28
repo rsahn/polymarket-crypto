@@ -1,0 +1,125 @@
+{
+  "pid": 23320,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260922_193032.db",
+  "started_utc": "2026-09-22T17:30:32.817590+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-22T17:39:31.109191+00:00",
+  "session_id": "2146106c-c265-490e-b865-eaa660e13d22",
+  "elapsed_seconds": 483.7767210002057,
+  "counts": {
+    "CLOCK_SAMPLE": 16,
+    "ACTIVATE": 85,
+    "BOOK": 161376,
+    "BTC_CONNECTED": 9,
+    "BTC": 5308,
+    "REJECT": 264,
+    "STALE_BOOK_RECONNECT": 81,
+    "RECONNECT": 83,
+    "BTC_RECONNECT": 8,
+    "EXPIRE": 1,
+    "ROTATION": 1,
+    "WS_ERROR": 2
+  },
+  "last_books": {
+    "5m": {
+      "slug": "btc-updown-5m-1790098500",
+      "received_ts_ms": 1790098756247
+    },
+    "15m": {
+      "slug": "btc-updown-15m-1790098200",
+      "received_ts_ms": 1790098756231
+    }
+  },
+  "writer": {
+    "submitted": 169240,
+    "sent_sequence": 169233,
+    "processed_sequence": 169233,
+    "committed_sequence": 169233,
+    "outstanding_items": 6,
+    "outstanding_bytes": 6928,
+    "high_water_items": 258,
+    "high_water_bytes": 772968,
+    "oldest_unacknowledged_age_seconds": 0.0009932001121342182,
+    "pending_batches_items": 3,
+    "control_pending_items": 3,
+    "worker_pid": 14372,
+    "capacity_rejections": 90,
+    "last_capacity_rejection": {
+      "kind": "BOOK",
+      "items": 256,
+      "bytes": 681417,
+      "command_bytes": 2776,
+      "processed_sequence": 167942,
+      "committed_sequence": 167942,
+      "sent_sequence": 168130,
+      "pending_items": 68,
+      "at_monotonic": 1130190.2272522
+    },
+    "closed_ack": false,
+    "error": null
+  },
+  "free_bytes": 75826835456,
+  "feed_timing": {
+    "5m": {
+      "observations": 85798,
+      "wire_age_sum_ms": 2347616,
+      "last_wire_age_ms": 24,
+      "max_wire_age_ms": 569,
+      "last_processing_ms": 1,
+      "last_received_ts_ms": 1790098756247
+    },
+    "15m": {
+      "observations": 75678,
+      "wire_age_sum_ms": 2019864,
+      "last_wire_age_ms": 28,
+      "max_wire_age_ms": 550,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790098756231
+    }
+  },
+  "stage_timing": {
+    "5m:normalize": {
+      "calls": 85961,
+      "wall_ns": 16210809200,
+      "cpu_ns": 14562500000,
+      "max_wall_ns": 128126100,
+      "over_5ms": 15,
+      "over_50ms": 2
+    },
+    "5m:callback_including_store": {
+      "calls": 85961,
+      "wall_ns": 5407112100,
+      "cpu_ns": 4984375000,
+      "max_wall_ns": 90658700,
+      "over_5ms": 6,
+      "over_50ms": 1
+    },
+    "15m:normalize": {
+      "calls": 75764,
+      "wall_ns": 13741257600,
+      "cpu_ns": 12250000000,
+      "max_wall_ns": 45657000,
+      "over_5ms": 25,
+      "over_50ms": 0
+    },
+    "15m:callback_including_store": {
+      "calls": 75764,
+      "wall_ns": 4875275200,
+      "cpu_ns": 4953125000,
+      "max_wall_ns": 59280000,
+      "over_5ms": 9,
+      "over_50ms": 1
+    }
+  },
+  "last_clock_failures": [],
+  "error": "RuntimeError('WRITER_FAILED: ')"
+}

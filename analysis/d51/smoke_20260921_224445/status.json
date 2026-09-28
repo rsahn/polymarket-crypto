@@ -1,0 +1,17 @@
+{
+  "pid": 22024,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_224445.db",
+  "started_utc": "2026-09-21T20:44:45.940579+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T20:45:02.125803+00:00",
+  "error": "KeyboardInterrupt()"
+}

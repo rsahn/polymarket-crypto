@@ -1,0 +1,43 @@
+{
+  "phase": "CTF_RPC_FAILURE_DIAGNOSTIC",
+  "status": "BLOCKED",
+  "rpc": "https://polygon.drpc.org",
+  "from_block": 94331195,
+  "to_block": 94331694,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790338703922,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 2,
+      "started_ms": 1790338704159,
+      "from_block": 94331195,
+      "to_block": 94331694,
+      "http_status": 400,
+      "error_category": "HTTP_ERROR",
+      "http_error_body_status": "JSON_ERROR_CLASSIFIED",
+      "error_response_id_matches": true,
+      "provider_error": {
+        "error_category": "METHOD_UNSUPPORTED",
+        "rpc_error_code": 35,
+        "classification_basis": "PROVIDER_ERROR_CODE_OR_MESSAGE_PATTERN_NOT_INDEPENDENTLY_VERIFIED"
+      },
+      "status": "FAILED"
+    }
+  ],
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "authenticated_get_attempts": 0,
+  "genesis_created": false,
+  "ready_for_arm": false,
+  "reason": "PUBLIC_READ_FAILED_SEE_SANITIZED_RPC_CALLS"
+}

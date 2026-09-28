@@ -1,0 +1,183 @@
+{
+  "captured_utc": "2026-09-21T20:27:31.148171+00:00",
+  "wall_ns": 1790022451148184900,
+  "monotonic_ns": 1053891883843000,
+  "references": {
+    "time.windows.com": {
+      "samples": [
+        {
+          "server": "time.windows.com",
+          "peer": [
+            "51.145.123.29",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:31.219060+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b32c880000",
+          "response_hex": "1c0400e90000000500000299564d5450ee5c11a57eda8afbee5c11b32c880000ee5c11b332d23efcee5c11b332d263e5",
+          "offset_ms": 2.018094062805176,
+          "delay_ms": 45.1047420501709,
+          "dispersion_ms": 10.1470947265625,
+          "root_delay_ms": 0.0762939453125,
+          "stratum": 4,
+          "leap": 0,
+          "reference_timestamp": 1790022437.4955223,
+          "t1": 1790022451.1739502,
+          "t2": 1790022451.1985207,
+          "t3": 1790022451.1985228,
+          "t4": 1790022451.219057,
+          "monotonic_elapsed_seconds": 0.04510760004632175
+        },
+        {
+          "server": "time.windows.com",
+          "peer": [
+            "51.145.123.29",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:32.265578+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b43871cc00",
+          "response_hex": "1c0400e9000000050000029a564d5450ee5c11a57eb0516cee5c11b43871cc00ee5c11b43eb0475bee5c11b43eb05674",
+          "offset_ms": 1.846909523010254,
+          "delay_ms": 45.08805274963379,
+          "dispersion_ms": 10.162353515625,
+          "root_delay_ms": 0.0762939453125,
+          "stratum": 4,
+          "leap": 0,
+          "reference_timestamp": 1790022437.4948778,
+          "t1": 1790022452.2204864,
+          "t2": 1790022452.2448773,
+          "t3": 1790022452.2448783,
+          "t4": 1790022452.2655754,
+          "monotonic_elapsed_seconds": 0.04509000014513731
+        },
+        {
+          "server": "time.windows.com",
+          "peer": [
+            "51.145.123.29",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:33.312584+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b5445c7800",
+          "response_hex": "1c0400e9000000050000029b564d5450ee5c11a57eb96d74ee5c11b5445c7800ee5c11b54ac1912fee5c11b54ac1a551",
+          "offset_ms": 2.2090673446655273,
+          "delay_ms": 45.542001724243164,
+          "dispersion_ms": 10.1776123046875,
+          "root_delay_ms": 0.0762939453125,
+          "stratum": 4,
+          "leap": 0,
+          "reference_timestamp": 1790022437.4950168,
+          "t1": 1790022453.267036,
+          "t2": 1790022453.292016,
+          "t3": 1790022453.2920172,
+          "t4": 1790022453.3125792,
+          "monotonic_elapsed_seconds": 0.04554429999552667
+        }
+      ],
+      "errors": [],
+      "valid": true
+    },
+    "time.cloudflare.com": {
+      "samples": [
+        {
+          "server": "time.cloudflare.com",
+          "peer": [
+            "162.159.200.1",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:33.372246+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b55646f800",
+          "response_hex": "240300e7000003c40000001b0a1a08b9ee5c11a29e7dd6f4ee5c11b55646f800ee5c11b55d31c86fee5c11b55d3adbdc",
+          "offset_ms": 9.478569030761719,
+          "delay_ms": 35.083770751953125,
+          "dispersion_ms": 0.4119873046875,
+          "root_delay_ms": 14.70947265625,
+          "stratum": 3,
+          "leap": 0,
+          "reference_timestamp": 1790022434.6191077,
+          "t1": 1790022453.3370204,
+          "t2": 1790022453.3640409,
+          "t3": 1790022453.3641794,
+          "t4": 1790022453.3722427,
+          "monotonic_elapsed_seconds": 0.03522319998592138
+        },
+        {
+          "server": "time.cloudflare.com",
+          "peer": [
+            "162.159.200.1",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:34.402805+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b65f76c400",
+          "response_hex": "240300e6000003da0000001d0a0e0804ee5c118d029c48baee5c11b65f76c400ee5c11b664fcf5a9ee5c11b665015864",
+          "offset_ms": 6.665587425231934,
+          "delay_ms": 29.82640266418457,
+          "dispersion_ms": 0.4425048828125,
+          "root_delay_ms": 15.045166015625,
+          "stratum": 3,
+          "leap": 0,
+          "reference_timestamp": 1790022413.0101972,
+          "t1": 1790022454.372906,
+          "t2": 1790022454.3944848,
+          "t3": 1790022454.3945518,
+          "t4": 1790022454.4027994,
+          "monotonic_elapsed_seconds": 0.029894700041040778
+        },
+        {
+          "server": "time.cloudflare.com",
+          "peer": [
+            "162.159.200.1",
+            123
+          ],
+          "captured_utc": "2026-09-21T20:27:35.446180+00:00",
+          "request_hex": "23000000000000000000000000000000000000000000000000000000000000000000000000000000ee5c11b767520c00",
+          "response_hex": "240300e6000003eb000000170ada0804ee5c11ac306e9fceee5c11b767520c00ee5c11b76e3a90ddee5c11b76e40a686",
+          "offset_ms": 5.741477012634277,
+          "delay_ms": 42.48785972595215,
+          "dispersion_ms": 0.3509521484375,
+          "root_delay_ms": 15.3045654296875,
+          "stratum": 3,
+          "leap": 0,
+          "reference_timestamp": 1790022444.189188,
+          "t1": 1790022455.4035957,
+          "t2": 1790022455.430581,
+          "t3": 1790022455.430674,
+          "t4": 1790022455.4461765,
+          "monotonic_elapsed_seconds": 0.04258110001683235
+        }
+      ],
+      "errors": [],
+      "valid": true
+    }
+  },
+  "raw_w32time": {
+    "command": [
+      "w32tm",
+      "/query",
+      "/status",
+      "/verbose"
+    ],
+    "exit_code": 0,
+    "stdout": "Indicateur de dérive : 0(Aucun avertissement)\nCouche : 5 (Référence secondaire, synchronisée par (S)NTP)\nPrécision : -23 (119.209ns par battement)\nDélai de racine : 0.0402508s\nDispersion de racine : 0.0290246s\nID de référence : 0x33917B1D (IP de la source :  51.145.123.29)\nHeure de la dernière synchronisation réussie : 21/09/2026 22:26:45\nSource : time.windows.com,0x8 \nIntervalle d'interrogation : 6 (64s)\n\nDécalage de phase : 0.0032384s\nFréquence d'horloge : 0.0156249s\nOrdinateur d'état : 2 (Synchroniser)\nIndicateur de source de temps : 0 (Aucun)\nRôle de serveur : 0 (Aucun)\nErreur lors de la dernière synchronisation : 0 (La commande s'est terminée correctement.)\nDurée écoulée depuis l'heure de la dernière synchronisation réussie : 49.7627720s\n\n",
+    "stderr": "",
+    "stdout_hex": "496e646963617465757220646520648272697665ff3a203028417563756e206176657274697373656d656e74290a436f75636865ff3a203520285282668272656e6365207365636f6e64616972652c2073796e6368726f6e6973826520706172202853294e5450290a507282636973696f6eff3a202d323320283131392e3230396e73207061722062617474656d656e74290a44826c616920646520726163696e65ff3a20302e30343032353038730a44697370657273696f6e20646520726163696e65ff3a20302e30323930323436730a4944206465207282668272656e6365ff3a203078333339313742314420284950206465206c6120736f75726365ff3a202035312e3134352e3132332e3239290a4865757265206465206c61206465726e698a72652073796e6368726f6e69736174696f6e2072827573736965ff3a2032312f30392f323032362032323a32363a34350a536f75726365ff3a2074696d652e77696e646f77732e636f6d2c307838200a496e74657276616c6c65206427696e746572726f676174696f6eff3a20362028363473290a0a448263616c616765206465207068617365ff3a20302e30303332333834730a4672827175656e6365206427686f726c6f6765ff3a20302e30313536323439730a4f7264696e617465757220642782746174ff3a2032202853796e6368726f6e69736572290a496e646963617465757220646520736f757263652064652074656d7073ff3a20302028417563756e290a52936c652064652073657276657572ff3a20302028417563756e290a457272657572206c6f7273206465206c61206465726e698a72652073796e6368726f6e69736174696f6eff3a203020284c6120636f6d6d616e6465207327657374207465726d696e826520636f7272656374656d656e742e290a44757282652082636f756c826520646570756973206c276865757265206465206c61206465726e698a72652073796e6368726f6e69736174696f6e2072827573736965ff3a2034392e37363237373230730a0a"
+  },
+  "raw_service": {
+    "command": [
+      "powershell",
+      "-NoProfile",
+      "-Command",
+      "(Get-Service W32Time).Status.ToString()"
+    ],
+    "exit_code": 0,
+    "stdout": "Running\r\n",
+    "stderr": "",
+    "stdout_hex": "52756e6e696e670d0a"
+  },
+  "w32time": {
+    "service": "Running",
+    "source": "time.windows.com,0x8",
+    "last_sync_error": 0,
+    "last_sync_age_seconds": 49.762772,
+    "last_sync_raw": "21/09/2026 22:26:45"
+  },
+  "phase": "during"
+}

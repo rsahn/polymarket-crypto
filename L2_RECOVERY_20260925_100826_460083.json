@@ -1,0 +1,25 @@
+{
+  "phase": "L2_EXISTING_CREDENTIAL_RECOVERY",
+  "preview": {
+    "chain_id": 137,
+    "environment": "production Polygon",
+    "expected_signer": "0x9348...203a",
+    "nonce": 0,
+    "eip712_domain": {
+      "name": "ClobAuthDomain",
+      "version": "1",
+      "chainId": 137
+    },
+    "eip712_type": "ClobAuth",
+    "endpoint": "https://clob.polymarket.com/auth/derive-api-key",
+    "method": "GET"
+  },
+  "success": true,
+  "stored": false,
+  "derive_attempted": false,
+  "signature_produced": false,
+  "storage_validated": true,
+  "real_orders_enabled": false,
+  "live_execution_armed": false,
+  "reason": "PREVIEW_ONLY"
+}

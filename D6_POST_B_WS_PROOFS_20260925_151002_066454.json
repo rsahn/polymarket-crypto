@@ -1,0 +1,255 @@
+{
+  "phase": "D6_POST_B_AND_WS_PROOFS",
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "genesis_created": false,
+  "finalized": {
+    "status": "BLOCKED",
+    "reason": "FINALIZED_UNPROVEN",
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94429218,
+          "block_hash": "0xd75fff5b3398ee3f98b473802fa3f321229fc3be722a71b7d5378ce0e5b14466",
+          "block_timestamp_ms": 1790348967000,
+          "request_started_ms": 1790348972270,
+          "response_received_ms": 1790348972494
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94429222,
+          "block_hash": "0x2a57ceb62dc0cc712e5b52f2e5c66ebb3e660cfcfb3d87417276d43e885ff40e",
+          "block_timestamp_ms": 1790348973000,
+          "request_started_ms": 1790348972494,
+          "response_received_ms": 1790348972718
+        }
+      ],
+      "reason": "HEADER_TIMESTAMP_IN_FUTURE",
+      "stage": "latest"
+    }
+  },
+  "inventory": {
+    "status": "NOT_RUN"
+  },
+  "book": {
+    "state": "DISCONNECTED",
+    "available": false,
+    "connected": false,
+    "synchronized": false,
+    "fresh": false,
+    "reason": "NOT_CONNECTED_OR_EXPIRED",
+    "diagnostics": {
+      "parser_reason": "NOT_CONNECTED_OR_EXPIRED",
+      "exception_category": "PARSER_OR_PROTOCOL_ERROR",
+      "close_code": null,
+      "close_reason_category": null,
+      "remote_close_reason_present": false,
+      "last_valid_message": {
+        "kind": "price_change",
+        "source_ms": 1790348999714,
+        "received_ms": 1790348999751,
+        "generation": 1
+      },
+      "resync_complete_generation": null,
+      "regression_event": null,
+      "transitions": [
+        {
+          "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348972489,
+          "reason": null
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348972560,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348972561,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348976468,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348976470,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348981391,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348981392,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348981418,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348981421,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348985931,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348985933,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348990313,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348990340,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348997030,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348997031,
+          "reason": "EMPTY_BOOK"
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790349000025,
+          "reason": "NOT_CONNECTED_OR_EXPIRED"
+        },
+        {
+          "kind": "DISCONNECTED",
+          "generation": 1,
+          "at_ms": 1790349002031,
+          "reason": "NOT_CONNECTED_OR_EXPIRED"
+        }
+      ],
+      "tokens": [
+        {
+          "token_index": 0,
+          "bids_count": 99,
+          "asks_count": 0,
+          "best_bid": "0.99",
+          "best_ask": null,
+          "generation": 1,
+          "last_valid_book_age_ms": null,
+          "current_generation_synced": false
+        },
+        {
+          "token_index": 1,
+          "bids_count": 0,
+          "asks_count": 99,
+          "best_bid": null,
+          "best_ask": "0.01",
+          "generation": 1,
+          "last_valid_book_age_ms": null,
+          "current_generation_synced": false
+        }
+      ],
+      "rejected_message_age_ms": null,
+      "first_full_books": [
+        {
+          "token_index": 0,
+          "token_sha256": "86af44f157d9d892b02bd2d6bac06723a09a7803ad7fb9d88bdb0036b668e12e",
+          "identity_matches": true,
+          "message_kind": "book",
+          "bids_count": 99,
+          "asks_count": 0,
+          "best_bid": "0.99",
+          "best_ask": null,
+          "source_timestamp_ms": 1790348972503,
+          "generation": 1
+        },
+        {
+          "token_index": 1,
+          "token_sha256": "a96e135ce7338bd3ca4b75cd1fcc685acd33c9fb21fe0f876a24573051c0cf03",
+          "identity_matches": true,
+          "message_kind": "book",
+          "bids_count": 0,
+          "asks_count": 99,
+          "best_bid": null,
+          "best_ask": "0.01",
+          "source_timestamp_ms": 1790348972503,
+          "generation": 1
+        }
+      ]
+    },
+    "messages_received": 2137
+  },
+  "genesis_unchanged": true,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790348971954,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790348972270,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790348972494,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790348700",
+      "started_ms": 1790348971995,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 180
+    }
+  ],
+  "status": "EVIDENCE_ONLY_NOT_READY"
+}

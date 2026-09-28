@@ -1,0 +1,33 @@
+{
+  "btc_move": -0.0005021182336372165,
+  "final": {
+    "average_fill_price": 0.73,
+    "exit_average_price": 0.8,
+    "exit_filled_size": 34.2465,
+    "filled_size": 34.2465,
+    "open_size": 0.0,
+    "realized_pnl": 2.397255000000002,
+    "state": "CLOSED"
+  },
+  "source": "observed-real-signal-replay",
+  "staged": {
+    "mode": "LIVE_STAGING_NO_SUBMIT",
+    "order": {
+      "limit_price": 0.73,
+      "market_slug": "btc-updown-5m-1790279700",
+      "min_order_size": 5.0,
+      "notional": 25.0,
+      "side": "BUY",
+      "signal_id": "1790279791870",
+      "size": 34.2465,
+      "tick_size": 0.01,
+      "token_id": "39360364743737186856890943742790400901889374934310999036224743283441056448445"
+    },
+    "real_orders_enabled_env": false,
+    "sdk_create_limit_order_signature": null,
+    "sdk_submission_methods_present": [],
+    "submit_allowed": false,
+    "ts_ms": 1790289058245
+  },
+  "valid": true
+}

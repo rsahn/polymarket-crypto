@@ -1,0 +1,34 @@
+{
+  "phase": "AUTHENTICATED_READ_ONLY",
+  "complete": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "derive_attempted": false,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "leak_scan": {
+    "detected": false,
+    "files_checked": 2198,
+    "files_unchecked": 7,
+    "scope": "selected tracked working-tree text files and L2 reports/logs; excludes Git history, terminal history and inaccessible/large files",
+    "global_absence_proven": false
+  },
+  "status": "STORAGE_VALIDATED_NETWORK_NOT_EXECUTED",
+  "reconciliation": {
+    "complete": false,
+    "status": "BLOCKED",
+    "reason": "GLOBAL_SCOPE_AND_LOCAL_LEDGER_NOT_PROVEN"
+  }
+}

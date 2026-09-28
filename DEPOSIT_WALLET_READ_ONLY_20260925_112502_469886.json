@@ -1,0 +1,111 @@
+{
+  "phase": "DEPOSIT_WALLET_READ_ONLY",
+  "deposit_wallet_proven": true,
+  "deposit_kind": "beacon",
+  "wallet_proof": {
+    "source": "SDK_CREATE2_AND_RELAYER_GET_DEPLOYED",
+    "observed_ms": 1790335501149,
+    "deployment_observations": {
+      "legacy": false,
+      "beacon": true
+    },
+    "onchain_verified": false,
+    "scope": "PUBLIC_SIGNER_CANDIDATE_ASSOCIATION_AND_RELAYER_DEPLOYMENT_ONLY"
+  },
+  "balance_type0_raw": "0",
+  "positions_http_status": 200,
+  "positions_count": 0,
+  "positions_400_cause": null,
+  "balance_type3_raw": "109160000",
+  "historical_raw": "109160000",
+  "historical_comparison": "EQUAL_RAW_UNITS_NOT_ATTESTED",
+  "positions_status": "PASS_INDEX_ONLY",
+  "conversion_allowed": false,
+  "complete": false,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "derive_attempted": false,
+  "onchain_verified": false,
+  "historical_instance_proven": false,
+  "collateral_contract_verified": false,
+  "decimals_verified": false,
+  "account_binding_verified": false,
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790335500422,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 305
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://relayer-v2.polymarket.com/deployed",
+      "started_ms": 1790335500728,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 219
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://relayer-v2.polymarket.com/deployed",
+      "started_ms": 1790335500947,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 202
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790335501888,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 161
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790335502049,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 171
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790335502223,
+      "http_status": 200,
+      "finished_ms": 1790335502466
+    }
+  ],
+  "blockers": [
+    "COLLATERAL_CONTRACT_DECIMALS_AND_ACCOUNT_BINDING_UNPROVEN",
+    "GLOBAL_INVENTORY_AND_LOCAL_RECONCILIATION_UNPROVEN"
+  ],
+  "deployment_observations": {
+    "legacy": false,
+    "beacon": true
+  },
+  "wallet_masked": "0x871d...9DE9",
+  "proof_scope": "SDK_CREATE2_SIGNER_ASSOCIATION_AND_PUBLIC_RELAYER_DEPLOYED_AT_OBSERVATION",
+  "proof_limit": "NOT_DIRECT_CHAIN_OWNER_PROOF_OR_HISTORICAL_SNAPSHOT",
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "allowance_type0_selected_raw": "0",
+  "allowance_type3_selected_raw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+  "positions_pagination_complete": true,
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "execution_context": "MANUAL_TARGET_POWERSHELL"
+}

@@ -1,0 +1,112 @@
+{
+  "phase": "D6_POST_B_AND_WS_PROOFS",
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "genesis_created": false,
+  "finalized": {
+    "status": "PASS_PROVIDER_FINALIZED_READ",
+    "chain_id": 137,
+    "anchor": {
+      "number": 94429083,
+      "hash": "0xff3f99bb04d3d05c59e561e924dc46ffd52598185c59cdbd95eac8f91edb3113",
+      "timestamp": 1790348765
+    },
+    "observed_ms": 1790348768715,
+    "finished_ms": 1790348770021,
+    "independent_consensus_proven": false,
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94429083,
+          "block_hash": "0xff3f99bb04d3d05c59e561e924dc46ffd52598185c59cdbd95eac8f91edb3113",
+          "block_timestamp_ms": 1790348765000,
+          "request_started_ms": 1790348769028,
+          "response_received_ms": 1790348769283
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94429086,
+          "block_hash": "0x7e74398f3af8bd2d3494a727efa31bf95c3f4d97e5597af5f80c4f5d237668f0",
+          "block_timestamp_ms": 1790348769000,
+          "request_started_ms": 1790348769283,
+          "response_received_ms": 1790348769525
+        },
+        {
+          "label": "anchor_recheck",
+          "requested_tag": "0x5a0df9b",
+          "number": 94429083,
+          "block_hash": "0xff3f99bb04d3d05c59e561e924dc46ffd52598185c59cdbd95eac8f91edb3113",
+          "block_timestamp_ms": 1790348765000,
+          "request_started_ms": 1790348769525,
+          "response_received_ms": 1790348769793
+        },
+        {
+          "label": "finalized_second",
+          "requested_tag": "finalized",
+          "number": 94429085,
+          "block_hash": "0xfaef54f6e7dc1c682771966024ff99209b43b5b592211c79d67e4dcf02a352f2",
+          "block_timestamp_ms": 1790348768000,
+          "request_started_ms": 1790348769793,
+          "response_received_ms": 1790348770021
+        }
+      ],
+      "reason": "FINALIZED_QUALIFIED",
+      "stage": "complete"
+    }
+  },
+  "inventory": {
+    "status": "NOT_RUN"
+  },
+  "book": {
+    "status": "NOT_RUN"
+  },
+  "genesis_unchanged": true,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790348768716,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790348769028,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790348769283,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790348769525,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790348769793,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [],
+  "status": "EVIDENCE_ONLY_NOT_READY"
+}

@@ -1,0 +1,19 @@
+{
+  "phase": "POLYGON_ARCHIVE_RPC_QUALIFICATION",
+  "status": "BLOCKED",
+  "rpc": "CONFIGURED_POLYGON_ARCHIVE_RPC_URL",
+  "from_block": 94331195,
+  "to_block": 94331204,
+  "rpc_calls": [],
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "authenticated_get_attempts": 0,
+  "genesis_created": false,
+  "ready_for_arm": false,
+  "rpc_configuration_source": "PROCESS_ENVIRONMENT_ONLY_NO_DOTENV",
+  "reason": "POLYGON_ARCHIVE_RPC_URL_INVALID"
+}

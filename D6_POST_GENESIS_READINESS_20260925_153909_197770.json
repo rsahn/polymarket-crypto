@@ -1,0 +1,1060 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "evaluated_ms": 1790350749125,
+    "generation": null,
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "SYSTEM_READY": false,
+    "MARKET_ELIGIBLE_NOW": false,
+    "health_checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false,
+      "book_stream_health": true
+    },
+    "operating_state": "SYSTEM_BLOCKED",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": false,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED"
+      },
+      "positions": {
+        "available": false,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED"
+      },
+      "book": {
+        "reason": "EMPTY_BOOK",
+        "market_eligible": false,
+        "available": false,
+        "connected": true,
+        "synchronized": true,
+        "fresh": true,
+        "book_synced": false,
+        "market_slug": "btc-updown-5m-1790350500",
+        "generation": 1,
+        "observed_ms": 1790350748960,
+        "state": "SYNCHRONIZED",
+        "diagnostics": {
+          "parser_reason": null,
+          "exception_category": null,
+          "close_code": null,
+          "close_reason_category": null,
+          "remote_close_reason_present": false,
+          "last_valid_message": {
+            "kind": "price_change",
+            "source_ms": 1790350748960,
+            "received_ms": 1790350748993,
+            "generation": 1
+          },
+          "resync_complete_generation": 1,
+          "regression_event": null,
+          "transitions": [
+            {
+              "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790350746196,
+              "reason": null
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790350746268,
+              "reason": null
+            }
+          ],
+          "tokens": [
+            {
+              "token_index": 0,
+              "last_valid_book_ms": 1790350748960,
+              "bids_present": false,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 0,
+              "asks_count": 99,
+              "best_bid": null,
+              "best_ask": "0.01",
+              "last_valid_book_age_ms": 162,
+              "current_generation_synced": true
+            },
+            {
+              "token_index": 1,
+              "last_valid_book_ms": 1790350748960,
+              "bids_present": true,
+              "asks_present": false,
+              "generation": 1,
+              "bids_count": 99,
+              "asks_count": 0,
+              "best_bid": "0.99",
+              "best_ask": null,
+              "last_valid_book_age_ms": 162,
+              "current_generation_synced": true
+            }
+          ],
+          "first_full_books": [
+            {
+              "token_index": 1,
+              "token_sha256": "460e495e83b615b608db79df97269d4efc78ff997999aec60d67578687b98317",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 99,
+              "asks_count": 0,
+              "best_bid": "0.99",
+              "best_ask": null,
+              "source_timestamp_ms": 1790350746210,
+              "generation": 1
+            },
+            {
+              "token_index": 0,
+              "token_sha256": "e9eece915593f722d35c326208448358628988d0cff8e84639185fcc2e304b80",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 0,
+              "asks_count": 99,
+              "best_bid": null,
+              "best_ask": "0.01",
+              "source_timestamp_ms": 1790350746210,
+              "generation": 1
+            }
+          ]
+        },
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "condition_verified": true,
+        "messages_received": 143,
+        "last_wire_event_ms": 1790350748960,
+        "last_valid_book_ms": 1790350748960
+      },
+      "geo": {
+        "available": false,
+        "reason": "FRESH_GEOBLOCK_REQUIRED"
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "geoblock",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "geoblock": {
+        "status": "BLOCKED",
+        "source": "geo",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "FRESH_GEOBLOCK_REQUIRED",
+        "freshness_limit_ms": 60000
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "observed_ms": 1790350748960,
+        "evaluated_ms": 1790350749125,
+        "reason": "EMPTY_BOOK",
+        "freshness_limit_ms": 500
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "MISSING_STALE_OR_UNRECONCILED",
+        "freshness_limit_ms": null
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE",
+        "freshness_limit_ms": 500
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790350749125,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "POST_B_TAIL_ADVANCED",
+    "failed_stage": "PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION"
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94430390,
+    "block_hash": "0x8c855c9332d6b4af0321c7fc7db6251af0cfc795566e9c3e99ad2f19347e45dc",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790350731326
+  },
+  "generation_attempts": [
+    {
+      "attempt": 1,
+      "reason": "POST_B_TAIL_ADVANCED",
+      "watermark_block": 94430404,
+      "witness_block": 94430406,
+      "account_complete": true,
+      "post_b": {
+        "current_inventory_proven": false,
+        "ready_for_arm": false,
+        "submit_allowed": false,
+        "reason": "POST_B_TAIL_ADVANCED",
+        "scope": "IDENTIFIED_CTF_AT_HEAD_WITNESS_ONLY"
+      }
+    }
+  ],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790350729538,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790350729817,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790350730063,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790350730303,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790350730550,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790350730785,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 7,
+      "started_ms": 1790350731028,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 8,
+      "started_ms": 1790350731326,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 9,
+      "started_ms": 1790350731548,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 10,
+      "started_ms": 1790350731768,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 11,
+      "started_ms": 1790350732035,
+      "from_block": 94429902,
+      "to_block": 94429911,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 12,
+      "started_ms": 1790350732261,
+      "from_block": 94429912,
+      "to_block": 94429921,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 13,
+      "started_ms": 1790350732493,
+      "from_block": 94429922,
+      "to_block": 94429931,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 14,
+      "started_ms": 1790350732723,
+      "from_block": 94429932,
+      "to_block": 94429941,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 15,
+      "started_ms": 1790350732951,
+      "from_block": 94429942,
+      "to_block": 94429951,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 16,
+      "started_ms": 1790350733181,
+      "from_block": 94429952,
+      "to_block": 94429961,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 17,
+      "started_ms": 1790350733412,
+      "from_block": 94429962,
+      "to_block": 94429971,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 18,
+      "started_ms": 1790350733640,
+      "from_block": 94429972,
+      "to_block": 94429981,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 19,
+      "started_ms": 1790350733879,
+      "from_block": 94429982,
+      "to_block": 94429991,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 20,
+      "started_ms": 1790350734103,
+      "from_block": 94429992,
+      "to_block": 94430001,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 21,
+      "started_ms": 1790350734332,
+      "from_block": 94430002,
+      "to_block": 94430011,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 22,
+      "started_ms": 1790350734564,
+      "from_block": 94430012,
+      "to_block": 94430021,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 23,
+      "started_ms": 1790350734797,
+      "from_block": 94430022,
+      "to_block": 94430031,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 24,
+      "started_ms": 1790350735044,
+      "from_block": 94430032,
+      "to_block": 94430041,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 25,
+      "started_ms": 1790350735314,
+      "from_block": 94430042,
+      "to_block": 94430051,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 26,
+      "started_ms": 1790350735535,
+      "from_block": 94430052,
+      "to_block": 94430061,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 27,
+      "started_ms": 1790350735761,
+      "from_block": 94430062,
+      "to_block": 94430071,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 28,
+      "started_ms": 1790350735988,
+      "from_block": 94430072,
+      "to_block": 94430081,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 29,
+      "started_ms": 1790350736208,
+      "from_block": 94430082,
+      "to_block": 94430091,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 30,
+      "started_ms": 1790350736434,
+      "from_block": 94430092,
+      "to_block": 94430101,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 31,
+      "started_ms": 1790350736656,
+      "from_block": 94430102,
+      "to_block": 94430111,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 32,
+      "started_ms": 1790350736887,
+      "from_block": 94430112,
+      "to_block": 94430121,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 33,
+      "started_ms": 1790350737125,
+      "from_block": 94430122,
+      "to_block": 94430131,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 34,
+      "started_ms": 1790350737376,
+      "from_block": 94430132,
+      "to_block": 94430141,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 35,
+      "started_ms": 1790350737599,
+      "from_block": 94430142,
+      "to_block": 94430151,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 36,
+      "started_ms": 1790350737832,
+      "from_block": 94430152,
+      "to_block": 94430161,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 37,
+      "started_ms": 1790350738050,
+      "from_block": 94430162,
+      "to_block": 94430171,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 38,
+      "started_ms": 1790350738315,
+      "from_block": 94430172,
+      "to_block": 94430181,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 39,
+      "started_ms": 1790350738538,
+      "from_block": 94430182,
+      "to_block": 94430191,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 40,
+      "started_ms": 1790350738758,
+      "from_block": 94430192,
+      "to_block": 94430201,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 41,
+      "started_ms": 1790350738987,
+      "from_block": 94430202,
+      "to_block": 94430211,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 42,
+      "started_ms": 1790350739210,
+      "from_block": 94430212,
+      "to_block": 94430221,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 43,
+      "started_ms": 1790350739553,
+      "from_block": 94430222,
+      "to_block": 94430231,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 44,
+      "started_ms": 1790350739778,
+      "from_block": 94430232,
+      "to_block": 94430241,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 45,
+      "started_ms": 1790350740010,
+      "from_block": 94430242,
+      "to_block": 94430251,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 46,
+      "started_ms": 1790350740251,
+      "from_block": 94430252,
+      "to_block": 94430261,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 47,
+      "started_ms": 1790350740477,
+      "from_block": 94430262,
+      "to_block": 94430271,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 48,
+      "started_ms": 1790350740732,
+      "from_block": 94430272,
+      "to_block": 94430281,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 49,
+      "started_ms": 1790350740954,
+      "from_block": 94430282,
+      "to_block": 94430291,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 50,
+      "started_ms": 1790350741174,
+      "from_block": 94430292,
+      "to_block": 94430301,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 51,
+      "started_ms": 1790350741398,
+      "from_block": 94430302,
+      "to_block": 94430311,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 52,
+      "started_ms": 1790350741629,
+      "from_block": 94430312,
+      "to_block": 94430321,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 53,
+      "started_ms": 1790350741854,
+      "from_block": 94430322,
+      "to_block": 94430331,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 54,
+      "started_ms": 1790350742083,
+      "from_block": 94430332,
+      "to_block": 94430341,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 55,
+      "started_ms": 1790350742313,
+      "from_block": 94430342,
+      "to_block": 94430351,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 56,
+      "started_ms": 1790350742535,
+      "from_block": 94430352,
+      "to_block": 94430361,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 57,
+      "started_ms": 1790350742776,
+      "from_block": 94430362,
+      "to_block": 94430371,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 58,
+      "started_ms": 1790350743008,
+      "from_block": 94430372,
+      "to_block": 94430381,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 59,
+      "started_ms": 1790350743221,
+      "from_block": 94430382,
+      "to_block": 94430390,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 60,
+      "started_ms": 1790350743448,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 61,
+      "started_ms": 1790350746527,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 62,
+      "started_ms": 1790350746743,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 63,
+      "started_ms": 1790350747174,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 64,
+      "started_ms": 1790350747399,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 65,
+      "started_ms": 1790350747616,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 66,
+      "started_ms": 1790350747885,
+      "from_block": 94430391,
+      "to_block": 94430400,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 67,
+      "started_ms": 1790350748116,
+      "from_block": 94430401,
+      "to_block": 94430404,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 68,
+      "started_ms": 1790350748347,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 69,
+      "started_ms": 1790350748581,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 70,
+      "started_ms": 1790350748881,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790350729260,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 230
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790350745559,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 166
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790350500",
+      "started_ms": 1790350745741,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 154
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790350746315,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 212
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790350748582,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 242
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790350748581,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 280
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790350748660,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 215
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790350748665,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 279
+    }
+  ],
+  "storage_binding_verified": true,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "finalized_qualification": {
+    "status": "PASS_PROVIDER_FINALIZED_READ",
+    "chain_id": 137,
+    "anchor": {
+      "number": 94430390,
+      "hash": "0x8c855c9332d6b4af0321c7fc7db6251af0cfc795566e9c3e99ad2f19347e45dc",
+      "timestamp": 1790350725
+    },
+    "observed_ms": 1790350729537,
+    "finished_ms": 1790350730785,
+    "independent_consensus_proven": false,
+    "diagnostics": {
+      "reads": [
+        {
+          "label": "finalized_first",
+          "requested_tag": "finalized",
+          "number": 94430390,
+          "block_hash": "0x8c855c9332d6b4af0321c7fc7db6251af0cfc795566e9c3e99ad2f19347e45dc",
+          "block_timestamp_ms": 1790350725000,
+          "request_started_ms": 1790350729817,
+          "response_received_ms": 1790350730062,
+          "block_minus_receive_ms": -5062,
+          "block_minus_request_ms": -4817
+        },
+        {
+          "label": "latest",
+          "requested_tag": "latest",
+          "number": 94430394,
+          "block_hash": "0x095af257c3b86e602c5fbd2969ee978f80ae82702ca3f984d182cee1dfd62f8d",
+          "block_timestamp_ms": 1790350731000,
+          "request_started_ms": 1790350730062,
+          "response_received_ms": 1790350730303,
+          "block_minus_receive_ms": 697,
+          "block_minus_request_ms": 938
+        },
+        {
+          "label": "anchor_recheck",
+          "requested_tag": "0x5a0e4b6",
+          "number": 94430390,
+          "block_hash": "0x8c855c9332d6b4af0321c7fc7db6251af0cfc795566e9c3e99ad2f19347e45dc",
+          "block_timestamp_ms": 1790350725000,
+          "request_started_ms": 1790350730303,
+          "response_received_ms": 1790350730549,
+          "block_minus_receive_ms": -5549,
+          "block_minus_request_ms": -5303
+        },
+        {
+          "label": "finalized_second",
+          "requested_tag": "finalized",
+          "number": 94430391,
+          "block_hash": "0x64de842f0299181c2502f16fcafd21e413b8d7df58b7d0785d1c9c04de73596c",
+          "block_timestamp_ms": 1790350727000,
+          "request_started_ms": 1790350730549,
+          "response_received_ms": 1790350730785,
+          "block_minus_receive_ms": -3785,
+          "block_minus_request_ms": -3549
+        }
+      ],
+      "reason": "FINALIZED_QUALIFIED",
+      "stage": "complete",
+      "clock_source": "LOCAL_TIME_TIME_NS_UTC",
+      "clock_accuracy_proven": false
+    }
+  },
+  "clock_diagnostic": {
+    "source": "LOCAL_TIME_TIME_NS_UTC",
+    "clob_server_seconds": 1790350745,
+    "request_started_ms": 1790350745559,
+    "response_received_ms": 1790350745725,
+    "accuracy_500ms_proven": false,
+    "server_second_minus_local_receive_ms": -725,
+    "offset_interval_ms": [
+      -725,
+      441
+    ],
+    "note": "CLOB integer-second reading is diagnostic, not a subsecond clock calibration; no timestamps adjusted"
+  },
+  "health_contract": true,
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364"
+}

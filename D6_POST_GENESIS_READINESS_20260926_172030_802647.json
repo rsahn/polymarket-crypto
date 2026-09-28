@@ -1,0 +1,769 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "temporal_contract": "D6_SEMANTIC_V1",
+    "domain_details": {
+      "transport": {
+        "limit_ms": null,
+        "calibration": "STRUCTURAL_INVARIANT",
+        "justification": "IDENTITY_STATE_AND_SEQUENCE",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "WS_DISCONNECTED"
+      },
+      "book": {
+        "limit_ms": 500,
+        "calibration": "CONSERVATIVE_EXISTING_POLICY",
+        "justification": "RETAINED_NOT_EMPIRICALLY_CALIBRATED",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "BOOK_INVALID_OR_UNAVAILABLE"
+      },
+      "signal": {
+        "limit_ms": 500,
+        "calibration": "CONSERVATIVE_EXISTING_POLICY",
+        "justification": "RETAINED_NOT_EMPIRICALLY_CALIBRATED",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "SIGNAL_UNAVAILABLE"
+      },
+      "authentication": {
+        "limit_ms": null,
+        "calibration": "STRUCTURAL_INVARIANT",
+        "justification": "IDENTITY_STATE_AND_SEQUENCE",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "AUTHENTICATION_INVALID"
+      },
+      "balance": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "INSUFFICIENT_COLLATERAL_OR_UNKNOWN"
+      },
+      "allowance": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "ALLOWANCE_INVALID_OR_UNKNOWN"
+      },
+      "orders": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "OPEN_ORDER_STATE_UNCERTAIN"
+      },
+      "positions": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "POSITION_STATE_UNCERTAIN"
+      },
+      "inventory": {
+        "limit_ms": null,
+        "calibration": "COMPLETENESS_UNPROVEN",
+        "justification": "NO_COMMON_POST_C_COMPLETENESS_WATERMARK",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "INVENTORY_UNPROVEN"
+      },
+      "recovery": {
+        "limit_ms": null,
+        "calibration": "STRUCTURAL_INVARIANT",
+        "justification": "IDENTITY_STATE_AND_SEQUENCE",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "RECOVERY_STATE_INVALID"
+      },
+      "account_reconciliation": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "ACCOUNT_UNRECONCILED"
+      },
+      "session_risk": {
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "justification": "NO_JUSTIFIED_TEMPORAL_SLA",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "SESSION_RISK_UNRECONCILED"
+      },
+      "geoblock": {
+        "limit_ms": 60000,
+        "calibration": "CONSERVATIVE_EXISTING_POLICY",
+        "justification": "RETAINED_NOT_EMPIRICALLY_CALIBRATED",
+        "observed_ms": null,
+        "age_ms": null,
+        "observation_valid": false,
+        "ready": false,
+        "reason": "GEOBLOCK_UNKNOWN_OR_STALE"
+      }
+    },
+    "legacy_checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "legacy_health_ready": false,
+    "retained_guard_policies": {
+      "account": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "positions": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "session_risk": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "reconciliation": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "inventory_observation": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "execution_geo": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      },
+      "cash_evidence": {
+        "limit_ms": 500,
+        "status": "CONSERVATIVE_EXISTING_POLICY",
+        "calibrated": false
+      }
+    },
+    "evaluated_ms": 1790443230797,
+    "evaluation_started_ms": 1790443230797,
+    "evaluation_complete_ms": 1790443230797,
+    "evaluation_thread_cpu_ms": 0.0,
+    "book_sample_started_ms": 1790443230797,
+    "book_sample_finished_ms": 1790443230797,
+    "generation": null,
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "SYSTEM_READY": false,
+    "MARKET_ELIGIBLE_NOW": false,
+    "legacy_health_checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false,
+      "book_stream_health": false
+    },
+    "health_checks": {
+      "transport": false,
+      "book": false,
+      "signal": false,
+      "authentication": false,
+      "balance": false,
+      "allowance": false,
+      "orders": false,
+      "positions": false,
+      "inventory": false,
+      "recovery": false,
+      "account_reconciliation": false,
+      "session_risk": false,
+      "geoblock": false,
+      "transport_lock": true,
+      "live_flags_disabled": true
+    },
+    "operating_state": "SYSTEM_BLOCKED",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": false,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED"
+      },
+      "positions": {
+        "available": false,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED"
+      },
+      "book": {
+        "reason": "WS_DISCONNECTED",
+        "market_eligible": false,
+        "available": false,
+        "connected": false,
+        "synchronized": false,
+        "fresh": false,
+        "book_synced": false,
+        "market_slug": null,
+        "generation": null,
+        "observed_ms": null
+      },
+      "geo": {
+        "available": false,
+        "reason": "FRESH_GEOBLOCK_REQUIRED"
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      },
+      "signal": {}
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "WS_DISCONNECTED",
+      "BOOK_INVALID_OR_UNAVAILABLE",
+      "SIGNAL_UNAVAILABLE",
+      "AUTHENTICATION_INVALID",
+      "INSUFFICIENT_COLLATERAL_OR_UNKNOWN",
+      "ALLOWANCE_INVALID_OR_UNKNOWN",
+      "OPEN_ORDER_STATE_UNCERTAIN",
+      "POSITION_STATE_UNCERTAIN",
+      "INVENTORY_UNPROVEN",
+      "RECOVERY_STATE_INVALID",
+      "ACCOUNT_UNRECONCILED",
+      "SESSION_RISK_UNRECONCILED",
+      "GEOBLOCK_UNKNOWN_OR_STALE"
+    ],
+    "legacy_blockers": [
+      "wallet_auth",
+      "geoblock",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "AUTHENTICATION_INVALID",
+        "legacy_guard_only": false,
+        "semantic_domain": "authentication",
+        "limit_ms": null,
+        "calibration": "STRUCTURAL_INVARIANT",
+        "observation_valid": false
+      },
+      "geoblock": {
+        "status": "BLOCKED",
+        "source": "geo",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "GEOBLOCK_UNKNOWN_OR_STALE",
+        "legacy_guard_only": false,
+        "semantic_domain": "geoblock",
+        "limit_ms": 60000,
+        "calibration": "CONSERVATIVE_EXISTING_POLICY",
+        "observation_valid": false
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "book",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "BOOK_INVALID_OR_UNAVAILABLE",
+        "legacy_guard_only": false,
+        "semantic_domain": "book",
+        "limit_ms": 500,
+        "calibration": "CONSERVATIVE_EXISTING_POLICY",
+        "observation_valid": false
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "ACCOUNT_UNRECONCILED",
+        "legacy_guard_only": false,
+        "semantic_domain": "account_reconciliation",
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "observation_valid": false
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "OPEN_ORDER_STATE_UNCERTAIN",
+        "legacy_guard_only": false,
+        "semantic_domain": "orders",
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "observation_valid": false
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "INVENTORY_UNPROVEN",
+        "legacy_guard_only": false,
+        "semantic_domain": "inventory",
+        "limit_ms": null,
+        "calibration": "COMPLETENESS_UNPROVEN",
+        "observation_valid": false
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "RECOVERY_STATE_INVALID",
+        "legacy_guard_only": false,
+        "semantic_domain": "recovery",
+        "limit_ms": null,
+        "calibration": "STRUCTURAL_INVARIANT",
+        "observation_valid": false
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "SESSION_RISK_UNRECONCILED",
+        "legacy_guard_only": false,
+        "semantic_domain": "session_risk",
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "observation_valid": false
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "INVARIANT_SATISFIED",
+        "legacy_guard_only": true
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "INVARIANT_SATISFIED",
+        "legacy_guard_only": true
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "INSUFFICIENT_COLLATERAL_OR_UNKNOWN",
+        "legacy_guard_only": false,
+        "semantic_domain": "balance",
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "observation_valid": false
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790443230797,
+        "reason": "ALLOWANCE_INVALID_OR_UNKNOWN",
+        "legacy_guard_only": false,
+        "semantic_domain": "allowance",
+        "limit_ms": null,
+        "calibration": "UNCALIBRATED",
+        "observation_valid": false
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "TAIL_SCAN_FAILED",
+    "failed_stage": "POST_GENESIS_CTF_DISCOVERY"
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_completeness": {
+    "evidence_available": false,
+    "inventory_through_C_proven": false,
+    "current_inventory_proven": false,
+    "post_C_completeness": "NO_BOUNDARY_EVIDENCE",
+    "generation_stale": false,
+    "boundary_verdict": null,
+    "latency_fix_sufficient": false
+  },
+  "inventory_evidence_origin": "PREPARATION_OR_PRIOR_CURSOR",
+  "preparation_rpc_policy": {
+    "scope": "PREPARATION_ONLY",
+    "max_in_flight": 1,
+    "min_start_interval_ms": 200,
+    "dispatch_budget_seconds": 120.0,
+    "requests_started": 7,
+    "pacing_wait_ms": 596.6017993632704,
+    "retries": 0,
+    "failure_reason": null
+  },
+  "connection_warmup": {
+    "status": "NOT_RUN"
+  },
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94438341,
+    "block_hash": "0x6277908209d7634b1edcfc7f278fd48d1b2fa839292e24751bd3bd6b25a803ad",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790362652551,
+    "provenance": "FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY"
+  },
+  "generation_attempts": [],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790443229488,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790443229717,
+      "parse_complete_ms": 1790443229717,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443229717,
+      "elapsed_ms": 229
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790443229717,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443229788,
+      "parse_complete_ms": 1790443229788,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443229788,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790443229917,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443229988,
+      "parse_complete_ms": 1790443229988,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443229988,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790443230118,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443230211,
+      "parse_complete_ms": 1790443230211,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443230211,
+      "elapsed_ms": 93
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790443230318,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443230387,
+      "parse_complete_ms": 1790443230387,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443230387,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790443230518,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443230617,
+      "parse_complete_ms": 1790443230617,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443230617,
+      "elapsed_ms": 99
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 7,
+      "started_ms": 1790443230718,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790443230790,
+      "parse_complete_ms": 1790443230790,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790443230790,
+      "elapsed_ms": 72
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790443228243,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790443228565,
+      "parse_complete_ms": 1790443228565,
+      "shape": "int",
+      "finished_ms": 1790443228565,
+      "elapsed_ms": 322,
+      "thread_cpu_ms": 62.5
+    }
+  ],
+  "storage_binding_verified": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "finalized_qualification": null,
+  "clock_diagnostic": {
+    "source": "LOCAL_TIME_TIME_NS_UTC",
+    "clob_server_seconds": 1790443228,
+    "request_started_ms": 1790443228235,
+    "response_received_ms": 1790443228565,
+    "server_second_minus_local_receive_ms": -565,
+    "offset_interval_ms": [
+      -565,
+      765
+    ],
+    "accuracy_500ms_proven": false,
+    "timestamps_adjusted": false
+  },
+  "health_contract": true,
+  "scheduler_timing": {
+    "generation_started_ms": null,
+    "inventory_final_proof_ms": null,
+    "account_started_ms": null,
+    "account_finished_ms": null,
+    "recheck_started_ms": null,
+    "recheck_finished_ms": null,
+    "join_finished_ms": null,
+    "reconciliation_started_ms": null,
+    "reconciliation_finished_ms": null,
+    "book_sample_started_ms": 1790443230797,
+    "book_sample_finished_ms": 1790443230797,
+    "evaluation_started_ms": 1790443230797,
+    "evaluation_finished_ms": 1790443230797,
+    "post_evaluation_persistence_started_ms": 1790443230797,
+    "post_evaluation_persistence_finished_ms": 1790443230797,
+    "account_recheck_execution": "SEQUENTIAL_POST_ACCOUNT_CANONICAL_WITNESS",
+    "scheduler_overhead_before_evaluation_ms": null,
+    "scheduler_overhead_scope": "TOTAL_NOT_ISOLATED_FROM_BUSINESS_CPU; SEE_MEASURED_RESUME_DELAYS",
+    "measured_scan_resume_delay_ms": null,
+    "measured_generation_continuation_delay_ms": null
+  },
+  "generation_worker_timing": {},
+  "final_timing_budget": {
+    "inventory_age_at_evaluation_ms": null,
+    "account_age_at_evaluation_ms": null,
+    "book_age_at_evaluation_ms": null,
+    "critical_path_wall_ms": null
+  },
+  "reconciliation_timing": {},
+  "inventory_checkpoint_status": "NOT_PENDING",
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+  "temporal_contract": "D6_SEMANTIC_V1",
+  "shadow_calibration": {
+    "mode": "SHADOW_CALIBRATION_READ_ONLY",
+    "book_samples": [],
+    "signal_samples": [],
+    "generations": [
+      {
+        "generation": null,
+        "decision_ms": 1790443230797,
+        "original_timestamps": {
+          "book": null
+        },
+        "book_age_ms": null,
+        "balance_age_ms": null,
+        "orders_age_ms": null,
+        "positions_age_ms": null,
+        "inventory_proof_age_ms": null,
+        "signal_age_ms": null,
+        "signal_status": "NOT_OBSERVED"
+      }
+    ],
+    "dropped_samples": 0,
+    "capacity": 4096,
+    "rejection_counts": {},
+    "instrumentation_errors": 0,
+    "age_distributions": {
+      "book_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "signal_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "balance_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "orders_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "positions_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      },
+      "inventory_proof_age_ms": {
+        "n": 0,
+        "min": null,
+        "median": null,
+        "p95": null,
+        "max": null
+      }
+    },
+    "book_age_distribution": {
+      "n": 0,
+      "min": null,
+      "median": null,
+      "p95": null,
+      "max": null
+    },
+    "selection_bias": "ACCEPTED_BOOKS_ONLY_WITH_EXPLICIT_REJECTION_COUNTS",
+    "limitations": [
+      "BOUNDED_SAMPLE_NOT_FULL_DATASET",
+      "REJECTED_BOOK_DEPTH_NOT_RECONSTRUCTED",
+      "BOOK_PROCESSING_TIMESTAMP_IS_NOT_EXECUTION_DECISION",
+      "NO_REALIZED_FILLS_OR_FEES",
+      "BTC_V1_NOT_RUN_BY_READINESS_QUALIFIER",
+      "NO_SLA_SELECTED"
+    ],
+    "sla_calibrated": false,
+    "real_fills": 0,
+    "submit_allowed": false
+  }
+}

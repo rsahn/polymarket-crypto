@@ -1,0 +1,341 @@
+{
+  "SESSION": {
+    "session_id": "bdaaf415-9ac1-4c1f-af8a-d590a064bde8",
+    "started_at_ms": 1790099014814,
+    "ended_at_ms": 1790100342315,
+    "code_version": "bf8ee19dcb65acef3615f385a0b7b7b4100b0529:working-tree-sha256:f643c062d76ca226b2c51c2b0b689414ef63a4f345dfcf7152a5bf034f24caab",
+    "schema_version": 2,
+    "mode": "SHADOW",
+    "status": "STOPPED",
+    "config_json": "{\"capital\":500,\"depth_levels\":20,\"mode\":\"SHADOW\",\"reconnect_after\":0,\"seconds\":1320,\"strategy\":\"NO_TRADE\",\"timestamp_contract\":\"D5.1\",\"writer\":\"process-writer\"}"
+  },
+  "ROWS": 1315615,
+  "TOTAL_EVENTS": 1336887,
+  "REAL_MARKETS": 9,
+  "5M_MARKETS": 6,
+  "15M_MARKETS": 3,
+  "CROSS_MARKET_VIOLATIONS": 0,
+  "POST_EXPIRY_EVENTS": 0,
+  "POST_EXPIRY_ANCHORS": 0,
+  "POST_EXPIRY_BOOK_SIDES": 0,
+  "INCOMPLETE_BOOK_EVENTS": 0,
+  "MISSING_TOKEN_IDS": 0,
+  "AVAILABILITY_REGRESSIONS": 0,
+  "EXPIRED_OPEN_ANCHORS": 0,
+  "BTC_TICKS": 19074,
+  "RECONNECTS": 2,
+  "KINDS": {
+    "ACTIVATE": 10,
+    "BOOK": 1315615,
+    "BTC": 19074,
+    "BTC_CONNECTED": 1,
+    "CLOCK_SAMPLE": 44,
+    "COLLECTION_STOP": 1,
+    "EXPIRE": 7,
+    "RECONNECT": 2,
+    "REJECT": 2122,
+    "ROTATION": 7,
+    "SESSION_END": 3,
+    "WS_ERROR": 1
+  },
+  "REJECTIONS": {
+    "CROSS_MARKET_REJECT": 25,
+    "DUPLICATE_EVENT": 88,
+    "INCOMPLETE_BOOK": 452,
+    "OUT_OF_ORDER": 1552,
+    "POST_EXPIRY_REJECT": 5
+  },
+  "LATENCY": [
+    {
+      "kind": "BOOK",
+      "n": 1315615,
+      "mean_ms": 41.21951330746457,
+      "min_ms": 13,
+      "max_ms": 747,
+      "missing_source_timestamp": 0,
+      "clock_ahead_over_2s": 0,
+      "mean_processing_ms": 281.4016942646595,
+      "max_processing_ms": 2501
+    },
+    {
+      "kind": "BTC",
+      "n": 19074,
+      "mean_ms": 230.06259830135264,
+      "min_ms": 122,
+      "max_ms": 1113,
+      "missing_source_timestamp": 0,
+      "clock_ahead_over_2s": 0,
+      "mean_processing_ms": 237.56322743000945,
+      "max_processing_ms": 2335
+    }
+  ],
+  "DEPTH": [
+    {
+      "side": "DOWN",
+      "n": 1315615,
+      "mean_ask_qty": 1076.4854535407396,
+      "min_ask_qty": 0.0,
+      "max_ask_qty": 77022.3,
+      "mean_bid_qty": 569.0482034941833,
+      "zero_ask_depth": 6632,
+      "zero_bid_depth": 26759,
+      "ask_depth_0_to_10": 52998,
+      "ask_depth_10_to_100": 267239,
+      "ask_depth_100_to_1000": 816526,
+      "ask_depth_ge_1000": 172220,
+      "mean_spread": 0.01117397718937531
+    },
+    {
+      "side": "UP",
+      "n": 1315615,
+      "mean_ask_qty": 569.0482034941833,
+      "min_ask_qty": 0.0,
+      "max_ask_qty": 75162.7,
+      "mean_bid_qty": 1076.4854535407396,
+      "zero_ask_depth": 26759,
+      "zero_bid_depth": 6632,
+      "ask_depth_0_to_10": 59266,
+      "ask_depth_10_to_100": 271957,
+      "ask_depth_100_to_1000": 838937,
+      "ask_depth_ge_1000": 118696,
+      "mean_spread": 0.01117397718937531
+    }
+  ],
+  "MARKETS": [
+    {
+      "market_duration": "15m",
+      "market_slug": "btc-updown-15m-1790098200",
+      "condition_id": "0x7560c9f936182da0748219cc511c0121ee47b60c81235c9825c969cfcfef2001",
+      "token_up": "41821197459334754802557481645917653943930968831540984823849262661463826795223",
+      "token_down": "4032171262473557148137090988244839093323905819017193488547759117205295975302",
+      "snapshots": 5389,
+      "first_ms": 1790099015944,
+      "last_ms": 1790099099858,
+      "collection_ms": 83914,
+      "generations": 1
+    },
+    {
+      "market_duration": "15m",
+      "market_slug": "btc-updown-15m-1790099100",
+      "condition_id": "0x08d723efc41c1866a80f5c56ca951003c8242789943f45badca11c5751cdebb6",
+      "token_up": "38845884589394672059893486685450965198251471439392693082191433195529295898317",
+      "token_down": "99984094700321917579611938105522788316904205702080035640226887037600830573363",
+      "snapshots": 303979,
+      "first_ms": 1790099100696,
+      "last_ms": 1790099999736,
+      "collection_ms": 899040,
+      "generations": 1
+    },
+    {
+      "market_duration": "15m",
+      "market_slug": "btc-updown-15m-1790100000",
+      "condition_id": "0xce14adc335da230061ba551dac1ad8b86b11efdf52500664034f638e87fc6282",
+      "token_up": "16191118931996960600824185052238782914802001342180249615373134625189455201659",
+      "token_down": "37782637871201761812093164831175145482609640999362031503899483984566877258645",
+      "snapshots": 123700,
+      "first_ms": 1790100000662,
+      "last_ms": 1790100335107,
+      "collection_ms": 334445,
+      "generations": 2
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790098800",
+      "condition_id": "0xc34da99a10238449199a74da711f07e24c09098ad0dacab707848cebcbc2d8f8",
+      "token_up": "27865055497570251001794285070419046851843708930479791299775870941414563511611",
+      "token_down": "59365732011057649941305104698153241736838641103093825545276799038730383678193",
+      "snapshots": 48784,
+      "first_ms": 1790099015903,
+      "last_ms": 1790099099992,
+      "collection_ms": 84089,
+      "generations": 1
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790099100",
+      "condition_id": "0x8a4c938e955a5a5f0cd4b0b67de000d5040bfc3fdd5a2067ca7b66303514b0c9",
+      "token_up": "20791025647056141574790040495380504318546852809518643704975830980357784540452",
+      "token_down": "58943261857588155256452614788605960342015600163567404948421898736326961997679",
+      "snapshots": 215384,
+      "first_ms": 1790099100649,
+      "last_ms": 1790099399981,
+      "collection_ms": 299332,
+      "generations": 1
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790099400",
+      "condition_id": "0x7c815877df9b03bd9c743dc0165cb78a26a909d2deffbde0b4380bcef304e042",
+      "token_up": "66481840730702523961443354903848699265129933421624660006312471172115259872370",
+      "token_down": "42843087218022338080074477734254653016359182907160832979443482306336065488402",
+      "snapshots": 212280,
+      "first_ms": 1790099400649,
+      "last_ms": 1790099699840,
+      "collection_ms": 299191,
+      "generations": 1
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790099700",
+      "condition_id": "0x5b1434f1bf68175e500e7c7476855b4715efc48f5868b03362b20b31281b44f4",
+      "token_up": "63541046804482245268901440788922293368140618093054606959462695644294617917406",
+      "token_down": "54008526048109404689137456456109670646645091340215597540491053938371523306459",
+      "snapshots": 174535,
+      "first_ms": 1790099701013,
+      "last_ms": 1790099999977,
+      "collection_ms": 298964,
+      "generations": 1
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790100000",
+      "condition_id": "0xab8d0123ff99662d2838f5f4dcbb344dbc9236f4eb989a6bdbc8f0076e872d45",
+      "token_up": "2110290979754172720526874755653044504074951413637951018130460968821950222818",
+      "token_down": "55747792709754491439068415547994887637155070341897085650636873704016258599813",
+      "snapshots": 210189,
+      "first_ms": 1790100000670,
+      "last_ms": 1790100299973,
+      "collection_ms": 299303,
+      "generations": 1
+    },
+    {
+      "market_duration": "5m",
+      "market_slug": "btc-updown-5m-1790100300",
+      "condition_id": "0xb6d325e9e70e2563a15c037dd45f8c7a7efaf2ad64959dac7751d077ecf8ce9c",
+      "token_up": "66185589952706873784656564735720793948233859542413844095919487935719418710824",
+      "token_down": "69586998357326913009724587495008399898841518950693451138603394183907861309879",
+      "snapshots": 21375,
+      "first_ms": 1790100301250,
+      "last_ms": 1790100335107,
+      "collection_ms": 33857,
+      "generations": 1
+    }
+  ],
+  "GAPS": [
+    {
+      "market_slug": "btc-updown-15m-1790098200",
+      "max_gap_ms": 1684,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-15m-1790099100",
+      "max_gap_ms": 1010,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-15m-1790100000",
+      "max_gap_ms": 963,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790098800",
+      "max_gap_ms": 1656,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790099100",
+      "max_gap_ms": 980,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790099400",
+      "max_gap_ms": 909,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790099700",
+      "max_gap_ms": 549,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790100000",
+      "max_gap_ms": 823,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    },
+    {
+      "market_slug": "btc-updown-5m-1790100300",
+      "max_gap_ms": 1016,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0
+    }
+  ],
+  "BOUNDS": {
+    "first_ms": 1790099015373,
+    "last_ms": 1790100342315
+  },
+  "SMOKE_VALIDATED": true,
+  "SMOKE_FAILURES": [],
+  "RESEARCH_ALLOWED": false,
+  "RESEARCH_REASON": "Quality review only; D5 Research is not authorized and will not be started.",
+  "SQLITE_INTEGRITY_CHECK": [
+    "ok"
+  ],
+  "FOREIGN_KEY_VIOLATIONS": [],
+  "OPEN_ANCHORS": 0,
+  "ACTUAL_DURATION_SECONDS": 1320.0542836000677,
+  "SESSION_ELAPSED_SECONDS": 1327.2521381000988,
+  "WALL_DURATION_SECONDS": 1327.501,
+  "POST_EXPIRY_ACCEPTED": 0,
+  "ROTATIONS_BY_DURATION": {
+    "5m": 5,
+    "15m": 2
+  },
+  "ROTATIONS": 7,
+  "RECONNECTIONS": {
+    "polymarket": 2,
+    "binance": 0
+  },
+  "REJECTED_EVENTS": 2122,
+  "OUT_OF_ORDER_REJECTED": 1552,
+  "COLLECTION_STOP_TS_MS": 1790100335116,
+  "FEED_GAPS": {
+    "5m": {
+      "events": 882547,
+      "first_ms": 1790099015903,
+      "last_ms": 1790100335107,
+      "max_gap_ms": 1656,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0,
+      "receive_regressions": 0,
+      "examples": [],
+      "coverage_seconds": 1319.204,
+      "initial_gap_ms": 1089,
+      "trailing_gap_ms": 9
+    },
+    "15m": {
+      "events": 433068,
+      "first_ms": 1790099015944,
+      "last_ms": 1790100335107,
+      "max_gap_ms": 1684,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0,
+      "receive_regressions": 0,
+      "examples": [],
+      "coverage_seconds": 1319.163,
+      "initial_gap_ms": 1130,
+      "trailing_gap_ms": 9
+    },
+    "BTC": {
+      "events": 19074,
+      "first_ms": 1790099017275,
+      "last_ms": 1790100334854,
+      "max_gap_ms": 3725,
+      "gaps_over_5s": 0,
+      "gap_time_ms": 0,
+      "receive_regressions": 0,
+      "examples": [],
+      "coverage_seconds": 1317.579,
+      "initial_gap_ms": 2461,
+      "trailing_gap_ms": 262
+    }
+  },
+  "CODE_CHANGED_DURING_COLLECTION": false
+}

@@ -1,0 +1,90 @@
+{
+  "contract": "D6_DESCRIPTIVE_ONLY",
+  "db": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260922_194254.db",
+  "lookback_ms": 250,
+  "markets": {
+    "15m": {
+      "btc_ticks": 19074,
+      "poly_quotes": 433068,
+      "responses": {
+        "100": {
+          "anchors": 221,
+          "mean_directional_response": 0.010407239819004521,
+          "mean_poly_change": -0.0009049773755656152,
+          "same_direction_fraction": 0.2895927601809955,
+          "usable": 221
+        },
+        "1000": {
+          "anchors": 221,
+          "mean_directional_response": 0.052714932126696826,
+          "mean_poly_change": 0.038235294117647055,
+          "same_direction_fraction": 0.4751131221719457,
+          "usable": 221
+        },
+        "250": {
+          "anchors": 221,
+          "mean_directional_response": 0.02665158371040725,
+          "mean_poly_change": 0.012171945701357474,
+          "same_direction_fraction": 0.4751131221719457,
+          "usable": 221
+        },
+        "50": {
+          "anchors": 221,
+          "mean_directional_response": 0.008778280542986421,
+          "mean_poly_change": 0.00018099547511311756,
+          "same_direction_fraction": 0.2895927601809955,
+          "usable": 221
+        },
+        "500": {
+          "anchors": 221,
+          "mean_directional_response": 0.04230769230769233,
+          "mean_poly_change": 0.028280542986425364,
+          "same_direction_fraction": 0.4751131221719457,
+          "usable": 221
+        }
+      }
+    },
+    "5m": {
+      "btc_ticks": 19074,
+      "poly_quotes": 882547,
+      "responses": {
+        "100": {
+          "anchors": 221,
+          "mean_directional_response": 0.09760180995475114,
+          "mean_poly_change": 0.09760180995475114,
+          "same_direction_fraction": 0.9773755656108597,
+          "usable": 221
+        },
+        "1000": {
+          "anchors": 221,
+          "mean_directional_response": 0.4314932126696833,
+          "mean_poly_change": 0.41565610859728513,
+          "same_direction_fraction": 1.0,
+          "usable": 221
+        },
+        "250": {
+          "anchors": 221,
+          "mean_directional_response": 0.20796380090497738,
+          "mean_poly_change": 0.20796380090497738,
+          "same_direction_fraction": 0.9773755656108597,
+          "usable": 221
+        },
+        "50": {
+          "anchors": 221,
+          "mean_directional_response": 0.03199095022624435,
+          "mean_poly_change": 0.03199095022624435,
+          "same_direction_fraction": 0.5656108597285068,
+          "usable": 221
+        },
+        "500": {
+          "anchors": 221,
+          "mean_directional_response": 0.35733031674208143,
+          "mean_poly_change": 0.3564253393665158,
+          "same_direction_fraction": 1.0,
+          "usable": 221
+        }
+      }
+    }
+  },
+  "threshold_bps": 5.0
+}

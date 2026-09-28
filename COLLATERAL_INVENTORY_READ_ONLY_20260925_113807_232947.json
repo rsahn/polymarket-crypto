@@ -1,0 +1,202 @@
+{
+  "phase": "COLLATERAL_INVENTORY_READ_ONLY",
+  "collateral": {
+    "status": "PASS_ONCHAIN_IDENTITY",
+    "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+    "rpc": "https://polygon.drpc.org",
+    "rpc_provenance": "https://docs.polygon.technology/pos/reference/rpc-endpoints",
+    "symbol_verified": true,
+    "decimals_verified": true,
+    "account_binding_verified": true,
+    "conversion_allowed": true,
+    "code_sha256": "c5731b62fc7c36236463af8d362688e37c08823abcda35d71ad7d1220eebf578",
+    "chain_id": 137,
+    "block_number": "0x5a0bf1b",
+    "block_hash": "0x8dbc7f1e616ee26a766354f14ee5e7d01d138752239921948327993c083f5c17",
+    "observed_ms": 1790336286402,
+    "symbol": "pUSD",
+    "decimals": 6,
+    "code_present": true,
+    "onchain_balance_raw": "109160000",
+    "mapping_provenance": [
+      "SDK 0.11.0 PRODUCTION_CONFIG.collateral_token",
+      "https://docs.polymarket.com/resources/contracts",
+      "https://docs.polymarket.com/concepts/pusd"
+    ],
+    "binding_scope": "OFFICIAL_MAPPING_PLUS_BEACON_BALANCE_CORROBORATION_BETWEEN_TWO_TYPE3_READS",
+    "balance_human": "109.160000",
+    "balance_unit": "pUSD"
+  },
+  "inventory": {
+    "phase": "GENESIS_RECONCILIATION_PENDING",
+    "complete": false,
+    "ledger_created": false,
+    "remote_views": {
+      "positions": {
+        "status": "PASS",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false,
+        "scope": "INDEX_CURRENT_FILTER",
+        "observed_ms": 1790336286816
+      },
+      "orders": {
+        "status": "PASS",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false,
+        "scope": "CREDENTIAL_VIEW",
+        "observed_ms": 1790336287031
+      },
+      "trades": {
+        "status": "PASS",
+        "count": 0,
+        "pagination_complete": true,
+        "complete": false,
+        "scope": "CREDENTIAL_VIEW",
+        "observed_ms": 1790336287208
+      }
+    },
+    "local_state": {
+      "configured": false,
+      "readable": false,
+      "session_history_proven": false,
+      "known_assets_count": null
+    },
+    "known_asset_scope": "EXPLICIT_LOCAL_EXECUTION_EVENTS_ONLY",
+    "global_coverage_proven": false,
+    "blockers": [
+      "GLOBAL_ASSET_DISCOVERY_AND_CONDITIONAL_BALANCES_UNPROVEN",
+      "GLOBAL_OPEN_ORDER_SCOPE_UNPROVEN",
+      "SESSION_HISTORY_AND_GENESIS_PROVENANCE_UNPROVEN",
+      "AUTHORITATIVE_LOCAL_LEDGER_NOT_AVAILABLE"
+    ]
+  },
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790336284933,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790336285172,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 3,
+      "started_ms": 1790336285346,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 4,
+      "started_ms": 1790336285534,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_call",
+      "id": 5,
+      "started_ms": 1790336285706,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_call",
+      "id": 6,
+      "started_ms": 1790336285876,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_call",
+      "id": 7,
+      "started_ms": 1790336286061,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 8,
+      "started_ms": 1790336286237,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790336284114,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 223
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790336284768,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 165
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790336286402,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 174
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790336286576,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 239
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790336286816,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 214
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790336287031,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 176
+    }
+  ],
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "readiness": {
+    "status": "PRODUCTION_READINESS_PHASE_CHECK",
+    "scope": "COLLATERAL_AND_INITIAL_INVENTORY_ONLY",
+    "checks": {
+      "collateral_identity_and_binding": true,
+      "inventory_reconciliation": false,
+      "transport_lock": true,
+      "live_flags_disabled": true
+    },
+    "blockers": [
+      "inventory_reconciliation"
+    ],
+    "provenance": {
+      "wallet": "USER_CONFIRMED_BEACON_AND_PUBLIC_CREATE2",
+      "collateral": "CURRENT_RPC_AND_TYPE3_GETS",
+      "inventory": "PAGINATED_GETS_AND_READ_ONLY_SQLITE"
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "other_live_checks": "NOT_REEVALUATED_IN_THIS_PHASE"
+  }
+}

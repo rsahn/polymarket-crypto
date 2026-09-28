@@ -1,0 +1,179 @@
+{
+  "phase": "D6_POST_B_AND_WS_PROOFS",
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "genesis_created": false,
+  "finalized": {
+    "status": "BLOCKED",
+    "reason": "FINALIZED_UNPROVEN"
+  },
+  "inventory": {
+    "status": "NOT_RUN"
+  },
+  "book": {
+    "state": "INVALID_BOOK",
+    "available": false,
+    "connected": true,
+    "synchronized": false,
+    "fresh": false,
+    "reason": "BOOK_REGRESSION",
+    "diagnostics": {
+      "parser_reason": "BOOK_REGRESSION",
+      "exception_category": null,
+      "close_code": null,
+      "close_reason_category": null,
+      "remote_close_reason_present": false,
+      "last_valid_message": {
+        "kind": "book",
+        "source_ms": 1790348236333,
+        "received_ms": 1790348236381,
+        "generation": 1
+      },
+      "resync_complete_generation": null,
+      "regression_event": {
+        "event_type": "price_change",
+        "token_index": 0,
+        "token_sha256": "82cdf614d3e9d92468ed0b324802152e8a153dbd95197d1fd8ce08d7e1c7bb5b",
+        "source_timestamp_ms": 1790348236317,
+        "previous_accepted_source_timestamp_ms": 1790348236333,
+        "received_timestamp_ms": 1790348236382,
+        "delta_ms": -16,
+        "generation": 1,
+        "reason": "BOOK_REGRESSION",
+        "comparison": "source_timestamp_ms < same_token_accepted_source_timestamp_ms",
+        "watermark_scope": "TOKEN_WITHIN_CONNECTION_GENERATION"
+      },
+      "transitions": [
+        {
+          "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348236290,
+          "reason": null
+        },
+        {
+          "kind": "RESYNC_COMPLETE",
+          "generation": 1,
+          "at_ms": 1790348236382,
+          "reason": null
+        },
+        {
+          "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+          "generation": 1,
+          "at_ms": 1790348236383,
+          "reason": "BOOK_REGRESSION"
+        }
+      ],
+      "tokens": [
+        {
+          "token_index": 0,
+          "last_valid_book_ms": 1790348236333,
+          "bids_present": true,
+          "asks_present": true,
+          "generation": 1,
+          "bids_count": 94,
+          "asks_count": 5,
+          "best_bid": "0.94",
+          "best_ask": "0.95",
+          "last_valid_book_age_ms": 80,
+          "current_generation_synced": false
+        },
+        {
+          "token_index": 1,
+          "last_valid_book_ms": 1790348236333,
+          "bids_present": true,
+          "asks_present": true,
+          "generation": 1,
+          "bids_count": 5,
+          "asks_count": 94,
+          "best_bid": "0.05",
+          "best_ask": "0.06",
+          "last_valid_book_age_ms": 80,
+          "current_generation_synced": false
+        }
+      ],
+      "rejected_message_age_ms": 66,
+      "first_full_books": [
+        {
+          "token_index": 1,
+          "token_sha256": "76f904eff705071722276730d39ff3a38d11c27124033516f37b245564c1c635",
+          "identity_matches": true,
+          "message_kind": "book",
+          "bids_count": 5,
+          "asks_count": 94,
+          "best_bid": "0.05",
+          "best_ask": "0.06",
+          "source_timestamp_ms": 1790348236333,
+          "generation": 1
+        },
+        {
+          "token_index": 0,
+          "token_sha256": "82cdf614d3e9d92468ed0b324802152e8a153dbd95197d1fd8ce08d7e1c7bb5b",
+          "identity_matches": true,
+          "message_kind": "book",
+          "bids_count": 94,
+          "asks_count": 5,
+          "best_bid": "0.94",
+          "best_ask": "0.95",
+          "source_timestamp_ms": 1790348236333,
+          "generation": 1
+        }
+      ]
+    },
+    "messages_received": 2
+  },
+  "genesis_unchanged": true,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790348235734,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790348236071,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790348236309,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790348236526,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790348236775,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790348100",
+      "started_ms": 1790348235747,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 213
+    }
+  ],
+  "status": "EVIDENCE_ONLY_NOT_READY"
+}

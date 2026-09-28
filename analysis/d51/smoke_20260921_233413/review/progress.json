@@ -1,0 +1,78 @@
+{
+  "pid": 15188,
+  "status": "FAILED",
+  "steps_total": 8,
+  "research_allowed": false,
+  "paper_started": false,
+  "source": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_233413.db",
+  "minimum_seconds": 1200,
+  "alert_after_seconds": 3600,
+  "hard_timeout": false,
+  "sqlite_cache_kib": 131072,
+  "one_hour_alert": false,
+  "step": 6,
+  "stage": "Replay NoTrade 1 source",
+  "rows_processed": 232000,
+  "total_rows": 539731,
+  "percent": 42.98437555004252,
+  "rows_per_second": 2808.7414654310323,
+  "detail": null,
+  "sql": null,
+  "elapsed_seconds": 271.24724679999053,
+  "stage_elapsed_seconds": 83.07238580007106,
+  "updated_utc": "2026-09-21T22:01:28.534197+00:00",
+  "completed_steps": [
+    {
+      "step": 1,
+      "stage": "Preparation metadata",
+      "status": "PASS",
+      "seconds": 56.67108320002444,
+      "details": {
+        "note": "Derived metadata only; not integrity or replay evidence"
+      }
+    },
+    {
+      "step": 2,
+      "stage": "Audit_next complet",
+      "status": "PASS",
+      "seconds": 15.127196999965236,
+      "details": {
+        "failures": []
+      }
+    },
+    {
+      "step": 3,
+      "stage": "SQLite integrity_check source",
+      "status": "PASS",
+      "seconds": 54.57089660014026,
+      "details": [
+        [
+          "ok"
+        ]
+      ]
+    },
+    {
+      "step": 4,
+      "stage": "SQLite foreign_key_check source",
+      "status": "PASS",
+      "seconds": 32.69461960019544,
+      "details": []
+    },
+    {
+      "step": 5,
+      "stage": "Qualite / provenance source",
+      "status": "PASS",
+      "seconds": 29.014175300020725,
+      "details": {
+        "note": "All quality metrics computed; policy evaluated at final gate"
+      }
+    },
+    {
+      "step": 6,
+      "status": "FAIL",
+      "error": "KeyboardInterrupt()"
+    }
+  ],
+  "D5_DATA_QUALITY": "FAIL",
+  "error": "KeyboardInterrupt()"
+}

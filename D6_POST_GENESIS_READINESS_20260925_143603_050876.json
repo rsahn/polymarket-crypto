@@ -1,0 +1,1466 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "evaluated_ms": 1790346963046,
+    "generation": null,
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": false,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED"
+      },
+      "positions": {
+        "available": false,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED"
+      },
+      "book": {
+        "reason": "BOOK_REGRESSION",
+        "available": false,
+        "connected": false,
+        "synchronized": false,
+        "fresh": false,
+        "book_synced": false,
+        "market_slug": "btc-updown-5m-1790346900",
+        "generation": 1,
+        "observed_ms": null,
+        "state": "DISCONNECTED",
+        "diagnostics": {
+          "parser_reason": "BOOK_REGRESSION",
+          "exception_category": "PARSER_OR_PROTOCOL_ERROR",
+          "close_code": null,
+          "close_reason_category": null,
+          "remote_close_reason_present": false,
+          "last_valid_message": {
+            "kind": "book",
+            "source_ms": 1790346954544,
+            "received_ms": 1790346954613,
+            "generation": 1
+          },
+          "resync_complete_generation": null,
+          "transitions": [
+            {
+              "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790346954489,
+              "reason": null
+            },
+            {
+              "kind": "RESYNC_COMPLETE",
+              "generation": 1,
+              "at_ms": 1790346954613,
+              "reason": null
+            },
+            {
+              "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+              "generation": 1,
+              "at_ms": 1790346954614,
+              "reason": "BOOK_REGRESSION"
+            },
+            {
+              "kind": "DISCONNECTED",
+              "generation": 1,
+              "at_ms": 1790346956615,
+              "reason": "BOOK_REGRESSION"
+            }
+          ],
+          "tokens": [
+            {
+              "token_index": 0,
+              "last_valid_book_ms": 1790346954544,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 42,
+              "asks_count": 57,
+              "best_bid": "0.42",
+              "best_ask": "0.43",
+              "last_valid_book_age_ms": 8499,
+              "current_generation_synced": false
+            },
+            {
+              "token_index": 1,
+              "last_valid_book_ms": 1790346954544,
+              "bids_present": true,
+              "asks_present": true,
+              "generation": 1,
+              "bids_count": 57,
+              "asks_count": 42,
+              "best_bid": "0.57",
+              "best_ask": "0.58",
+              "last_valid_book_age_ms": 8499,
+              "current_generation_synced": false
+            }
+          ],
+          "rejected_message_age_ms": 71,
+          "first_full_books": [
+            {
+              "token_index": 1,
+              "token_sha256": "9087927d0a059d83c30825970a8292c35c4ede1d9c3e530fefb7ea2cb532d32c",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 57,
+              "asks_count": 42,
+              "best_bid": "0.57",
+              "best_ask": "0.58",
+              "source_timestamp_ms": 1790346954544,
+              "generation": 1
+            },
+            {
+              "token_index": 0,
+              "token_sha256": "b7b30370c17454ada42c7f5541733fe0f81cabafd80add87889d78c4abdcccd2",
+              "identity_matches": true,
+              "message_kind": "book",
+              "bids_count": 42,
+              "asks_count": 57,
+              "best_bid": "0.42",
+              "best_ask": "0.43",
+              "source_timestamp_ms": 1790346954544,
+              "generation": 1
+            }
+          ]
+        },
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "condition_verified": true,
+        "messages_received": 2,
+        "last_wire_event_ms": 1790346954543,
+        "last_valid_book_ms": 1790346954544
+      },
+      "geo": {
+        "available": false,
+        "reason": "FRESH_GEOBLOCK_REQUIRED"
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "geoblock",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "geoblock": {
+        "status": "BLOCKED",
+        "source": "geo",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "FRESH_GEOBLOCK_REQUIRED",
+        "freshness_limit_ms": 60000
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "PUBLIC_CLOB_PERSISTENT_WS",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "BOOK_REGRESSION",
+        "freshness_limit_ms": 500
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "MISSING_STALE_OR_UNRECONCILED",
+        "freshness_limit_ms": null
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE",
+        "freshness_limit_ms": 500
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790346963046,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "HEAD_ADVANCED_GENERATION_RETRY_LIMIT",
+    "failed_stage": "PREPARE_CTF_THEN_PARALLEL_ACCOUNT_GENERATION"
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94427861,
+    "block_hash": "0xafd3b42c2d8587a6df8f974154fc45936c72c88610e2ec96c7506cfe8739aa82",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790346932000,
+    "provenance": "POST_GENESIS_CTF_INCOMING_EVENTS_AND_ANCHORED_BALANCES"
+  },
+  "generation_attempts": [
+    {
+      "attempt": 1,
+      "watermark_block": 94427878,
+      "watermark_hash": "0xfd855031b62299b5bd9cbe279572e1ab3f5cb10161982e5cde1ae888b15e7bcd",
+      "scan_observed_ms": 1790346957000,
+      "reason": "HEAD_ADVANCED",
+      "account_complete": true
+    },
+    {
+      "attempt": 2,
+      "watermark_block": 94427880,
+      "watermark_hash": "0xec61d07bc553e26d1052eed3ae503dd42d15fde0246a78369bb8f8a88f3f1cb5",
+      "scan_observed_ms": 1790346959535,
+      "reason": "HEAD_ADVANCED",
+      "account_complete": true
+    },
+    {
+      "attempt": 3,
+      "watermark_block": 94427881,
+      "watermark_hash": "0xa1a2572fc9cc96a396af269d58264f4b9ca3a743972e6bebd3038fd896a574f0",
+      "scan_observed_ms": 1790346961495,
+      "reason": "HEAD_ADVANCED",
+      "account_complete": true
+    }
+  ],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 1,
+      "started_ms": 1790346931307,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790346931599,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790346931842,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 4,
+      "started_ms": 1790346932097,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790346932341,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 6,
+      "started_ms": 1790346932577,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 7,
+      "started_ms": 1790346932852,
+      "from_block": 94426993,
+      "to_block": 94427002,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 8,
+      "started_ms": 1790346933097,
+      "from_block": 94427003,
+      "to_block": 94427012,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 9,
+      "started_ms": 1790346933318,
+      "from_block": 94427013,
+      "to_block": 94427022,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 10,
+      "started_ms": 1790346933539,
+      "from_block": 94427023,
+      "to_block": 94427032,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 11,
+      "started_ms": 1790346933760,
+      "from_block": 94427033,
+      "to_block": 94427042,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 12,
+      "started_ms": 1790346933987,
+      "from_block": 94427043,
+      "to_block": 94427052,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 13,
+      "started_ms": 1790346934210,
+      "from_block": 94427053,
+      "to_block": 94427062,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 14,
+      "started_ms": 1790346934442,
+      "from_block": 94427063,
+      "to_block": 94427072,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 15,
+      "started_ms": 1790346934682,
+      "from_block": 94427073,
+      "to_block": 94427082,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 16,
+      "started_ms": 1790346934901,
+      "from_block": 94427083,
+      "to_block": 94427092,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 17,
+      "started_ms": 1790346935125,
+      "from_block": 94427093,
+      "to_block": 94427102,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 18,
+      "started_ms": 1790346935347,
+      "from_block": 94427103,
+      "to_block": 94427112,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 19,
+      "started_ms": 1790346935576,
+      "from_block": 94427113,
+      "to_block": 94427122,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 20,
+      "started_ms": 1790346935803,
+      "from_block": 94427123,
+      "to_block": 94427132,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 21,
+      "started_ms": 1790346936026,
+      "from_block": 94427133,
+      "to_block": 94427142,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 22,
+      "started_ms": 1790346936254,
+      "from_block": 94427143,
+      "to_block": 94427152,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 23,
+      "started_ms": 1790346936493,
+      "from_block": 94427153,
+      "to_block": 94427162,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 24,
+      "started_ms": 1790346936717,
+      "from_block": 94427163,
+      "to_block": 94427172,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 25,
+      "started_ms": 1790346936942,
+      "from_block": 94427173,
+      "to_block": 94427182,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 26,
+      "started_ms": 1790346937181,
+      "from_block": 94427183,
+      "to_block": 94427192,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 27,
+      "started_ms": 1790346937413,
+      "from_block": 94427193,
+      "to_block": 94427202,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 28,
+      "started_ms": 1790346937649,
+      "from_block": 94427203,
+      "to_block": 94427212,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 29,
+      "started_ms": 1790346937885,
+      "from_block": 94427213,
+      "to_block": 94427222,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 30,
+      "started_ms": 1790346938111,
+      "from_block": 94427223,
+      "to_block": 94427232,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 31,
+      "started_ms": 1790346938334,
+      "from_block": 94427233,
+      "to_block": 94427242,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 32,
+      "started_ms": 1790346938560,
+      "from_block": 94427243,
+      "to_block": 94427252,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 33,
+      "started_ms": 1790346938786,
+      "from_block": 94427253,
+      "to_block": 94427262,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 34,
+      "started_ms": 1790346939011,
+      "from_block": 94427263,
+      "to_block": 94427272,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 35,
+      "started_ms": 1790346939238,
+      "from_block": 94427273,
+      "to_block": 94427282,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 36,
+      "started_ms": 1790346939452,
+      "from_block": 94427283,
+      "to_block": 94427292,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 37,
+      "started_ms": 1790346939674,
+      "from_block": 94427293,
+      "to_block": 94427302,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 38,
+      "started_ms": 1790346939890,
+      "from_block": 94427303,
+      "to_block": 94427312,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 39,
+      "started_ms": 1790346940108,
+      "from_block": 94427313,
+      "to_block": 94427322,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 40,
+      "started_ms": 1790346940326,
+      "from_block": 94427323,
+      "to_block": 94427332,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 41,
+      "started_ms": 1790346940558,
+      "from_block": 94427333,
+      "to_block": 94427342,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 42,
+      "started_ms": 1790346940783,
+      "from_block": 94427343,
+      "to_block": 94427352,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 43,
+      "started_ms": 1790346941011,
+      "from_block": 94427353,
+      "to_block": 94427362,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 44,
+      "started_ms": 1790346941234,
+      "from_block": 94427363,
+      "to_block": 94427372,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 45,
+      "started_ms": 1790346941453,
+      "from_block": 94427373,
+      "to_block": 94427382,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 46,
+      "started_ms": 1790346941679,
+      "from_block": 94427383,
+      "to_block": 94427392,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 47,
+      "started_ms": 1790346941904,
+      "from_block": 94427393,
+      "to_block": 94427402,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 48,
+      "started_ms": 1790346942128,
+      "from_block": 94427403,
+      "to_block": 94427412,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 49,
+      "started_ms": 1790346942346,
+      "from_block": 94427413,
+      "to_block": 94427422,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 50,
+      "started_ms": 1790346942567,
+      "from_block": 94427423,
+      "to_block": 94427432,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 51,
+      "started_ms": 1790346942806,
+      "from_block": 94427433,
+      "to_block": 94427442,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 52,
+      "started_ms": 1790346943027,
+      "from_block": 94427443,
+      "to_block": 94427452,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 53,
+      "started_ms": 1790346943247,
+      "from_block": 94427453,
+      "to_block": 94427462,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 54,
+      "started_ms": 1790346943477,
+      "from_block": 94427463,
+      "to_block": 94427472,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 55,
+      "started_ms": 1790346943708,
+      "from_block": 94427473,
+      "to_block": 94427482,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 56,
+      "started_ms": 1790346943925,
+      "from_block": 94427483,
+      "to_block": 94427492,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 57,
+      "started_ms": 1790346944149,
+      "from_block": 94427493,
+      "to_block": 94427502,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 58,
+      "started_ms": 1790346944377,
+      "from_block": 94427503,
+      "to_block": 94427512,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 59,
+      "started_ms": 1790346944594,
+      "from_block": 94427513,
+      "to_block": 94427522,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 60,
+      "started_ms": 1790346944812,
+      "from_block": 94427523,
+      "to_block": 94427532,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 61,
+      "started_ms": 1790346945039,
+      "from_block": 94427533,
+      "to_block": 94427542,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 62,
+      "started_ms": 1790346945261,
+      "from_block": 94427543,
+      "to_block": 94427552,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 63,
+      "started_ms": 1790346945482,
+      "from_block": 94427553,
+      "to_block": 94427562,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 64,
+      "started_ms": 1790346945707,
+      "from_block": 94427563,
+      "to_block": 94427572,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 65,
+      "started_ms": 1790346945926,
+      "from_block": 94427573,
+      "to_block": 94427582,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 66,
+      "started_ms": 1790346946150,
+      "from_block": 94427583,
+      "to_block": 94427592,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 67,
+      "started_ms": 1790346946379,
+      "from_block": 94427593,
+      "to_block": 94427602,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 68,
+      "started_ms": 1790346946611,
+      "from_block": 94427603,
+      "to_block": 94427612,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 69,
+      "started_ms": 1790346946830,
+      "from_block": 94427613,
+      "to_block": 94427622,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 70,
+      "started_ms": 1790346947050,
+      "from_block": 94427623,
+      "to_block": 94427632,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 71,
+      "started_ms": 1790346947655,
+      "from_block": 94427633,
+      "to_block": 94427642,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 72,
+      "started_ms": 1790346947892,
+      "from_block": 94427643,
+      "to_block": 94427652,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 73,
+      "started_ms": 1790346948120,
+      "from_block": 94427653,
+      "to_block": 94427662,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 74,
+      "started_ms": 1790346948357,
+      "from_block": 94427663,
+      "to_block": 94427672,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 75,
+      "started_ms": 1790346948577,
+      "from_block": 94427673,
+      "to_block": 94427682,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 76,
+      "started_ms": 1790346948797,
+      "from_block": 94427683,
+      "to_block": 94427692,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 77,
+      "started_ms": 1790346949024,
+      "from_block": 94427693,
+      "to_block": 94427702,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 78,
+      "started_ms": 1790346949239,
+      "from_block": 94427703,
+      "to_block": 94427712,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 79,
+      "started_ms": 1790346949457,
+      "from_block": 94427713,
+      "to_block": 94427722,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 80,
+      "started_ms": 1790346949675,
+      "from_block": 94427723,
+      "to_block": 94427732,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 81,
+      "started_ms": 1790346949897,
+      "from_block": 94427733,
+      "to_block": 94427742,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 82,
+      "started_ms": 1790346950116,
+      "from_block": 94427743,
+      "to_block": 94427752,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 83,
+      "started_ms": 1790346950348,
+      "from_block": 94427753,
+      "to_block": 94427762,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 84,
+      "started_ms": 1790346950604,
+      "from_block": 94427763,
+      "to_block": 94427772,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 85,
+      "started_ms": 1790346950820,
+      "from_block": 94427773,
+      "to_block": 94427782,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 86,
+      "started_ms": 1790346951035,
+      "from_block": 94427783,
+      "to_block": 94427792,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 87,
+      "started_ms": 1790346951256,
+      "from_block": 94427793,
+      "to_block": 94427802,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 88,
+      "started_ms": 1790346951476,
+      "from_block": 94427803,
+      "to_block": 94427812,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 89,
+      "started_ms": 1790346951699,
+      "from_block": 94427813,
+      "to_block": 94427822,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 90,
+      "started_ms": 1790346951923,
+      "from_block": 94427823,
+      "to_block": 94427832,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 91,
+      "started_ms": 1790346952149,
+      "from_block": 94427833,
+      "to_block": 94427842,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 92,
+      "started_ms": 1790346952367,
+      "from_block": 94427843,
+      "to_block": 94427852,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 93,
+      "started_ms": 1790346952586,
+      "from_block": 94427853,
+      "to_block": 94427861,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 94,
+      "started_ms": 1790346952814,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 95,
+      "started_ms": 1790346956846,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 96,
+      "started_ms": 1790346957095,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 97,
+      "started_ms": 1790346957324,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 98,
+      "started_ms": 1790346957544,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 99,
+      "started_ms": 1790346957767,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 100,
+      "started_ms": 1790346958029,
+      "from_block": 94427862,
+      "to_block": 94427871,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 101,
+      "started_ms": 1790346958257,
+      "from_block": 94427872,
+      "to_block": 94427878,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 102,
+      "started_ms": 1790346958486,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 103,
+      "started_ms": 1790346958720,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 104,
+      "started_ms": 1790346959075,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 105,
+      "started_ms": 1790346959301,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 106,
+      "started_ms": 1790346959535,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 107,
+      "started_ms": 1790346959763,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 108,
+      "started_ms": 1790346959988,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 109,
+      "started_ms": 1790346960265,
+      "from_block": 94427879,
+      "to_block": 94427880,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 110,
+      "started_ms": 1790346960482,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 111,
+      "started_ms": 1790346960706,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 112,
+      "started_ms": 1790346961046,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 113,
+      "started_ms": 1790346961270,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 114,
+      "started_ms": 1790346961495,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 115,
+      "started_ms": 1790346961718,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 116,
+      "started_ms": 1790346961953,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 117,
+      "started_ms": 1790346962228,
+      "from_block": 94427881,
+      "to_block": 94427881,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 118,
+      "started_ms": 1790346962454,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 119,
+      "started_ms": 1790346962690,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790346953795,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 198
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets/slug/btc-updown-5m-1790346900",
+      "started_ms": 1790346954009,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 139
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790346956630,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 216
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790346958720,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 246
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790346958720,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 260
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790346958758,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 241
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790346958798,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 277
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790346960707,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 237
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790346960706,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 281
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790346960725,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 267
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790346960706,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 288
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790346962690,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 244
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790346962690,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 283
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790346962690,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 298
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790346962690,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 308
+    }
+  ],
+  "storage_binding_verified": true,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364"
+}

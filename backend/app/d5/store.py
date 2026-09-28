@@ -60,27 +60,31 @@ class Store:
             raise ValueError('Historical database is audit-only')
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(self.path)
-        tables = {r[0] for r in self.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-        if tables and 'schema_info' not in tables:
+        try:
+            tables = {r[0] for r in self.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+            if tables and 'schema_info' not in tables:
+                self.db.close()
+                raise ValueError('Refusing non-D5 database')
+            if 'schema_info' in tables and self.db.execute('SELECT version FROM schema_info').fetchall() != [(self.schema_version,)]:
+                self.db.close()
+                raise ValueError('Unsupported D5 schema')
+            self.db.execute('PRAGMA journal_mode=WAL')
+            self.db.execute('PRAGMA synchronous=NORMAL')
+            schema = 'schema_v2.sql' if self.schema_version == 2 else 'schema.sql'
+            self.db.executescript(Path(__file__).with_name(schema).read_text())
+            self.session_id = str(uuid.uuid4())
+            self.last_available = 0
+            self.counts = Counter()
+            self.depth_cache = OrderedDict()
+            self.cache_hits = 0
+            self.cache_misses = 0
+            self.db.execute('INSERT INTO sessions VALUES(?,?,NULL,?,?,?,?,?)',
+                            (self.session_id, time.time_ns()//1_000_000, code_version(), self.schema_version, 'SHADOW',
+                             'RUNNING', encode(config or {})))
+            self.db.commit()
+        except BaseException:
             self.db.close()
-            raise ValueError('Refusing non-D5 database')
-        if 'schema_info' in tables and self.db.execute('SELECT version FROM schema_info').fetchall() != [(self.schema_version,)]:
-            self.db.close()
-            raise ValueError('Unsupported D5 schema')
-        self.db.execute('PRAGMA journal_mode=WAL')
-        self.db.execute('PRAGMA synchronous=NORMAL')
-        schema = 'schema_v2.sql' if self.schema_version == 2 else 'schema.sql'
-        self.db.executescript(Path(__file__).with_name(schema).read_text())
-        self.session_id = str(uuid.uuid4())
-        self.last_available = 0
-        self.counts = Counter()
-        self.depth_cache = OrderedDict()
-        self.cache_hits = 0
-        self.cache_misses = 0
-        self.db.execute('INSERT INTO sessions VALUES(?,?,NULL,?,?,?,?,?)',
-                        (self.session_id, time.time_ns()//1_000_000, code_version(), self.schema_version, 'SHADOW',
-                         'RUNNING', encode(config or {})))
-        self.db.commit()
+            raise
 
     def _pack_uncached(self, value):
         text = encode(value)

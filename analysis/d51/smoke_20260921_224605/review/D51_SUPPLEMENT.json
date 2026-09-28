@@ -1,0 +1,2256 @@
+{
+  "contract": "D5.1",
+  "rows": 639880,
+  "book_events": 624251,
+  "book_sides": 1248502,
+  "btc_events": 13520,
+  "failures": {
+    "RECONNECT_GAP_OVER_5S": 22,
+    "ACCEPTED_AFTER_COLLECTION_STOP": 2
+  },
+  "gap_counts": {
+    "STARTUP_GAP": 3,
+    "RECONNECT_GAP": 212,
+    "TRANSITION_GAP": 5,
+    "SHUTDOWN_GAP": 3
+  },
+  "gaps": [
+    {
+      "feed": "15m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1790023604979,
+      "to_ms": 1790023605754,
+      "gap_ms": 775,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1790023604979,
+      "to_ms": 1790023605824,
+      "gap_ms": 845,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "STARTUP_GAP",
+      "from_ms": 1790023604979,
+      "to_ms": 1790023606333,
+      "gap_ms": 1354,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023617915,
+      "to_ms": 1790023620502,
+      "gap_ms": 2587,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023617910,
+      "to_ms": 1790023620688,
+      "gap_ms": 2778,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023623896,
+      "to_ms": 1790023626729,
+      "gap_ms": 2833,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023623883,
+      "to_ms": 1790023626731,
+      "gap_ms": 2848,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023627469,
+      "to_ms": 1790023630541,
+      "gap_ms": 3072,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023632747,
+      "to_ms": 1790023635882,
+      "gap_ms": 3135,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023632756,
+      "to_ms": 1790023636046,
+      "gap_ms": 3290,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023623835,
+      "to_ms": 1790023636194,
+      "gap_ms": 12359,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023640847,
+      "to_ms": 1790023644211,
+      "gap_ms": 3364,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023640839,
+      "to_ms": 1790023644480,
+      "gap_ms": 3641,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023647858,
+      "to_ms": 1790023651596,
+      "gap_ms": 3738,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023647898,
+      "to_ms": 1790023651892,
+      "gap_ms": 3994,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023661044,
+      "to_ms": 1790023665130,
+      "gap_ms": 4086,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023665279,
+      "to_ms": 1790023669224,
+      "gap_ms": 3945,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023665292,
+      "to_ms": 1790023669662,
+      "gap_ms": 4370,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023670099,
+      "to_ms": 1790023672245,
+      "gap_ms": 2146,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023670140,
+      "to_ms": 1790023674574,
+      "gap_ms": 4434,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023665259,
+      "to_ms": 1790023679192,
+      "gap_ms": 13933,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023675454,
+      "to_ms": 1790023679767,
+      "gap_ms": 4313,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023675468,
+      "to_ms": 1790023679846,
+      "gap_ms": 4378,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023682362,
+      "to_ms": 1790023686730,
+      "gap_ms": 4368,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023682376,
+      "to_ms": 1790023686754,
+      "gap_ms": 4378,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023682275,
+      "to_ms": 1790023694791,
+      "gap_ms": 12516,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023691737,
+      "to_ms": 1790023696034,
+      "gap_ms": 4297,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023698360,
+      "to_ms": 1790023700917,
+      "gap_ms": 2557,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023698394,
+      "to_ms": 1790023702013,
+      "gap_ms": 3619,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023698443,
+      "to_ms": 1790023702792,
+      "gap_ms": 4349,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023704771,
+      "to_ms": 1790023709101,
+      "gap_ms": 4330,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023704766,
+      "to_ms": 1790023709160,
+      "gap_ms": 4394,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023710070,
+      "to_ms": 1790023714633,
+      "gap_ms": 4563,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023710569,
+      "to_ms": 1790023715001,
+      "gap_ms": 4432,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023704818,
+      "to_ms": 1790023717188,
+      "gap_ms": 12370,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023715217,
+      "to_ms": 1790023719651,
+      "gap_ms": 4434,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023715232,
+      "to_ms": 1790023719698,
+      "gap_ms": 4466,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023723293,
+      "to_ms": 1790023727672,
+      "gap_ms": 4379,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023729552,
+      "to_ms": 1790023733941,
+      "gap_ms": 4389,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023729559,
+      "to_ms": 1790023735003,
+      "gap_ms": 5444,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023735108,
+      "to_ms": 1790023739450,
+      "gap_ms": 4342,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023735119,
+      "to_ms": 1790023739461,
+      "gap_ms": 4342,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023783501,
+      "to_ms": 1790023787854,
+      "gap_ms": 4353,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023783473,
+      "to_ms": 1790023787923,
+      "gap_ms": 4450,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023788643,
+      "to_ms": 1790023791112,
+      "gap_ms": 2469,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023788650,
+      "to_ms": 1790023793163,
+      "gap_ms": 4513,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1790023799957,
+      "to_ms": 1790023800751,
+      "gap_ms": 794,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023788599,
+      "to_ms": 1790023800875,
+      "gap_ms": 12276,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023801116,
+      "to_ms": 1790023803852,
+      "gap_ms": 2736,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023801126,
+      "to_ms": 1790023805565,
+      "gap_ms": 4439,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023801115,
+      "to_ms": 1790023813969,
+      "gap_ms": 12854,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023812142,
+      "to_ms": 1790023814949,
+      "gap_ms": 2807,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023812143,
+      "to_ms": 1790023816527,
+      "gap_ms": 4384,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023820918,
+      "to_ms": 1790023824064,
+      "gap_ms": 3146,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023820897,
+      "to_ms": 1790023825268,
+      "gap_ms": 4371,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023832287,
+      "to_ms": 1790023835695,
+      "gap_ms": 3408,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023832299,
+      "to_ms": 1790023836700,
+      "gap_ms": 4401,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023837839,
+      "to_ms": 1790023841413,
+      "gap_ms": 3574,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023837841,
+      "to_ms": 1790023842218,
+      "gap_ms": 4377,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023860801,
+      "to_ms": 1790023864720,
+      "gap_ms": 3919,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023860777,
+      "to_ms": 1790023865117,
+      "gap_ms": 4340,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023866446,
+      "to_ms": 1790023870529,
+      "gap_ms": 4083,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023866443,
+      "to_ms": 1790023870869,
+      "gap_ms": 4426,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023871111,
+      "to_ms": 1790023875555,
+      "gap_ms": 4444,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023871113,
+      "to_ms": 1790023876650,
+      "gap_ms": 5537,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023877178,
+      "to_ms": 1790023881471,
+      "gap_ms": 4293,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023877191,
+      "to_ms": 1790023881595,
+      "gap_ms": 4404,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023882509,
+      "to_ms": 1790023886870,
+      "gap_ms": 4361,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023882492,
+      "to_ms": 1790023886981,
+      "gap_ms": 4489,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023888211,
+      "to_ms": 1790023892527,
+      "gap_ms": 4316,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023888206,
+      "to_ms": 1790023892660,
+      "gap_ms": 4454,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023882365,
+      "to_ms": 1790023894807,
+      "gap_ms": 12442,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023908247,
+      "to_ms": 1790023912622,
+      "gap_ms": 4375,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023924787,
+      "to_ms": 1790023929180,
+      "gap_ms": 4393,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023924768,
+      "to_ms": 1790023929223,
+      "gap_ms": 4455,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023924629,
+      "to_ms": 1790023936633,
+      "gap_ms": 12004,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023942739,
+      "to_ms": 1790023947114,
+      "gap_ms": 4375,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023942738,
+      "to_ms": 1790023947163,
+      "gap_ms": 4425,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023952700,
+      "to_ms": 1790023957017,
+      "gap_ms": 4317,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023952695,
+      "to_ms": 1790023957020,
+      "gap_ms": 4325,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023962784,
+      "to_ms": 1790023967197,
+      "gap_ms": 4413,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023962780,
+      "to_ms": 1790023967199,
+      "gap_ms": 4419,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023986087,
+      "to_ms": 1790023990440,
+      "gap_ms": 4353,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023986041,
+      "to_ms": 1790023990475,
+      "gap_ms": 4434,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023990828,
+      "to_ms": 1790023995132,
+      "gap_ms": 4304,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023990829,
+      "to_ms": 1790023995156,
+      "gap_ms": 4327,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790023986013,
+      "to_ms": 1790023998576,
+      "gap_ms": 12563,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024003508,
+      "to_ms": 1790024007886,
+      "gap_ms": 4378,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024003513,
+      "to_ms": 1790024007952,
+      "gap_ms": 4439,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024003434,
+      "to_ms": 1790024016378,
+      "gap_ms": 12944,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024015067,
+      "to_ms": 1790024019446,
+      "gap_ms": 4379,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024015050,
+      "to_ms": 1790024019475,
+      "gap_ms": 4425,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024023876,
+      "to_ms": 1790024028205,
+      "gap_ms": 4329,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024023855,
+      "to_ms": 1790024028230,
+      "gap_ms": 4375,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024023868,
+      "to_ms": 1790024036125,
+      "gap_ms": 12257,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024050860,
+      "to_ms": 1790024055229,
+      "gap_ms": 4369,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024050857,
+      "to_ms": 1790024055258,
+      "gap_ms": 4401,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024050821,
+      "to_ms": 1790024064114,
+      "gap_ms": 13293,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024070260,
+      "to_ms": 1790024074580,
+      "gap_ms": 4320,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024070211,
+      "to_ms": 1790024082561,
+      "gap_ms": 12350,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024079744,
+      "to_ms": 1790024084113,
+      "gap_ms": 4369,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024079723,
+      "to_ms": 1790024084158,
+      "gap_ms": 4435,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1790024099964,
+      "to_ms": 1790024101038,
+      "gap_ms": 1074,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024098801,
+      "to_ms": 1790024103153,
+      "gap_ms": 4352,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024101568,
+      "to_ms": 1790024104291,
+      "gap_ms": 2723,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024106133,
+      "to_ms": 1790024109048,
+      "gap_ms": 2915,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024106141,
+      "to_ms": 1790024110473,
+      "gap_ms": 4332,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024114394,
+      "to_ms": 1790024117623,
+      "gap_ms": 3229,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024114405,
+      "to_ms": 1790024118825,
+      "gap_ms": 4420,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024118987,
+      "to_ms": 1790024122329,
+      "gap_ms": 3342,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024118992,
+      "to_ms": 1790024123327,
+      "gap_ms": 4335,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024126473,
+      "to_ms": 1790024130158,
+      "gap_ms": 3685,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024126465,
+      "to_ms": 1790024130789,
+      "gap_ms": 4324,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024134429,
+      "to_ms": 1790024138412,
+      "gap_ms": 3983,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024134433,
+      "to_ms": 1790024138900,
+      "gap_ms": 4467,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024151239,
+      "to_ms": 1790024155445,
+      "gap_ms": 4206,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024151313,
+      "to_ms": 1790024155768,
+      "gap_ms": 4455,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024151139,
+      "to_ms": 1790024163722,
+      "gap_ms": 12583,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024162343,
+      "to_ms": 1790024166684,
+      "gap_ms": 4341,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024162343,
+      "to_ms": 1790024166831,
+      "gap_ms": 4488,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024167295,
+      "to_ms": 1790024169682,
+      "gap_ms": 2387,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024167296,
+      "to_ms": 1790024171730,
+      "gap_ms": 4434,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024181194,
+      "to_ms": 1790024185507,
+      "gap_ms": 4313,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024181204,
+      "to_ms": 1790024185649,
+      "gap_ms": 4445,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024189206,
+      "to_ms": 1790024193620,
+      "gap_ms": 4414,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024189199,
+      "to_ms": 1790024193640,
+      "gap_ms": 4441,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024200583,
+      "to_ms": 1790024204999,
+      "gap_ms": 4416,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024200545,
+      "to_ms": 1790024205017,
+      "gap_ms": 4472,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024205989,
+      "to_ms": 1790024210438,
+      "gap_ms": 4449,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024205970,
+      "to_ms": 1790024210447,
+      "gap_ms": 4477,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024216434,
+      "to_ms": 1790024220815,
+      "gap_ms": 4381,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024235842,
+      "to_ms": 1790024240267,
+      "gap_ms": 4425,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024235850,
+      "to_ms": 1790024240322,
+      "gap_ms": 4472,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024240753,
+      "to_ms": 1790024245145,
+      "gap_ms": 4392,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024240741,
+      "to_ms": 1790024245159,
+      "gap_ms": 4418,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024248439,
+      "to_ms": 1790024252839,
+      "gap_ms": 4400,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024248451,
+      "to_ms": 1790024252878,
+      "gap_ms": 4427,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024253431,
+      "to_ms": 1790024257889,
+      "gap_ms": 4458,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024253426,
+      "to_ms": 1790024257939,
+      "gap_ms": 4513,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024263728,
+      "to_ms": 1790024266168,
+      "gap_ms": 2440,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024263739,
+      "to_ms": 1790024268231,
+      "gap_ms": 4492,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024290000,
+      "to_ms": 1790024294384,
+      "gap_ms": 4384,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024289999,
+      "to_ms": 1790024294459,
+      "gap_ms": 4460,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024295943,
+      "to_ms": 1790024300252,
+      "gap_ms": 4309,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024295956,
+      "to_ms": 1790024300325,
+      "gap_ms": 4369,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024289993,
+      "to_ms": 1790024302255,
+      "gap_ms": 12262,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024301851,
+      "to_ms": 1790024306203,
+      "gap_ms": 4352,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024301866,
+      "to_ms": 1790024306226,
+      "gap_ms": 4360,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024309012,
+      "to_ms": 1790024313303,
+      "gap_ms": 4291,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024309005,
+      "to_ms": 1790024313422,
+      "gap_ms": 4417,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024315863,
+      "to_ms": 1790024320265,
+      "gap_ms": 4402,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024315874,
+      "to_ms": 1790024320335,
+      "gap_ms": 4461,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024320744,
+      "to_ms": 1790024325167,
+      "gap_ms": 4423,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024320746,
+      "to_ms": 1790024325188,
+      "gap_ms": 4442,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024330730,
+      "to_ms": 1790024335109,
+      "gap_ms": 4379,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024330751,
+      "to_ms": 1790024335133,
+      "gap_ms": 4382,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024339678,
+      "to_ms": 1790024344007,
+      "gap_ms": 4329,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024339681,
+      "to_ms": 1790024344093,
+      "gap_ms": 4412,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024344708,
+      "to_ms": 1790024349087,
+      "gap_ms": 4379,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024344715,
+      "to_ms": 1790024349169,
+      "gap_ms": 4454,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024344711,
+      "to_ms": 1790024357152,
+      "gap_ms": 12441,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024356757,
+      "to_ms": 1790024359214,
+      "gap_ms": 2457,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024356769,
+      "to_ms": 1790024361143,
+      "gap_ms": 4374,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024362826,
+      "to_ms": 1790024365386,
+      "gap_ms": 2560,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024362841,
+      "to_ms": 1790024367256,
+      "gap_ms": 4415,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024381228,
+      "to_ms": 1790024383922,
+      "gap_ms": 2694,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024381330,
+      "to_ms": 1790024385679,
+      "gap_ms": 4349,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1790024399955,
+      "to_ms": 1790024400644,
+      "gap_ms": 689,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1790024399955,
+      "to_ms": 1790024400683,
+      "gap_ms": 728,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024405473,
+      "to_ms": 1790024408050,
+      "gap_ms": 2577,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024405465,
+      "to_ms": 1790024408076,
+      "gap_ms": 2611,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024408925,
+      "to_ms": 1790024411822,
+      "gap_ms": 2897,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024408901,
+      "to_ms": 1790024411839,
+      "gap_ms": 2938,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024412867,
+      "to_ms": 1790024416043,
+      "gap_ms": 3176,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024412881,
+      "to_ms": 1790024416083,
+      "gap_ms": 3202,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024408916,
+      "to_ms": 1790024421214,
+      "gap_ms": 12298,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024420421,
+      "to_ms": 1790024424013,
+      "gap_ms": 3592,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024431288,
+      "to_ms": 1790024435017,
+      "gap_ms": 3729,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024441524,
+      "to_ms": 1790024442949,
+      "gap_ms": 1425,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024441533,
+      "to_ms": 1790024445502,
+      "gap_ms": 3969,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024448552,
+      "to_ms": 1790024452131,
+      "gap_ms": 3579,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024448560,
+      "to_ms": 1790024452932,
+      "gap_ms": 4372,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024458720,
+      "to_ms": 1790024462554,
+      "gap_ms": 3834,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024458722,
+      "to_ms": 1790024463117,
+      "gap_ms": 4395,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024463679,
+      "to_ms": 1790024467982,
+      "gap_ms": 4303,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024471394,
+      "to_ms": 1790024475458,
+      "gap_ms": 4064,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024471382,
+      "to_ms": 1790024475730,
+      "gap_ms": 4348,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024485596,
+      "to_ms": 1790024489942,
+      "gap_ms": 4346,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024485593,
+      "to_ms": 1790024490032,
+      "gap_ms": 4439,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024491235,
+      "to_ms": 1790024495607,
+      "gap_ms": 4372,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024491243,
+      "to_ms": 1790024495704,
+      "gap_ms": 4461,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024510836,
+      "to_ms": 1790024515188,
+      "gap_ms": 4352,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024510851,
+      "to_ms": 1790024515209,
+      "gap_ms": 4358,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024519065,
+      "to_ms": 1790024523473,
+      "gap_ms": 4408,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024519072,
+      "to_ms": 1790024523548,
+      "gap_ms": 4476,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024535322,
+      "to_ms": 1790024539603,
+      "gap_ms": 4281,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024552224,
+      "to_ms": 1790024556543,
+      "gap_ms": 4319,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024552209,
+      "to_ms": 1790024556568,
+      "gap_ms": 4359,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024586410,
+      "to_ms": 1790024590794,
+      "gap_ms": 4384,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024586414,
+      "to_ms": 1790024590815,
+      "gap_ms": 4401,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024586425,
+      "to_ms": 1790024598919,
+      "gap_ms": 12494,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "TRANSITION_GAP",
+      "from_ms": 1790024699971,
+      "to_ms": 1790024700984,
+      "gap_ms": 1013,
+      "transition_verified": true,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024703052,
+      "to_ms": 1790024705632,
+      "gap_ms": 2580,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024702840,
+      "to_ms": 1790024707198,
+      "gap_ms": 4358,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024706881,
+      "to_ms": 1790024709893,
+      "gap_ms": 3012,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024710219,
+      "to_ms": 1790024713453,
+      "gap_ms": 3234,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024702849,
+      "to_ms": 1790024715699,
+      "gap_ms": 12850,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024738461,
+      "to_ms": 1790024741894,
+      "gap_ms": 3433,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024738454,
+      "to_ms": 1790024743180,
+      "gap_ms": 4726,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024745930,
+      "to_ms": 1790024749498,
+      "gap_ms": 3568,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024760053,
+      "to_ms": 1790024763874,
+      "gap_ms": 3821,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024764654,
+      "to_ms": 1790024768715,
+      "gap_ms": 4061,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024764651,
+      "to_ms": 1790024768998,
+      "gap_ms": 4347,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024769345,
+      "to_ms": 1790024771812,
+      "gap_ms": 2467,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024769348,
+      "to_ms": 1790024773800,
+      "gap_ms": 4452,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024764596,
+      "to_ms": 1790024777225,
+      "gap_ms": 12629,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": "RECONNECT_GAP_OVER_5S"
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024777090,
+      "to_ms": 1790024779538,
+      "gap_ms": 2448,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024777101,
+      "to_ms": 1790024781536,
+      "gap_ms": 4435,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024786108,
+      "to_ms": 1790024790449,
+      "gap_ms": 4341,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "RECONNECT_GAP",
+      "from_ms": 1790024786111,
+      "to_ms": 1790024790573,
+      "gap_ms": 4462,
+      "transition_verified": false,
+      "reconnect_observed": true,
+      "failure": null
+    },
+    {
+      "feed": "5m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1790024925065,
+      "to_ms": 1790024925068,
+      "gap_ms": 3,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "15m",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1790024925068,
+      "to_ms": 1790024925068,
+      "gap_ms": 0,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    },
+    {
+      "feed": "BTC",
+      "kind": "SHUTDOWN_GAP",
+      "from_ms": 1790024924678,
+      "to_ms": 1790024925068,
+      "gap_ms": 390,
+      "transition_verified": false,
+      "reconnect_observed": false,
+      "failure": null
+    }
+  ],
+  "wire_regressions_diagnostic_only": 75,
+  "wire_worst_regression_ms": 151,
+  "wire_missing_timestamp_count": 0,
+  "reconnect_event_markers": 382,
+  "reconnect_attempts": 191,
+  "collection_stop_markers": 1,
+  "session_end_markers": 3
+}

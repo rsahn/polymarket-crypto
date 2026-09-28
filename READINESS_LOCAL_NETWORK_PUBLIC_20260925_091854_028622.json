@@ -1,0 +1,112 @@
+{
+  "status": "PUBLIC_ONLY_NOT_READY",
+  "checks": {
+    "wallet_auth": false,
+    "balance_usdc": false,
+    "allowance_usdc": false,
+    "geoblock": true,
+    "book_freshness": false,
+    "account_reconciliation": false,
+    "open_orders": false,
+    "inventory": false,
+    "local_recovery_state": false,
+    "session_risk": false,
+    "transport_lock": true,
+    "live_flags_disabled": true
+  },
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "blockers": [
+    "wallet_auth",
+    "balance_usdc",
+    "allowance_usdc",
+    "book_freshness",
+    "account_reconciliation",
+    "open_orders",
+    "inventory",
+    "local_recovery_state",
+    "session_risk"
+  ],
+  "mode": "public-only",
+  "complete": false,
+  "credentials_loaded": false,
+  "dotenv_read": false,
+  "qualification": {
+    "time": {
+      "status": "PASS",
+      "received_ms": 1790327934248,
+      "round_trip_ms": 217,
+      "server_seconds": 1790327934,
+      "coarse_skew_ms": 248,
+      "ntp_qualified": false
+    },
+    "geo": {
+      "status": "PASS",
+      "received_ms": 1790327934489,
+      "round_trip_ms": 241,
+      "blocked": false
+    },
+    "gamma": {
+      "status": "PASS",
+      "received_ms": 1790327934653,
+      "round_trip_ms": 164,
+      "market_count": 1
+    }
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790327934035,
+      "http_status": 200,
+      "shape": "int",
+      "elapsed_ms": 212
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://polymarket.com/api/geoblock",
+      "started_ms": 1790327934248,
+      "http_status": 200,
+      "shape": "dict",
+      "elapsed_ms": 241
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "started_ms": 1790327934489,
+      "http_status": 200,
+      "shape": "list",
+      "elapsed_ms": 163
+    }
+  ],
+  "previous_codex_403_not_generalized": true,
+  "transport_profile": {
+    "method": "GET",
+    "user_agent": "Mozilla/5.0",
+    "accept": "application/json",
+    "redirects": "rejected",
+    "proxy_policy": "urllib default discovery; no override or environment changes",
+    "url_normalization": "base.rstrip('/') + exact allowlisted path",
+    "query_encoding": "urllib.parse.urlencode",
+    "request_body": null,
+    "timeout_seconds": 8
+  },
+  "provenance": {
+    "wallet_auth": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "balance_usdc": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "allowance_usdc": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "geoblock": "GET /api/geoblock; explicit boolean required",
+    "book_freshness": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "account_reconciliation": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "open_orders": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "inventory": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "local_recovery_state": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "session_risk": "NOT_QUALIFIED_IN_PUBLIC_ONLY",
+    "transport_lock": "local AST guard",
+    "live_flags_disabled": "process flags only; .env deliberately not read"
+  }
+}

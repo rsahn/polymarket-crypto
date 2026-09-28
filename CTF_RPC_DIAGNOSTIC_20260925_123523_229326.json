@@ -1,0 +1,48 @@
+{
+  "phase": "POLYGON_ARCHIVE_RPC_QUALIFICATION",
+  "status": "PASS_READ_ONLY_RPC",
+  "rpc": "CONFIGURED_POLYGON_ARCHIVE_RPC_URL",
+  "from_block": 94331195,
+  "to_block": 94331204,
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790339722382,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 2,
+      "started_ms": 1790339722688,
+      "http_status": 200,
+      "status": "PASS"
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 3,
+      "started_ms": 1790339722986,
+      "from_block": 94331195,
+      "to_block": 94331204,
+      "http_status": 200,
+      "status": "PASS"
+    }
+  ],
+  "flags": {
+    "REAL_ORDERS_ENABLED": "false",
+    "LIVE_EXECUTION_ARMED": "false"
+  },
+  "credentials_loaded": false,
+  "private_key_loaded": false,
+  "authenticated_get_attempts": 0,
+  "genesis_created": false,
+  "ready_for_arm": false,
+  "rpc_configuration_source": "PROCESS_ENVIRONMENT_ONLY_NO_DOTENV",
+  "chain_id": 137,
+  "historical_code_present": true,
+  "historical_block": 94331195,
+  "historical_logs_readable": true,
+  "rows_count": 0,
+  "reason": "TESTED_BLOCK_AND_TEN_BLOCK_RANGE_ONLY_NO_GLOBAL_ARCHIVE_OR_GENESIS_CLAIM"
+}

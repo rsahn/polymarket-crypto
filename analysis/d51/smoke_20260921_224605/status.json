@@ -1,0 +1,177 @@
+{
+  "pid": 20104,
+  "phase": "COMPLETE",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260921_224605.db",
+  "started_utc": "2026-09-21T20:46:05.427542+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-21T21:22:31.382529+00:00",
+  "session_id": "25eeb96a-14df-40b5-ac24-20cf68a853d0",
+  "elapsed_seconds": 1303.9975372001063,
+  "counts": {
+    "CLOCK_SAMPLE": 43,
+    "ACTIVATE": 198,
+    "BOOK": 620888,
+    "BTC_CONNECTED": 22,
+    "BTC": 13319,
+    "REJECT": 1194,
+    "WS_ERROR": 191,
+    "RECONNECT": 382,
+    "BTC_RECONNECT": 21,
+    "EXPIRE": 5,
+    "ROTATION": 5
+  },
+  "last_books": {
+    "5m": {
+      "slug": "btc-updown-5m-1790024700",
+      "received_ts_ms": 1790024909055
+    },
+    "15m": {
+      "slug": "btc-updown-15m-1790024400",
+      "received_ts_ms": 1790024909061
+    }
+  },
+  "writer": {
+    "submitted": 641636,
+    "sent_sequence": 641631,
+    "processed_sequence": 641628,
+    "committed_sequence": 641628,
+    "outstanding_items": 7,
+    "outstanding_bytes": 9402,
+    "high_water_items": 259,
+    "high_water_bytes": 774417,
+    "oldest_unacknowledged_age_seconds": 0.01085679978132248,
+    "pending_batches_items": 1,
+    "control_pending_items": 3,
+    "worker_pid": 20644,
+    "capacity_rejections": 212,
+    "last_capacity_rejection": {
+      "kind": "BOOK",
+      "items": 256,
+      "bytes": 752855,
+      "command_bytes": 3015,
+      "processed_sequence": 577882,
+      "committed_sequence": 577882,
+      "sent_sequence": 578074,
+      "pending_items": 64,
+      "at_monotonic": 1056226.8375952
+    },
+    "closed_ack": false,
+    "error": null
+  },
+  "free_bytes": 82254499840,
+  "feed_timing": {
+    "15m": {
+      "observations": 215482,
+      "wire_age_sum_ms": 7588921,
+      "last_wire_age_ms": 21,
+      "max_wire_age_ms": 551,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790024909061
+    },
+    "5m": {
+      "observations": 405712,
+      "wire_age_sum_ms": 16310768,
+      "last_wire_age_ms": 21,
+      "max_wire_age_ms": 836,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790024909055
+    }
+  },
+  "stage_timing": {
+    "15m:normalize": {
+      "calls": 215689,
+      "wall_ns": 38267200200,
+      "cpu_ns": 33609375000,
+      "max_wall_ns": 22046600,
+      "over_5ms": 16,
+      "over_50ms": 0
+    },
+    "15m:callback_including_store": {
+      "calls": 215689,
+      "wall_ns": 13018624400,
+      "cpu_ns": 12140625000,
+      "max_wall_ns": 10548100,
+      "over_5ms": 7,
+      "over_50ms": 0
+    },
+    "5m:normalize": {
+      "calls": 406588,
+      "wall_ns": 73387675000,
+      "cpu_ns": 66921875000,
+      "max_wall_ns": 28938300,
+      "over_5ms": 25,
+      "over_50ms": 0
+    },
+    "5m:callback_including_store": {
+      "calls": 406588,
+      "wall_ns": 23626290200,
+      "cpu_ns": 21421875000,
+      "max_wall_ns": 55648200,
+      "over_5ms": 19,
+      "over_50ms": 1
+    }
+  },
+  "last_clock_failures": [],
+  "collection": {
+    "session_id": "25eeb96a-14df-40b5-ac24-20cf68a853d0",
+    "elapsed_seconds": 1326.952901800163,
+    "collection_seconds": 1320.0045521000866,
+    "counts": {
+      "CLOCK_SAMPLE": 44,
+      "ACTIVATE": 198,
+      "BOOK": 624251,
+      "BTC_CONNECTED": 22,
+      "BTC": 13520,
+      "REJECT": 1237,
+      "WS_ERROR": 191,
+      "RECONNECT": 382,
+      "BTC_RECONNECT": 21,
+      "EXPIRE": 5,
+      "ROTATION": 5,
+      "COLLECTION_STOP": 1,
+      "SESSION_END": 3
+    },
+    "status": "STOPPED",
+    "writer": {
+      "submitted": 645307,
+      "sent_sequence": 645306,
+      "processed_sequence": 645306,
+      "committed_sequence": 645306,
+      "outstanding_items": 0,
+      "outstanding_bytes": 0,
+      "high_water_items": 259,
+      "high_water_bytes": 774417,
+      "oldest_unacknowledged_age_seconds": 0.0,
+      "pending_batches_items": 0,
+      "control_pending_items": 0,
+      "worker_pid": 20644,
+      "capacity_rejections": 212,
+      "last_capacity_rejection": {
+        "kind": "BOOK",
+        "items": 256,
+        "bytes": 752855,
+        "command_bytes": 3015,
+        "processed_sequence": 577882,
+        "committed_sequence": 577882,
+        "sent_sequence": 578074,
+        "pending_items": 64,
+        "at_monotonic": 1056226.8375952
+      },
+      "closed_ack": true,
+      "error": null
+    }
+  },
+  "D51_DATA_QUALITY": "FAIL",
+  "failures": [
+    "ACCEPTED_AFTER_COLLECTION_STOP",
+    "RECONNECT_GAP_OVER_5S"
+  ]
+}

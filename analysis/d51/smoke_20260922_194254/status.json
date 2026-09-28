@@ -1,0 +1,151 @@
+{
+  "pid": 5388,
+  "phase": "FAILED",
+  "mode": "SHADOW",
+  "strategy": "NO_TRADE",
+  "capital": 500,
+  "orders": 0,
+  "fills": 0,
+  "inventory": 0,
+  "paper_started": false,
+  "research_allowed": false,
+  "database": "C:\\Users\\Ramy\\Documents\\polymarket-crypto\\data\\d51\\d51_smoke_20260922_194254.db",
+  "started_utc": "2026-09-22T17:42:54.548099+00:00",
+  "keep_awake": false,
+  "updated_utc": "2026-09-22T18:38:31.028476+00:00",
+  "session_id": "bdaaf415-9ac1-4c1f-af8a-d590a064bde8",
+  "elapsed_seconds": 1301.0634238999337,
+  "counts": {
+    "CLOCK_SAMPLE": 43,
+    "ACTIVATE": 10,
+    "BOOK": 1294670,
+    "REJECT": 2088,
+    "BTC_CONNECTED": 1,
+    "BTC": 18815,
+    "EXPIRE": 7,
+    "ROTATION": 7,
+    "WS_ERROR": 1,
+    "RECONNECT": 2
+  },
+  "last_books": {
+    "15m": {
+      "slug": "btc-updown-15m-1790100000",
+      "received_ts_ms": 1790100316122
+    },
+    "5m": {
+      "slug": "btc-updown-5m-1790100300",
+      "received_ts_ms": 1790100316125
+    }
+  },
+  "writer": {
+    "submitted": 1320802,
+    "sent_sequence": 1320798,
+    "processed_sequence": 1320794,
+    "committed_sequence": 1320794,
+    "outstanding_items": 7,
+    "outstanding_bytes": 12368,
+    "high_water_items": 4437,
+    "high_water_bytes": 13281476,
+    "oldest_unacknowledged_age_seconds": 0.003427499905228615,
+    "pending_batches_items": 0,
+    "control_pending_items": 3,
+    "worker_pid": 19704,
+    "capacity_rejections": 0,
+    "last_capacity_rejection": null,
+    "closed_ack": false,
+    "error": null
+  },
+  "free_bytes": 71114661888,
+  "feed_timing": {
+    "5m": {
+      "observations": 869610,
+      "wire_age_sum_ms": 36891369,
+      "last_wire_age_ms": 16,
+      "max_wire_age_ms": 743,
+      "last_processing_ms": 0,
+      "last_received_ts_ms": 1790100316125
+    },
+    "15m": {
+      "observations": 425546,
+      "wire_age_sum_ms": 16708025,
+      "last_wire_age_ms": 16,
+      "max_wire_age_ms": 594,
+      "last_processing_ms": 1,
+      "last_received_ts_ms": 1790100316122
+    }
+  },
+  "stage_timing": {
+    "5m:normalize": {
+      "calls": 871046,
+      "wall_ns": 163036232800,
+      "cpu_ns": 152078125000,
+      "max_wall_ns": 78102900,
+      "over_5ms": 281,
+      "over_50ms": 8
+    },
+    "5m:callback_including_store": {
+      "calls": 871046,
+      "wall_ns": 54810311800,
+      "cpu_ns": 50859375000,
+      "max_wall_ns": 110798800,
+      "over_5ms": 105,
+      "over_50ms": 4
+    },
+    "15m:normalize": {
+      "calls": 425716,
+      "wall_ns": 78543906100,
+      "cpu_ns": 76265625000,
+      "max_wall_ns": 78674100,
+      "over_5ms": 131,
+      "over_50ms": 2
+    },
+    "15m:callback_including_store": {
+      "calls": 425716,
+      "wall_ns": 26947619600,
+      "cpu_ns": 24015625000,
+      "max_wall_ns": 60236000,
+      "over_5ms": 45,
+      "over_50ms": 2
+    }
+  },
+  "last_clock_failures": [],
+  "collection": {
+    "session_id": "bdaaf415-9ac1-4c1f-af8a-d590a064bde8",
+    "elapsed_seconds": 1327.3818040001206,
+    "collection_seconds": 1320.0542836000677,
+    "counts": {
+      "CLOCK_SAMPLE": 44,
+      "ACTIVATE": 10,
+      "BOOK": 1315615,
+      "REJECT": 2122,
+      "BTC_CONNECTED": 1,
+      "BTC": 19074,
+      "EXPIRE": 7,
+      "ROTATION": 7,
+      "WS_ERROR": 1,
+      "RECONNECT": 2,
+      "COLLECTION_STOP": 1,
+      "SESSION_END": 3
+    },
+    "status": "STOPPED",
+    "writer": {
+      "submitted": 1342116,
+      "sent_sequence": 1342115,
+      "processed_sequence": 1342115,
+      "committed_sequence": 1342115,
+      "outstanding_items": 0,
+      "outstanding_bytes": 0,
+      "high_water_items": 4437,
+      "high_water_bytes": 13281476,
+      "oldest_unacknowledged_age_seconds": 0.0,
+      "pending_batches_items": 0,
+      "control_pending_items": 0,
+      "worker_pid": 19704,
+      "capacity_rejections": 0,
+      "last_capacity_rejection": null,
+      "closed_ack": true,
+      "error": null
+    }
+  },
+  "error": "KeyboardInterrupt()"
+}

@@ -1,0 +1,3587 @@
+{
+  "phase": "D6_POST_GENESIS_READ_ONLY",
+  "readiness": {
+    "evaluated_ms": 1790359089594,
+    "evaluation_started_ms": 1790359089594,
+    "evaluation_complete_ms": 1790359089595,
+    "evaluation_thread_cpu_ms": 0.0,
+    "book_sample_started_ms": 1790359089594,
+    "book_sample_finished_ms": 1790359089594,
+    "generation": null,
+    "collateral_unit": "pUSD",
+    "status": "READ_ONLY_READINESS",
+    "SYSTEM_READY": false,
+    "MARKET_ELIGIBLE_NOW": false,
+    "health_checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false,
+      "book_stream_health": false
+    },
+    "operating_state": "SYSTEM_BLOCKED",
+    "checks": {
+      "wallet_auth": false,
+      "geoblock": false,
+      "book_freshness": false,
+      "account_reconciliation": false,
+      "open_orders": false,
+      "inventory": false,
+      "local_recovery_state": false,
+      "session_risk": false,
+      "transport_lock": true,
+      "live_flags_disabled": true,
+      "balance_pusd": false,
+      "allowance_pusd": false
+    },
+    "observations": {
+      "account": {
+        "available": false,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED"
+      },
+      "positions": {
+        "available": false,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED"
+      },
+      "book": {
+        "reason": "WS_DISCONNECTED",
+        "market_eligible": false,
+        "available": false,
+        "connected": false,
+        "synchronized": false,
+        "fresh": false,
+        "book_synced": false,
+        "market_slug": null,
+        "generation": null,
+        "observed_ms": null
+      },
+      "geo": {
+        "available": false,
+        "reason": "FRESH_GEOBLOCK_REQUIRED"
+      },
+      "risk": {
+        "available": false,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE"
+      }
+    },
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "ready_for_arm": false,
+    "submit_allowed": false,
+    "blockers": [
+      "wallet_auth",
+      "geoblock",
+      "book_freshness",
+      "account_reconciliation",
+      "open_orders",
+      "inventory",
+      "local_recovery_state",
+      "session_risk",
+      "balance_pusd",
+      "allowance_pusd"
+    ],
+    "check_details": {
+      "wallet_auth": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "geoblock": {
+        "status": "BLOCKED",
+        "source": "geo",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "FRESH_GEOBLOCK_REQUIRED",
+        "freshness_limit_ms": 60000
+      },
+      "book_freshness": {
+        "status": "BLOCKED",
+        "source": "book",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "WS_DISCONNECTED",
+        "freshness_limit_ms": 500
+      },
+      "account_reconciliation": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "open_orders": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "inventory": {
+        "status": "BLOCKED",
+        "source": "positions",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "POST_GENESIS_INVENTORY_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "local_recovery_state": {
+        "status": "BLOCKED",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "MISSING_STALE_OR_UNRECONCILED",
+        "freshness_limit_ms": null
+      },
+      "session_risk": {
+        "status": "BLOCKED",
+        "source": "risk",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "SESSION_LEDGER_UNRECONCILED_OR_STALE",
+        "freshness_limit_ms": 500
+      },
+      "transport_lock": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "live_flags_disabled": {
+        "status": "PASS",
+        "source": "local",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "INVARIANT_SATISFIED",
+        "freshness_limit_ms": null
+      },
+      "balance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      },
+      "allowance_pusd": {
+        "status": "BLOCKED",
+        "source": "account",
+        "observed_ms": null,
+        "evaluated_ms": 1790359089594,
+        "reason": "FRESH_AUTHENTICATED_READ_REQUIRED",
+        "freshness_limit_ms": 500
+      }
+    }
+  },
+  "reconciliation": {
+    "phase": "BLOCKED",
+    "reconciled": false,
+    "reason": "TAIL_SCAN_FAILED",
+    "failed_stage": "POST_GENESIS_CTF_DISCOVERY"
+  },
+  "genesis_created": false,
+  "genesis_snapshot_sha256": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+  "genesis_unchanged": true,
+  "inventory_completeness": {
+    "evidence_available": true,
+    "inventory_through_C_proven": true,
+    "current_inventory_proven": false,
+    "post_C_completeness": "UNPROVEN_NO_COMMON_WATERMARK",
+    "generation_stale": true,
+    "boundary_verdict": "GENERATION_STALE_500MS",
+    "latency_fix_sufficient": false
+  },
+  "inventory_incremental": {
+    "from_block": 94424638,
+    "to_block": 94435013,
+    "block_hash": "0x24a59510b954919121b1bc3c594207ca293e4a84b1c3959284b67a79dc90a4b3",
+    "events_count": 0,
+    "assets_checked": 0,
+    "observed_ms": 1790357660317,
+    "provenance": "FIXED_C_COVERAGE_NOT_CURRENT_INVENTORY",
+    "scan_observed_ms": 1790357660317,
+    "generation_attempt": 1,
+    "post_b_proof": {
+      "inventory_through_C_proven": true,
+      "boundary_generation_complete": false,
+      "current_inventory_proven": false,
+      "ready_for_arm": false,
+      "submit_allowed": false,
+      "scope": "IDENTIFIED_CTF_THROUGH_FIXED_C_NOT_CURRENT",
+      "reason": "GENERATION_STALE_500MS"
+    },
+    "finalized_block": 94435008,
+    "finalized_hash": "0xe8ea99c0f35e24410bc274bb234001321746dae45980a2667e1564d51a863f9c",
+    "critical_path": {
+      "scan_dispatch_ms": 1790357660223,
+      "scan_observed_ms": 1790357660317,
+      "scan_finished_ms": 1790357660942,
+      "scan_worker_finished_ms": 1790357660766,
+      "scan_resume_delay_ms": 176,
+      "seal_started_ms": 1790357660601,
+      "sealed_ms": 1790357660766,
+      "seal_provenance": "SCAN_FINAL_NUMERIC_WITNESS",
+      "account_started_ms": 1790357660942,
+      "account_finished_ms": 1790357661786,
+      "recheck_started_ms": 1790357661786,
+      "recheck_finished_ms": 1790357662409,
+      "boundary_evaluated_ms": 1790357662409
+    },
+    "boundary_evidence": {
+      "generation": 1,
+      "finalized_qualified": true,
+      "cursor_previous": 94434302,
+      "anchor_number": 94435008,
+      "boundary_number": 94435013,
+      "anchor_hash": "0xe8ea99c0f35e24410bc274bb234001321746dae45980a2667e1564d51a863f9c",
+      "anchor_rechecked_hash": "0xe8ea99c0f35e24410bc274bb234001321746dae45980a2667e1564d51a863f9c",
+      "boundary_hash": "0x24a59510b954919121b1bc3c594207ca293e4a84b1c3959284b67a79dc90a4b3",
+      "boundary_rechecked_hash": "0x24a59510b954919121b1bc3c594207ca293e4a84b1c3959284b67a79dc90a4b3",
+      "anchor_ranges": [
+        [
+          94434303,
+          94434312
+        ],
+        [
+          94434313,
+          94434322
+        ],
+        [
+          94434323,
+          94434332
+        ],
+        [
+          94434333,
+          94434342
+        ],
+        [
+          94434343,
+          94434352
+        ],
+        [
+          94434353,
+          94434362
+        ],
+        [
+          94434363,
+          94434372
+        ],
+        [
+          94434373,
+          94434382
+        ],
+        [
+          94434383,
+          94434392
+        ],
+        [
+          94434393,
+          94434402
+        ],
+        [
+          94434403,
+          94434412
+        ],
+        [
+          94434413,
+          94434422
+        ],
+        [
+          94434423,
+          94434432
+        ],
+        [
+          94434433,
+          94434442
+        ],
+        [
+          94434443,
+          94434452
+        ],
+        [
+          94434453,
+          94434462
+        ],
+        [
+          94434463,
+          94434472
+        ],
+        [
+          94434473,
+          94434482
+        ],
+        [
+          94434483,
+          94434492
+        ],
+        [
+          94434493,
+          94434502
+        ],
+        [
+          94434503,
+          94434512
+        ],
+        [
+          94434513,
+          94434522
+        ],
+        [
+          94434523,
+          94434532
+        ],
+        [
+          94434533,
+          94434542
+        ],
+        [
+          94434543,
+          94434552
+        ],
+        [
+          94434553,
+          94434562
+        ],
+        [
+          94434563,
+          94434572
+        ],
+        [
+          94434573,
+          94434582
+        ],
+        [
+          94434583,
+          94434592
+        ],
+        [
+          94434593,
+          94434602
+        ],
+        [
+          94434603,
+          94434612
+        ],
+        [
+          94434613,
+          94434622
+        ],
+        [
+          94434623,
+          94434632
+        ],
+        [
+          94434633,
+          94434642
+        ],
+        [
+          94434643,
+          94434652
+        ],
+        [
+          94434653,
+          94434662
+        ],
+        [
+          94434663,
+          94434672
+        ],
+        [
+          94434673,
+          94434682
+        ],
+        [
+          94434683,
+          94434692
+        ],
+        [
+          94434693,
+          94434702
+        ],
+        [
+          94434703,
+          94434712
+        ],
+        [
+          94434713,
+          94434722
+        ],
+        [
+          94434723,
+          94434732
+        ],
+        [
+          94434733,
+          94434742
+        ],
+        [
+          94434743,
+          94434752
+        ],
+        [
+          94434753,
+          94434762
+        ],
+        [
+          94434763,
+          94434772
+        ],
+        [
+          94434773,
+          94434782
+        ],
+        [
+          94434783,
+          94434792
+        ],
+        [
+          94434793,
+          94434802
+        ],
+        [
+          94434803,
+          94434812
+        ],
+        [
+          94434813,
+          94434822
+        ],
+        [
+          94434823,
+          94434832
+        ],
+        [
+          94434833,
+          94434842
+        ],
+        [
+          94434843,
+          94434852
+        ],
+        [
+          94434853,
+          94434862
+        ],
+        [
+          94434863,
+          94434872
+        ],
+        [
+          94434873,
+          94434882
+        ],
+        [
+          94434883,
+          94434892
+        ],
+        [
+          94434893,
+          94434902
+        ],
+        [
+          94434903,
+          94434912
+        ],
+        [
+          94434913,
+          94434922
+        ],
+        [
+          94434923,
+          94434932
+        ],
+        [
+          94434933,
+          94434942
+        ],
+        [
+          94434943,
+          94434952
+        ],
+        [
+          94434953,
+          94434962
+        ],
+        [
+          94434963,
+          94434972
+        ],
+        [
+          94434973,
+          94434982
+        ],
+        [
+          94434983,
+          94434992
+        ],
+        [
+          94434993,
+          94435002
+        ],
+        [
+          94435003,
+          94435008
+        ]
+      ],
+      "tail_ranges": [
+        [
+          94435009,
+          94435013
+        ]
+      ],
+      "rpc_complete": true,
+      "events_count": 0,
+      "scan_observed_ms": 1790357660317,
+      "sealed_ms": 1790357660766,
+      "rechecked_ms": 1790357661786,
+      "account": {
+        "balance": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790357660945
+        },
+        "orders": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790357660945
+        },
+        "trades": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790357660946
+        },
+        "positions": {
+          "generation": 1,
+          "complete": true,
+          "observed_ms": 1790357660947
+        }
+      }
+    },
+    "cursor_previous": 94434302,
+    "anchor_catchup_ranges": [
+      [
+        94434303,
+        94434312
+      ],
+      [
+        94434313,
+        94434322
+      ],
+      [
+        94434323,
+        94434332
+      ],
+      [
+        94434333,
+        94434342
+      ],
+      [
+        94434343,
+        94434352
+      ],
+      [
+        94434353,
+        94434362
+      ],
+      [
+        94434363,
+        94434372
+      ],
+      [
+        94434373,
+        94434382
+      ],
+      [
+        94434383,
+        94434392
+      ],
+      [
+        94434393,
+        94434402
+      ],
+      [
+        94434403,
+        94434412
+      ],
+      [
+        94434413,
+        94434422
+      ],
+      [
+        94434423,
+        94434432
+      ],
+      [
+        94434433,
+        94434442
+      ],
+      [
+        94434443,
+        94434452
+      ],
+      [
+        94434453,
+        94434462
+      ],
+      [
+        94434463,
+        94434472
+      ],
+      [
+        94434473,
+        94434482
+      ],
+      [
+        94434483,
+        94434492
+      ],
+      [
+        94434493,
+        94434502
+      ],
+      [
+        94434503,
+        94434512
+      ],
+      [
+        94434513,
+        94434522
+      ],
+      [
+        94434523,
+        94434532
+      ],
+      [
+        94434533,
+        94434542
+      ],
+      [
+        94434543,
+        94434552
+      ],
+      [
+        94434553,
+        94434562
+      ],
+      [
+        94434563,
+        94434572
+      ],
+      [
+        94434573,
+        94434582
+      ],
+      [
+        94434583,
+        94434592
+      ],
+      [
+        94434593,
+        94434602
+      ],
+      [
+        94434603,
+        94434612
+      ],
+      [
+        94434613,
+        94434622
+      ],
+      [
+        94434623,
+        94434632
+      ],
+      [
+        94434633,
+        94434642
+      ],
+      [
+        94434643,
+        94434652
+      ],
+      [
+        94434653,
+        94434662
+      ],
+      [
+        94434663,
+        94434672
+      ],
+      [
+        94434673,
+        94434682
+      ],
+      [
+        94434683,
+        94434692
+      ],
+      [
+        94434693,
+        94434702
+      ],
+      [
+        94434703,
+        94434712
+      ],
+      [
+        94434713,
+        94434722
+      ],
+      [
+        94434723,
+        94434732
+      ],
+      [
+        94434733,
+        94434742
+      ],
+      [
+        94434743,
+        94434752
+      ],
+      [
+        94434753,
+        94434762
+      ],
+      [
+        94434763,
+        94434772
+      ],
+      [
+        94434773,
+        94434782
+      ],
+      [
+        94434783,
+        94434792
+      ],
+      [
+        94434793,
+        94434802
+      ],
+      [
+        94434803,
+        94434812
+      ],
+      [
+        94434813,
+        94434822
+      ],
+      [
+        94434823,
+        94434832
+      ],
+      [
+        94434833,
+        94434842
+      ],
+      [
+        94434843,
+        94434852
+      ],
+      [
+        94434853,
+        94434862
+      ],
+      [
+        94434863,
+        94434872
+      ],
+      [
+        94434873,
+        94434882
+      ],
+      [
+        94434883,
+        94434892
+      ],
+      [
+        94434893,
+        94434902
+      ],
+      [
+        94434903,
+        94434912
+      ],
+      [
+        94434913,
+        94434922
+      ],
+      [
+        94434923,
+        94434932
+      ],
+      [
+        94434933,
+        94434942
+      ],
+      [
+        94434943,
+        94434952
+      ],
+      [
+        94434953,
+        94434962
+      ],
+      [
+        94434963,
+        94434972
+      ],
+      [
+        94434973,
+        94434982
+      ],
+      [
+        94434983,
+        94434992
+      ],
+      [
+        94434993,
+        94435002
+      ],
+      [
+        94435003,
+        94435008
+      ]
+    ]
+  },
+  "generation_attempts": [],
+  "coverage_limitations": [
+    "PRE_GENESIS_HISTORY_NOT_GLOBALLY_KNOWN",
+    "ORDERS_AND_TRADES_CREDENTIAL_VIEW_ONLY",
+    "CTF_AND_INDEXER_ASSET_SCOPE_ONLY",
+    "PUBLIC_RPC_ARCHIVE_COMPLETENESS_TRUSTED",
+    "NO_OTHER_PROTOCOL_GLOBAL_BALANCE_CLAIM",
+    "COUNTERFACTUAL_PREDEPLOYMENT_CTF_TRANSFERS_NOT_ENUMERATED"
+  ],
+  "rpc_calls": [
+    {
+      "rpc_method": "eth_chainId",
+      "id": 1,
+      "started_ms": 1790359087864,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088094,
+      "parse_complete_ms": 1790359088094,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088094,
+      "elapsed_ms": 230
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 2,
+      "started_ms": 1790359088094,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088188,
+      "parse_complete_ms": 1790359088188,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088188,
+      "elapsed_ms": 94
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 3,
+      "started_ms": 1790359088188,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088258,
+      "parse_complete_ms": 1790359088258,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088258,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 4,
+      "started_ms": 1790359088259,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088345,
+      "parse_complete_ms": 1790359088345,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088345,
+      "elapsed_ms": 86
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 5,
+      "started_ms": 1790359088345,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088441,
+      "parse_complete_ms": 1790359088441,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088441,
+      "elapsed_ms": 96
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 6,
+      "started_ms": 1790359088441,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088529,
+      "parse_complete_ms": 1790359088529,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088529,
+      "elapsed_ms": 88
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 7,
+      "started_ms": 1790359088529,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088599,
+      "parse_complete_ms": 1790359088599,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088599,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_chainId",
+      "id": 8,
+      "started_ms": 1790359088599,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088671,
+      "parse_complete_ms": 1790359088671,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088671,
+      "elapsed_ms": 72
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 16,
+      "started_ms": 1790359088672,
+      "from_block": 94435064,
+      "to_block": 94435073,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088759,
+      "parse_complete_ms": 1790359088759,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088759,
+      "elapsed_ms": 87
+    },
+    {
+      "rpc_method": "eth_getBlockByNumber",
+      "id": 9,
+      "started_ms": 1790359088600,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088798,
+      "parse_complete_ms": 1790359088798,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359088798,
+      "elapsed_ms": 198
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 11,
+      "started_ms": 1790359088602,
+      "from_block": 94435014,
+      "to_block": 94435023,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088800,
+      "parse_complete_ms": 1790359088800,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359088800,
+      "elapsed_ms": 198
+    },
+    {
+      "rpc_method": "eth_getCode",
+      "id": 10,
+      "started_ms": 1790359088601,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088801,
+      "parse_complete_ms": 1790359088801,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359088801,
+      "elapsed_ms": 200
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 15,
+      "started_ms": 1790359088607,
+      "from_block": 94435054,
+      "to_block": 94435063,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088805,
+      "parse_complete_ms": 1790359088805,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088805,
+      "elapsed_ms": 198
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 14,
+      "started_ms": 1790359088605,
+      "from_block": 94435044,
+      "to_block": 94435053,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088805,
+      "parse_complete_ms": 1790359088805,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088805,
+      "elapsed_ms": 200
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 12,
+      "started_ms": 1790359088603,
+      "from_block": 94435024,
+      "to_block": 94435033,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088812,
+      "parse_complete_ms": 1790359088812,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088812,
+      "elapsed_ms": 209
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 13,
+      "started_ms": 1790359088604,
+      "from_block": 94435034,
+      "to_block": 94435043,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 1,
+      "start_tls_started": 1,
+      "connection_reuse_proven": false,
+      "http_status": 200,
+      "response_received_ms": 1790359088817,
+      "parse_complete_ms": 1790359088817,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088817,
+      "elapsed_ms": 213
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 17,
+      "started_ms": 1790359088759,
+      "from_block": 94435074,
+      "to_block": 94435083,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088829,
+      "parse_complete_ms": 1790359088829,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088829,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 19,
+      "started_ms": 1790359088800,
+      "from_block": 94435094,
+      "to_block": 94435103,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088869,
+      "parse_complete_ms": 1790359088869,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088869,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 20,
+      "started_ms": 1790359088801,
+      "from_block": 94435104,
+      "to_block": 94435113,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088871,
+      "parse_complete_ms": 1790359088871,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088871,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 18,
+      "started_ms": 1790359088798,
+      "from_block": 94435084,
+      "to_block": 94435093,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088876,
+      "parse_complete_ms": 1790359088876,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088876,
+      "elapsed_ms": 78
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 22,
+      "started_ms": 1790359088806,
+      "from_block": 94435124,
+      "to_block": 94435133,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088878,
+      "parse_complete_ms": 1790359088878,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088878,
+      "elapsed_ms": 72
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 21,
+      "started_ms": 1790359088805,
+      "from_block": 94435114,
+      "to_block": 94435123,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088878,
+      "parse_complete_ms": 1790359088878,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088878,
+      "elapsed_ms": 73
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 23,
+      "started_ms": 1790359088812,
+      "from_block": 94435134,
+      "to_block": 94435143,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088883,
+      "parse_complete_ms": 1790359088883,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088883,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 24,
+      "started_ms": 1790359088817,
+      "from_block": 94435144,
+      "to_block": 94435153,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088892,
+      "parse_complete_ms": 1790359088892,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088892,
+      "elapsed_ms": 75
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 25,
+      "started_ms": 1790359088829,
+      "from_block": 94435154,
+      "to_block": 94435163,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088902,
+      "parse_complete_ms": 1790359088902,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359088902,
+      "elapsed_ms": 73
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 26,
+      "started_ms": 1790359088870,
+      "from_block": 94435164,
+      "to_block": 94435173,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088941,
+      "parse_complete_ms": 1790359088941,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088941,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 28,
+      "started_ms": 1790359088877,
+      "from_block": 94435184,
+      "to_block": 94435193,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088945,
+      "parse_complete_ms": 1790359088945,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088945,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 30,
+      "started_ms": 1790359088879,
+      "from_block": 94435204,
+      "to_block": 94435213,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088947,
+      "parse_complete_ms": 1790359088947,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088947,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 31,
+      "started_ms": 1790359088883,
+      "from_block": 94435214,
+      "to_block": 94435223,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088953,
+      "parse_complete_ms": 1790359088953,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088953,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 27,
+      "started_ms": 1790359088872,
+      "from_block": 94435174,
+      "to_block": 94435183,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088954,
+      "parse_complete_ms": 1790359088954,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088954,
+      "elapsed_ms": 82
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 29,
+      "started_ms": 1790359088878,
+      "from_block": 94435194,
+      "to_block": 94435203,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088955,
+      "parse_complete_ms": 1790359088955,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088955,
+      "elapsed_ms": 77
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 32,
+      "started_ms": 1790359088892,
+      "from_block": 94435224,
+      "to_block": 94435233,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088962,
+      "parse_complete_ms": 1790359088962,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088962,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 33,
+      "started_ms": 1790359088902,
+      "from_block": 94435234,
+      "to_block": 94435243,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359088973,
+      "parse_complete_ms": 1790359088973,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359088973,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 34,
+      "started_ms": 1790359088941,
+      "from_block": 94435244,
+      "to_block": 94435253,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089008,
+      "parse_complete_ms": 1790359089008,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089008,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 35,
+      "started_ms": 1790359088946,
+      "from_block": 94435254,
+      "to_block": 94435263,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089014,
+      "parse_complete_ms": 1790359089014,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089014,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 38,
+      "started_ms": 1790359088954,
+      "from_block": 94435284,
+      "to_block": 94435293,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089024,
+      "parse_complete_ms": 1790359089024,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089024,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 37,
+      "started_ms": 1790359088953,
+      "from_block": 94435274,
+      "to_block": 94435283,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089025,
+      "parse_complete_ms": 1790359089025,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089025,
+      "elapsed_ms": 72
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 36,
+      "started_ms": 1790359088947,
+      "from_block": 94435264,
+      "to_block": 94435273,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089025,
+      "parse_complete_ms": 1790359089025,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089025,
+      "elapsed_ms": 78
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 39,
+      "started_ms": 1790359088955,
+      "from_block": 94435294,
+      "to_block": 94435303,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089031,
+      "parse_complete_ms": 1790359089031,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089031,
+      "elapsed_ms": 76
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 40,
+      "started_ms": 1790359088962,
+      "from_block": 94435304,
+      "to_block": 94435313,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089035,
+      "parse_complete_ms": 1790359089035,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089035,
+      "elapsed_ms": 73
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 41,
+      "started_ms": 1790359088973,
+      "from_block": 94435314,
+      "to_block": 94435323,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089042,
+      "parse_complete_ms": 1790359089042,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089042,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 42,
+      "started_ms": 1790359089008,
+      "from_block": 94435324,
+      "to_block": 94435333,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089078,
+      "parse_complete_ms": 1790359089078,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089078,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 43,
+      "started_ms": 1790359089014,
+      "from_block": 94435334,
+      "to_block": 94435343,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089082,
+      "parse_complete_ms": 1790359089082,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089082,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 45,
+      "started_ms": 1790359089025,
+      "from_block": 94435354,
+      "to_block": 94435363,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089095,
+      "parse_complete_ms": 1790359089095,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089095,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 46,
+      "started_ms": 1790359089025,
+      "from_block": 94435364,
+      "to_block": 94435373,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089095,
+      "parse_complete_ms": 1790359089095,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089095,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 47,
+      "started_ms": 1790359089031,
+      "from_block": 94435374,
+      "to_block": 94435383,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089100,
+      "parse_complete_ms": 1790359089100,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089100,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 44,
+      "started_ms": 1790359089024,
+      "from_block": 94435344,
+      "to_block": 94435353,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089100,
+      "parse_complete_ms": 1790359089100,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089100,
+      "elapsed_ms": 76
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 48,
+      "started_ms": 1790359089035,
+      "from_block": 94435384,
+      "to_block": 94435393,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089111,
+      "parse_complete_ms": 1790359089111,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089111,
+      "elapsed_ms": 76
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 49,
+      "started_ms": 1790359089042,
+      "from_block": 94435394,
+      "to_block": 94435403,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089112,
+      "parse_complete_ms": 1790359089112,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089112,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 50,
+      "started_ms": 1790359089078,
+      "from_block": 94435404,
+      "to_block": 94435413,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089148,
+      "parse_complete_ms": 1790359089148,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089148,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 51,
+      "started_ms": 1790359089082,
+      "from_block": 94435414,
+      "to_block": 94435423,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089151,
+      "parse_complete_ms": 1790359089151,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089151,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 52,
+      "started_ms": 1790359089095,
+      "from_block": 94435424,
+      "to_block": 94435433,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089163,
+      "parse_complete_ms": 1790359089163,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089163,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 54,
+      "started_ms": 1790359089100,
+      "from_block": 94435454,
+      "to_block": 94435463,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089169,
+      "parse_complete_ms": 1790359089169,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089169,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 53,
+      "started_ms": 1790359089095,
+      "from_block": 94435434,
+      "to_block": 94435443,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089170,
+      "parse_complete_ms": 1790359089170,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089170,
+      "elapsed_ms": 75
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 55,
+      "started_ms": 1790359089101,
+      "from_block": 94435444,
+      "to_block": 94435453,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089174,
+      "parse_complete_ms": 1790359089174,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089174,
+      "elapsed_ms": 73
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 56,
+      "started_ms": 1790359089111,
+      "from_block": 94435464,
+      "to_block": 94435473,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089179,
+      "parse_complete_ms": 1790359089179,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089179,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 57,
+      "started_ms": 1790359089113,
+      "from_block": 94435474,
+      "to_block": 94435483,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089180,
+      "parse_complete_ms": 1790359089180,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089180,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 58,
+      "started_ms": 1790359089148,
+      "from_block": 94435484,
+      "to_block": 94435493,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089214,
+      "parse_complete_ms": 1790359089214,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089214,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 59,
+      "started_ms": 1790359089152,
+      "from_block": 94435494,
+      "to_block": 94435503,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089223,
+      "parse_complete_ms": 1790359089223,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089223,
+      "elapsed_ms": 71
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 60,
+      "started_ms": 1790359089164,
+      "from_block": 94435504,
+      "to_block": 94435513,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089229,
+      "parse_complete_ms": 1790359089229,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089229,
+      "elapsed_ms": 65
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 62,
+      "started_ms": 1790359089170,
+      "from_block": 94435524,
+      "to_block": 94435533,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089242,
+      "parse_complete_ms": 1790359089242,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089242,
+      "elapsed_ms": 72
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 63,
+      "started_ms": 1790359089175,
+      "from_block": 94435534,
+      "to_block": 94435543,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089243,
+      "parse_complete_ms": 1790359089243,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089243,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 61,
+      "started_ms": 1790359089169,
+      "from_block": 94435514,
+      "to_block": 94435523,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089244,
+      "parse_complete_ms": 1790359089244,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089244,
+      "elapsed_ms": 75
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 64,
+      "started_ms": 1790359089179,
+      "from_block": 94435544,
+      "to_block": 94435553,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089248,
+      "parse_complete_ms": 1790359089248,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089248,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 65,
+      "started_ms": 1790359089180,
+      "from_block": 94435554,
+      "to_block": 94435563,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089250,
+      "parse_complete_ms": 1790359089250,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089250,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 66,
+      "started_ms": 1790359089215,
+      "from_block": 94435564,
+      "to_block": 94435573,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089280,
+      "parse_complete_ms": 1790359089280,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089280,
+      "elapsed_ms": 65
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 67,
+      "started_ms": 1790359089224,
+      "from_block": 94435574,
+      "to_block": 94435583,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089289,
+      "parse_complete_ms": 1790359089289,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089289,
+      "elapsed_ms": 65
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 68,
+      "started_ms": 1790359089229,
+      "from_block": 94435584,
+      "to_block": 94435593,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089297,
+      "parse_complete_ms": 1790359089297,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089297,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 69,
+      "started_ms": 1790359089242,
+      "from_block": 94435594,
+      "to_block": 94435603,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089308,
+      "parse_complete_ms": 1790359089308,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089308,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 70,
+      "started_ms": 1790359089244,
+      "from_block": 94435604,
+      "to_block": 94435613,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089311,
+      "parse_complete_ms": 1790359089311,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089311,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 71,
+      "started_ms": 1790359089244,
+      "from_block": 94435614,
+      "to_block": 94435623,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089312,
+      "parse_complete_ms": 1790359089312,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089312,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 72,
+      "started_ms": 1790359089248,
+      "from_block": 94435624,
+      "to_block": 94435633,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089317,
+      "parse_complete_ms": 1790359089317,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089317,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 73,
+      "started_ms": 1790359089250,
+      "from_block": 94435634,
+      "to_block": 94435643,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089318,
+      "parse_complete_ms": 1790359089318,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089318,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 74,
+      "started_ms": 1790359089280,
+      "from_block": 94435644,
+      "to_block": 94435653,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089346,
+      "parse_complete_ms": 1790359089346,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089346,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 75,
+      "started_ms": 1790359089289,
+      "from_block": 94435654,
+      "to_block": 94435663,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089354,
+      "parse_complete_ms": 1790359089354,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089354,
+      "elapsed_ms": 65
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 76,
+      "started_ms": 1790359089297,
+      "from_block": 94435664,
+      "to_block": 94435673,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089363,
+      "parse_complete_ms": 1790359089363,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089363,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 77,
+      "started_ms": 1790359089308,
+      "from_block": 94435674,
+      "to_block": 94435683,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089374,
+      "parse_complete_ms": 1790359089374,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089374,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 78,
+      "started_ms": 1790359089311,
+      "from_block": 94435684,
+      "to_block": 94435693,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089379,
+      "parse_complete_ms": 1790359089379,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089379,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 79,
+      "started_ms": 1790359089312,
+      "from_block": 94435694,
+      "to_block": 94435703,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089381,
+      "parse_complete_ms": 1790359089381,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089381,
+      "elapsed_ms": 69
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 80,
+      "started_ms": 1790359089317,
+      "from_block": 94435704,
+      "to_block": 94435713,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089384,
+      "parse_complete_ms": 1790359089384,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089384,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 81,
+      "started_ms": 1790359089318,
+      "from_block": 94435714,
+      "to_block": 94435723,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089386,
+      "parse_complete_ms": 1790359089386,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089386,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 82,
+      "started_ms": 1790359089347,
+      "from_block": 94435724,
+      "to_block": 94435733,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089414,
+      "parse_complete_ms": 1790359089414,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089414,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 83,
+      "started_ms": 1790359089354,
+      "from_block": 94435734,
+      "to_block": 94435743,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089424,
+      "parse_complete_ms": 1790359089424,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089424,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 84,
+      "started_ms": 1790359089364,
+      "from_block": 94435744,
+      "to_block": 94435753,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089432,
+      "parse_complete_ms": 1790359089432,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089432,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 85,
+      "started_ms": 1790359089374,
+      "from_block": 94435754,
+      "to_block": 94435763,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089440,
+      "parse_complete_ms": 1790359089440,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089440,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 86,
+      "started_ms": 1790359089380,
+      "from_block": 94435764,
+      "to_block": 94435773,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089447,
+      "parse_complete_ms": 1790359089447,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089447,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 87,
+      "started_ms": 1790359089381,
+      "from_block": 94435774,
+      "to_block": 94435783,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089449,
+      "parse_complete_ms": 1790359089449,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089449,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 88,
+      "started_ms": 1790359089384,
+      "from_block": 94435784,
+      "to_block": 94435793,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089451,
+      "parse_complete_ms": 1790359089451,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089451,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 89,
+      "started_ms": 1790359089386,
+      "from_block": 94435794,
+      "to_block": 94435803,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089454,
+      "parse_complete_ms": 1790359089454,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089454,
+      "elapsed_ms": 68
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 90,
+      "started_ms": 1790359089414,
+      "from_block": 94435804,
+      "to_block": 94435813,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089480,
+      "parse_complete_ms": 1790359089480,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089480,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 91,
+      "started_ms": 1790359089425,
+      "from_block": 94435814,
+      "to_block": 94435823,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089491,
+      "parse_complete_ms": 1790359089491,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089491,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 92,
+      "started_ms": 1790359089432,
+      "from_block": 94435824,
+      "to_block": 94435833,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089498,
+      "parse_complete_ms": 1790359089498,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089498,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 93,
+      "started_ms": 1790359089441,
+      "from_block": 94435834,
+      "to_block": 94435843,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089508,
+      "parse_complete_ms": 1790359089508,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089508,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 94,
+      "started_ms": 1790359089447,
+      "from_block": 94435844,
+      "to_block": 94435853,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089514,
+      "parse_complete_ms": 1790359089514,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089514,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 95,
+      "started_ms": 1790359089449,
+      "from_block": 94435854,
+      "to_block": 94435863,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089516,
+      "parse_complete_ms": 1790359089516,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089516,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 97,
+      "started_ms": 1790359089454,
+      "from_block": 94435874,
+      "to_block": 94435883,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089521,
+      "parse_complete_ms": 1790359089521,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089521,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 96,
+      "started_ms": 1790359089452,
+      "from_block": 94435864,
+      "to_block": 94435873,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089522,
+      "parse_complete_ms": 1790359089522,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089522,
+      "elapsed_ms": 70
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 98,
+      "started_ms": 1790359089480,
+      "from_block": 94435884,
+      "to_block": 94435893,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": false,
+      "http_status": 429,
+      "error_category": "UNCLASSIFIED_READ_ERROR",
+      "status": "FAILED",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089546,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 99,
+      "started_ms": 1790359089491,
+      "from_block": 94435894,
+      "to_block": 94435903,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089557,
+      "parse_complete_ms": 1790359089557,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089557,
+      "elapsed_ms": 66
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 100,
+      "started_ms": 1790359089498,
+      "from_block": 94435904,
+      "to_block": 94435913,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089565,
+      "parse_complete_ms": 1790359089565,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089565,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 101,
+      "started_ms": 1790359089508,
+      "from_block": 94435914,
+      "to_block": 94435923,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089573,
+      "parse_complete_ms": 1790359089573,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089573,
+      "elapsed_ms": 65
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 102,
+      "started_ms": 1790359089514,
+      "from_block": 94435924,
+      "to_block": 94435933,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": false,
+      "http_status": 429,
+      "error_category": "UNCLASSIFIED_READ_ERROR",
+      "status": "FAILED",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089581,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 103,
+      "started_ms": 1790359089516,
+      "from_block": 94435934,
+      "to_block": 94435943,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089583,
+      "parse_complete_ms": 1790359089583,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089583,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 104,
+      "started_ms": 1790359089521,
+      "from_block": 94435944,
+      "to_block": 94435953,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089588,
+      "parse_complete_ms": 1790359089588,
+      "status": "PASS",
+      "thread_cpu_ms": 0.0,
+      "finished_ms": 1790359089588,
+      "elapsed_ms": 67
+    },
+    {
+      "rpc_method": "eth_getLogs",
+      "id": 105,
+      "started_ms": 1790359089522,
+      "from_block": 94435954,
+      "to_block": 94435962,
+      "transport": "HTTPX_PERSISTENT_POOL",
+      "connect_tcp_started": 0,
+      "start_tls_started": 0,
+      "connection_reuse_proven": true,
+      "http_status": 200,
+      "response_received_ms": 1790359089589,
+      "parse_complete_ms": 1790359089589,
+      "status": "PASS",
+      "thread_cpu_ms": 15.625,
+      "finished_ms": 1790359089589,
+      "elapsed_ms": 67
+    }
+  ],
+  "get_requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790359086913,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790359087146,
+      "parse_complete_ms": 1790359087146,
+      "shape": "int",
+      "finished_ms": 1790359087146,
+      "elapsed_ms": 233,
+      "thread_cpu_ms": 31.25
+    }
+  ],
+  "storage_binding_verified": false,
+  "private_key_loaded": false,
+  "l1_signature_produced": false,
+  "finalized_qualification": null,
+  "clock_diagnostic": {
+    "source": "LOCAL_TIME_TIME_NS_UTC",
+    "clob_server_seconds": 1790359087,
+    "request_started_ms": 1790359086906,
+    "response_received_ms": 1790359087147,
+    "server_second_minus_local_receive_ms": -147,
+    "offset_interval_ms": [
+      -147,
+      1094
+    ],
+    "accuracy_500ms_proven": false,
+    "timestamps_adjusted": false
+  },
+  "health_contract": true,
+  "scheduler_timing": {
+    "generation_started_ms": null,
+    "inventory_final_proof_ms": 1790357660766,
+    "account_started_ms": 1790357660942,
+    "account_finished_ms": 1790357661786,
+    "recheck_started_ms": 1790357661786,
+    "recheck_finished_ms": 1790357662409,
+    "join_finished_ms": null,
+    "reconciliation_started_ms": null,
+    "reconciliation_finished_ms": null,
+    "book_sample_started_ms": 1790359089594,
+    "book_sample_finished_ms": 1790359089594,
+    "evaluation_started_ms": 1790359089594,
+    "evaluation_finished_ms": 1790359089595,
+    "post_evaluation_persistence_started_ms": 1790359089595,
+    "post_evaluation_persistence_finished_ms": 1790359089595,
+    "account_recheck_execution": "SEQUENTIAL_POST_ACCOUNT_CANONICAL_WITNESS",
+    "scheduler_overhead_before_evaluation_ms": null,
+    "scheduler_overhead_scope": "TOTAL_NOT_ISOLATED_FROM_BUSINESS_CPU; SEE_MEASURED_RESUME_DELAYS",
+    "measured_scan_resume_delay_ms": 176,
+    "measured_generation_continuation_delay_ms": null
+  },
+  "generation_worker_timing": {},
+  "final_timing_budget": {
+    "inventory_age_at_evaluation_ms": 1429277,
+    "account_age_at_evaluation_ms": null,
+    "book_age_at_evaluation_ms": null,
+    "critical_path_wall_ms": 1429371
+  },
+  "reconciliation_timing": {},
+  "inventory_checkpoint_status": "NOT_PENDING",
+  "future_execution_binding_ready": false,
+  "network_mode": "MANUAL_TARGET",
+  "btc_v1_sha256": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+  "latency_diagnostics": {
+    "utc_anchor_ms": 1790359085466,
+    "monotonic_anchor_ns": 1390525197199600,
+    "events": [
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526645925000,
+        "lag_ms": 1438.718699850142
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526686000200,
+        "lag_ms": 30.073300004005432
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526700830500,
+        "lag_ms": 4.833100130781531
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526716920800,
+        "lag_ms": 6.088299909606576
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526732534400,
+        "lag_ms": 5.615900037810206
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526747700300,
+        "lag_ms": 5.163599969819188
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526762926800,
+        "lag_ms": 5.22859999909997
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526778319800,
+        "lag_ms": 5.391299957409501
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526793161600,
+        "lag_ms": 4.843999864533544
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526809205000,
+        "lag_ms": 6.041800137609243
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526824534700,
+        "lag_ms": 5.331399850547314
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526840320200,
+        "lag_ms": 5.783700151368976
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526855640100,
+        "lag_ms": 5.321499891579151
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390526871015700,
+        "lag_ms": 5.375799955800176
+      },
+      {
+        "kind": "worker",
+        "label": "get:/time",
+        "dispatch_ns": 1390526637574200,
+        "worker_start_ns": 1390526643920700,
+        "worker_end_ns": 1390526877749800,
+        "thread_cpu_ms": 31.25,
+        "resume_ns": 1390526878140000,
+        "queue_ms": 6.3465,
+        "worker_ms": 233.8291,
+        "resume_ms": 0.3902
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527595893500,
+        "lag_ms": 714.8768999613822
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527607795900,
+        "lag_ms": 1.9020000472664833
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527623812300,
+        "lag_ms": 6.016700062900782
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527638970700,
+        "lag_ms": 5.158199928700924
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527653745200,
+        "lag_ms": 4.7744999174028635
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527669731500,
+        "lag_ms": 5.986600182950497
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527685756100,
+        "lag_ms": 6.024600006639957
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527700927400,
+        "lag_ms": 5.171199794858694
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527715734500,
+        "lag_ms": 4.807000048458576
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527731872400,
+        "lag_ms": 6.137999938800931
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527747754100,
+        "lag_ms": 5.881499964743853
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527764378400,
+        "lag_ms": 6.624400150030851
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527779155700,
+        "lag_ms": 4.776299931108952
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527794320900,
+        "lag_ms": 5.167199997231364
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527809608100,
+        "lag_ms": 5.284999962896109
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527825690200,
+        "lag_ms": 6.083599990233779
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527840651100,
+        "lag_ms": 4.960400052368641
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527855596400,
+        "lag_ms": 4.946599947288632
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527871644300,
+        "lag_ms": 6.046300055459142
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527887768200,
+        "lag_ms": 6.12360006198287
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527903364200,
+        "lag_ms": 5.596499890089035
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527918758200,
+        "lag_ms": 5.394299980252981
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527934619500,
+        "lag_ms": 5.859100027009845
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527950335300,
+        "lag_ms": 5.717599997296929
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527966309800,
+        "lag_ms": 5.973599851131439
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527982325300,
+        "lag_ms": 6.016300059854984
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390527998299600,
+        "lag_ms": 5.975000094622374
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528013299200,
+        "lag_ms": 4.999599885195494
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528029188200,
+        "lag_ms": 5.888799903914332
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528044192400,
+        "lag_ms": 5.004200153052807
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528060194600,
+        "lag_ms": 6.001499947160482
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528077113000,
+        "lag_ms": 6.919600069522858
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528092256300,
+        "lag_ms": 5.1426999270915985
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528107609200,
+        "lag_ms": 5.352600011974573
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528123585000,
+        "lag_ms": 5.976199870929122
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528139633400,
+        "lag_ms": 6.04810006916523
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528155637100,
+        "lag_ms": 6.003400078043342
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528173642700,
+        "lag_ms": 8.006199961528182
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528187909600,
+        "lag_ms": 4.2669998947530985
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528203724600,
+        "lag_ms": 5.814699921756983
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528218840800,
+        "lag_ms": 5.115400068461895
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528233949400,
+        "lag_ms": 5.107700126245618
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528249200600,
+        "lag_ms": 5.2535999566316605
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528265203000,
+        "lag_ms": 6.00189995020628
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528280428300,
+        "lag_ms": 5.224699852988124
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528295234300,
+        "lag_ms": 4.807700170204043
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528310372400,
+        "lag_ms": 5.1380000077188015
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528325517300,
+        "lag_ms": 5.144799826666713
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528340887800,
+        "lag_ms": 5.369800142943859
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528356604900,
+        "lag_ms": 5.718000000342727
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528372263400,
+        "lag_ms": 5.655099870637059
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528388039100,
+        "lag_ms": 5.778999999165535
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528403138000,
+        "lag_ms": 5.09830005466938
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528418347900,
+        "lag_ms": 5.20929996855557
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528433508700,
+        "lag_ms": 5.161199951544404
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528449107700,
+        "lag_ms": 5.598800024017692
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528464214500,
+        "lag_ms": 5.107000004500151
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528479079300,
+        "lag_ms": 4.864499904215336
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528493970800,
+        "lag_ms": 4.8911001067608595
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528509328100,
+        "lag_ms": 5.3570999298244715
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528528245500,
+        "lag_ms": 8.918300038203597
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528547039400,
+        "lag_ms": 8.793999906629324
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528575287000,
+        "lag_ms": 18.247100058943033
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528590451300,
+        "lag_ms": 5.164699861779809
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528605618300,
+        "lag_ms": 5.166799994185567
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528622886900,
+        "lag_ms": 7.26890005171299
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528647176600,
+        "lag_ms": 14.289299957454205
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528662392100,
+        "lag_ms": 5.215100012719631
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528677619000,
+        "lag_ms": 5.227500107139349
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528692440100,
+        "lag_ms": 4.82099992223084
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528707807500,
+        "lag_ms": 5.367700010538101
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528722956100,
+        "lag_ms": 5.14819985255599
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528739013200,
+        "lag_ms": 6.057300139218569
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528754099000,
+        "lag_ms": 5.0854000728577375
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528769065500,
+        "lag_ms": 4.9669998697936535
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528784790200,
+        "lag_ms": 5.724400049075484
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528800008700,
+        "lag_ms": 5.218799924477935
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528814782100,
+        "lag_ms": 4.77349990978837
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528830151700,
+        "lag_ms": 5.369100021198392
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528845534700,
+        "lag_ms": 5.383400013670325
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528861088300,
+        "lag_ms": 5.55340014398098
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528876351700,
+        "lag_ms": 5.263299914076924
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528892150400,
+        "lag_ms": 5.7981000281870365
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528907618700,
+        "lag_ms": 5.469499854370952
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528923194700,
+        "lag_ms": 5.57540007866919
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528938539900,
+        "lag_ms": 5.345799960196018
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528953771200,
+        "lag_ms": 5.230600014328957
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528968581800,
+        "lag_ms": 4.809800069779158
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528984209100,
+        "lag_ms": 5.628599785268307
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390528999241300,
+        "lag_ms": 5.032700020819902
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529014365500,
+        "lag_ms": 5.123900016769767
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529029844500,
+        "lag_ms": 5.478899925947189
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529045910600,
+        "lag_ms": 6.066000089049339
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529061239100,
+        "lag_ms": 5.3270000498741865
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529077390700,
+        "lag_ms": 6.152699934318662
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529092199400,
+        "lag_ms": 4.80940006673336
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529107427100,
+        "lag_ms": 5.223399959504604
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529123187400,
+        "lag_ms": 5.763699999079108
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529138470500,
+        "lag_ms": 5.28179993852973
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529153419500,
+        "lag_ms": 4.950399976223707
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529169030700,
+        "lag_ms": 5.611000116914511
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529184275100,
+        "lag_ms": 5.245199892669916
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529199260300,
+        "lag_ms": 4.984299885109067
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529215154100,
+        "lag_ms": 5.894700065255165
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529231101100,
+        "lag_ms": 5.9466001112014055
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529246940100,
+        "lag_ms": 5.839499877765775
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529262271400,
+        "lag_ms": 5.3304999601095915
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529278185700,
+        "lag_ms": 5.914400098845363
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529293055300,
+        "lag_ms": 4.870199831202626
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529307978500,
+        "lag_ms": 4.923200001940131
+      },
+      {
+        "kind": "loop_lag",
+        "label": "loop.timer",
+        "at_ns": 1390529321156400,
+        "lag_ms": 3.177399979904294
+      },
+      {
+        "kind": "await",
+        "label": "readiness.sources",
+        "start_ns": 1390529321370700,
+        "end_ns": 1390529321610600,
+        "wall_ms": 0.2399
+      }
+    ],
+    "dropped_events": 0,
+    "scope": "APPLICATION_TIMING_NOT_NETWORK_ARRIVAL_OR_GIL_PROOF",
+    "enabled": true
+  }
+}
