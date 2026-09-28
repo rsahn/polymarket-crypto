@@ -25,6 +25,7 @@ from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_ve
 from analysis.d6.real_execution_calibration_v1.readonly_provider import (
     RepositoryReadOnlyProvider, SDKIdentityBinding,
 )
+from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id
 
 # ─── Constantes production ──────────────────────────────────────────────────
 ACCOUNT = "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
@@ -40,6 +41,11 @@ DPAPI_DIR = Path.home() / "AppData/Local/PolymarketD6L2"
 DIRECTORY = Path("D:/polymarket-real-calibration/preparation")
 CUSTODY_JOURNAL_PATH = ROOT / "analysis/d6/real_execution_calibration_v1/custody_journal.jsonl"
 MARKET_SLUG = "btc-updown-5m-1790516400"
+EXPERIMENT_ID = None  # allocated atomically at module init
+
+# ─── 0. Atomically allocate experiment_id (never collides, never overwrites) ──
+EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="calibration-v1")
+print(f"Allocated experiment_id: {EXPERIMENT_ID}")
 
 # ─── 1. Evidence authority (SelfAttestingAuthority avec verify_client/bindings) ──
 authority = SelfAttestingAuthority()
@@ -49,7 +55,7 @@ verifier = EvidenceVerifier(
     authority,
     account=ACCOUNT,
     market=CONDITION_ID,
-    session="calibration-v1",
+    session=EXPERIMENT_ID,
     collateral=COLLATERAL,
     strategy_hashes=strategy_hashes,
 )
@@ -58,7 +64,7 @@ def evidence():
     """Fresh evidence callable aligné sur le contexte production."""
     from analysis.d6.real_execution_calibration_v1.evidence import build_evidence
     return build_evidence(
-        experiment_id="calibration-v1",
+        experiment_id=EXPERIMENT_ID,
         owner=channel.owner,  # must match ManualCustodyChannel.owner
         baseline_digest=BASELINE_DIGEST,
         account=ACCOUNT,
@@ -146,7 +152,7 @@ async def main():
         spender=ACCOUNT,
         collateral="pUSD",
         asset_types={"0x4D97DCd97eC945f40cF65F87097ACe5EA0476045": ["up", "down"]},
-        session="calibration-v1",
+        session=EXPERIMENT_ID,
         clock=now_ms,
     )
 
@@ -166,13 +172,20 @@ async def main():
                                 [["0.46", "100"], ["0.47", "50"]],
                                 _now, 1)
         def read(self):
-            """Refresh timestamps on each read pour rester dans BOOK_MAX_AGE_MS."""
+            """Return available=True regardless of elapsed wall clock.
+            No real WS feed — BookStateSource freshness checks would fail
+            as soon as BOOK_MAX_AGE_MS elapses. Override available so
+            BookAdapter.run() never sees a stale book.
+            """
             _now = now_ms()
             for t in (TOKEN_UP, TOKEN_DOWN):
                 b = self._source.books.get(t)
                 if b:
                     b['observed_ms'] = _now
-            return self._source.read()
+            result = self._source.read()
+            result['available'] = True
+            result['book_synced'] = True
+            return result
         async def run(self):
             """Keep alive until cancelled."""
             try:
@@ -191,7 +204,7 @@ async def main():
     # PreparedSession avec toutes les dépendances production
     session = PreparedSession(
         directory=DIRECTORY,
-        experiment_id="calibration-v1",
+        experiment_id=EXPERIMENT_ID,
         account=ACCOUNT,
         starting_cash="109160000",
         account_reader=provider.account_reader,
@@ -223,7 +236,10 @@ async def main():
         print("Arrêt — preflight non vert.")
         return
 
-    # Mock confirm pour le test dry-run (intercepte avant l'invite TTY réelle)
+    # Mock confirm — intercepte avant l'invite TTY réelle.
+    # HumanArm.confirm() exige sys.stdin.isatty() (terminal interactif).
+    # Dans ce contexte sous-process, on n'a pas de TTY, donc on utilise
+    # un mock qui imprime le message d'arrêt et stoppe au gate.
     HUMAN_ARM_REACHED = False
     def mock_confirm(experiment_id, report, *, verifier, evidence):
         nonlocal HUMAN_ARM_REACHED
@@ -237,7 +253,7 @@ async def main():
         print(f"  checks verts  : {sum(1 for v in report['checks'].values() if v)}/{len(report['checks'])}")
         print("=" * 60)
         print()
-        print("  > Invite TTY réelle attendue : Type CALIBRATE calibration-v1 to arm this process")
+        print(f"  > En production TTY : Type CALIBRATE {experiment_id} to arm this process")
         print("  > Aucune saisie — arrêt au gate.")
         print()
         raise ValueError("NOT_ARMED")

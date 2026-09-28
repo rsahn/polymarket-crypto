@@ -15,6 +15,59 @@ def dec(x):
 
 def encoded(x):return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False,default=lambda x:str(x) if isinstance(x,Decimal) else (_ for _ in ()).throw(TypeError(type(x))))
 def digest(x):return hashlib.sha256(encoded(x).encode()).hexdigest()
+def allocate_experiment_id(directory, base_name="calibration-v1"):
+    """Atomically allocate the next unused experiment ID.
+
+    Uses a lock file + counter file so concurrent launches never collide.
+    Scans existing .jsonl journals to seed the counter on first use.
+    Returns e.g. 'calibration-v1-run0003'.
+    Never overwrites or reuses an existing journal file.
+    """
+    import msvcrt, os, json, re
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    lock_path = directory / "._run_counter.lock"
+    counter_path = directory / "._run_counter.json"
+    pattern = re.compile(r"^" + re.escape(base_name) + r"-run(\d{4})\.jsonl$")
+
+    # Acquire exclusive lock
+    fd = os.open(str(lock_path), os.O_CREAT | os.O_RDWR, 0o666)
+    try:
+        msvcrt.locking(fd, msvcrt.LK_NBLCK, 1)
+    except OSError:
+        os.close(fd)
+        raise OSError("CONCURRENT_LAUNCH_DETECTED: another launch holds the counter lock")
+    try:
+        if counter_path.exists():
+            data = json.loads(counter_path.read_text())
+            next_n = data["next"]
+        else:
+            # Seed: find highest existing run number
+            max_n = 0
+            for f in directory.iterdir():
+                m = pattern.match(f.name)
+                if m:
+                    n = int(m.group(1))
+                    if n > max_n:
+                        max_n = n
+            next_n = max_n + 1
+            # Also check DURABLE_INTENT recovery journals (outside preparation/)
+            # Only preparation/ matters for the lock file scope.
+
+        experiment_id = f"{base_name}-run{next_n:04d}"
+        # Double-check no journal file exists with this ID (safety net)
+        journal_path = directory / f"{experiment_id}.jsonl"
+        if journal_path.exists():
+            raise FileExistsError(f"JOURNAL_COLLISION: {journal_path} exists despite counter {next_n}")
+
+        # Write back incremented counter
+        counter_path.write_text(json.dumps({"next": next_n + 1}, separators=(",", ":")))
+        os.fsync(fd)
+        return experiment_id
+    finally:
+        os.close(fd)
+
+
 def redact(x):
  if isinstance(x,dict):return {k:('[REDACTED]' if any(t in k.lower().replace('_','') for t in ('secret','privatekey','signature','credential','authorization','apikey','passphrase','seedphrase')) else redact(v)) for k,v in x.items()}
  if isinstance(x,(list,tuple)):return [redact(v) for v in x]

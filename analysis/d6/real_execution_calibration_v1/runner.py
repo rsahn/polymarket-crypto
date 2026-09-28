@@ -91,6 +91,12 @@ class PreparedSession:
                 identity=proof['wallet_account_identity_verified']['payload']
                 self.sdk_binding=SDKIdentityBinding.inspect(client,wallet=identity['maker'],signer=identity['signer'])
             if self.book.state!='SYNCHRONIZED' or not self.book.stream.read().get('available'):raise ValueError('BOOK_DEGRADED')
+            # Refresh evidence and preflight with fresh timestamps for HumanArm.confirm()
+            # (validate_assembly + SDKIdentityBinding.inspect may have consumed >5s)
+            proof=evidence()
+            import shutil as _shutil
+            report=evaluate(proof,self.coordinator.clock(),_shutil.disk_usage(self.directory).free,verifier)
+            if report['status']!='CALIBRATION_READY':raise ValueError('PREFLIGHT_REFRESH_BLOCKED: '+' '.join(report['blockers']))
             arm=(confirm or HumanArm.confirm)(self.journal.experiment_id,report,verifier=verifier,evidence=proof)
             fee=verifier.validate('fee_upper_bound_proven',proof['fee_upper_bound_proven'],self.coordinator.clock())
             def current_fee():
