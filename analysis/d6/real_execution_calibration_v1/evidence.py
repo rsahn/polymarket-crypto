@@ -56,6 +56,7 @@ def build_evidence(
     rpc_block=94559626,
     rpc_hash="0x1464da79136d7160f84ca0f6ddbeb2b0f207d21cbbb37b81413b61e77b49037e",
     codec_digest="3e2ba43e59d19191f0d208e39b1ec16f920bdda30ebfa062330ea9fe8d8363f5",
+    baseline_digest="0" * 64,
 ):
     """Build all 14 evidence records with fresh timestamps."""
     from analysis.d6.real_execution_calibration_v1.v1_binding import verify
@@ -107,6 +108,7 @@ def build_evidence(
             "condition": condition_id,
             "tokens": tokens,
             "expires_ms": expires_ms,
+            "outcome_tokens": {"UP": token_up, "DOWN": token_down},
         },
         ctx, now_ms,
     )
@@ -129,7 +131,7 @@ def build_evidence(
         {
             "scope": "wallet",
             "atomic_frontier": {"sequence": 0, "digest": "0" * 64},
-            "baseline_digest": "0" * 64,
+            "baseline_digest": baseline_digest,
             "fee_effects": "cash_and_shares",
         },
         ctx, now_ms,
