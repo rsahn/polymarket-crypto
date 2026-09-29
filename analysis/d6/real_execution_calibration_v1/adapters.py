@@ -124,24 +124,45 @@ class BookAdapter:
         await asyncio.wait_for(self.ready.wait(),timeout)
         if self.state!='SYNCHRONIZED':raise ValueError('BOOK_DEGRADED')
 
-    async def run(self,on_status,initial_timeout=5):
-        task=asyncio.create_task(self.stream.run());started=time.monotonic()
+    async def run(self,on_status,initial_timeout=30):
+        task=asyncio.create_task(self.stream.run(rest_seed_coro=self.rest_seed));started=time.monotonic()
         self.owned_tasks.add(task);task.add_done_callback(self.owned_tasks.discard)
         try:
             while not task.done():
                 healthy=self.stream.read().get('available') is True
                 if self.state=='INITIALIZING':
-                    if healthy:self.state='SYNCHRONIZED';self.ready.set()
+                    if healthy:self.state='SYNCHRONIZED';self.ready.set();on_status('WS_RECONNECTED')
                     elif time.monotonic()-started>initial_timeout:raise TimeoutError('BOOK_INITIAL_SYNC_TIMEOUT')
-                elif not healthy and self.state=='SYNCHRONIZED':
+                elif self.state=='SYNCHRONIZED' and not healthy:
                     self.state='DEGRADED';on_status('WS_DISCONNECT')
-                # A later reconnect never clears DEGRADED or rearms entries.
+                elif self.state=='DEGRADED' and healthy:
+                    self.state='RESYNCHRONIZING';on_status('WS_RECONNECTING')
+                elif self.state=='RESYNCHRONIZING' and healthy:
+                    self.state='SYNCHRONIZED';self.ready.set();on_status('WS_RECONNECTED')
                 await asyncio.sleep(.02)
             await task
             raise RuntimeError('BOOK_STREAM_ENDED')
         finally:
             self.state='DEGRADED';on_status('WS_DISCONNECT');task.cancel()
             await asyncio.wait({task},timeout=.2)
+
+    async def rest_seed(self):
+        """REST reseed: fetch fresh books for UP/DOWN via snapshot before trusting WS deltas.
+        Override in subclass or configure via constructor."""
+        pass
+
+    async def rotate(self,new_slug,new_condition,new_tokens,new_expiry,*,rest_seed_coro=None):
+        """Rotate to a new market when the current one expires."""
+        await self.shutdown()
+        from .readonly_book_stream import StreamBook
+        self.stream=StreamBook(slug=new_slug,condition=new_condition,tokens=new_tokens,expiry=new_expiry,clock=self.stream.clock)
+        self.state='INITIALIZING';self.ready=asyncio.Event();self.owned_tasks=set()
+        self.tokens=dict(zip(('UP','DOWN'),new_tokens))
+        self.market=new_condition
+        self.stream.connect(new_slug,new_tokens,1)
+        if rest_seed_coro is not None:
+            try:await rest_seed_coro()
+            except Exception:pass
 
     async def shutdown(self):
         for task in self.owned_tasks:task.cancel()

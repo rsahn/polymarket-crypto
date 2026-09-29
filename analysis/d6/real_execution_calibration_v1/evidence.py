@@ -133,6 +133,10 @@ def build_evidence(
     codec_digest="3e2ba43e59d19191f0d208e39b1ec16f920bdda30ebfa062330ea9fe8d8363f5",
     baseline_digest="0" * 64,
 ):
+    # Digests qualifiés — calculés depuis les artefacts vérifiés
+    NATIVE_V2 = Path(__file__).resolve().parent / "evidence" / "native_v2"
+    _fee_source_digest = hashlib.sha256((NATIVE_V2 / "Trading.sol").read_bytes()).hexdigest()
+    _audit_digest = hashlib.sha256((NATIVE_V2 / "FINAL_OFFLINE_REVIEW.md").read_bytes()).hexdigest()
     """Build all 14 evidence records with fresh timestamps."""
     from analysis.d6.real_execution_calibration_v1.v1_binding import verify
     strategy_hashes = verify()
@@ -221,7 +225,7 @@ def build_evidence(
             "cash_collateral": "1000000",
             "outcome_shares": "0",
             "collateral_per_share_upper": "0.01",
-            "fee_source_digest": "f" * 64,
+            "fee_source_digest": _fee_source_digest,
             "coverage": "ROUND_TRIP_FAK_1BUY_1SELL",
             "epoch": "UNQUALIFIED",
             "late_fill_coverage": True,
@@ -310,7 +314,7 @@ def build_evidence(
     evidence["audit_pass"] = _make_record(
         "audit_pass",
         {
-            "audit_digest": "0" * 64,
+            "audit_digest": _audit_digest,
             "reviewer": "Ramy",
             "unresolved_critical": 0,
         },

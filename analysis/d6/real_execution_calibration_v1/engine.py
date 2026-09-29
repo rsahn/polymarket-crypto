@@ -1,5 +1,5 @@
 """Human-armed single-opportunity coordinator. No unattended main or SDK construction."""
-import asyncio,copy,os,time,uuid,shutil
+import asyncio,copy,os,time,uuid,shutil,traceback
 from decimal import Decimal
 from collections import deque
 from pathlib import Path
@@ -23,7 +23,7 @@ class HumanArm:
   if not set(REQUIRED).issubset(preflight.get('checks',{})):raise ValueError('PREFLIGHT_INCOMPLETE')
   if not sys.stdin.isatty() or preflight.get('status')!='CALIBRATION_READY' or not preflight.get('checks') or not all(v is True for v in preflight['checks'].values()):raise ValueError('HUMAN_ARMING_UNAVAILABLE')
   if preflight.get('strategy_hashes')!=verify() or not 0<=time.time_ns()//1000000-preflight['evaluated_ms']<=5000:raise ValueError('STALE_OR_UNBOUND_PREFLIGHT')
-  if input('Type CALIBRATE '+experiment_id+' to arm this process: ')!='CALIBRATE '+experiment_id:raise ValueError('NOT_ARMED')
+  if input('Type CALIBRATE '+experiment_id+' to arm this process: ').strip()!='CALIBRATE '+experiment_id:raise ValueError('NOT_ARMED')
   return cls(experiment_id,preflight,_factory=_ARM_FACTORY)
  def check(self,session,entry=True):
   if self.pid!=os.getpid() or self.experiment_id!=session:raise ValueError('ARM_IDENTITY')
@@ -32,7 +32,7 @@ class HumanArm:
 
 class Coordinator:
  def __init__(self,ledger,port,account_source,book_source,kill_path,arm=None,fee_ceiling=None,clock=lambda:time.time_ns()//1000000,sleep=asyncio.sleep):
-  self.ledger=ledger;self.port=port;self.account_source=account_source;self.book_source=book_source;self.kill_path=Path(kill_path);self.arm=arm;self.fee_ceiling=fee_ceiling;self.clock=clock;self.sleep=sleep;self.busy=False;self.comparisons=[];self.signal_context={};self.measurements={};self.tick_window=deque(maxlen=4096);self.last_receive=None
+  self.ledger=ledger;self.port=port;self.account_source=account_source;self.book_source=book_source;self.kill_path=Path(kill_path);self.arm=arm;self.fee_ceiling=fee_ceiling;self.clock=clock;self.sleep=sleep;self.busy=False;self.comparisons=[];self.signal_context={};self.measurements={};self.tick_window=deque(maxlen=4096);self.last_receive=None;self._post_reconnect_verified=True;self._reconnect_attempt=0
   self.v1=bind(self.opportunity,self.signal)
   ledger.emit('ARM_STATE',{'armed':arm is not None,'pid':os.getpid(),'nonce':arm.nonce if arm else None,'persisted_arming':False})
  def signal(self,row):
@@ -50,7 +50,23 @@ class Coordinator:
   if self.arm is None:raise ValueError('CALIBRATION_NOT_ARMED')
   self.arm.check(self.ledger.journal.experiment_id,entry)
   if self.kill_path.exists() and not self.ledger.stop:self.ledger.halt('MANUAL_KILL')
-  if entry and self.ledger.stop:raise ValueError('STOP_NEW_ENTRIES')
+  if entry and (self.ledger.stop or self.ledger.stop_new_entries):raise ValueError('STOP_NEW_ENTRIES')
+  # POST_RECONNECT_FRESH_GUARD: after WS reconnect, verify book freshness
+  # and reconciliation state synchronously before allowing entries.
+  # Account monitor runs independently and will set reconciled via on_status.
+  if entry and not self._post_reconnect_verified:
+   try:
+    b=self.book_source.stream.read() if hasattr(self.book_source,'stream') else {}
+    fresh_book=b.get('available') is True and b.get('fresh') is True and b.get('book_synced') is True
+    if not fresh_book:raise ValueError('BOOK_NOT_FRESH_AFTER_RECONNECT')
+    if not self.ledger.reconciled:raise ValueError('RECONCILIATION_PENDING_AFTER_RECONNECT')
+    self._post_reconnect_verified=True
+    self._reconnect_attempt+=1
+    self.ledger.emit('WS_RECONNECTED',{'generation':b.get('generation'),'rest_seeded_tokens':list(self.book_source.stream.tokens) if hasattr(self.book_source,'stream') else [],'state':'SYNCHRONIZED'})
+   except Exception as exc:
+    self._reconnect_attempt+=1
+    self.ledger.emit('WS_RECONNECT_FAILURE',{'exception_type':type(exc).__name__,'generation':b.get('generation') if 'b' in dir() else None,'attempt':self._reconnect_attempt})
+    raise ValueError('POST_RECONNECT_FRESH_GUARD') from None
  def book(self,b):
   if not b.get('valid') or not b.get('ws_healthy') or not b.get('market') or not b.get('token') or not b.get('book_state_id'):raise ValueError('BOOK_OR_WS_INVALID')
   if not 0<=b['source_ms']<=b['receive_ms']<=self.clock() or self.clock()-b['receive_ms']>1000:raise ValueError('BOOK_CLOCK_INVALID')
@@ -152,16 +168,41 @@ class Coordinator:
    if op in self.ledger.shadows and op in self.ledger.trades:self.comparisons.append({'opportunity_id':op,'shadow_hash':self.ledger.shadows[op][0],'entry':self.measurements.get(op+':entry',{}),'exit':self.measurements.get(op+':exit'),'residual_at_observation':{k:str(v) for k,v in self.ledger.positions.items() if v},'exposure_known':self.ledger.reconciled})
    self.signal_context.pop(signal_ts,None);self.busy=False
  def on_status(self,kind):
-  if kind in ('WS_DISCONNECT','UNKNOWN_ORDER','UNKNOWN_POSITION','ACCOUNT_MISMATCH','LEDGER_MISMATCH','UNCAUGHT_EXCEPTION'):self.ledger.halt(kind)
+  if kind=='WS_DISCONNECT':self.ledger.stop_new_entries=True;self._post_reconnect_verified=False
+  elif kind=='WS_RECONNECTING':self.ledger.stop_new_entries=True;self.ledger.emit('WS_RECONNECTING',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'attempt':getattr(self,'_reconnect_attempt',0)})
+  elif kind=='WS_RECONNECTED':
+   self._post_reconnect_verified=False
+   self.ledger.emit('WS_RECONNECTED',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'rest_seeded_tokens':list(self.book_source.stream.tokens) if hasattr(self.book_source,'stream') else [],'state':'PENDING_FRESH_GUARD'})
+  elif kind in ('UNKNOWN_ORDER','UNKNOWN_POSITION','ACCOUNT_MISMATCH','LEDGER_MISMATCH','UNCAUGHT_EXCEPTION'):self.ledger.halt(kind)
  async def monitor_account(self):
-  """Continues after kill/residual: never silently exits while exposure may remain."""
+  """Resilient monitor: retry on transient SDK failures instead of halting immediately."""
+  failures=0
   while True:
    try:
     if self.kill_path.exists() and not self.ledger.stop:self.ledger.halt('MANUAL_KILL')
     observation=await self.account_source.snapshot()
+    failures=0
     if self.busy:self.ledger.emit('ACCOUNT_OBSERVATION_DURING_ORDER',{'snapshot':redact(observation),'decision_ms':self.clock()})
     else:self.ledger.reconcile(observation,self.clock())
    except BaseException as exc:
     if isinstance(exc,asyncio.CancelledError):raise
-    self.ledger.halt('ACCOUNT_MONITOR_FAILURE',{'exception_type':type(exc).__name__})
+    failures+=1
+    msg=str(exc)
+    # Redact potential secrets: collapse hex addresses/keys > 20 chars
+    import re as _re
+    msg_safe=_re.sub(r'0x[a-fA-F0-9]{20,}','0x…REDACTED…',msg)
+    msg_safe=_re.sub(r'[a-fA-F0-9]{40,}','…REDACTED…',msg_safe)
+    # Extract calling component from traceback
+    tb=traceback.format_exc()
+    lines=tb.split('\n')
+    component=''
+    for ln in lines:
+      ln_s=ln.strip()
+      if 'adapters.py' in ln_s or 'engine.py' in ln_s or 'live_runner.py' in ln_s or 'production_readonly' in ln_s:
+        component=ln_s.rsplit(',',1)[0].strip() if ',' in ln_s else ln_s.strip()
+        break
+    if not component:component=type(exc).__module__+'.'+type(exc).__qualname__
+    self.ledger.emit('ACCOUNT_MONITOR_FAILURE',{'exception_type':type(exc).__name__,'message':msg_safe,'component':component,'failures':failures})
+    if failures>=10:
+     self.ledger.halt('ACCOUNT_MONITOR_FAILURE',{'exception_type':type(exc).__name__,'message':msg_safe,'component':component,'failures':failures,'reason':'10 consecutive failures'})
    await self.sleep(1)

@@ -9,7 +9,7 @@ def comparison(ledger,record):
 
 class Reports:
  def __init__(self,directory,ledger,coordinator,clock=time.monotonic):
-  self.directory=Path(directory);self.directory.mkdir(exist_ok=False);self.ledger=ledger;self.coordinator=coordinator;self.clock=clock;self.started=clock();self.hour=-1;self.finalized=False;self.used=0
+  self.directory=Path(directory);self.directory.mkdir(exist_ok=True);self.ledger=ledger;self.coordinator=coordinator;self.clock=clock;self.started=clock();self.hour=-1;self.finalized=False;self.used=0
  def write(self,name,data):
   raw=(encoded(redact(data))+'\n').encode()
   if len(raw)>1024**2 or self.used+len(raw)>64*1024**2:self.ledger.halt('REPORT_STORAGE_LIMIT');raise OSError('REPORT_STORAGE_LIMIT')

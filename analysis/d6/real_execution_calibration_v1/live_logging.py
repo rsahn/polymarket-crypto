@@ -12,7 +12,8 @@ from .offline import RotatingLog,sanitize,SAFE_EVENTS,SENSITIVE,durable
 REAL_CALIBRATION_ROTATION_SECONDS = 18000
 
 EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_BOOK',
- 'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE'}
+ 'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
+ 'ACCOUNT_MONITOR_FAILURE','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE'}
 PAYLOAD_FIELDS={
  'INIT':{'account','starting_cash','version','max_entry','max_total','max_entries'},
  'ARM_STATE':{'armed','pid','nonce','persisted_arming'},
@@ -33,6 +34,10 @@ PAYLOAD_FIELDS={
  'OPPORTUNITY_SKIPPED':{'signal_receive_ts','reason'},
  'OPPORTUNITY_COMPLETE':{'opportunity_id'},
  'ENTRY_DUE':{'opportunity_id','entry_due_ms','signal_receive_ts','signal_decision_ts','signal_source_ts','direction','btc_move','btc_lookback_evidence'},
+ 'WS_RECONNECTING':{'generation','attempt'},
+ 'WS_RECONNECTED':{'generation','rest_seeded_tokens','state'},
+ 'WS_RECONNECT_FAILURE':{'exception_type','generation','attempt'},
+ 'ACCOUNT_MONITOR_FAILURE':{'exception_type','message','component','failures'},
 }
 class LiveLog(RotatingLog):
     def __init__(self,*args,max_bytes=64*1024**2,on_fault=None,require_drive=None,**kwargs):

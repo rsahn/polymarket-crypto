@@ -98,6 +98,8 @@ class PreparedSession:
             report=evaluate(proof,self.coordinator.clock(),_shutil.disk_usage(self.directory).free,verifier)
             if report['status']!='CALIBRATION_READY':raise ValueError('PREFLIGHT_REFRESH_BLOCKED: '+' '.join(report['blockers']))
             arm=(confirm or HumanArm.confirm)(self.journal.experiment_id,report,verifier=verifier,evidence=proof)
+            # Re-collect evidence after HumanArm.confirm() — human may have taken >5s
+            proof=evidence()
             fee=verifier.validate('fee_upper_bound_proven',proof['fee_upper_bound_proven'],self.coordinator.clock())
             def current_fee():
                 current=evidence();record=current['fee_upper_bound_proven']

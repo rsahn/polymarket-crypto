@@ -107,7 +107,7 @@ class CalibrationLedger:
  MAX_ENTRY=25;MAX_TOTAL=100;MAX_ENTRIES=4;MAX_CONCURRENT=1
  def __init__(self,journal,account,starting_cash):
   self.journal=journal;self.account=account;self.starting_cash=dec(starting_cash);self.allocated=ZERO;self.spent=ZERO;self.proceeds=ZERO;self.cash_fees=ZERO;self.share_fees=ZERO
-  self.cash=self.starting_cash;self.positions={};self.orders={};self.fills={};self.shadows={};self.trades={};self.active=None;self.attempts=0;self.reconciled=False;self.stop=False;self.reasons=[];self.recovery_only=False;self.last_fill_receive_ms=0
+  self.cash=self.starting_cash;self.positions={};self.orders={};self.fills={};self.shadows={};self.trades={};self.active=None;self.attempts=0;self.reconciled=False;self.stop=False;self.stop_new_entries=False;self.reasons=[];self.recovery_only=False;self.last_fill_receive_ms=0
   journal.append('INIT',{'account':account,'starting_cash':str(self.starting_cash),'version':VERSION,'max_entry':25,'max_total':100,'max_entries':4})
  def emit(self,kind,payload):
   try:return self.journal.append(kind,payload)

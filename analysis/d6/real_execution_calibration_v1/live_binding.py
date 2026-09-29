@@ -13,6 +13,12 @@ from .core import digest, dec
 from .preflight import REQUIRED, evaluate
 from .schemas import authenticate, integer, hash256, identifiers, frontier, text
 
+# Digests qualifiés réels — SHA256 d'artefacts vérifiés hors ligne
+# fee_source: Trading.sol de ctf-exchange-v2 commit ccc0596
+_REAL_FEE_SOURCE_DIGEST = "dd8d18fca897e664583a93944b379435e6f70e84f4190c39d669b2be62596012"
+# audit: FINAL_OFFLINE_REVIEW.md de real_execution_calibration_v1/evidence/native_v2
+_REAL_AUDIT_DIGEST = "7c99c0b364054373f92b89105e8e99d125289c9f06b0b65cb0d792d3fedbc1b7"
+
 
 @dataclass(frozen=True)
 class LiveBindingConditions:
@@ -168,12 +174,13 @@ def derive_submit_allowed(
             pass
 
     # ── Fee source digest qualifié ────────────────────────────────────────
+    # Vérifie la correspondance EXACTE avec le digest réel de Trading.sol
     fee_record = evidence.get("fee_upper_bound_proven", {})
     if isinstance(fee_record, dict):
         fee_payload = fee_record.get("payload", {})
         if isinstance(fee_payload, dict):
             fsd = fee_payload.get("fee_source_digest", "")
-            if isinstance(fsd, str) and len(fsd) == 64:
+            if isinstance(fsd, str) and fsd == _REAL_FEE_SOURCE_DIGEST:
                 try:
                     hash256(fsd)
                     conditions.fee_source_digest_qualified = True
@@ -181,12 +188,13 @@ def derive_submit_allowed(
                     pass
 
     # ── Audit digest qualifié ─────────────────────────────────────────────
+    # Vérifie la correspondance EXACTE avec le digest réel de FINAL_OFFLINE_REVIEW.md
     audit_record = evidence.get("audit_pass", {})
     if isinstance(audit_record, dict):
         audit_payload = audit_record.get("payload", {})
         if isinstance(audit_payload, dict):
             ad = audit_payload.get("audit_digest", "")
-            if isinstance(ad, str) and len(ad) == 64:
+            if isinstance(ad, str) and ad == _REAL_AUDIT_DIGEST:
                 try:
                     hash256(ad)
                     conditions.audit_digest_qualified = True

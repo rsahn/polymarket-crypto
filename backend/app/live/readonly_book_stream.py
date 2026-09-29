@@ -40,6 +40,7 @@ class StreamBook(BookStateSource):
     def disconnect(self):
         if self.connected:self.transition('DISCONNECTED')
         super().disconnect();self.depth={}
+        self._ws_running=False
     def capture_first_book(self,event):
         if not isinstance(event,dict) or event.get('event_type')!='book':return
         token=event.get('asset_id')
@@ -119,7 +120,8 @@ class StreamBook(BookStateSource):
                 for change in event['price_changes']:
                     token=change['asset_id']
                     if token not in self.tokens:raise ValueError('TOKEN_IDENTITY')
-                    if token not in self.depth:continue
+                    if token not in self.depth:
+                        self.depth[token]={'bids':{},'asks':{}}
                     side={'BUY':'bids','SELL':'asks'}[change['side']]
                     p,q=number(change['price']),number(change['size'])
                     if not 0<p<1 or q<0:raise ValueError('DELTA_LEVEL')
@@ -217,55 +219,85 @@ class StreamBook(BookStateSource):
                 'last_frame_received_ms':self.last_frame_received_ms,'last_pong_received_ms':self.last_pong_received_ms,
                 'freshness_limit_ms':BOOK_MAX_AGE_MS,'no_new_wire_event_over_limit':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>BOOK_MAX_AGE_MS}
 
-    async def run(self,*,connect_factory=None):
+    async def run(self,*,connect_factory=None,rest_seed_coro=None):
+        if getattr(self,"_ws_running",False):
+            return
+        self._ws_running=True
         from websockets.asyncio.client import connect
         class FixedConnect(connect):
             def process_redirect(self,exc):return exc
-        try:
-            async with (connect_factory or FixedConnect)(WS,ping_interval=None,open_timeout=10,close_timeout=2,max_size=4000000) as ws:
-                self.connected_generation()
-                await ws.send(json.dumps({'assets_ids':list(self.tokens),'type':'market'}))
-                async def heartbeat():
-                    while True:
-                        await asyncio.sleep(10)
-                        try:await ws.send('PING')
+
+        backoff=1
+        attempt=0
+        while self.clock()<self.expiry:
+            attempt+=1
+            self._ws_running=True
+            self.transition('CONNECTING')
+            try:
+                async with (connect_factory or FixedConnect)(WS,ping_interval=None,open_timeout=10,close_timeout=2,max_size=4000000) as ws:
+                    self.connected_generation()
+                    # REST reseed after reconnect: fetch fresh book before trusting WS deltas
+                    if rest_seed_coro is not None:
+                        try:
+                            self.transition('REST_SEED_STARTED')
+                            await rest_seed_coro()
+                            self.transition('REST_SEED_COMPLETE')
                         except Exception:
-                            self.failure='WS_HEARTBEAT_FAILED';self.disconnect();return
-                ping=asyncio.create_task(heartbeat())
-                try:
-                    while self.clock()<self.expiry:
-                        raw=await asyncio.wait_for(ws.recv(),25)
-                        wire_received_ms=self.clock();self.last_frame_received_ms=wire_received_ms
-                        if raw=='PONG':
-                            self.last_pong_received_ms=wire_received_ms;continue
-                        try:values=decode_frame(raw)
-                        except (ValueError,TypeError):
-                            self.diagnostics['parser_reason']='WS_INVALID_JSON';self.failure='WS_INVALID_JSON'
-                            raise ValueError('WS_INVALID_JSON') from None
-                        for event in values if isinstance(values,list) else [values]:
-                            try:self.ingest(event,wire_received_ms=wire_received_ms)
-                            except ValueError:
-                                if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT','STALE_BOOK'}:raise
-                                # Remain connected but unusable pending full resync.
-                                continue
-                finally:
-                    ping.cancel()
-                    with suppress(asyncio.CancelledError):await ping
-        except asyncio.CancelledError:
-            self.transition('LOCAL_TASK_CANCELLED');raise
-        except Exception as exc:
-            from websockets.exceptions import ConnectionClosed
-            if isinstance(exc,ConnectionClosed):
-                received=exc.rcvd
-                self.diagnostics['close_code']=received.code if received else None
-                self.diagnostics['remote_close_reason_present']=bool(received and received.reason)
-                self.diagnostics['close_reason_category']='REMOTE_CLOSE_FRAME' if received else 'NO_CLOSE_FRAME'
-                category='CONNECTION_CLOSED'
-            elif isinstance(exc,TimeoutError):category='RECEIVE_OR_CONNECT_TIMEOUT'
-            elif isinstance(exc,OSError):category='NETWORK_OS_ERROR'
-            else:category='PARSER_OR_PROTOCOL_ERROR'
-            self.diagnostics['exception_category']=category
-            self.failure=self.failure or category
-        else:
-            self.failure=self.failure or 'MARKET_EXPIRED'
-        finally:self.disconnect()
+                            self.transition('REST_SEED_FAILED')
+                    await ws.send(json.dumps({'assets_ids':list(self.tokens),'type':'market'}))
+                    async def heartbeat():
+                        while True:
+                            await asyncio.sleep(10)
+                            try:await ws.send('PING')
+                            except Exception:
+                                self.failure='WS_HEARTBEAT_FAILED';self.disconnect();return
+                    ping=asyncio.create_task(heartbeat())
+                    try:
+                        while self.clock()<self.expiry:
+                            raw=await asyncio.wait_for(ws.recv(),25)
+                            wire_received_ms=self.clock();self.last_frame_received_ms=wire_received_ms
+                            if raw=='PONG':
+                                self.last_pong_received_ms=wire_received_ms;continue
+                            try:values=decode_frame(raw)
+                            except (ValueError,TypeError):
+                                self.diagnostics['parser_reason']='WS_INVALID_JSON';self.failure='WS_INVALID_JSON'
+                                raise ValueError('WS_INVALID_JSON') from None
+                            for event in values if isinstance(values,list) else [values]:
+                                try:self.ingest(event,wire_received_ms=wire_received_ms)
+                                except ValueError:
+                                    if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT','STALE_BOOK'}:raise
+                                    # Remain connected but unusable pending full resync.
+                                    continue
+                    finally:
+                        ping.cancel()
+                        with suppress(asyncio.CancelledError):await ping
+            except asyncio.CancelledError:
+                self.transition('LOCAL_TASK_CANCELLED')
+                self._ws_running=False
+                raise
+            except Exception as exc:
+                from websockets.exceptions import ConnectionClosed
+                if isinstance(exc,ConnectionClosed):
+                    received=exc.rcvd
+                    self.diagnostics['close_code']=received.code if received else None
+                    self.diagnostics['remote_close_reason_present']=bool(received and received.reason)
+                    self.diagnostics['close_reason_category']='REMOTE_CLOSE_FRAME' if received else 'NO_CLOSE_FRAME'
+                    category='CONNECTION_CLOSED'
+                elif isinstance(exc,TimeoutError):category='RECEIVE_OR_CONNECT_TIMEOUT'
+                elif isinstance(exc,OSError):category='NETWORK_OS_ERROR'
+                else:category='PARSER_OR_PROTOCOL_ERROR'
+                self.diagnostics['exception_category']=category
+                self.failure=self.failure or category
+            else:
+                self.failure=self.failure or 'MARKET_EXPIRED'
+                self._ws_running=False
+                self.disconnect()
+                break  # clean exit (expired)
+            finally:
+                self.disconnect()
+
+            # Exponential backoff before reconnect
+            if self.clock()>=self.expiry:
+                break
+            await asyncio.sleep(min(backoff,30))
+            backoff=min(backoff*2,30)
