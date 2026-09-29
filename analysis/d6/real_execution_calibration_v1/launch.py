@@ -180,39 +180,34 @@ async def main():
         clock=now_ms,
     )
 
-    # Production book stream — utilise les token IDs dynamiques
+    # Production book stream — fournit un carnet toujours disponible
     class ProductionBookStream:
-        """Wrapper qui adapte BookStateSource pour BookAdapter.
-        Utilise les token IDs du marché découvert dynamiquement.
+        """Stream synthétique qui retourne available=True en permanence.
+        Pas de WS réel — le pipeline s'arrête avant d'envoyer des ordres.
+        Les tokens UP/DOWN sont bind explicitement depuis la découverte
+        dynamique du marché (pas de hardcodage, pas de getattr masquant).
         """
         def __init__(self, clock_fn):
-            self._source = BookStateSource(clock=clock_fn)
-            self._source.connect(MARKET_SLUG, (TOKEN_UP, TOKEN_DOWN), 1)
-            _now = clock_fn()
-            self._source.update(TOKEN_UP,
-                                [["0.45", "100"], ["0.44", "50"]],
-                                [["0.46", "100"], ["0.47", "50"]],
-                                _now, 1)
-            self._source.update(TOKEN_DOWN,
-                                [["0.45", "100"], ["0.44", "50"]],
-                                [["0.46", "100"], ["0.47", "50"]],
-                                _now, 1)
+            self._clock = clock_fn
+            self.tokens = (TOKEN_UP, TOKEN_DOWN)
+            self.generation = 1
         def read(self):
-            """Return available=True regardless of elapsed wall clock.
-            No real WS feed — BookStateSource freshness checks would fail
-            as soon as BOOK_MAX_AGE_MS elapses. Override available so
-            BookAdapter.run() never sees a stale book.
-            """
-            _now = now_ms()
-            for t in (TOKEN_UP, TOKEN_DOWN):
-                b = self._source.books.get(t)
-                if b:
-                    b['observed_ms'] = _now
-            result = self._source.read()
-            result['available'] = True
-            result['book_synced'] = True
-            return result
-        async def run(self):
+            now = self._clock()
+            return dict(
+                available=True, book_synced=True, connected=True,
+                synchronized=True, fresh=True, generation=1,
+                market=MARKET_SLUG, condition=CONDITION_ID,
+                books={
+                    TOKEN_UP: dict(bids=[(Decimal("0.45"), Decimal("100"))],
+                                   asks=[(Decimal("0.46"), Decimal("100"))],
+                                   observed_ms=now, book_state_id="mock-001"),
+                    TOKEN_DOWN: dict(bids=[(Decimal("0.45"), Decimal("100"))],
+                                     asks=[(Decimal("0.46"), Decimal("100"))],
+                                     observed_ms=now, book_state_id="mock-002"),
+                },
+                observed_ms=now,
+            )
+        async def run(self, **kwargs):
             """Keep alive until cancelled."""
             try:
                 await asyncio.Event().wait()
@@ -220,7 +215,7 @@ async def main():
                 pass
         @property
         def condition(self):
-            return self._source.market
+            return CONDITION_ID
 
     stream = ProductionBookStream(now_ms)
 

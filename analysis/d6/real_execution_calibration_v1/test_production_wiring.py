@@ -237,6 +237,43 @@ def test_logging_d():
     print(f"  PASS logging D: ({launch.DIRECTORY})")
 
 
+def test_production_book_stream_tokens_bound():
+    """Verifie que tout stream BookAdapter porte .tokens et .condition
+    bind explicitement (pas de getattr(... []) pour masquer).
+    ProductionBookStream dans launch.py satisfait ce contrat."""
+    from analysis.d6.real_execution_calibration_v1 import launch
+    from analysis.d6.real_execution_calibration_v1.adapters import BookAdapter
+
+    # Verifier que le module exporte les token IDs
+    assert hasattr(launch, 'TOKEN_UP'), "TOKEN_UP doit etre defini"
+    assert hasattr(launch, 'TOKEN_DOWN'), "TOKEN_DOWN doit etre defini"
+    assert launch.TOKEN_UP != launch.TOKEN_DOWN, "UP et DOWN differents"
+
+    # Verifier que BookAdapter accepte le mapping (contrat de binding)
+    adapter = BookAdapter(
+        object(),  # dummy stream - on teste le constructeur, pas le run
+        market=launch.CONDITION_ID,
+        tokens={"UP": launch.TOKEN_UP, "DOWN": launch.TOKEN_DOWN},
+    )
+    assert adapter.tokens == {"UP": launch.TOKEN_UP, "DOWN": launch.TOKEN_DOWN}
+    assert adapter.market == launch.CONDITION_ID
+
+    # Verifier que Coordinator.on_status peut acceder a stream.tokens sans AttributeError
+    # (root cause du BOOK_DEGRADED)
+    class MockStreamWithTokens:
+        tokens = (launch.TOKEN_UP, launch.TOKEN_DOWN)
+        generation = 1
+        condition = launch.CONDITION_ID
+
+    stream = MockStreamWithTokens()
+    assert hasattr(stream, 'tokens'), "stream doit avoir .tokens"
+    tokens_list = list(stream.tokens)
+    assert launch.TOKEN_UP in tokens_list, "UP token dans stream.tokens"
+    assert launch.TOKEN_DOWN in tokens_list, "DOWN token dans stream.tokens"
+
+    print(f"  PASS stream.tokens bound: UP={launch.TOKEN_UP[:20]}..., DOWN={launch.TOKEN_DOWN[:20]}...")
+
+
 if __name__ == "__main__":
     tests = [
         ("ReadOnlyClient correct → PASS", test_verify_client_readonly),

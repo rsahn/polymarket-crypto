@@ -122,10 +122,13 @@ class BookAdapter:
 
     async def wait_ready(self,timeout=5):
         await asyncio.wait_for(self.ready.wait(),timeout)
-        if self.state!='SYNCHRONIZED':raise ValueError('BOOK_DEGRADED')
+        if self.state!='SYNCHRONIZED':
+            print(f'  [WAIT_READY] MISMATCH state={self.state!r} != SYNCHRONIZED', flush=True)
+            raise ValueError('BOOK_DEGRADED')
 
     async def run(self,on_status,initial_timeout=30):
-        task=asyncio.create_task(self.stream.run(rest_seed_coro=self.rest_seed));started=time.monotonic()
+        task=asyncio.create_task(self.stream.run(rest_seed_coro=self.rest_seed))
+        started=time.monotonic()
         self.owned_tasks.add(task);task.add_done_callback(self.owned_tasks.discard)
         try:
             while not task.done():
@@ -133,14 +136,12 @@ class BookAdapter:
                 if self.state=='INITIALIZING':
                     if healthy:self.state='SYNCHRONIZED';self.ready.set();on_status('WS_RECONNECTED')
                     elif time.monotonic()-started>initial_timeout:raise TimeoutError('BOOK_INITIAL_SYNC_TIMEOUT')
-                elif self.state=='SYNCHRONIZED' and not healthy:
-                    self.state='DEGRADED';on_status('WS_DISCONNECT')
-                elif self.state=='DEGRADED' and healthy:
-                    self.state='RESYNCHRONIZING';on_status('WS_RECONNECTING')
-                elif self.state=='RESYNCHRONIZING' and healthy:
-                    self.state='SYNCHRONIZED';self.ready.set();on_status('WS_RECONNECTED')
+                elif self.state=='SYNCHRONIZED' and not healthy:self.state='DEGRADED';on_status('WS_DISCONNECT')
+                elif self.state=='DEGRADED' and healthy:self.state='RESYNCHRONIZING';on_status('WS_RECONNECTING')
+                elif self.state=='RESYNCHRONIZING' and healthy:self.state='SYNCHRONIZED';self.ready.set();on_status('WS_RECONNECTED')
                 await asyncio.sleep(.02)
-            await task
+            if task.cancelled():raise asyncio.CancelledError('STREAM_TASK_CANCELLED')
+            if task.exception() is not None:raise task.exception()
             raise RuntimeError('BOOK_STREAM_ENDED')
         finally:
             self.state='DEGRADED';on_status('WS_DISCONNECT');task.cancel()
