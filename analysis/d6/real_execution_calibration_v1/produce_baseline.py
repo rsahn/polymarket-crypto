@@ -19,10 +19,9 @@ sys.path[:0] = [str(ROOT), str(ROOT / "backend")]
 from analysis.d6.real_execution_calibration_v1.evidence import SelfAttestingAuthority, _digest
 from analysis.d6.real_execution_calibration_v1.core import digest
 
-# ─── Constantes production (identiques à launch.py) ─────────────────────────
+# ─── Constantes production ───────────────────────────────────────────────────
 ACCOUNT = "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
 SIGNER = "0x9348efd557a09e644795c8f114bcf0bef86f203a"
-CONDITION_ID = "0xc2bce096198c6f4c16bcefa91cc16829f8a84bf9e20551b8147d72c8bc6f5433"
 COLLATERAL = "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB"
 
 # ─── Chemins par défaut ─────────────────────────────────────────────────────
@@ -34,12 +33,32 @@ DEFAULT_EVIDENCE = (
 DEFAULT_OUTPUT = Path("D:/polymarket-real-calibration/preparation/BASELINE.json")
 
 
+def _discover_current_market():
+    """Discover current active BTC Up/Down 5m market via gamma-api."""
+    from .market_discovery import discover_current
+    return discover_current()
+
+
 def produce(
     evidence_path: Path,
     experiment_id: str,
     output_path: Path,
+    *,
+    condition_id: str = None,
 ) -> dict:
     """Lit une observation production et produit un enregistrement self-attested.
+
+    Parameters
+    ----------
+    evidence_path : Path
+        Chemin vers le fichier d'evidence production (fresh_production_evidence.json
+        ou qualification_matrix.json).
+    experiment_id : str
+        Identifiant de session.
+    output_path : Path
+        Chemin de sortie pour BASELINE.json.
+    condition_id : str, optional
+        Condition ID du marché actif. Si omis, découvert dynamiquement.
 
     Returns
     -------
@@ -48,6 +67,11 @@ def produce(
     """
     now_ms = int(time.time() * 1000)
     evidence = json.loads(evidence_path.read_text())
+
+    # Découvrir le marché actif (plus de hardcodé)
+    if condition_id is None:
+        _mkt = _discover_current_market()
+        condition_id = _mkt["condition_id"]
 
     # Extraire les champs de l'observation production
     balance_raw = str(evidence.get("balance_type3_raw", "109160000"))
@@ -80,7 +104,7 @@ def produce(
         },
         "signature_type": 3,
         "chain_id": 137,
-        "market": CONDITION_ID,
+        "market": condition_id,
         "scope": "wallet",
         "inventory_proven": False,
         "cash_proven": True,
@@ -92,12 +116,12 @@ def produce(
 
     baseline = {
         "account": ACCOUNT,
-        "market": CONDITION_ID,
+        "market": condition_id,
         "session": experiment_id,
         "collateral": COLLATERAL,
         "strategy_hashes": {},
         "observed_ms": now_ms,
-        "valid_until_ms": now_ms + 5000,
+        "valid_until_ms": now_ms + 86400000,
         "scope": "wallet",
         "atomic_frontier": {"sequence": 0, "digest": payload_digest},
         "trade_ids": payload["trade_ids"],
@@ -128,7 +152,7 @@ def produce(
     output_path.write_text(
         json.dumps(baseline, sort_keys=True, separators=(",", ":"), indent=2)
     )
-    print(f"\nFichier écrit → {output_path}")
+    print(f"\nFichier ecrit -> {output_path}")
     return baseline
 
 
@@ -155,6 +179,11 @@ if __name__ == "__main__":
         default="calibration-v1-baseline",
         help="Identifiant de session pour le baseline",
     )
+    parser.add_argument(
+        "--condition-id",
+        default=None,
+        help="Condition ID du marché (découvert automatiquement si omis)",
+    )
     args = parser.parse_args()
 
-    produce(args.evidence, args.experiment_id, args.output)
+    produce(args.evidence, args.experiment_id, args.output, condition_id=args.condition_id)

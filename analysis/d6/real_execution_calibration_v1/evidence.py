@@ -116,10 +116,10 @@ def build_evidence(
     *,
     account="0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
     signer="0x9348efd557a09e644795c8f114bcf0bef86f203a",
-    condition_id="0xc2bce096198c6f4c16bcefa91cc16829f8a84bf9e20551b8147d72c8bc6f5433",
-    token_up="108356011342159985803141201944072402866666559766806853187422737531686424103314",
-    token_down="16759512213770205038300183826897320054770267440645397738685477740352888131801",
-    market_slug="btc-updown-5m-1790516400",
+    condition_id=None,
+    token_up=None,
+    token_down=None,
+    market_slug=None,
     collateral="0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
     balance_raw="109160000",
     required_cash="100000000",
@@ -142,7 +142,16 @@ def build_evidence(
     strategy_hashes = verify()
 
     now_ms = _now_ms()
-    # Use the current 5-minute slot
+
+    # Discover current market if not explicitly provided
+    if condition_id is None or token_up is None or token_down is None:
+        from .market_discovery import discover_current
+        _market = discover_current()
+        condition_id = _market["condition_id"]
+        token_up = _market["token_up"]
+        token_down = _market["token_down"]
+        market_slug = _market["market_slug"]
+
     slot_s = int(time.time()) // 300 * 300
     expires_ms = (slot_s + 300) * 1000
 
@@ -325,13 +334,17 @@ def build_evidence(
     return evidence
 
 
-def evidence():
+def evidence(**kw):
     """Runtime evidence callable — produces 14 fresh self-attested proofs.
-    
+
+    Accepts same keyword arguments as build_evidence() for explicit override.
+    When condition_id/token_up/token_down are omitted, discovers current market
+    dynamically via gamma-api.
+
     Returns a dict keyed by check name, each value is a self-attested record
     accepted by SelfAttestingAuthority.
     """
-    return build_evidence()
+    return build_evidence(**kw)
 
 
 if __name__ == "__main__":

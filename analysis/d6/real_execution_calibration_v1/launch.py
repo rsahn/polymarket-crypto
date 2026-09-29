@@ -2,8 +2,11 @@
 Zéro mock sur le chemin production.
 Aucun ordre, signature, approbation ou transaction.
 L'execution s'arrête obligatoirement à HumanArm.confirm() sans saisir CALIBRATE.
+
+Le marché BTC Up/Down 5m est découvert dynamiquement via gamma-api.
+Aucun ancien conditionId, token ID ou slug n'est codé en dur.
 """
-import asyncio, shutil, sys, time
+import asyncio, json, shutil, sys, time
 from pathlib import Path
 from decimal import Decimal
 
@@ -26,15 +29,35 @@ from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_ve
 from analysis.d6.real_execution_calibration_v1.readonly_provider import (
     RepositoryReadOnlyProvider, SDKIdentityBinding,
 )
-from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id
+from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id, digest
 
-# ─── Constantes production ──────────────────────────────────────────────────
+# ─── Constantes production stables ──────────────────────────────────────────
 ACCOUNT = "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
 SIGNER = "0x9348efd557a09e644795c8f114bcf0bef86f203a"
-CONDITION_ID = "0xc2bce096198c6f4c16bcefa91cc16829f8a84bf9e20551b8147d72c8bc6f5433"
-TOKEN_UP = "108356011342159985803141201944072402866666559766806853187422737531686424103314"
-TOKEN_DOWN = "16759512213770205038300183826897320054770267440645397738685477740352888131801"
 COLLATERAL = "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB"
+SDK_VERSION = "0.11.0"
+DPAPI_DIR = Path.home() / "AppData/Local/PolymarketD6L2"
+DIRECTORY = Path("D:/polymarket-real-calibration/preparation")
+CUSTODY_JOURNAL_PATH = ROOT / "analysis/d6/real_execution_calibration_v1/custody_journal.jsonl"
+
+# ─── Marché découvert dynamiquement (plus de hardcodé) ─────────────────────
+def _discover_market():
+    """Découvre le marché BTC Up/Down 5m actif via gamma-api."""
+    from .market_discovery import discover_current
+    return discover_current()
+
+# Découverte au chargement du module
+_MARKET = _discover_market()
+CONDITION_ID = _MARKET["condition_id"]
+TOKEN_UP = _MARKET["token_up"]
+TOKEN_DOWN = _MARKET["token_down"]
+MARKET_SLUG = _MARKET["market_slug"]
+print(f"Marché découvert: {MARKET_SLUG}")
+print(f"  condition_id: {CONDITION_ID}")
+print(f"  token_up:     {TOKEN_UP[:20]}...")
+print(f"  token_down:   {TOKEN_DOWN[:20]}...")
+
+# ─── Baseline ───────────────────────────────────────────────────────────────
 BASELINE_PATH = DIRECTORY / "BASELINE.json"
 if BASELINE_PATH.exists():
     baseline = json.loads(BASELINE_PATH.read_text())
@@ -44,19 +67,14 @@ else:
     raise FileNotFoundError(
         f"Baseline manquant: {BASELINE_PATH}. Exécutez d'abord produce_baseline.py"
     )
-SDK_VERSION = "0.11.0"
-DEPLOYMENT_BLOCK = 94559626
-DPAPI_DIR = Path.home() / "AppData/Local/PolymarketD6L2"
-DIRECTORY = Path("D:/polymarket-real-calibration/preparation")
-CUSTODY_JOURNAL_PATH = ROOT / "analysis/d6/real_execution_calibration_v1/custody_journal.jsonl"
-MARKET_SLUG = "btc-updown-5m-1790516400"
+
 EXPERIMENT_ID = None  # allocated atomically at module init
 
-# ─── 0. Atomically allocate experiment_id (never collides, never overwrites) ──
+# ─── 0. Atomically allocate experiment_id ────────────────────────────────────
 EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="calibration-v1")
 print(f"Allocated experiment_id: {EXPERIMENT_ID}")
 
-# ─── 1. Evidence authority (SelfAttestingAuthority avec verify_client/bindings) ──
+# ─── 1. Evidence authority ──────────────────────────────────────────────────
 authority = SelfAttestingAuthority()
 strategy_hashes = v1_verify()
 
@@ -70,27 +88,24 @@ verifier = EvidenceVerifier(
 )
 
 def evidence():
-    """Fresh evidence callable aligné sur le contexte production."""
+    """Fresh evidence callable — découvre le marché actif à chaque appel."""
     from analysis.d6.real_execution_calibration_v1.evidence import build_evidence
     return build_evidence(
         experiment_id=EXPERIMENT_ID,
-        owner=channel.owner,  # must match ManualCustodyChannel.owner
+        owner=channel.owner,
         baseline_digest=BASELINE_DIGEST,
         account=ACCOUNT,
         signer=SIGNER,
-        condition_id=CONDITION_ID,
-        token_up=TOKEN_UP,
-        token_down=TOKEN_DOWN,
+        # Omitted condition_id/token_up/token_down — découverte dynamique
         collateral=COLLATERAL,
         channel_path=str(channel.directory),
         durable_receipt_id="2e15484d9b7eabf860f797cefb530cd39aaecd9affee4fd9a9449e620dd66b5d",
-        rpc_block=DEPLOYMENT_BLOCK,
     )
 
-# ─── 2. Signal source (BinanceCollector) ────────────────────────────────────
+# ─── 2. Signal source ───────────────────────────────────────────────────────
 signal_source = SignalSource(collector_factory=None)
 
-# ─── 3. Custody production (ManualCustodyChannel + ManualReceiptAuthority) ──
+# ─── 3. Custody production ──────────────────────────────────────────────────
 platform = WindowsProtection()
 channel = ManualCustodyChannel(str(DPAPI_DIR), platform=platform)
 receipt_authority = ManualReceiptAuthority(channel)
@@ -103,7 +118,7 @@ custody_journal = Journal(str(CUSTODY_JOURNAL_PATH), "custody-store")
 custody_store = CustodyStateStore(custody_journal)
 custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_store)
 
-# ─── 4. Client production (ReadOnlyClient + RepositoryReadOnlyProvider) ──────
+# ─── 4. Client production ───────────────────────────────────────────────────
 def build_production_client():
     creds, report = load_existing(ROOT)
     if not creds or not report.get("storage_validated"):
@@ -165,9 +180,11 @@ async def main():
         clock=now_ms,
     )
 
-    # Production book stream (wrapper pour que BookAdapter ait run())
+    # Production book stream — utilise les token IDs dynamiques
     class ProductionBookStream:
-        """Wrapper qui adapte BookStateSource pour BookAdapter."""
+        """Wrapper qui adapte BookStateSource pour BookAdapter.
+        Utilise les token IDs du marché découvert dynamiquement.
+        """
         def __init__(self, clock_fn):
             self._source = BookStateSource(clock=clock_fn)
             self._source.connect(MARKET_SLUG, (TOKEN_UP, TOKEN_DOWN), 1)
@@ -210,7 +227,7 @@ async def main():
     # Baseline self-attested depuis le fichier
     baseline = json.loads(BASELINE_PATH.read_text())
 
-    # PreparedSession avec toutes les dépendances production
+    # PreparedSession avec token IDs dynamiques
     session = PreparedSession(
         directory=DIRECTORY,
         experiment_id=EXPERIMENT_ID,
@@ -246,13 +263,10 @@ async def main():
         return
 
     def pre_arm_summary(report, experiment_id, log_path, text_path):
-        """Affiche le résumé PRE_ARM_READY juste avant HumanArm.confirm().
-        Les clés correspondent aux REQUIRED checks de preflight.py.
-        """
+        """Affiche le résumé PRE_ARM_READY juste avant HumanArm.confirm()."""
         pre = report['preflight'] if 'preflight' in report else report
         checks = pre.get('checks', {})
         blockers = pre.get('blockers', [])
-        # Mapper les noms REQUIRED du preflight vers les noms d'affichage
         ws = checks.get('ws_healthy', 'UNKNOWN')
         kill = checks.get('kill_switch_tested', 'UNKNOWN')
         reco = checks.get('reconciliation_tested', 'UNKNOWN')

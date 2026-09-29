@@ -20,7 +20,7 @@ _REAL_FEE_SOURCE_DIGEST = "dd8d18fca897e664583a93944b379435e6f70e84f4190c39d669b
 _REAL_AUDIT_DIGEST = "7c99c0b364054373f92b89105e8e99d125289c9f06b0b65cb0d792d3fedbc1b7"
 
 
-@dataclass(frozen=True)
+@dataclass
 class LiveBindingConditions:
     """Ensemble de toutes les conditions pour submit_allowed."""
     # Baseline
