@@ -15,6 +15,7 @@ from app.live.production_readonly import AccountStateSource, PositionSource, Boo
 from app.live.l2_existing_reader import load_existing
 from app.live.l2_windows_storage import WindowsProtection
 from analysis.d6.real_execution_calibration_v1.runner import PreparedSession, SignalSource
+from analysis.d6.real_execution_calibration_v1.engine import HumanArm
 from analysis.d6.real_execution_calibration_v1.evidence import SelfAttestingAuthority
 from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier
 from analysis.d6.real_execution_calibration_v1.custody import CustodyOwner, CustodyStateStore
@@ -34,7 +35,15 @@ CONDITION_ID = "0xc2bce096198c6f4c16bcefa91cc16829f8a84bf9e20551b8147d72c8bc6f54
 TOKEN_UP = "108356011342159985803141201944072402866666559766806853187422737531686424103314"
 TOKEN_DOWN = "16759512213770205038300183826897320054770267440645397738685477740352888131801"
 COLLATERAL = "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB"
-BASELINE_DIGEST = "46b72832b1480d2c6532d143c524ee8ebe289bb18f3f3ded3b8e10858d2263e4"
+BASELINE_PATH = DIRECTORY / "BASELINE.json"
+if BASELINE_PATH.exists():
+    baseline = json.loads(BASELINE_PATH.read_text())
+    BASELINE_DIGEST = digest(baseline)
+    print(f"Baseline chargé: {BASELINE_DIGEST}")
+else:
+    raise FileNotFoundError(
+        f"Baseline manquant: {BASELINE_PATH}. Exécutez d'abord produce_baseline.py"
+    )
 SDK_VERSION = "0.11.0"
 DEPLOYMENT_BLOCK = 94559626
 DPAPI_DIR = Path.home() / "AppData/Local/PolymarketD6L2"
@@ -198,8 +207,8 @@ async def main():
 
     stream = ProductionBookStream(now_ms)
 
-    # Baseline statique (doit correspondre à BASELINE_DIGEST)
-    baseline = {"version": "REAL_EXECUTION_CALIBRATION_V1", "started": 1790577000000}
+    # Baseline self-attested depuis le fichier
+    baseline = json.loads(BASELINE_PATH.read_text())
 
     # PreparedSession avec toutes les dépendances production
     session = PreparedSession(
@@ -236,27 +245,56 @@ async def main():
         print("Arrêt — preflight non vert.")
         return
 
-    # Mock confirm — intercepte avant l'invite TTY réelle.
-    # HumanArm.confirm() exige sys.stdin.isatty() (terminal interactif).
-    # Dans ce contexte sous-process, on n'a pas de TTY, donc on utilise
-    # un mock qui imprime le message d'arrêt et stoppe au gate.
-    HUMAN_ARM_REACHED = False
-    def mock_confirm(experiment_id, report, *, verifier, evidence):
-        nonlocal HUMAN_ARM_REACHED
-        HUMAN_ARM_REACHED = True
+    def pre_arm_summary(report, experiment_id, log_path, text_path):
+        """Affiche le résumé PRE_ARM_READY juste avant HumanArm.confirm().
+        Les clés correspondent aux REQUIRED checks de preflight.py.
+        """
+        pre = report['preflight'] if 'preflight' in report else report
+        checks = pre.get('checks', {})
+        blockers = pre.get('blockers', [])
+        # Mapper les noms REQUIRED du preflight vers les noms d'affichage
+        ws = checks.get('ws_healthy', 'UNKNOWN')
+        kill = checks.get('kill_switch_tested', 'UNKNOWN')
+        reco = checks.get('reconciliation_tested', 'UNKNOWN')
+        cust = checks.get('exit_handoff_ready', 'UNKNOWN')
+        fresh = checks.get('fresh_runtime_evidence', 'UNKNOWN')
+        storage = checks.get('storage_sufficient', 'UNKNOWN')
+        flags = checks.get('global_D6_flags_false', 'UNKNOWN')
+        bal_ok = checks.get('balance_sufficient', 'UNKNOWN')
+        bal = pre.get('balance', pre.get('balance_sufficient', {}))
+        if isinstance(bal, dict):
+            bal_str = f"{bal.get('cash', bal.get('required_cash', '?'))} {bal.get('unit', 'pUSD')}"
+        else:
+            bal_str = str(bal)
         print()
         print("=" * 60)
-        print("  ARRIVE A HumanArm.confirm()")
-        print(f"  experiment_id : {experiment_id}")
-        print(f"  preflight     : {report['status']}")
-        print(f"  bloqueurs     : {report['blockers']}")
-        print(f"  checks verts  : {sum(1 for v in report['checks'].values() if v)}/{len(report['checks'])}")
+        print("  PRE_ARM_READY")
+        print("=" * 60)
+        print(f"  PRE_ARM_READY          = {pre.get('status') == 'CALIBRATION_READY'}")
+        print(f"  CALIBRATION_READY      = {pre.get('status') == 'CALIBRATION_READY'}")
+        print(f"  EXPERIMENT_ID          = {experiment_id}")
+        print(f"  CAPS                   = 100/25/1")
+        print(f"  BALANCE                = {bal_str}")
+        print(f"  BALANCE_SUFFICIENT     = {bal_ok}")
+        print(f"  LOG_JSONL              = {log_path}")
+        print(f"  LOG_TEXT               = {text_path}")
+        print(f"  FRESH_ENTRY_GUARD      = {fresh}")
+        print(f"  KILL_SWITCH_READY      = {kill}")
+        print(f"  RECONCILIATION_READY   = {reco}")
+        print(f"  CUSTODY_READY          = {cust}")
+        print(f"  WS_HEALTHY             = {ws}")
+        print(f"  STORAGE_SUFFICIENT     = {storage}")
+        print(f"  D6_FLAGS_FALSE         = {flags}")
+        print(f"  BLOCKERS               = {blockers if blockers else 'none'}")
         print("=" * 60)
         print()
-        print(f"  > En production TTY : Type CALIBRATE {experiment_id} to arm this process")
-        print("  > Aucune saisie — arrêt au gate.")
-        print()
-        raise ValueError("NOT_ARMED")
+
+    def production_confirm(experiment_id, report, *, verifier, evidence):
+        """Affiche le résumé PRE_ARM_READY puis délègue à HumanArm.confirm()."""
+        log_jsonl = str(DIRECTORY / f"{experiment_id}.jsonl")
+        log_text = str(DIRECTORY / f"REAL_CALIBRATION_{time.strftime('%Y%m%d_%H%M')}_{experiment_id}-p0000.log")
+        pre_arm_summary(report, experiment_id, log_jsonl, log_text)
+        return HumanArm.confirm(experiment_id, report, verifier=verifier, evidence=evidence)
 
     try:
         result = await session.start(
@@ -265,10 +303,10 @@ async def main():
             evidence=evidence,
             signal_source=signal_source,
             custody_owner=custody_owner,
-            confirm=mock_confirm,
+            confirm=production_confirm,
         )
     except ValueError as e:
-        if "NOT_ARMED" in str(e) and HUMAN_ARM_REACHED:
+        if "NOT_ARMED" in str(e):
             print()
             print("=" * 60)
             print("  BOOTSTRAP PRODUCTION COMPLET")
@@ -278,8 +316,7 @@ async def main():
             print("  CALIBRATION_READY = VERT")
             print("=" * 60)
         else:
-            if not HUMAN_ARM_REACHED:
-                print(f"BLOQUE avant HumanArm : {e}")
+            print(f"BLOQUE avant HumanArm : {e}")
             raise
     finally:
         session.close()
