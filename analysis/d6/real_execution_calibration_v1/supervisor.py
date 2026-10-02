@@ -23,15 +23,30 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
             for task in tasks:
                 if task.done():
                     task.result();raise RuntimeError('BACKGROUND_TASK_ENDED')
-            if c.v1['errors']:raise RuntimeError('STRATEGY_TASK_FAILED')
             reports.hourly()
             if time.monotonic()-c.arm.started_monotonic>=259200:c.ledger.halt('EXPERIMENT_EXPIRED')
             if c.kill_path.exists() and not c.ledger.stop:c.ledger.halt('MANUAL_KILL')
             if c.ledger.attempts>=4 and not c.busy:c.ledger.halt('ENTRY_ATTEMPT_LIMIT')
             if c.ledger.stop_new_entries and not c.ledger.stop and not c.busy:
-                c.ledger.emit('RECOVERY_WAIT',{'reasons':c.ledger.reasons.copy(),'stop_new_entries':True,'waiting_for_reconciliation':True})
+                # Recovery mode: wait for full requalification before clearing V1 transient errors
+                qualified=(
+                    c.ledger.reconciled
+                    and c.ledger.exposure_known
+                    and not any(c.ledger.positions.values())
+                    and c.ledger.active is None
+                    and c.ledger.account_qualified
+                    and c._post_reconnect_verified
+                )
+                if qualified:
+                    _TRANSIENT_TYPES={'ValueError','KeyError'}
+                    c.v1['errors']=[e for e in c.v1['errors'] if e not in _TRANSIENT_TYPES]
+                    c.ledger.stop_new_entries=False
+                    c.ledger.emit('RECOVERY_COMPLETE',{'cleared_transient_errors':True,'remaining_v1_errors':c.v1['errors'].copy()})
+                else:
+                    c.ledger.emit('RECOVERY_WAIT',{'reasons':c.ledger.reasons.copy(),'stop_new_entries':True,'waiting_for_reconciliation':True,'qualified':qualified})
                 await asyncio.sleep(1)
                 continue
+            if c.v1['errors']:raise RuntimeError('STRATEGY_TASK_FAILED')
             if c.ledger.stop and not c.busy:
                 reason=c.ledger.reasons[-1];break
             await asyncio.sleep(.1)
