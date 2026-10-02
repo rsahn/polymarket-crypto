@@ -163,7 +163,17 @@ class Coordinator:
    self.ledger.emit('OPPORTUNITY_COMPLETE',{'opportunity_id':op})
    if any(self.ledger.positions.values()):self.ledger.halt('RESIDUAL_REQUIRES_OPERATOR_HANDOFF')
   except BaseException as exc:
-   self.ledger.halt('CALIBRATION_EXCEPTION',{'exception_type':type(exc).__name__,'exposure_management':'STOP_ENTRIES_KEEP_JOURNAL_AND_ACCOUNT_MONITOR; operator handoff required for residual/unknown exposure'})
+   _TRANSIENT_PATTERNS=('NO_SHADOW_ENTRY_DEPTH','NO_EXIT_DEPTH','BOOK_OR_WS_INVALID','BOOK_CLOCK_INVALID','DEPTH_INVALID','DUPLICATE_DEPTH_LEVEL','UNSORTED_DEPTH','EMPTY_OR_CROSSED_BOOK','BOOK_RECORD_BOUND','ENTRIES_STOPPED_OR_UNRECONCILED','PRE_ENTRY_ACCOUNT_UNQUALIFIED','FEE_MARKET_MISMATCH','EXIT_IDENTITY_CHANGED')
+   exc_name=type(exc).__name__
+   exc_msg=str(exc)
+   is_transient=any(p in exc_msg for p in _TRANSIENT_PATTERNS) or exc_name in ('ValueError','KeyError')
+   if is_transient:
+    self.ledger.stop_new_entries=True
+    self.ledger.reconciled=False
+    self.ledger.reasons.append('TRANSIENT_'+exc_name)
+    self.ledger.emit('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'TRANSIENT','message':exc_msg,'exposure_management':'STOP_NEW_ENTRIES_ONLY; recovery will re-enable if reconciled'})
+   else:
+    self.ledger.halt('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'FATAL','message':exc_msg,'exposure_management':'STOP_ENTRIES_KEEP_JOURNAL_AND_ACCOUNT_MONITOR; operator handoff required for residual/unknown exposure'})
   finally:
    if op in self.ledger.shadows and op in self.ledger.trades:self.comparisons.append({'opportunity_id':op,'shadow_hash':self.ledger.shadows[op][0],'entry':self.measurements.get(op+':entry',{}),'exit':self.measurements.get(op+':exit'),'residual_at_observation':{k:str(v) for k,v in self.ledger.positions.items() if v},'exposure_known':self.ledger.reconciled})
    self.signal_context.pop(signal_ts,None);self.busy=False

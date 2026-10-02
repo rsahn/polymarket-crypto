@@ -3,6 +3,8 @@ import asyncio,time
 from .reports import Reports
 from .custody import CustodyOwner
 
+TARGET_RUNTIME_SECONDS=259200
+
 def stop_memory(c,reason):
     c.ledger.stop=True;c.ledger.reconciled=False;c.ledger.reasons.append(reason)
     try:c.ledger.emit('STOP',{'reason':reason})
@@ -23,9 +25,13 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
                     task.result();raise RuntimeError('BACKGROUND_TASK_ENDED')
             if c.v1['errors']:raise RuntimeError('STRATEGY_TASK_FAILED')
             reports.hourly()
-            if time.monotonic()-c.arm.started_monotonic>=86400:c.ledger.halt('EXPERIMENT_EXPIRED')
+            if time.monotonic()-c.arm.started_monotonic>=259200:c.ledger.halt('EXPERIMENT_EXPIRED')
             if c.kill_path.exists() and not c.ledger.stop:c.ledger.halt('MANUAL_KILL')
             if c.ledger.attempts>=4 and not c.busy:c.ledger.halt('ENTRY_ATTEMPT_LIMIT')
+            if c.ledger.stop_new_entries and not c.ledger.stop and not c.busy:
+                c.ledger.emit('RECOVERY_WAIT',{'reasons':c.ledger.reasons.copy(),'stop_new_entries':True,'waiting_for_reconciliation':True})
+                await asyncio.sleep(1)
+                continue
             if c.ledger.stop and not c.busy:
                 reason=c.ledger.reasons[-1];break
             await asyncio.sleep(.1)

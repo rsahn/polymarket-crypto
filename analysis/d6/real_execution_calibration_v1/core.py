@@ -112,7 +112,8 @@ class CalibrationLedger:
  def emit(self,kind,payload):
   try:return self.journal.append(kind,payload)
   except BaseException:
-   self.stop=True;self.reconciled=False;self.reasons.append('JOURNAL_FAILURE');raise
+   self.stop=True;self.reconciled=False
+   if 'JOURNAL_FAILURE' not in self.reasons:self.reasons.append('JOURNAL_FAILURE')
  def halt(self,reason,details=None):
   self.stop=True
   if reason not in ('MANUAL_KILL','DISK_LOW','EXPERIMENT_EXPIRED','RESIDUAL_REQUIRES_OPERATOR_HANDOFF'):self.reconciled=False
