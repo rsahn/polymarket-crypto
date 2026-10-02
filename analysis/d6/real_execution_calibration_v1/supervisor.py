@@ -17,12 +17,24 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
     try:
         c.guard()
         reports=Reports(report_directory,c.ledger,c)
-        tasks=[asyncio.create_task(signal_source.run(c.on_btc,c.on_status)),
-               asyncio.create_task(book_source.run(c.on_status)),asyncio.create_task(c.monitor_account())]
+        tasks=[asyncio.create_task(signal_source.run(c.on_btc,c.on_status),name='BTC_SIGNAL_SOURCE'),
+               asyncio.create_task(book_source.run(c.on_status),name='POLYMARKET_BOOK_SOURCE'),
+               asyncio.create_task(c.monitor_account(),name='ACCOUNT_MONITOR')]
+        _TASK_NAMES={t.get_name() for t in tasks}
         while True:
             for task in tasks:
                 if task.done():
-                    task.result();raise RuntimeError('BACKGROUND_TASK_ENDED')
+                    try:
+                        task.result()
+                    except BaseException as exc:
+                        c.ledger.emit('BACKGROUND_TASK_ENDED',{
+                            'task_name':task.get_name(),
+                            'exception_type':type(exc).__name__,
+                            'message_redacted':str(exc)[:200],
+                            'transient':False,
+                            'restart_attempted':False,
+                        })
+                    raise RuntimeError('BACKGROUND_TASK_ENDED:'+task.get_name())
             reports.hourly()
             if time.monotonic()-c.arm.started_monotonic>=259200:c.ledger.halt('EXPERIMENT_EXPIRED')
             if c.kill_path.exists() and not c.ledger.stop:c.ledger.halt('MANUAL_KILL')
