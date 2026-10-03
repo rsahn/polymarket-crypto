@@ -26,7 +26,11 @@ class Reports:
   def distribution(key):
    x=sorted(float(c[key]) for c in comparisons if c.get(key) is not None)
    return {'n':len(x),'min':min(x) if x else None,'max':max(x) if x else None,'median':x[len(x)//2] if x else None}
-  return {**self.ledger.report(),'runtime_seconds':self.clock()-self.started,'opportunities':len(self.ledger.shadows),'shadow_vs_real':comparisons,'slippage_distribution':distribution('slippage_bps'),'fill_ratio_distribution':distribution('fill_ratio'),'ack_latency_ms':[c['actual_latency']['ack_ms'] for c in comparisons],'fee_evidence':'Retained normalized and allowed raw FILL_OBSERVATION / ACK_RESPONSE; documented, reported, inferred and locally calculated fields are distinct','all_reconciliation_results':'Immutable journal RECONCILIATION_OBSERVATION / RECONCILED / STOP events','all_anomalies':self.ledger.reasons.copy(),'kill_switch_state':self.coordinator.kill_path.exists(),'stop_reason':reason,'edge_proven':False}
+  metrics=self.coordinator.v1.get('diagnostics',lambda:{})()
+  metrics.update(getattr(self.coordinator,'runtime_counts',{}))
+  report=self.ledger.report()
+  metrics.update(ORDER_ATTEMPTS=report['orders_attempted'],ACKS=report['orders_accepted'],FILLS=report['fills'],NO_FILLS=report['no_fills'])
+  return {**report,'runtime_diagnostics':metrics,'runtime_seconds':self.clock()-self.started,'opportunities':len(self.ledger.shadows),'shadow_vs_real':comparisons,'slippage_distribution':distribution('slippage_bps'),'fill_ratio_distribution':distribution('fill_ratio'),'ack_latency_ms':[c['actual_latency']['ack_ms'] for c in comparisons],'fee_evidence':'Retained normalized and allowed raw FILL_OBSERVATION / ACK_RESPONSE; documented, reported, inferred and locally calculated fields are distinct','all_reconciliation_results':'Immutable journal RECONCILIATION_OBSERVATION / RECONCILED / STOP events','all_anomalies':self.ledger.reasons.copy(),'kill_switch_state':self.coordinator.kill_path.exists(),'stop_reason':reason,'edge_proven':False}
  def hourly(self):
   h=int((self.clock()-self.started)//3600)
   if h<1 or h<=self.hour or self.finalized:return False

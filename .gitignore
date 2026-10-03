@@ -1,6 +1,9 @@
 # Local databases and large research snapshots
 *.db
 *.db-shm
+
+# Local temporary directories for the offline qualification harness
+.qualification-tmp/
 *.db-wal
 *.db-journal
 *.sqlite

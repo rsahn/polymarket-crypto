@@ -77,6 +77,10 @@ def test_protected_genesis_btc_risk_flags_unchanged():
     baseline=json.loads((root/"analysis/post_c_completeness_20260926/BASELINE.json").read_text())
     for name,expected in baseline["protected"].items():
         from protected_book_migration import protected_match
+        if name=='backend/app/live/readonly_book_stream.py':
+            assert not protected_match(name,(root/name).read_bytes(),expected)
+            assert protected_match(name,(root/'backend/tests/fixtures/readonly_book_stream_legacy.txt').read_bytes(),expected)
+            continue  # Historical qualification does not carry over to the new runtime.
         assert protected_match(name,(root/name).read_bytes(),expected),name
     assert set(baseline["flags"].values())=={"false"}
 

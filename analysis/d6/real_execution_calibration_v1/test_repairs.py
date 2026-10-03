@@ -35,14 +35,18 @@ def test_complete_injected_composition_without_order_calls(tmp_path):
         e['account_evidence_adapter_qualified']['source_digest']=digest(e['account_evidence_adapter_qualified']['payload']);a.seal(e['account_evidence_adapter_qualified'])
         e['exit_handoff_ready']['payload']['owner']='owner';e['exit_handoff_ready']['source_digest']=digest(e['exit_handoff_ready']['payload']);a.seal(e['exit_handoff_ready'])
         class Stream:
-            def read(self):return {'available':True}
-            async def run(self):await asyncio.Event().wait()
+            tokens=('u','d');generation=1
+            def read(self):return {'available':True,'fresh':True,'book_synced':True,'generation':1}
+            async def run(self,*,rest_seed_coro=None):await asyncio.Event().wait()
         class Channel:
             async def accept(self,req):return a.seal(dict(**req,owner='owner',receipt_id='r',accepted_ms=1000))
         owner=CustodyOwner(Channel(),ReceiptVerifier(a,'owner',clock=lambda:1000))
         s=PreparedSession(directory=tmp_path,experiment_id='experiment',account='account',starting_cash='100',account_reader=None,position_reader=None,stream=Stream(),market='m',tokens={'UP':'u','DOWN':'d'},clock=lambda:1000,collateral='pUSD',baseline=base)
         class Signal:
             async def run(self,*args):raise RuntimeError('fixture_end_no_order')
+        async def monitor_fixture():await asyncio.Event().wait()
+        s.coordinator.monitor_account=monitor_fixture
+        s.ledger.reconciled=True
         arm=types.SimpleNamespace(nonce='fixture',started_monotonic=time.monotonic(),check=lambda *a:None)
         try:
             with pytest.raises(RuntimeError,match='fixture_end'):await s.start(client=a.client,verifier=v,evidence=lambda:e,signal_source=Signal(),custody_owner=owner,confirm=lambda *a,**k:arm)
@@ -126,13 +130,13 @@ def test_book_initialization_and_latched_loss():
         class Stream:
             healthy=False
             def read(self):return {'available':self.healthy}
-            async def run(self):await asyncio.Event().wait()
+            async def run(self,*,rest_seed_coro=None):await asyncio.Event().wait()
         s=Stream();b=BookAdapter(s,market='m',tokens={'UP':'u','DOWN':'d'});events=[]
         task=asyncio.create_task(b.run(events.append,initial_timeout=.5))
         await asyncio.sleep(.03);assert events==[] and b.state=='INITIALIZING'
         s.healthy=True;await b.wait_ready(.2);assert b.state=='SYNCHRONIZED'
         s.healthy=False;await asyncio.sleep(.04);s.healthy=True;await asyncio.sleep(.03)
-        assert b.state=='DEGRADED' and 'WS_DISCONNECT' in events
+        assert b.state in ('RESYNCHRONIZING','SYNCHRONIZED') and 'WS_DISCONNECT' in events and 'WS_RECONNECTING' in events
         task.cancel();await asyncio.gather(task,return_exceptions=True)
     asyncio.run(case())
 

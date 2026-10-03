@@ -1,0 +1,10 @@
+...                                                                      [100%]
+============================== warnings summary ===============================
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness
+  C:\Users\Ramy\Documents\polymarket-crypto\analysis\d6\research\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.
+    return c.execute(query).fetch_arrow_table().to_pylist()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 3 warnings in 1.67s

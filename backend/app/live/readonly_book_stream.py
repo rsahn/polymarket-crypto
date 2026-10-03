@@ -121,7 +121,8 @@ class StreamBook(BookStateSource):
                     token=change['asset_id']
                     if token not in self.tokens:raise ValueError('TOKEN_IDENTITY')
                     if token not in self.depth:
-                        self.depth[token]={'bids':{},'asks':{}}
+                        # A delta cannot establish an initial full snapshot.
+                        continue
                     side={'BUY':'bids','SELL':'asks'}[change['side']]
                     p,q=number(change['price']),number(change['size'])
                     if not 0<p<1 or q<0:raise ValueError('DELTA_LEVEL')
@@ -219,9 +220,14 @@ class StreamBook(BookStateSource):
                 'last_frame_received_ms':self.last_frame_received_ms,'last_pong_received_ms':self.last_pong_received_ms,
                 'freshness_limit_ms':BOOK_MAX_AGE_MS,'no_new_wire_event_over_limit':self.last_wire_received_ms is None or self.clock()-self.last_wire_received_ms>BOOK_MAX_AGE_MS}
 
-    async def run(self,*,connect_factory=None,rest_seed_coro=None):
-        if getattr(self,"_ws_running",False):
-            return
+    async def run(self,*,connect_factory=None,rest_seed_coro=None,reconnect=True):
+        if getattr(self,'_run_active',False):raise RuntimeError('BOOK_STREAM_ALREADY_RUNNING')
+        self._run_active=True
+        try:await self._run(connect_factory=connect_factory,rest_seed_coro=rest_seed_coro,reconnect=reconnect)
+        finally:
+            self._run_active=False;self._ws_running=False;self.disconnect()
+
+    async def _run(self,*,connect_factory=None,rest_seed_coro=None,reconnect=True):
         self._ws_running=True
         from websockets.asyncio.client import connect
         class FixedConnect(connect):
@@ -288,6 +294,7 @@ class StreamBook(BookStateSource):
                 else:category='PARSER_OR_PROTOCOL_ERROR'
                 self.diagnostics['exception_category']=category
                 self.failure=self.failure or category
+                if reconnect and category=='PARSER_OR_PROTOCOL_ERROR':raise
             else:
                 self.failure=self.failure or 'MARKET_EXPIRED'
                 self._ws_running=False
@@ -297,7 +304,7 @@ class StreamBook(BookStateSource):
                 self.disconnect()
 
             # Exponential backoff before reconnect
-            if self.clock()>=self.expiry:
+            if not reconnect or self.clock()>=self.expiry:
                 break
             await asyncio.sleep(min(backoff,30))
             backoff=min(backoff*2,30)

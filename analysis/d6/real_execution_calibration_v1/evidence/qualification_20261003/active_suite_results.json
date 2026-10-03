@@ -1,0 +1,110 @@
+[
+  {
+    "group": "analysis/d5/auditor_next",
+    "exit": 0,
+    "report": "active_group_0.txt",
+    "tail": "......................................                           [100%]\n38 passed, 8 subtests passed in 11.17s"
+  },
+  {
+    "group": "analysis/d51/depth_cache_candidate_not_adopted",
+    "exit": 0,
+    "report": "active_group_1.txt",
+    "tail": "...                                                                      [100%]\n3 passed in 0.63s"
+  },
+  {
+    "group": "analysis/d51/exact_depth_cache_candidate",
+    "exit": 0,
+    "report": "active_group_2.txt",
+    "tail": "..                                                                       [100%]\n2 passed in 0.16s"
+  },
+  {
+    "group": "analysis/d51/latency_tools",
+    "exit": 0,
+    "report": "active_group_3.txt",
+    "tail": "..                                                                       [100%]\n2 passed in 0.16s"
+  },
+  {
+    "group": "analysis/d51/native_json_candidate",
+    "exit": 0,
+    "report": "active_group_4.txt",
+    "tail": ".........                               [100%]\n9 passed, 33 subtests passed in 0.22s"
+  },
+  {
+    "group": "analysis/d51/side_projection_candidate",
+    "exit": 0,
+    "report": "active_group_5.txt",
+    "tail": ".                                                                        [100%]\n1 passed in 0.25s"
+  },
+  {
+    "group": "analysis/d51",
+    "exit": 0,
+    "report": "active_group_6.txt",
+    "tail": ".                                                                        [100%]\n1 passed in 0.70s"
+  },
+  {
+    "group": "analysis/d6/causal_capture_24h_v1",
+    "exit": 0,
+    "report": "active_group_7.txt",
+    "tail": "......................                                                   [100%]\n22 passed in 2.59s"
+  },
+  {
+    "group": "analysis/d6/paper_runtime",
+    "exit": 0,
+    "report": "active_group_8.txt",
+    "tail": "......................                                                   [100%]\n22 passed in 0.75s"
+  },
+  {
+    "group": "analysis/d6/pipeline",
+    "exit": 0,
+    "report": "active_group_9.txt",
+    "tail": "....                                                                     [100%]\n4 passed in 2.93s"
+  },
+  {
+    "group": "analysis/d6/prospective_24h_v1",
+    "exit": 0,
+    "report": "active_group_10.txt",
+    "tail": "..........                                                               [100%]\n10 passed in 0.28s"
+  },
+  {
+    "group": "analysis/d6/prospective_v1",
+    "exit": 0,
+    "report": "active_group_11.txt",
+    "tail": "............................................ [ 37%]\n.................................................................. [ 94%]\n.......                                                            [100%]\n117 passed, 40 subtests passed in 12.08s"
+  },
+  {
+    "group": "analysis/d6/real_execution_calibration_v1",
+    "exit": 0,
+    "report": "active_group_12.txt",
+    "tail": "........................................................................ [ 36%]\n........................................................................ [ 48%]\n........................................................................ [ 60%]\n........................................................................ [ 72%]\n........................................................................ [ 84%]\n........................................................................ [ 96%]\n......................                                                   [100%]\n598 passed in 35.07s"
+  },
+  {
+    "group": "analysis/d6/research",
+    "exit": 0,
+    "report": "active_group_13.txt",
+    "tail": "analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\nanalysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\nanalysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\n  C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\research\\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.\n    return c.execute(query).fetch_arrow_table().to_pylist()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 3 warnings in 1.67s"
+  },
+  {
+    "group": "analysis/d6/tests",
+    "exit": 0,
+    "report": "active_group_14.txt",
+    "tail": "...................................                             [100%]\n35 passed, 9 subtests passed in 0.17s"
+  },
+  {
+    "group": "analysis",
+    "exit": 0,
+    "report": "active_group_15.txt",
+    "tail": "............                                                             [100%]\n12 passed in 0.90s"
+  },
+  {
+    "group": "backend/tests",
+    "exit": 0,
+    "report": "active_group_16.txt",
+    "tail": "backend/tests/test_ws_recovery.py::test_expired_market_does_not_connect PASSED [ 99%]\nbackend/tests/test_ws_recovery.py::test_cancel_during_backoff_never_reconnects PASSED [ 99%]\nbackend/tests/test_ws_recovery.py::test_invalid_policy_rejected[kwargs0] PASSED [ 99%]\nbackend/tests/test_ws_recovery.py::test_invalid_policy_rejected[kwargs1] PASSED [ 99%]\nbackend/tests/test_ws_recovery.py::test_invalid_policy_rejected[kwargs2] PASSED [ 99%]\nbackend/tests/test_ws_recovery.py::test_invalid_policy_rejected[kwargs3] PASSED [100%]\n\n=================== 755 passed, 8 subtests passed in 27.01s ==================="
+  },
+  {
+    "group": "tests",
+    "exit": 0,
+    "report": "active_group_17.txt",
+    "tail": "........                                                                 [100%]\n8 passed in 0.36s"
+  }
+]

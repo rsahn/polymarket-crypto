@@ -154,19 +154,22 @@ class BookAdapter:
 
     async def rotate(self,new_slug,new_condition,new_tokens,new_expiry,*,rest_seed_coro=None):
         """Rotate to a new market when the current one expires."""
+        if len(new_tokens)!=2 or len(set(new_tokens))!=2 or new_expiry<=self.clock():raise ValueError('ROTATION_IDENTITY_OR_EXPIRY')
         await self.shutdown()
-        from .readonly_book_stream import StreamBook
+        from app.live.readonly_book_stream import StreamBook
         self.stream=StreamBook(slug=new_slug,condition=new_condition,tokens=new_tokens,expiry=new_expiry,clock=self.stream.clock)
         self.state='INITIALIZING';self.ready=asyncio.Event();self.owned_tasks=set()
         self.tokens=dict(zip(('UP','DOWN'),new_tokens))
         self.market=new_condition
         self.stream.connect(new_slug,new_tokens,1)
         if rest_seed_coro is not None:
-            try:await rest_seed_coro()
-            except Exception:pass
+            await rest_seed_coro()
 
     async def shutdown(self):
-        for task in self.owned_tasks:task.cancel()
-        while self.owned_tasks:
-            try:await asyncio.wait(set(self.owned_tasks),timeout=.1)
-            except asyncio.CancelledError:continue
+        tasks=set(self.owned_tasks)
+        for task in tasks:task.cancel()
+        if tasks:
+            done,pending=await asyncio.wait(tasks,timeout=.2)
+            if pending:raise TimeoutError('BOOK_SHUTDOWN_TASKS_PENDING')
+            for task in done:
+                if not task.cancelled():task.result()

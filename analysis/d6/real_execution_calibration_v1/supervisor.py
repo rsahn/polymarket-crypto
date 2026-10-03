@@ -2,11 +2,13 @@
 import asyncio,time
 from .reports import Reports
 from .custody import CustodyOwner
+from .engine import transient_availability
 
 TARGET_RUNTIME_SECONDS=259200
 
 def stop_memory(c,reason):
     c.ledger.stop=True;c.ledger.reconciled=False;c.ledger.reasons.append(reason)
+    if hasattr(c.ledger,'journal_failure'):return
     try:c.ledger.emit('STOP',{'reason':reason})
     except Exception:pass
 
@@ -17,48 +19,45 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
     try:
         c.guard()
         reports=Reports(report_directory,c.ledger,c)
-        tasks=[asyncio.create_task(signal_source.run(c.on_btc,c.on_status),name='BTC_SIGNAL_SOURCE'),
-               asyncio.create_task(book_source.run(c.on_status),name='POLYMARKET_BOOK_SOURCE'),
-               asyncio.create_task(c.monitor_account(),name='ACCOUNT_MONITOR')]
-        _TASK_NAMES={t.get_name() for t in tasks}
+        factories=[lambda:signal_source.run(c.on_btc,c.on_status),lambda:book_source.run(c.on_status),c.monitor_account]
+        names=['BTC_SIGNAL_SOURCE','POLYMARKET_BOOK_SOURCE','ACCOUNT_MONITOR'];restarts=[0,0,0]
+        tasks=[asyncio.create_task(factory(),name=name) for factory,name in zip(factories,names)]
         while True:
-            for task in tasks:
+            for i,task in enumerate(tasks):
                 if task.done():
                     try:
                         task.result()
                     except BaseException as exc:
-                        c.ledger.emit('BACKGROUND_TASK_ENDED',{
-                            'task_name':task.get_name(),
-                            'exception_type':type(exc).__name__,
-                            'message_redacted':str(exc)[:200],
-                            'transient':False,
-                            'restart_attempted':False,
-                        })
+                        retry=transient_availability(exc) and not c.ledger.stop and not c.busy and c.ledger.active is None and not any(c.ledger.positions.values()) and restarts[i]<3
+                        try:
+                            c.ledger.emit('BACKGROUND_TASK_ENDED',{
+                                'task_name':task.get_name(),
+                                'exception_type':type(exc).__name__,
+                                'message_redacted':'[REDACTED]',
+                                'transient':retry,
+                                'restart_attempted':retry,
+                            })
+                        except BaseException:pass  # ledger retains the independent journal failure
+                        if retry and not c.ledger.stop:
+                            c.ledger.stop_new_entries=True;c.ledger.reconciled=False
+                            c.on_status('BTC_RECONNECT' if i==0 else 'WS_DISCONNECT')
+                            restarts[i]+=1
+                            tasks[i]=asyncio.create_task(factories[i](),name=names[i])
+                            continue
+                        raise
                     raise RuntimeError('BACKGROUND_TASK_ENDED:'+task.get_name())
             reports.hourly()
-            if time.monotonic()-c.arm.started_monotonic>=259200:c.ledger.halt('EXPERIMENT_EXPIRED')
+            if time.monotonic()-c.arm.started_monotonic>=TARGET_RUNTIME_SECONDS:c.ledger.halt('EXPERIMENT_EXPIRED')
             if c.kill_path.exists() and not c.ledger.stop:c.ledger.halt('MANUAL_KILL')
             if c.ledger.attempts>=4 and not c.busy:c.ledger.halt('ENTRY_ATTEMPT_LIMIT')
             if c.ledger.stop_new_entries and not c.ledger.stop and not c.busy:
-                # Recovery mode: wait for full requalification before clearing V1 transient errors
-                qualified=(
-                    c.ledger.reconciled
-                    and c.ledger.exposure_known
-                    and not any(c.ledger.positions.values())
-                    and c.ledger.active is None
-                    and c.ledger.account_qualified
-                    and c._post_reconnect_verified
-                )
-                if qualified:
-                    _TRANSIENT_TYPES={'ValueError','KeyError'}
-                    c.v1['errors']=[e for e in c.v1['errors'] if e not in _TRANSIENT_TYPES]
-                    c.ledger.stop_new_entries=False
-                    c.ledger.emit('RECOVERY_COMPLETE',{'cleared_transient_errors':True,'remaining_v1_errors':c.v1['errors'].copy()})
-                else:
+                if c.v1['errors']:raise (c.v1.get('failures') or [RuntimeError('STRATEGY_TASK_FAILED')])[0]
+                qualified=await c.recover_entries()
+                if not qualified:
                     c.ledger.emit('RECOVERY_WAIT',{'reasons':c.ledger.reasons.copy(),'stop_new_entries':True,'waiting_for_reconciliation':True,'qualified':qualified})
                 await asyncio.sleep(1)
                 continue
-            if c.v1['errors']:raise RuntimeError('STRATEGY_TASK_FAILED')
+            if c.v1['errors']:raise (c.v1.get('failures') or [RuntimeError('STRATEGY_TASK_FAILED')])[0]
             if c.ledger.stop and not c.busy:
                 reason=c.ledger.reasons[-1];break
             await asyncio.sleep(.1)

@@ -151,7 +151,7 @@ class SignalSource:
             from app.collectors.binance import BinanceCollector
             factory=BinanceCollector
         async def status(kind,details):
-            if kind!='BTC_CONNECTED':on_status('WS_DISCONNECT')
+            on_status(kind)
         await factory('btcusdt',on_tick,status).run()
 
 def prepare_report(evidence,now_ms,free_bytes):

@@ -1,0 +1,38 @@
+{
+  "0088": {
+    "sha256": "f35eeb01e97456d9e226b76d383120687b09fb7ac7834351ea3af3294b38a404",
+    "hash_chain_verified": true,
+    "events": {
+      "INIT": 1,
+      "ARM_STATE": 3,
+      "WS_RECONNECTED": 3,
+      "WS_RECONNECTING": 2,
+      "RECONCILIATION_OBSERVATION": 1300,
+      "RECONCILED": 1300,
+      "ACCOUNT_MONITOR_FAILURE": 11,
+      "STOP": 1,
+      "CHECKPOINT": 1
+    },
+    "stop_codes": [
+      "CALIBRATION_EXCEPTION"
+    ]
+  },
+  "0089": {
+    "sha256": "118293825925dfe48b0ca604f3d832ab38d1e8537c7b69587cc4e034ee969d1a",
+    "hash_chain_verified": true,
+    "events": {
+      "INIT": 1,
+      "ARM_STATE": 3,
+      "WS_RECONNECTED": 20,
+      "RECONCILIATION_OBSERVATION": 4639,
+      "RECONCILED": 4639,
+      "WS_RECONNECTING": 19,
+      "ACCOUNT_MONITOR_FAILURE": 18,
+      "STOP": 1,
+      "CHECKPOINT": 1
+    },
+    "stop_codes": [
+      "SUPERVISOR_EXCEPTION:RuntimeError"
+    ]
+  }
+}

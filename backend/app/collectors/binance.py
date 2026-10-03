@@ -15,6 +15,7 @@ class BinanceCollector:
     async def run(self):
         backoff = 1
         while True:
+            callback_failure=None
             try:
                 async with websockets.connect(self.url, ping_interval=20, ping_timeout=20) as ws:
                     self.last_bid = self.last_ask = self.last_bq = self.last_aq = None
@@ -30,15 +31,19 @@ class BinanceCollector:
                         if etype == "aggTrade":
                             tick = MarketTick("binance", self.symbol, data.get("E"), recv, float(data["p"]), self.last_bid, self.last_ask, self.last_bq, self.last_aq,
                                               recv_ts_ns=recv_ns, trade_id=data.get('a'))
-                            await self.on_tick(tick)
+                            try:await self.on_tick(tick)
+                            except Exception as exc:
+                                callback_failure=exc;raise
                         elif etype == "bookTicker" or {"b","a"}.issubset(data):
                             self.last_bid, self.last_ask = float(data["b"]), float(data["a"])
                             self.last_bq, self.last_aq = float(data.get("B",0)), float(data.get("A",0))
+                    raise ConnectionError('BTC_STREAM_CLOSED')
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
+                if exc is callback_failure:raise
                 if self.on_status:
                     await self.on_status('BTC_RECONNECT', {'error':str(exc)})
-                print(f"[binance] reconnect after error: {exc}")
+                print(f"[binance] reconnect after error: {type(exc).__name__}")
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, 30)

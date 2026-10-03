@@ -47,45 +47,48 @@ def _discover_market():
     return discover_current()
 
 # Découverte au chargement du module
-_MARKET = _discover_market()
-CONDITION_ID = _MARKET["condition_id"]
-TOKEN_UP = _MARKET["token_up"]
-TOKEN_DOWN = _MARKET["token_down"]
-MARKET_SLUG = _MARKET["market_slug"]
-print(f"Marché découvert: {MARKET_SLUG}")
-print(f"  condition_id: {CONDITION_ID}")
-print(f"  token_up:     {TOKEN_UP[:20]}...")
-print(f"  token_down:   {TOKEN_DOWN[:20]}...")
+def initialize_market():
+    global _MARKET, CONDITION_ID, TOKEN_UP, TOKEN_DOWN, MARKET_SLUG
+    global BASELINE_PATH, baseline, BASELINE_DIGEST, EXPERIMENT_ID, authority, strategy_hashes, verifier
+    _MARKET = _discover_market()
+    CONDITION_ID = _MARKET["condition_id"]
+    TOKEN_UP = _MARKET["token_up"]
+    TOKEN_DOWN = _MARKET["token_down"]
+    MARKET_SLUG = _MARKET["market_slug"]
+    print(f"Marché découvert: {MARKET_SLUG}")
+    print(f"  condition_id: {CONDITION_ID}")
+    print(f"  token_up:     {TOKEN_UP[:20]}...")
+    print(f"  token_down:   {TOKEN_DOWN[:20]}...")
 
-# ─── Baseline ───────────────────────────────────────────────────────────────
-BASELINE_PATH = DIRECTORY / "BASELINE.json"
-if BASELINE_PATH.exists():
-    baseline = json.loads(BASELINE_PATH.read_text())
-    BASELINE_DIGEST = digest(baseline)
-    print(f"Baseline chargé: {BASELINE_DIGEST}")
-else:
-    raise FileNotFoundError(
-        f"Baseline manquant: {BASELINE_PATH}. Exécutez d'abord produce_baseline.py"
+    # ─── Baseline ───────────────────────────────────────────────────────────────
+    BASELINE_PATH = DIRECTORY / "BASELINE.json"
+    if BASELINE_PATH.exists():
+        baseline = json.loads(BASELINE_PATH.read_text())
+        BASELINE_DIGEST = digest(baseline)
+        print(f"Baseline chargé: {BASELINE_DIGEST}")
+    else:
+        raise FileNotFoundError(
+            f"Baseline manquant: {BASELINE_PATH}. Exécutez d'abord produce_baseline.py"
+        )
+
+    EXPERIMENT_ID = None  # allocated atomically at module init
+
+    # ─── 0. Atomically allocate experiment_id ────────────────────────────────────
+    EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="calibration-v1")
+    print(f"Allocated experiment_id: {EXPERIMENT_ID}")
+
+    # ─── 1. Evidence authority ──────────────────────────────────────────────────
+    authority = SelfAttestingAuthority()
+    strategy_hashes = v1_verify()
+
+    verifier = EvidenceVerifier(
+        authority,
+        account=ACCOUNT,
+        market=CONDITION_ID,
+        session=EXPERIMENT_ID,
+        collateral=COLLATERAL,
+        strategy_hashes=strategy_hashes,
     )
-
-EXPERIMENT_ID = None  # allocated atomically at module init
-
-# ─── 0. Atomically allocate experiment_id ────────────────────────────────────
-EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="calibration-v1")
-print(f"Allocated experiment_id: {EXPERIMENT_ID}")
-
-# ─── 1. Evidence authority ──────────────────────────────────────────────────
-authority = SelfAttestingAuthority()
-strategy_hashes = v1_verify()
-
-verifier = EvidenceVerifier(
-    authority,
-    account=ACCOUNT,
-    market=CONDITION_ID,
-    session=EXPERIMENT_ID,
-    collateral=COLLATERAL,
-    strategy_hashes=strategy_hashes,
-)
 
 def evidence():
     """Fresh evidence callable — découvre le marché actif à chaque appel."""
@@ -106,19 +109,21 @@ def evidence():
 signal_source = SignalSource(collector_factory=None)
 
 # ─── 3. Custody production ──────────────────────────────────────────────────
-platform = WindowsProtection()
-channel = ManualCustodyChannel(str(DPAPI_DIR), platform=platform)
-receipt_authority = ManualReceiptAuthority(channel)
-receipt_verifier = ManualReceiptVerifier(receipt_authority)
+def initialize_custody():
+    global platform, channel, receipt_authority, receipt_verifier, custody_journal, custody_store, custody_owner
+    platform = WindowsProtection()
+    channel = ManualCustodyChannel(str(DPAPI_DIR), platform=platform)
+    receipt_authority = ManualReceiptAuthority(channel)
+    receipt_verifier = ManualReceiptVerifier(receipt_authority)
 
-from analysis.d6.real_execution_calibration_v1.core import Journal
-if CUSTODY_JOURNAL_PATH.exists():
-    CUSTODY_JOURNAL_PATH.unlink()
-custody_journal = Journal(str(CUSTODY_JOURNAL_PATH), "custody-store")
-custody_store = CustodyStateStore(custody_journal)
-custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_store)
+    from analysis.d6.real_execution_calibration_v1.core import Journal
+    if CUSTODY_JOURNAL_PATH.exists():
+        raise RuntimeError('EXISTING_CUSTODY_REQUIRES_REVIEW')
+    custody_journal = Journal(str(CUSTODY_JOURNAL_PATH), "custody-store")
+    custody_store = CustodyStateStore(custody_journal)
+    custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_store)
 
-# ─── 4. Client production ───────────────────────────────────────────────────
+    # ─── 4. Client production ───────────────────────────────────────────────────
 def build_production_client():
     creds, report = load_existing(ROOT)
     if not creds or not report.get("storage_validated"):
@@ -161,6 +166,7 @@ def verify_no_mocks():
 
 
 async def main():
+    raise RuntimeError('LIVE_GATE_BLOCKED: synthetic book and self-attested evidence are not production qualification')
     now_ms = lambda: int(time.time() * 1000)
 
     # Vérification statique — aucun mock dans le graphe

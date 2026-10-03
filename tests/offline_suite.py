@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SELF=Path(__file__).resolve()
 BASE=ROOT/'analysis/d6/real_execution_calibration_v1'
-OUT=BASE/'evidence/native_v2'
+OUT=Path(os.environ.get('D6_TEST_OUTPUT',str(BASE/'evidence/native_v2')))
 CRASH=BASE/'crash_fixture.py'
 CRASH_SHA256='89ef1de7151ea143a9ae69e15655f48bbe26b26788aca8a4801669bba6b8d411'
 JOURNAL_CODE="""import os,sys
@@ -104,7 +104,7 @@ def main():
         if not all(f in allowed_files and Path(f).parent.as_posix()==group for f in files):raise RuntimeError('TEST_INVENTORY_SCOPE')
         sys.path.insert(0,str(ROOT/group))
         import pytest
-        raise SystemExit(pytest.main(['-q','--import-mode=importlib','-p','no:cacheprovider','--basetemp',str(Path(temp)/'pytest'),*files]))
+        raise SystemExit(pytest.main(['-v' if group=='backend/tests' else '-q','-o','faulthandler_timeout=30','--import-mode=importlib','-p','no:cacheprovider','-p','pytest_asyncio.plugin','--basetemp',str(Path(temp)/'pytest'),*files]))
     included,excluded=inventory();groups={}
     for f in included:groups.setdefault(Path(f).parent.as_posix(),[]).append(f)
     selected=sys.argv[1:]
@@ -120,6 +120,8 @@ def main():
             cmd=[sys.executable,'-B',str(SELF),'--child',temp,group,json.dumps(files)]
             try:r=subprocess.run(cmd,cwd=ROOT,env=clean_env(temp),capture_output=True,text=True,errors='replace',timeout=180)
             except subprocess.TimeoutExpired as exc:
+                output=(exc.stdout or b'')+(exc.stderr or b'')
+                (OUT/('active_group_'+str(i)+'.txt')).write_bytes(output if isinstance(output,bytes) else output.encode())
                 results.append(dict(group=group,exit='TIMEOUT'));print(group,'TIMEOUT',flush=True);continue
             output=r.stdout+r.stderr;(OUT/('active_group_'+str(i)+'.txt')).write_text(output,encoding='utf-8')
             tail='\n'.join(output.splitlines()[-8:]);print(group,r.returncode,tail,flush=True)

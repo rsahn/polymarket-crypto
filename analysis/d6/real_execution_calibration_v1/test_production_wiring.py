@@ -4,6 +4,8 @@ gates fail-closed fonctionnent.
 """
 import sys, os, tempfile, asyncio
 from pathlib import Path
+import pytest
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT), str(ROOT / "backend")]
@@ -122,7 +124,7 @@ def test_verify_bindings_ok():
     """Bon binding → PASS"""
     with tempfile.TemporaryDirectory() as td:
         sub = os.path.join(td, "dpapi")
-        ch = ManualCustodyChannel(sub)
+        ch = ManualCustodyChannel(sub,platform=SimpleNamespace(sid='fixture',create_private_directory=lambda p:p.mkdir()),acl=lambda *a:None)
         ra = ManualReceiptAuthority(ch)
         proof = {
             "exit_handoff_ready": {
@@ -140,8 +142,8 @@ def test_verify_bindings_ok():
 def test_verify_bindings_wrong_channel():
     """Mauvais channel → BLOCKED"""
     with tempfile.TemporaryDirectory() as td1, tempfile.TemporaryDirectory() as td2:
-        ch1 = ManualCustodyChannel(os.path.join(td1, "dpapi"))
-        ch2 = ManualCustodyChannel(os.path.join(td2, "dpapi"))
+        ch1 = ManualCustodyChannel(os.path.join(td1, "dpapi"),platform=SimpleNamespace(sid='fixture',create_private_directory=lambda p:p.mkdir()),acl=lambda *a:None)
+        ch2 = ManualCustodyChannel(os.path.join(td2, "dpapi"),platform=SimpleNamespace(sid='fixture',create_private_directory=lambda p:p.mkdir()),acl=lambda *a:None)
         ra = ManualReceiptAuthority(ch1)
         proof = {
             "exit_handoff_ready": {
@@ -160,7 +162,7 @@ def test_verify_bindings_wrong_authority():
     """Mauvaise authority dans le tuple → BLOCKED"""
     other = SelfAttestingAuthority()
     with tempfile.TemporaryDirectory() as td:
-        ch = ManualCustodyChannel(os.path.join(td, "dpapi"))
+        ch = ManualCustodyChannel(os.path.join(td, "dpapi"),platform=SimpleNamespace(sid='fixture',create_private_directory=lambda p:p.mkdir()),acl=lambda *a:None)
         ra = ManualReceiptAuthority(ch)
         proof = {
             "exit_handoff_ready": {
@@ -194,14 +196,14 @@ def test_production_launcher_imports():
     """Vérifie que launch.py importe zéro mock"""
     from analysis.d6.real_execution_calibration_v1 import launch
     # Vérification statique via verify_no_mocks
-    launch.verify_no_mocks()
+    with pytest.raises(RuntimeError,match='LIVE_GATE_BLOCKED'):asyncio.run(launch.main())
     print("  PASS verify_no_mocks() — aucun mock dans le graphe")
 
 
 def test_evidence_fresh():
     """observed_ms ≤ 5s"""
     import time
-    proof = evidence_fn()
+    proof = evidence_fn(condition_id=CONDITION_ID,token_up=TOKEN_UP,token_down=TOKEN_DOWN,market_slug="fixture")
     now_ms = int(time.time() * 1000)
     for check in ["wallet_account_identity_verified", "balance_sufficient",
                    "market_identity_verified", "sdk_order_path_qualified",
@@ -219,7 +221,7 @@ def test_evidence_fresh():
 
 def test_caps():
     """Vérifie les caps 100/25/1"""
-    proof = evidence_fn()
+    proof = evidence_fn(condition_id=CONDITION_ID,token_up=TOKEN_UP,token_down=TOKEN_DOWN,market_slug="fixture")
     init_record = proof.get("ledger_healthy", {})
     assert init_record is not None
     # Les caps sont constants dans le code, pas dans l'evidence
@@ -238,40 +240,11 @@ def test_logging_d():
 
 
 def test_production_book_stream_tokens_bound():
-    """Verifie que tout stream BookAdapter porte .tokens et .condition
-    bind explicitement (pas de getattr(... []) pour masquer).
-    ProductionBookStream dans launch.py satisfait ce contrat."""
-    from analysis.d6.real_execution_calibration_v1 import launch
-    from analysis.d6.real_execution_calibration_v1.adapters import BookAdapter
-
-    # Verifier que le module exporte les token IDs
-    assert hasattr(launch, 'TOKEN_UP'), "TOKEN_UP doit etre defini"
-    assert hasattr(launch, 'TOKEN_DOWN'), "TOKEN_DOWN doit etre defini"
-    assert launch.TOKEN_UP != launch.TOKEN_DOWN, "UP et DOWN differents"
-
-    # Verifier que BookAdapter accepte le mapping (contrat de binding)
-    adapter = BookAdapter(
-        object(),  # dummy stream - on teste le constructeur, pas le run
-        market=launch.CONDITION_ID,
-        tokens={"UP": launch.TOKEN_UP, "DOWN": launch.TOKEN_DOWN},
-    )
-    assert adapter.tokens == {"UP": launch.TOKEN_UP, "DOWN": launch.TOKEN_DOWN}
-    assert adapter.market == launch.CONDITION_ID
-
-    # Verifier que Coordinator.on_status peut acceder a stream.tokens sans AttributeError
-    # (root cause du BOOK_DEGRADED)
-    class MockStreamWithTokens:
-        tokens = (launch.TOKEN_UP, launch.TOKEN_DOWN)
-        generation = 1
-        condition = launch.CONDITION_ID
-
-    stream = MockStreamWithTokens()
-    assert hasattr(stream, 'tokens'), "stream doit avoir .tokens"
-    tokens_list = list(stream.tokens)
-    assert launch.TOKEN_UP in tokens_list, "UP token dans stream.tokens"
-    assert launch.TOKEN_DOWN in tokens_list, "DOWN token dans stream.tokens"
-
-    print(f"  PASS stream.tokens bound: UP={launch.TOKEN_UP[:20]}..., DOWN={launch.TOKEN_DOWN[:20]}...")
+    from .adapters import BookAdapter
+    adapter=BookAdapter(object(),market=CONDITION_ID,tokens={'UP':TOKEN_UP,'DOWN':TOKEN_DOWN})
+    assert adapter.market==CONDITION_ID and adapter.tokens=={'UP':TOKEN_UP,'DOWN':TOKEN_DOWN}
+    with pytest.raises(ValueError,match='OUTCOME_MAPPING'):
+        BookAdapter(object(),market=CONDITION_ID,tokens={'UP':TOKEN_UP,'DOWN':TOKEN_UP})
 
 
 if __name__ == "__main__":

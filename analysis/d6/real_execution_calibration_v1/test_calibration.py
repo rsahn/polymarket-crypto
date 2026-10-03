@@ -110,7 +110,7 @@ def test_disk_failure_prevents_order_and_keeps_stop(tmp_path,monkeypatch):
  l=ledger(tmp_path)
  def fail(*a):raise OSError('fixture disk full')
  monkeypatch.setattr(os,'fsync',fail)
- with pytest.raises(ValueError,match='ENTRIES_STOPPED_OR_UNRECONCILED'):reserve(l)
+ with pytest.raises(OSError,match='fixture disk full'):reserve(l)
  assert l.stop and l.journal.failed and not l.orders;l.journal.close()
 
 def signed(**changes):

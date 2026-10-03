@@ -58,7 +58,7 @@ class Socket:
 
 def test_parser_cause_survives_run_cleanup():
     s=stream()
-    asyncio.run(s.run(connect_factory=lambda *a,**k:Socket()))
+    asyncio.run(s.run(connect_factory=lambda *a,**k:Socket(),reconnect=False))
     r=s.read()
     assert r['reason']=='STALE_WIRE_EVENT'
     assert not r['connected']
@@ -111,7 +111,7 @@ def test_remote_close_code_and_reason_redacted():
     from websockets.frames import Close
     class Closed(Socket):
         async def recv(self):raise ConnectionClosedError(Close(1008,'SECRET_SENTINEL'),None)
-    s=stream();asyncio.run(s.run(connect_factory=lambda *a,**k:Closed()))
+    s=stream();asyncio.run(s.run(connect_factory=lambda *a,**k:Closed(),reconnect=False))
     r=s.read();d=r['diagnostics']
     assert d['close_code']==1008 and d['close_reason_category']=='REMOTE_CLOSE_FRAME'
     assert d['remote_close_reason_present'] and 'SECRET_SENTINEL' not in json.dumps(r)
@@ -159,7 +159,7 @@ def test_qualifier_evaluates_before_ws_shutdown(monkeypatch,health_contract,empt
     monkeypatch.setattr(proof,'acquire_post_b',acquired)
     stopped=[]
     class Active(StreamBook):
-        async def run(self):
+        async def run(self,*,reconnect=True):
             self.connected_generation()
             for token in ('1','2'):
                 e=event(token)

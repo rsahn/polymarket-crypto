@@ -1,6 +1,6 @@
 """Separate calibration ledger. No SDK, network, D6 mutation or auto-arming."""
 from __future__ import annotations
-import copy,hashlib,json,os,time
+import copy,hashlib,json,os,time,threading,sys
 from decimal import Decimal
 from pathlib import Path
 
@@ -75,9 +75,12 @@ def redact(x):
 
 class Journal:
  def __init__(self,path,experiment_id):
+  self.lock=threading.RLock()
   self.path=Path(path);self.experiment_id=experiment_id;self.seq=0;self.previous='0'*64;self.failed=False;self.bytes=0
   self.file=self.path.open('xb',buffering=0)
  def append(self,kind,payload):
+  with self.lock:return self._append(kind,payload)
+ def _append(self,kind,payload):
   if self.failed:raise OSError('JOURNAL_FAILED')
   try:
    row={'experiment_id':self.experiment_id,'seq':self.seq,'previous':self.previous,'kind':kind,'payload':redact(payload)}
@@ -91,7 +94,8 @@ class Journal:
    os.fsync(self.file.fileno());self.seq+=1;self.previous=row['hash'];self.bytes+=len(data)
    return copy.deepcopy(row)
   except BaseException:self.failed=True;raise
- def close(self):self.file.close()
+ def close(self):
+  with self.lock:self.file.close()
  @staticmethod
  def read(path):
   previous='0'*64;session=None
@@ -111,9 +115,15 @@ class CalibrationLedger:
   journal.append('INIT',{'account':account,'starting_cash':str(self.starting_cash),'version':VERSION,'max_entry':25,'max_total':100,'max_entries':4})
  def emit(self,kind,payload):
   try:return self.journal.append(kind,payload)
-  except BaseException:
-   self.stop=True;self.reconciled=False
+  except BaseException as exc:
+   self.stop=True;self.stop_new_entries=True;self.reconciled=False
    if 'JOURNAL_FAILURE' not in self.reasons:self.reasons.append('JOURNAL_FAILURE')
+   if not hasattr(self,'journal_failure'):
+    self.journal_failure=exc
+    # Independent sink, no payload or exception text (both may contain credentials).
+    try:sys.stderr.write('JOURNAL_FAILURE exception_type='+type(exc).__name__+'; entries blocked\n');sys.stderr.flush()
+    except BaseException:pass
+   raise
  def halt(self,reason,details=None):
   self.stop=True
   if reason not in ('MANUAL_KILL','DISK_LOW','EXPERIMENT_EXPIRED','RESIDUAL_REQUIRES_OPERATOR_HANDOFF'):self.reconciled=False
@@ -127,7 +137,7 @@ class CalibrationLedger:
   self.emit('SHADOW_SEALED',{'opportunity_id':opportunity,'sha256':h,'shadow':sealed});self.shadows[opportunity]=(h,sealed);return h
  def reserve(self,opportunity,notional,fee_ceiling,fee_risk=None):
   n,f=dec(notional),dec(fee_ceiling)
-  if self.stop or self.recovery_only or not self.reconciled:raise ValueError('ENTRIES_STOPPED_OR_UNRECONCILED')
+  if self.stop or self.stop_new_entries or self.recovery_only or not self.reconciled:raise ValueError('ENTRIES_STOPPED_OR_UNRECONCILED')
   if self.active is not None or any(self.positions.values()):raise ValueError('ONE_POSITION_GATE')
   if opportunity not in self.shadows:raise ValueError('SHADOW_REQUIRED')
   if not ZERO<n<=25:raise ValueError('ENTRY_CAP_25')
@@ -209,6 +219,7 @@ class CalibrationLedger:
    known={o['order_id'] for o in self.orders.values() if o['order_id']}
    if set(snapshot['terminal_order_ids'])!=known or any(not o['terminal'] or o['reported_filled']!=o['filled_shares'] for o in self.orders.values()):raise ValueError('ORDER_STATE_UNKNOWN')
   except (KeyError,ValueError,TypeError,ArithmeticError) as exc:self.halt(str(exc));return False
+  self.last_account_snapshot=copy.deepcopy(snapshot)
   self.reconciled=True;self.emit('RECONCILED',{'CALIBRATION_ACCOUNT_RECONCILED':True,'decision_ms':now_ms,'D6_current_inventory_proven':False})
   if self.active and not any(self.positions.values()):
    t=self.trades[self.active]
@@ -216,7 +227,7 @@ class CalibrationLedger:
   return True
  def report(self):
   flat=not any(self.positions.values());known=self.reconciled
-  return {'version':VERSION,'starting_experiment_budget':'100','maximum_allowed_budget':'100','starting_account_cash':str(self.starting_cash),'total_committed_notional':str(sum((x['notional'] for x in self.trades.values()),ZERO)),'lifetime_allocated_including_fee_ceiling':str(self.allocated),'reserved_amount':str(sum((x['reserved'] for x in self.trades.values()),ZERO)),'realized_spent_notional':str(self.spent),'realized_proceeds':str(self.proceeds),'actual_fees':{'collateral_cash':str(self.cash_fees),'outcome_shares':str(self.share_fees)},'remaining_experiment_budget':str(Decimal(100)-self.allocated),'open_exposure':{k:str(v) for k,v in self.positions.items() if v},'open_exposure_at_risk_upper_bound':str(self.allocated) if not flat or self.active is not None else '0','exposure_known':known,'net_realized_pnl':str(self.cash-self.starting_cash) if flat and known else None,'gross_realized_pnl':str(self.proceeds-self.spent) if flat and known and self.share_fees==0 else None,'entries_attempted':self.attempts,'orders_attempted':len(self.orders),'orders_accepted':sum(o['order_id'] is not None for o in self.orders.values()),'fills':len(self.fills),'partial_fills':sum(o['terminal'] and 0<o['filled_shares']<dec(o['shares']) for o in self.orders.values()),'no_fills':sum(o['terminal'] and o['filled_shares']==0 for o in self.orders.values()),'CALIBRATION_ACCOUNT_RECONCILED':self.reconciled,'STOP_NEW_ENTRIES':self.stop,'reasons':self.reasons.copy(),'SYSTEM_READY':False,'current_inventory_proven':False,'submit_allowed':False}
+  return {'version':VERSION,'starting_experiment_budget':'100','maximum_allowed_budget':'100','starting_account_cash':str(self.starting_cash),'total_committed_notional':str(sum((x['notional'] for x in self.trades.values()),ZERO)),'lifetime_allocated_including_fee_ceiling':str(self.allocated),'reserved_amount':str(sum((x['reserved'] for x in self.trades.values()),ZERO)),'realized_spent_notional':str(self.spent),'realized_proceeds':str(self.proceeds),'actual_fees':{'collateral_cash':str(self.cash_fees),'outcome_shares':str(self.share_fees)},'remaining_experiment_budget':str(Decimal(100)-self.allocated),'open_exposure':{k:str(v) for k,v in self.positions.items() if v},'open_exposure_at_risk_upper_bound':str(self.allocated) if not flat or self.active is not None else '0','exposure_known':known,'net_realized_pnl':str(self.cash-self.starting_cash) if flat and known else None,'gross_realized_pnl':str(self.proceeds-self.spent) if flat and known and self.share_fees==0 else None,'entries_attempted':self.attempts,'orders_attempted':len(self.orders),'orders_accepted':sum(o['order_id'] is not None for o in self.orders.values()),'fills':len(self.fills),'partial_fills':sum(o['terminal'] and 0<o['filled_shares']<dec(o['shares']) for o in self.orders.values()),'no_fills':sum(o['terminal'] and o['filled_shares']==0 for o in self.orders.values()),'CALIBRATION_ACCOUNT_RECONCILED':self.reconciled,'STOP_NEW_ENTRIES':self.stop or self.stop_new_entries,'reasons':self.reasons.copy(),'SYSTEM_READY':False,'current_inventory_proven':False,'submit_allowed':False}
 
  def custody_snapshot(self):
   # Content revision changes for intents/ACKs/fills/terminality, never monitor writes.

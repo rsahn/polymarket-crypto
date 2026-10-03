@@ -30,7 +30,6 @@ from analysis.d6.real_execution_calibration_v1.manual_custody import (
 )
 from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_verify
 from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id, Journal, digest
-from analysis.d6.real_execution_calibration_v1.adapters import CalibrationEvidenceSource
 from analysis.d6.real_execution_calibration_v1.transport import SDKPort
 from analysis.d6.real_execution_calibration_v1.supervisor import run as supervisor_run
 
@@ -103,74 +102,78 @@ def _discover_market():
     from analysis.d6.real_execution_calibration_v1.market_discovery import discover_current
     return discover_current()
 
-_MARKET = _discover_market()
-CONDITION_ID = _MARKET["condition_id"]
-TOKEN_UP = _MARKET["token_up"]
-TOKEN_DOWN = _MARKET["token_down"]
-MARKET_SLUG = _MARKET["market_slug"]
-print(f"Marche decouvert: {MARKET_SLUG}")
-print(f"  condition_id: {CONDITION_ID}")
-print(f"  token_up:     {TOKEN_UP[:20]}...")
-print(f"  token_down:   {TOKEN_DOWN[:20]}...")
+def initialize_production():
+    global _MARKET, CONDITION_ID, TOKEN_UP, TOKEN_DOWN, MARKET_SLUG, BASELINE_PATH, _baseline_data, BASELINE_DIGEST
+    global EXPERIMENT_ID, authority, strategy_hashes, creds_dict, report, api_creds, platform, channel
+    global receipt_authority, receipt_verifier, custody_journal, custody_store, custody_owner, verifier
+    _MARKET = _discover_market()
+    CONDITION_ID = _MARKET["condition_id"]
+    TOKEN_UP = _MARKET["token_up"]
+    TOKEN_DOWN = _MARKET["token_down"]
+    MARKET_SLUG = _MARKET["market_slug"]
+    print(f"Marche decouvert: {MARKET_SLUG}")
+    print(f"  condition_id: {CONDITION_ID}")
+    print(f"  token_up:     {TOKEN_UP[:20]}...")
+    print(f"  token_down:   {TOKEN_DOWN[:20]}...")
 
-# --- Baseline ---
-BASELINE_PATH = DIRECTORY / "BASELINE.json"
-if BASELINE_PATH.exists():
-    _baseline_data = json.loads(BASELINE_PATH.read_text())
-    BASELINE_DIGEST = digest(_baseline_data)
-    print(f"Baseline charge: {BASELINE_DIGEST}")
-else:
-    _baseline_data = {
-        "version": "REAL_EXECUTION_CALIBRATION_V1",
-        "started": 1790577000000,
-    }
-    BASELINE_DIGEST = digest(_baseline_data)
-    print(f"Baseline par defaut: {BASELINE_DIGEST}")
+    # --- Baseline ---
+    BASELINE_PATH = DIRECTORY / "BASELINE.json"
+    if BASELINE_PATH.exists():
+        _baseline_data = json.loads(BASELINE_PATH.read_text())
+        BASELINE_DIGEST = digest(_baseline_data)
+        print(f"Baseline charge: {BASELINE_DIGEST}")
+    else:
+        _baseline_data = {
+            "version": "REAL_EXECUTION_CALIBRATION_V1",
+            "started": 1790577000000,
+        }
+        BASELINE_DIGEST = digest(_baseline_data)
+        print(f"Baseline par defaut: {BASELINE_DIGEST}")
 
-# --- 0. Allocate experiment_id ---
-EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="live-v1")
-print(f"Allocated experiment_id: {EXPERIMENT_ID}")
+    # --- 0. Allocate experiment_id ---
+    EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="live-v1")
+    print(f"Allocated experiment_id: {EXPERIMENT_ID}")
 
-# --- 1. Evidence authority ---
-authority = SelfAttestingAuthority()
-strategy_hashes = v1_verify()
+    # --- 1. Evidence authority ---
+    authority = SelfAttestingAuthority()
+    strategy_hashes = v1_verify()
 
-# --- 2. Credentials (existing DPAPI, never hardcoded) ---
-creds_dict, report = load_existing(ROOT)
-if not creds_dict or not report.get("storage_validated"):
-    print("CREDENTIALS_NOT_AVAILABLE: run recovery first")
-    sys.exit(1)
+    # --- 2. Credentials (existing DPAPI, never hardcoded) ---
+    creds_dict, report = load_existing(ROOT)
+    if not creds_dict or not report.get("storage_validated"):
+        print("CREDENTIALS_NOT_AVAILABLE: run recovery first")
+        sys.exit(1)
 
-api_creds = ApiKeyCreds(
-    key=creds_dict["apiKey"],
-    secret=creds_dict["secret"],
-    passphrase=creds_dict["passphrase"],
-)
+    api_creds = ApiKeyCreds(
+        key=creds_dict["apiKey"],
+        secret=creds_dict["secret"],
+        passphrase=creds_dict["passphrase"],
+    )
 
-# --- 3. Custody production ---
-from app.live.l2_windows_storage import WindowsProtection
-platform = WindowsProtection()
-channel = ManualCustodyChannel(str(DPAPI_DIR), platform=platform)
-receipt_authority = ManualReceiptAuthority(channel)
-receipt_verifier = ManualReceiptVerifier(receipt_authority)
+    # --- 3. Custody production ---
+    from app.live.l2_windows_storage import WindowsProtection
+    platform = WindowsProtection()
+    channel = ManualCustodyChannel(str(DPAPI_DIR), platform=platform)
+    receipt_authority = ManualReceiptAuthority(channel)
+    receipt_verifier = ManualReceiptVerifier(receipt_authority)
 
-# Supprime le journal du run précédent (mode exclusive-create)
-if CUSTODY_JOURNAL_PATH.exists():
-    CUSTODY_JOURNAL_PATH.unlink()
-custody_journal = Journal(str(CUSTODY_JOURNAL_PATH), "custody-store")
-custody_store = CustodyStateStore(custody_journal)
-custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_store)
+    # Supprime le journal du run précédent (mode exclusive-create)
+    if CUSTODY_JOURNAL_PATH.exists():
+        raise RuntimeError('EXISTING_CUSTODY_REQUIRES_REVIEW')
+    custody_journal = Journal(str(CUSTODY_JOURNAL_PATH), "custody-store")
+    custody_store = CustodyStateStore(custody_journal)
+    custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_store)
 
-verifier = EvidenceVerifier(
-    authority,
-    account=ACCOUNT,
-    market=CONDITION_ID,
-    session=EXPERIMENT_ID,
-    collateral=COLLATERAL,
-    strategy_hashes=strategy_hashes,
-)
+    verifier = EvidenceVerifier(
+        authority,
+        account=ACCOUNT,
+        market=CONDITION_ID,
+        session=EXPERIMENT_ID,
+        collateral=COLLATERAL,
+        strategy_hashes=strategy_hashes,
+    )
 
-# --- 4. Build evidence callable (reconstruit dans main() apres chargement baseline) ---
+    # --- 4. Build evidence callable (reconstruit dans main() apres chargement baseline) ---
 def build_evidence_fn(owner, ch):
     def evidence():
         from analysis.d6.real_execution_calibration_v1.evidence import build_evidence as _be
@@ -190,7 +193,8 @@ def build_evidence_fn(owner, ch):
         )
     return evidence
 
-evidence = build_evidence_fn(custody_owner.verifier.owner, channel)
+def evidence():
+    return build_evidence_fn(custody_owner.verifier.owner, channel)()
 
 # --- 5. AsyncSecureClient - real SDK ---
 async def build_secure_client():
@@ -258,11 +262,6 @@ def production_confirm(experiment_id, report, *, verifier, evidence_fn):
     _fresh_proof = evidence_fn()
     _fresh_report = _fresh_eval(_fresh_proof, int(time.time() * 1000), _shutil.disk_usage(DIRECTORY).free, verifier)
     # REAL_ORDERS_ENABLED=true = confirmation humaine donnée par le propriétaire du wallet
-    # On bypass le check isatty() + input() car l'opérateur a explicitement autorisé l'armement
-    if _os.environ.get('REAL_ORDERS_ENABLED','').lower() == 'true':
-        print(f">>> AUTO-ARM: {experiment_id} (REAL_ORDERS_ENABLED=true)")
-        from analysis.d6.real_execution_calibration_v1.engine import _ARM_FACTORY
-        return HumanArm(experiment_id, _fresh_report, _factory=_ARM_FACTORY)
     return HumanArm.confirm(experiment_id, _fresh_report, verifier=verifier, evidence=_fresh_proof)
 
 # --- 7. Main ---
@@ -272,7 +271,7 @@ async def main():
     # REAL_ORDERS_ENABLED=true : autorise D6_current_inventory_proven, l'auto-arm
     # et le passage en mode armé complet. Le propriétaire du wallet a explicitement
     # autorisé cette session (cf. auto-arm dans production_confirm).
-    _os.environ['REAL_ORDERS_ENABLED'] = 'true'
+    raise RuntimeError('LIVE_GATE_BLOCKED: authoritative execution evidence source missing')
 
     print("Creating AsyncSecureClient...")
     secure_client = await build_secure_client()
@@ -294,7 +293,7 @@ async def main():
     )
 
     # 30 jours d'expiration
-    expiry_ms = int(time.time() * 1000) + 86400000 * 30
+    expiry_ms = _MARKET["expiry_ts_ms"]
     stream_book = StreamBook(
         slug=MARKET_SLUG,
         condition=CONDITION_ID,

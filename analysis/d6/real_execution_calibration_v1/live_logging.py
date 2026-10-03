@@ -12,9 +12,14 @@ from .offline import RotatingLog,sanitize,SAFE_EVENTS,SENSITIVE,durable
 REAL_CALIBRATION_ROTATION_SECONDS = 18000
 
 EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_BOOK',
+ 'CALIBRATION_EXCEPTION','RECOVERY_COMPLETE','RECOVERY_WAIT','BACKGROUND_TASK_ENDED',
  'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
  'ACCOUNT_MONITOR_FAILURE','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE'}
 PAYLOAD_FIELDS={
+ 'CALIBRATION_EXCEPTION':{'exception_type','classification','message_redacted','exposure_management'},
+ 'RECOVERY_COMPLETE':{'cleared_transient_errors','remaining_v1_errors'},
+ 'RECOVERY_WAIT':{'reasons','stop_new_entries','waiting_for_reconciliation','qualified'},
+ 'BACKGROUND_TASK_ENDED':{'task_name','exception_type','message_redacted','transient','restart_attempted'},
  'INIT':{'account','starting_cash','version','max_entry','max_total','max_entries'},
  'ARM_STATE':{'armed','pid','nonce','persisted_arming'},
  'STOP':{'reason','details'},
@@ -117,6 +122,8 @@ class LoggedJournal(Journal):
         from .log_schema import project,SHADOW
         return self.log.canonical_tree(project(shadow,SHADOW,self.log.public_tokens))
     def append(self,kind,payload):
+        with self.lock:return self._logged_append(kind,payload)
+    def _logged_append(self,kind,payload):
         if kind not in EVENTS:raise ValueError('UNREVIEWED_LOG_EVENT')
         try:
             def scrub(x):

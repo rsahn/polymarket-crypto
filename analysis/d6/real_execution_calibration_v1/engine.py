@@ -8,6 +8,13 @@ from .v1_binding import bind,verify
 from .transport import validate_signed
 
 _ARM_FACTORY=object()
+# Exact pre-reservation availability failures only. Unknown errors never recover.
+TRANSIENT_AVAILABILITY=frozenset(('NO_SHADOW_ENTRY_DEPTH','EMPTY_OR_CROSSED_BOOK',
+ 'BOOK_OR_WS_INVALID','BOOK_CLOCK_INVALID','BOOK_CAUSAL_CLOCK_UNPROVEN',
+ 'BOOK_IDENTITY_OR_MISSING','ACCOUNT_READ_UNAVAILABLE','ACCOUNT_CLOCK',
+ 'STOP_NEW_ENTRIES','POST_RECONNECT_FRESH_GUARD'))
+def transient_availability(exc):
+ return isinstance(exc,(TimeoutError,ConnectionError)) or (type(exc) is ValueError and str(exc) in TRANSIENT_AVAILABILITY)
 class HumanArm:
  def __init__(self,experiment_id,preflight,*,_factory=None):
   if _factory is not _ARM_FACTORY:raise ValueError('HUMAN_CONFIRMATION_REQUIRED')
@@ -18,6 +25,8 @@ class HumanArm:
   from .preflight import REQUIRED
   from .preflight import evaluate
   if verifier is None or evidence is None:raise ValueError('HUMAN_ARMING_UNAVAILABLE: LIVE_QUALIFICATION_REQUIRED')
+  from .evidence import SelfAttestingAuthority
+  if isinstance(verifier.authority,SelfAttestingAuthority):raise ValueError('SELF_ATTESTATION_NOT_LIVE_PROOF')
   verified=evaluate(evidence,time.time_ns()//1000000,preflight.get('storage',{}).get('free_bytes',0),verifier)
   if verified['status']!='CALIBRATION_READY' or verifier.context['session']!=experiment_id:raise ValueError('HUMAN_ARMING_UNAVAILABLE')
   if not set(REQUIRED).issubset(preflight.get('checks',{})):raise ValueError('PREFLIGHT_INCOMPLETE')
@@ -28,12 +37,13 @@ class HumanArm:
  def check(self,session,entry=True):
   if self.pid!=os.getpid() or self.experiment_id!=session:raise ValueError('ARM_IDENTITY')
   if any(os.environ.get(k,'false').lower()!='false' for k in ('REAL_ORDERS_ENABLED','LIVE_EXECUTION_ARMED')):raise ValueError('D6_FLAGS_MUST_STAY_FALSE')
-  if entry and time.monotonic()-self.started_monotonic>=86400:pass  # Removed by operator: 24/7 no expiry
+  if entry and time.monotonic()-self.started_monotonic>=259200:raise ValueError('EXPERIMENT_EXPIRED')
 
 class Coordinator:
  def __init__(self,ledger,port,account_source,book_source,kill_path,arm=None,fee_ceiling=None,clock=lambda:time.time_ns()//1000000,sleep=asyncio.sleep):
   self.ledger=ledger;self.port=port;self.account_source=account_source;self.book_source=book_source;self.kill_path=Path(kill_path);self.arm=arm;self.fee_ceiling=fee_ceiling;self.clock=clock;self.sleep=sleep;self.busy=False;self.comparisons=[];self.signal_context={};self.measurements={};self.tick_window=deque(maxlen=4096);self.last_receive=None;self._post_reconnect_verified=True;self._reconnect_attempt=0
   self.v1=bind(self.opportunity,self.signal)
+  self.runtime_counts={'OPPORTUNITIES':0,'SHADOW_REJECTIONS':0};self._btc_recovery_required=False
   ledger.emit('ARM_STATE',{'armed':arm is not None,'pid':os.getpid(),'nonce':arm.nonce if arm else None,'persisted_arming':False})
  def signal(self,row):
   self.signal_context[row['ts_ms']]={'signal_receive_ts':row['ts_ms'],'signal_decision_ts':self.clock(),'signal_source_ts':self.last_tick_source,'direction':row['side'],'btc_move':row['btc_move'],'btc_lookback_evidence':[t.copy() for t in self.tick_window if t['receive_ms']>=row['ts_ms']-250]}
@@ -42,6 +52,9 @@ class Coordinator:
   if tick.event_ts_ms is None or not tick.event_ts_ms<=tick.recv_ts_ms<=self.clock():self.ledger.halt('BTC_CLOCK_INVALID');return
   if self.last_receive is not None and tick.recv_ts_ms<self.last_receive:self.ledger.halt('BTC_RECEIVE_REGRESSION');return
   self.last_receive=tick.recv_ts_ms;self.last_tick_source=tick.event_ts_ms
+  if self.clock()-tick.event_ts_ms>1000:
+   self.ledger.stop_new_entries=True;self._btc_recovery_required=True;return
+  self._btc_recovery_required=False
   self.tick_window.append({'source_ms':tick.event_ts_ms,'receive_ms':tick.recv_ts_ms,'price':tick.price})
   await self.v1['on_btc'](tick)
  def guard(self,entry=True):
@@ -69,7 +82,7 @@ class Coordinator:
     raise ValueError('POST_RECONNECT_FRESH_GUARD') from None
  def book(self,b):
   if not b.get('valid') or not b.get('ws_healthy') or not b.get('market') or not b.get('token') or not b.get('book_state_id'):raise ValueError('BOOK_OR_WS_INVALID')
-  if not 0<=b['source_ms']<=b['receive_ms']<=self.clock() or self.clock()-b['receive_ms']>1000:raise ValueError('BOOK_CLOCK_INVALID')
+  if not 0<=b['source_ms']<=b['receive_ms']<=self.clock() or self.clock()-b['source_ms']>1000:raise ValueError('BOOK_CLOCK_INVALID')
   for side in ('asks','bids'):
    levels=b[side]
    if any(not 0<dec(p)<1 or dec(q)<=0 for p,q in levels):raise ValueError('DEPTH_INVALID')
@@ -117,6 +130,7 @@ class Coordinator:
   self.measurements[client_id].update(actual_shares=str(self.ledger.orders[client_id]['filled_shares']),actual_notional=str(self.ledger.orders[client_id]['filled_notional']),execution_complete=True)
   return self.measurements[client_id]
  async def opportunity(self,signal_ts,move,side):
+  self.runtime_counts['OPPORTUNITIES']+=1
   if self.busy:
    self.ledger.emit('OPPORTUNITY_SKIPPED',{'signal_receive_ts':signal_ts,'reason':'ONE_POSITION_GATE'});self.signal_context.pop(signal_ts,None);return
   self.busy=True;op=self.ledger.journal.experiment_id+':'+str(signal_ts)
@@ -163,27 +177,49 @@ class Coordinator:
    self.ledger.emit('OPPORTUNITY_COMPLETE',{'opportunity_id':op})
    if any(self.ledger.positions.values()):self.ledger.halt('RESIDUAL_REQUIRES_OPERATOR_HANDOFF')
   except BaseException as exc:
-   _TRANSIENT_PATTERNS=('NO_SHADOW_ENTRY_DEPTH','NO_EXIT_DEPTH','BOOK_OR_WS_INVALID','BOOK_CLOCK_INVALID','DEPTH_INVALID','DUPLICATE_DEPTH_LEVEL','UNSORTED_DEPTH','EMPTY_OR_CROSSED_BOOK','BOOK_RECORD_BOUND','ENTRIES_STOPPED_OR_UNRECONCILED','PRE_ENTRY_ACCOUNT_UNQUALIFIED','FEE_MARKET_MISMATCH','EXIT_IDENTITY_CHANGED')
+   if hasattr(self.ledger,'journal_failure'):raise
    exc_name=type(exc).__name__
-   exc_msg=str(exc)
-   is_transient=any(p in exc_msg for p in _TRANSIENT_PATTERNS) or exc_name in ('ValueError','KeyError')
+   is_transient=transient_availability(exc) and self.ledger.active is None and not any(self.ledger.positions.values()) and not self.ledger.stop
    if is_transient:
+    self.runtime_counts['SHADOW_REJECTIONS']+=1
     self.ledger.stop_new_entries=True
     self.ledger.reconciled=False
     self.ledger.reasons.append('TRANSIENT_'+exc_name)
-    self.ledger.emit('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'TRANSIENT','message':exc_msg,'exposure_management':'STOP_NEW_ENTRIES_ONLY; recovery will re-enable if reconciled'})
+    self.ledger.emit('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'TRANSIENT','message_redacted':str(exc) if str(exc) in TRANSIENT_AVAILABILITY else '[REDACTED]','exposure_management':'FULL_REQUALIFICATION_REQUIRED'})
    else:
-    self.ledger.halt('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'FATAL','message':exc_msg,'exposure_management':'STOP_ENTRIES_KEEP_JOURNAL_AND_ACCOUNT_MONITOR; operator handoff required for residual/unknown exposure'})
+    self.ledger.halt('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'FATAL','exposure_management':'INDEPENDENT_CUSTODY_REQUIRED'})
+    raise
   finally:
    if op in self.ledger.shadows and op in self.ledger.trades:self.comparisons.append({'opportunity_id':op,'shadow_hash':self.ledger.shadows[op][0],'entry':self.measurements.get(op+':entry',{}),'exit':self.measurements.get(op+':exit'),'residual_at_observation':{k:str(v) for k,v in self.ledger.positions.items() if v},'exposure_known':self.ledger.reconciled})
    self.signal_context.pop(signal_ts,None);self.busy=False
  def on_status(self,kind):
+  if kind=='BTC_RECONNECT':
+   self._btc_recovery_required=True;self.v1['reset_feed']();self.ledger.stop_new_entries=True;return
+  if kind=='BTC_CONNECTED':return
   if kind=='WS_DISCONNECT':self.ledger.stop_new_entries=True;self._post_reconnect_verified=False
   elif kind=='WS_RECONNECTING':self.ledger.stop_new_entries=True;self.ledger.emit('WS_RECONNECTING',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'attempt':getattr(self,'_reconnect_attempt',0)})
   elif kind=='WS_RECONNECTED':
    self._post_reconnect_verified=False
    self.ledger.emit('WS_RECONNECTED',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'rest_seeded_tokens':list(self.book_source.stream.tokens) if hasattr(self.book_source,'stream') else [],'state':'PENDING_FRESH_GUARD'})
-  elif kind in ('UNKNOWN_ORDER','UNKNOWN_POSITION','ACCOUNT_MISMATCH','LEDGER_MISMATCH','UNCAUGHT_EXCEPTION'):self.ledger.halt(kind)
+  elif kind in ('UNKNOWN_ORDER','UNKNOWN_FILL','UNKNOWN_POSITION','ACCOUNT_MISMATCH','LEDGER_MISMATCH','UNCAUGHT_EXCEPTION'):self.ledger.halt(kind)
+ async def recover_entries(self):
+  """Fresh complete account and both outcome books; no flag-only recovery."""
+  l=self.ledger
+  if l.stop or self.busy or l.active is not None or any(l.positions.values()) or self.v1['errors'] or self._btc_recovery_required:return False
+  try:
+   observation=await self.account_source.snapshot()
+   books=[self.book(await self.book_source.current(side)) for side in ('UP','DOWN')]
+   if books[0]['market']!=books[1]['market']:raise ValueError('RECOVERY_MARKET_MISMATCH')
+   if l.stop or self.busy or l.active is not None or self.v1['errors'] or self._btc_recovery_required:return False
+   if not l.reconcile(observation,self.clock()):return False
+   for b in books:self.book(b)
+  except Exception as exc:
+   if hasattr(l,'journal_failure'):raise
+   if not transient_availability(exc):raise
+   l.reconciled=False;return False
+  l.emit('RECOVERY_COMPLETE',{'cleared_transient_errors':False,'remaining_v1_errors':[]})
+  self._post_reconnect_verified=True;l.stop_new_entries=False
+  return True
  async def monitor_account(self):
   """Resilient monitor: retry on transient SDK failures instead of halting immediately."""
   failures=0
@@ -196,8 +232,13 @@ class Coordinator:
     else:self.ledger.reconcile(observation,self.clock())
    except BaseException as exc:
     if isinstance(exc,asyncio.CancelledError):raise
+    if hasattr(self.ledger,'journal_failure'):raise
+    self.ledger.stop_new_entries=True;self.ledger.reconciled=False
+    if not transient_availability(exc):
+     self.ledger.halt('ACCOUNT_MONITOR_FATAL',{'exception_type':type(exc).__name__})
+     raise
     failures+=1
-    msg=str(exc)
+    msg=str(exc) if str(exc) in TRANSIENT_AVAILABILITY else '[REDACTED]'
     # Redact potential secrets: collapse hex addresses/keys > 20 chars
     import re as _re
     msg_safe=_re.sub(r'0x[a-fA-F0-9]{20,}','0x…REDACTED…',msg)

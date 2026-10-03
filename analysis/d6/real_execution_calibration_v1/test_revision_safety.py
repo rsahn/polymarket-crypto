@@ -116,7 +116,7 @@ def test_book_initial_timeout_never_becomes_ready():
     async def case():
         class S:
             def read(self):return {'available':False}
-            async def run(self):await asyncio.Event().wait()
+            async def run(self,*,rest_seed_coro=None):await asyncio.Event().wait()
         b=BookAdapter(S(),market='m',tokens={'UP':'u','DOWN':'d'})
         with pytest.raises(TimeoutError):await b.run(lambda x:None,initial_timeout=.01)
         assert not b.ready.is_set() and b.state=='DEGRADED'
@@ -153,8 +153,9 @@ def test_root_waits_after_exception_until_custody_transfer(tmp_path):
             e[k]['source_digest']=digest(e[k]['payload']);a.seal(e[k])
         release=asyncio.Event()
         class S:
-            def read(self):return {'available':True}
-            async def run(self):await asyncio.Event().wait()
+            tokens=('u','d');generation=1
+            def read(self):return {'available':True,'fresh':True,'book_synced':True,'generation':1}
+            async def run(self,*,rest_seed_coro=None):await asyncio.Event().wait()
         class Channel:
             async def accept(self,r):
                 await release.wait();return a.seal(dict(**r,owner='owner',receipt_id='r',accepted_ms=1000))
@@ -162,6 +163,9 @@ def test_root_waits_after_exception_until_custody_transfer(tmp_path):
             async def run(self,*args):raise RuntimeError('PRIMARY')
         owner=CustodyOwner(Channel(),ReceiptVerifier(a,'owner',clock=lambda:1000),timeout=2)
         s=PreparedSession(directory=tmp_path,experiment_id='experiment',account='account',starting_cash='100',account_reader=None,position_reader=None,stream=S(),market='m',tokens={'UP':'u','DOWN':'d'},clock=lambda:1000,collateral='pUSD',baseline=base)
+        async def monitor_fixture():await asyncio.Event().wait()
+        s.coordinator.monitor_account=monitor_fixture
+        s.ledger.reconciled=True
         arm=types.SimpleNamespace(nonce='fixture',started_monotonic=__import__('time').monotonic(),check=lambda *a:None)
         task=asyncio.create_task(s.start(client=a.client,verifier=v,evidence=lambda:e,signal_source=Signal(),custody_owner=owner,confirm=lambda *a,**k:arm))
         await asyncio.sleep(.3);assert not task.done()
@@ -209,7 +213,7 @@ def test_verifier_ignoring_cancel_has_single_tracked_operation(tmp_path):
 def test_production_root_refuses_wrong_volume_before_stream(tmp_path):
     from .runner import PreparedSession
     class Stream:
-        async def run(self):raise AssertionError('must not start')
+        async def run(self,*,rest_seed_coro=None):raise AssertionError('must not start')
     a=Authority();owner=CustodyOwner(None,ReceiptVerifier(a,'owner'))
     s=PreparedSession(directory=tmp_path,experiment_id='experiment',account='account',starting_cash='100',account_reader=None,position_reader=None,stream=Stream(),market='m',tokens={'UP':'u','DOWN':'d'},clock=lambda:1000)
     try:

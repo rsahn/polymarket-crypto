@@ -23,9 +23,9 @@ async def run_with_recovery(stream, *, connect_factory=None, max_reconnects=2,
             # run closes the previous socket and clears usable books before returning.
             # Each connection starts a new generation and needs two full snapshots.
             if connect_factory is None:
-                await stream.run()
+                await stream.run(reconnect=False)
             else:
-                await stream.run(connect_factory=connect_factory)
+                await stream.run(connect_factory=connect_factory,reconnect=False)
             recovery['attempts'].append(dict(attempt=attempt + 1,
                 generation=stream.generation, reason=stream.failure,
                 regression_event=deepcopy(stream.diagnostics.get('regression_event')),
