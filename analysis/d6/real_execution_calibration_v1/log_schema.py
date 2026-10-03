@@ -7,7 +7,7 @@ def public_asset(value):
 
 BOOK={'valid','ws_healthy','market','token','book_state_id','source_ms','receive_ms','asks','bids','generation'}
 FILL={'trade_id','order_id','token','market','side','price','shares','cash_fee','share_fee','fee_evidence','exchange_ts_ms','receive_ts_ms','transaction_hash'}
-SNAP={'account','observed_ms','cash','positions','open_orders','trade_ids','terminal_order_ids','inventory_proven','cash_proven','orders_complete','trades_complete','positions_complete','atomic_frontier','scope','session','collateral','baseline_digest','experiment_trade_ids','ancestor_frontiers'}
+SNAP={'source_record_digest','account','observed_ms','cash','positions','open_orders','trade_ids','terminal_order_ids','inventory_proven','cash_proven','orders_complete','trades_complete','positions_complete','atomic_frontier','scope','session','collateral','baseline_digest','experiment_trade_ids','ancestor_frontiers'}
 SHADOW={'opportunity_id','market','token','direction','signal_receive_ts','signal_decision_ts','signal_source_ts','btc_move','btc_lookback_evidence','actual_selected_book','selected_book','actual_entry_observation_ts','expected_entry_price','expected_quantity','expected_vwap','expected_fill','expected_entry_cost','expected_residual','expected_fee','fee_status','expected_exit_behavior','strategy_hashes','expected_proceeds','expected_sold','exit_due_ms','actual_exit_observation_ms'}
 
 def project(value,fields,tokens):

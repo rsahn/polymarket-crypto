@@ -96,7 +96,10 @@ class AccountAdapter:
         if new!=set(e['experiment_trade_ids']):raise ValueError('FOREIGN_ACCOUNT_ACTIVITY')
         if e.get('foreign_order_ids'):raise ValueError('FOREIGN_ACCOUNT_ACTIVITY')
         if any(e.get(k) is not True for k in ('inventory_proven','cash_proven','orders_complete','trades_complete','positions_complete')):raise ValueError('ACCOUNT_SCOPE_UNPROVEN')
-        result=copy.deepcopy(e);result['cash']=str(dec(e['cash']));result['positions']={k:str(dec(v)) for k,v in e['positions'].items()};result['trade_ids']=sorted(new)
+        result=copy.deepcopy(e);result['source_record_digest']=digest(e);result['cash']=str(dec(e['cash']));result['positions']={k:str(dec(v)) for k,v in e['positions'].items()};result['trade_ids']=sorted(new)
+        prior_terminals=set(identifiers(self.baseline.get('terminal_order_ids',[])))
+        if not prior_terminals<=set(e['terminal_order_ids']):raise ValueError('BASELINE_ORDER_HISTORY_MISSING')
+        result['terminal_order_ids']=sorted(set(e['terminal_order_ids'])-prior_terminals)
         return result
 
 class BookAdapter:

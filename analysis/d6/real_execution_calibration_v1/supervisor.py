@@ -3,6 +3,7 @@ import asyncio,time
 from .reports import Reports
 from .custody import CustodyOwner
 from .engine import transient_availability
+from .incidents import capture as capture_incident
 
 TARGET_RUNTIME_SECONDS=259200
 
@@ -12,17 +13,18 @@ def stop_memory(c,reason):
     try:c.ledger.emit('STOP',{'reason':reason})
     except Exception:pass
 
-async def run(coordinator,signal_source,book_source,report_directory,operator_handoff,*,shutdown_timeout=1):
+async def run(coordinator,signal_source,book_source,report_directory,operator_handoff,*,shutdown_timeout=1,clock=time.monotonic,sleep=asyncio.sleep,maintenance=None):
     c=coordinator
     if not isinstance(operator_handoff,CustodyOwner):raise ValueError('INDEPENDENT_CUSTODY_OWNER_REQUIRED')
     reports=None;tasks=[];primary=None;reason='UNKNOWN';custody=None
     try:
         c.guard()
-        reports=Reports(report_directory,c.ledger,c)
+        reports=Reports(report_directory,c.ledger,c,clock=clock)
         factories=[lambda:signal_source.run(c.on_btc,c.on_status),lambda:book_source.run(c.on_status),c.monitor_account]
         names=['BTC_SIGNAL_SOURCE','POLYMARKET_BOOK_SOURCE','ACCOUNT_MONITOR'];restarts=[0,0,0]
         tasks=[asyncio.create_task(factory(),name=name) for factory,name in zip(factories,names)]
         while True:
+            if maintenance is not None:await maintenance()
             for i,task in enumerate(tasks):
                 if task.done():
                     try:
@@ -34,6 +36,7 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
                                 'task_name':task.get_name(),
                                 'exception_type':type(exc).__name__,
                                 'message_redacted':'[REDACTED]',
+                                'incident_id':capture_incident(c.ledger,exc,task.get_name()),
                                 'transient':retry,
                                 'restart_attempted':retry,
                             })
@@ -47,7 +50,7 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
                         raise
                     raise RuntimeError('BACKGROUND_TASK_ENDED:'+task.get_name())
             reports.hourly()
-            if time.monotonic()-c.arm.started_monotonic>=TARGET_RUNTIME_SECONDS:c.ledger.halt('EXPERIMENT_EXPIRED')
+            if clock()-c.arm.started_monotonic>=TARGET_RUNTIME_SECONDS:c.ledger.halt('EXPERIMENT_EXPIRED')
             if c.kill_path.exists() and not c.ledger.stop:c.ledger.halt('MANUAL_KILL')
             if c.ledger.attempts>=4 and not c.busy:c.ledger.halt('ENTRY_ATTEMPT_LIMIT')
             if c.ledger.stop_new_entries and not c.ledger.stop and not c.busy:
@@ -55,13 +58,14 @@ async def run(coordinator,signal_source,book_source,report_directory,operator_ha
                 qualified=await c.recover_entries()
                 if not qualified:
                     c.ledger.emit('RECOVERY_WAIT',{'reasons':c.ledger.reasons.copy(),'stop_new_entries':True,'waiting_for_reconciliation':True,'qualified':qualified})
-                await asyncio.sleep(1)
+                await sleep(1)
                 continue
             if c.v1['errors']:raise (c.v1.get('failures') or [RuntimeError('STRATEGY_TASK_FAILED')])[0]
             if c.ledger.stop and not c.busy:
                 reason=c.ledger.reasons[-1];break
-            await asyncio.sleep(.1)
+            await sleep(.1)
     except BaseException as exc:
+        capture_incident(c.ledger,exc,'SUPERVISOR')
         primary=exc;reason='SUPERVISOR_EXCEPTION:'+type(exc).__name__
         stop_memory(c,reason)
     finally:

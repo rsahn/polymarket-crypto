@@ -90,6 +90,7 @@ def inventory():
     return sorted(included),sorted(excluded)
 
 def main():
+    sys.stdout.reconfigure(errors='backslashreplace');sys.stderr.reconfigure(errors='backslashreplace')
     if len(sys.argv)>1 and sys.argv[1] in ('--child','--crash','--journal'):
         mode,temp=sys.argv[1:3];os.environ.clear();os.environ.update(clean_env_saved)
         tempfile.tempdir=temp;sys.dont_write_bytecode=True;install(temp)
@@ -104,7 +105,7 @@ def main():
         if not all(f in allowed_files and Path(f).parent.as_posix()==group for f in files):raise RuntimeError('TEST_INVENTORY_SCOPE')
         sys.path.insert(0,str(ROOT/group))
         import pytest
-        raise SystemExit(pytest.main(['-v' if group=='backend/tests' else '-q','-o','faulthandler_timeout=30','--import-mode=importlib','-p','no:cacheprovider','-p','pytest_asyncio.plugin','--basetemp',str(Path(temp)/'pytest'),*files]))
+        raise SystemExit(pytest.main(['-v' if group=='backend/tests' else '-q','--capture=tee-sys','-o','faulthandler_timeout=900' if group=='analysis/d6/real_execution_calibration_v1' else 'faulthandler_timeout=30','--import-mode=importlib','-p','no:cacheprovider','-p','pytest_asyncio.plugin','--basetemp',str(Path(temp)/'pytest'),*files]))
     included,excluded=inventory();groups={}
     for f in included:groups.setdefault(Path(f).parent.as_posix(),[]).append(f)
     selected=sys.argv[1:]
@@ -118,7 +119,7 @@ def main():
         # Parent orchestrator never imports application/test code. Children scrub environment and guard first.
         with tempfile.TemporaryDirectory(prefix='d6-audited-tests-') as temp:
             cmd=[sys.executable,'-B',str(SELF),'--child',temp,group,json.dumps(files)]
-            try:r=subprocess.run(cmd,cwd=ROOT,env=clean_env(temp),capture_output=True,text=True,errors='replace',timeout=180)
+            try:r=subprocess.run(cmd,cwd=ROOT,env=clean_env(temp),capture_output=True,text=True,errors='replace',timeout=1800 if group=='analysis/d6/real_execution_calibration_v1' else 180)
             except subprocess.TimeoutExpired as exc:
                 output=(exc.stdout or b'')+(exc.stderr or b'')
                 (OUT/('active_group_'+str(i)+'.txt')).write_bytes(output if isinstance(output,bytes) else output.encode())

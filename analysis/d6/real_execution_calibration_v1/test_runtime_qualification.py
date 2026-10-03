@@ -21,23 +21,25 @@ def test_self_attestation_cannot_arm():
         HumanArm.confirm('fixture',{},verifier=types.SimpleNamespace(authority=SelfAttestingAuthority()),evidence={})
 
 
-def fixture(path, mode='full', logged=False):
+def fixture(path, mode='full', logged=False, token='t', down='d', maker='account', signer_address='signer'):
     path.mkdir(exist_ok=True)
     now=[1000]
     log=LiveLog(path/'logs','fixture',background=False,console=io.StringIO()) if logged else None
-    if log:log.public_tokens.update(('t','d'));log.public_markets.add('m')
+    if log:log.public_tokens.update((token,down));log.public_markets.add('m')
     j=LoggedJournal(path/'journal','fixture',log) if log else Journal(path/'journal','fixture')
-    l=CalibrationLedger(j,'account','500')
+    l=CalibrationLedger(j,maker,'500')
     remote={'cash':Decimal('500'),'positions':{},'trades':[],'orders':[]}
     calls=[]
     class Books:
         failure=None
-        async def current(self,side):return await self.snapshot('t' if side=='UP' else 'd')
+        async def current(self,side):return await self.snapshot(token if side=='UP' else down)
         async def snapshot(self,token):
             if self.failure:raise self.failure
             return dict(valid=True,ws_healthy=True,market='m',token=token,book_state_id=str(now[0]),source_ms=now[0]-1,receive_ms=now[0],asks=[['.5','100']],bids=[['.49','100']])
     class Port:
-        maker='account';signer='signer'
+        signer=signer_address
+        # fixture identity
+        maker_address=maker
         async def prepare(self,**kw):
             q=Decimal(kw['shares']);p=Decimal(kw['price']);buy=kw['side']=='BUY'
             calls.append('sign')
@@ -52,7 +54,7 @@ def fixture(path, mode='full', logged=False):
         changes={}
         async def snapshot(self):
             if self.failure:raise self.failure
-            return snapshot(l,cash=str(remote['cash']),positions=remote['positions'].copy(),trade_ids=remote['trades'].copy(),terminal_order_ids=remote['orders'].copy(),observed_ms=now[0],**self.changes)
+            return snapshot(l,account=maker,cash=str(remote['cash']),positions=remote['positions'].copy(),trade_ids=remote['trades'].copy(),terminal_order_ids=remote['orders'].copy(),observed_ms=now[0],**self.changes)
         async def execution(self,oid):
             cid=oid.removesuffix('-remote');o=l.orders[cid];buy=o['side']=='BUY'
             q=Decimal('0' if mode=='none' else '10' if mode=='partial' and buy else o['shares'])
@@ -62,13 +64,14 @@ def fixture(path, mode='full', logged=False):
                 tid=oid+'-trade';remote['trades'].append(tid)
                 remote['cash']+=(-q*price if buy else q*price)-fee
                 remote['positions'][o['token']]=remote['positions'].get(o['token'],Decimal(0))+(q if buy else -q)
-                fills=[dict(trade_id=tid,order_id=oid,token=o['token'],market='m',side=o['side'],price=str(price),shares=str(q),cash_fee=str(fee),share_fee='0',fee_evidence=dict(cash_effect_proven=True,share_effect_proven=True),exchange_ts_ms=now[0]-1,receive_ts_ms=now[0])]
+                fills=[dict(trade_id=tid,order_id=oid,token=o['token'],market=o['market'],side=o['side'],price=str(price),shares=str(q),cash_fee=str(fee),share_fee='0',fee_evidence=dict(cash_effect_proven=True,share_effect_proven=True),exchange_ts_ms=now[0]-1,receive_ts_ms=now[0])]
             remote['orders'].append(oid)
             # Idempotent duplicate observation must never double debit cash or shares.
             return dict(fills=fills+fills,terminal_status='FILLED' if q==Decimal(o['shares']) else 'CANCELED',cumulative_shares=str(q),account_snapshot=await self.snapshot())
     async def sleep(seconds):now[0]+=int(seconds*1000);await asyncio.sleep(0)
     arm=types.SimpleNamespace(nonce='fixture',started_monotonic=0,check=lambda *a,**k:None)
-    c=Coordinator(l,Port(),Account(),Books(),path/'kill',arm=arm,fee_ceiling='1',clock=lambda:now[0],sleep=sleep)
+    port=Port();port.maker=maker
+    c=Coordinator(l,port,Account(),Books(),path/'kill',arm=arm,fee_ceiling='1',clock=lambda:now[0],sleep=sleep)
     return c,l,now,log,calls
 
 

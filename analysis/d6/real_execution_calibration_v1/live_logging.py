@@ -16,10 +16,10 @@ EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_B
  'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
  'ACCOUNT_MONITOR_FAILURE','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE'}
 PAYLOAD_FIELDS={
- 'CALIBRATION_EXCEPTION':{'exception_type','classification','message_redacted','exposure_management'},
+ 'CALIBRATION_EXCEPTION':{'incident_id','exception_type','classification','message_redacted','exposure_management'},
  'RECOVERY_COMPLETE':{'cleared_transient_errors','remaining_v1_errors'},
  'RECOVERY_WAIT':{'reasons','stop_new_entries','waiting_for_reconciliation','qualified'},
- 'BACKGROUND_TASK_ENDED':{'task_name','exception_type','message_redacted','transient','restart_attempted'},
+ 'BACKGROUND_TASK_ENDED':{'incident_id','task_name','exception_type','message_redacted','transient','restart_attempted'},
  'INIT':{'account','starting_cash','version','max_entry','max_total','max_entries'},
  'ARM_STATE':{'armed','pid','nonce','persisted_arming'},
  'STOP':{'reason','details'},
@@ -116,8 +116,8 @@ class LiveLog(RotatingLog):
             except BaseException:self.fault('LOG_WRITE_OR_CONSOLE_FAILURE');raise
 
 class LoggedJournal(Journal):
-    def __init__(self,path,experiment_id,log):
-        self.log=log;super().__init__(path,experiment_id)
+    def __init__(self,path,experiment_id,log,**quota):
+        self.log=log;super().__init__(path,experiment_id,**quota)
     def project_shadow(self,shadow):
         from .log_schema import project,SHADOW
         return self.log.canonical_tree(project(shadow,SHADOW,self.log.public_tokens))
@@ -133,7 +133,7 @@ class LoggedJournal(Journal):
             if kind not in PAYLOAD_FIELDS:raise ValueError('LIVE_PAYLOAD_SCHEMA_REQUIRED')
             clean=scrub({k:v for k,v in payload.items() if k in PAYLOAD_FIELDS[kind]})
             if kind=='STOP' and isinstance(clean.get('details'),dict):
-                clean['details']={k:v for k,v in clean['details'].items() if k in ('exception_type','exposure_management','local_send_call_ms','socket_send_proven')}
+                clean['details']={k:v for k,v in clean['details'].items() if k in ('incident_id','exception_type','exposure_management','local_send_call_ms','socket_send_proven')}
             if kind=='ACK_RESPONSE':
                 clean={k:v for k,v in clean.items() if k in ('client_id','response','receive_ms','local_send_call_ms')}
                 response=clean.get('response',{})

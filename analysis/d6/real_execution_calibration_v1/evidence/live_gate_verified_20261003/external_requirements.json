@@ -1,0 +1,55 @@
+{
+  "live_gate": "BLOCKED_UNTIL_EXTERNAL_PROVENANCE_IS_APPROVED",
+  "historical_incidents": {
+    "run0088": "UNPROVEN original trigger/message/executed historical artifact",
+    "run0089": "UNPROVEN initial message/exact historical executable; do not infer from current code"
+  },
+  "external_decisions": [
+    {
+      "id": "AUTHORITATIVE_PROVIDER",
+      "decision": "Select and independently approve the source of complete wallet-wide observations. Scoped market readers and API-key-only inventories are insufficient.",
+      "required_artifacts": [
+        "Coverage audit for all cash, positions, all open/terminal orders across credentials and markets, all trades/fills, cash/share fee effects, from wallet creation at one coherent frontier",
+        "Approved provider identity plus archival retrieval of original signed observations by source_record_digest",
+        "Outside-Git inbox: baseline.json, snapshot.json, qualification.json, market.json, next_market.json, execution-<SHA256(order_id)>.json; atomic publication"
+      ],
+      "implementation": "production_provider.EvidenceInbox and production_evidence_source.ProductionEvidenceSource; no local completeness flag synthesis"
+    },
+    {
+      "id": "TRUST_POLICY",
+      "decision": "Approve external signer addresses and permitted evidence kinds, account/signer/collateral/session bindings, and the canonical trust-policy SHA256 through an independent review. Do not calculate a policy digest and treat that as approval.",
+      "required_artifacts": [
+        "Reviewed trust policy {keys: {key_id: {address,kinds}}, provider, context: {account,signer,collateral,session}}",
+        "Externally supplied approved_policy_digest matching core.digest(trust_policy)",
+        "Fresh signed records for all 14 preflight requirements, including real account/fee coverage, tested SDK codec, custody probe and independent audit"
+      ],
+      "implementation": "production_authority.ProductionAuthority; EIP-191 domain D6_PROVENANCE_V1; SelfAttestingAuthority rejected at production boundary"
+    },
+    {
+      "id": "CUSTODY_AND_ARM",
+      "decision": "Designate and provision the independent custody owner, durable state store, receipt authority and verified acceptance probe. Supply the already configured real SDK identity. The operator must explicitly type CALIBRATE <session> only after all real preflight proofs are ready.",
+      "required_artifacts": [
+        "Independent custody receipt/probe and durable owner lifecycle outside the trading task",
+        "Real SDK client matching the approved public wallet/signer and pinned production environment",
+        "Explicit interactive HumanArm confirmation; no environment-variable auto-arm"
+      ],
+      "implementation": "launch.from_approved_inbox -> launch.main -> PreparedSession.start; no execution performed during this qualification"
+    }
+  ],
+  "storage_profile": {
+    "raw_journal_quota_bytes": 17179869184,
+    "log_quota_bytes": 17179869184,
+    "reserve_bytes": 1073741824,
+    "required_free_bytes": 35433480192,
+    "observed_D_free_bytes": 1596416430080,
+    "raw_record_max_bytes": 16384,
+    "planning_records": 550144,
+    "margin_minimum": 1.5,
+    "limitation": "Capacity envelope, not an endurance guarantee for hardware or unbounded incident storms. Quotas and low-disk guards remain fail-closed."
+  },
+  "logical_soak_scope": "One supervisor, ledger, arm and journal for 259200 seconds. Test-only buffered writes/coalesced physical fsync barriers; all journal bytes retained until end-of-test full hash-chain verification. Production uses unmodified per-record fsync. Physical rotating-log and journal fsync are tested separately. This is not 72 hours of physical uptime.",
+  "production_synthetic_dependencies": "NONE in launch/live_runner; real StreamBook, SignalSource and SDK type required",
+  "strategy": "Frozen V1 hashes must remain unchanged; no guard or financial-cap relaxation",
+  "new_incident_capture": "DPAPI CurrentUser, owner-only directory, exact exception message/traceback, marshalled executed code and source hashes, captured independently before attempted exception journaling. Archive failure blocks entries and reports its own failure without recursive journal use.",
+  "no_monetary_actions": true
+}

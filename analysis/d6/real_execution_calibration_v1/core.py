@@ -74,7 +74,8 @@ def redact(x):
  return x
 
 class Journal:
- def __init__(self,path,experiment_id):
+ def __init__(self,path,experiment_id,*,max_bytes=256*1024**2,max_record_bytes=1024**2):
+  self.max_bytes=max_bytes;self.max_record_bytes=max_record_bytes
   self.lock=threading.RLock()
   self.path=Path(path);self.experiment_id=experiment_id;self.seq=0;self.previous='0'*64;self.failed=False;self.bytes=0
   self.file=self.path.open('xb',buffering=0)
@@ -85,7 +86,7 @@ class Journal:
   try:
    row={'experiment_id':self.experiment_id,'seq':self.seq,'previous':self.previous,'kind':kind,'payload':redact(payload)}
    row['hash']=digest(row);data=(encoded(row)+'\n').encode()
-   if len(data)>1024**2 or self.bytes+len(data)>256*1024**2:raise OSError('JOURNAL_QUOTA')
+   if len(data)>self.max_record_bytes or self.bytes+len(data)>self.max_bytes:raise OSError('JOURNAL_QUOTA')
    view=memoryview(data)
    while view:
     n=self.file.write(view)
@@ -120,6 +121,8 @@ class CalibrationLedger:
    if 'JOURNAL_FAILURE' not in self.reasons:self.reasons.append('JOURNAL_FAILURE')
    if not hasattr(self,'journal_failure'):
     self.journal_failure=exc
+    from .incidents import capture
+    capture(self,exc,'JOURNAL_APPEND')
     # Independent sink, no payload or exception text (both may contain credentials).
     try:sys.stderr.write('JOURNAL_FAILURE exception_type='+type(exc).__name__+'; entries blocked\n');sys.stderr.flush()
     except BaseException:pass

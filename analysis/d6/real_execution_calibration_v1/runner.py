@@ -24,14 +24,23 @@ class DisabledPort:
     async def submit_once(self,*args):raise ValueError('LIVE_QUALIFICATION_REQUIRED')
 
 class PreparedSession:
-    def __init__(self,*,directory,experiment_id,account,starting_cash,account_reader,position_reader,stream,market,tokens,clock,collateral=None,evidence_source=None,authority=None,baseline=None):
+    def __init__(self,*,directory,experiment_id,account,starting_cash,account_reader,position_reader,stream,market,tokens,clock,collateral=None,evidence_source=None,authority=None,baseline=None,production_capacity=False):
         from .core import digest
         self.context=SessionContext(account,experiment_id,market,collateral,tokens['UP'],tokens['DOWN'],digest(baseline) if baseline else None)
         self.directory=Path(directory);self.directory.mkdir(parents=True,exist_ok=True)
-        self.log=LiveLog(self.directory,experiment_id);self.log.public_tokens.update(tokens.values());self.log.public_markets.add(market)
+        log_options={};journal_options={}
+        if production_capacity:
+            from .capacity import require_capacity,QUOTA_BYTES,MAX_RECORD_BYTES
+            require_capacity(self.directory)
+            log_options=dict(max_bytes=QUOTA_BYTES)
+            journal_options=dict(max_bytes=QUOTA_BYTES,max_record_bytes=MAX_RECORD_BYTES)
+        self.log=LiveLog(self.directory,experiment_id,**log_options);self.log.public_tokens.update(tokens.values());self.log.public_markets.add(market)
         try:
-            self.journal=LoggedJournal(self.directory/(experiment_id+'.jsonl'),experiment_id,self.log)
+            self.journal=LoggedJournal(self.directory/(experiment_id+'.jsonl'),experiment_id,self.log,**journal_options)
             self.ledger=CalibrationLedger(self.journal,account,starting_cash)
+            if production_capacity:
+                from .incidents import IncidentStore
+                self.ledger.incident_store=IncidentStore(self.directory/(experiment_id+'-incidents'))
             self.account=AccountAdapter(account_reader,position_reader,account=account,collateral=collateral,evidence_source=evidence_source,authority=authority,baseline=baseline,session=experiment_id,intents=lambda:self.ledger.orders,clock=clock)
             self.book=BookAdapter(stream,market=market,tokens=tokens,clock=clock)
             def fault(reason):
@@ -67,7 +76,7 @@ class PreparedSession:
         # Authority must bind this very client instance without exposing credentials.
         if verifier.authority.verify_client(client,proof['sdk_order_path_qualified']) is not True:raise ValueError('ASSEMBLY_CLIENT_UNQUALIFIED')
 
-    async def start(self,*,client=None,verifier=None,evidence=None,signal_source=None,custody_owner=None,confirm=None):
+    async def start(self,*,client=None,verifier=None,evidence=None,signal_source=None,custody_owner=None,confirm=None,rotation_source=None):
         import asyncio,shutil
         from .engine import HumanArm
         from .transport import SDKPort
@@ -122,9 +131,43 @@ class PreparedSession:
             arm=RevalidatedArm()
             self.coordinator.arm=arm
             self.coordinator.port=SDKPort(client,maker=identity['maker'],signer=identity['signer'],ledger=self.ledger,arm=arm,qualified=True)
+            rotating=False
+            async def rotate_if_due():
+                nonlocal book_task,rotating,verifier,evidence
+                if rotation_source is None or self.coordinator.clock()<self.book.stream.expiry-1000:return
+                self.coordinator.on_status('WS_DISCONNECT')
+                if self.coordinator.busy or self.ledger.active is not None or any(self.ledger.positions.values()):return
+                rotating=True
+                try:
+                    specification,new_evidence=await rotation_source()
+                    tokens=specification['outcome_tokens'];market=specification['condition_id']
+                    new_verifier=type(verifier)(verifier.authority,account=self.context.account,market=market,session=self.context.session,collateral=self.context.collateral,strategy_hashes=verifier.context['strategy_hashes'])
+                    proof=new_evidence()
+                    new_verifier.validate('market_identity_verified',proof['market_identity_verified'],self.coordinator.clock())
+                    expected=proof['market_identity_verified']['payload']
+                    if expected['outcome_tokens']!=tokens or expected['expires_ms']!=specification['expiry_ms']:raise ValueError('ROTATION_PROVENANCE')
+                    book_task.cancel()
+                    done,pending=await asyncio.wait({book_task},timeout=1)
+                    if pending:raise TimeoutError('ROTATION_SHUTDOWN_TIMEOUT')
+                    if not book_task.cancelled():book_task.result()
+                    await self.book.rotate(specification['slug'],market,(tokens['UP'],tokens['DOWN']),specification['expiry_ms'])
+                    self.context=SessionContext(self.context.account,self.context.session,market,self.context.collateral,tokens['UP'],tokens['DOWN'],self.context.baseline_digest)
+                    self.log.public_tokens.update(tokens.values());self.log.public_markets.add(market)
+                    verifier=new_verifier;evidence=new_evidence
+                    book_task=asyncio.create_task(self.book.run(self.coordinator.on_status))
+                    await self.book.wait_ready()
+                    current=evidence();self.validate_assembly(verifier,current,client,custody_owner)
+                    if evaluate(current,self.coordinator.clock(),shutil.disk_usage(self.directory).free,verifier)['status']!='CALIBRATION_READY':raise ValueError('ROTATION_PREFLIGHT_BLOCKED')
+                    if not await self.coordinator.recover_entries():raise ValueError('ROTATION_ACCOUNT_UNQUALIFIED')
+                finally:rotating=False
             class RunningBook:
-                async def run(inner,on_status):await asyncio.shield(book_task)
-            result=await run(self.coordinator,signal_source,RunningBook(),self.directory/'reports',custody_owner)
+                async def run(inner,on_status):
+                    while True:
+                        if not rotating and book_task.done():
+                            await book_task
+                            raise RuntimeError('BOOK_STREAM_ENDED')
+                        await asyncio.sleep(.1)
+            result=await run(self.coordinator,signal_source,RunningBook(),self.directory/'reports',custody_owner,maintenance=rotate_if_due)
         except BaseException as exc:primary=exc
         finally:
             try:await custody_owner.wait_resolved()
@@ -132,15 +175,22 @@ class PreparedSession:
                 if primary is None:primary=exc
                 else:custody_owner.errors.append('ROOT_CLEANUP:'+type(exc).__name__)
             book_task.cancel()
-            while not book_task.done():
-                try:await asyncio.wait({book_task},timeout=.1)
-                except asyncio.CancelledError:continue
-            if not book_task.cancelled():
+            _,pending=await asyncio.wait({book_task},timeout=1)
+            if pending:
+                custody_owner.errors.append('ROOT_BOOK_SHUTDOWN_TIMEOUT')
+                if primary is None:primary=TimeoutError('ROOT_BOOK_SHUTDOWN_TIMEOUT')
+            if book_task.done() and not book_task.cancelled():
                 try:book_task.result()
                 except BaseException as exc:
                     if primary is None:primary=exc
-            await self.book.shutdown()
-        if primary is not None:raise primary
+            try:await self.book.shutdown()
+            except BaseException as exc:
+                custody_owner.errors.append('ROOT_STREAM_CLEANUP:'+type(exc).__name__)
+                if primary is None:primary=exc
+        if primary is not None:
+            from .incidents import capture
+            capture(self.ledger,primary,'PREPARED_SESSION')
+            raise primary
         return result
 
 class SignalSource:

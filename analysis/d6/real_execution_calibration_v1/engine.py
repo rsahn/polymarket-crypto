@@ -6,6 +6,7 @@ from pathlib import Path
 from .core import dec,digest,encoded,redact
 from .v1_binding import bind,verify
 from .transport import validate_signed
+from .incidents import capture as capture_incident
 
 _ARM_FACTORY=object()
 # Exact pre-reservation availability failures only. Unknown errors never recover.
@@ -178,6 +179,7 @@ class Coordinator:
    if any(self.ledger.positions.values()):self.ledger.halt('RESIDUAL_REQUIRES_OPERATOR_HANDOFF')
   except BaseException as exc:
    if hasattr(self.ledger,'journal_failure'):raise
+   incident_id=capture_incident(self.ledger,exc,'OPPORTUNITY')
    exc_name=type(exc).__name__
    is_transient=transient_availability(exc) and self.ledger.active is None and not any(self.ledger.positions.values()) and not self.ledger.stop
    if is_transient:
@@ -185,9 +187,9 @@ class Coordinator:
     self.ledger.stop_new_entries=True
     self.ledger.reconciled=False
     self.ledger.reasons.append('TRANSIENT_'+exc_name)
-    self.ledger.emit('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'TRANSIENT','message_redacted':str(exc) if str(exc) in TRANSIENT_AVAILABILITY else '[REDACTED]','exposure_management':'FULL_REQUALIFICATION_REQUIRED'})
+    self.ledger.emit('CALIBRATION_EXCEPTION',{'incident_id':incident_id,'exception_type':exc_name,'classification':'TRANSIENT','message_redacted':str(exc) if str(exc) in TRANSIENT_AVAILABILITY else '[REDACTED]','exposure_management':'FULL_REQUALIFICATION_REQUIRED'})
    else:
-    self.ledger.halt('CALIBRATION_EXCEPTION',{'exception_type':exc_name,'classification':'FATAL','exposure_management':'INDEPENDENT_CUSTODY_REQUIRED'})
+    self.ledger.halt('CALIBRATION_EXCEPTION',{'incident_id':incident_id,'exception_type':exc_name,'classification':'FATAL','exposure_management':'INDEPENDENT_CUSTODY_REQUIRED'})
     raise
   finally:
    if op in self.ledger.shadows and op in self.ledger.trades:self.comparisons.append({'opportunity_id':op,'shadow_hash':self.ledger.shadows[op][0],'entry':self.measurements.get(op+':entry',{}),'exit':self.measurements.get(op+':exit'),'residual_at_observation':{k:str(v) for k,v in self.ledger.positions.items() if v},'exposure_known':self.ledger.reconciled})
@@ -232,6 +234,7 @@ class Coordinator:
     else:self.ledger.reconcile(observation,self.clock())
    except BaseException as exc:
     if isinstance(exc,asyncio.CancelledError):raise
+    capture_incident(self.ledger,exc,'ACCOUNT_MONITOR')
     if hasattr(self.ledger,'journal_failure'):raise
     self.ledger.stop_new_entries=True;self.ledger.reconciled=False
     if not transient_availability(exc):

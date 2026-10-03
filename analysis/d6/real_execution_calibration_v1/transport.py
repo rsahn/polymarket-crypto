@@ -47,7 +47,10 @@ class SDKPort:
 
 def validate_signed(s,*,token,side,amount,price,shares,maker,signer):
  if str(s.token_id)!=str(token) or s.side!=side or str(s.order_type)!='FAK' or s.post_only:raise ValueError('SIGNED_ORDER_IDENTITY')
- if str(s.maker).lower()!=maker.lower() or str(s.signer).lower()!=signer.lower():raise ValueError('SIGNED_ACCOUNT_IDENTITY')
+ if str(s.maker).lower()!=maker.lower():raise ValueError('SIGNED_ACCOUNT_IDENTITY')
+ if getattr(s,'signature_type',None)==3:
+  if str(s.signer).lower()!=maker.lower() or not verify_deposit_signature(s,signer):raise ValueError('SIGNED_ACCOUNT_IDENTITY')
+ elif str(s.signer).lower()!=signer.lower():raise ValueError('SIGNED_ACCOUNT_IDENTITY')
  if type(s.maker_amount) is not int or type(s.taker_amount) is not int or min(s.maker_amount,s.taker_amount)<=0:raise ValueError('SIGNED_AMOUNTS_INVALID')
  m,t=Decimal(s.maker_amount)/1000000,Decimal(s.taker_amount)/1000000
  p=dec(price)
@@ -56,3 +59,25 @@ def validate_signed(s,*,token,side,amount,price,shares,maker,signer):
  else:
   if m>dec(shares) or t<p*m:raise ValueError('SIGNED_EXIT_CAP_OR_PRICE')
  return {'requested_notional':str(m if side=='BUY' else t),'requested_shares':str(t if side=='BUY' else m),'limit_price':str(p),'side':side,'token':str(token),'order_type':'FAK'}
+
+
+def verify_deposit_signature(s,owner):
+ """Deposit orders name the wallet as signer; recover the actual EOA owner.
+ Strictly pinned production domains, including the SDK's complete 1271 trailer.
+ Session-key envelopes are deliberately rejected until separately qualified.
+ """
+ from eth_account import Account
+ from eth_account.messages import encode_typed_data
+ from polymarket.clients.async_secure import get_environment_config,PRODUCTION
+ from polymarket._internal.actions.orders.context import resolve_order_exchange_address
+ from polymarket._internal.actions.orders.types import UnsignedOrder
+ from polymarket._internal.actions.orders.typed_data import build_order_typed_data,build_order_signature
+ from polymarket._internal.protocol import is_v2_position_id
+ try:
+  config=get_environment_config(PRODUCTION);sig=bytes.fromhex(s.signature.removeprefix('0x'))
+  for neg in (False,True):
+   u=UnsignedOrder(chain_id=config.chain_id,exchange_address=resolve_order_exchange_address(config,asset_id=s.token_id,neg_risk=neg),protocol_version='3' if is_v2_position_id(s.token_id) else '2',**{k:getattr(s,k) for k in ('builder','expiration','maker','maker_amount','metadata','order_type','salt','side','signature_type','signer','taker_amount','timestamp','token_id')})
+   if build_order_signature(u,'0x'+sig[:65].hex())!=s.signature:continue
+   if Account.recover_message(encode_typed_data(full_message=build_order_typed_data(u)),signature=sig[:65]).lower()==owner.lower():return True
+ except Exception:return False
+ return False

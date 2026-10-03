@@ -1,0 +1,206 @@
+{
+  "starting_sha": "038ee6359dddb67505cbfed0e3d7601ba816391e",
+  "timestamp_utc": "2026-10-03T18:30:11.039695+00:00",
+  "LIVE_GATE": "BLOCKED",
+  "PRODUCTION_EVIDENCE_SOURCE_QUALIFIED": "OFFLINE_CONSUMER_CONTRACT_ONLY; actual full-wallet production coverage and independently approved provider absent",
+  "PRODUCTION_ARM_AUTHORITY_QUALIFIED": "OFFLINE_MECHANISM_ONLY; approved external signer policy and real fresh preflight records absent",
+  "PRODUCTION_SYNTHETIC_DEPENDENCIES": "NONE in launch/live_runner; real SDK type, StreamBook and SignalSource mandatory",
+  "CRYPTO_SDK_SIGNING_E2E": {
+    "status": "PASS",
+    "cases": 12,
+    "sdk": "polymarket-client/0.11.0",
+    "wallet_types": [
+      "EOA",
+      "DEPOSIT_WALLET"
+    ],
+    "protocol_versions": [
+      "2",
+      "3"
+    ],
+    "fills": [
+      "full",
+      "partial",
+      "none"
+    ],
+    "signing": "real SDK EIP712 creation and independent signer recovery; complete deposit trailer validation, mutation rejection",
+    "inputs": "ephemeral signing keys and seeded market metadata",
+    "submission": "only SDK post_json network submission replaced; harness denies network and production-secret access"
+  },
+  "CONTINUOUS_72H_LOGICAL_SOAK": {
+    "rotations": 863,
+    "reconnects": 863,
+    "btc_reconnects": 863,
+    "btc_ticks": 259203,
+    "account_failures": 869,
+    "account_reads": 260937,
+    "logical_seconds": 259200.0,
+    "sessions": 1,
+    "journal_rows": 522793,
+    "journal_bytes": 325428847,
+    "log_capacity_model_bytes": 9013559296,
+    "max_record_bytes": 1508,
+    "quota_bytes": 17179869184,
+    "real_seconds": 363.33492910000496,
+    "fsync_mode": "test-only buffered IO/coalesced barriers; production unchanged"
+  },
+  "SOAK_ASSERTED_FINANCIAL_STATE": {
+    "entries": 3,
+    "orders": 6,
+    "fills": 6,
+    "lifetime_allocated": "78",
+    "entry_cap": "25",
+    "lifetime_cap": "100",
+    "max_entries": 4,
+    "final_flat": true,
+    "final_reconciled": true,
+    "ledger_instances": 1,
+    "supervisor_runs": 1
+  },
+  "JOURNAL_CAPACITY_72H": {
+    "status": "PASS_WITHIN_BOUNDED_PROFILE",
+    "projected_journal_bytes": 9013559296,
+    "projected_log_bytes": 9154396160,
+    "quota_each_bytes": 17179869184,
+    "required_free_bytes": 35433480192,
+    "observed_D_free_bytes": 1596416430080,
+    "margin_minimum": 1.5,
+    "physical_sample": {
+      "records": 73,
+      "fsync": "each append, unmodified",
+      "rotations": 14,
+      "logical_seconds": 259200,
+      "wall_seconds": 0.4745783999969717,
+      "journal_bytes": 23313,
+      "log_bytes": 26087,
+      "quota_per_sink": 17179869184
+    },
+    "limits": "Logical soak buffers test IO and coalesces fsync only in the test. Unmodified fsync/rotation tested separately. No claim of 72h physical uptime, unlimited incident rate or power-loss survival of hardware."
+  },
+  "ALL_TESTS_PASS": true,
+  "TESTS_TOTAL": 1755,
+  "FULL_SUITE_TESTS": 1754,
+  "FULL_SUITE_GROUPS": 18,
+  "SUBTESTS_TOTAL": 98,
+  "FINAL_CHANGE_VERIFICATION": {
+    "reason": "Bounded root cleanup must preserve the primary exception and capture it independently",
+    "reports": [
+      "final_cleanup_regressions.txt"
+    ],
+    "passed": 25,
+    "additional_unique_case": 1,
+    "description": "After full suite: reran test_repairs, test_production_rotation, test_incidents_capacity against final runner code. One new stubborn-shutdown parameter case; do not double count the other 24 repeated cases."
+  },
+  "SUITES": [
+    {
+      "group": "analysis/d5/auditor_next",
+      "passed": 38,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51/depth_cache_candidate_not_adopted",
+      "passed": 3,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51/exact_depth_cache_candidate",
+      "passed": 2,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51/latency_tools",
+      "passed": 2,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51/native_json_candidate",
+      "passed": 9,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51/side_projection_candidate",
+      "passed": 1,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d51",
+      "passed": 1,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/causal_capture_24h_v1",
+      "passed": 22,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/paper_runtime",
+      "passed": 22,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/pipeline",
+      "passed": 4,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/prospective_24h_v1",
+      "passed": 10,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/prospective_v1",
+      "passed": 117,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/real_execution_calibration_v1",
+      "passed": 710,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/research",
+      "passed": 3,
+      "exit": 0
+    },
+    {
+      "group": "analysis/d6/tests",
+      "passed": 35,
+      "exit": 0
+    },
+    {
+      "group": "analysis",
+      "passed": 12,
+      "exit": 0
+    },
+    {
+      "group": "backend/tests",
+      "passed": 755,
+      "exit": 0
+    },
+    {
+      "group": "tests",
+      "passed": 8,
+      "exit": 0
+    }
+  ],
+  "V1_SOURCE_HASHES": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+  },
+  "RUN0088_ROOT_CAUSE": "UNPROVEN historical initial message and executed artifacts remain unavailable",
+  "RUN0089_ROOT_CAUSE": "UNPROVEN historical initial message and exact executed source remain unavailable",
+  "CURRENT_INCIDENT_CAPTURE": "PASS: exact message, traceback and executed code preserved in owner-only DPAPI archive when journal logging fails; archive failure blocks entries and emits independent payload-free diagnostic",
+  "BLOCKERS": [
+    "AUTHORITATIVE_PROVIDER: approve wallet-wide complete account/order/trade/fill/fee coverage and immutable original evidence archive; provision signed inbox",
+    "TRUST_POLICY: independently approve external keys, permitted evidence kinds, identity/session context and policy digest; provision real fresh 14-check evidence",
+    "CUSTODY_AND_ARM: designate independent durable custody owner/receipt authority and verify real acceptance probe; supply approved SDK identity and explicit interactive HumanArm confirmation"
+  ],
+  "EXTERNAL_REQUIREMENTS": "external_requirements.json",
+  "NO_MONETARY_ACTIONS": true,
+  "TESTED_SOURCE_MANIFEST_MATCH": true,
+  "FINAL_FORMAT_ONLY_CHANGE": {
+    "path": "analysis/d6/real_execution_calibration_v1/test_continuous_soak.py",
+    "change": "Removed spaces on two otherwise blank lines after validation",
+    "ast_including_source_locations_unchanged": true,
+    "ast_sha256": "3af703283f64475883df25c8382c675cefcc53686e2a076e578dad4c7f97238b"
+  }
+}

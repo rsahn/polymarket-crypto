@@ -25,7 +25,8 @@ def evidence():
     for k,p in zip(REQUIRED,payloads):e[k]=a.seal(dict(**v.context,check=k,payload=p,source_digest=digest(p),observed_ms=1000,valid_until_ms=2000))
     return a,v,e
 
-def test_complete_injected_composition_without_order_calls(tmp_path):
+@pytest.mark.parametrize('stubborn',[False,True])
+def test_complete_injected_composition_without_order_calls(tmp_path,stubborn):
     from .runner import PreparedSession
     from .transport import SDKPort
     async def case():
@@ -34,10 +35,15 @@ def test_complete_injected_composition_without_order_calls(tmp_path):
         e['account_evidence_adapter_qualified']['payload']['baseline_digest']=digest(base)
         e['account_evidence_adapter_qualified']['source_digest']=digest(e['account_evidence_adapter_qualified']['payload']);a.seal(e['account_evidence_adapter_qualified'])
         e['exit_handoff_ready']['payload']['owner']='owner';e['exit_handoff_ready']['source_digest']=digest(e['exit_handoff_ready']['payload']);a.seal(e['exit_handoff_ready'])
+        release=asyncio.Event()
         class Stream:
             tokens=('u','d');generation=1
             def read(self):return {'available':True,'fresh':True,'book_synced':True,'generation':1}
-            async def run(self,*,rest_seed_coro=None):await asyncio.Event().wait()
+            async def run(self,*,rest_seed_coro=None):
+                while not release.is_set():
+                    try:await release.wait()
+                    except asyncio.CancelledError:
+                        if not stubborn:raise
         class Channel:
             async def accept(self,req):return a.seal(dict(**req,owner='owner',receipt_id='r',accepted_ms=1000))
         owner=CustodyOwner(Channel(),ReceiptVerifier(a,'owner',clock=lambda:1000))
@@ -51,7 +57,9 @@ def test_complete_injected_composition_without_order_calls(tmp_path):
         try:
             with pytest.raises(RuntimeError,match='fixture_end'):await s.start(client=a.client,verifier=v,evidence=lambda:e,signal_source=Signal(),custody_owner=owner,confirm=lambda *a,**k:arm)
             assert isinstance(s.coordinator.port,SDKPort) and not s.ledger.orders and owner.accepted
+            if stubborn:assert any('ROOT_STREAM_CLEANUP' in error for error in owner.errors)
         finally:
+            release.set();await asyncio.sleep(0)
             if owner.tasks:await asyncio.wait(owner.tasks,timeout=1)
             s.close()
     asyncio.run(case())
