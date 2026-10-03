@@ -1,0 +1,502 @@
+{
+  "mode": "LIVE_READ_ONLY_QUALIFICATION",
+  "observed_ms": 1790681321373,
+  "selection": {
+    "selectors": {
+      "REAL_ORDERS_ENABLED": [
+        {
+          "source": ".env",
+          "value": "false"
+        },
+        {
+          "source": "process",
+          "value": "false"
+        }
+      ],
+      "POLYMARKET_WALLET_ADDRESS": [
+        {
+          "source": ".env",
+          "value": "0x9348efd557a09e644795c8f114bcf0bef86f203a"
+        },
+        {
+          "source": "process",
+          "value": "0x9348efd557a09e644795c8f114bcf0bef86f203a"
+        }
+      ],
+      "LIVE_EXECUTION_ARMED": [
+        {
+          "source": "process",
+          "value": "false"
+        }
+      ]
+    },
+    "canonical_runtime_account": {
+      "source": "runtime/d6_genesis.db (validated read-only)",
+      "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+      "snapshot_digest": "b2f84d9eb96f6b2ac322b7be21bbfa8d13118d6484a3b582f0755e7a7c6d41f6",
+      "phase": "GENESIS_RECONCILED"
+    },
+    "selected_wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "explicit_read_only_account_choice": "canonical-d6",
+    "blockers": [],
+    "existing_storage_signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "market_policy": "V1_BTC_5M_CURRENT_SLOT_FROM_EXISTING_QUALIFY_POST_GENESIS",
+    "selection_ready": true
+  },
+  "strategy_hashes": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+  },
+  "private_key_loaded": false,
+  "credential_creation": false,
+  "order_signatures": 0,
+  "order_submissions": 0,
+  "ready_for_arm": false,
+  "submit_allowed": false,
+  "current_inventory_proven": false,
+  "operator": {
+    "designation": "requesting-owner",
+    "consent_scope": "MANUAL_OPERATOR_DESIGNATED_ONLY",
+    "specific_exposure_accepted": false,
+    "recovery_drill_verified": false
+  },
+  "storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "observations": {
+    "mode": "LIVE_READ_ONLY_OBSERVATION",
+    "started_ms": 1790681322021,
+    "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+    "signature_type": 3,
+    "market_policy": "V1_BTC_5M_CURRENT_SLOT_FROM_EXISTING_QUALIFY_POST_GENESIS",
+    "checks": {
+      "clock": {
+        "status": "OBSERVED",
+        "offset_ms": -185,
+        "uncertainty_ms": 1164,
+        "server_seconds": 1790681322,
+        "started_ms": 1790681322021,
+        "finished_ms": 1790681322350
+      },
+      "market": {
+        "status": "OBSERVED",
+        "market_duration": "5m",
+        "market_slug": "btc-updown-5m-1790681100",
+        "condition_id": "0xb2876c784fb79ef4f874aab13001838f9f8cb850e544e8f877266a4db104ffe2",
+        "token_up": "75372564210486743648298816071385319218685613717257329056313324990308081856558",
+        "token_down": "105135304380487922487243504188663853601063206820294030855728592619005224073320",
+        "expiry_ts_ms": 1790681400000,
+        "source_digest": "89363ca07f2129ef4ab9de27efe91219907f0751a9beea7797e6f194bff81092",
+        "valid_until_ms": 1790681400000,
+        "started_ms": 1790681322350,
+        "finished_ms": 1790681322568
+      },
+      "balance": {
+        "status": "OBSERVED_AUTHENTICATED_GET",
+        "balance_raw": "109160000",
+        "allowance_raw": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "units": "BASE_UNITS",
+        "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+        "scope": "CREDENTIAL",
+        "atomic_frontier": null,
+        "complete": false,
+        "started_ms": 1790681322568,
+        "finished_ms": 1790681322797
+      },
+      "budget": {
+        "status": "BLOCKED",
+        "reason": "BALANCE_OR_UNITS_NOT_QUALIFIED",
+        "required_experiment_budget": "100"
+      },
+      "orders": {
+        "status": "OBSERVED",
+        "count": 0,
+        "pages": 1,
+        "pagination_complete": true,
+        "scope": "CREDENTIAL_OPEN_ORDERS",
+        "status_counts": {},
+        "complete": false,
+        "atomic_frontier": null,
+        "settlement_finality_proven": false,
+        "fee_effects_proven": false,
+        "started_ms": 1790681322797,
+        "finished_ms": 1790681323071
+      },
+      "trades": {
+        "status": "OBSERVED_ATTRIBUTED",
+        "count": 0,
+        "count_scope": "VALIDATED_RETURNED_ROWS_ONLY",
+        "pages": 1,
+        "pagination_complete": true,
+        "scope": "CREDENTIAL_SELECTED_MARKET_SINCE_SLOT_START",
+        "status_counts": {},
+        "complete": false,
+        "atomic_frontier": null,
+        "settlement_finality_proven": false,
+        "fee_effects_proven": false,
+        "provenance": {
+          "validation_source": "RAW_CLOB_BEFORE_SDK_COERCION",
+          "market": "0xb2876c784fb79ef4f874aab13001838f9f8cb850e544e8f877266a4db104ffe2",
+          "window_start_seconds": 1790681100,
+          "window_end_ms": 1790681400000,
+          "response_digests": [
+            "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+          ]
+        },
+        "started_ms": 1790681323071,
+        "finished_ms": 1790681323544
+      },
+      "positions": {
+        "status": "OBSERVED_INDEX_ONLY",
+        "count": 0,
+        "nonzero_positions": {},
+        "pages": 1,
+        "pagination_complete": true,
+        "scope": "INDEX_CURRENT_POSITIONS_NOT_GLOBAL",
+        "complete": false,
+        "atomic_frontier": null,
+        "started_ms": 1790681323544,
+        "finished_ms": 1790681323831
+      },
+      "fee_rates": {
+        "status": "OBSERVED_RATE_ONLY",
+        "rates": {
+          "75372564210486743648298816071385319218685613717257329056313324990308081856558": {
+            "base_fee": "1000",
+            "response_digest": "81d6b89f3fbbe2c7b60158be7b1ee962b27c18d4eae4571a84292020afa2c1e8"
+          },
+          "105135304380487922487243504188663853601063206820294030855728592619005224073320": {
+            "base_fee": "1000",
+            "response_digest": "81d6b89f3fbbe2c7b60158be7b1ee962b27c18d4eae4571a84292020afa2c1e8"
+          }
+        },
+        "round_trip_upper_bound_proven": false,
+        "native_cash_share_effects_proven": false,
+        "started_ms": 1790681323831,
+        "finished_ms": 1790681324276
+      }
+    },
+    "proof_records": [
+      {
+        "account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+        "market": "0xb2876c784fb79ef4f874aab13001838f9f8cb850e544e8f877266a4db104ffe2",
+        "session": "readonly-1790681322021",
+        "collateral": "pUSD",
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        },
+        "check": "market_identity_verified",
+        "payload": {
+          "condition": "0xb2876c784fb79ef4f874aab13001838f9f8cb850e544e8f877266a4db104ffe2",
+          "tokens": [
+            "75372564210486743648298816071385319218685613717257329056313324990308081856558",
+            "105135304380487922487243504188663853601063206820294030855728592619005224073320"
+          ],
+          "outcome_tokens": {
+            "UP": "75372564210486743648298816071385319218685613717257329056313324990308081856558",
+            "DOWN": "105135304380487922487243504188663853601063206820294030855728592619005224073320"
+          },
+          "expires_ms": 1790681400000
+        },
+        "source_digest": "67421dc14dc6eb6a8116b34fe3c832d1778f6ffd604b4fb3bc41b3cad8fd1271",
+        "acquisition_digest": "89363ca07f2129ef4ab9de27efe91219907f0751a9beea7797e6f194bff81092",
+        "observed_ms": 1790681322568,
+        "valid_until_ms": 1790681327568,
+        "provenance": "LOCAL_READ_ONLY_ACQUISITION_NOT_THIRD_PARTY_SIGNATURE"
+      }
+    ],
+    "submit_allowed": false,
+    "ready_for_arm": false,
+    "current_inventory_proven": false,
+    "finished_ms": 1790681324276,
+    "observations_expired_for_arming": true,
+    "unknowns": [
+      "COMMON_ATOMIC_FRONTIER",
+      "GLOBAL_WALLET_COMPLETENESS",
+      "POST_OBSERVATION_MUTATION_CLOSURE",
+      "FINAL_ATTRIBUTED_CASH_AND_SHARE_FEES",
+      "ROUND_TRIP_FEE_UPPER_BOUND",
+      "SDK_ORDER_TRANSPORT_QUALIFICATION",
+      "SPECIFIC_EXPOSURE_OPERATOR_ACCEPTANCE"
+    ],
+    "receipt_candidates": [],
+    "receipt_candidate_scope": "ATTRIBUTED_RETURNED_TRADES_ONLY",
+    "positive_records_scope": "LOCAL_HTTPS_ACQUISITION_ONLY_NOT_FULL_PREFLIGHT"
+  },
+  "chain": {
+    "status": "OBSERVED_PINNED_READS",
+    "chain_identity": "CONFIGURED_POLYGON_NOT_RPC_CHAINID_VERIFIED",
+    "rpc_endpoint": "EXISTING_PROCESS_CONFIGURATION",
+    "current_inventory_proven": false,
+    "fee_effects_proven": false,
+    "round_trip_fee_bound": null,
+    "receipts": [],
+    "selected_token_balances_raw_at_existing_CTF": {
+      "75372564210486743648298816071385319218685613717257329056313324990308081856558": "0",
+      "105135304380487922487243504188663853601063206820294030855728592619005224073320": "0"
+    },
+    "asset_contract_binding": "CTF_SCOPED_READ_NOT_PROOF_OF_V2_OR_GLOBAL_ASSET_UNIVERSE",
+    "anchor_number": 94650787,
+    "anchor_hash": "0x8d2f23372c07fb413e4709984a96648f46a1d552b6dc6d0409608d84afa73d8d",
+    "anchor_timestamp_ms": 1790681321000,
+    "collateral_symbol": "pUSD",
+    "collateral_decimals": 6,
+    "collateral_balance_raw": "109160000",
+    "incoming_ctf_log_count": 0,
+    "incoming_ctf_log_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "log_scope": "LAST_20_FINALIZED_BLOCKS_INCOMING_CTF_ONLY",
+    "canonical_recheck": true,
+    "settlement": "NO_SELECTED_MARKET_TRADE_TRANSACTION_TO_QUALIFY",
+    "requests": [
+      {
+        "rpc_method": "eth_getBlockByNumber",
+        "id": 1,
+        "started_ms": 1790681324277,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681324879,
+        "parse_complete_ms": 1790681324879,
+        "status": "PASS",
+        "thread_cpu_ms": 62.5,
+        "finished_ms": 1790681324879,
+        "elapsed_ms": 602
+      },
+      {
+        "rpc_method": "eth_call",
+        "id": 2,
+        "started_ms": 1790681324879,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681325361,
+        "parse_complete_ms": 1790681325361,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1790681325361,
+        "elapsed_ms": 482
+      },
+      {
+        "rpc_method": "eth_call",
+        "id": 3,
+        "started_ms": 1790681325361,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681325834,
+        "parse_complete_ms": 1790681325834,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1790681325834,
+        "elapsed_ms": 473
+      },
+      {
+        "rpc_method": "eth_call",
+        "id": 4,
+        "started_ms": 1790681325834,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681326292,
+        "parse_complete_ms": 1790681326292,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1790681326292,
+        "elapsed_ms": 458
+      },
+      {
+        "rpc_method": "eth_call",
+        "id": 5,
+        "started_ms": 1790681326293,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681326794,
+        "parse_complete_ms": 1790681326794,
+        "status": "PASS",
+        "thread_cpu_ms": 46.875,
+        "finished_ms": 1790681326794,
+        "elapsed_ms": 501
+      },
+      {
+        "rpc_method": "eth_call",
+        "id": 6,
+        "started_ms": 1790681326794,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681327274,
+        "parse_complete_ms": 1790681327274,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1790681327275,
+        "elapsed_ms": 481
+      },
+      {
+        "rpc_method": "eth_getLogs",
+        "id": 7,
+        "started_ms": 1790681327275,
+        "from_block": 94650768,
+        "to_block": 94650787,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681327748,
+        "parse_complete_ms": 1790681327748,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1790681327749,
+        "elapsed_ms": 474
+      },
+      {
+        "rpc_method": "eth_getBlockByNumber",
+        "id": 8,
+        "started_ms": 1790681327749,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1790681328247,
+        "parse_complete_ms": 1790681328247,
+        "status": "PASS",
+        "thread_cpu_ms": 46.875,
+        "finished_ms": 1790681328247,
+        "elapsed_ms": 498
+      }
+    ],
+    "pacing": {
+      "scope": "PREPARATION_ONLY",
+      "max_in_flight": 1,
+      "min_start_interval_ms": 200,
+      "dispatch_budget_seconds": 90.0,
+      "requests_started": 8,
+      "pacing_wait_ms": 0.0,
+      "retries": 0,
+      "failure_reason": null
+    },
+    "finished_ms": 1790681328247
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/time",
+      "started_ms": 1790681322029,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681322349,
+      "parse_complete_ms": 1790681322349,
+      "shape": "int",
+      "finished_ms": 1790681322349,
+      "elapsed_ms": 320,
+      "thread_cpu_ms": 62.5
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://gamma-api.polymarket.com/markets",
+      "started_ms": 1790681322350,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681322550,
+      "parse_complete_ms": 1790681322551,
+      "shape": "list",
+      "finished_ms": 1790681322551,
+      "elapsed_ms": 201,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1790681322610,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681322794,
+      "parse_complete_ms": 1790681322794,
+      "shape": "dict",
+      "finished_ms": 1790681322794,
+      "elapsed_ms": 184,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1790681322874,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681323070,
+      "parse_complete_ms": 1790681323070,
+      "shape": "dict",
+      "finished_ms": 1790681323070,
+      "elapsed_ms": 196,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1790681323137,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681323543,
+      "parse_complete_ms": 1790681323543,
+      "shape": "dict",
+      "finished_ms": 1790681323543,
+      "elapsed_ms": 406,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/v2/positions",
+      "started_ms": 1790681323544,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681323830,
+      "parse_complete_ms": 1790681323830,
+      "shape": "dict",
+      "finished_ms": 1790681323830,
+      "elapsed_ms": 286,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/fee-rate",
+      "started_ms": 1790681323831,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681323979,
+      "parse_complete_ms": 1790681323979,
+      "shape": "dict",
+      "finished_ms": 1790681323979,
+      "elapsed_ms": 148,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/fee-rate",
+      "started_ms": 1790681324087,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1790681324276,
+      "parse_complete_ms": 1790681324276,
+      "shape": "dict",
+      "finished_ms": 1790681324276,
+      "elapsed_ms": 189,
+      "thread_cpu_ms": 46.875
+    }
+  ],
+  "read_budget": {
+    "get_calls_admitted": 8,
+    "get_limit": 12,
+    "min_get_interval_ms": 250,
+    "retries": 0,
+    "rate_limited": false
+  },
+  "blockers": [
+    "COMMON_ATOMIC_FRONTIER",
+    "GLOBAL_WALLET_COMPLETENESS",
+    "POST_OBSERVATION_MUTATION_CLOSURE",
+    "FINAL_ATTRIBUTED_CASH_AND_SHARE_FEES",
+    "ROUND_TRIP_FEE_UPPER_BOUND",
+    "SDK_ORDER_TRANSPORT_QUALIFICATION",
+    "SPECIFIC_EXPOSURE_OPERATOR_ACCEPTANCE"
+  ],
+  "status": "READ_ONLY_OBSERVED_NOT_READY",
+  "finished_ms": 1790681328247,
+  "proofs_require_fresh_reacquisition": true
+}

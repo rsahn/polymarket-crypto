@@ -1,0 +1,12 @@
+{
+  "balance_type3_raw": "109160000",
+  "rpc_block": 94559626,
+  "rpc_hash": "0x1464da79136d7160f84ca0f6ddbeb2b0f207d21cbbb37b81413b61e77b49037e",
+  "orders": [],
+  "trades": [],
+  "allowances": {
+    "type0": "0",
+    "type3": "0"
+  },
+  "observed_ms": 1790682326487
+}
