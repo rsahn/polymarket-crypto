@@ -3,7 +3,7 @@ import unittest
 
 import pandas as pd
 
-from c3_d4_analysis import (FEATURES, META, add_features, entry_signals,
+from analysis.c3_d4_analysis import (FEATURES, META, add_features, entry_signals,
                             load_partition, market_manifest, simulate)
 
 

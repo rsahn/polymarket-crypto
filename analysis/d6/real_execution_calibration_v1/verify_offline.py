@@ -33,4 +33,7 @@ if __name__=='__main__':
     socket.socketpair=local_pair;sys.addaudithook(guard)
     import pytest
     targets=sys.argv[1:] or [str(Path(__file__).parent)]
-    raise SystemExit(pytest.main(['--import-mode=importlib','-p','no:cacheprovider','-q',*targets]))
+    # Legacy research suites import siblings as top-level modules. Prepend each
+    # test directory so a same-named module in this harness cannot shadow them.
+    # Autoload stays disabled; explicitly enable the async tests' required plugin.
+    raise SystemExit(pytest.main(['--import-mode=prepend','-p','pytest_asyncio.plugin','-p','no:cacheprovider','-q',*targets]))

@@ -51,8 +51,8 @@ def test_rotation_requires_fresh_authorized_market_without_resetting_session(tmp
         try:
             task=s.start(client=a.client,verifier=v,evidence=lambda:e,signal_source=object(),custody_owner=owner,confirm=lambda *args,**kwargs:armed,rotation_source=rotation)
             if tamper:
-                with pytest.raises(ValueError,match='ROTATION_PROVENANCE'):await task
+                with pytest.raises(ValueError,match='ROTATION_PROVENANCE'):await asyncio.wait_for(task,10)
                 assert s.book.market=='m' and s.ledger.stop_new_entries
-            else:assert await task=='rotated'
+            else:assert await asyncio.wait_for(task,10)=='rotated'
         finally:s.close()
     asyncio.run(case())

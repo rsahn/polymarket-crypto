@@ -1,0 +1,43 @@
+{
+  "schema": "D6_AUTHORITY_DEPLOYMENT_TEMPLATE_V1",
+  "approval_status": "NOT_APPROVED",
+  "authority_account": "D6Authority",
+  "authority_sid": null,
+  "supervisor_sid": "S-1-5-21-996557404-12191610-680381608-1002",
+  "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+  "key_id": "d6-windows-telemetry-v1",
+  "public_key": null,
+  "address": null,
+  "permitted_evidence_kinds": [
+    "clock_sanity",
+    "ws_healthy"
+  ],
+  "context": {
+    "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+    "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+    "collateral": "pUSD",
+    "session": "PENDING_EXPLICIT_PRODUCTION_SESSION"
+  },
+  "chain_id": 137,
+  "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "decimals": 6,
+  "clock_sources": [
+    "time.google.com",
+    "time.cloudflare.com",
+    "time.windows.com"
+  ],
+  "clock_source_authentication": "UNAUTHENTICATED_NTP; SOURCE_TRUST_DECISION_REQUIRED",
+  "clock_max_bound_ms": 100,
+  "book_max_age_ms": 500,
+  "proof_max_lifetime_ms": 5000,
+  "wallet_credentials": "FORBIDDEN",
+  "account_completeness_attestation": "FORBIDDEN",
+  "custody_receipt_attestation": "FORBIDDEN",
+  "orders_transactions_transfers": "FORBIDDEN",
+  "policy_digest": null,
+  "notes": [
+    "Final ProductionAuthority policy cannot be hashed/approved until public key, independent SID, session and source policy exist.",
+    "A secp256k1 key alone cannot authorize movement from the existing Deposit Wallet: it is not its owner or authorized signer.",
+    "No trade client or wallet credentials deployed. No automatic service startup."
+  ]
+}
