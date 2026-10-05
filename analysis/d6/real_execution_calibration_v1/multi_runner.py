@@ -21,7 +21,7 @@ from app.live.readonly_book_stream import StreamBook
 from analysis.d6.real_execution_calibration_v1.runner import PreparedSession, SignalSource
 from analysis.d6.real_execution_calibration_v1.engine import HumanArm, Coordinator
 from analysis.d6.real_execution_calibration_v1.multi_engine import MultiCoordinator, MarketSlot
-from analysis.d6.real_execution_calibration_v1.multi_market_discovery import discover_all
+from analysis.d6.real_execution_calibration_v1.multi_market_discovery import discover_all, BINANCE_SYMBOLS, CRYPTO_SLUGS
 from analysis.d6.real_execution_calibration_v1.evidence import SelfAttestingAuthority
 from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier, FeeRisk
 from analysis.d6.real_execution_calibration_v1.custody import CustodyOwner, CustodyStateStore
@@ -121,6 +121,7 @@ for m in markets:
         token_down=m["token_down"],
         market_slug=m["market_slug"],
     )
+    slot.binance_symbol = BINANCE_SYMBOLS.get(m["crypto"], f"{m['crypto']}USDT")
     slots.append(slot)
     print(f"  Slot created: {slot.key} ({slot.binance_symbol})")
 
