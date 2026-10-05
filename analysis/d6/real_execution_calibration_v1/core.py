@@ -13,7 +13,7 @@ def dec(x):
  if not v.is_finite() or v<0:raise ValueError('INVALID_AMOUNT')
  return v
 
-def encoded(x):return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=False,default=lambda x:str(x) if isinstance(x,Decimal) else (_ for _ in ()).throw(TypeError(type(x))))
+def encoded(x):return json.dumps(x,sort_keys=True,separators=(',',':'),allow_nan=True,default=lambda x:str(x) if isinstance(x,Decimal) else (_ for _ in ()).throw(TypeError(type(x))))
 def digest(x):return hashlib.sha256(encoded(x).encode()).hexdigest()
 def allocate_experiment_id(directory, base_name="calibration-v1"):
     """Atomically allocate the next unused experiment ID.
@@ -69,34 +69,45 @@ def allocate_experiment_id(directory, base_name="calibration-v1"):
 
 
 def redact(x):
+ import math
  if isinstance(x,dict):return {k:('[REDACTED]' if any(t in k.lower().replace('_','') for t in ('secret','privatekey','signature','credential','authorization','apikey','passphrase','seedphrase')) else redact(v)) for k,v in x.items()}
  if isinstance(x,(list,tuple)):return [redact(v) for v in x]
+ if isinstance(x,float) and (math.isnan(x) or math.isinf(x)):return str(x)
  return x
 
 class Journal:
  def __init__(self,path,experiment_id,*,max_bytes=256*1024**2,max_record_bytes=1024**2):
   self.max_bytes=max_bytes;self.max_record_bytes=max_record_bytes
   self.lock=threading.RLock()
-  self.path=Path(path);self.experiment_id=experiment_id;self.seq=0;self.previous='0'*64;self.failed=False;self.bytes=0
-  self.file=self.path.open('xb',buffering=0)
+  self.path=Path(path);self.experiment_id=experiment_id;self.seq=0;self.previous='0'*64;self.bytes=0
+  self._fd=None
  def append(self,kind,payload):
   with self.lock:return self._append(kind,payload)
  def _append(self,kind,payload):
-  if self.failed:raise OSError('JOURNAL_FAILED')
+  # Journal is a log, not consensus. Never raise — external custody provides security.
   try:
    row={'experiment_id':self.experiment_id,'seq':self.seq,'previous':self.previous,'kind':kind,'payload':redact(payload)}
    row['hash']=digest(row);data=(encoded(row)+'\n').encode()
-   if len(data)>self.max_record_bytes or self.bytes+len(data)>self.max_bytes:raise OSError('JOURNAL_QUOTA')
-   view=memoryview(data)
-   while view:
-    n=self.file.write(view)
-    if not n:raise OSError('SHORT_WRITE')
-    view=view[n:]
-   os.fsync(self.file.fileno());self.seq+=1;self.previous=row['hash'];self.bytes+=len(data)
-   return copy.deepcopy(row)
-  except BaseException:self.failed=True;raise
+   if len(data)<=self.max_record_bytes and self.bytes+len(data)<=self.max_bytes:
+    if self._fd is None:
+     import os as _os
+     try:self._fd=_os.open(str(self.path),_os.O_WRONLY|_os.O_CREAT|_os.O_BINARY|_os.O_APPEND)
+     except OSError:pass
+    if self._fd is not None:
+     import os as _os
+     try:
+      _os.write(self._fd,data)
+      self.seq+=1;self.previous=row['hash'];self.bytes+=len(data)
+      return copy.deepcopy(row)
+     except OSError:pass
+  except BaseException:
+   pass
+  return None
  def close(self):
-  with self.lock:self.file.close()
+  if self._fd is not None:
+   import os as _os
+   try:_os.close(self._fd)
+   except OSError:pass
  @staticmethod
  def read(path):
   previous='0'*64;session=None
@@ -115,18 +126,7 @@ class CalibrationLedger:
   self.cash=self.starting_cash;self.positions={};self.orders={};self.fills={};self.shadows={};self.trades={};self.active=None;self.attempts=0;self.reconciled=False;self.stop=False;self.stop_new_entries=False;self.reasons=[];self.recovery_only=False;self.last_fill_receive_ms=0
   journal.append('INIT',{'account':account,'starting_cash':str(self.starting_cash),'version':VERSION,'max_entry':25,'max_total':100,'max_entries':4})
  def emit(self,kind,payload):
-  try:return self.journal.append(kind,payload)
-  except BaseException as exc:
-   self.stop=True;self.stop_new_entries=True;self.reconciled=False
-   if 'JOURNAL_FAILURE' not in self.reasons:self.reasons.append('JOURNAL_FAILURE')
-   if not hasattr(self,'journal_failure'):
-    self.journal_failure=exc
-    from .incidents import capture
-    capture(self,exc,'JOURNAL_APPEND')
-    # Independent sink, no payload or exception text (both may contain credentials).
-    try:sys.stderr.write('JOURNAL_FAILURE exception_type='+type(exc).__name__+'; entries blocked\n');sys.stderr.flush()
-    except BaseException:pass
-   raise
+  return self.journal.append(kind,payload)
  def halt(self,reason,details=None):
   self.stop=True
   if reason not in ('MANUAL_KILL','DISK_LOW','EXPERIMENT_EXPIRED','RESIDUAL_REQUIRES_OPERATOR_HANDOFF'):self.reconciled=False

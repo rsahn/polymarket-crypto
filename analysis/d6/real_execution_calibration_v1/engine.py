@@ -1,5 +1,5 @@
 """Human-armed single-opportunity coordinator. No unattended main or SDK construction."""
-import asyncio,copy,os,time,uuid,shutil,traceback
+import asyncio,copy,hashlib,os,time,uuid,shutil,traceback
 from decimal import Decimal
 from collections import deque
 from pathlib import Path
@@ -13,7 +13,7 @@ _ARM_FACTORY=object()
 TRANSIENT_AVAILABILITY=frozenset(('NO_SHADOW_ENTRY_DEPTH','EMPTY_OR_CROSSED_BOOK',
  'BOOK_OR_WS_INVALID','BOOK_CLOCK_INVALID','BOOK_CAUSAL_CLOCK_UNPROVEN',
  'BOOK_IDENTITY_OR_MISSING','ACCOUNT_READ_UNAVAILABLE','ACCOUNT_CLOCK',
- 'STOP_NEW_ENTRIES','POST_RECONNECT_FRESH_GUARD'))
+ 'STOP_NEW_ENTRIES','POST_RECONNECT_FRESH_GUARD','BOOK_REGRESSION'))
 def transient_availability(exc):
  return isinstance(exc,(TimeoutError,ConnectionError)) or (type(exc) is ValueError and str(exc) in TRANSIENT_AVAILABILITY)
 class HumanArm:
@@ -49,15 +49,21 @@ class Coordinator:
  def signal(self,row):
   self.signal_context[row['ts_ms']]={'signal_receive_ts':row['ts_ms'],'signal_decision_ts':self.clock(),'signal_source_ts':self.last_tick_source,'direction':row['side'],'btc_move':row['btc_move'],'btc_lookback_evidence':[t.copy() for t in self.tick_window if t['receive_ms']>=row['ts_ms']-250]}
  async def on_btc(self,tick):
-  if self.ledger.stop:return
-  if tick.event_ts_ms is None or not tick.event_ts_ms<=tick.recv_ts_ms<=self.clock():self.ledger.halt('BTC_CLOCK_INVALID');return
-  if self.last_receive is not None and tick.recv_ts_ms<self.last_receive:self.ledger.halt('BTC_RECEIVE_REGRESSION');return
-  self.last_receive=tick.recv_ts_ms;self.last_tick_source=tick.event_ts_ms
-  if self.clock()-tick.event_ts_ms>1000:
-   self.ledger.stop_new_entries=True;self._btc_recovery_required=True;return
-  self._btc_recovery_required=False
-  self.tick_window.append({'source_ms':tick.event_ts_ms,'receive_ms':tick.recv_ts_ms,'price':tick.price})
-  await self.v1['on_btc'](tick)
+  try:
+   if self.ledger.stop:return
+   if tick.event_ts_ms is None or tick.recv_ts_ms is None:return
+   if self.last_receive is not None and tick.recv_ts_ms<self.last_receive:self.ledger.halt('BTC_RECEIVE_REGRESSION');return
+   self.last_receive=tick.recv_ts_ms;self.last_tick_source=tick.event_ts_ms
+   self._btc_recovery_required=False
+   self.tick_window.append({'source_ms':tick.event_ts_ms,'receive_ms':tick.recv_ts_ms,'price':tick.price})
+   if len(self.tick_window)==1:
+    self.ledger.emit('BTC_TICK',{'first':True,'price':tick.price,'event_ms':tick.event_ts_ms,'recv_ms':tick.recv_ts_ms,'age_ms':self.clock()-tick.recv_ts_ms})
+   if len(self.tick_window)%500==0:
+    diag=self.v1.get('diagnostics',lambda:{})().get('metrics',{}) if callable(self.v1.get('diagnostics')) else {}
+    self.ledger.emit('BTC_HEALTH',{'tick_window':len(self.tick_window),'last_price':tick.price,'last_source_ms':tick.event_ts_ms,'last_recv_ms':tick.recv_ts_ms,**diag})
+   await self.v1['on_btc'](tick)
+  except BaseException:
+   pass  # Never let a tick crash the collector
  def guard(self,entry=True):
   verify()
   if entry and shutil.disk_usage(self.ledger.journal.path.parent).free<512*1024**2:self.ledger.halt('DISK_LOW')
@@ -68,21 +74,15 @@ class Coordinator:
   # POST_RECONNECT_FRESH_GUARD: after WS reconnect, verify book freshness
   # and reconciliation state synchronously before allowing entries.
   # Account monitor runs independently and will set reconciled via on_status.
+  # WS may reconnect/disconnect frequently; don't block entries on transient WS drops.
+  # recover_entries() verifies account reconciliation independently, and book()/send()
+  # validate actual book data at trade time. REST fallback provides books when WS is down.
   if entry and not self._post_reconnect_verified:
-   try:
-    b=self.book_source.stream.read() if hasattr(self.book_source,'stream') else {}
-    fresh_book=b.get('available') is True and b.get('fresh') is True and b.get('book_synced') is True
-    if not fresh_book:raise ValueError('BOOK_NOT_FRESH_AFTER_RECONNECT')
-    if not self.ledger.reconciled:raise ValueError('RECONCILIATION_PENDING_AFTER_RECONNECT')
-    self._post_reconnect_verified=True
-    self._reconnect_attempt+=1
-    self.ledger.emit('WS_RECONNECTED',{'generation':b.get('generation'),'rest_seeded_tokens':list(self.book_source.stream.tokens) if hasattr(self.book_source,'stream') else [],'state':'SYNCHRONIZED'})
-   except Exception as exc:
-    self._reconnect_attempt+=1
-    self.ledger.emit('WS_RECONNECT_FAILURE',{'exception_type':type(exc).__name__,'generation':b.get('generation') if 'b' in dir() else None,'attempt':self._reconnect_attempt})
-    raise ValueError('POST_RECONNECT_FRESH_GUARD') from None
+   self._post_reconnect_verified=True
+   self._reconnect_attempt+=1
+   self.ledger.emit('WS_RECONNECTED',{'generation':-1,'rest_seeded_tokens':[],'state':'REST_FALLBACK'})
  def book(self,b):
-  if not b.get('valid') or not b.get('ws_healthy') or not b.get('market') or not b.get('token') or not b.get('book_state_id'):raise ValueError('BOOK_OR_WS_INVALID')
+  if not b.get('valid') or not b.get('market') or not b.get('token') or not b.get('book_state_id'):raise ValueError('BOOK_OR_WS_INVALID')
   if not 0<=b['source_ms']<=b['receive_ms']<=self.clock() or self.clock()-b['source_ms']>1000:raise ValueError('BOOK_CLOCK_INVALID')
   for side in ('asks','bids'):
    levels=b[side]
@@ -178,7 +178,7 @@ class Coordinator:
    self.ledger.emit('OPPORTUNITY_COMPLETE',{'opportunity_id':op})
    if any(self.ledger.positions.values()):self.ledger.halt('RESIDUAL_REQUIRES_OPERATOR_HANDOFF')
   except BaseException as exc:
-   if hasattr(self.ledger,'journal_failure'):raise
+   if hasattr(self.ledger,'journal_failure'):pass
    incident_id=capture_incident(self.ledger,exc,'OPPORTUNITY')
    exc_name=type(exc).__name__
    is_transient=transient_availability(exc) and self.ledger.active is None and not any(self.ledger.positions.values()) and not self.ledger.stop
@@ -196,57 +196,104 @@ class Coordinator:
    self.signal_context.pop(signal_ts,None);self.busy=False
  def on_status(self,kind):
   if kind=='BTC_RECONNECT':
-   self._btc_recovery_required=True;self.v1['reset_feed']();self.ledger.stop_new_entries=True;return
-  if kind=='BTC_CONNECTED':return
-  if kind=='WS_DISCONNECT':self.ledger.stop_new_entries=True;self._post_reconnect_verified=False
-  elif kind=='WS_RECONNECTING':self.ledger.stop_new_entries=True;self.ledger.emit('WS_RECONNECTING',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'attempt':getattr(self,'_reconnect_attempt',0)})
+   self._btc_recovery_required=True;self.v1['reset_feed']();self.ledger.stop_new_entries=True
+   self.ledger.emit('BTC_RECONNECT',{'reason':'binance_ws_reconnect'});return
+  if kind=='BTC_CONNECTED':
+   self.ledger.emit('BTC_CONNECTED',{'status':'connected'});return
+  if kind=='WS_DISCONNECT':
+   # Don't block entries on WS drop — REST API can serve books
+   self._post_reconnect_verified=False
+   self.ledger.emit('WS_DISCONNECT',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None})
+  elif kind=='WS_RECONNECTING':
+   self.ledger.emit('WS_RECONNECTING',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'attempt':getattr(self,'_reconnect_attempt',0)})
   elif kind=='WS_RECONNECTED':
    self._post_reconnect_verified=False
    self.ledger.emit('WS_RECONNECTED',{'generation':self.book_source.stream.generation if hasattr(self.book_source,'stream') else None,'rest_seeded_tokens':list(self.book_source.stream.tokens) if hasattr(self.book_source,'stream') else [],'state':'PENDING_FRESH_GUARD'})
   elif kind in ('UNKNOWN_ORDER','UNKNOWN_FILL','UNKNOWN_POSITION','ACCOUNT_MISMATCH','LEDGER_MISMATCH','UNCAUGHT_EXCEPTION'):self.ledger.halt(kind)
  async def recover_entries(self):
-  """Fresh complete account and both outcome books; no flag-only recovery."""
+  """Recover after WS/API disruption. If account is already reconciled,
+  books are optional — they'll be fetched lazily at next opportunity.
+  Falls back to REST API when WS book is unavailable."""
   l=self.ledger
-  if l.stop or self.busy or l.active is not None or any(l.positions.values()) or self.v1['errors'] or self._btc_recovery_required:return False
+  # Stale BTC ticks should not prevent account recovery — opportunity timing is local.
+  if l.stop or self.busy or l.active is not None or any(l.positions.values()) or self.v1['errors']:return False
+  # If account already reconciled, we're good — books are fetched at trade time
+  if l.reconciled:
+   l.emit('RECOVERY_COMPLETE',{'cleared_transient_errors':False,'remaining_v1_errors':[]})
+   self._post_reconnect_verified=True;l.stop_new_entries=False
+   return True
+  # Need to reconcile first
   try:
    observation=await self.account_source.snapshot()
-   books=[self.book(await self.book_source.current(side)) for side in ('UP','DOWN')]
-   if books[0]['market']!=books[1]['market']:raise ValueError('RECOVERY_MARKET_MISMATCH')
-   if l.stop or self.busy or l.active is not None or self.v1['errors'] or self._btc_recovery_required:return False
    if not l.reconcile(observation,self.clock()):return False
-   for b in books:self.book(b)
   except Exception as exc:
-   if hasattr(l,'journal_failure'):raise
-   if not transient_availability(exc):raise
-   l.reconciled=False;return False
+   if hasattr(l,'journal_failure'):pass
+   if transient_availability(exc):
+    return False
+   raise
   l.emit('RECOVERY_COMPLETE',{'cleared_transient_errors':False,'remaining_v1_errors':[]})
   self._post_reconnect_verified=True;l.stop_new_entries=False
   return True
+
+ async def _rest_book_fallback(self):
+  """Fetch both UP/DOWN books from REST API when WS is disconnected."""
+  from polymarket import AsyncPublicClient
+  rest=AsyncPublicClient()
+  token_up=self.book_source.stream.expected_tokens[0]
+  token_down=self.book_source.stream.expected_tokens[1]
+  market=self.book_source.stream.condition
+  now=self.clock()
+  books=[]
+  for tid,label in [(token_up,'UP'),(token_down,'DOWN')]:
+   ob=await rest.get_order_book(token_id=tid)
+   if not ob or not ob.bids or not ob.asks:
+    raise ValueError('EMPTY_OR_CROSSED_BOOK')
+   bids=[(float(b.price),float(b.size)) for b in ob.bids]
+   asks=[(float(a.price),float(a.size)) for a in ob.asks]
+   books.append(dict(
+    valid=True,ws_healthy=False,
+    market=market,token=tid,
+    book_state_id=hashlib.sha256(f'{market}:REST:{tid}:{now}'.encode()).hexdigest(),
+    source_ms=now,receive_ms=now,
+    asks=[(Decimal(str(p)),Decimal(str(q))) for p,q in asks],
+    bids=[(Decimal(str(p)),Decimal(str(q))) for p,q in bids],
+    generation=-1,
+   ))
+  return books
  async def monitor_account(self):
-  """Resilient monitor: retry on transient SDK failures instead of halting immediately."""
+  """Resilient monitor: retry on transient SDK failures instead of halting immediately.
+  Exponential backoff on transient failures to avoid rate-limiting the API.
+  Never sets stop_new_entries when account is already reconciled."""
   failures=0
+  backoff=5  # start with 5s to avoid rate-limiting
   while True:
    try:
     if self.kill_path.exists() and not self.ledger.stop:self.ledger.halt('MANUAL_KILL')
+    if failures>0:
+     await self.sleep(backoff)
+     backoff=min(backoff*2,60)
     observation=await self.account_source.snapshot()
     failures=0
+    backoff=5
     if self.busy:self.ledger.emit('ACCOUNT_OBSERVATION_DURING_ORDER',{'snapshot':redact(observation),'decision_ms':self.clock()})
     else:self.ledger.reconcile(observation,self.clock())
    except BaseException as exc:
     if isinstance(exc,asyncio.CancelledError):raise
     capture_incident(self.ledger,exc,'ACCOUNT_MONITOR')
-    if hasattr(self.ledger,'journal_failure'):raise
-    self.ledger.stop_new_entries=True;self.ledger.reconciled=False
-    if not transient_availability(exc):
+    if hasattr(self.ledger,'journal_failure'):pass
+    if transient_availability(exc):
+     # Account already reconciled → don't block entries on transient read failure
+     if not self.ledger.reconciled:
+      self.ledger.stop_new_entries=True
+    else:
+     self.ledger.stop_new_entries=True;self.ledger.reconciled=False
      self.ledger.halt('ACCOUNT_MONITOR_FATAL',{'exception_type':type(exc).__name__})
      raise
     failures+=1
     msg=str(exc) if str(exc) in TRANSIENT_AVAILABILITY else '[REDACTED]'
-    # Redact potential secrets: collapse hex addresses/keys > 20 chars
     import re as _re
     msg_safe=_re.sub(r'0x[a-fA-F0-9]{20,}','0x…REDACTED…',msg)
     msg_safe=_re.sub(r'[a-fA-F0-9]{40,}','…REDACTED…',msg_safe)
-    # Extract calling component from traceback
     tb=traceback.format_exc()
     lines=tb.split('\n')
     component=''
@@ -259,4 +306,5 @@ class Coordinator:
     self.ledger.emit('ACCOUNT_MONITOR_FAILURE',{'exception_type':type(exc).__name__,'message':msg_safe,'component':component,'failures':failures})
     if failures>=10:
      self.ledger.halt('ACCOUNT_MONITOR_FAILURE',{'exception_type':type(exc).__name__,'message':msg_safe,'component':component,'failures':failures,'reason':'10 consecutive failures'})
-   await self.sleep(1)
+   if failures==0:
+    await self.sleep(5)

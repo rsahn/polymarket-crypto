@@ -26,8 +26,8 @@ class SDKIdentityBinding:
         if version('polymarket-client')!='0.11.0':raise ValueError('SDK_CLASS_OR_VERSION')
         if type(client) is AsyncSecureClient:
             # Only documented public properties; never client.credentials or signer.key.
-            actual_environment=getattr(client.environment,'value',client.environment)
-            if address(str(client.wallet))!=address(wallet) or address(str(client.signer))!=address(signer) or actual_environment!=environment:raise ValueError('SDK_PUBLIC_IDENTITY')
+            from polymarket.environments import PRODUCTION
+            if address(str(client.wallet))!=address(wallet) or address(str(client.signer))!=address(signer) or environment!='production' or client.environment is not PRODUCTION:raise ValueError('SDK_PUBLIC_IDENTITY')
         elif type(client) is ReadOnlyClient:
             # ReadOnlyClient has no signer or environment; bind wallet only.
             if address(str(client.wallet))!=address(wallet):raise ValueError('SDK_PUBLIC_IDENTITY')

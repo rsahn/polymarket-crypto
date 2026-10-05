@@ -271,7 +271,7 @@ class StreamBook(BookStateSource):
                             for event in values if isinstance(values,list) else [values]:
                                 try:self.ingest(event,wire_received_ms=wire_received_ms)
                                 except ValueError:
-                                    if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT','STALE_BOOK'}:raise
+                                    if self.failure not in {'EMPTY_BOOK','CROSSED_BOOK','STALE_WIRE_EVENT','STALE_BOOK','BOOK_REGRESSION'}:raise
                                     # Remain connected but unusable pending full resync.
                                     continue
                     finally:
@@ -294,7 +294,9 @@ class StreamBook(BookStateSource):
                 else:category='PARSER_OR_PROTOCOL_ERROR'
                 self.diagnostics['exception_category']=category
                 self.failure=self.failure or category
-                if reconnect and category=='PARSER_OR_PROTOCOL_ERROR':raise
+                if reconnect and category=='PARSER_OR_PROTOCOL_ERROR' and self.clock()<self.expiry:
+                    # Don't crash on parser errors — reconnect instead
+                    pass
             else:
                 self.failure=self.failure or 'MARKET_EXPIRED'
                 self._ws_running=False

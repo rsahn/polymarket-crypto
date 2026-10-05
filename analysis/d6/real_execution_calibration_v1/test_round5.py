@@ -54,7 +54,7 @@ def test_sdk_binding_only_reads_public_identity():
     from .readonly_provider import SDKIdentityBinding
     wallet='0x'+'1'*40;signer='0x'+'2'*40
     class Context:
-        environment='production'
+        from polymarket.environments import PRODUCTION as environment
         @property
         def credentials(self):raise AssertionError('SECRET_READ')
     ctx=Context();ctx.wallet=wallet;ctx.signer=types.SimpleNamespace(address=signer)

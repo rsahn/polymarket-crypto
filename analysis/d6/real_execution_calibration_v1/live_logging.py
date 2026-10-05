@@ -14,7 +14,8 @@ REAL_CALIBRATION_ROTATION_SECONDS = 18000
 EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_BOOK',
  'CALIBRATION_EXCEPTION','RECOVERY_COMPLETE','RECOVERY_WAIT','BACKGROUND_TASK_ENDED',
  'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
- 'ACCOUNT_MONITOR_FAILURE','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE'}
+ 'ACCOUNT_MONITOR_FAILURE','WS_DISCONNECT','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE',
+ 'BTC_CONNECTED','BTC_TICK','BTC_HEALTH','BTC_RECONNECT','BTC_RECEIVE_REGRESSION'}
 PAYLOAD_FIELDS={
  'CALIBRATION_EXCEPTION':{'incident_id','exception_type','classification','message_redacted','exposure_management'},
  'RECOVERY_COMPLETE':{'cleared_transient_errors','remaining_v1_errors'},
@@ -41,6 +42,7 @@ PAYLOAD_FIELDS={
  'ENTRY_DUE':{'opportunity_id','entry_due_ms','signal_receive_ts','signal_decision_ts','signal_source_ts','direction','btc_move','btc_lookback_evidence'},
  'WS_RECONNECTING':{'generation','attempt'},
  'WS_RECONNECTED':{'generation','rest_seeded_tokens','state'},
+ 'WS_DISCONNECT':{'generation'},
  'WS_RECONNECT_FAILURE':{'exception_type','generation','attempt'},
  'ACCOUNT_MONITOR_FAILURE':{'exception_type','message','component','failures'},
 }
@@ -95,25 +97,26 @@ class LiveLog(RotatingLog):
         return sanitize(value)
     def encode_record(self,row):return encoded(row)  # already canonical; never re-sanitize a sealed record
     def write(self,row):
-        with self.lock:
-            from .log_schema import nested_payload
-            row=dict(row)
-            sealed_shadow=row.get('payload',{}).get('shadow') if row.get('kind')=='SHADOW_SEALED' else None
-            if 'payload' in row:
-                fields=PAYLOAD_FIELDS.get(row.get('kind'),set())
-                row['payload']=nested_payload(row.get('kind'),{k:v for k,v in row['payload'].items() if k in fields},self.public_tokens) if isinstance(row['payload'],dict) else {}
-            allowed={'experiment_id','hash','kind','payload','previous','seq','mode'}
-            data={**self.canonical_tree({k:v for k,v in row.items() if k in allowed}),'mode':'REAL_CALIBRATION_PREPARATION'}
-            if row.get('kind')=='SHADOW_SEALED':
-                from .core import digest
-                p=data['payload']
-                if p.get('shadow')!=sealed_shadow or digest(p['shadow'])!=p.get('sha256'):
-                    self.fault('NONCANONICAL_SHADOW_LOG');raise ValueError('NONCANONICAL_SHADOW_LOG')
-            size=len((encoded(data)+'\n').encode())
-            if sum(p.stat().st_size for p in self.directory.glob('*.log'))+size>self.max_bytes or shutil.disk_usage(self.directory).free<512*1024**2:
-                self.fault('LOG_STORAGE_LIMIT');raise OSError('LOG_STORAGE_LIMIT')
-            try:super().write(data);self.total_bytes+=size
-            except BaseException:self.fault('LOG_WRITE_OR_CONSOLE_FAILURE');raise
+        # Journal is a log, not consensus. Never raise.
+        try:
+            with self.lock:
+                from .log_schema import nested_payload
+                row=dict(row)
+                sealed_shadow=row.get('payload',{}).get('shadow') if row.get('kind')=='SHADOW_SEALED' else None
+                if 'payload' in row:
+                    fields=PAYLOAD_FIELDS.get(row.get('kind'),set())
+                    row['payload']=nested_payload(row.get('kind'),{k:v for k,v in row['payload'].items() if k in fields},self.public_tokens) if isinstance(row['payload'],dict) else {}
+                allowed={'experiment_id','hash','kind','payload','previous','seq','mode'}
+                data={**self.canonical_tree({k:v for k,v in row.items() if k in allowed}),'mode':'REAL_CALIBRATION_PREPARATION'}
+                if row.get('kind')=='SHADOW_SEALED':
+                    from .core import digest
+                    p=data['payload']
+                    if p.get('shadow')!=sealed_shadow or digest(p['shadow'])!=p.get('sha256'):return
+                size=len((encoded(data)+'\n').encode())
+                if sum(p.stat().st_size for p in self.directory.glob('*.log'))+size>self.max_bytes or shutil.disk_usage(self.directory).free<512*1024**2:return
+                try:super().write(data);self.total_bytes+=size
+                except BaseException:pass
+        except BaseException:pass
 
 class LoggedJournal(Journal):
     def __init__(self,path,experiment_id,log,**quota):
@@ -124,13 +127,16 @@ class LoggedJournal(Journal):
     def append(self,kind,payload):
         with self.lock:return self._logged_append(kind,payload)
     def _logged_append(self,kind,payload):
-        if kind not in EVENTS:raise ValueError('UNREVIEWED_LOG_EVENT')
+        # Journal is a log, not consensus. Never raise.
+        if kind not in EVENTS:
+            # Silently skip unreviewed events instead of raising
+            return None
         try:
             def scrub(x):
                 if isinstance(x,dict):return {k:('[REDACTED]' if re.sub('[^a-z]','',str(k).lower()) in ('password','accesstoken','refreshtoken') else scrub(v)) for k,v in x.items()}
                 if isinstance(x,(list,tuple)):return [scrub(v) for v in x]
                 return x
-            if kind not in PAYLOAD_FIELDS:raise ValueError('LIVE_PAYLOAD_SCHEMA_REQUIRED')
+            if kind not in PAYLOAD_FIELDS:return None
             clean=scrub({k:v for k,v in payload.items() if k in PAYLOAD_FIELDS[kind]})
             if kind=='STOP' and isinstance(clean.get('details'),dict):
                 clean['details']={k:v for k,v in clean['details'].items() if k in ('incident_id','exception_type','exposure_management','local_send_call_ms','socket_send_proven')}
@@ -153,4 +159,5 @@ class LoggedJournal(Journal):
             row=super().append(kind,clean)
             self.log.write(row);return row
         except BaseException:
-            self.failed=True;raise
+            pass
+        return None

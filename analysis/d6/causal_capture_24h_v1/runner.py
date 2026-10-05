@@ -115,9 +115,11 @@ async def capture(destination):
  except BaseException as exc:status='INCOMPLETE';error=type(exc).__name__+':'+str(exc);raise
  finally:
   for task in tasks:task.cancel()
-  await asyncio.gather(*tasks,return_exceptions=True)
+  feed_results=await asyncio.gather(*tasks,return_exceptions=True)
   try:
    if error is None:
+    for result in feed_results:
+     if isinstance(result,BaseException) and not isinstance(result,asyncio.CancelledError):raise result
     while not queue.queue.empty():k,p,t=await queue.get();await apply(k,p,t)
     if engine['pending']:await asyncio.gather(*engine['pending'])
     await asyncio.sleep(0)

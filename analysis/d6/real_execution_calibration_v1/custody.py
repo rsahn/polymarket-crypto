@@ -12,7 +12,10 @@ class CustodyStateStore:
     @staticmethod
     def recover_states(path):
         from .core import Journal
+        from pathlib import Path
         states={}
+        if not Path(path).exists():
+            return states
         for row in Journal.read(path):
             if row['kind']!='CUSTODY_STATE':raise ValueError('CUSTODY_STORE_SCHEMA')
             p=row['payload'];states[p['experiment_id']]=p['state']
