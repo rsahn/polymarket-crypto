@@ -1,0 +1,140 @@
+{
+  "unsigned_only": true,
+  "production_qualified": false,
+  "observations": [
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": 7.021903991699219,
+          "uncertainty_ms": 39.39213943481445,
+          "observed_ms": 1791061011709,
+          "stratum": 1,
+          "numerical_bound_ms": 46.41404342651367,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": 5.487680435180664,
+          "uncertainty_ms": 44.631179094314575,
+          "observed_ms": 1791061011747,
+          "stratum": 3,
+          "numerical_bound_ms": 50.11885952949524,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": -1.374959945678711,
+          "uncertainty_ms": 53.027894020080566,
+          "observed_ms": 1791061011830,
+          "stratum": 4,
+          "numerical_bound_ms": 54.40285396575928,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": -1,
+          "uncertainty_ms": 56
+        },
+        "observed_ms": 1791061011709,
+        "valid_until_ms": 1791061016709,
+        "signed": false,
+        "production_qualified": false
+      }
+    },
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": 6.519556045532227,
+          "uncertainty_ms": 39.26959228515625,
+          "observed_ms": 1791061012156,
+          "stratum": 1,
+          "numerical_bound_ms": 45.78914833068848,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": 5.089521408081055,
+          "uncertainty_ms": 44.385607957839966,
+          "observed_ms": 1791061012193,
+          "stratum": 3,
+          "numerical_bound_ms": 49.47512936592102,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": -6.720066070556641,
+          "uncertainty_ms": 61.13054943084717,
+          "observed_ms": 1791061012292,
+          "stratum": 4,
+          "numerical_bound_ms": 67.85061550140381,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": -7,
+          "uncertainty_ms": 64
+        },
+        "observed_ms": 1791061012156,
+        "valid_until_ms": 1791061017156,
+        "signed": false,
+        "production_qualified": false
+      }
+    },
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": 4.9506425857543945,
+          "uncertainty_ms": 35.864378929138184,
+          "observed_ms": 1791061012611,
+          "stratum": 1,
+          "numerical_bound_ms": 40.81502151489258,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": 3.598451614379883,
+          "uncertainty_ms": 45.69285702705383,
+          "observed_ms": 1791061012651,
+          "stratum": 3,
+          "numerical_bound_ms": 49.291308641433716,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": -2.611398696899414,
+          "uncertainty_ms": 53.78201198577881,
+          "observed_ms": 1791061012735,
+          "stratum": 4,
+          "numerical_bound_ms": 56.39341068267822,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": -3,
+          "uncertainty_ms": 57
+        },
+        "observed_ms": 1791061012611,
+        "valid_until_ms": 1791061017611,
+        "signed": false,
+        "production_qualified": false
+      }
+    }
+  ],
+  "source_policy_approved": false,
+  "live_monitor_stopped": true
+}

@@ -1,0 +1,42 @@
+{
+  "sdk_identity": {
+    "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+    "sdk_version": "0.11.0",
+    "wallet": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "environment": "production",
+    "independent_attestation": false,
+    "transport_qualified": false,
+    "submit_allowed": false,
+    "wallet_type": "EOA",
+    "production_authority_bound": false,
+    "wallet_deployment_checked": false,
+    "credential_network_bootstrap": false
+  },
+  "real_streambook": {
+    "slug": "btc-updown-5m-1791055200",
+    "condition_id": "0x8a75dcbeb8266526d54fff1eea3d05bc07e5b72d1b23047f140c2054fb4bd702",
+    "tokens": [
+      "58172526989572152347704758902939073279360415883863591135968216015375785955343",
+      "23004288917113669199675678137701927414288360046468977551864805909705385762870"
+    ],
+    "observed_ms": 1791055486908,
+    "available": false,
+    "book_synced": false,
+    "messages": 0,
+    "failure": "STALE_WIRE_EVENT",
+    "production_session_bound": false,
+    "freshness_diagnostics": {
+      "source_age_at_receipt_ms": -395,
+      "local_processing_ms": 0,
+      "rejected_message_age_ms": -395,
+      "freshness_cause": "WIRE_EVENT_STALE_AT_RECEIPT",
+      "parser_reason": "STALE_WIRE_EVENT",
+      "exception_category": null
+    },
+    "diagnostic_only": true,
+    "expiry_ms": 1791055500000
+  },
+  "LIVE_GATE": "BLOCKED",
+  "armed": false
+}

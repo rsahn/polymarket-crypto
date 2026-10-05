@@ -1,0 +1,26 @@
+{
+  "observed_ms": 1791125683922,
+  "public_endpoints": [
+    {
+      "url": "https://data-api.polymarket.com/v2/status",
+      "status": 403
+    },
+    {
+      "url": "https://data-api.polymarket.com/v2/openapi.json",
+      "status": 403
+    },
+    {
+      "url": "https://data-api.polymarket.com/v1/accounting/snapshot?user=0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+      "status": 403
+    }
+  ],
+  "known_receipts_revalidated": [
+    {
+      "tx": "0xeee934cede451fa4feb9f441714d692d58717de77980765f5497aa5f8281051d",
+      "status": "0x1",
+      "canonical": true,
+      "finalized": true
+    }
+  ],
+  "limitation": "Known receipts only; neither receipts nor an empty accounting snapshot enumerate unsubmitted offchain obligations."
+}

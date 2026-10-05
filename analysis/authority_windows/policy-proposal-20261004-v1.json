@@ -1,0 +1,27 @@
+{
+  "policy": {
+    "keys": {
+      "d6-windows-telemetry-v1": {
+        "address": "0x42DEf9Ae2e61CC1e1f99f56B33852c4285A03810",
+        "kinds": [
+          "clock_sanity",
+          "ws_healthy"
+        ]
+      }
+    },
+    "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+    "context": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "collateral": "pUSD",
+      "session": "d6-authority-20261004-v1"
+    }
+  },
+  "policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+  "public_key": "0x040c4109d9dfb22d5fac59a7b34fa92a49d3089009673b0b6cefe3770309410634d2f30ff02ba20fd23d470dfa77e450e60cc9918689c4533e05a3ce07aeb27c46",
+  "authority_sid": "S-1-5-21-996557404-12191610-680381608-1006",
+  "approved": false,
+  "source_trust_approved": false,
+  "isolation_test_required": true,
+  "consequences": "Only the two listed telemetry kinds; no account completeness, funds, orders or custody acceptance."
+}

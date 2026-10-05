@@ -1,0 +1,436 @@
+PRODUCTION PROVISIONING — contrat inspecté à d6112e1dc2689ed7c995a5496ea5706eb0894ab8
+Date : 2026-10-03. Aucune modification du runtime, de V1 ou des guards.
+
+ÉTAT ET PORTÉE
+Les 1755 tests et le soak sont des qualifications hors ligne historiques. Ils ne
+constituent pas les 14 attestations fraîches d'une session de production.
+L'inventaire des noms de fichiers sous D:/polymarket-real-calibration n'a trouvé
+que live/BASELINE.json et preparation/BASELINE.json ; aucune policy, qualification,
+snapshot ou market de la nouvelle inbox. Ces anciens baselines ne sont pas promus.
+Aucune variable d'environnement contenant D6/POLY/CUSTODY/EVIDENCE/AUTHORITY ou
+les deux flags d'exécution n'était présente dans le processus inspecté.
+Ce constat ne prouve pas l'absence de fichiers dans tout autre emplacement.
+Le diagnostic w32tm /query /status a renvoyé 0x80070426 (service non démarré).
+Cela ne prouve pas un décalage de l'horloge, mais ne fournit aucune preuve11.
+
+A. PRODUCTION_EVIDENCE_SOURCE
+
+Interface : production_evidence_source.ProductionEvidenceSource(provider,
+authority=ProductionAuthority(...), account, collateral, session, baseline, clock).
+provider.snapshot() et provider.execution(order_id) sont async. La source impose
+un timeout de 5 secondes, sérialise les lectures et valide chaque observation.
+Le provider concret livré est production_provider.EvidenceInbox(directory).
+Il lit des fichiers ; il ne contacte aucun endpoint et ne produit aucune preuve.
+AccountAdapter réalise ensuite normalisation, identité, lineage et réconciliation.
+
+Fichiers dans un répertoire réel hors Git, documents <= 8 MiB, publiés par rename
+atomique, sans doublons JSON, NaN/Infinity ni liens de fichier :
+  baseline.json : baseline signé, figé pour la session ;
+  snapshot.json : inventaire complet actualisé signé ;
+  qualification.json : observed_ms global + 14 enveloppes signées ci-dessous ;
+  market.json : slug, condition_id, outcome_tokens {UP,DOWN}, expiry_ms ;
+  next_market.json : même forme pour les rotations ;
+  execution-<SHA256 UTF-8 order_id>.json : exécution signée quand nécessaire.
+Les métadonnées market sont liées aux preuves signées par validate_assembly.
+Pas de demande d'exécution artificielle ni de trade pour créer un fichier.
+
+Enveloppe baseline/snapshot : kind, key_id, provider, account, signer, collateral,
+session, trust_policy_digest, observed_ms, valid_until_ms, provenance_signature,
+scope='wallet', atomic_frontier={sequence,digest}, inventory, coverage, cash,
+positions, trade_ids, open_orders, terminal_order_ids, inventory_proven=true,
+cash_proven=true, orders_complete=true, trades_complete=true,
+positions_complete=true. Snapshot : baseline_digest, ancestor_frontiers,
+experiment_trade_ids, foreign_order_ids également nécessaires à l'adapter.
+Montants : décimaux non négatifs et finis, unités explicites/normalisées.
+Voir adapters.py pour les champs d'observation et clocks supplémentaires.
+
+Définition exacte de complétude acceptée par le consumer :
+  inventory possède cash, positions, orders, trades, fees ;
+  coverage possède exactement ces 5 clés ; pour chacune :
+    scope='wallet', filters={}, frontier identique à atomic_frontier,
+    complete=true, next_cursor=null, origin='wallet_creation',
+    count=len(inventory[composant]), digest=core.digest(inventory[composant]).
+  Les lignes ont des id uniques non vides. atomic_frontier.digest est le digest
+  de l'inventaire entier, sequence entier >=0. Ni régression ni fork ; les
+  frontiers baseline/précédent doivent être présents dans ancestor_frontiers
+  quand le frontier avance. Ce frontier applicatif n'est PAS en soi un bloc
+  finalisé ni une preuve de simultanéité de plusieurs APIs.
+  cash : exactement [{id:collateral,balance:cash}].
+  positions : {ligne.id:ligne.shares} doit égaler positions.
+  trades : leurs id, dans l'ordre, égalent trade_ids.
+  orders : terminal est un vrai bool ; false -> open_orders, true -> terminal_order_ids.
+  fees : exactement les mêmes id que trades ; cash_fee et share_fee doivent
+  égaler les effets des fills dans les preuves d'exécution.
+  Depuis le baseline : aucun trade historique perdu ; nouveaux trades exactement
+  experiment_trade_ids ; foreign_order_ids vide. Activité étrangère bloquante.
+  Baseline observé <=5 s au chargement initial, validité <=259200000 ms.
+  Snapshot observé <=5 s et validité <=5000 ms. Jamais restamper un vieux relevé.
+
+Cela signifie TOUS les marchés/tokens concernés par ce wallet, toutes les
+credentials et identités maker/proxy/deposit applicables, tout historique depuis
+création, tous ordres ouverts ET terminaux, tous fills et effets cash/shares des
+fees. Les autres actifs/expositions ne doivent pas être silencieusement exclus :
+le provider doit démontrer leur absence ou les rendre bloquants. Une pagination
+terminée pour une seule clé ne démontre pas ce périmètre.
+
+Exécution : enveloppe kind='execution', order_id, market, fills, account_snapshot
+signé, schema='independent-settled/v1' (ou branche raw SDK0.11.0 de l'adapter).
+L'enveloppe execution conserve aussi les champs de provenance/contexte, scope,
+atomic_frontier, baseline_digest, ancestor_frontiers, token, side,
+terminal_status et cumulative_shares. Fill : trade_id, order_id, market, token,
+side, price, shares, cash_fee, share_fee, fee_evidence, exchange_ts_ms,
+receive_ts_ms. L'ordre temporel doit être exchange<=receive<=now et le snapshot
+postérieur à tous les receive_ts_ms ; terminal FILLED/CANCELED/EXPIRED, cumul
+exactement égal à la somme des shares. Les lignes inventory.trades portent
+id et fill, inventory.fees portent id/cash_fee/share_fee.
+Chaque fill est lié à son trade/order/market/token/side et à l'intent durable ;
+0<price<1, shares>0, cash_fee/share_fee>=0 et fee_evidence prouve les deux effets.
+Tous les trades de cet ordre doivent apparaître, sans doublons ; terminal et
+cumul des fills doivent correspondre. Voir adapters.py et raw_trades.py : un
+simple JSON de réponse POST n'est pas une preuve indépendante de règlement.
+
+Endpoints et acquisition par le provider À DÉSIGNER :
+  - Cash : GET CLOB /balance-allowance (route du lecteur local) + lecture RPC
+    du contrat collateral réellement approuvé, au bloc de référence ; rapprocher
+    réservations et disponibilité. Ne pas confondre allowance et solde libre.
+    Cette route n'a pas été revalidée avec succès dans la doc web actuelle.
+  - Orders : https://clob.polymarket.com/data/orders, pagination authentifiée
+    sans filtre marché/asset, tous scopes de credentials applicables. Ajouter
+    archive d'ordres terminaux et consultation par ID. L'API d'ordres ouverts
+    seule ne reconstitue pas les annulations sans fill historiques.
+  - Trades/fills : https://clob.polymarket.com/data/trades, maker approprié,
+    pagination complète sans restriction de marché ; conserver les réponses,
+    timestamps, cursors, statuts de settlement et liens transaction/order.
+    La doc utilise LTE= comme fin de pagination ; le contrat local normalise
+    next_cursor=null après vérification de fin, sans prétendre étendre le scope.
+  - Positions : Data API wallet-wide ; legacy GET /positions (user=wallet,
+    sizeThreshold=0, pas de filtre market, pagination), historique closed/activity,
+    et contrôle des balances/transferts ERC1155 via RPC/indexeur approuvé. La doc
+    actuelle expose aussi Data API v2 ; migration/équivalence doivent être
+    validées par le provider, aucune migration automatique du runtime.
+  - Fees : paramètres de marché/GET /fee-rate pour borne préalable, puis effets
+    effectivement réglés cash/shares de CHAQUE fill. Un taux n'est pas une preuve
+    du débit réel. Inclure règles d'arrondi, epoch, corrections et late fills.
+  - Cross-check : journal historique de transferts, split/merge/redemption,
+    deposits/withdrawals, rebates et autres changements du wallet ; finalité,
+    reorgs, lag d'indexation et concurrence des APIs doivent être résolus avant
+    publication d'un seul frontier cohérent. Archive immuable des originaux,
+    récupérable par source_record_digest, avec preuves de couverture/audit.
+  Il n'existe pas de provider universel déjà configuré dans ce dépôt. Les APIs
+  consultées ne prouvent pas à elles seules le contrat complet ci-dessus.
+
+Sources officielles consultées le 2026-10-03 (ne pas confondre APIs externes et
+interface locale ; vérifier compatibilité SDK0.11.0 avant configuration) :
+  https://docs.polymarket.com/api-reference/trade/get-user-orders
+  https://docs.polymarket.com/api-reference/trade/get-trades
+  https://docs.polymarket.com/api-reference/core/get-current-positions-for-a-user
+  https://docs.polymarket.com/api-reference/core/get-user-activity
+  https://docs.polymarket.com/api-reference/wallet/list-positions-for-a-user-or-market
+  https://docs.polymarket.com/api-reference/market-data/get-fee-rate
+  https://docs.polymarket.com/trading/fees
+
+Clés nécessaires : clés API de lecture/HMAC pour les sources authentifiées,
+accès RPC/archive si exigé par provider, clés privées d'attestation conservées
+CHEZ les autorités externes. Le consumer n'a besoin que de leurs adresses
+publiques. Le signer de trading est distinct de cette fonction de provenance.
+Ne pas envoyer ces secrets dans une commande, un rapport ou Git.
+
+PASS de A : provider et couverture audités indépendamment ; archive originale
+vérifiée ; baseline/snapshot authentifiés frais et toutes validations source +
+AccountAdapter satisfaites ; cohérence cash/positions/ordres/trades/fees sur
+frontier complet ; pas d'exposition inconnue ; preuves d'exécution existantes
+validées si disponibles. L'absence de trades n'autorise pas des fills fictifs.
+Le champ PRODUCTION_EVIDENCE_SOURCE_QUALIFIED est un résultat de qualification,
+pas un flag d'environnement à mettre à true.
+
+B. PRODUCTION_ARM_AUTHORITY
+
+AUCUNE liste d'adresses ou key_id prédéfinie. Il faut fournir une politique :
+  {"keys":{"<key_id externe>":{"address":"0x<40 hex>","kinds":[...] }},
+   "provider":"<identité du producteur>",
+   "context":{"account":"<wallet>","signer":"<signer SDK>",
+              "collateral":"<identifiant exact>","session":"<session unique>"}}
+Le provider est une chaîne commune à toute la policy, même avec plusieurs
+signataires. Les rôles ne sont pas codés : seule l'autorisation par kinds l'est.
+Ensemble exact des permissions nécessaires : baseline, snapshot, execution,
+puis les 14 noms numérotés ci-dessous. Si raw_trades est utilisé, faire auditer
+aussi le contrat des effets signés de cette branche avant de l'activer.
+Pas besoin de 14 clés ; la séparation provider/risque/custody/audit est à faire
+approuver. Le code n'impose pas cette séparation organisationnelle.
+
+Rôles à assigner explicitement : provider pour inventaire/exécution et preuves
+1,2,5 ; marché/risque pour 3,6 ; qualification technique pour 4,8,9,10,11,12,13 ;
+custody pour 7 ; réviseur indépendant pour 14. Cette répartition est une
+proposition de provisioning, pas une policy préapprouvée. La receipt authority
+de custody est un autre objet, pas automatiquement une key de cette policy.
+
+Signature : EIP-191 secp256k1. Retirer seulement provenance_signature de
+l'enveloppe ; sérialiser via core.encoded (JSON trié, compact, ensure_ascii par
+défaut, NaN interdit ; Decimal en chaîne), puis signer encode_defunct(text=
+'D6_PROVENANCE_V1:'+encoded(record)). Ajouter signature hex SANS préfixe 0x.
+Le verifier récupère l'adresse, compare key_id/address/kinds/provider/context
+et trust_policy_digest. kind, s'il accompagne check, doit lui être égal.
+policy digest = core.digest(policy), SHA256 du JSON canonique UTF-8, PAS le hash
+des octets indentés du fichier. Le digest APPROUVÉ doit arriver par un canal
+indépendant ; son calcul local ne constitue aucune approbation.
+
+Enveloppe de chacune des 14 preuves : check, éventuellement kind=check, key_id,
+provider, account, signer, collateral, session, market=condition_id,
+strategy_hashes=résultat exact v1_binding.verify(), trust_policy_digest,
+observed_ms, valid_until_ms, payload, source_digest=core.digest(payload),
+provenance_signature. Âge <=5000 ms, non future, expiration <=observed+5000 ms.
+qualification.json a aussi observed_ms global frais <=5000 ms. Le service
+signataire doit réévaluer la validité des sources avant chaque republication ;
+changer seulement le timestamp d'un ancien résultat serait une fausse preuve.
+
+14 preuves : origine, configuration/commande, critères du code
+
+01 wallet_account_identity_verified
+Origine : registre approuvé wallet/maker/signer et propriétés publiques du vrai
+AsyncSecureClient production0.11.0. Fournir payload {wallet,maker,signer}.
+PASS : wallet=maker=account, signer non vide ; SDKIdentityBinding inspect vérifie
+en plus le vrai wallet/signer/environment et l'identité du client lié.
+Commande producteur : aucune livrée ; configurer identité et publier check01.
+
+02 balance_sufficient
+Origine : relevé cash disponible autoritatif au frontier de A.
+Payload {available_cash,required_cash,collateral}. PASS : montants finis >=0,
+available>=required, collateral exact ; validate_assembly impose required>=100.
+Configuration : budget minimum100, pas de transfert/funding automatique.
+Commande producteur : aucune livrée ; publier check02 depuis le relevé vérifié.
+
+03 market_identity_verified
+Origine : métadonnées réelles du marché courant, expirations et tokens.
+Payload {condition,tokens,expires_ms,outcome_tokens:{UP,DOWN}}.
+PASS : condition=market, 2 tokens distincts, expiration future ; runtime impose
+mapping exact et ordre [UP,DOWN], également identique aux tokens de check12.
+Configuration : market.json puis next_market.json à chaque rotation ; preuves
+reliées au nouveau market/session. Pas de condition/token choisi arbitrairement.
+
+04 sdk_order_path_qualified
+Origine : qualification crypto SDK et inspection de l'artefact réellement déployé.
+Payload {sdk_version,codec_digest,http_attempts,allowance_mutation}.
+PASS : version='0.11.0', digest64hex, http_attempts=1, allowance_mutation=false.
+Commande source : suite hors ligne PROD_STEP_07 ; aucun POST réel. L'autorité
+doit attester que le codec déployé correspond à cet artefact ; le prédicat ne
+compare pas de lui-même ce hash avec une référence externe.
+
+05 account_evidence_adapter_qualified
+Origine : audit A et validation source/adapter du baseline courant.
+Payload {scope,atomic_frontier,baseline_digest,fee_effects}.
+PASS : scope='wallet', frontier valide, digest64hex, fee_effects='cash_and_shares'
+et baseline_digest égal au baseline réel dans validate_assembly.
+Commande consumer : production_provisioning_check.py avec inbox/policy/digest.
+Ce contrôle local seul ne prouve pas le scope externe.
+
+06 fee_upper_bound_proven
+Origine : policy de fees actuelle et preuve des effets/arrondis/late fills.
+Payload {cash_collateral,outcome_shares,collateral_per_share_upper,
+fee_source_digest,coverage,epoch,late_fill_coverage}.
+PASS : coverage='ROUND_TRIP_FAK_1BUY_1SELL', late_fill_coverage=true,
+cash/shares/conversion non négatifs finis, conversion requise si shares>0,
+cash+shares*conversion>=0, digest64hex, epoch non vide. La policy gelée doit
+couvrir entrée/sortie et réservations ; changement d'epoch/marché ou dépassement
+de réserve à la sortie bloque. Commande provider : aucune livrée.
+
+07 exit_handoff_ready
+Origine : probe réel d'acceptation de custody et archive durable indépendante.
+Payload {owner,channel,durable_receipt_probe}, chaînes non vides ; owner égal au
+verifier.owner au runtime, objets liés à l'authority. Le prédicat vérifie les
+chaînes, PAS le contenu du probe. Le signataire doit vérifier le vrai reçu et
+la survie indépendante (C). Commandes manuelles C si ce mode est approuvé.
+
+08 ledger_healthy
+Origine : relecture Journal.read du journal réel et checkpoint/hash conservé,
+stockage D: contrôlé. Payload {verified_sequence,journal_digest,free_bytes}.
+PASS : sequence entier>=0, digest64hex, free>=512MiB pour le prédicat générique.
+Production impose EN PLUS 35433480192 octets libres (33GiB), quotas16GiB/sink,
+record16KiB. Commande locale : checker ; relecture journal dans PROD_STEP_08.
+Le digest seul n'effectue pas la vérification de chaîne : producteur responsable.
+
+09 kill_switch_tested
+Origine : test contrôlé de kill avec SDK soumission bloquée et custody réelle
+vérifiée ; qualification hors ligne existante comme artefact technique.
+Payload {test_digest,new_entries_after_kill,custody_verified}.
+PASS : digest64hex, new_entries_after_kill=0, custody_verified=true.
+Commande : PROD_STEP_07 pour logiciel ; C pour vraie custody. Aucun ordre réel.
+
+10 reconciliation_tested
+Origine : observations indépendantes rapprochées, tests rejet inconnu/duplicata.
+Payload {test_digest,independent_observations,unknown_events_rejected}.
+PASS : digest64hex et deux booléens true. Commande : PROD_STEP_07 plus audit A.
+Un mock ne remplace pas les observations indépendantes de production.
+
+11 clock_sanity
+Origine : mesure de clock contre référence indépendante approuvée, avec borne
+d'incertitude (RTT, résolution, erreur référence), pas la seule heure locale.
+Payload {offset_ms,uncertainty_ms}. PASS : offset entier, uncertainty entier>=0,
+abs(offset)+uncertainty<=100. Commandes : w32tm /query /status ; mesure selon
+PROD_STEP_09. Le status Windows seul n'établit pas cette borne.
+
+12 ws_healthy
+Origine : vrai StreamBook du marché courant, deux books synchronisés.
+Payload {state,generation,tokens,receive_ms}. PASS : state='SYNCHRONIZED',
+generation entier>=0, deux tokens distincts exacts, âge receive<=1000 ms.
+Runtime vérifie aussi read().available et fraîcheur/causalité du book réel.
+Configuration : observer le StreamBook utilisé par la composition ; aucun
+always-healthy, aucun flux de test. Pas de CLI standalone livrée pour attester.
+
+13 tests_green
+Origine : rapports du code déployé et manifest de sources ; 1755 PASS historiques
+à d6112e1, audit et final_cleanup_regressions à inclure sans double comptage.
+Payload {test_digest,failed,passed}. PASS : digest64hex, failed=0, passed>0.
+Commande : PROD_STEP_07. L'autorité revalide manifest et état de déploiement puis
+émet une preuve fraîche ; aucun résultat de suite modifié en enveloppe locale.
+
+14 audit_pass
+Origine : réviseur indépendant ayant examiné policy, couverture, custody,
+artefacts, SDK, composition et blockers restants.
+Payload {audit_digest,reviewer,unresolved_critical}.
+PASS : digest64hex, reviewer non vide, unresolved_critical=0.
+Commande : aucune automatisation d'approbation ; transmettre l'audit au réviseur.
+
+Toutes les preuves se vérifient via preflight.evaluate avec EvidenceVerifier et
+ProductionAuthority. Aucune variable ENV ne provisionne keys/policy/inbox/client.
+REAL_ORDERS_ENABLED et LIVE_EXECUTION_ARMED doivent être absents ou 'false'.
+from_approved_inbox reçoit directory, trust_policy, approved_policy_digest,
+client déjà configuré, custody déjà provisionnée et log_directory sur D:.
+L'appel lie les mêmes objets et conserve l'armement humain interactif.
+
+C. INDEPENDENT CUSTODY
+
+Contrat : CustodyOwner(channel, verifier, state_store=CustodyStateStore(Journal)).
+channel.accept(request) async renvoie None ou un reçu. verifier.verify(receipt,
+request) async ; verifier.owner ; verifier.authority.verify_durable(receipt)
+async doit vérifier une acceptation durable indépendante, pas un bool local.
+Store fsync distinct et relisible ; jamais unlink pour effacer une responsabilité.
+
+Requête issue de ledger.custody_snapshot : account, experiment_id, exposition
+complète, exposure_digest/exposure_revision, journal_sequence et orders/intents/
+unknown/future corrections. Reçu générique : owner, receipt_id unique,
+accepted_ms <=5s, account/experiment/exposure_digest/journal_sequence exacts,
+future_result_client_ids couvrant TOUS les intents, même terminaux. Le Owner
+recontrôle la révision avant transfert, attend les tâches stratégie en cours et
+persiste TRANSFERRED AVANT de libérer sa responsabilité.
+
+Implémentation manuelle existante : ManualCustodyChannel(directory), owner fixe
+'requesting-owner', ManualReceiptAuthority(channel), ManualReceiptVerifier(...),
+CustodyOwner(...,state_store=...). Répertoire Windows owner-only, propriétaire
+SID courant, aucune junction/symlink ; documents <=1MiB écrits exclusifs/fsync.
+Challenge nonce + digest, valable10min ; acceptation humaine TTY exacte :
+  ACCEPT CUSTODY <experiment_id> <exposure_digest> <nonce>
+Ce reçu persiste après acceptation ; responsabilité non expirée au bout de5s.
+La confiance est l'ACL du SID + action opérateur ; ce n'est PAS une signature
+indépendante d'un autre processus exécuté sous le même SID. Faire approuver ce
+modèle ou fournir un service externe de receipts avec son authority.
+
+Dans un terminal indépendant du bot (opérateur, après choix du répertoire) :
+  python -m analysis.d6.real_execution_calibration_v1.manual_custody --directory "<custody_dir>" --watch
+Puis dans un autre terminal opérateur, pour le vrai challenge affiché :
+  python -m analysis.d6.real_execution_calibration_v1.manual_custody --directory "<custody_dir>" --accept <challenge_id>
+L'agent ne tape pas ACCEPT CUSTODY à la place du propriétaire.
+
+Probe nécessaire sans ordre : faire publier une requête portant sur l'état réel
+lu en A (flat s'il l'est réellement), obtenir un reçu réel, relire/vérifier
+receipt et journal depuis le processus de custody. Arrêter le supervisor du
+probe sans arrêter le watcher/service propriétaire ; démontrer que les fichiers,
+la responsabilité acceptée et le monitoring indépendant restent accessibles.
+Tester également une relance du lecteur indépendant et comparer les digests.
+Un watcher qui affiche des messages ne prouve pas à lui seul une capacité de
+recovery. Documenter responsable, canal, disponibilité, traitement des inconnus
+et procédure de reprise effective. Ne pas stopper un vrai bot avec exposition
+pour fabriquer ce test ; utiliser un probe sans trading et état observé réel.
+
+PASS : owner nommé/accepte, channel opérationnel, authority vérifie receipt
+durable lié à la bonne exposition, store récupérable, aucun trou de responsabilité,
+couverture des futures corrections, processus/opérateur de custody extérieur au
+supervisor reste responsable après son arrêt. Les tâches asyncio de CustodyOwner
+survivent à l'annulation trading, PAS à la mort de l'OS/processus : cette dernière
+exigence dépend réellement du service ou humain indépendant provisionné.
+
+CHECKLIST EXÉCUTABLE (depuis la racine du dépôt, PowerShell)
+Les steps externes ne disposent pas d'une commande magique : leur livrable est
+précisé. Ne pas passer à un step dépendant si le livrable n'existe pas.
+
+PROD_STEP_01 — état local / V1 / SDK / stockage / 14 prédicats sans armement :
+  python analysis/production_provisioning_check.py --output analysis/provisioning_preflight_initial.json
+Exécuté par l'agent ; code retour2 attendu (BLOCKED), rapport non probant.
+
+PROD_STEP_02 — décision provider : fournir identité, endpoint/service, couverture
+wallet-wide depuis création, scopes credentials, finalité/frontier, accès archive
+immuable et audit de couverture. Ne pas approuver une signature comme complétude.
+
+PROD_STEP_03 — décision policy : fournir adresses publiques/key_id/kinds,
+account/signer/collateral/session uniques, réviseur et approved_policy_digest
+obtenu séparément. Aucune clé de signature externe générée par l'agent.
+
+PROD_STEP_04 — provider : créer son inbox hors Git avec ACL appropriée ; publier
+policy publique séparée et baseline/snapshot/market/qualification par rename
+atomique. Le consumer ne réclame pas de credentials dans cette inbox. Fournir
+les chemins exacts à l'agent ; aucun chemin existant ne sera deviné ou écrasé.
+
+PROD_STEP_05 — consumer : lorsque les trois entrées approuvées sont disponibles :
+  python analysis/production_provisioning_check.py --inbox "<inbox>" --policy "<trust-policy.json>" --approved-policy-digest "<digest approuvé>" --output "analysis/provisioning_preflight_supplied.json"
+Ce diagnostic lit baseline/snapshot via les vrais validators et évalue les14.
+Il ne certifie jamais indépendamment la policy, le provider ou LIVE_GATE et ne
+construit jamais de SDK client ; exit2 reste volontaire. Utiliser un nouveau nom
+de rapport à chaque exécution (création exclusive).
+
+PROD_STEP_06 — décision custody : owner, canal, modèle de receipts (manuel SID
+ou service externe), store durable, runbook et probe C. Livrer résultat du probe
+et originale archive ; le service signataire autorisé produit ensuite check07.
+
+PROD_STEP_07 — sources techniques : vérifier les rapports déjà committés et
+tested_source_manifest dans evidence/live_gate_verified_20261003. Si nouvelle
+qualification nécessaire, lancer le harness hors ligne (aucun ordre) :
+  $env:D6_TEST_OUTPUT = '<répertoire de preuves neuf>'
+  python tests/offline_suite.py
+Le producteur externe référence ces artefacts par digest ; il ne faut pas signer
+automatiquement un nouveau audit_pass depuis la machine testée.
+
+PROD_STEP_08 — ledger : choisir le journal RÉEL de la session et le relire :
+  python -c "from pathlib import Path; from analysis.d6.real_execution_calibration_v1.core import Journal; print(sum(1 for _ in Journal.read(Path(r'<journal réel>'))))"
+Conserver checkpoint/digest selon le producteur, vérifier stockage33GiB via step05.
+Pas de journal fictif substitué à la future session. Configurer les paths D:
+avec les mêmes identités SID que le process réel, archives incidents DPAPI privées.
+
+PROD_STEP_09 — clock :
+  w32tm /query /status
+Puis avec serveur TEMPS approuvé par l'opérateur :
+  w32tm /stripchart /computer:<serveur approuvé> /samples:5 /dataonly
+L'autorité doit borner l'incertitude et obtenir <=100ms avec abs(offset).
+Ne pas modifier l'horloge système automatiquement ni déduire PASS du seul status.
+
+PROD_STEP_10 — préparer la composition avec vrai SDK0.11.0 déjà configuré,
+identité approved wallet/signer/production, vrai StreamBook et SignalSource,
+custody du step06. Pas d'auto allowance ni credential bootstrap non audité.
+API existante : await launch.from_approved_inbox(directory=...,trust_policy=...,
+approved_policy_digest=...,client=...,custody=...,log_directory=...).
+Il n'existe PAS de CLI injectant ces objets ni de commande CALIBRATE standalone.
+Le code d'intégration concret dépend du provider, du stockage d'identité SDK et
+du mode custody retenus. Il reste à composer une fois ces choix fournis ; ce
+n'est pas une raison pour modifier l'architecture ou utiliser un faux client.
+
+PROD_STEP_11 — faire fonctionner le producteur indépendant : publier les14
+preuves réelles fraîches ensemble, liées au baseline/session/market/code courant,
+clock, WS réel, original custody probe et audit. Rafraîchissement continu <5s ;
+mettre à jour les preuves de marché à chaque rotation. Valider avec step05.
+
+PROD_STEP_12 — preflight production complet dans la composition réellement
+provisionnée : contrôles storage, DPAPI, source/adapter, SDK identity, books réels,
+14 preuves, validate_assembly et bindings. Aucune soumission avant HumanArm.
+Tant que SDK/custody/policy/provider manquent, ce step est NON EXÉCUTABLE.
+Le diagnostic step01/05 ne doit jamais être présenté comme ce step complet.
+
+PROD_STEP_13 — STOP lorsque les steps précédents sont PASS ; l'opérateur seul
+saisit dans le prompt HumanArm de cette composition : CALIBRATE <session exacte>.
+Ce n'est pas une commande PowerShell. HumanArm exige TTY/PID/session, garde
+V1/caps et réévalue la fraîcheur. Une commande de lancement exacte ne peut être
+donnée honnêtement avant la composition configurée au step10.
+
+LIVRABLES EXTERNES MANQUANTS ACTUELS
+1. Provider approuvé, audit de couverture/archive, inbox et observations signées.
+2. Policy/adresses/rôles/contexte approuvés, digest indépendant, producteur des14.
+3. Owner/service custody, receipt authority, store/probe d'acceptation et survie.
+4. Identité SDK de production approuvée et composition avec ces dépendances.
+L'armement humain reste obligatoire mais n'est pas le seul élément manquant.

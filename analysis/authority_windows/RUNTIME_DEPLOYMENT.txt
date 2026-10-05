@@ -1,0 +1,45 @@
+Protected telemetry deployment
+
+This entry point composes the existing TelemetrySigner, ClockCandidate,
+run_telemetry, StreamBook, public GET market discovery and DPAPI key loader.
+It grants only clock_sanity and ws_healthy. It cannot qualify account coverage,
+custody, fees or the complete production preflight. No order SDK is packaged.
+
+Prerequisites: the existing Authority bootstrap and supervisor isolation proof,
+an explicitly approved two-kind policy, and explicit approval of the three
+unauthenticated NTP sources. Runtime observations, keys and operator approval
+records remain local; they are not included in this code commit.
+
+prepare_telemetry_runtime.py NEW_DIRECTORY stages the installed Python standard
+library and dependency versions, the imported first-party modules and pinned V1
+source hashes. It copies no environment file, wallet credentials or Authority key.
+The resulting manifest pins every deployed file. Staging is not a signing runtime.
+
+Install-TelemetryRuntime.ps1 -Stage DIRECTORY -ManifestSha256 HASH validates all
+staged files without mutation. Adding -Apply requires an elevated administrator
+and creates C:\ProgramData\D6Authority\runtime-v1 with Administrators/SYSTEM write
+access and read/execute access for Authority and supervisor. Existing runtimes
+are refused rather than overwritten. No account, private directory or key changes.
+
+A reviewed host-only update can use -UpdateHostOnly together with
+-ExpectedInstalledManifestSha256 OLD_HASH. Every other runtime file must already
+match the new manifest. The new host and manifest are hash checked and atomically
+replaced by the administrator; this mode cannot change dependencies or policy.
+
+Launch only under the non-elevated D6Authority identity:
+C:\ProgramData\D6Authority\runtime-v1\python\python.exe -I -S -B C:\ProgramData\D6Authority\runtime-v1\telemetry_host.py
+
+The protected host pins its location, isolated interpreter, policy and sources.
+It removes inherited proxy/TLS-root overrides and restricts PATH to Windows
+system tools before the existing ACL/key loader runs. It publishes telemetry.json
+atomically in the existing Authority out directory. Missing, stale, unhealthy or
+unqualified clock/book inputs withdraw both records. Market rotation and reconnect
+rebuild the genuine stream. A process crash can leave a file; consumers must still
+verify its signature, context and absolute expiry on every use. Reuse within its
+valid lease is not claimed to be a global one-use replay protocol.
+
+--check-imports checks the staged interpreter and approved configuration without
+loading a key or using the network. It is not evidence of producer identity,
+runtime isolation, fresh signed telemetry or a ready trading gate.
+
+No change to V1, verifier thresholds, financial caps or custody acceptance rules.

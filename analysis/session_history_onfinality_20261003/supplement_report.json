@@ -1,0 +1,15 @@
+{
+  "mode": "secondary",
+  "from_block": 94331195,
+  "to_block": 94902121,
+  "anchor_hash": "0xd594493e8c8acb1a58b3fc8092b68a3435c35f4f38725148085809eb05414b62",
+  "range_coverage_complete": true,
+  "failed_ranges": [],
+  "observed_ms": 1791059787137,
+  "read_only": true,
+  "primary_secondary_results_identical": true,
+  "primary_logs": 25,
+  "secondary_logs": 25,
+  "secondary_normalized_digest": "829a4b104e568e55e9b36d17282e714cbfc05f140ccdf6e8a0cd3658dbee029a",
+  "primary_normalized_digest": "829a4b104e568e55e9b36d17282e714cbfc05f140ccdf6e8a0cd3658dbee029a"
+}

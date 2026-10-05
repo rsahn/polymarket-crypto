@@ -1,0 +1,10 @@
+{
+  "preflight.py": "23b86dea49f6f49bf1f649e579ce43ddfdad86c9 feat(calibration): baseline 24/7 \u00e2\u20ac\u201d v1 calibrateur qualifi\u00c3\u00a9 complet",
+  "qualification.py": "23b86dea49f6f49bf1f649e579ce43ddfdad86c9 feat(calibration): baseline 24/7 \u00e2\u20ac\u201d v1 calibrateur qualifi\u00c3\u00a9 complet",
+  "custody.py": "23b86dea49f6f49bf1f649e579ce43ddfdad86c9 feat(calibration): baseline 24/7 \u00e2\u20ac\u201d v1 calibrateur qualifi\u00c3\u00a9 complet",
+  "manual_custody.py": "23b86dea49f6f49bf1f649e579ce43ddfdad86c9 feat(calibration): baseline 24/7 \u00e2\u20ac\u201d v1 calibrateur qualifi\u00c3\u00a9 complet",
+  "production_authority.py": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8 Qualify D6 live-gate software with external evidence contracts",
+  "production_evidence_source.py": "80920af612f0746e98a5dc8f2ce4fa2fa989bf24 chore(d6): preserve inherited local diagnostics and qualification artifacts",
+  "production_provider.py": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8 Qualify D6 live-gate software with external evidence contracts",
+  "readonly_provider.py": "23b86dea49f6f49bf1f649e579ce43ddfdad86c9 feat(calibration): baseline 24/7 \u00e2\u20ac\u201d v1 calibrateur qualifi\u00c3\u00a9 complet"
+}

@@ -1,0 +1,67 @@
+Remaining settlement evidence — read-only, no requested monetary action
+
+The on-chain historical Session Signer gap for wallet
+0x871d37b430c42ddbd0bbd37c29c02a2974109de9 is closed over blocks
+94331195..94902121. Both secp256k1 and P-256 passkey paths were included.
+No historical Session-Key account export or natural-expiry guarantee is required
+to close that proved-zero population. Do not reintroduce that blocker.
+
+Observed independently:
+- Owner-authenticated CLOB: no open orders, no trades, exhausted cursors.
+- MATCHED=0, MINED=0, RETRYING=0 in that returned view.
+- Data API: no positions or activity.
+- Polygon: one incoming pUSD transfer, no outgoing pUSD transfer, no ERC1155
+  movement involving the wallet from deployment through block 94902553.
+- Opening pUSD=0; incoming=109160000; closing=109160000 base units.
+- The deposit receipt and anchor/cash values agree between Tenderly and dRPC.
+
+Still not established by those observations:
+1. Whether owner-authenticated /data/orders and /data/trades include obligations
+   submitted using every historical API credential set belonging to that owner,
+   including revoked/deleted sets. The documented wording 'authenticated user'
+   is not treated here as an explicit cross-credential lifecycle guarantee.
+   The order/trade owner field is not silently equated with the on-chain owner.
+2. Which snapshot cutoff/indexing watermark binds pending cancellations, matches,
+   retry queues, actual fee liabilities and their on-chain settlement status.
+   On-chain absence of a transfer excludes an already-finalized debit, not a
+   pending off-chain debit. No future liability is manufactured or assumed zero.
+3. CLOSED: predeployment standard ERC1155 receipts are now covered, blocks
+   0..94331194 inclusive, 3145 validated ranges, zero failures and zero logs.
+   The provider's documented-in-error 30000-block range limit was respected.
+   Evidence: analysis/predeployment_positions_20261003/report.json.
+   Combined with the postdeployment scan through 94902553 this proves zero
+   standard event-emitting ERC1155 positions at that fixed chain cut, assuming
+   the canonical RPC log responses are complete. It is not a fresh off-chain
+   obligations certificate, nor a claim about malicious nonstandard contracts.
+
+Minimum acceptable resolution:
+- A documented, authoritative wallet/owner-inclusive scope guarantee for the
+  existing GET endpoints may resolve item 1; a new third party is not required.
+  Otherwise an official read-only wallet-wide export must include all owner
+  credential sets and the still-live obligations they originated.
+- A defined cutoff/settlement watermark or equivalent verifiable reconciliation
+  contract must tie the order/trade/fee view to the canonical chain cut and specify
+  update delay, pending statuses and finality. Only CONFIRMED/FAILED are terminal.
+- Item 3 is resolved for standard ERC1155 positions at the recorded fixed cut.
+
+No unsupported assertion is made that an API cannot ever provide these features.
+They have not been demonstrated by the interfaces/contracts used in this audit.
+No key creation, revocation, cancel-all, transfer, order or transaction is requested.
+
+Official references inspected 2026-10-03:
+https://docs.polymarket.com/api-reference/trade/get-trades
+https://docs.polymarket.com/trading/manage-orders
+https://docs.polymarket.com/trading/session-keys
+
+Request to Polymarket (read-only; not sent automatically):
+For Deposit Wallet 0x871d37b430c42ddbd0bbd37c29c02a2974109de9 and owner
+0x9348efd557a09e644795c8f114bcf0bef86f203a, please identify an authoritative
+GET/export contract covering every outstanding owner-originated order and
+settlement, including those submitted with revoked/deleted API credential sets.
+Specify whether unfiltered /data/orders and /data/trades with the owner's current
+credentials already provide that coverage. Specify treatment of pending cancel,
+MATCHED/MINED/RETRYING, fees, retention, indexing delay, and the watermark/finality
+rule needed to reconcile an exhausted empty result with a canonical chain cut.
+Historical cancelled/unfilled orders with no remaining liability are not needed
+merely to prove current safety. Historical Session Keys are not the unresolved
+population for the proved interval. No write operation is requested.

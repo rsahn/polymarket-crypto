@@ -1,0 +1,113 @@
+{
+  "sdk": {
+    "phase": "POLYGON_ARCHIVE_RPC_QUALIFICATION",
+    "status": "PASS_READ_ONLY_RPC",
+    "rpc": "CONFIGURED_POLYGON_ARCHIVE_RPC_URL",
+    "from_block": 94331195,
+    "to_block": 94331204,
+    "rpc_calls": [
+      {
+        "rpc_method": "eth_chainId",
+        "id": 1,
+        "started_ms": 1791054843485,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1791054843701,
+        "parse_complete_ms": 1791054843701,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1791054843701,
+        "elapsed_ms": 216
+      },
+      {
+        "rpc_method": "eth_getCode",
+        "id": 2,
+        "started_ms": 1791054843701,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1791054843923,
+        "parse_complete_ms": 1791054843923,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1791054843923,
+        "elapsed_ms": 222
+      },
+      {
+        "rpc_method": "eth_getLogs",
+        "id": 3,
+        "started_ms": 1791054843929,
+        "from_block": 94331195,
+        "to_block": 94331204,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1791054844377,
+        "parse_complete_ms": 1791054844377,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1791054844377,
+        "elapsed_ms": 448
+      }
+    ],
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "credentials_loaded": false,
+    "private_key_loaded": false,
+    "authenticated_get_attempts": 0,
+    "genesis_created": false,
+    "ready_for_arm": false,
+    "rpc_configuration_source": "PROCESS_ENVIRONMENT_ONLY_NO_DOTENV",
+    "chain_id": 137,
+    "historical_code_present": true,
+    "historical_block": 94331195,
+    "historical_logs_readable": true,
+    "rows_count": 0,
+    "reason": "TESTED_BLOCK_AND_TEN_BLOCK_RANGE_ONLY_NO_GLOBAL_ARCHIVE_OR_GENESIS_CLAIM"
+  },
+  "publicnode": {
+    "phase": "POLYGON_ARCHIVE_RPC_QUALIFICATION",
+    "status": "BLOCKED",
+    "rpc": "CONFIGURED_POLYGON_ARCHIVE_RPC_URL",
+    "from_block": 94331195,
+    "to_block": 94331204,
+    "rpc_calls": [
+      {
+        "rpc_method": "eth_chainId",
+        "id": 1,
+        "started_ms": 1791054844378,
+        "transport": "URLLIB_NO_POOL",
+        "http_status": 200,
+        "response_received_ms": 1791054844547,
+        "parse_complete_ms": 1791054844547,
+        "status": "PASS",
+        "thread_cpu_ms": 31.25,
+        "finished_ms": 1791054844547,
+        "elapsed_ms": 169
+      },
+      {
+        "rpc_method": "eth_getCode",
+        "id": 2,
+        "started_ms": 1791054844547,
+        "transport": "URLLIB_NO_POOL",
+        "error_category": "TIMEOUT",
+        "status": "FAILED",
+        "thread_cpu_ms": 15.625,
+        "finished_ms": 1791054854643,
+        "elapsed_ms": 10096
+      }
+    ],
+    "flags": {
+      "REAL_ORDERS_ENABLED": "false",
+      "LIVE_EXECUTION_ARMED": "false"
+    },
+    "credentials_loaded": false,
+    "private_key_loaded": false,
+    "authenticated_get_attempts": 0,
+    "genesis_created": false,
+    "ready_for_arm": false,
+    "rpc_configuration_source": "PROCESS_ENVIRONMENT_ONLY_NO_DOTENV",
+    "chain_id": 137,
+    "reason": "PUBLIC_READ_FAILED_SEE_SANITIZED_RPC_CALLS"
+  }
+}

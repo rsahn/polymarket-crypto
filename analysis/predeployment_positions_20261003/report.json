@@ -1,0 +1,16 @@
+{
+  "provider": "https://tenderly.rpc.polygon.community",
+  "from_block": 0,
+  "to_block": 94331194,
+  "anchor_hash": "0xc1f6d867d3f38293999a5ddeef084d5a0e75a003f1004d3b27216ca3df686480",
+  "incoming_erc1155_logs": [],
+  "coverage_complete": true,
+  "zero_predeployment_standard_erc1155_receipts_proven": true,
+  "failed_ranges": [],
+  "manifest_digest": "3f99206d45aa8d45e6ccf906f0d24bdac18391810d172e761cfa7f01371ad90e",
+  "observed_ms": 1791060264613,
+  "limitations": [
+    "Trusted canonical RPC log completeness and standard ERC1155 mandatory transfer event semantics.",
+    "Not a statement about pending off-chain settlements, malicious nonstandard token contracts, or authorizations."
+  ]
+}

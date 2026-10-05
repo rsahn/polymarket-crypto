@@ -1,0 +1,253 @@
+REVUE ARCHITECTURALE — PROVENANCE, SIMPLIFICATION ET ÉTAT RÉEL
+2026-10-03 ; base Git d6112e1 ; changements locaux uniquement décrits ci-dessous.
+
+1. CE QUI EST OFFICIEL ET CE QUE D6 A CHOISI
+
+PROVISIONING_REQUIREMENTS_AUDIT.txt donne PROOF_01…14 avec fichier:ligne,
+commit, données, prédicat PASS, origine, risque, alternative, puis226 lignes de
+guards. provisioning_proof_plan.json fournit le même plan exploitable par outil.
+provisioning_requirement_blame.json contient toutes les lignes et leur blame Git.
+23b86dea a introduit dans cet historique les14 contrôles (preflight.py:7,
+qualification.py:42 puis prédicats:84 et suivants). d6112e1 a ajouté authority
+et provider, et réécrit production_evidence_source.py (fichier initial80920af).
+Les guards actuels de ces trois modules proviennent de d6112e1. Ce sont des
+exigences D6 (D). Voir aussi provisioning_file_introductions.json.
+
+A : Polymarket définit APIs, credentials/HMAC, identités, ordres/signatures,
+marchés/tokens, fees. Cela ne rend pas officiels nos14 attestations,5s,100ms,
+inbox, tiers externe, archive depuis création, répertoire D: ou custody manuelle.
+B : si on choisit des signatures comme frontière de confiance, intégrité,
+liaison à l'identité/contexte et protection contre rejeu/substitution nécessaires.
+Le choix EIP191/secp256k1 pour NOS attestations reste D, distinct du signing SDK.
+C : aucune exigence réglementaire établie par ces fichiers/docs API. Ce constat
+n'est pas une consultation juridique ni une affirmation d'exemption légale.
+D : tous les gates de qualification et les paramètres chiffrés énumérés ci-dessus.
+E démontré : readonly_provider.py:29 à d6112e1 traite environment comme chaîne/
+enum.value ; SDK0.11.0 expose Environment(name='production'). test_round5.py:57
+utilisait une chaîne dans le contexte factice et cachait le défaut production.
+Le vrai SDK échouait SDK_PUBLIC_IDENTITY. Correction minimale : singleton officiel
+PRODUCTION obligatoire, pas un nom de chaîne. Test vrai SDK + rejets substitution.
+Ne pas classer arbitrairement tout choix D contraignant comme E accidentel.
+
+Sources officielles consultées (et limites) :
+https://docs.polymarket.com/api-reference/trade/get-user-orders
+  Liste des ordres live ; recherche par id permet l'ordre terminal connu.
+  Ne promet pas l'énumération de tous les ordres terminaux inconnus historiques.
+https://docs.polymarket.com/api-reference/trade/get-trades
+  Trades paginés authentifiés. Ne démontre pas toutes les credentials du wallet.
+https://docs.polymarket.com/api-reference/wallet/list-positions-for-a-user-or-market
+https://docs.polymarket.com/trading/fees
+  Positions/fees : sources utiles, pas certificat de couverture globale atomique.
+https://docs.polymarket.com/resources/contracts
+  Contrats Polygon137 ; recoupement avec la config du SDK réellement installé.
+https://www.rfc-editor.org/info/rfc5905/
+https://developers.cloudflare.com/time-services/nts/
+  NTP/temps authentifié : notre seuil100ms est une politique D6, pas API Polymarket.
+https://polygon.publicnode.com/
+  Endpoint RPC public et accès archive ; tentative réelle HTTP403 ici.
+
+2. CHALLENGE DE CHAQUE FAMILLE D/E
+
+Références relatives à analysis/d6/real_execution_calibration_v1.
+Les invariants restent en vigueur. Les alternatives ci-dessous ne sont PAS
+déployées implicitement et aucune réussite de modèle n'est une preuve production.
+
+P1 — production_evidence_source.py:24-32, d6112e1 : authenticité/contexte/freshness.
+Risque : faux compte, cache, replay. Minimum : collecteur direct isolé du
+supervisor, TLS/RPC validés, nonce/context et reçu signé ; firme tierce inutile.
+Une clé sous le même SID ne protège PAS d'un supervisor malveillant de ce SID.
+Sous ce modèle d'attaque, compte de service/ACL distinct ou hôte externe requis.
+
+P2 — source:34-45 : cinq composants, counts/digests, origin wallet_creation,
+filters={}, frontier commun. Risque : exposition/fees omis. Minimum exact :
+inventaire exhaustif avec provenance du checkpoint, historique complet et clôture
+de pagination ; recoupement RPC à bloc fixé et archive des ordres hors chaîne.
+Une liste vide ne prouve pas l'absence globale. Hash commun = cohérence des octets,
+pas preuve que les données viennent du même instant ou qu'un élément ne manque pas.
+
+P3 — source:46-65 et adapters.py:72-105 : baseline, ancêtres, flags, projections,
+absence d'activité étrangère. Risque : fork, compte mélangé, double comptage.
+Minimum : baseline vérifié + journal monotone, conservation cash/shares et toutes
+sources pertinentes. Les booléens de complétude ne peuvent créer l'information.
+
+P4 — source:68-89 / adapters.py:37-70 : timeout5s, lock, fills/fees/terminal.
+Risque : race, résultat submit non final, fees manquants. Minimum : un collecteur
+sérialisé, identités de trades uniques, effets indépendants et terminal vérifié.
+Pas besoin de faire un ordre pour prouver ce chemin avant armement.
+
+P5 — production_provider.py:11-28, d6112e1 : hors Git,8MiB, noms, pas de links,
+JSON strict ; publication atomique. Risque : fuite, ambiguïté JSON, fichiers
+partiels/substitués, mémoire non bornée. Un spool local privé est suffisant.
+8MiB ne doit pas être pris comme preuve qu'un wallet arbitrairement ancien tient
+dans le format ; en cas de dépassement, bloquer, jamais tronquer l'inventaire.
+
+A1 — production_authority.py:10-28, d6112e1 : clés/kinds/provider/context/policy,
+signature. Risque : auto-approbation, mauvaise source, signature hors scope.
+Minimum : clé d'un collecteur identifié et policy approuvée une fois hors du
+supervisor. Pas besoin d'une clé par preuve ni d'une entreprise de certification.
+Une clé générée automatiquement est un candidat, pas une décision de confiance.
+
+A2 — authority:30-36 : baseline72h, autres5s. Risque : données périmées.
+Pour cash/book/clock, garder une fraîcheur runtime bornée. Pour tests/audit/code,
+une attestation durable liée à codehash+policy+déploiement, avec révocation et
+vérification actuelle de ces liens, peut couvrir l'invariant sans resign toutes
+les5s. Le modèle teste l'invalidation sur changement ; pas encore preuve complète
+de révocation ou d'équivalence à déployer. Le guard actuel reste inchangé.
+
+A3 — authority:39-54, launch:17-42, runner.validate_assembly : mêmes objets,
+vrai SDK/StreamBook/source/custody, context et tokens. Risque substitution après
+qualification. Garder les bindings. Un wrapper de lancement ne doit pas lancer
+AsyncSecureClient.create aveuglément : le SDK peut créer des credentials ou
+déployer un Deposit Wallet. Diagnostic utilise uniquement construction locale
+auditée du SDK épinglé, jamais create, bootstrap, ensure_wallet_ready ou ordre.
+
+C1 — custody.py:11-21,23b86dea : état fsync/relecture. Risque oubli après crash.
+Un seul journal indépendant et relisible suffit ; une seconde base n'est pas
+intrinsèquement nécessaire. fsync ne garantit pas matériel/volume jamais perdu.
+
+C2 — custody.py:25-38,62-138 : reçu identité/révision/checkpoint/futures, arrêt
+stratégie, TRANSFERRED durable. Risque trou de responsabilité/late fill abandonné.
+Minimum : une acceptation exacte, idempotente, signée par owner/service autorisé,
+persistée avant ACK ; tout changement d'exposition invalide le reçu précédent.
+La signature de reçu est exigée par la mission actuelle. ManualReceiptAuthority
+historique vérifie un fichier+ACL+TTY : ce n'est PAS un reçu cryptographiquement
+signé. Ne pas annoncer qu'il satisfait cette nouvelle demande.
+
+C3 — custody.py:145-165 : owner hors trading task, wait_resolved. Risque shutdown
+annule le responsable. Une autre task du même loop ne survit pas à la mort du
+processus. Minimum pour ce risque : processus/service sibling, pas enfant tué
+avec le supervisor, stockage propre, reprise et monitoring. Pour compromise
+du même user : service sous autre principal, admin nécessaire ici.
+
+C4 — manual_custody.py:9-41,53-91,102-122 : SID/ACL, nonce, TTY,600s challenge,
+acceptation non expirante. Risque acceptation forgée ou état changé pendant saisie.
+Une autorisation préalable explicite de service peut remplacer chaque TTY pour
+le même invariant de prise de responsabilité ; impossible de l'inventer au nom
+de l'utilisateur. L'owner, son périmètre et l'autorité de reçu doivent être choisis.
+
+R1 — capacity.py:8-21, d6112e1 :16GiB/sink,33GiB libres,16KiB/record. Risque disque
+plein ; choix de profil mesuré D. Stockage suffisant observé ici. Changer D: pour
+un autre volume qualifié pourrait être légitime mais ne débloquerait rien ici.
+R2 — engine.HumanArm,23b86dea et038ee635 : TTY/PID/session,flagsfalse,caps,V1.
+Risque armement involontaire et budget dépassé. Conserver intégralement. Aucun
+guard n'a été retiré. REAL_ORDERS_ENABLED local nonfalse a été remis à false.
+
+3. LE MINIMUM LÉGITIME POUR WALLET-WIDE
+
+Pas de tiers magique nécessaire. Un collecteur direct indépendant peut consommer
+CLOB/Data API/WS utilisateur et RPC d'archive, conserver les originaux et publier
+les mêmes enveloppes actuelles. La décision de confiance porte sur le principal,
+le programme vérifié, les sources et les droits, pas sur le mot 'provider'.
+
+Cash : balanceOf du collateral exact à bloc fixé + balance CLOB, disponibilité
+et réservations ; positions : token universe découvert dans tous transferts /
+mint/burn/split/merge/redeem depuis origine puis balances par token, Data API en
+contre-vérification ; ordres : scope exchange de tous les makers/credentials,
+pagination live, archive d'IDs terminaux ; fills : trades attribués au wallet,
+receipt/logs de settlement finalisés ; fees : effets cash/shares de chaque fill,
+pas simple taux. Compter toutes corrections et prouver la conservation des flux.
+
+LIMITATION INFORMATIONNELLE DÉMONTRÉE : un ordre annulé sans fill, dont l'ID est
+perdu, ne change ni la liste live ni les fills on-chain. Deux historiques distincts
+produisent ces mêmes observations. Un nouveau signataire ne peut pas reconstituer
+cette information. Le test de contre-exemple est explicite dans le modèle.
+L'invariant littéral actuel 'tous terminaux depuis création' exige une archive
+complète/exchange export ou une autre source historique. Les GET examinés ne la
+promettent pas. On ne déclare donc pas wallet_creation=true après pagination vide.
+
+Un checkpoint actuel prouvé + aucun ordre/engagement inconnu + journal complet
+depuis T0 pourrait préserver l'invariant économique 'aucune exposition inconnue'.
+Mais il ne préserve PAS l'invariant littéral d'historique exhaustif. Ce serait un
+changement explicite de contrat, pas une simplification équivalente démontrée.
+Il n'a pas été appliqué. Si l'historique exigé n'existe nulle part, il faut décider
+ce contrat après revue, pas fabriquer un provider qui le signerait.
+
+4. CE QUI A ÉTÉ EXÉCUTÉ, ET CE QUI RESTE NON PROUVÉ
+
+- GET réels avec credentials DPAPI existants : cash accessible, vues orders/trades
+  et positions vides. Pour EOA, fins de pagination observées ; scope credential
+  ne prouve toujours pas couverture historique/multi-credential.
+- L'identité réelle du SDK construit localement est EOA0x9348…203a, signer même
+  adresse. Ancien compte D6=0x871d…9de9. Choix utilisateur demandé ; aucune
+  substitution silencieuse du wallet de production.
+- WS réel d'un marché BTC courant : STALE_WIRE_EVENT, available=false. Aucun
+  book synthétique injecté et aucune compensation d'horloge ad hoc.
+- RPC SDK polygon.drpc.org échoue HTTP ; second RPC PublicNode HTTP403. Pas de
+  lecture de bloc finalisé/balance indépendante réussie. Accès RPC utilisable
+  avec périmètre archive nécessaire pour poursuivre la couverture globale.
+- NTP Cloudflare/Google/Windows : offset environ+435ms, bornes observées environ
+ 463–480ms, toutes FAIL. UDP non authentifié ; les échantillons ne sont pas une
+  preuve de validité continue. Windows Time arrêté ; Start-Service refusé faute
+  d'accès au service. Aucun service/time config contourné.
+- Clé CANDIDATE : provisioning_authority_candidate.json. Secret DPAPI owner-only
+  hors Git ; roundtrip et clé publique vérifiés ; aucun kind autorisé, aucune
+  preuve production signée, mêmeSID => indépendance de principal NON qualifiée.
+- Modèle et canal signé candidat :7 tests PASS, dont service sibling vivant après terminaison
+  du supervisor jetable, reçu signé fsync relu, altération/révision/futures rejetées.
+  Tests du canal signé réel candidat : rejet reçu non persisté/non signé, mauvaise
+  clé, exposition modifiée ; reprise entre acceptation et signature, idempotence,
+  TTY obligatoire avant lecture de clé. Acceptation TEST_ONLY. Pas d'exposition réelle assumée, pas de service production
+  démarré ni de claim 'INDEPENDENT_CUSTODY_QUALIFIED=true'.
+- Bug SDK : test échouant avant correction,6 tests ciblés PASS ensuite.
+- Suite complète a exposé un second bug de capture : exception feed achevée à la
+  limite de durée perdue dans gather(return_exceptions=True). Correction vérifie
+  les résultats hors CancelledError et préserve l'erreur primaire ;22 tests du
+  groupe repassés. Ce runner n'est pas la stratégie V1 ; hashes V1 inchangés.
+
+5. ACTIONS HUMAINES / EXTERNES CONCRÈTES
+
+H1 Choisir le compte EOA configuré ou l'ancien compteD6. Puis figer collateral
+réel, session et mappings. Le draft public n'est pas une approbation.
+H2 Fournir un accès RPC utilisable/archive et la source d'énumération exhaustive
+des ordres historiques/tous scopes. Aucun achat ni création de credential faite.
+H3 Désigner le propriétaire/service custody et sa responsabilité, et approuver
+les rôles/signataires/policy. Si isolation contre supervisor compromis demandée,
+provisionner un principal Windows distinct (admin) ; générer sa clé DANS ce
+principal plutôt que transférer un secret DPAPI illisible pour cet autre SID.
+H4 Dans PowerShell administrateur :
+  Start-Service W32Time
+  w32tm /resync
+Si aucune source approuvée configurée, administrateur choisit/configure d'abord
+la source selon sa politique de temps. Ne pas déclarer PASS sur ces commandes :
+relancer les mesures et contrôler abs(offset)+uncertainty<=100 avec expiration.
+H5 Faire approuver l'audit et réaliser une vraie acceptation custody liée à l'état
+observé ; le service autorisé peut ensuite signer les receipts automatiquement.
+H6 CALIBRATE reste la dernière action, uniquement une fois les autres preuves
+réelles et bindings qualifiés. À ce stade ce n'est PAS le seul blocker.
+
+RÉEXÉCUTION SANS ORDRE
+  python analysis/build_provisioning_audit.py
+  python analysis/provisioning_live_observe.py <nouveau-rapport.json> <wallet-candidat>
+  python analysis/provisioning_chain_observe.py <nouveau-rapport.json> https://polygon-bor-rpc.publicnode.com
+  python analysis/provisioning_identity_book.py <nouveau-rapport.json>
+  python -m pytest analysis/provisioning_model_checks.py -q
+  python analysis/production_provisioning_check.py --output <nouveau-rapport.json>
+Ne pas relancer provision_candidate_authority.py pour régénérer/écraser la clé :
+création unique ; elle n'est pas automatiquement approuvée par sa présence.
+
+CANAL SIGNÉ MINIMAL CONSTRUIT, NON ACTIVÉ
+analysis/provisioning_signed_custody.py conserve tous les contrôles de
+ManualCustodyChannel et ajoute signature EIP191 domaine D6_CUSTODY_RECEIPT_V1,
+pin de clé publique, vérification du reçu original durable et du fichier signé.
+La composition candidate est :
+  base = ManualCustodyChannel(directory)
+  channel = SignedManualChannel(base)
+  authority = SignedReceiptAuthority(channel, pinned_address=approved_address)
+  verifier = ManualReceiptVerifier(authority)
+  custody = CustodyOwner(channel, verifier, state_store=CustodyStateStore(journal))
+L'owner et la clé doivent être approuvés ; ce code ne s'installe pas dans launch.
+L'opérateur dans un terminal indépendant, après vraie requête/probe et approbation :
+  python analysis/provisioning_signed_custody.py --directory "<custody_dir>" --accept <challenge_id> --key-file "<clé_DPAPI_du_principal_owner>" --approved-public-address <adresse_approuvée>
+Il doit lire le challenge et saisir la phrase ACCEPT CUSTODY exacte. Si arrêt
+après acceptation mais avant signature, reprise sans effacer le reçu original :
+  python analysis/provisioning_signed_custody.py --directory "<custody_dir>" --resume-accepted <receipt_id> --key-file "<clé_DPAPI_du_principal_owner>" --approved-public-address <adresse_approuvée>
+Nouvelle confirmation SIGN ACCEPTED CUSTODY demandée. Aucun auto-accept, aucun
+overwrite d'un reçu conflictuel, aucune signature d'ordre. La survie du processus
+est testée dans le modèle ; l'isolation de principal et une reprise production
+avec exposition réelle restent à qualifier avec l'owner désigné.
+
+BILAN FINAL DES TESTS :1756 cas de suite PASS apr?s reprise compl?te du groupe
+22 cas corrig? ;7 contr?les candidats s?par?s PASS (provisioning_model_standalone_results.txt).
+Les mod?les multi-processus sont explicitement ex?cut?s s?par?ment ; aucune
+permission subprocess du harness offline_suite n?est assouplie.
+Rapport consolid? : PRODUCTION_PROVISIONING_REVIEW_FINAL.json.

@@ -1,0 +1,18 @@
+{
+  "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+  "sdk_version": "0.11.0",
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+  "environment": "production",
+  "independent_attestation": false,
+  "transport_qualified": false,
+  "submit_allowed": false,
+  "wallet_type": "DEPOSIT_WALLET",
+  "production_authority_bound": false,
+  "configured_wallet": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "active_environment_modified": false,
+  "explicit_production_composition": true,
+  "sdk_identity_binding_qualified": true,
+  "wallet_deployment_checked": false,
+  "credential_network_bootstrap": false
+}

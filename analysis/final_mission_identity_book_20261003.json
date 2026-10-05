@@ -1,0 +1,47 @@
+{
+  "sdk_identity": {
+    "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+    "sdk_version": "0.11.0",
+    "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "environment": "production",
+    "independent_attestation": false,
+    "transport_qualified": false,
+    "submit_allowed": false,
+    "wallet_type": "DEPOSIT_WALLET",
+    "production_authority_bound": false,
+    "configured_wallet": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+    "active_environment_modified": false,
+    "explicit_production_composition": true,
+    "sdk_identity_binding_qualified": true,
+    "wallet_deployment_checked": false,
+    "credential_network_bootstrap": false
+  },
+  "real_streambook": {
+    "slug": "btc-updown-5m-1791059700",
+    "condition_id": "0xb0f896b7c3f9ebdba7905aebb115fd0ef411e4421cb860676adb8d330c4ba218",
+    "tokens": [
+      "58610822565391131623848492241097593409254751938252573892394395687904690988790",
+      "21665067965326766108025661024687306333468138366841738766727228714131975207134"
+    ],
+    "observed_ms": 1791059941199,
+    "available": false,
+    "book_synced": false,
+    "messages": 976,
+    "failure": null,
+    "production_session_bound": false,
+    "regression_diagnostics": null,
+    "freshness_diagnostics": {
+      "source_age_at_receipt_ms": null,
+      "local_processing_ms": null,
+      "rejected_message_age_ms": null,
+      "freshness_cause": null,
+      "parser_reason": null,
+      "exception_category": null
+    },
+    "diagnostic_only": true,
+    "expiry_ms": 1791060000000
+  },
+  "LIVE_GATE": "BLOCKED",
+  "armed": false
+}

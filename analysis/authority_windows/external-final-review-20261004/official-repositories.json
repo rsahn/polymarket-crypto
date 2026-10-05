@@ -1,0 +1,620 @@
+[
+  {
+    "name": "audit-checklist",
+    "description": "A Solidity smart contract auditing checklist",
+    "archived": true,
+    "url": "https://github.com/Polymarket/audit-checklist"
+  },
+  {
+    "name": "eztz",
+    "description": "Tezos JS Library",
+    "archived": true,
+    "url": "https://github.com/Polymarket/eztz"
+  },
+  {
+    "name": "livepeerjs",
+    "description": "JavaScript tools and applications that interact with Livepeer's smart contracts and peer-to-peer network",
+    "archived": true,
+    "url": "https://github.com/Polymarket/livepeerjs"
+  },
+  {
+    "name": "cosmos-delegation-js",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/cosmos-delegation-js"
+  },
+  {
+    "name": "ledger-cosmos-js",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/ledger-cosmos-js"
+  },
+  {
+    "name": "tezbridge-crypto",
+    "description": "The library contains useful codec and crypto utilities for Tezos.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/tezbridge-crypto"
+  },
+  {
+    "name": "vue-components",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/vue-components"
+  },
+  {
+    "name": "s3x",
+    "description": "s3x is a fork of minio providing an S3 API powered by TemporalX that uses IPFS as the data storage layer. It lets you turn any S3 application into an IPFS application with no change in application design",
+    "archived": true,
+    "url": "https://github.com/Polymarket/s3x"
+  },
+  {
+    "name": "irisnet-crypto",
+    "description": "JavaScript library for IRIS Hub and Cosmos Hub",
+    "archived": true,
+    "url": "https://github.com/Polymarket/irisnet-crypto"
+  },
+  {
+    "name": "polymarket-subgraph",
+    "description": "Polymarket's public subgraph manifest for indexing on-chain trade, volume, user, liquidity and market data. ",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-subgraph"
+  },
+  {
+    "name": "conditional-tokens-market-makers",
+    "description": " Automated Market Maker (AMM) smart contracts for Conditional Tokens Markets.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/conditional-tokens-market-makers"
+  },
+  {
+    "name": "conditional-tokens-contracts",
+    "description": "Smart contracts for conditional tokens.",
+    "archived": false,
+    "url": "https://github.com/Polymarket/conditional-tokens-contracts"
+  },
+  {
+    "name": "amm-maths",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/amm-maths"
+  },
+  {
+    "name": "polymarket-bounties",
+    "description": "https://polymarket-bounties.vercel.app/",
+    "archived": true,
+    "url": "https://github.com/Polymarket/polymarket-bounties"
+  },
+  {
+    "name": "balance-checker",
+    "description": "Verify on Chain Balances",
+    "archived": true,
+    "url": "https://github.com/Polymarket/balance-checker"
+  },
+  {
+    "name": "withdrawal-checker",
+    "description": "Given your Polymarket Address This tool will check your latest burnhash And tell you if you can withdraw Very useful for withdrawal being stuck",
+    "archived": true,
+    "url": "https://github.com/Polymarket/withdrawal-checker"
+  },
+  {
+    "name": "deploy-ctf",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/deploy-ctf"
+  },
+  {
+    "name": "polymarket-sdk",
+    "description": "SDK for interacting with the Polymarket Wallets",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-sdk"
+  },
+  {
+    "name": "polymarket-status-tool",
+    "description": "https://dashboard.heroku.com/apps/polymarket-redis-status",
+    "archived": true,
+    "url": "https://github.com/Polymarket/polymarket-status-tool"
+  },
+  {
+    "name": "redis-leaderboard",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/redis-leaderboard"
+  },
+  {
+    "name": "status-page-front",
+    "description": "At a glance status of Polymarket Infra",
+    "archived": true,
+    "url": "https://github.com/Polymarket/status-page-front"
+  },
+  {
+    "name": "matic-withdrawal-batcher",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/matic-withdrawal-batcher"
+  },
+  {
+    "name": "matic-withdrawal-batching-subgraph",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/matic-withdrawal-batching-subgraph"
+  },
+  {
+    "name": "web3-react-multichain",
+    "description": "\ud83e\uddf0 A simple, maximally extensible, dependency minimized framework for building modern Ethereum dApps",
+    "archived": true,
+    "url": "https://github.com/Polymarket/web3-react-multichain"
+  },
+  {
+    "name": "multi-endpoint-provider",
+    "description": "ethers.js JsonRpcProvider and Web3Provider that try backup rpc endpoints when requests fail",
+    "archived": true,
+    "url": "https://github.com/Polymarket/multi-endpoint-provider"
+  },
+  {
+    "name": "insta-exit-sdk",
+    "description": "SDK to interact with Biconomy instaExit backend. It will provide a seamless process to integrate Insta-exit in any dapp or project",
+    "archived": true,
+    "url": "https://github.com/Polymarket/insta-exit-sdk"
+  },
+  {
+    "name": "fx-portal",
+    "description": "FxPortal for Polygon (Previously Matic) chain. No mapping. Seamless.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/fx-portal"
+  },
+  {
+    "name": "relayer-deposits",
+    "description": "Deposits to polymarket through a custom relayer",
+    "archived": false,
+    "url": "https://github.com/Polymarket/relayer-deposits"
+  },
+  {
+    "name": "uma-ctf-adapter",
+    "description": "Adapter contract to resolve Polymarket prediction markets via UMA's Optimistic Oracle.",
+    "archived": false,
+    "url": "https://github.com/Polymarket/uma-ctf-adapter"
+  },
+  {
+    "name": "polymarket-liquidity-requests",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/polymarket-liquidity-requests"
+  },
+  {
+    "name": "clob-client",
+    "description": "Typescript client for the Polymarket CLOB",
+    "archived": true,
+    "url": "https://github.com/Polymarket/clob-client"
+  },
+  {
+    "name": "polymarket-liq-mining",
+    "description": "Payout calculation scripts and merkle distributor contracts for the Polymarket liquidity mining program. ",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-liq-mining"
+  },
+  {
+    "name": "solcurity",
+    "description": "Opinionated security and code quality standard for Solidity smart contracts.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/solcurity"
+  },
+  {
+    "name": "go-order-utils",
+    "description": "Go utilities used to generate and sign limit and market orders for the Polymarket CLOB",
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-order-utils"
+  },
+  {
+    "name": "python-order-utils",
+    "description": "Python utilities to generate and sign orders for Polymarket's CLOB",
+    "archived": false,
+    "url": "https://github.com/Polymarket/python-order-utils"
+  },
+  {
+    "name": "market-maker-keeper",
+    "description": "Maker Keeper Framework: Market maker keepers for OasisDEX, EtherDelta, 0x (RadarRelay, ERCdEX), Paradex, DDEX, IDEX, Bibox, Ethfinex, GoPax, HitBTC, TheOcean, OKEX and Gate.io.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/market-maker-keeper"
+  },
+  {
+    "name": "pyexchange",
+    "description": "Python API for some cryptocurrency exchanges",
+    "archived": true,
+    "url": "https://github.com/Polymarket/pyexchange"
+  },
+  {
+    "name": "py-clob-client",
+    "description": "Python client for the Polymarket CLOB",
+    "archived": true,
+    "url": "https://github.com/Polymarket/py-clob-client"
+  },
+  {
+    "name": "clob-order-utils",
+    "description": "Typescript utility to generate and sign orders for Polymarket's CLOB",
+    "archived": false,
+    "url": "https://github.com/Polymarket/clob-order-utils"
+  },
+  {
+    "name": "poly-market-maker",
+    "description": "Market maker keeper for the Polymarket CLOB",
+    "archived": false,
+    "url": "https://github.com/Polymarket/poly-market-maker"
+  },
+  {
+    "name": "tvl-subgraph",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/tvl-subgraph"
+  },
+  {
+    "name": "uma-binary-adapter-sdk",
+    "description": "(deprecated) Typescript sdk for the Polymarket UMA CTF adapter",
+    "archived": false,
+    "url": "https://github.com/Polymarket/uma-binary-adapter-sdk"
+  },
+  {
+    "name": "uma-ctf-adapter-sdk",
+    "description": "SDK for the UMA CTF Adapter",
+    "archived": false,
+    "url": "https://github.com/Polymarket/uma-ctf-adapter-sdk"
+  },
+  {
+    "name": "proxy-factories",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/proxy-factories"
+  },
+  {
+    "name": "forge-template",
+    "description": "Forkable template to get you started with Foundry's Forge",
+    "archived": true,
+    "url": "https://github.com/Polymarket/forge-template"
+  },
+  {
+    "name": "ctf-exchange",
+    "description": "Polymarket CTF Exchange",
+    "archived": true,
+    "url": "https://github.com/Polymarket/ctf-exchange"
+  },
+  {
+    "name": "ctf-utils",
+    "description": "Utility library to calculate CTF tokenIds",
+    "archived": false,
+    "url": "https://github.com/Polymarket/ctf-utils"
+  },
+  {
+    "name": "poly-ct-scripts",
+    "description": "Forge scripts for interacting with Gnosis Conditional Tokens and related contracts.",
+    "archived": false,
+    "url": "https://github.com/Polymarket/poly-ct-scripts"
+  },
+  {
+    "name": "exchange-fee-module",
+    "description": "Enables dynamic fees on Exchange",
+    "archived": false,
+    "url": "https://github.com/Polymarket/exchange-fee-module"
+  },
+  {
+    "name": "leaderboard-username",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/leaderboard-username"
+  },
+  {
+    "name": "neg-risk-ctf-adapter",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/neg-risk-ctf-adapter"
+  },
+  {
+    "name": "positions-subgraph",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/positions-subgraph"
+  },
+  {
+    "name": "cachethq-docker",
+    "description": "A Dockerized version of Cachet.",
+    "archived": true,
+    "url": "https://github.com/Polymarket/cachethq-docker"
+  },
+  {
+    "name": "resolution-subgraph",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/resolution-subgraph"
+  },
+  {
+    "name": "rmqprom",
+    "description": "Prometheus Metrics for RMQ",
+    "archived": false,
+    "url": "https://github.com/Polymarket/rmqprom"
+  },
+  {
+    "name": "conditional-token-examples",
+    "description": "Interacting with the Conditional Token Framework contracts using Ethers",
+    "archived": false,
+    "url": "https://github.com/Polymarket/conditional-token-examples"
+  },
+  {
+    "name": "conditional-token-examples-py",
+    "description": "Interacting with the Conditional Token Framework contracts using Web3py",
+    "archived": true,
+    "url": "https://github.com/Polymarket/conditional-token-examples-py"
+  },
+  {
+    "name": "go-ethereum-hdwallet",
+    "description": "Ethereum HD Wallet derivations in Go (golang)",
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-ethereum-hdwallet"
+  },
+  {
+    "name": "routing-api",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/routing-api"
+  },
+  {
+    "name": "ts-merge-split-positions",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/ts-merge-split-positions"
+  },
+  {
+    "name": "py-merge-split-positions",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/py-merge-split-positions"
+  },
+  {
+    "name": "go-ctf-utils",
+    "description": "Go utility to calculate CTF position ids",
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-ctf-utils"
+  },
+  {
+    "name": "clob-client-l2-auth",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/clob-client-l2-auth"
+  },
+  {
+    "name": "py-clob-client-l2-auth",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/py-clob-client-l2-auth"
+  },
+  {
+    "name": "contract-security",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/contract-security"
+  },
+  {
+    "name": "go-redeemtions",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-redeemtions"
+  },
+  {
+    "name": "PolyLend",
+    "description": "PolyLend",
+    "archived": false,
+    "url": "https://github.com/Polymarket/PolyLend"
+  },
+  {
+    "name": "examples",
+    "description": "Code examples for Polymarket",
+    "archived": true,
+    "url": "https://github.com/Polymarket/examples"
+  },
+  {
+    "name": "go-market-events",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-market-events"
+  },
+  {
+    "name": "agents",
+    "description": "Trade autonomously on Polymarket using AI Agents",
+    "archived": true,
+    "url": "https://github.com/Polymarket/agents"
+  },
+  {
+    "name": "poly-py-eip712-structs",
+    "description": "EIP712 data structure management for python",
+    "archived": false,
+    "url": "https://github.com/Polymarket/poly-py-eip712-structs"
+  },
+  {
+    "name": "uma-sports-oracle",
+    "description": "Oracle contract to resolve Polymarket sports markets using the Optimistic Oracle",
+    "archived": false,
+    "url": "https://github.com/Polymarket/uma-sports-oracle"
+  },
+  {
+    "name": "polymarket-mev-bundle-poc",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-mev-bundle-poc"
+  },
+  {
+    "name": "real-time-data-client",
+    "description": "A TypeScript client to receive real time data messages",
+    "archived": false,
+    "url": "https://github.com/Polymarket/real-time-data-client"
+  },
+  {
+    "name": "erpc",
+    "description": "eRPC \u2014 fault-tolerant evm rpc proxy",
+    "archived": false,
+    "url": "https://github.com/Polymarket/erpc"
+  },
+  {
+    "name": "builder-signing-sdk",
+    "description": "TypeScript SDK for creating authenticated builder headers",
+    "archived": false,
+    "url": "https://github.com/Polymarket/builder-signing-sdk"
+  },
+  {
+    "name": "builder-signing-server",
+    "description": "Express server for creating authenticated builder headers remotely",
+    "archived": false,
+    "url": "https://github.com/Polymarket/builder-signing-server"
+  },
+  {
+    "name": "builder-relayer-client",
+    "description": "Typescript Client for the Polymarket Relayer API",
+    "archived": false,
+    "url": "https://github.com/Polymarket/builder-relayer-client"
+  },
+  {
+    "name": "py-builder-signing-sdk",
+    "description": "Python SDK for creating authenticated builder headers",
+    "archived": false,
+    "url": "https://github.com/Polymarket/py-builder-signing-sdk"
+  },
+  {
+    "name": "py-builder-relayer-client",
+    "description": "Python Client for the Polymarket Relayer API",
+    "archived": false,
+    "url": "https://github.com/Polymarket/py-builder-relayer-client"
+  },
+  {
+    "name": "ctf-exchange-v2",
+    "description": "Polymarket CTF Exchange v2",
+    "archived": false,
+    "url": "https://github.com/Polymarket/ctf-exchange-v2"
+  },
+  {
+    "name": "go-builder-signing-sdk",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/go-builder-signing-sdk"
+  },
+  {
+    "name": "wagmi-safe-builder-example",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/wagmi-safe-builder-example"
+  },
+  {
+    "name": "matic-proofs",
+    "description": "Package to generate the required proofs to exit funds from Matic Network",
+    "archived": false,
+    "url": "https://github.com/Polymarket/matic-proofs"
+  },
+  {
+    "name": "magic-proxy-builder-example",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/magic-proxy-builder-example"
+  },
+  {
+    "name": "clob-client-v2",
+    "description": "Typescript client for the Polymarket CLOB",
+    "archived": false,
+    "url": "https://github.com/Polymarket/clob-client-v2"
+  },
+  {
+    "name": "magic-safe-builder-example",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/magic-safe-builder-example"
+  },
+  {
+    "name": "privy-safe-builder-example",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/privy-safe-builder-example"
+  },
+  {
+    "name": "turnkey-safe-builder-example",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/turnkey-safe-builder-example"
+  },
+  {
+    "name": "rs-clob-client",
+    "description": "Polymarket Rust CLOB Client",
+    "archived": true,
+    "url": "https://github.com/Polymarket/rs-clob-client"
+  },
+  {
+    "name": "safe-wallet-integration",
+    "description": null,
+    "archived": true,
+    "url": "https://github.com/Polymarket/safe-wallet-integration"
+  },
+  {
+    "name": "polymarket-us-typescript",
+    "description": "Official Polymarket US Typescript SDKs",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-us-typescript"
+  },
+  {
+    "name": "polymarket-us-python",
+    "description": "Official Polymarket US Python SDK",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-us-python"
+  },
+  {
+    "name": "agent-skills",
+    "description": "Public repository for Polymarket Agent Skills",
+    "archived": false,
+    "url": "https://github.com/Polymarket/agent-skills"
+  },
+  {
+    "name": "polymarket-cli",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-cli"
+  },
+  {
+    "name": "py-clob-client-v2",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/py-clob-client-v2"
+  },
+  {
+    "name": "vigil",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/vigil"
+  },
+  {
+    "name": "ts-sdk",
+    "description": "Unified TypeScript SDKs for Polymarket DeFi",
+    "archived": false,
+    "url": "https://github.com/Polymarket/ts-sdk"
+  },
+  {
+    "name": "rs-clob-client-v2",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/rs-clob-client-v2"
+  },
+  {
+    "name": "perpetuals-examples",
+    "description": null,
+    "archived": false,
+    "url": "https://github.com/Polymarket/perpetuals-examples"
+  },
+  {
+    "name": "py-sdk",
+    "description": "Unified Python SDK for Polymarket DeFi",
+    "archived": false,
+    "url": "https://github.com/Polymarket/py-sdk"
+  },
+  {
+    "name": "connect-swift",
+    "description": "The Swift implementation of Connect: Protobuf RPC that works.",
+    "archived": false,
+    "url": "https://github.com/Polymarket/connect-swift"
+  },
+  {
+    "name": "polymarket-v2-external",
+    "description": "Polymarket-v2 contracts",
+    "archived": false,
+    "url": "https://github.com/Polymarket/polymarket-v2-external"
+  }
+]

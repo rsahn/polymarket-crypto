@@ -1,0 +1,76 @@
+{
+  "kind": "REAL_EXECUTION_CALIBRATION_PREFLIGHT",
+  "status": "CALIBRATION_BLOCKED",
+  "checks": {
+    "wallet_account_identity_verified": false,
+    "balance_sufficient": false,
+    "market_identity_verified": false,
+    "sdk_order_path_qualified": false,
+    "account_evidence_adapter_qualified": false,
+    "fee_upper_bound_proven": false,
+    "exit_handoff_ready": false,
+    "ledger_healthy": false,
+    "kill_switch_tested": false,
+    "reconciliation_tested": false,
+    "clock_sanity": true,
+    "ws_healthy": true,
+    "tests_green": false,
+    "audit_pass": false,
+    "storage_sufficient": true,
+    "fresh_runtime_evidence": true,
+    "global_D6_flags_false": true
+  },
+  "evidence_failures": {
+    "wallet_account_identity_verified": "EVIDENCE_ENVELOPE_REQUIRED",
+    "balance_sufficient": "EVIDENCE_ENVELOPE_REQUIRED",
+    "market_identity_verified": "EVIDENCE_ENVELOPE_REQUIRED",
+    "sdk_order_path_qualified": "EVIDENCE_ENVELOPE_REQUIRED",
+    "account_evidence_adapter_qualified": "EVIDENCE_ENVELOPE_REQUIRED",
+    "fee_upper_bound_proven": "EVIDENCE_ENVELOPE_REQUIRED",
+    "exit_handoff_ready": "EVIDENCE_ENVELOPE_REQUIRED",
+    "ledger_healthy": "EVIDENCE_ENVELOPE_REQUIRED",
+    "kill_switch_tested": "EVIDENCE_ENVELOPE_REQUIRED",
+    "reconciliation_tested": "EVIDENCE_ENVELOPE_REQUIRED",
+    "clock_sanity": null,
+    "ws_healthy": null,
+    "tests_green": "EVIDENCE_ENVELOPE_REQUIRED",
+    "audit_pass": "EVIDENCE_ENVELOPE_REQUIRED"
+  },
+  "blockers": [
+    "account_evidence_adapter_qualified",
+    "audit_pass",
+    "balance_sufficient",
+    "exit_handoff_ready",
+    "fee_upper_bound_proven",
+    "kill_switch_tested",
+    "ledger_healthy",
+    "market_identity_verified",
+    "reconciliation_tested",
+    "sdk_order_path_qualified",
+    "tests_green",
+    "wallet_account_identity_verified"
+  ],
+  "strategy_hashes": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+  },
+  "budget_caps": {
+    "entry": 25,
+    "total_including_fee_reservations": 100,
+    "entry_attempts": 4,
+    "open_positions": 1
+  },
+  "storage": {
+    "required_bytes": 536870912,
+    "free_bytes": 1595037360128,
+    "journal_max_bytes": 268435456,
+    "reports_max_bytes": 67108864,
+    "recovery_bytes": 67108864,
+    "margin_bytes": 134217728
+  },
+  "evaluated_ms": 1791125271806,
+  "armed": false,
+  "SYSTEM_READY": false,
+  "current_inventory_proven": false,
+  "submit_allowed": false
+}

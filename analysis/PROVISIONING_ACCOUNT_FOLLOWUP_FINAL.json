@@ -1,0 +1,29 @@
+{
+  "ACCOUNT_BINDING_PROVEN": true,
+  "PRODUCTION_ACCOUNT": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+  "SIGNING_EOA": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "COLLATERAL_IDENTITY": "Polygon137 / pUSD / 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB / decimals6",
+  "CLOCK_100MS_QUALIFIED": false,
+  "STREAMBOOK_QUALIFIED": false,
+  "WALLET_COMPLETENESS_PROVEN": false,
+  "AUTHORITY_READY_FOR_APPROVAL": "PUBLIC_DRAFT_PREPARED; producer principals and permissions still require designation",
+  "CUSTODY_READY_FOR_ACCEPTANCE": false,
+  "PREFLIGHT_PROOFS": "0/14",
+  "LIVE_GATE": "BLOCKED",
+  "active_bindings_changed": false,
+  "armed": false,
+  "submit_allowed": false,
+  "HUMAN_ACTIONS_REMAINING": [
+    "Elevated Windows Time start/resync, then fresh clock and StreamBook checks",
+    "Provide or identify exhaustive original/exchange terminal order history",
+    "Designate and approve evidence producer identities, permitted kinds and exact policy digest",
+    "Designate independent custody owner/channel/receipt key; review genuine exposure and accept real probe after completeness"
+  ],
+  "automatic_work_observed": [
+    "Two RPC finalized owner/code/balance reads; SDK derivation; existing relayer deployment and L2 credential listing",
+    "Collateral onchain symbol/decimals qualification",
+    "500-block historical CTF catchup validated and checkpoint persisted; still scoped, not wallet-wide",
+    "Unsigned public policy draft context prepared; all permissions empty",
+    "Production preflight validator rerun: 0/14; no approved inbox"
+  ]
+}

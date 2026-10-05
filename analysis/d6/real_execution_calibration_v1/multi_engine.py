@@ -14,7 +14,8 @@ import asyncio, time
 from decimal import Decimal
 from pathlib import Path
 
-from .core import dec, digest, verify
+from .core import dec, digest
+from .v1_binding import verify
 from .multi_v1_strategy import V1Strategy
 
 
@@ -207,6 +208,7 @@ class MultiCoordinator:
     
     async def run(self):
         """Main loop."""
+        print("MULTI: Starting main reconciliation loop", flush=True)
         self.ledger.emit('MULTI_START', {
             'slots': list(self.slots.keys()),
             'total_cash': str(self.total_cash),
@@ -214,14 +216,31 @@ class MultiCoordinator:
             'max_concurrent': self.max_concurrent,
         })
         
+        cycle = 0
         while not self.stop and not self.ledger.stop:
             try:
                 self.guard(entry=False)
+                cycle += 1
                 
-                # Reconcile account
-                snapshot = await self.account_source.snapshot()
-                cash = Decimal(str(snapshot.get('cash', '0')))
-                self.total_cash = cash
+                # Reconcile account with timeout
+                print(f"MULTI: Cycle {cycle} — snapshot...", flush=True)
+                try:
+                    snapshot = await asyncio.wait_for(
+                        self.account_source.snapshot(), timeout=20
+                    )
+                    cash = Decimal(str(snapshot.get('cash', '0')))
+                    self.total_cash = cash
+                    print(f"MULTI: Cycle {cycle} — cash={cash}", flush=True)
+                except asyncio.TimeoutError:
+                    print(f"MULTI: Cycle {cycle} — snapshot TIMEOUT, retrying", flush=True)
+                    self.ledger.emit('MULTI_TRANSIENT', {'error': 'SNAPSHOT_TIMEOUT'})
+                    await self.sleep(5)
+                    continue
+                except ValueError as exc:
+                    print(f"MULTI: Cycle {cycle} — snapshot error: {exc}", flush=True)
+                    self.ledger.emit('MULTI_TRANSIENT', {'error': str(exc)})
+                    await self.sleep(5)
+                    continue
                 
                 # Collect diagnostics from all strategies
                 diagnostics = {}
@@ -238,6 +257,7 @@ class MultiCoordinator:
                     'opportunities': self.runtime_counts['OPPORTUNITIES'],
                     'diagnostics': diagnostics,
                 })
+                print(f"MULTI: Cycle {cycle} — done, sleeping 10s", flush=True)
                 
                 await self.sleep(10)  # 10s reconciliation cycle
                 

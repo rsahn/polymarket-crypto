@@ -1,0 +1,11 @@
+{
+  "from_block": 94901864,
+  "to_block": 94902121,
+  "anchor_hash": "0xd594493e8c8acb1a58b3fc8092b68a3435c35f4f38725148085809eb05414b62",
+  "observed_ms": 1791058334382,
+  "all_authorizations_proven": false,
+  "logs": [],
+  "session_events": [],
+  "digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "tail_coverage_complete": true
+}

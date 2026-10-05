@@ -1,0 +1,35 @@
+...................F..                                                   [100%]
+================================== FAILURES ===================================
+_____________ test_runner_offline_shutdown_and_feed_failure[True] _____________
+
+tmp_path = WindowsPath('C:/Users/Ramy/AppData/Local/Temp/d6-audited-tests-gfcuwu0l/pytest/test_runner_offline_shutdown_a1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002989463EE50>
+failure = True
+
+    @pytest.mark.parametrize('failure',[False,True])
+    def test_runner_offline_shutdown_and_feed_failure(tmp_path,monkeypatch,failure):
+     from analysis.d6.causal_capture_24h_v1 import runner
+     monkeypatch.setattr(runner,'build_v1',lambda root,*a,**kw:build_v1(ROOT,*a,**kw))
+     monkeypatch.setattr(runner,'ROOT',tmp_path);monkeypatch.setattr(runner,'DURATION',.01)
+     seal=types.SimpleNamespace(hashes={},hash='fixture-only',verify=lambda p:None)
+     monkeypatch.setattr(runner,'checked_seal',lambda:seal)
+     monkeypatch.setattr(runner,'storage_preflight',lambda x:{'status':'PASS','fixture':True})
+     async def clock():return {'fixture_only':True}
+     monkeypatch.setattr(runner,'clock_evidence',clock)
+     async def feed(q):
+      q.put('ACTIVATE',{'slug':'m','metadata':{'conditionId':'c'},'token_ids':{'UP':'u','DOWN':'d'},'expiry_ts_ms':100000},101)
+      q.put('BOOK',books(),102)
+      if failure:raise OSError('fixture feed failed')
+      await asyncio.sleep(10)
+     async def idle(q):await asyncio.sleep(10)
+     monkeypatch.setattr(runner,'binance',idle);monkeypatch.setattr(runner,'polymarket',feed)
+     destination=tmp_path/'session'
+     if failure:
+>     with pytest.raises(OSError,match='fixture feed failed'):asyncio.run(runner.capture(destination))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E     Failed: DID NOT RAISE OSError
+
+analysis\d6\causal_capture_24h_v1\test_capture.py:181: Failed
+=========================== short test summary info ===========================
+FAILED analysis/d6/causal_capture_24h_v1/test_capture.py::test_runner_offline_shutdown_and_feed_failure[True]
+1 failed, 21 passed in 2.85s

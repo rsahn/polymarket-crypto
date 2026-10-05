@@ -1,0 +1,96 @@
+PRODUCTION PROVISIONING — 2026-10-03, read-only observations, no live arm
+
+ACCOUNT PROOF
+The SDK beacon deposit derivation from signer 0x9348eFd557A09e644795C8F114BcF0BeF86F203a equals
+0x871d37B430C42DDBD0BBD37C29c02A2974109DE9. Proxy, Safe and UUPS derivations differ.
+Both public RPCs independently returned deployed code and owner() = that EOA, at their
+respective finalized blocks (NOT a common atomic frontier). Relayer GET confirms deployed.
+Existing DPAPI L2 credentials validate against that signer and are listed by authenticated
+GET /auth/api-keys. Neither credentials nor wallet were created. Runs 0088/0089 name the
+deposit account. Historical exception details remain UNPROVEN.
+Evidence: provisioning_account_relationship.json, provisioning_binding_service_checks.json,
+provisioning_chain_sdk_verified.json, provisioning_chain_publicnode_verified.json.
+Active environment binding remains unchanged; a locally valid EOA SDK identity must NOT
+be confused with the proven historical production Deposit Wallet identity. Production
+composition must select DEPOSIT_WALLET explicitly with this owner and funder and rerun
+SDKIdentityBinding before use. No runtime binding was silently changed by this audit.
+
+COLLATERAL
+Polygon 137 pUSD 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB, decimals 6.
+Official mapping: https://docs.polymarket.com/resources/contracts
+SDK mapping and onchain symbol/decimals/code validated. Observed deposit balance raw
+109160000 (109.16 pUSD); EOA raw balance 0. These are dated reads, not fresh preflight
+balance proofs. The collateral helper's account_binding_verified=false is preserved:
+owner/account binding is evidenced separately, not asserted by the collateral helper.
+
+CLOCK / STREAM
+Wire event age -402 ms, processing 0 ms, concurrent NTP offset +438.295 ms with
+uncertainty 28.829 ms: local clock lag explains STALE_WIRE_EVENT. Guard unchanged.
+Windows Time service stopped, Manual start; configured Type=NTP, time.windows.com,0x8.
+OS administrator rights are required to start the service. Minimal elevated PowerShell:
+  Start-Service W32Time
+  w32tm /resync /rediscover
+  w32tm /query /status
+Do not infer <=100 ms from a successful resync. Then ordinary PowerShell in this repo:
+  python -B analysis/provisioning_clock_recheck.py --output analysis/clock_after_admin.json
+  python -B analysis/provisioning_identity_book.py analysis/book_after_admin.json
+Output paths must be new. Samples fail closed numerically; they are not signed production
+clock evidence. An approved clock producer must continuously supply fresh bounded evidence.
+
+WALLET-WIDE COVERAGE: WHAT IS ACTUALLY MISSING
+No newly purchased RPC is yet demonstrated necessary. polygon.drpc.org answers historical
+code and CTF log requests. publicnode answers current reads; its historical sample timed out.
+Earlier HTTP403 diagnosis was a diagnostic-header issue, now corrected; this supersedes
+the previous architecture review's blanket claim that public RPC access was unavailable.
+POLYGON_ARCHIVE_RPC_URL=https://polygon.drpc.org is a candidate, not a completeness certificate.
+See provisioning_archive_capability.json and provisioning_inventory_gap.json for actual scope.
+Existing inventory cursor only covers identified CTF from its scoped genesis. Even catching
+it up cannot upgrade it to complete wallet-creation history or recover offchain cancellations.
+Required archive capabilities: Polygon chain137 historical eth_getCode, eth_getLogs without
+silent truncation, eth_call at pinned historical blocks, receipts and canonical headers;
+all incoming/outgoing CTF TransferSingle/TransferBatch, pUSD transfers, exchange fills,
+redemptions/splits/merges/conversions, asset identifiers and balance reconciliation. Preserve
+raw bytes, requests, contiguous ranges, block hashes and finality/reorg checks. Discover any
+counterfactual predeployment holdings as well; code-onset alone does not rule those out.
+Authenticated CLOB /data/orders and /data/trades must cover the account without market
+filters, exhaust cursor pagination, reconcile maker/taker fills and actual fees with receipts
+and cash changes. Data API positions/activity are corroboration; a zero list is insufficient.
+Official API references:
+https://docs.polymarket.com/api-reference/trade/get-user-orders
+https://docs.polymarket.com/api-reference/trade/get-trades
+The current D6 consumer additionally requires terminal orders from wallet creation. A
+cancelled unfilled order leaves no necessary onchain trace: a polygon RPC cannot supply it.
+Missing external data is an exhaustive exchange account/order lifecycle export, or an
+existing complete original order archive with independently verifiable coverage. No such
+archive has been proven here. No synthetic third-party certificate can repair this gap.
+
+AUTHORITY
+provisioning_policy_draft.json holds public candidate context/roles/digest. Permissions
+remain empty, approval null, production_usable=false. Candidate private key is DPAPI protected
+outside Git; candidate address 0x1D75D4fE535d81b58Cf6D0e8f11B2984748e220f.
+The operator must designate trusted producers/principals, validate actual evidence origins,
+approve exact kinds/context/session/digest, and provision an approved policy outside Git.
+Same-SID candidate keys are not independent principal isolation. Do not enable roles merely
+to obtain 14 records. No signature on an unsupported completeness statement is acceptable.
+
+REAL CUSTODY PROBE — PREPARED, NOT ACCEPTED
+1. Human designates accountable owner and receipt authority, independent of the supervisor
+   process, and approves the pinned public address and durable channel. An external operator
+   may share a machine for process-crash survival; same SID does not prove hostile isolation.
+2. After complete real account evidence exists, CustodyOwner builds its genuine current
+   session/account/market/exposure request, including all open orders and residual obligations.
+   Do not substitute a flat inventory or TEST_ONLY challenge. Persist through StateStore and
+   ManualCustodyChannel under the approved outside-Git directory with verified ACLs/fsync.
+3. In the owner's separate terminal, using the actual challenge hash:
+   python -B analysis/provisioning_signed_custody.py --directory <approved-directory> --accept <challenge-id> --key-file <approved-DPAPI-key> --approved-public-address <approved-address>
+   The owner reviews the exact request and types the existing ACCEPT CUSTODY phrase.
+   This creates durable acceptance and an EIP191 D6_CUSTODY_RECEIPT_V1 signed receipt.
+4. Verify with SignedReceiptAuthority AND ManualReceiptVerifier, pinned identity/context,
+   complete exposure coverage and persistent acceptance. Keep request and receipt digests.
+5. Run the actual owner independently, terminate ONLY a dedicated nontrading probe supervisor
+   process (never the live trading process), reopen state in a fresh process and retrieve the
+   same signed receipt; owner confirms it still owns the request and can resume its procedure.
+6. PASS requires real owner acceptance, real state persistence, verified signature and observed
+   recovery after supervisor death. Existing seven model tests do not satisfy this acceptance.
+Blocked before step2 by incomplete account evidence and no approved custody owner/key/channel.
+No real challenge was fabricated and no owner acceptance was performed by the assistant.

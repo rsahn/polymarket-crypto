@@ -1,0 +1,13 @@
+{
+  "key_id": "candidate-local-sidecar-01",
+  "address": "0x1D75D4fE535d81b58Cf6D0e8f11B2984748e220f",
+  "public_key": "0x6ace168a655b75a6113480e05838bf2b87cb73a03919b211f85e13b6b59062f5217dfc5623283a6b5eb136ca7d244a995f372158dd4b57a9b2823f9aaf03ec48",
+  "storage_directory": "D:\\polymarket-real-calibration\\provisioning-authority-candidate",
+  "dpapi_roundtrip": true,
+  "owner_only_acl_verified": true,
+  "approved": false,
+  "permitted_kinds": [],
+  "independent_principal_provisioned": false,
+  "limitation": "Same Windows user as supervisor. NOT an approved authority or independent provenance.",
+  "production_proofs_signed": 0
+}

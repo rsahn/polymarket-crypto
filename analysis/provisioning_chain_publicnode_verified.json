@@ -1,0 +1,28 @@
+{
+  "rpc": "https://polygon-bor-rpc.publicnode.com",
+  "configured_collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "wallet_completeness_proven": false,
+  "submit_allowed": false,
+  "chain_id": 137,
+  "finalized_block": "0x5a80e45",
+  "finalized_hash": "0x83041a27b30f6fd70f886d0f9ea07abe0a0f24a275e55fb4e9d65cb9a248ec09",
+  "block_timestamp": 1791054816,
+  "observed_ms": 1791054818175,
+  "observations": [
+    {
+      "wallet": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+      "code_present": false,
+      "owner_at_finalized_block": null,
+      "code_sha256": "a54942c8e365f3784f38b8d437f9d708290db60738b00cdcfb934c32d1be97f3",
+      "collateral_balance_raw": "0"
+    },
+    {
+      "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+      "code_present": true,
+      "owner_at_finalized_block": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+      "code_sha256": "9117db9529a52a68871ee4ffcd80c2bd78a5ae4a0b74b81acd308d780d0e4dc1",
+      "collateral_balance_raw": "109160000"
+    }
+  ],
+  "status": "SINGLE_RPC_FINALIZED_OBSERVATIONS_ONLY"
+}

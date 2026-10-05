@@ -1,0 +1,211 @@
+{
+  "sdk_identity": {
+    "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+    "sdk_version": "0.11.0",
+    "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "environment": "production",
+    "independent_attestation": false,
+    "transport_qualified": false,
+    "submit_allowed": false,
+    "wallet_type": "DEPOSIT_WALLET",
+    "production_authority_bound": false,
+    "configured_wallet": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+    "active_environment_modified": false,
+    "explicit_production_composition": true,
+    "sdk_identity_binding_qualified": true,
+    "wallet_deployment_checked": false,
+    "credential_network_bootstrap": false
+  },
+  "real_streambook": {
+    "slug": "btc-updown-5m-1791060000",
+    "condition_id": "0xdb0ed859e4602e0d36f20ce8785879d1dcc38452b203f6c6ccc7c0c24ec6cf8f",
+    "tokens": [
+      "39949748818571732605221760394036460639536301448719269373046660939041778778235",
+      "27780689007386542531660384036275994371975399030444693507407169030015600124950"
+    ],
+    "observed_ms": 1791060180845,
+    "available": false,
+    "book_synced": false,
+    "messages": 2,
+    "book_state": {
+      "reason": "BOOK_REGRESSION",
+      "market_eligible": false,
+      "available": false,
+      "connected": false,
+      "synchronized": false,
+      "fresh": false,
+      "book_synced": false,
+      "market_slug": "btc-updown-5m-1791060000",
+      "generation": 1,
+      "books": {},
+      "observed_ms": null,
+      "state": "DISCONNECTED",
+      "diagnostics": {
+        "parser_reason": "BOOK_REGRESSION",
+        "exception_category": "PARSER_OR_PROTOCOL_ERROR",
+        "close_code": null,
+        "close_reason_category": null,
+        "remote_close_reason_present": false,
+        "last_valid_message": {
+          "kind": "book",
+          "source_ms": 1791060178686,
+          "received_ms": 1791060178733,
+          "generation": 1
+        },
+        "resync_complete_generation": null,
+        "regression_event": {
+          "event_type": "price_change",
+          "token_index": 1,
+          "token_sha256": "1e4da599193821a23a58e8abec6b9107c794dd83af1026b168f85dd06147bb86",
+          "source_timestamp_ms": 1791060178681,
+          "previous_accepted_source_timestamp_ms": 1791060178686,
+          "received_timestamp_ms": 1791060178736,
+          "delta_ms": -5,
+          "generation": 1,
+          "reason": "BOOK_REGRESSION",
+          "comparison": "source_timestamp_ms < same_token_accepted_source_timestamp_ms",
+          "watermark_scope": "TOKEN_WITHIN_CONNECTION_GENERATION",
+          "reference_full_book_ms": 1791060178686,
+          "accepted_deltas_since_full_book": 0,
+          "classification": "PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN",
+          "supersession_proven": false
+        },
+        "transitions": [
+          {
+            "kind": "CONNECTING",
+            "generation": null,
+            "at_ms": 1791060178345,
+            "reason": null
+          },
+          {
+            "kind": "CONNECTED_AWAITING_TWO_FULL_BOOKS",
+            "generation": 1,
+            "at_ms": 1791060178635,
+            "reason": null
+          },
+          {
+            "kind": "RESYNC_COMPLETE",
+            "generation": 1,
+            "at_ms": 1791060178736,
+            "reason": null
+          },
+          {
+            "kind": "INVALIDATED_AWAITING_TWO_FULL_BOOKS",
+            "generation": 1,
+            "at_ms": 1791060178736,
+            "reason": "BOOK_REGRESSION"
+          },
+          {
+            "kind": "DISCONNECTED",
+            "generation": 1,
+            "at_ms": 1791060180738,
+            "reason": "BOOK_REGRESSION"
+          }
+        ],
+        "tokens": [
+          {
+            "token_index": 0,
+            "last_valid_book_ms": 1791060178686,
+            "bids_present": true,
+            "asks_present": true,
+            "generation": 1,
+            "bids_count": 51,
+            "asks_count": 48,
+            "best_bid": "0.51",
+            "best_ask": "0.52",
+            "last_valid_book_age_ms": 2159,
+            "current_generation_synced": false
+          },
+          {
+            "token_index": 1,
+            "last_valid_book_ms": 1791060178686,
+            "bids_present": true,
+            "asks_present": true,
+            "generation": 1,
+            "bids_count": 48,
+            "asks_count": 51,
+            "best_bid": "0.48",
+            "best_ask": "0.49",
+            "last_valid_book_age_ms": 2159,
+            "current_generation_synced": false
+          }
+        ],
+        "rejected_message_age_ms": 55,
+        "source_age_at_receipt_ms": 55,
+        "local_processing_ms": 0,
+        "freshness_cause": "BOOK_INVALIDATED",
+        "first_full_books": [
+          {
+            "token_index": 0,
+            "token_sha256": "a5cbc2f45a2b4cd01ea41e5bf850d809c22e68a734f27a531ad68bb9ebd4e796",
+            "identity_matches": true,
+            "message_kind": "book",
+            "bids_count": 51,
+            "asks_count": 48,
+            "best_bid": "0.51",
+            "best_ask": "0.52",
+            "source_timestamp_ms": 1791060178686,
+            "generation": 1
+          },
+          {
+            "token_index": 1,
+            "token_sha256": "1e4da599193821a23a58e8abec6b9107c794dd83af1026b168f85dd06147bb86",
+            "identity_matches": true,
+            "message_kind": "book",
+            "bids_count": 48,
+            "asks_count": 51,
+            "best_bid": "0.48",
+            "best_ask": "0.49",
+            "source_timestamp_ms": 1791060178686,
+            "generation": 1
+          }
+        ]
+      },
+      "source": "PUBLIC_CLOB_PERSISTENT_WS",
+      "condition_verified": true,
+      "messages_received": 2,
+      "last_wire_event_ms": 1791060178681,
+      "last_valid_book_ms": 1791060178686,
+      "last_wire_event_source_ms": 1791060178681,
+      "last_wire_event_received_ms": 1791060178736,
+      "last_valid_book_source_ms": 1791060178686,
+      "last_valid_book_received_ms": 1791060178733,
+      "last_frame_received_ms": 1791060178736,
+      "last_pong_received_ms": null,
+      "freshness_limit_ms": 500,
+      "no_new_wire_event_over_limit": true
+    },
+    "failure": "BOOK_REGRESSION",
+    "production_session_bound": false,
+    "regression_diagnostics": {
+      "event_type": "price_change",
+      "token_index": 1,
+      "token_sha256": "1e4da599193821a23a58e8abec6b9107c794dd83af1026b168f85dd06147bb86",
+      "source_timestamp_ms": 1791060178681,
+      "previous_accepted_source_timestamp_ms": 1791060178686,
+      "received_timestamp_ms": 1791060178736,
+      "delta_ms": -5,
+      "generation": 1,
+      "reason": "BOOK_REGRESSION",
+      "comparison": "source_timestamp_ms < same_token_accepted_source_timestamp_ms",
+      "watermark_scope": "TOKEN_WITHIN_CONNECTION_GENERATION",
+      "reference_full_book_ms": 1791060178686,
+      "accepted_deltas_since_full_book": 0,
+      "classification": "PRE_SNAPSHOT_DELTA_SUPERSESSION_UNPROVEN",
+      "supersession_proven": false
+    },
+    "freshness_diagnostics": {
+      "source_age_at_receipt_ms": 55,
+      "local_processing_ms": 0,
+      "rejected_message_age_ms": 55,
+      "freshness_cause": "BOOK_INVALIDATED",
+      "parser_reason": "BOOK_REGRESSION",
+      "exception_category": "PARSER_OR_PROTOCOL_ERROR"
+    },
+    "diagnostic_only": true,
+    "expiry_ms": 1791060300000
+  },
+  "LIVE_GATE": "BLOCKED",
+  "armed": false
+}

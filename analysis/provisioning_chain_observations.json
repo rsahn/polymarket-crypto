@@ -1,0 +1,8 @@
+{
+  "rpc": "https://polygon.drpc.org",
+  "configured_collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "wallet_completeness_proven": false,
+  "submit_allowed": false,
+  "status": "FAILED",
+  "error_type": "HTTPError"
+}

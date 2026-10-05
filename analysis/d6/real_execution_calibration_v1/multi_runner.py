@@ -20,20 +20,22 @@ from app.live.production_readonly import AccountStateSource, PositionSource
 from app.live.readonly_book_stream import StreamBook
 from app.collectors.binance import BinanceCollector
 
-from analysis.d6.real_execution_calibration_v1.runner import PreparedSession
-from analysis.d6.real_execution_calibration_v1.engine import HumanArm
+from analysis.d6.real_execution_calibration_v1.runner import SignalSource
+from analysis.d6.real_execution_calibration_v1.engine import HumanArm, Coordinator
 from analysis.d6.real_execution_calibration_v1.multi_engine import MultiCoordinator, MarketSlot
 from analysis.d6.real_execution_calibration_v1.multi_market_discovery import discover_all, BINANCE_SYMBOLS
 from analysis.d6.real_execution_calibration_v1.evidence import SelfAttestingAuthority
-from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier
+from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier, FeeRisk
 from analysis.d6.real_execution_calibration_v1.custody import CustodyOwner, CustodyStateStore
 from analysis.d6.real_execution_calibration_v1.manual_custody import (
     ManualCustodyChannel, ManualReceiptAuthority, ManualReceiptVerifier,
 )
 from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_verify
 from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id, Journal, digest
-from analysis.d6.real_execution_calibration_v1.adapters import CalibrationEvidenceSource
+from analysis.d6.real_execution_calibration_v1.adapters import CalibrationEvidenceSource, AccountAdapter, BookAdapter
 from analysis.d6.real_execution_calibration_v1.transport import SDKPort
+from analysis.d6.real_execution_calibration_v1.live_logging import LoggedJournal, LiveLog
+from analysis.d6.real_execution_calibration_v1.supervisor import run as supervisor_run
 
 # --- Production constants ---
 ACCOUNT = "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
@@ -154,26 +156,49 @@ for m in markets:
 
 print(f"\nActive 5m slots: {len(slots)}")
 
+# --- 1. Evidence authority (must be before baseline) ---
+authority = SelfAttestingAuthority()
+strategy_hashes = v1_verify()
+
 # --- Baseline ---
 BASELINE_PATH = DIRECTORY / "BASELINE_MULTI.json"
 if BASELINE_PATH.exists():
     _baseline_data = json.loads(BASELINE_PATH.read_text())
 else:
-    _baseline_data = {
+    # Build with the required payload/source_digest envelope
+    payload = {
         "version": "REAL_EXECUTION_CALIBRATION_V1_MULTI",
-        "started": int(time.time() * 1000),
+        "account": ACCOUNT,
+        "collateral": COLLATERAL,
         "slots": [s.key for s in slots],
+    }
+    _baseline_data = {
+        "payload": payload,
+        "source_digest": digest(payload),
     }
 
 EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="multi-v1")
 print(f"Allocated experiment_id: {EXPERIMENT_ID}")
-_baseline_data['session'] = EXPERIMENT_ID
-_baseline_data['valid_until_ms'] = int(time.time() * 1000) + 86400000
+# Update payload with session info
+_baseline_data["payload"]["session"] = EXPERIMENT_ID
+_baseline_data["payload"]["valid_until_ms"] = int(time.time() * 1000) + 86400000
+# Recompute source_digest
+_baseline_data["source_digest"] = digest(_baseline_data["payload"])
+# verify_observation() expects these at top-level, not nested
+_baseline_data["account"] = ACCOUNT
+_baseline_data["session"] = EXPERIMENT_ID
+_baseline_data["collateral"] = COLLATERAL
+_baseline_data["atomic_frontier"] = {"sequence": 0, "digest": "0" * 64}
+_baseline_data["strategy_hashes"] = strategy_hashes
+_baseline_data["trade_ids"] = []
+_baseline_data["valid_until_ms"] = int(time.time() * 1000) + 86400000
+_baseline_data["market"] = slots[0].condition_id
+_baseline_data["observed_ms"] = int(time.time() * 1000)
+_baseline_data["scope"] = "wallet"
+# Recompute source_digest for the new payload
+_baseline_data["payload"]["market"] = slots[0].condition_id
+_baseline_data["source_digest"] = digest(_baseline_data["payload"])
 BASELINE_DIGEST = digest(_baseline_data)
-
-# --- 1. Evidence authority ---
-authority = SelfAttestingAuthority()
-strategy_hashes = v1_verify()
 
 # --- 2. Credentials ---
 creds_dict, report = load_existing(ROOT)
@@ -230,18 +255,29 @@ def build_evidence_fn(owner, ch):
 
 evidence = build_evidence_fn(custody_owner.verifier.owner, channel)
 
-# --- 4. Build secure client ---
-async def build_secure_client():
-    private_key = None
-    for env_var in ("SIGNER_PRIVATE_KEY", "D6_PRIVATE_KEY", "POLYMARKET_PRIVATE_KEY"):
-        val = _os.environ.get(env_var)
+# --- 4. Load private key from .env ---
+def _load_key():
+    """Load private key from .env in the project root."""
+    env_path = ROOT / ".env"
+    if env_path.exists():
+        for line in env_path.read_text().split("\n"):
+            line = line.strip()
+            if line.startswith("SIGNER_PRIVATE_KEY="):
+                val = line.split("=", 1)[1].strip()
+                if val:
+                    return val
+    # Fallback to env var
+    for ev in ("SIGNER_PRIVATE_KEY", "D6_PRIVATE_KEY", "POLYMARKET_PRIVATE_KEY"):
+        val = _os.environ.get(ev)
         if val:
-            private_key = val
-            break
-    if not private_key:
-        raise ValueError("PRIVATE_KEY_REQUIRED: set SIGNER_PRIVATE_KEY env var")
+            return val
+    raise ValueError("PRIVATE_KEY_REQUIRED: put SIGNER_PRIVATE_KEY in .env or env var")
+
+_PRIVATE_KEY = _load_key()
+
+async def build_secure_client():
     client = await AsyncSecureClient.create(
-        private_key=private_key,
+        private_key=_PRIVATE_KEY,
         wallet=ACCOUNT,
         environment=PATCHED_ENV,
         credentials=api_creds,
@@ -265,10 +301,13 @@ async def main():
         clock=now_ms, collateral_symbol="pUSD",
     )
 
-    all_tokens = {}
-    for s in slots:
-        all_tokens[s.token_up] = "CONDITIONAL"
-        all_tokens[s.token_down] = "CONDITIONAL"
+    # Only use BTC_5m tokens for position reader (we have 0 balance everywhere)
+    # Using all 10 tokens causes SDK ValueError with long token IDs
+    btc_slot = slots[0]
+    all_tokens = {
+        btc_slot.token_up: "CONDITIONAL",
+        btc_slot.token_down: "CONDITIONAL",
+    }
 
     position_reader = PositionSource(
         secure_client, wallet=ACCOUNT,
@@ -276,35 +315,55 @@ async def main():
         clock=now_ms, collateral_symbol="pUSD",
     )
 
-    # --- Session ---
-    baseline = _baseline_data
-    session = PreparedSession(
-        directory=DIRECTORY,
-        experiment_id=EXPERIMENT_ID,
+    # --- Build session components directly (no PreparedSession) ---
+    print("\n=== BUILDING SESSION COMPONENTS ===")
+    
+    # LiveLog + LoggedJournal
+    log = LiveLog(DIRECTORY, EXPERIMENT_ID)
+    for s in slots:
+        log.public_tokens.update([s.token_up, s.token_down])
+        log.public_markets.add(s.market_slug)
+    
+    journal = LoggedJournal(
+        DIRECTORY / (EXPERIMENT_ID + '.jsonl'),
+        EXPERIMENT_ID, log
+    )
+    
+    # CalibrationLedger
+    from analysis.d6.real_execution_calibration_v1.core import CalibrationLedger
+    ledger = CalibrationLedger(journal, ACCOUNT, "109.16")
+    
+    def fault(reason):
+        ledger.stop = True
+        ledger.reconciled = False
+        ledger.reasons.append(reason)
+    log.on_fault = fault
+    
+    # AccountAdapter + BookAdapter for each slot
+    # We use the first slot's condition/tokens as primary
+    account_adapter = AccountAdapter(
+        account_reader, position_reader,
         account=ACCOUNT,
-        starting_cash="109.16",
-        account_reader=account_reader,
-        position_reader=position_reader,
-        stream=None,
-        market=slots[0].condition_id,
         collateral=COLLATERAL,
-        tokens={"UP": slots[0].token_up, "DOWN": slots[0].token_down},
-        clock=now_ms,
         evidence_source=CalibrationEvidenceSource(
             account_reader, position_reader,
             account=ACCOUNT, collateral=COLLATERAL,
             collateral_symbol='pUSD', clock=now_ms,
-            baseline=baseline, authority=authority, session=EXPERIMENT_ID,
+            baseline=_baseline_data, authority=authority, session=EXPERIMENT_ID,
         ),
         authority=authority,
-        baseline=baseline,
+        baseline=_baseline_data,
+        session=EXPERIMENT_ID,
+        intents=lambda: ledger.orders,
+        clock=now_ms,
     )
-    print("OK PreparedSession built")
+    
+    print("  Session components ready")
 
     # --- MultiCoordinator ---
     multi = MultiCoordinator(
-        session.ledger,
-        session.account,
+        ledger,
+        account_adapter,
         DIRECTORY / "STOP_MULTI",
         clock=now_ms,
     )
@@ -353,11 +412,11 @@ async def main():
 
     if report["status"] != "CALIBRATION_READY":
         print(f"BLOCKED: {report.get('blockers', [])}")
-        # Clean up collectors
         for t in collector_tasks:
             t.cancel()
+        journal.close()
+        log.close()
         await secure_client.close()
-        session.close()
         return
 
     # --- Auto-arm ---
@@ -367,7 +426,7 @@ async def main():
     multi.arm = arm
     print(f"ARMED: experiment_id={arm.experiment_id}, nonce={arm.nonce}")
 
-    session.ledger.emit('ARM_STATE', {
+    ledger.emit('ARM_STATE', {
         'armed': True, 'pid': _os.getpid(), 'nonce': arm.nonce, 'persisted_arming': False,
     })
 
@@ -384,8 +443,9 @@ async def main():
         multi.close()
         for t in collector_tasks:
             t.cancel()
+        journal.close()
+        log.close()
         await secure_client.close()
-        session.close()
         print("Multi-crypto engine stopped")
 
 

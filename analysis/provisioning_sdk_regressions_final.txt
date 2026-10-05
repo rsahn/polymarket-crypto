@@ -1,0 +1,67 @@
+F.....                                                                   [100%]
+================================== FAILURES ===================================
+________ test_real_sdk_production_environment_and_replacement_rejected ________
+
+    def test_real_sdk_production_environment_and_replacement_rejected():
+        async def case():
+            signer = Account.create()
+            client = AsyncSecureClient._construct_for_wallet(signer=signer, wallet=signer.address,
+                wallet_type='EOA', signer_type='OWNER', environment=PRODUCTION,
+                config=get_environment_config(PRODUCTION),
+                credentials=ApiKeyCreds(apiKey='test', secret='dGVzdA==', passphrase='test'),
+                api_key=None, logger=None, on_rate_limit_update=None)
+            try:
+                binding = SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address)
+                assert binding.matches(client)
+                original_context = client._ctx
+                for false_environment in ('production', SimpleNamespace(name='production'), None):
+                    client._ctx = replace(original_context, environment=false_environment)
+                    assert not binding.matches(client)
+                    with pytest.raises(ValueError, match='SDK_PUBLIC_IDENTITY'):
+                        SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address)
+                client._ctx = original_context
+                assert binding.matches(client)
+                with pytest.raises(ValueError, match='SDK_PUBLIC_IDENTITY'):
+                    SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address, environment='test')
+            finally:
+                await client.close()
+>       asyncio.run(case())
+
+analysis\d6\real_execution_calibration_v1\test_sdk_environment_binding.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:196: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:119: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:726: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+analysis\d6\real_execution_calibration_v1\test_sdk_environment_binding.py:25: in case
+    client._ctx = replace(original_context, environment=false_environment)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\dataclasses.py:1645: in replace
+    return _replace(obj, **changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\dataclasses.py:1679: in _replace
+    return self.__class__(**changes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+<string>:21: in __init__
+    ???
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\polymarket\_internal\context.py:64: in __post_init__
+    config = _resolved_environment_config or get_environment_config(self.environment)
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+environment = 'production'
+
+    def get_environment_config(environment: Environment) -> _EnvironmentConfig:
+>       return environment._config  # pyright: ignore[reportPrivateUsage]
+               ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'str' object has no attribute '_config'
+
+..\..\AppData\Local\Programs\Python\Python313\Lib\site-packages\polymarket\_internal\environment.py:14: AttributeError
+=========================== short test summary info ===========================
+FAILED analysis/d6/real_execution_calibration_v1/test_sdk_environment_binding.py::test_real_sdk_production_environment_and_replacement_rejected
+1 failed, 5 passed in 6.96s

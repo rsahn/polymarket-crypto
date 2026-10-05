@@ -1,0 +1,175 @@
+SESSION STORAGE PATH PROOF — 2026-10-03
+
+Scope: Polygon 137 Deposit Wallet 0x871d37b430c42ddbd0bbd37c29c02a2974109de9,
+blocks 94331195 through 94902121 inclusive. This is an evidence review, not a
+change to D6 entry guards, V1, an authority approval or a perpetual certificate.
+
+1. Source and deployed-bytecode binding
+
+Actual implementation: 0xf7f27c29e60fe6325bef8da7f93250353d2e3294.
+Runtime keccak256:
+0xf5c1072460e64902af84d35f5bb1d0a15d80a88c5827b831a977fbc5a0684b96.
+Beacon: 0x7a18edfe055488a3128f01f563e5b479d92ffc3a.
+Runtime keccak256:
+0xf87b06a1302051471df08ff79a938757509569e16b7a7efa55a3ea7b29b0b9d1.
+Native proxy runtime keccak256:
+0xd0f3bff6ece692ff18b60dd9f40326d318601229f6b008bc38930b277fa9d372.
+
+Sourcify v2 returned exact-match sources for the actual implementation and beacon.
+Blockscout independently supplied the verified implementation source. Sources,
+ABI, compiler input/output and retrieval URLs are archived under
+session_contract_sources_20261003/. Source tree paths are preserved under
+verified_tree/ to distinguish the two different Ownable.sol files.
+
+The official Solidity 0.8.34 Windows compiler was obtained from ethereum/solc-bin;
+its SHA256 was checked against that repository's release catalog. Local compilation
+of each contract's original standard JSON input reproduces its deployed runtime,
+including metadata. Wallet constructor immutables are independently calculated:
+implementation address, chain 137, name DepositWallet, version 1 and EIP712 domain
+separator. Only compiler-declared immutable offsets are substituted. No arbitrary
+byte masks or metadata stripping are accepted. Both boundary RPC bytecodes match.
+
+Sources:
+https://github.com/Polymarket/contract-security
+https://polygon.blockscout.com/api/v2/smart-contracts/0xf7f27c29e60fe6325bef8da7f93250353d2e3294
+https://sourcify.dev/server/v2/contract/137/0xf7f27c29e60fe6325bef8da7f93250353d2e3294?fields=all
+https://sourcify.dev/server/v2/contract/137/0x7a18edfe055488a3128f01f563e5b479d92ffc3a?fields=all
+https://raw.githubusercontent.com/ethereum/solc-bin/gh-pages/windows-amd64/list.json
+
+2. Historical implementation reconstruction
+
+The wallet runtime is the native ERC1967 beacon-proxy template, not a UUPS wallet.
+The proxy uses STATICCALL implementation() on the beacon from its fixed ERC1967
+beacon storage slot, then DELEGATECALL to that returned implementation. Its own
+runtime contains no storage setter. Factory/id immutable args match the known
+factory and owner-based wallet id.
+
+At creation and the terminal block, the beacon slot contains the stated beacon,
+the UUPS implementation slot is zero, and pinnedImplementation(wallet) is zero.
+Crucially, implementation() was also called with from=wallet: the beacon dispatches
+by msg.sender, so a call without that context alone would not establish this.
+
+ALL beacon logs were queried in 115 contiguous ranges over the requested interval:
+zero logs, including zero Upgraded, OptedIn and OptedOut events. Source review of
+DepositWalletBeacon.sol proves that _setImplementation (line 115) always performs
+SSTORE followed by LOG2 Upgraded; upgradeTo (161) is its only post-constructor
+entry. It also probes the wallet interface; failure reverts both mutation and log.
+The pin mapping is Solidity slot 0. optOut (222) and optIn (229) always emit their
+respective events after assigning/deleting that mapping. No external delegatecall,
+arbitrary slot write, proxy upgrade or selfdestruct exists in beacon runtime.
+Thus, under canonical log completeness, the same implementation was used over the
+entire interval, including intermediate blocks; this is not inferred just from
+equal endpoint values. No forwarder/legacy implementation was active for this wallet.
+
+3. Complete authorization storage mutation inventory
+
+All line numbers below refer to verified_tree/src/DepositWallet.sol.
+The secp256k1 mapping base is
+0x262dd1cbe20a9ecc9fedf7b43d241ce1a18ea01dc95ca2bd68106e58474d85da.
+A signer value is SLOAD/SSTORE at keccak256(abi.encode(address, base)).
+Its only writer is _setSessionSigner (585), with exactly these callers:
+  authorizeSessionSigner (332): onlySelf, nonzero address, future validUntil;
+    setter then unconditional SessionSignerAuthorized(address,uint256).
+  revokeSessionSigner (343): onlySelf, zero expiry;
+    setter then unconditional SessionSignerRevoked(address).
+  revokeSessionSignerEmergency (492): onlyPaused + onlyOwner, zero expiry;
+    setter then unconditional SessionSignerRevokedEmergency(address).
+
+The original three-event hypothesis omitted P-256 passkeys. Their mapping base is
+0x3aeceb64e5bf1bc571c0f9d844588aca01e747977eb627cfe37418f8e321be25.
+For passkeyId=keccak256(x || y), let h=keccak256(abi.encode(passkeyId,base)).
+Slots h, h+1, h+2 hold x, y, validUntil. _setPasskeySessionSigner (595) is the only
+writer; its callers are authorizePasskeySessionSigner (350),
+revokePasskeySessionSigner (364), revokePasskeySessionSignerEmergency (499).
+Each has the corresponding onlySelf or onlyPaused+onlyOwner restriction and an
+unconditional PasskeySessionSignerAuthorized/Revoked/RevokedEmergency emit.
+These events were checked against ALL existing archived wallet logs, without
+rerunning the original wallet scanner. None occurred.
+
+4. Other paths and storage separation
+
+execute (271) requires the factory caller and a valid owner/session signature;
+it checks wallet identity, nonce and deadline. Each batch operation uses CALL,
+not DELEGATECALL. A session signer cannot target the wallet or beacon. An owner's
+self-call can reach the setters above, but cannot bypass their required emit.
+Relayer/factory access is not an arbitrary wallet-storage writer. Reentrancy via
+an external target does not acquire onlySelf; an independently valid nested batch
+still traverses the same emitting setters.
+
+The complete inherited AST SSTORE inventory is archived in session_storage_path_proof.json.
+Other writes are nonce, pause timestamp, owner/pending-owner/deadline/handover-nonce,
+and Initializable's fixed slot
+0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffbf601132.
+They do not address either authorization mapping. Ordinary Solidity storage layout
+is empty; there are no unaccounted Solidity state assignments in DepositWallet.
+Receiver fallback only handles token receipt selectors or rejects; ERC1271/EIP712
+signature paths are view/pure. There is no dynamic library link or arbitrary
+delegatecall/selfdestruct in the active implementation or inherited execution paths.
+Ownership changes modify ownership state, not signer mappings. initialize (147)
+sets the owner only and is guarded by initializer. Factory upgrades cannot directly
+rewrite this wallet's storage or beacon pointer. Native wallet optIn/optOut calls
+only change the emitting beacon pin mapping, not authorization storage.
+
+The proof assumes standard EVM/compiler semantics and keccak collision/preimage
+resistance, as do address/signature/storage proofs generally. This is a manual
+source argument bound to an exact locally rebuilt runtime, with targeted AST and
+adversarial evidence checks; it is not advertised as a machine-checked theorem
+for arbitrary future implementations.
+
+5. Zero-signers conclusion
+
+The creation boundary, canonical receipt and native proxy code establish initial
+zero authorization mappings. Additionally, genesis_call_trace.json records the
+actual CREATE2 constructor and returned runtime. Its exact 35-byte constructor
+CODECOPYs the proxy, SSTOREs only the ERC1967 beacon slot, then RETURNs. This
+rules out an unexamined constructor pre-populating signer mappings while returning
+the expected runtime. The trace is a read-only debug_traceTransaction result, not
+a transaction. An adversarial initcode mutation is rejected by the verifier.
+All successful subsequent mapping mutations must
+emit one of the SIX signer events. The complete wallet log archive contains only:
+OwnershipTransferred=1, Initialized=1, Execution=21, BatchExecuted=2.
+The 21 executions decode to ERC20 approve / ERC1155 setApprovalForAll only; no
+authorization call is concealed in those recorded batches.
+
+Therefore, for this wallet and the stated interval, no secp256k1 or P-256 session
+signer was authorized on-chain. HISTORICAL_ZERO_SIGNERS_PROVEN=true is justified
+within this scope. Natural expiry of a historically authorized session signer is
+not a remaining blocker for this interval and wallet. No assertion is made that
+expiration cancels orders generally, or that other wallets have this property.
+
+6. Separate settlement limitations
+
+Authenticated owner GET /data/orders and /data/trades both exhaust pagination with
+zero rows. MATCHED=MINED=RETRYING=0 in the accessible view. Data API positions and
+activity also return zero. Existing credentials are read from protected DPAPI;
+raw API payloads are archived outside Git with owner-only DACL and DPAPI.
+
+Independent transfer reconstruction from creation to block 94902553 finds one
+pUSD incoming transfer, 109160000 base units, no pUSD outgoing transfer, and no
+ERC1155 transfer involving this wallet. Receipt
+0xeee934cede451fa4feb9f441714d692d58717de77980765f5497aa5f8281051d
+is successful, canonical and finalized. Cash is reconciled as
+0 + 109160000 - 0 = 109160000, also matching authenticated CLOB balance.
+
+This proves the observed cash movement and that listed accessible trades contain
+no pending item. It does not certify a global absence of off-chain obligations:
+ - owner endpoint scope across historical/revoked owner credential sets is not
+   explicitly established by the retrieved contract, nor is a common CLOB/chain
+   settlement watermark or complete residual-liability ledger available here;
+ - the fixed session-history anchor is not an ongoing live authorization monitor;
+ - no pre-creation ERC1155 inventory is certified by a scan beginning at deployment.
+
+No historical Session-Key lifecycle gap is retained after the proof above. These
+are separate current-state/settlement completeness questions; an empty active-key
+list or matching cash balance is not substituted for their proof.
+Required external capability if owner scope cannot be established from the API
+contract: wallet-wide owner-key-inclusive order/trade/settlement export, including
+revoked credentials, pending cancellations, matches/retries and residual fees,
+with a defined coverage cutoff/finality and account/chain reconciliation binding.
+
+Documentation consulted:
+https://docs.polymarket.com/trading/session-keys
+https://docs.polymarket.com/trading/manage-orders
+https://docs.polymarket.com/api-reference/trade/get-trades
+
+No transaction, order, key creation/revocation, V1 change or guard change occurred.

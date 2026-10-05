@@ -1,0 +1,36 @@
+{
+  "book": {
+    "slug": "btc-updown-5m-1791054600",
+    "condition_id": "0x51544a6b90a34d3743ee4740d119050896210878ca01a9e5c85853812eb7089d",
+    "tokens": [
+      "27933578426217164428798210849219277279602579673765433496862323615293615326733",
+      "80153652697336902721021737038637844836046752025625954983215582952795288011216"
+    ],
+    "observed_ms": 1791054742932,
+    "available": false,
+    "book_synced": false,
+    "messages": 0,
+    "failure": "STALE_WIRE_EVENT",
+    "production_session_bound": false,
+    "freshness_diagnostics": {
+      "source_age_at_receipt_ms": -402,
+      "local_processing_ms": 0,
+      "rejected_message_age_ms": -402,
+      "freshness_cause": "WIRE_EVENT_STALE_AT_RECEIPT",
+      "parser_reason": "STALE_WIRE_EVENT",
+      "exception_category": null
+    },
+    "diagnostic_only": true,
+    "expiry_ms": 1791054900000
+  },
+  "clock": {
+    "host": "time.google.com",
+    "authenticated": false,
+    "offset_ms": 438.2953643798828,
+    "uncertainty_ms": 28.828765869140625,
+    "observed_ms": 1791054744998,
+    "stratum": 1,
+    "numerical_bound_ms": 467.12413024902344,
+    "diagnostic_within_100ms": false
+  }
+}

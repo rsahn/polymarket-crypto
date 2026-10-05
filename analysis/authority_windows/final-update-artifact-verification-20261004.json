@@ -1,0 +1,15 @@
+{
+  "commit": "a6d3be5b28d8888d6a00a406014314bfb6641cff",
+  "publication_worktree_clean": true,
+  "git_normalized_source_checks": 28,
+  "source_mismatches": [],
+  "normalization": "Git hash-object --path applies the repository text filters before comparison to committed blobs",
+  "changed_runtime_files": [
+    "telemetry_host.py"
+  ],
+  "installed_manifest_sha256": "1625af95426122c36b6c2b8eb130fab7cfe8066940ffed7becf50c85abbfa549",
+  "target_manifest_sha256": "d8b885fccd9cf0f73a3505f93dd7c5a377fbc241cd1a20c9d0495d52d3d7c98c",
+  "host_target_sha256": "abf61fb3d5404b482ba7457b848d7fbda9618a52d1d1423c0fe571d441e4090d",
+  "installation_performed": false,
+  "key_read": false
+}

@@ -1,0 +1,140 @@
+{
+  "unsigned_only": true,
+  "production_qualified": false,
+  "observations": [
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": -0.1304149627685547,
+          "uncertainty_ms": 29.752399444580078,
+          "observed_ms": 1791102291629,
+          "stratum": 1,
+          "numerical_bound_ms": 29.882814407348633,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": -0.14102458953857422,
+          "uncertainty_ms": 40.164764642715454,
+          "observed_ms": 1791102291698,
+          "stratum": 3,
+          "numerical_bound_ms": 40.30578923225403,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": -0.5398988723754883,
+          "uncertainty_ms": 44.008161544799805,
+          "observed_ms": 1791102291797,
+          "stratum": 4,
+          "numerical_bound_ms": 44.54806041717529,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": -1,
+          "uncertainty_ms": 47
+        },
+        "observed_ms": 1791102291629,
+        "valid_until_ms": 1791102296629,
+        "signed": false,
+        "production_qualified": false
+      }
+    },
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": 0.8252859115600586,
+          "uncertainty_ms": 28.41880512237549,
+          "observed_ms": 1791102292101,
+          "stratum": 1,
+          "numerical_bound_ms": 29.244091033935547,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": 1.2364387512207031,
+          "uncertainty_ms": 39.30347752571106,
+          "observed_ms": 1791102292129,
+          "stratum": 3,
+          "numerical_bound_ms": 40.53991627693176,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": 0.823974609375,
+          "uncertainty_ms": 42.7942533493042,
+          "observed_ms": 1791102292191,
+          "stratum": 4,
+          "numerical_bound_ms": 43.6182279586792,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": 1,
+          "uncertainty_ms": 45
+        },
+        "observed_ms": 1791102292101,
+        "valid_until_ms": 1791102297101,
+        "signed": false,
+        "production_qualified": false
+      }
+    },
+    {
+      "samples": [
+        {
+          "host": "time.google.com",
+          "authenticated": false,
+          "offset_ms": -4.474282264709473,
+          "uncertainty_ms": 34.10437297821045,
+          "observed_ms": 1791102292507,
+          "stratum": 1,
+          "numerical_bound_ms": 38.57865524291992,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.cloudflare.com",
+          "authenticated": false,
+          "offset_ms": -1.4574527740478516,
+          "uncertainty_ms": 41.13500905036926,
+          "observed_ms": 1791102292539,
+          "stratum": 3,
+          "numerical_bound_ms": 42.592461824417114,
+          "diagnostic_within_100ms": true
+        },
+        {
+          "host": "time.windows.com",
+          "authenticated": false,
+          "offset_ms": 0.6827116012573242,
+          "uncertainty_ms": 42.66801071166992,
+          "observed_ms": 1791102292601,
+          "stratum": 4,
+          "numerical_bound_ms": 43.350722312927246,
+          "diagnostic_within_100ms": true
+        }
+      ],
+      "candidate": {
+        "payload": {
+          "offset_ms": 0,
+          "uncertainty_ms": 46
+        },
+        "observed_ms": 1791102292507,
+        "valid_until_ms": 1791102297507,
+        "signed": false,
+        "production_qualified": false
+      }
+    }
+  ],
+  "source_policy_approved": false,
+  "live_monitor_stopped": true
+}

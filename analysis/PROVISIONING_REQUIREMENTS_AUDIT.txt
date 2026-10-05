@@ -1,0 +1,400 @@
+AUDIT DE PROVENANCE ET PLAN 0→14
+Base inspectée : d6112e1. Blame = dernière introduction/modification de la ligne, pas preuve de son origine antérieure hors Git.
+A=API/SDK officiel ; B=nécessité cryptographique ; C=réglementation documentée ; D=choix sécurité D6 ; E=assumption/test promu par erreur.
+Les14 contrôles comme obligations de préflight sont D. Aucun C identifié dans le code ni les documents API consultés.
+Le mécanisme de preuve signée et les5s sont D ; authentifier une clé, le contenu et anti-rejeu relève de B si ce mécanisme est choisi.
+Le vrai bug E est détaillé dans PROVISIONING_ARCHITECTURE_REVIEW.txt. Aucun autre E n’est certifié accidentel sans historique probant.
+
+PROOF_01 wallet_account_identity_verified
+Objectif : Identité du wallet et du signataire
+Origine : A/B pour adresses/signatures ; D pour attestation D6
+Producteur / source : identity / SDK réel + configuration publique + liaison propriétaire on-chain
+Données : wallet, maker, signer
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:37 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:82 [23b86dea49f6]
+PASS exact : 'wallet_account_identity_verified':lambda:p['wallet']==c['account'] and p['maker']==c['account'] and bool(p['signer']),
+Risque : Confusion EOA/proxy/deposit, mauvais maker
+Alternative à démontrer : Lire les propriétés du vrai client et contrôler le propriétaire on-chain ; pas besoin de tiers commercial.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_02 balance_sufficient
+Objectif : Budget réellement disponible
+Origine : A pour balances ; D pour réserve100 et preuve
+Producteur / source : account / CLOB balance + balanceOf RPC + réservations
+Données : available_cash, required_cash, collateral
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:38 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:83 [23b86dea49f6]
+PASS exact : 'balance_sufficient':lambda:dec(p['available_cash'])>=dec(p['required_cash']) and p['collateral']==c['collateral'],
+Risque : Surengagement et cash indisponible
+Alternative à démontrer : Collecteur GET/RPC distinct, même frontier et rapprochement ; une signature locale seule ne suffit pas.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_03 market_identity_verified
+Objectif : Marché et deux outcomes exacts
+Origine : A pour mapping ; D pour enveloppe
+Producteur / source : market / Gamma/CLOB + contrats condition/token
+Données : condition, tokens, expires_ms
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:39 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:84 [23b86dea49f6]
+PASS exact : 'market_identity_verified':lambda:p['condition']==c['market'] and len(set(p['tokens']))==2 and p['expires_ms']>now_ms,
+Risque : Trader le mauvais token ou marché expiré
+Alternative à démontrer : Comparer metadata et vrai abonnement WS ; signer uniquement le résultat observé.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_04 sdk_order_path_qualified
+Objectif : Chemin SDK signé testé
+Origine : B pour intégrité/signature ; D pour version et preuve fraîche
+Producteur / source : software / artefact SDK0.11.0 + tests crypto et source manifest
+Données : sdk_version, codec_digest, http_attempts, allowance_mutation
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:40 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:85 [23b86dea49f6]
+PASS exact : 'sdk_order_path_qualified':lambda:p['sdk_version']=='0.11.0' and len(p['codec_digest'])==64 and p['http_attempts']==1 and p['allowance_mutation'] is False,
+Risque : Codec erroné, retries/allowance implicites
+Alternative à démontrer : Attestation durable liée au hash du binaire ; vérifier le hash courant à chaque démarrage plutôt que réémettre le test toutes les5s.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_05 account_evidence_adapter_qualified
+Objectif : Inventaire et fees cohérents
+Origine : D
+Producteur / source : account / collecteur direct CLOB/Data/RPC et archive
+Données : scope, atomic_frontier, baseline_digest, fee_effects
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:41 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:86 [23b86dea49f6]
+PASS exact : 'account_evidence_adapter_qualified':lambda:p['scope']=='wallet' and bool(p['atomic_frontier']) and len(p['baseline_digest'])==64 and p['fee_effects']=='cash_and_shares',
+Risque : Exposition inconnue/observation partielle
+Alternative à démontrer : Même invariant via collecteur séparé avec couverture vérifiable, sans société tierce obligatoire.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_06 fee_upper_bound_proven
+Objectif : Borne de fees entrée/sortie
+Origine : A pour frais réels ; D pour borne round-trip/epoch
+Producteur / source : risk / paramètres marché + règles de règlement/arrondi
+Données : cash_collateral, outcome_shares, collateral_per_share_upper, fee_source_digest, coverage, epoch, late_fill_coverage
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:42 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:87 [23b86dea49f6]
+PASS exact : 'fee_upper_bound_proven':lambda:p['coverage']=='ROUND_TRIP_FAK_1BUY_1SELL' and p['late_fill_coverage'] is True and FeeRisk(p['cash_collateral'],p['outcome_shares'],p['collateral_per_share_upper'],p['fee_source_digest'],c['market'],record['valid_until_ms']).conservative_cash(now_ms)>=0,
+Risque : Dépasser budget via fees ou late fills
+Alternative à démontrer : Calcul déterministe contrôlé indépendamment depuis règles réelles ; ne pas substituer fee_rate à fee_effect.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_07 exit_handoff_ready
+Objectif : Handoff accepté durablement
+Origine : D ; B pour signature de reçu demandée dans cette mission
+Producteur / source : custody / service/propriétaire indépendant + reçu du probe
+Données : owner, channel, durable_receipt_probe
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:43 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:88 [23b86dea49f6]
+PASS exact : 'exit_handoff_ready':lambda:bool(p['owner'] and p['channel'] and p['durable_receipt_probe']),
+Risque : Exposition abandonnée après arrêt
+Alternative à démontrer : Un service hors arbre supervisor, journal fsync, clé propre et reçu exact ; pas de flotte de tiers.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_08 ledger_healthy
+Objectif : Ledger vérifié et espace suffisant
+Origine : D
+Producteur / source : runtime / Journal.read et disque D réel
+Données : verified_sequence, journal_digest, free_bytes
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:44 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:89 [23b86dea49f6]
+PASS exact : 'ledger_healthy':lambda:type(p['verified_sequence']) is int and p['verified_sequence']>=0 and len(p['journal_digest'])==64 and p['free_bytes']>=512*1024**2,
+Risque : Perte de journal ou disque plein
+Alternative à démontrer : Rejouer chaîne localement + copie/checkpoint indépendante ; dimensionnement mesuré. Lettre D est choix de déploiement, pas invariant.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_09 kill_switch_tested
+Objectif : Kill sans nouvelle entrée
+Origine : D
+Producteur / source : software / test logiciel + probe du vrai canal custody
+Données : test_digest, new_entries_after_kill, custody_verified
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:45 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:90 [23b86dea49f6]
+PASS exact : 'kill_switch_tested':lambda:len(p['test_digest'])==64 and p['new_entries_after_kill']==0 and p['custody_verified'] is True,
+Risque : Ordre après kill, position abandonnée
+Alternative à démontrer : Artefact de test lié au code + probe du déploiement, sans nouvel ordre réel.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_10 reconciliation_tested
+Objectif : Réconciliation indépendante
+Origine : D
+Producteur / source : software / CLOB/Data/RPC + tests d’inconnus
+Données : test_digest, independent_observations, unknown_events_rejected
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:46 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:91 [23b86dea49f6]
+PASS exact : 'reconciliation_tested':lambda:len(p['test_digest'])==64 and p['independent_observations'] is True and p['unknown_events_rejected'] is True,
+Risque : Double compte, fills manqués, confiance au POST
+Alternative à démontrer : Observation séparée du submitter et contrôle de conservation ; aucun signataire commercial nécessaire.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_11 clock_sanity
+Objectif : Erreur horloge bornée
+Origine : D pour100ms ; protocole NTP documenté, pas règle Polymarket
+Producteur / source : runtime / source de temps indépendante et mesure RTT/dispersion
+Données : offset_ms, uncertainty_ms
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:47 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:92 [23b86dea49f6]
+PASS exact : 'clock_sanity':lambda:abs(p['offset_ms'])+p['uncertainty_ms']<=100 and p['uncertainty_ms']>=0,
+Risque : Accepter une preuve périmée/future
+Alternative à démontrer : Mesure continue, borne et expiration locales monotoniques ; NTS/authentification si attaque réseau dans le modèle.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_12 ws_healthy
+Objectif : Vrai book frais synchronisé
+Origine : A pour protocole ; D pour fraîcheur1000ms/enveloppe
+Producteur / source : runtime / StreamBook réel de la session et son flux WS
+Données : state, generation, tokens, receive_ms
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:48 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:93 [23b86dea49f6]
+PASS exact : 'ws_healthy':lambda:p['state']=='SYNCHRONIZED' and type(p['generation']) is int and len(set(p['tokens']))==2 and 0<=now_ms-p['receive_ms']<=1000,
+Risque : Acheter sur book périmé/incomplet
+Alternative à démontrer : Valider localement générations/tokens/âge du flux réel ; collecteur indépendant si isolation contre supervisor compromise requise.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_13 tests_green
+Objectif : Tests du code déployé verts
+Origine : D
+Producteur / source : software / rapports harness + manifest exact
+Données : test_digest, failed, passed
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:49 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:94 [23b86dea49f6]
+PASS exact : 'tests_green':lambda:len(p['test_digest'])==64 and p['failed']==0 and p['passed']>0,
+Risque : Déployer un artefact non qualifié
+Alternative à démontrer : Attestation liée au hash jusqu’à changement du binaire, pas exécution complète toutes les5s.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+PROOF_14 audit_pass
+Objectif : Audit sans point critique ouvert
+Origine : D ; aucune obligation réglementaire établie
+Producteur / source : review / réviseur et audit de l’artefact/policy/déploiement
+Données : audit_digest, reviewer, unresolved_critical
+Imposé par : analysis/d6/real_execution_calibration_v1/qualification.py:50 [23b86dea49f6] ; analysis/d6/real_execution_calibration_v1/qualification.py:95 [23b86dea49f6]
+PASS exact : 'audit_pass':lambda:len(p['audit_digest'])==64 and bool(p['reviewer']) and p['unresolved_critical']==0,
+Risque : Auto-déclaration READY malgré défauts de confiance
+Alternative à démontrer : Une approbation humaine initiale versionnée + vérification mécanique du hash ; invalider sur changement.
+Signature/clé/freshness/vérification/commande/automatisation : contrat commun ci-dessous.
+
+CONTRAT COMMUN À CHAQUE PROOF_01…14
+EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)
+Policy keys[key_id].address. NONE approved/provisioned; trading signer is not implicitly an authority.
+Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.
+EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.
+python analysis/production_provisioning_check.py --inbox <inbox> --policy <trust-policy.json> --approved-policy-digest <external-approved-digest> --output <new-report.json>
+Automatic acquisition/validation; principal and policy approval human. 07 owner acceptance human/service-authorized;14 independent review human.
+Configuration payload et compléments runtime exacts : PRODUCTION_PROVISIONING.txt, sections01…14.
+La commande vérifie des fichiers fournis ; elle ne produit ni signe la preuve et ne donne jamais une autorisation LIVE.
+
+INVENTAIRE EXHAUSTIF DES LIGNES DE GARDE Provider / Authority / Custody / assembly
+Classification : D sauf primitives cryptographiques B indiquées ; les commentaires de code ne constituent pas une obligation officielle.
+
+analysis/d6/real_execution_calibration_v1/production_authority.py:13 [d6112e1dc268] D | if not keys or not provider: raise ValueError('EXTERNAL_TRUST_POLICY_REQUIRED')
+analysis/d6/real_execution_calibration_v1/production_authority.py:23 [d6112e1dc268] D | if 'check' in r and r.get('kind',r['check'])!=r['check']:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:24 [d6112e1dc268] D | if r.get('provider')!=self.provider or r.get('kind',r.get('check')) not in kinds:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:25 [d6112e1dc268] D | if any(r.get(k)!=v for k,v in self.context.items()):return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:26 [d6112e1dc268] D (primitive B sous-jacente) | if r.get('trust_policy_digest')!=self.approval_digest:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:28 [d6112e1dc268] D | except Exception:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:32 [d6112e1dc268] D | if not self.verify_provenance(record):return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:34 [d6112e1dc268] D | if type(r['observed_ms']) is not int or type(r['valid_until_ms']) is not int:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:37 [d6112e1dc268] D | except Exception:return False
+analysis/d6/real_execution_calibration_v1/production_authority.py:42 [d6112e1dc268] D | if self.bindings is not None: raise ValueError('AUTHORITY_ALREADY_BOUND')
+analysis/d6/real_execution_calibration_v1/production_authority.py:43 [d6112e1dc268] D | if type(source) is not ProductionEvidenceSource or source.authority is not self: raise ValueError('SOURCE_BINDING')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:17 [d6112e1dc268] D | raise ValueError('PRODUCTION_AUTHORITY_REQUIRED')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:24 [d6112e1dc268] D | if not self.authority.verify_provenance(record):raise ValueError('AUTHORITY_REJECTED')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:25 [d6112e1dc268] D | if record.get('kind') != kind: raise ValueError('EVIDENCE_KIND')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:26 [d6112e1dc268] D | if any(record.get(k)!=v for k,v in dict(account=self.account,collateral=self.collateral,session=self.session,scope='wallet').items()):
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:27 [d6112e1dc268] D | raise ValueError('EVIDENCE_SCOPE')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:30 [d6112e1dc268] D | raise ValueError('ACCOUNT_CLOCK')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:32 [d6112e1dc268] D | if record['valid_until_ms']>record['observed_ms']+lifetime:raise ValueError('EVIDENCE_VALIDITY_WINDOW')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:34 [d6112e1dc268] D (primitive B sous-jacente) | if f['digest']!=digest(record['inventory']):raise ValueError('FRONTIER_CONTENT')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:36 [d6112e1dc268] D | if set(coverage)!=COMPONENTS: raise ValueError('COVERAGE_COMPONENTS')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:38 [d6112e1dc268] D | if proof.get('scope')!='wallet' or proof.get('filters')!={} or proof.get('frontier')!=f:
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:39 [d6112e1dc268] D | raise ValueError('COVERAGE_SCOPE_OR_FRONTIER')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:40 [d6112e1dc268] D | if proof.get('complete') is not True or proof.get('next_cursor') is not None or proof.get('origin')!='wallet_creation':
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:41 [d6112e1dc268] D | raise ValueError('COVERAGE_INCOMPLETE')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:43 [d6112e1dc268] D (primitive B sous-jacente) | if type(rows) is not list or integer(proof['count'])!=len(rows) or proof['digest']!=digest(rows):
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:44 [d6112e1dc268] D | raise ValueError('COVERAGE_CONTENT')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:47 [d6112e1dc268] D (primitive B sous-jacente) | if record.get('baseline_digest')!=digest(self.baseline): raise ValueError('BASELINE_BINDING')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:51 [d6112e1dc268] D | if f['sequence'] < ancestor['sequence'] or (f['sequence']==ancestor['sequence'] and f!=ancestor):
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:52 [d6112e1dc268] D | raise ValueError('EVIDENCE_FORK_OR_REPLAY')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:53 [d6112e1dc268] D | if f!=ancestor and ancestor not in ancestors: raise ValueError('EVIDENCE_LINEAGE')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:55 [d6112e1dc268] D | if record.get(key) is not True: raise ValueError('COMPLETENESS_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:58 [d6112e1dc268] D | if inv['cash'] != [dict(id=self.collateral, balance=record['cash'])]: raise ValueError('CASH_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:59 [d6112e1dc268] D | if {r['id']:r['shares'] for r in inv['positions']}!=record['positions']: raise ValueError('POSITION_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:60 [d6112e1dc268] D | if [r['id'] for r in inv['trades']]!=record['trade_ids']: raise ValueError('TRADE_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:61 [d6112e1dc268] D | if [r['id'] for r in inv['orders'] if r['terminal'] is False]!=record['open_orders']: raise ValueError('ORDER_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:62 [d6112e1dc268] D | if [r['id'] for r in inv['orders'] if r['terminal'] is True]!=record['terminal_order_ids']: raise ValueError('TERMINAL_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:63 [d6112e1dc268] D | if any(type(r['terminal']) is not bool for r in inv['orders']): raise ValueError('ORDER_TERMINAL_SCHEMA')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:64 [d6112e1dc268] D | if {r['id'] for r in inv['fees']} != set(record['trade_ids']): raise ValueError('FEE_COVERAGE')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:76 [d6112e1dc268] D | if record.get('kind')!='execution' or record.get('order_id')!=order_id:
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:77 [d6112e1dc268] D | raise ValueError('EXECUTION_BINDING')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:83 [d6112e1dc268] D | if fill['order_id']!=order_id or trades.get(tid,{}).get('fill')!=fill:
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:84 [d6112e1dc268] D | raise ValueError('FILL_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:85 [d6112e1dc268] D | if any(fees.get(tid,{}).get(k)!=fill[k] for k in ('cash_fee','share_fee')):
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:86 [d6112e1dc268] D | raise ValueError('FEE_PROJECTION')
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:87 [d6112e1dc268] D | if {r['id'] for r in trades.values() if r['fill']['order_id']==order_id}!={f['trade_id'] for f in record['fills']}:
+analysis/d6/real_execution_calibration_v1/production_evidence_source.py:88 [d6112e1dc268] D | raise ValueError('EXECUTION_INCOMPLETE')
+analysis/d6/real_execution_calibration_v1/production_provider.py:11 [d6112e1dc268] D | MAX_BYTES=8*1024**2
+analysis/d6/real_execution_calibration_v1/production_provider.py:14 [d6112e1dc268] D | if not self.directory.is_dir():raise ValueError('EVIDENCE_DIRECTORY')
+analysis/d6/real_execution_calibration_v1/production_provider.py:16 [d6112e1dc268] D | raise ValueError('EVIDENCE_INBOX_MUST_BE_OUTSIDE_GIT')
+analysis/d6/real_execution_calibration_v1/production_provider.py:18 [d6112e1dc268] D | if not re.fullmatch(r'[a-z0-9][a-z0-9_-]*\.json',name):raise ValueError('EVIDENCE_FILENAME')
+analysis/d6/real_execution_calibration_v1/production_provider.py:20 [d6112e1dc268] D | if p.is_symlink() or (hasattr(p,'is_junction') and p.is_junction()):raise ValueError('EVIDENCE_LINK')
+analysis/d6/real_execution_calibration_v1/production_provider.py:22 [d6112e1dc268] D | if len(raw)>self.MAX_BYTES:raise ValueError('EVIDENCE_SIZE')
+analysis/d6/real_execution_calibration_v1/production_provider.py:26 [d6112e1dc268] D | if key in result:raise ValueError('DUPLICATE_EVIDENCE_KEY')
+analysis/d6/real_execution_calibration_v1/custody.py:17 [23b86dea49f6] D | if row['kind']!='CUSTODY_STATE':raise ValueError('CUSTODY_STORE_SCHEMA')
+analysis/d6/real_execution_calibration_v1/custody.py:28 [23b86dea49f6] D | if not isinstance(receipt,dict):return False
+analysis/d6/real_execution_calibration_v1/custody.py:30 [23b86dea49f6] D | if not rid or rid in self.seen or receipt.get('owner')!=self.owner:return False
+analysis/d6/real_execution_calibration_v1/custody.py:31 [23b86dea49f6] D | if type(stamp) is not int or not 0<=self.clock()-stamp<=5000:return False
+analysis/d6/real_execution_calibration_v1/custody.py:32 [23b86dea49f6] D (primitive B sous-jacente) | if any(receipt.get(k)!=request[k] for k in ('account','experiment_id','exposure_digest','journal_sequence')):return False
+analysis/d6/real_execution_calibration_v1/custody.py:36 [23b86dea49f6] D | except (ValueError,KeyError):return False
+analysis/d6/real_execution_calibration_v1/custody.py:37 [23b86dea49f6] D | if await self.authority.verify_durable(copy.deepcopy(receipt)) is not True:return False
+analysis/d6/real_execution_calibration_v1/custody.py:42 [23b86dea49f6] D | if not done:return False
+analysis/d6/real_execution_calibration_v1/custody.py:52 [23b86dea49f6] D | if key in self.states:raise RuntimeError('CUSTODY_EXPERIMENT_ALREADY_OWNED_OR_RECORDED')
+analysis/d6/real_execution_calibration_v1/custody.py:80 [23b86dea49f6] D | if previous is None or expired or previous['exposure_revision']!=observed['exposure_revision']:self.requests[key]=observed
+analysis/d6/real_execution_calibration_v1/custody.py:100 [23b86dea49f6] D | if l.custody_snapshot()['exposure_revision']!=request['exposure_revision']:
+analysis/d6/real_execution_calibration_v1/custody.py:131 [23b86dea49f6] D | if self.states.get(key)!='TRANSFERRED':
+analysis/d6/real_execution_calibration_v1/custody.py:143 [23b86dea49f6] D | except Exception as exc:self.errors.append('CUSTODY_STATE_STORAGE:'+type(exc).__name__);return False
+analysis/d6/real_execution_calibration_v1/custody.py:146 [23b86dea49f6] D | if self.tasks or self.operations or any(v!='TRANSFERRED' for v in self.states.values()):raise RuntimeError('CUSTODY_STILL_OWNED')
+analysis/d6/real_execution_calibration_v1/custody.py:151 [23b86dea49f6] D | while self.tasks or self.operations or any(v!='TRANSFERRED' for v in self.states.values()):
+analysis/d6/real_execution_calibration_v1/custody.py:154 [23b86dea49f6] D | if self.states[key]!='TRANSFERRED' and worker.done():
+analysis/d6/real_execution_calibration_v1/custody.py:166 [23b86dea49f6] D | if cancellation is not None:raise cancellation
+analysis/d6/real_execution_calibration_v1/manual_custody.py:12 [23b86dea49f6] D | if result.returncode:raise ValueError('CUSTODY_ACL_UNAVAILABLE')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:14 [23b86dea49f6] D | if value['owner']!=sid or not value['rules'] or any(r['sid']!=sid or r['type']!='Allow' or r['rights']!=2032127 for r in value['rules']):raise ValueError('CUSTODY_ACL_INVALID')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:18 [23b86dea49f6] D | if p.is_symlink() or (hasattr(p,'is_junction') and p.is_junction()):raise ValueError('CUSTODY_REPARSE_POINT')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:23 [23b86dea49f6] D | if len(raw)>1024**2:raise ValueError('CUSTODY_DOCUMENT_BOUND')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:27 [23b86dea49f6] D | if k in d:raise ValueError('DUPLICATE_CUSTODY_FIELD')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:34 [23b86dea49f6] D | if len(data)>1024**2:raise ValueError('CUSTODY_DOCUMENT_BOUND')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:39 [23b86dea49f6] D | if not n:raise OSError('SHORT_WRITE')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:54 [23b86dea49f6] D (primitive B sous-jacente) | if request['exposure_digest']!=digest(request['exposure']) or request['exposure_revision']!=request['exposure_digest']:raise ValueError('CUSTODY_EXPOSURE_BINDING')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:60 [23b86dea49f6] D | if not active.exists() or read_document(active).get('challenge_id')!=key:
+analysis/d6/real_execution_calibration_v1/manual_custody.py:64 [23b86dea49f6] D | if value['request']!=request or value['owner_sid']!=self.sid:raise ValueError('CUSTODY_CHALLENGE_CHANGED')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:75 [23b86dea49f6] D | if not sys.stdin.isatty():raise ValueError('OPERATOR_INTERACTIVE_TERMINAL_REQUIRED')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:76 [23b86dea49f6] D | if len(challenge_id)!=64 or any(c not in '0123456789abcdef' for c in challenge_id):raise ValueError('CHALLENGE_ID')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:78 [23b86dea49f6] D | if c['challenge_id']!=challenge_id or c['owner_sid']!=self.sid or self.clock()>c['valid_until_ms']:raise ValueError('STALE_OR_FOREIGN_CHALLENGE')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:80 [23b86dea49f6] D (primitive B sous-jacente) | if digest(r)!=challenge_id or digest(r['exposure'])!=r['exposure_digest']:raise ValueError('CHALLENGE_TAMPERED')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:84 [23b86dea49f6] D | if input()!=phrase:raise ValueError('OPERATOR_DID_NOT_ACCEPT')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:85 [23b86dea49f6] D | if self.clock()>c['valid_until_ms']:raise ValueError('CHALLENGE_EXPIRED')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:87 [23b86dea49f6] D | if read_document(path)!=c or read_document(self.directory/'active-challenge.json')['challenge_id']!=challenge_id:raise ValueError('CHALLENGE_CHANGED_DURING_ACCEPTANCE')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:105 [23b86dea49f6] D | if len(key)!=64 or any(c not in '0123456789abcdef' for c in key):return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:110 [23b86dea49f6] D | except (KeyError,ValueError,OSError,TypeError,subprocess.SubprocessError):return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:118 [23b86dea49f6] D | if not isinstance(receipt,dict):return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:119 [23b86dea49f6] D (primitive B sous-jacente) | if receipt.get('challenge_id')!=digest(request):return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:120 [23b86dea49f6] D (primitive B sous-jacente) | if any(receipt.get(k)!=request[k] for k in ('account','experiment_id','exposure_digest','journal_sequence')):return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:121 [23b86dea49f6] D | if receipt.get('owner')!=self.owner or type(receipt.get('accepted_ms')) is not int or receipt['accepted_ms']>self.authority.channel.clock():return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:122 [23b86dea49f6] D | if await self.authority.verify_durable(receipt) is not True:return False
+analysis/d6/real_execution_calibration_v1/manual_custody.py:133 [23b86dea49f6] D | if not sys.stdin.isatty():raise ValueError('OPERATOR_INTERACTIVE_TERMINAL_REQUIRED')
+analysis/d6/real_execution_calibration_v1/manual_custody.py:140 [23b86dea49f6] D | if key!=last:
+analysis/d6/real_execution_calibration_v1/launch.py:20 [d6112e1dc268] D | raise RuntimeError('LIVE_GATE_BLOCKED: externally approved trust policy, full-wallet provider/baseline, fresh qualification proofs, SDK identity and durable custody required')
+analysis/d6/real_execution_calibration_v1/launch.py:21 [d6112e1dc268] D | if type(authority) is not ProductionAuthority:raise ValueError('PRODUCTION_AUTHORITY_REQUIRED')
+analysis/d6/real_execution_calibration_v1/launch.py:24 [d6112e1dc268] D | if type(client) is not AsyncSecureClient:raise ValueError('PRODUCTION_SDK_REQUIRED')
+analysis/d6/real_execution_calibration_v1/launch.py:25 [d6112e1dc268] D | if custody.state_store is None:raise ValueError('DURABLE_CUSTODY_STORE_REQUIRED')
+analysis/d6/real_execution_calibration_v1/launch.py:31 [d6112e1dc268] D | if set(tokens)!={'UP','DOWN'} or tokens['UP']==tokens['DOWN'] or market['expiry_ms']<=clock():raise ValueError('MARKET_IDENTITY')
+analysis/d6/real_execution_calibration_v1/launch.py:49 [d6112e1dc268] D (primitive B sous-jacente) | if digest(trust_policy)!=approved_policy_digest:raise ValueError('TRUST_POLICY_APPROVAL_MISMATCH')
+analysis/d6/real_execution_calibration_v1/runner.py:23 [23b86dea49f6] D | async def prepare(self,**kwargs):raise ValueError('LIVE_QUALIFICATION_REQUIRED')
+analysis/d6/real_execution_calibration_v1/runner.py:24 [23b86dea49f6] D | async def submit_once(self,*args):raise ValueError('LIVE_QUALIFICATION_REQUIRED')
+analysis/d6/real_execution_calibration_v1/runner.py:55 [23b86dea49f6] D | if owner and (owner.tasks or owner.operations or any(v!='TRANSFERRED' for v in owner.states.values())):raise RuntimeError('CUSTODY_STILL_OWNED')
+analysis/d6/real_execution_calibration_v1/runner.py:62 [23b86dea49f6] D | if actual!=expected or self.book.tokens!={'UP':self.context.up,'DOWN':self.context.down}:raise ValueError('ASSEMBLY_CONTEXT_MUTATED')
+analysis/d6/real_execution_calibration_v1/runner.py:63 [23b86dea49f6] D (primitive B sous-jacente) | if digest(self.account.baseline)!=self.context.baseline_digest:raise ValueError('ASSEMBLY_BASELINE_MUTATED')
+analysis/d6/real_execution_calibration_v1/runner.py:64 [23b86dea49f6] D | if any(ctx.get(k)!=v for k,v in expected.items()):raise ValueError('ASSEMBLY_CONTEXT_MISMATCH')
+analysis/d6/real_execution_calibration_v1/runner.py:66 [23b86dea49f6] D | if market.get('outcome_tokens')!=self.book.tokens:raise ValueError('ASSEMBLY_OUTCOME_MAPPING')
+analysis/d6/real_execution_calibration_v1/runner.py:67 [23b86dea49f6] D | if market['tokens']!=[self.book.tokens['UP'],self.book.tokens['DOWN']] or proof['ws_healthy']['payload']['tokens']!=market['tokens']:raise ValueError('ASSEMBLY_TOKEN_ORDER')
+analysis/d6/real_execution_calibration_v1/runner.py:70 [23b86dea49f6] D | if method is None or method(bindings,proof) is not True:raise ValueError('ASSEMBLY_PROVIDER_BINDINGS')
+analysis/d6/real_execution_calibration_v1/runner.py:71 [23b86dea49f6] D | if hasattr(self,'provider_bindings') and any(a is not b for a,b in zip(self.provider_bindings,bindings)):raise ValueError('ASSEMBLY_PROVIDER_REPLACED')
+analysis/d6/real_execution_calibration_v1/runner.py:73 [23b86dea49f6] D | if proof['exit_handoff_ready']['payload']['owner']!=owner.verifier.owner:raise ValueError('ASSEMBLY_CUSTODY_OWNER')
+analysis/d6/real_execution_calibration_v1/runner.py:74 [23b86dea49f6] D (primitive B sous-jacente) | if not self.account.baseline or proof['account_evidence_adapter_qualified']['payload']['baseline_digest']!=digest(self.account.baseline):raise ValueError('ASSEMBLY_BASELINE')
+analysis/d6/real_execution_calibration_v1/runner.py:75 [23b86dea49f6] D | if dec(proof['balance_sufficient']['payload']['required_cash'])<self.ledger.MAX_TOTAL:raise ValueError('ASSEMBLY_REQUIRED_BUDGET')
+analysis/d6/real_execution_calibration_v1/runner.py:77 [23b86dea49f6] D | if verifier.authority.verify_client(client,proof['sdk_order_path_qualified']) is not True:raise ValueError('ASSEMBLY_CLIENT_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/runner.py:85 [23b86dea49f6] D | if any(x is None for x in (client,verifier,evidence,signal_source,custody_owner)):raise ValueError('LIVE_DEPENDENCIES_REQUIRED')
+analysis/d6/real_execution_calibration_v1/runner.py:88 [23b86dea49f6] D | if self.directory.resolve().drive.lower()!='d:':raise ValueError('LIVE_LOG_TARGET_MUST_BE_D')
+analysis/d6/real_execution_calibration_v1/runner.py:89 [23b86dea49f6] D | if custody_owner.state_store is None:raise ValueError('DURABLE_CUSTODY_STORE_REQUIRED')
+analysis/d6/real_execution_calibration_v1/runner.py:96 [23b86dea49f6] D | if report['status']!='CALIBRATION_READY':raise ValueError('PREFLIGHT_BLOCKED')
+analysis/d6/real_execution_calibration_v1/runner.py:102 [23b86dea49f6] D | if self.book.state!='SYNCHRONIZED' or not self.book.stream.read().get('available'):raise ValueError('BOOK_DEGRADED')
+analysis/d6/real_execution_calibration_v1/runner.py:108 [381a5b19ca80] D | if report['status']!='CALIBRATION_READY':raise ValueError('PREFLIGHT_REFRESH_BLOCKED: '+' '.join(report['blockers']))
+analysis/d6/real_execution_calibration_v1/runner.py:128 [23b86dea49f6] D | if hasattr(self,'sdk_binding') and not self.sdk_binding.matches(client):raise ValueError('SDK_PUBLIC_IDENTITY_CHANGED')
+analysis/d6/real_execution_calibration_v1/runner.py:130 [23b86dea49f6] D | if fresh['status']!='CALIBRATION_READY':raise ValueError('RUNTIME_EVIDENCE_INVALID')
+analysis/d6/real_execution_calibration_v1/runner.py:148 [d6112e1dc268] D | if expected['outcome_tokens']!=tokens or expected['expires_ms']!=specification['expiry_ms']:raise ValueError('ROTATION_PROVENANCE')
+analysis/d6/real_execution_calibration_v1/runner.py:151 [d6112e1dc268] D | if pending:raise TimeoutError('ROTATION_SHUTDOWN_TIMEOUT')
+analysis/d6/real_execution_calibration_v1/runner.py:160 [d6112e1dc268] D | if evaluate(current,self.coordinator.clock(),shutil.disk_usage(self.directory).free,verifier)['status']!='CALIBRATION_READY':raise ValueError('ROTATION_PREFLIGHT_BLOCKED')
+analysis/d6/real_execution_calibration_v1/runner.py:161 [d6112e1dc268] D | if not await self.coordinator.recover_entries():raise ValueError('ROTATION_ACCOUNT_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/runner.py:168 [d6112e1dc268] D | raise RuntimeError('BOOK_STREAM_ENDED')
+analysis/d6/real_execution_calibration_v1/runner.py:193 [d6112e1dc268] D | raise primary
+analysis/d6/real_execution_calibration_v1/adapters.py:20 [fad3a246723b] D | if not a.get('available') or not p.get('available'):raise ValueError('ACCOUNT_READ_UNAVAILABLE')
+analysis/d6/real_execution_calibration_v1/adapters.py:21 [fad3a246723b] D | if any(str(r.get('wallet','')).lower()!=self.account.lower() for r in (a,p)):raise ValueError('ACCOUNT_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:22 [fad3a246723b] D | if self.collateral is None or any(r.get('collateral_symbol')!=self.collateral for r in (a,p)):raise ValueError('COLLATERAL_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:24 [fad3a246723b] D | if any(type(t) is not int or not 0<=self.clock()-t<=5000 for t in stamps):raise ValueError('ACCOUNT_CLOCK')
+analysis/d6/real_execution_calibration_v1/adapters.py:36 [fad3a246723b] D | if not isinstance(order_id,str) or not order_id:raise ValueError('ORDER_ID_REQUIRED')
+analysis/d6/real_execution_calibration_v1/adapters.py:37 [fad3a246723b] D | if self.evidence_source is None:raise ValueError('AUTHORITATIVE_FILLS_FEES_AND_ACCOUNT_SCOPE_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/adapters.py:39 [fad3a246723b] D | if e.get('order_id')!=order_id:raise ValueError('EXECUTION_ORDER_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:40 [fad3a246723b] D | if self.intents is None:raise ValueError('LOCAL_INTENTS_REQUIRED')
+analysis/d6/real_execution_calibration_v1/adapters.py:42 [fad3a246723b] D | if len(expected)!=1 or any(e.get(k)!=expected[0][k] for k in ('market','token','side')):raise ValueError('EXECUTION_INTENT_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:45 [fad3a246723b] D | if self.intents is None:raise ValueError('LOCAL_INTENTS_REQUIRED')
+analysis/d6/real_execution_calibration_v1/adapters.py:47 [fad3a246723b] D | if len(matches)!=1:raise ValueError('LOCAL_INTENT_AMBIGUOUS')
+analysis/d6/real_execution_calibration_v1/adapters.py:48 [fad3a246723b] D | if type(e['raw_trades']) is not list:raise ValueError('RAW_TRADE_LIST')
+analysis/d6/real_execution_calibration_v1/adapters.py:51 [fad3a246723b] D | else:raise ValueError('EXECUTION_SCHEMA_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/adapters.py:54 [fad3a246723b] D | if f['trade_id'] in seen or f['order_id']!=order_id or f['market']!=e['market'] or f['side'] not in ('BUY','SELL'):raise ValueError('FILL_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:56 [fad3a246723b] D | if not 0<dec(f['price'])<1 or dec(f['shares'])<=0:raise ValueError('FILL_AMOUNT')
+analysis/d6/real_execution_calibration_v1/adapters.py:58 [fad3a246723b] D | if f['fee_evidence'].get('cash_effect_proven') is not True or f['fee_evidence'].get('share_effect_proven') is not True:raise ValueError('FEE_EFFECT_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:60 [fad3a246723b] D | if not 0<=f['exchange_ts_ms']<=f['receive_ts_ms']<=self.clock():raise ValueError('FILL_CLOCK')
+analysis/d6/real_execution_calibration_v1/adapters.py:61 [fad3a246723b] D | if e['terminal_status'] not in ('FILLED','CANCELED','EXPIRED') or dec(e['cumulative_shares'])!=total:raise ValueError('TERMINAL_FILL_MISMATCH')
+analysis/d6/real_execution_calibration_v1/adapters.py:62 [fad3a246723b] D | if any(e['account_snapshot']['observed_ms']<f['receive_ts_ms'] for f in fills):raise ValueError('POST_FILL_SNAPSHOT_STALE')
+analysis/d6/real_execution_calibration_v1/adapters.py:67 [fad3a246723b] D | if self.authority is None:raise ValueError('INDEPENDENT_ACCOUNT_PROOF_REQUIRED')
+analysis/d6/real_execution_calibration_v1/adapters.py:69 [fad3a246723b] D | if not self.session or e.get('session')!=self.session:raise ValueError('ACCOUNT_SESSION')
+analysis/d6/real_execution_calibration_v1/adapters.py:70 [fad3a246723b] D | if e.get('account')!=self.account or e.get('collateral')!=self.collateral:raise ValueError('ACCOUNT_OR_COLLATERAL_IDENTITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:71 [fad3a246723b] D | if e.get('scope')!='wallet':raise ValueError('PARTIAL_SCOPE')
+analysis/d6/real_execution_calibration_v1/adapters.py:73 [fad3a246723b] D | if type(e.get('observed_ms')) is not int or not 0<=self.clock()-e['observed_ms']<=5000:raise ValueError('ACCOUNT_CLOCK')
+analysis/d6/real_execution_calibration_v1/adapters.py:74 [fad3a246723b] D | if not self.baseline:raise ValueError('BASELINE_UNVERIFIED')
+analysis/d6/real_execution_calibration_v1/adapters.py:76 [fad3a246723b] D | if self.baseline.get('session')!=self.session or self.baseline.get('collateral')!=self.collateral:raise ValueError('BASELINE_CONTEXT')
+analysis/d6/real_execution_calibration_v1/adapters.py:80 [fad3a246723b] D (primitive B sous-jacente) | if self.baseline['account']!=self.account or self.baseline['valid_until_ms']<self.clock() or e.get('baseline_digest')!=digest(self.baseline):raise ValueError('BASELINE_STALE_OR_MISMATCH')
+analysis/d6/real_execution_calibration_v1/adapters.py:85 [fad3a246723b] D | if current['sequence']<previous['sequence']:raise ValueError('FRONTIER_REGRESSION')
+analysis/d6/real_execution_calibration_v1/adapters.py:87 [fad3a246723b] D (primitive B sous-jacente) | if current['digest']!=previous['digest']:raise ValueError('FRONTIER_FORK')
+analysis/d6/real_execution_calibration_v1/adapters.py:88 [fad3a246723b] D | elif previous not in observation.get('ancestor_frontiers',[]):raise ValueError('FRONTIER_LINEAGE_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:94 [fad3a246723b] D | if not baseline<=all_ids:raise ValueError('BASELINE_HISTORY_MISSING')
+analysis/d6/real_execution_calibration_v1/adapters.py:96 [fad3a246723b] D | if new!=set(e['experiment_trade_ids']):raise ValueError('FOREIGN_ACCOUNT_ACTIVITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:97 [fad3a246723b] D | if e.get('foreign_order_ids'):raise ValueError('FOREIGN_ACCOUNT_ACTIVITY')
+analysis/d6/real_execution_calibration_v1/adapters.py:98 [fad3a246723b] D | if any(e.get(k) is not True for k in ('inventory_proven','cash_proven','orders_complete','trades_complete','positions_complete')):raise ValueError('ACCOUNT_SCOPE_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:101 [d6112e1dc268] D | if not prior_terminals<=set(e['terminal_order_ids']):raise ValueError('BASELINE_ORDER_HISTORY_MISSING')
+analysis/d6/real_execution_calibration_v1/adapters.py:107 [fad3a246723b] D | if set(tokens)!={'UP','DOWN'} or len(set(tokens.values()))!=2:raise ValueError('OUTCOME_MAPPING')
+analysis/d6/real_execution_calibration_v1/adapters.py:114 [fad3a246723b] D | if token not in self.tokens.values():raise ValueError('BOOK_TOKEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:116 [fad3a246723b] D | if not b or self.stream.condition!=self.market:raise ValueError('BOOK_IDENTITY_OR_MISSING')
+analysis/d6/real_execution_calibration_v1/adapters.py:118 [fad3a246723b] D | valid=s.get('available') is True and s.get('book_synced') is True
+analysis/d6/real_execution_calibration_v1/adapters.py:120 [fad3a246723b] D | raise ValueError('BOOK_CAUSAL_CLOCK_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:121 [fad3a246723b] D | if not b.get('book_state_id'):raise ValueError('BOOK_CAUSAL_ID_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/adapters.py:122 [fad3a246723b] D | return copy.deepcopy(dict(valid=valid,ws_healthy=valid and s.get('connected') is True,
+analysis/d6/real_execution_calibration_v1/adapters.py:128 [fad3a246723b] D | if self.state!='SYNCHRONIZED':
+analysis/d6/real_execution_calibration_v1/adapters.py:129 [fad3a246723b] D | print(f'  [WAIT_READY] MISMATCH state={self.state!r} != SYNCHRONIZED', flush=True)
+analysis/d6/real_execution_calibration_v1/adapters.py:130 [fad3a246723b] D | raise ValueError('BOOK_DEGRADED')
+analysis/d6/real_execution_calibration_v1/adapters.py:138 [fad3a246723b] D | healthy=self.stream.read().get('available') is True
+analysis/d6/real_execution_calibration_v1/adapters.py:141 [fad3a246723b] D | elif time.monotonic()-started>initial_timeout:raise TimeoutError('BOOK_INITIAL_SYNC_TIMEOUT')
+analysis/d6/real_execution_calibration_v1/adapters.py:146 [fad3a246723b] D | if task.cancelled():raise asyncio.CancelledError('STREAM_TASK_CANCELLED')
+analysis/d6/real_execution_calibration_v1/adapters.py:147 [fad3a246723b] D | if task.exception() is not None:raise task.exception()
+analysis/d6/real_execution_calibration_v1/adapters.py:148 [fad3a246723b] D | raise RuntimeError('BOOK_STREAM_ENDED')
+analysis/d6/real_execution_calibration_v1/adapters.py:160 [038ee6359ddd] D | if len(new_tokens)!=2 or len(set(new_tokens))!=2 or new_expiry<=self.clock():raise ValueError('ROTATION_IDENTITY_OR_EXPIRY')
+analysis/d6/real_execution_calibration_v1/adapters.py:176 [038ee6359ddd] D | if pending:raise TimeoutError('BOOK_SHUTDOWN_TASKS_PENDING')
+analysis/d6/real_execution_calibration_v1/capacity.py:15 [d6112e1dc268] D | REQUIRED_FREE_BYTES=2*QUOTA_BYTES+RESERVE_BYTES
+analysis/d6/real_execution_calibration_v1/capacity.py:20 [d6112e1dc268] D | raise ValueError('STORAGE_72H_CAPACITY_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/engine.py:21 [23b86dea49f6] D | if _factory is not _ARM_FACTORY:raise ValueError('HUMAN_CONFIRMATION_REQUIRED')
+analysis/d6/real_execution_calibration_v1/engine.py:28 [23b86dea49f6] D | if verifier is None or evidence is None:raise ValueError('HUMAN_ARMING_UNAVAILABLE: LIVE_QUALIFICATION_REQUIRED')
+analysis/d6/real_execution_calibration_v1/engine.py:30 [038ee6359ddd] D | if isinstance(verifier.authority,SelfAttestingAuthority):raise ValueError('SELF_ATTESTATION_NOT_LIVE_PROOF')
+analysis/d6/real_execution_calibration_v1/engine.py:32 [23b86dea49f6] D | if verified['status']!='CALIBRATION_READY' or verifier.context['session']!=experiment_id:raise ValueError('HUMAN_ARMING_UNAVAILABLE')
+analysis/d6/real_execution_calibration_v1/engine.py:33 [23b86dea49f6] D | if not set(REQUIRED).issubset(preflight.get('checks',{})):raise ValueError('PREFLIGHT_INCOMPLETE')
+analysis/d6/real_execution_calibration_v1/engine.py:34 [23b86dea49f6] D | if not sys.stdin.isatty() or preflight.get('status')!='CALIBRATION_READY' or not preflight.get('checks') or not all(v is True for v in preflight['checks'].values()):raise ValueError('HUMAN_ARMING_UNAVAILABLE')
+analysis/d6/real_execution_calibration_v1/engine.py:35 [23b86dea49f6] D | if preflight.get('strategy_hashes')!=verify() or not 0<=time.time_ns()//1000000-preflight['evaluated_ms']<=5000:raise ValueError('STALE_OR_UNBOUND_PREFLIGHT')
+analysis/d6/real_execution_calibration_v1/engine.py:36 [c95090e7f546] D | if input('Type CALIBRATE '+experiment_id+' to arm this process: ').strip()!='CALIBRATE '+experiment_id:raise ValueError('NOT_ARMED')
+analysis/d6/real_execution_calibration_v1/engine.py:39 [23b86dea49f6] D | if self.pid!=os.getpid() or self.experiment_id!=session:raise ValueError('ARM_IDENTITY')
+analysis/d6/real_execution_calibration_v1/engine.py:40 [23b86dea49f6] D | if any(os.environ.get(k,'false').lower()!='false' for k in ('REAL_ORDERS_ENABLED','LIVE_EXECUTION_ARMED')):raise ValueError('D6_FLAGS_MUST_STAY_FALSE')
+analysis/d6/real_execution_calibration_v1/engine.py:41 [038ee6359ddd] D | if entry and time.monotonic()-self.started_monotonic>=259200:raise ValueError('EXPERIMENT_EXPIRED')
+analysis/d6/real_execution_calibration_v1/engine.py:64 [23b86dea49f6] D | if self.arm is None:raise ValueError('CALIBRATION_NOT_ARMED')
+analysis/d6/real_execution_calibration_v1/engine.py:67 [c95090e7f546] D | if entry and (self.ledger.stop or self.ledger.stop_new_entries):raise ValueError('STOP_NEW_ENTRIES')
+analysis/d6/real_execution_calibration_v1/engine.py:74 [c95090e7f546] D | fresh_book=b.get('available') is True and b.get('fresh') is True and b.get('book_synced') is True
+analysis/d6/real_execution_calibration_v1/engine.py:75 [c95090e7f546] D | if not fresh_book:raise ValueError('BOOK_NOT_FRESH_AFTER_RECONNECT')
+analysis/d6/real_execution_calibration_v1/engine.py:76 [c95090e7f546] D | if not self.ledger.reconciled:raise ValueError('RECONCILIATION_PENDING_AFTER_RECONNECT')
+analysis/d6/real_execution_calibration_v1/engine.py:83 [c95090e7f546] D | raise ValueError('POST_RECONNECT_FRESH_GUARD') from None
+analysis/d6/real_execution_calibration_v1/engine.py:85 [23b86dea49f6] D | if not b.get('valid') or not b.get('ws_healthy') or not b.get('market') or not b.get('token') or not b.get('book_state_id'):raise ValueError('BOOK_OR_WS_INVALID')
+analysis/d6/real_execution_calibration_v1/engine.py:86 [038ee6359ddd] D | if not 0<=b['source_ms']<=b['receive_ms']<=self.clock() or self.clock()-b['source_ms']>1000:raise ValueError('BOOK_CLOCK_INVALID')
+analysis/d6/real_execution_calibration_v1/engine.py:89 [23b86dea49f6] D | if any(not 0<dec(p)<1 or dec(q)<=0 for p,q in levels):raise ValueError('DEPTH_INVALID')
+analysis/d6/real_execution_calibration_v1/engine.py:90 [23b86dea49f6] D | if len({dec(p) for p,q in levels})!=len(levels):raise ValueError('DUPLICATE_DEPTH_LEVEL')
+analysis/d6/real_execution_calibration_v1/engine.py:91 [23b86dea49f6] D | if levels!=sorted(levels,key=lambda x:dec(x[0]),reverse=side=='bids'):raise ValueError('UNSORTED_DEPTH')
+analysis/d6/real_execution_calibration_v1/engine.py:92 [23b86dea49f6] D | if not b['asks'] or not b['bids'] or dec(b['bids'][0][0])>=dec(b['asks'][0][0]):raise ValueError('EMPTY_OR_CROSSED_BOOK')
+analysis/d6/real_execution_calibration_v1/engine.py:93 [23b86dea49f6] D | if len(encoded(b).encode())>512*1024:raise ValueError('BOOK_RECORD_BOUND')
+analysis/d6/real_execution_calibration_v1/engine.py:104 [23b86dea49f6] D | if current!=prepared_policy:raise ValueError('FEE_POLICY_CHANGED_DURING_PREPARE')
+analysis/d6/real_execution_calibration_v1/engine.py:116 [23b86dea49f6] D | if current!=prepared_policy:raise ValueError('FEE_POLICY_CHANGED_DURING_PREPARE')
+analysis/d6/real_execution_calibration_v1/engine.py:118 [23b86dea49f6] D | if side=='BUY' and dec(amount)>self.ledger.trades[self.ledger.active]['notional']:raise ValueError('BUY_RESERVATION_CHANGED')
+analysis/d6/real_execution_calibration_v1/engine.py:123 [23b86dea49f6] D | if not self.ledger.ack(client_id,response,reply_ms,send_ms=call_ms):raise ValueError('ACK_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/engine.py:127 [23b86dea49f6] D | if not self.ledger.fill(client_id,fill):raise ValueError('FILL_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/engine.py:128 [23b86dea49f6] D | if not self.ledger.terminal(client_id,evidence['terminal_status'],evidence['cumulative_shares']):raise ValueError('ORDER_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/engine.py:129 [23b86dea49f6] D | if not self.ledger.reconcile(evidence['account_snapshot'],self.clock()):raise ValueError('ACCOUNT_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/engine.py:144 [23b86dea49f6] D | if qty<=0:raise ValueError('NO_SHADOW_ENTRY_DEPTH')
+analysis/d6/real_execution_calibration_v1/engine.py:152 [23b86dea49f6] D | if self.fee_ceiling is None:raise ValueError('FEE_RISK_BOUND_UNPROVEN')
+analysis/d6/real_execution_calibration_v1/engine.py:154 [23b86dea49f6] D | if not self.ledger.reconcile(await self.account_source.snapshot(),self.clock()):raise ValueError('PRE_ENTRY_ACCOUNT_UNQUALIFIED')
+analysis/d6/real_execution_calibration_v1/engine.py:158 [23b86dea49f6] D | if risk and risk.market!=b['market']:raise ValueError('FEE_MARKET_MISMATCH')
+analysis/d6/real_execution_calibration_v1/engine.py:167 [23b86dea49f6] D | if exit_book['market']!=b['market'] or exit_book['token']!=b['token']:raise ValueError('EXIT_IDENTITY_CHANGED')
+analysis/d6/real_execution_calibration_v1/engine.py:170 [23b86dea49f6] D | if sold<=0:raise ValueError('NO_EXIT_DEPTH')
+analysis/d6/real_execution_calibration_v1/engine.py:210 [038ee6359ddd] D | if l.stop or self.busy or l.active is not None or any(l.positions.values()) or self.v1['errors'] or self._btc_recovery_required:return False
+analysis/d6/real_execution_calibration_v1/engine.py:214 [038ee6359ddd] D | if books[0]['market']!=books[1]['market']:raise ValueError('RECOVERY_MARKET_MISMATCH')
+analysis/d6/real_execution_calibration_v1/engine.py:215 [038ee6359ddd] D | if l.stop or self.busy or l.active is not None or self.v1['errors'] or self._btc_recovery_required:return False
+analysis/d6/real_execution_calibration_v1/engine.py:216 [038ee6359ddd] D | if not l.reconcile(observation,self.clock()):return False
+analysis/d6/real_execution_calibration_v1/engine.py:221 [038ee6359ddd] D | l.reconciled=False;return False

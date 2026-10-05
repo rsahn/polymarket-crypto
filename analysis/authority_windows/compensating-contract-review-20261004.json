@@ -1,0 +1,24 @@
+{
+  "status": "UNPROVEN",
+  "reviewed_at_ms": 1791125315189,
+  "search_scope": "Reachable Git history --all, current analysis/backend code, qualification reports and tests; no claim about unavailable external approvals.",
+  "history_search": "git log --all -G compensating|compensatoire|compensatory|MINIMAL_SAFE_LIVE_GATE -- analysis/d6 backend/app/live returned no matches",
+  "defining_commit": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8",
+  "existing_contract": "analysis/d6/real_execution_calibration_v1/evidence/live_gate_verified_20261003/external_requirements.json",
+  "invariants": [
+    "Independently authenticated full-wallet coverage across credentials and markets",
+    "Complete inventories at a coherent atomic frontier with baseline ancestry",
+    "Cash/share fee effects and settlement coverage",
+    "All 14 semantic preflight requirements; custody and human arm remain separate"
+  ],
+  "tests": [
+    "test_signed_incomplete_coverage_rejected",
+    "test_signed_projection_or_binding_rejected",
+    "test_stale_external_record_cannot_be_restamped",
+    "test_self_attesting_authority_rejected_at_source_boundary",
+    "test_external_authority_human_arm_contract"
+  ],
+  "test_file": "analysis/d6/real_execution_calibration_v1/test_production_evidence.py",
+  "conclusion": "No approved compensating contract located permitting a first bounded live while scope and settlement watermark remain unproven. Existing requirements explicitly reject scoped inventories. Financial caps do not establish coverage.",
+  "closed_historical_gaps_reopened": false
+}

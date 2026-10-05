@@ -1,0 +1,63 @@
+CURRENT_SAFE_STATE vs FULL_HISTORICAL_AUDIT — 2026-10-03
+
+Exact requirement: production_evidence_source.py:40 requires origin=wallet_creation
+for ALL five coverage components; :61 projects all terminal IDs. Introduced by
+d6112e1dc2689ed7c995a5496ea5706eb0894ab8 (git blame verified). This is D6 architecture,
+not an official API requirement. adapters.py:100-102 preserves baseline terminal
+IDs and subtracts them for experiment reconciliation. core.py:223 requires current
+session known orders to have verified terminal quantities. These latter obligations
+must remain; history pruning cannot erase a current-session intent or reservation.
+
+Formal distinction:
+CURRENT_SAFE_STATE(K,D) consists of wallet cash, every position, open orders and
+reservations, all pending/settled relevant fills, actual fees/liabilities, local
+intents and obligations, and coverage of changes from consistent cut K to decision D.
+It requires exhaustive asset AND credential/session scope, canonical/final settlement
+or conservative pending exposure, no unexplained cash/position delta, and freshness.
+It does NOT mean merely no rows returned, flat balances, or no local orders.
+FULL_HISTORICAL_AUDIT consists of every order lifecycle since wallet creation,
+including cancelled/unfilled orders without an onchain footprint.
+
+Necessity argument (conditional, not a production certificate):
+Take two histories differing only by a finally cancelled, never-filled past order
+with no fees, unresolved intent, pending settlement, reservation or other liability.
+They have the same complete current state and future admissible transitions. An
+entry rule depending on the same state, capital limits, strategy and custody must
+therefore make the same decision. Full historical enumeration is not logically
+necessary for that safety invariant. The premises require independent evidence:
+an apparently cancelled order with a pending fill does NOT meet the counterexample.
+The existing model counterexample is in provisioning_model_checks.py, test_open_order_
+and_chain_views_cannot_prove_all_terminal_history. It is a model, not wallet evidence.
+
+FULL_HISTORICAL_AUDIT_REQUIRED_FOR_SAFE_ENTRY=false as a mathematical necessity.
+CURRENT_PRODUCTION_CONSUMER_REQUIRES_WALLET_CREATION_COVERAGE=true (unchanged).
+Removing that check without a qualified alternative would still be unsafe.
+
+Why the requested positive current-state implementation is not yet justified:
+Official https://docs.polymarket.com/trading/manage-orders explicitly limits session-key
+visibility; the Deposit Wallet owner cannot fetch authorized session-key orders.
+Thus owner credentials and exhaustive /data/orders pagination do not alone prove
+wallet-wide coverage. Unknown historical terminal orders and invisible CURRENT
+session-key orders are different problems. All active/previous keys with residual
+obligations must be covered, or their lack of obligations independently proven.
+The installed readers also lack a proved snapshot/replay boundary connecting CLOB
+pending fills, canonical chain state and decision-time mutations. See
+backend/app/live/post_c_completeness.py and
+analysis/post_c_completeness_20260926/POST_C_SOURCE_MATRIX.md.
+Official sources checked again: /trading/manage-orders, /trading/realtime-order-updates,
+and https://data-api.polymarket.com/v2/docs. No claim that no future API can solve this.
+
+A safe separate current-state proof needs the following real witnesses:
+1. Complete authorized owner/session-key scope and authenticated exhaustive account reads.
+2. Globally complete asset universe and canonical cash/position reconstruction at W.
+3. Every relevant pending/matched fill, receipt, fee and liability linked and reconciled.
+4. Consistent account/chain cut, with no pagination gap and closure through decision D.
+5. Original raw evidence provenance, fresh verification and approved authority identity.
+Only after these witnesses exist may an independently reviewed current-state consumer
+replace the historical prerequisite. No speculative positive verifier was installed;
+the existing diagnostic correctly rejects caller-supplied completeness flags/watermarks.
+
+CURRENT_SAFE_STATE_PROVEN=UNPROVEN
+FULL_HISTORICAL_AUDIT_PROVEN=UNPROVEN
+No V1, financial, economic, freshness or production guard changed.
+No genuine custody challenge can yet claim complete current exposure.

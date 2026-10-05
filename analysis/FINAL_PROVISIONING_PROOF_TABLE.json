@@ -1,0 +1,501 @@
+{
+  "PREFLIGHT_PROOFS": "0/14",
+  "proofs": [
+    {
+      "id": "PROOF_01",
+      "check": "wallet_account_identity_verified",
+      "status": "UNPROVEN",
+      "source": "Real SDK 0.11.0 explicit Deposit Wallet identity + on-chain owner",
+      "producer": "PROPOSED_UNAPPROVED: identity (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/final_mission_identity_book_20261003.json",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "wallet",
+        "maker",
+        "signer"
+      ]
+    },
+    {
+      "id": "PROOF_02",
+      "check": "balance_sufficient",
+      "status": "UNPROVEN",
+      "source": "Authenticated CLOB balance and Polygon pUSD receipts, outstanding reservations unresolved",
+      "producer": "PROPOSED_UNAPPROVED: account (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Off-chain obligation scope/cutoff is not proved.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/legacy_settlement_observation_1791059799297.json",
+      "timestamp_ms": null,
+      "block/reference": "0x9943285bb3ae6ac8474cc3a12d83a3938507353c3bf75f6edbf477773578c286",
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "available_cash",
+        "required_cash",
+        "collateral"
+      ],
+      "current_safe_state_dependencies": [
+        "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+        "OFFCHAIN_SETTLEMENT_WATERMARK"
+      ]
+    },
+    {
+      "id": "PROOF_03",
+      "check": "market_identity_verified",
+      "status": "UNPROVEN",
+      "source": "Gamma market identity and two actual StreamBook tokens",
+      "producer": "PROPOSED_UNAPPROVED: market (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/preflight_preparation_book_20261003.json",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "condition",
+        "tokens",
+        "expires_ms"
+      ],
+      "observation_timestamp_ms": 1791060997614,
+      "observation_available": true
+    },
+    {
+      "id": "PROOF_04",
+      "check": "sdk_order_path_qualified",
+      "status": "UNPROVEN",
+      "source": "Baseline cryptographic SDK E2E and exact source manifest",
+      "producer": "PROPOSED_UNAPPROVED: software (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "D6_QUALIFICATION_FINAL.log",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "sdk_version",
+        "codec_digest",
+        "http_attempts",
+        "allowance_mutation"
+      ]
+    },
+    {
+      "id": "PROOF_05",
+      "check": "account_evidence_adapter_qualified",
+      "status": "UNPROVEN",
+      "source": "Owner CLOB plus Polygon plus Data API, coverage contract unresolved",
+      "producer": "PROPOSED_UNAPPROVED: account (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Off-chain obligation scope/cutoff is not proved.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt",
+      "timestamp_ms": null,
+      "block/reference": "0x9943285bb3ae6ac8474cc3a12d83a3938507353c3bf75f6edbf477773578c286",
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "scope",
+        "atomic_frontier",
+        "baseline_digest",
+        "fee_effects"
+      ],
+      "current_safe_state_dependencies": [
+        "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+        "OFFCHAIN_SETTLEMENT_WATERMARK"
+      ]
+    },
+    {
+      "id": "PROOF_06",
+      "check": "fee_upper_bound_proven",
+      "status": "UNPROVEN",
+      "source": "Market fee rules, round trip and late-fill cash/share liability bound",
+      "producer": "PROPOSED_UNAPPROVED: risk (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Off-chain obligation scope/cutoff is not proved.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "cash_collateral",
+        "outcome_shares",
+        "collateral_per_share_upper",
+        "fee_source_digest",
+        "coverage",
+        "epoch",
+        "late_fill_coverage"
+      ],
+      "current_safe_state_dependencies": [
+        "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+        "OFFCHAIN_SETTLEMENT_WATERMARK"
+      ]
+    },
+    {
+      "id": "PROOF_07",
+      "check": "exit_handoff_ready",
+      "status": "HUMAN_REQUIRED",
+      "source": "Independent designated owner and genuine durable signed custody probe",
+      "producer": "PROPOSED_UNAPPROVED: custody (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Genuine custody acceptance/recovery awaits current safe state and owner designation.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": null,
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "owner",
+        "channel",
+        "durable_receipt_probe"
+      ]
+    },
+    {
+      "id": "PROOF_08",
+      "check": "ledger_healthy",
+      "status": "UNPROVEN",
+      "source": "Actual production journal and disk capacity",
+      "producer": "PROPOSED_UNAPPROVED: runtime (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/final_mission_preflight_20261003.json",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "verified_sequence",
+        "journal_digest",
+        "free_bytes"
+      ]
+    },
+    {
+      "id": "PROOF_09",
+      "check": "kill_switch_tested",
+      "status": "UNPROVEN",
+      "source": "Kill-switch tests plus genuine custody verification",
+      "producer": "PROPOSED_UNAPPROVED: software (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Genuine custody acceptance/recovery awaits current safe state and owner designation.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "D6_QUALIFICATION_FINAL.log",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "test_digest",
+        "new_entries_after_kill",
+        "custody_verified"
+      ]
+    },
+    {
+      "id": "PROOF_10",
+      "check": "reconciliation_tested",
+      "status": "UNPROVEN",
+      "source": "Independent reconciled account sources and unknown-event rejection tests",
+      "producer": "PROPOSED_UNAPPROVED: software (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Fresh signed evidence from an approved capable producer is absent. Off-chain obligation scope/cutoff is not proved.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/standard_positions_genesis_proof.json",
+      "timestamp_ms": null,
+      "block/reference": "0x9943285bb3ae6ac8474cc3a12d83a3938507353c3bf75f6edbf477773578c286",
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "test_digest",
+        "independent_observations",
+        "unknown_events_rejected"
+      ],
+      "current_safe_state_dependencies": [
+        "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+        "OFFCHAIN_SETTLEMENT_WATERMARK"
+      ]
+    },
+    {
+      "id": "PROOF_11",
+      "check": "clock_sanity",
+      "status": "HUMAN_REQUIRED",
+      "source": "Independent NTP samples including RTT/root dispersion and future degradation detection",
+      "producer": "PROPOSED_UNAPPROVED: runtime (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Independent producer principal/source-trust decision and exact final policy approval needed before production signing. Pipeline tested with ephemeral key only; actual live composition still requires validation.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/preflight_clock_candidate_observations.json",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "observation_timestamp_ms": 1791059917489,
+      "observation_max_bound_ms": 55.79974842071533,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "offset_ms",
+        "uncertainty_ms"
+      ],
+      "preparation": "Unsigned bounded clock candidate implemented; 11 adversarial tests PASS; 3 real candidate updates PASS. No approved live signer or source policy.",
+      "signing_pipeline": "analysis/provisioning_telemetry_signing.py"
+    },
+    {
+      "id": "PROOF_12",
+      "check": "ws_healthy",
+      "status": "HUMAN_REQUIRED",
+      "source": "Actual runtime StreamBook identity, generation, two snapshots and freshness",
+      "producer": "PROPOSED_UNAPPROVED: runtime (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Independent producer principal/source-trust decision and exact final policy approval needed before production signing. Pipeline tested with ephemeral key only; actual live composition still requires validation.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "analysis/preflight_preparation_book_20261003.json",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "observation_timestamp_ms": 1791060997614,
+      "observation_available": true,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "state",
+        "generation",
+        "tokens",
+        "receive_ms"
+      ],
+      "signing_pipeline": "analysis/provisioning_telemetry_signing.py"
+    },
+    {
+      "id": "PROOF_13",
+      "check": "tests_green",
+      "status": "UNPROVEN",
+      "source": "Full-suite reports and exact tested-source manifest",
+      "producer": "PROPOSED_UNAPPROVED: software (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Baseline 1755 and current 56 targeted cases PASS; final complete suite and exact final manifest await completed provisioning.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": "D6_QUALIFICATION_FINAL.log",
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "test_digest",
+        "failed",
+        "passed"
+      ]
+    },
+    {
+      "id": "PROOF_14",
+      "check": "audit_pass",
+      "status": "HUMAN_REQUIRED",
+      "source": "Independent reviewer of code, policy, deployment and unresolved critical risks",
+      "producer": "PROPOSED_UNAPPROVED: review (unapproved)",
+      "signature": "ABSENT; required EIP191 D6_PROVENANCE_V1 + core.encoded(envelope without provenance_signature)",
+      "freshness": "Current code: observed<=now<=valid_until; age<=5000ms, lifetime<=5000ms. WS receive additionally<=1000ms.",
+      "verification": "EvidenceVerifier.validate + ProductionAuthority.verify + preflight.evaluate; runtime bindings remain required.",
+      "evidence_file": null,
+      "blocker": "Independent reviewer designation and real review required; unresolved account coverage blocks approval.",
+      "context": {
+        "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+        "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+        "collateral": "pUSD",
+        "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a",
+        "market": "0x113324a0b610017f53a49a871838a546176e079f41c5385e1c82e04016548a9a",
+        "approved": false,
+        "strategy_hashes": {
+          "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+          "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+        }
+      },
+      "observation_or_baseline_file": null,
+      "timestamp_ms": null,
+      "block/reference": null,
+      "failure_reason": "INDEPENDENT_VERIFIER_REQUIRED",
+      "required_payload_fields": [
+        "audit_digest",
+        "reviewer",
+        "unresolved_critical"
+      ]
+    }
+  ],
+  "note": "Historical test/model successes are not fresh production preflight records.",
+  "updated_ms": 1791061042994,
+  "preflight_execution": "analysis/preflight_preparation_current.json"
+}

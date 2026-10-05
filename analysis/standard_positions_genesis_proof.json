@@ -1,0 +1,15 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "from_block": 0,
+  "to_block": 94902553,
+  "anchor_hash": "0x9943285bb3ae6ac8474cc3a12d83a3938507353c3bf75f6edbf477773578c286",
+  "zero_standard_erc1155_positions_at_fixed_cut": true,
+  "predeployment": "analysis/predeployment_positions_20261003/report.json",
+  "postdeployment": "analysis/legacy_chain_reconciliation_20261003/report.json",
+  "assumptions": [
+    "Canonical RPC logs complete",
+    "ERC1155 mandatory mint/transfer event semantics"
+  ],
+  "current_safe_state_proven": false,
+  "offchain_pending_obligations_proven": false
+}

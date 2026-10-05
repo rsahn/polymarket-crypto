@@ -1,0 +1,66 @@
+F.....                                                                   [100%]
+================================== FAILURES ===================================
+________ test_real_sdk_production_environment_and_replacement_rejected ________
+
+    def test_real_sdk_production_environment_and_replacement_rejected():
+        async def case():
+            signer = Account.create()
+            client = AsyncSecureClient._construct_for_wallet(signer=signer, wallet=signer.address,
+                wallet_type='EOA', signer_type='OWNER', environment=PRODUCTION,
+                config=get_environment_config(PRODUCTION),
+                credentials=ApiKeyCreds(apiKey='test', secret='dGVzdA==', passphrase='test'),
+                api_key=None, logger=None, on_rate_limit_update=None)
+            try:
+                binding = SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address)
+                assert binding.matches(client)
+                for false_environment in ('production', SimpleNamespace(name='production'), None):
+                    client._ctx.environment = false_environment
+                    assert not binding.matches(client)
+                    with pytest.raises(ValueError, match='SDK_PUBLIC_IDENTITY'):
+                        SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address)
+                client._ctx.environment = PRODUCTION
+                assert binding.matches(client)
+                with pytest.raises(ValueError, match='SDK_PUBLIC_IDENTITY'):
+                    SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address, environment='test')
+            finally:
+                await client.close()
+>       asyncio.run(case())
+
+analysis\d6\real_execution_calibration_v1\test_sdk_environment_binding.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:196: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py:119: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py:726: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+analysis\d6\real_execution_calibration_v1\test_sdk_environment_binding.py:20: in case
+    binding = SDKIdentityBinding.inspect(client, wallet=signer.address, signer=signer.address)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+cls = <class 'analysis.d6.real_execution_calibration_v1.readonly_provider.SDKIdentityBinding'>
+client = <polymarket.clients.async_secure.AsyncSecureClient object at 0x00000257ABB978C0>
+wallet = '0x38E0A9cffb5d8Ad1a6801bbCa047EB3f8dB7181b'
+signer = '0x38E0A9cffb5d8Ad1a6801bbCa047EB3f8dB7181b'
+environment = 'production'
+
+    @classmethod
+    def inspect(cls,client,*,wallet,signer,environment='production'):
+        from polymarket import AsyncSecureClient
+        from app.live.network_readonly import ReadOnlyClient
+        if version('polymarket-client')!='0.11.0':raise ValueError('SDK_CLASS_OR_VERSION')
+        if type(client) is AsyncSecureClient:
+            # Only documented public properties; never client.credentials or signer.key.
+            actual_environment=getattr(client.environment,'value',client.environment)
+>           if address(str(client.wallet))!=address(wallet) or address(str(client.signer))!=address(signer) or actual_environment!=environment:raise ValueError('SDK_PUBLIC_IDENTITY')
+                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: SDK_PUBLIC_IDENTITY
+
+analysis\d6\real_execution_calibration_v1\readonly_provider.py:30: ValueError
+=========================== short test summary info ===========================
+FAILED analysis/d6/real_execution_calibration_v1/test_sdk_environment_binding.py::test_real_sdk_production_environment_and_replacement_rejected
+1 failed, 5 passed in 7.06s

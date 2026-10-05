@@ -1,0 +1,110 @@
+[
+  {
+    "url": "https://docs.polymarket.com/llms.txt",
+    "file": "llms.txt",
+    "sha256": "5098705a892e7313e0ec47bf2981cc71e2f771728da099ed7264fd0a60047c63",
+    "bytes": 13761
+  },
+  {
+    "url": "https://docs.polymarket.com/_llms/en/api-reference/predictions.md",
+    "file": "_llms_en_api-reference_predictions.md",
+    "sha256": "08123915e9a33674f38dec2e3c84b9885b4f787a6a080c739e160cf7aec59485",
+    "bytes": 27539
+  },
+  {
+    "url": "https://docs.polymarket.com/concepts/order-lifecycle.md",
+    "file": "concepts_order-lifecycle.md",
+    "sha256": "5151259d8cd0a1dcaed1df2b7390d22ad8f3f012511aac67a3a17785a56e0014",
+    "bytes": 7207
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/manage-orders.md",
+    "file": "trading_manage-orders.md",
+    "sha256": "47a3649699a22bf0aedc69ad08bc5f3b7300729630eec1825388c3fc08c46023",
+    "bytes": 52901
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/wallets-auth.md",
+    "file": "trading_wallets-auth.md",
+    "sha256": "194f59b14e172482b78deef2e1bac53c06eec8404aadb1fcd0d23d184107e7d7",
+    "bytes": 53214
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/session-keys.md",
+    "file": "trading_session-keys.md",
+    "sha256": "7abcbcfcf46bae39698b403053cba583de462eed5ec2b6b7c59acf5cf2c23e0f",
+    "bytes": 44023
+  },
+  {
+    "url": "https://docs.polymarket.com/getting-started/python.md",
+    "file": "getting-started_python.md",
+    "sha256": "c5860a04c695fb915a7a1b736cfeae723c4e4b3ccd982946d62aa4caf2efe32b",
+    "bytes": 10550
+  },
+  {
+    "url": "https://docs.polymarket.com/getting-started/typescript.md",
+    "file": "getting-started_typescript.md",
+    "sha256": "7b796ccefc091c59f29f3e5907e7e9d18f926169ce9ca859f210ef9cad7de71d",
+    "bytes": 10006
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/fees.md",
+    "file": "trading_fees.md",
+    "sha256": "7409b13c646126ff1c3bacc478c0594a7b3db2a2e735fcdf6ddb59b3fdc44035",
+    "bytes": 6189
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/realtime-order-updates.md",
+    "file": "trading_realtime-order-updates.md",
+    "sha256": "5ab428be9f73ba55056430ec720588e01c812824a9f42e9129065ac593b0bfbf",
+    "bytes": 15414
+  },
+  {
+    "url": "https://docs.polymarket.com/trading/wallet-activity.md",
+    "file": "trading_wallet-activity.md",
+    "sha256": "dad7f0bba1e2af32cbf049d7c103496011267677bfeeda533d38f4e7f15e0148",
+    "bytes": 31830
+  },
+  {
+    "url": "https://docs.polymarket.com/resources/blockchain-data.md",
+    "file": "resources_blockchain-data.md",
+    "sha256": "1c947035744b393f1a6a720a29438754183dd68517081b2805f96649e825ad2e",
+    "bytes": 4214
+  },
+  {
+    "url": "https://docs.polymarket.com/resources/contracts.md",
+    "file": "resources_contracts.md",
+    "sha256": "c07417689b9231b4d3eee392e2e1824a3da0271dd0eb0b7b079d864a1a54510d",
+    "bytes": 6129
+  },
+  {
+    "url": "https://docs.polymarket.com/api-reference/service/get-data-freshness.md",
+    "file": "api-reference_service_get-data-freshness.md",
+    "sha256": "d4a589fb007db41b34ac9d63e19e2f719c6f01166cd1053406d471238051bbf8",
+    "bytes": 18149
+  },
+  {
+    "url": "https://docs.polymarket.com/api-reference/trade/get-trades.md",
+    "file": "api-reference_trade_get-trades.md",
+    "sha256": "39ce70f2a8474b672cf11da1b7078cee1d2e8b206e25c58cfc018de88b5f8095",
+    "bytes": 12041
+  },
+  {
+    "url": "https://docs.polymarket.com/api-reference/trade/get-user-orders.md",
+    "file": "api-reference_trade_get-user-orders.md",
+    "sha256": "d3c05e8291eda7245f14ff6cc61b143af8665f30a98bb96c4faf14f6fa396ffb",
+    "bytes": 10605
+  },
+  {
+    "url": "https://docs.polymarket.com/api-spec/clob-openapi.yaml",
+    "file": "api-spec_clob-openapi.yaml",
+    "sha256": "d993169c2fd17cbc75304c9cd7bc3b6a351fa21f98cbd12dcd4c5dbbca2fedb8",
+    "bytes": 216099
+  },
+  {
+    "url": "https://docs.polymarket.com/api-spec/data-openapi.yaml",
+    "file": "api-spec_data-openapi.yaml",
+    "sha256": "4a56acffa689f8fadd4645dcb0cc75147de71d23469e0bf85c6989f813d57c68",
+    "bytes": 61162
+  }
+]

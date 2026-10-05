@@ -1,0 +1,16 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "submit_allowed": false,
+  "all_authorizations_covered_from_wallet_genesis": false,
+  "source_abi_binding_verified": false,
+  "non_terminal_legacy_trades": "UNPROVEN",
+  "start_block": 94331195,
+  "rpc": "https://polygon.drpc.org",
+  "independent_provider_crosscheck": false,
+  "end_block": 94901863,
+  "end_hash": "0x525b3ea090de6ca6db77296640280ed00929598cec993479dcfd7c869f9537f2",
+  "block_timestamp": 1791057946,
+  "code_onset_verified": true,
+  "status": "BLOCKED_PARTIAL",
+  "error_type": "HTTPError"
+}

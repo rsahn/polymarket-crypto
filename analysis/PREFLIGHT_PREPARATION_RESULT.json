@@ -1,0 +1,42 @@
+{
+  "HISTORICAL_SESSION_KEY_GAP": "CLOSED",
+  "PREDEPLOYMENT_POSITION_GAP": "CLOSED",
+  "OWNER_API_CROSS_CREDENTIAL_SCOPE": "UNPROVEN",
+  "OFFCHAIN_SETTLEMENT_WATERMARK": "UNPROVEN",
+  "CURRENT_SAFE_STATE_PROVEN": false,
+  "CLOCK_100MS_QUALIFIED": false,
+  "STREAMBOOK_QUALIFIED": false,
+  "AUTHORITY_POLICY_READY": false,
+  "CUSTODY_CHALLENGE_READY": false,
+  "PREFLIGHT_PROOFS": "0/14",
+  "LIVE_GATE": "BLOCKED",
+  "CURRENT_SAFE_STATE_BLOCKERS": [
+    "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+    "OFFCHAIN_SETTLEMENT_WATERMARK"
+  ],
+  "OTHER_PREFLIGHT_DEPENDENCIES": [
+    "Independent Authority/custody principals, roles and policy approval",
+    "Fresh signed runtime evidence and real custody acceptance/recovery",
+    "Final production assembly and final validation after provisioning"
+  ],
+  "preparation_outside_git": "D:\\polymarket-real-calibration\\provisioning-authority-candidate\\preflight-preparation-unapproved.json",
+  "clock_tests_passed": 11,
+  "clock_real_updates_passed": 3,
+  "streambook_real_observation_passed": true,
+  "closed_gap_scopes": {
+    "HISTORICAL_SESSION_KEY_GAP": {
+      "status": "CLOSED",
+      "from_block": 94331195,
+      "to_block": 94902121,
+      "proof": "analysis/session_storage_path_proof.json"
+    },
+    "PREDEPLOYMENT_POSITION_GAP": {
+      "status": "CLOSED",
+      "from_block": 0,
+      "to_block": 94331194,
+      "proof": "analysis/predeployment_positions_20261003/report.json"
+    }
+  },
+  "guard_changes": false,
+  "V1_changed": false
+}

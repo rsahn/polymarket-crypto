@@ -1,0 +1,110 @@
+[
+  {
+    "group": "analysis/d5/auditor_next",
+    "exit": 0,
+    "report": "active_group_0.txt",
+    "tail": ".uuuu.uu.........................uu...........                           [100%]\n38 passed, 8 subtests passed in 10.01s"
+  },
+  {
+    "group": "analysis/d51/depth_cache_candidate_not_adopted",
+    "exit": 0,
+    "report": "active_group_1.txt",
+    "tail": "...                                                                      [100%]\n3 passed in 0.58s"
+  },
+  {
+    "group": "analysis/d51/exact_depth_cache_candidate",
+    "exit": 0,
+    "report": "active_group_2.txt",
+    "tail": "..                                                                       [100%]\n2 passed in 0.17s"
+  },
+  {
+    "group": "analysis/d51/latency_tools",
+    "exit": 0,
+    "report": "active_group_3.txt",
+    "tail": "..                                                                       [100%]\n2 passed in 0.23s"
+  },
+  {
+    "group": "analysis/d51/native_json_candidate",
+    "exit": 0,
+    "report": "active_group_4.txt",
+    "tail": "..uuuuuuuuuuu...uuuuuuuuuuu...uuuuuuuuuuu.                               [100%]\n9 passed, 33 subtests passed in 0.22s"
+  },
+  {
+    "group": "analysis/d51/side_projection_candidate",
+    "exit": 0,
+    "report": "active_group_5.txt",
+    "tail": ".                                                                        [100%]\n1 passed in 0.26s"
+  },
+  {
+    "group": "analysis/d51",
+    "exit": 0,
+    "report": "active_group_6.txt",
+    "tail": ".                                                                        [100%]\n1 passed in 1.00s"
+  },
+  {
+    "group": "analysis/d6/causal_capture_24h_v1",
+    "exit": 1,
+    "report": "active_group_7.txt",
+    "tail": ">     with pytest.raises(OSError,match='fixture feed failed'):asyncio.run(runner.capture(destination))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE     Failed: DID NOT RAISE OSError\n\nanalysis\\d6\\causal_capture_24h_v1\\test_capture.py:181: Failed\n=========================== short test summary info ===========================\nFAILED analysis/d6/causal_capture_24h_v1/test_capture.py::test_runner_offline_shutdown_and_feed_failure[True]\n1 failed, 21 passed in 2.85s"
+  },
+  {
+    "group": "analysis/d6/paper_runtime",
+    "exit": 0,
+    "report": "active_group_8.txt",
+    "tail": "......................                                                   [100%]\n22 passed in 0.87s"
+  },
+  {
+    "group": "analysis/d6/pipeline",
+    "exit": 0,
+    "report": "active_group_9.txt",
+    "tail": "....                                                                     [100%]\n4 passed in 3.12s"
+  },
+  {
+    "group": "analysis/d6/prospective_24h_v1",
+    "exit": 0,
+    "report": "active_group_10.txt",
+    "tail": "..........                                                               [100%]\n10 passed in 0.31s"
+  },
+  {
+    "group": "analysis/d6/prospective_v1",
+    "exit": 0,
+    "report": "active_group_11.txt",
+    "tail": ".uuuuuuuuuuuuuu.......uuuu.............uuuuuuu.....uuu.................. [ 37%]\n..............................uuu.................................uuu... [ 94%]\n.uuu.uuu.....                                                            [100%]\n117 passed, 40 subtests passed in 12.21s"
+  },
+  {
+    "group": "analysis/d6/real_execution_calibration_v1",
+    "exit": 0,
+    "report": "active_group_12.txt",
+    "tail": "........................................................................ [ 91%]\n................................................................         [100%]\n712 passed in 463.82s (0:07:43)\nJOURNAL_FAILURE exception_type=OSError; entries blocked\nJOURNAL_FAILURE exception_type=OSError; entries blocked\nD6_INCIDENT_CAPTURE_FAILED:OSError\nJOURNAL_FAILURE exception_type=OSError; entries blocked\nJOURNAL_FAILURE exception_type=OSError; entries blocked"
+  },
+  {
+    "group": "analysis/d6/research",
+    "exit": 0,
+    "report": "active_group_13.txt",
+    "tail": "analysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\nanalysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\nanalysis/d6/research/test_context_join.py::JoinTests::test_book_identity_generation_future_and_freshness\n  C:\\Users\\Ramy\\Documents\\polymarket-crypto\\analysis\\d6\\research\\context_join.py:21: DeprecationWarning: fetch_arrow_table() is deprecated, use to_arrow_table() instead.\n    return c.execute(query).fetch_arrow_table().to_pylist()\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n3 passed, 3 warnings in 1.93s"
+  },
+  {
+    "group": "analysis/d6/tests",
+    "exit": 0,
+    "report": "active_group_14.txt",
+    "tail": "....uuuuuuuuu...............................                             [100%]\n35 passed, 9 subtests passed in 0.16s"
+  },
+  {
+    "group": "analysis",
+    "exit": 0,
+    "report": "active_group_15.txt",
+    "tail": "............                                                             [100%]\n12 passed in 0.87s"
+  },
+  {
+    "group": "backend/tests",
+    "exit": 0,
+    "report": "active_group_16.txt",
+    "tail": "ValueError: UNSUPPORTED_WRITER_COMMAND\nusage: audit_d5 [-h] [--db DB] [--session SESSION] [--out OUT]\n                [--require-smoke]\naudit_d5: error: Output must be a new file, different from the input database\nusage: audit_d5 [-h] [--db DB] [--session SESSION] [--out OUT]\n                [--require-smoke]\naudit_d5: error: Output must be a new file, different from the input database\nInvalid arguments: only --preview and --output are supported."
+  },
+  {
+    "group": "tests",
+    "exit": 0,
+    "report": "active_group_17.txt",
+    "tail": "........                                                                 [100%]\n8 passed in 0.32s"
+  }
+]

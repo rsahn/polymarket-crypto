@@ -1,0 +1,334 @@
+{
+  "conclusion": "B_NON_PROUVABLE_AVEC_LES_INTERFACES_DISPONIBLES",
+  "reviewed_at_ms": 1791125711767,
+  "COMPENSATING_CONTRACT": "NOT_FOUND",
+  "OWNER_API_CROSS_CREDENTIAL_SCOPE": "UNPROVEN",
+  "OFFCHAIN_SETTLEMENT_WATERMARK": "UNPROVEN",
+  "PUBLICLY_PROVABLE": false,
+  "POLYMARKET_SUPPORT_OR_EXPORT_REQUIRED": true,
+  "CURRENT_EXPOSURE_KNOWN": false,
+  "FRESH_PRODUCTION_EVIDENCE_READY": false,
+  "CUSTODY_CHALLENGE_READY": false,
+  "CUSTODY_RECOVERY_PROVEN": false,
+  "PRODUCTION_COMPOSITION_QUALIFIED": false,
+  "MINIMAL_SAFE_LIVE_GATE_READY": false,
+  "scope_finding": "Current orders/trades specs identify authenticated-user scope but do not define cross-credential lifecycle coverage for revoked/deleted owner credentials. SDKs implement authenticated GET filters and pagination; this does not establish backend authorization semantics. Documented Session Key restrictions remain distinct from already closed historical gaps.",
+  "watermark_finding": "Official Python and TypeScript settlement helpers poll known AcceptedOrder trade IDs until CONFIRMED/FAILED. Timeout is a client timeout, not a server queue-drain guarantee. Data v2 status reports chain ingestion and serving projections, not a CLOB pending cancellation/match/retry/fee/settlement barrier. Accounting snapshot specification lists positions.csv/equity.csv without a complete pending-liability guarantee. Exchange code settles supplied signed orders and exposes status by hash, not an enumerable offchain queue.",
+  "interface_limitations": [
+    "Data API /v2/status, /v2/openapi.json and /v1/accounting/snapshot returned HTTP 403 from this environment; their documented semantics were reviewed, no access restriction bypass attempted.",
+    "No universal impossibility claim: conclusion applies to documented public contracts and interfaces actually accessible in this audit.",
+    "Public repository inventory reviewed (103 repositories); relevant official Python/TypeScript SDKs and CTF Exchange V2 source pinned by Git SHA. No public backend coverage/queue-drain guarantee established."
+  ],
+  "fresh_account_artifact": "analysis/legacy_settlement_observation_1791125668713.json",
+  "fresh_account_summary": {
+    "cash_raw": "109160000",
+    "visible_orders": 0,
+    "visible_trades": 0,
+    "visible_positions": 0,
+    "accessible_pagination_exhausted": true,
+    "global_absence_inferred": false
+  },
+  "receipts": "endpoint-receipt-observations.json",
+  "residual_risk": "An already authorized obligation outside the returned view could settle later, consume cash or shares and fees, or create/change a position. A new trade could then exceed the intended aggregate exposure/cash reservation or leave custody responsible for an incomplete inventory. Neither the amount of such residual obligations nor their last possible settlement time can be certified from these observations. This does not assert infinite loss or prove that a hidden obligation exists; token holdings, permissions and contract rules still constrain execution. The local first-live caps do not bound unknown pre-existing obligations.",
+  "human_action": "Request from Polymarket a written scope contract or authoritative wallet-wide export covering every still-active owner obligation regardless of creating/revoked/deleted credentials, plus a cutoff tied to Polygon finality that covers pending cancellation, MATCHED, MINED, RETRYING, fees and settlement, with retention/indexing/retry timing and terminality rules. Existing exact read-only request: analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt. No message sent.",
+  "sources": [
+    {
+      "url": "https://docs.polymarket.com/llms.txt",
+      "file": "llms.txt",
+      "sha256": "5098705a892e7313e0ec47bf2981cc71e2f771728da099ed7264fd0a60047c63",
+      "bytes": 13761
+    },
+    {
+      "url": "https://docs.polymarket.com/_llms/en/api-reference/predictions.md",
+      "file": "_llms_en_api-reference_predictions.md",
+      "sha256": "08123915e9a33674f38dec2e3c84b9885b4f787a6a080c739e160cf7aec59485",
+      "bytes": 27539
+    },
+    {
+      "url": "https://docs.polymarket.com/concepts/order-lifecycle.md",
+      "file": "concepts_order-lifecycle.md",
+      "sha256": "5151259d8cd0a1dcaed1df2b7390d22ad8f3f012511aac67a3a17785a56e0014",
+      "bytes": 7207
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/manage-orders.md",
+      "file": "trading_manage-orders.md",
+      "sha256": "47a3649699a22bf0aedc69ad08bc5f3b7300729630eec1825388c3fc08c46023",
+      "bytes": 52901
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/wallets-auth.md",
+      "file": "trading_wallets-auth.md",
+      "sha256": "194f59b14e172482b78deef2e1bac53c06eec8404aadb1fcd0d23d184107e7d7",
+      "bytes": 53214
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/session-keys.md",
+      "file": "trading_session-keys.md",
+      "sha256": "7abcbcfcf46bae39698b403053cba583de462eed5ec2b6b7c59acf5cf2c23e0f",
+      "bytes": 44023
+    },
+    {
+      "url": "https://docs.polymarket.com/getting-started/python.md",
+      "file": "getting-started_python.md",
+      "sha256": "c5860a04c695fb915a7a1b736cfeae723c4e4b3ccd982946d62aa4caf2efe32b",
+      "bytes": 10550
+    },
+    {
+      "url": "https://docs.polymarket.com/getting-started/typescript.md",
+      "file": "getting-started_typescript.md",
+      "sha256": "7b796ccefc091c59f29f3e5907e7e9d18f926169ce9ca859f210ef9cad7de71d",
+      "bytes": 10006
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/fees.md",
+      "file": "trading_fees.md",
+      "sha256": "7409b13c646126ff1c3bacc478c0594a7b3db2a2e735fcdf6ddb59b3fdc44035",
+      "bytes": 6189
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/realtime-order-updates.md",
+      "file": "trading_realtime-order-updates.md",
+      "sha256": "5ab428be9f73ba55056430ec720588e01c812824a9f42e9129065ac593b0bfbf",
+      "bytes": 15414
+    },
+    {
+      "url": "https://docs.polymarket.com/trading/wallet-activity.md",
+      "file": "trading_wallet-activity.md",
+      "sha256": "dad7f0bba1e2af32cbf049d7c103496011267677bfeeda533d38f4e7f15e0148",
+      "bytes": 31830
+    },
+    {
+      "url": "https://docs.polymarket.com/resources/blockchain-data.md",
+      "file": "resources_blockchain-data.md",
+      "sha256": "1c947035744b393f1a6a720a29438754183dd68517081b2805f96649e825ad2e",
+      "bytes": 4214
+    },
+    {
+      "url": "https://docs.polymarket.com/resources/contracts.md",
+      "file": "resources_contracts.md",
+      "sha256": "c07417689b9231b4d3eee392e2e1824a3da0271dd0eb0b7b079d864a1a54510d",
+      "bytes": 6129
+    },
+    {
+      "url": "https://docs.polymarket.com/api-reference/service/get-data-freshness.md",
+      "file": "api-reference_service_get-data-freshness.md",
+      "sha256": "d4a589fb007db41b34ac9d63e19e2f719c6f01166cd1053406d471238051bbf8",
+      "bytes": 18149
+    },
+    {
+      "url": "https://docs.polymarket.com/api-reference/trade/get-trades.md",
+      "file": "api-reference_trade_get-trades.md",
+      "sha256": "39ce70f2a8474b672cf11da1b7078cee1d2e8b206e25c58cfc018de88b5f8095",
+      "bytes": 12041
+    },
+    {
+      "url": "https://docs.polymarket.com/api-reference/trade/get-user-orders.md",
+      "file": "api-reference_trade_get-user-orders.md",
+      "sha256": "d3c05e8291eda7245f14ff6cc61b143af8665f30a98bb96c4faf14f6fa396ffb",
+      "bytes": 10605
+    },
+    {
+      "url": "https://docs.polymarket.com/api-spec/clob-openapi.yaml",
+      "file": "api-spec_clob-openapi.yaml",
+      "sha256": "d993169c2fd17cbc75304c9cd7bc3b6a351fa21f98cbd12dcd4c5dbbca2fedb8",
+      "bytes": 216099
+    },
+    {
+      "url": "https://docs.polymarket.com/api-spec/data-openapi.yaml",
+      "file": "api-spec_data-openapi.yaml",
+      "sha256": "4a56acffa689f8fadd4645dcb0cc75147de71d23469e0bf85c6989f813d57c68",
+      "bytes": 61162
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/py-sdk/b543c9db0c896a3727619ea174db7971f03b5b6a/src/polymarket/_internal/actions/account.py",
+      "file": "py-sdk_src_polymarket__internal_actions_account.py",
+      "sha256": "35b05b050c42f5ae7c57ed2ebf840e0e8795fe85332ce5523d3aa5c4d359c479"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/py-sdk/b543c9db0c896a3727619ea174db7971f03b5b6a/src/polymarket/_internal/actions/orders/settlement.py",
+      "file": "py-sdk_src_polymarket__internal_actions_orders_settlement.py",
+      "sha256": "98a385c45caaa8bea79af270e9f17d0a5822151a244851093d77fe29536f1363"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/py-sdk/b543c9db0c896a3727619ea174db7971f03b5b6a/src/polymarket/clients/async_secure.py",
+      "file": "py-sdk_src_polymarket_clients_async_secure.py",
+      "sha256": "5f0e908dcf775cfe12205846be4e0e6eb0617c76185d67d701270a0da0bdc09b"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/py-sdk/b543c9db0c896a3727619ea174db7971f03b5b6a/tests/unit/test_order_settlement.py",
+      "file": "py-sdk_tests_unit_test_order_settlement.py",
+      "sha256": "db008aec98224d94fbb1ffa72429737f117382cb1990f4a9f663a68c83909db1"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ts-sdk/d36b9df37b8562887aadad78b063bb84550eb343/packages/client/src/actions/account.ts",
+      "file": "ts-sdk_packages_client_src_actions_account.ts",
+      "sha256": "462f390415e584c6322c318343af8565dc91ae7afcc982a81952af40a2c5c966"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ts-sdk/d36b9df37b8562887aadad78b063bb84550eb343/packages/client/src/actions/orders/settlement.ts",
+      "file": "ts-sdk_packages_client_src_actions_orders_settlement.ts",
+      "sha256": "6c1a5fd8855c67608b337a72da5d1a5344a307acd83c1544a0249dc7534d9a19"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ts-sdk/d36b9df37b8562887aadad78b063bb84550eb343/packages/client/src/websockets/perps/actions/account.ts",
+      "file": "ts-sdk_packages_client_src_websockets_perps_actions_account.ts",
+      "sha256": "084d57dca4997d900655eed355f3bffa5880dc21cda37476b862eae13a2139a3"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/py-clob-client/b076b04d61135657e25dccc1bbd6866a96bd8c6e/py_clob_client/client.py",
+      "file": "py-clob-client_py_clob_client_client.py",
+      "sha256": "9b3035ac65913efe5a2db14159abc09d423fa754d9d9c1a823038d2967338856"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/CTFExchange.sol",
+      "file": "ctf-exchange-v2_src_exchange_CTFExchange.sol",
+      "sha256": "cde0437ecabdddfabfd365d557591533e8a717a7fc5be0a240ca2b0082fb0a8c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IAssetOperations.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IAssetOperations.sol",
+      "sha256": "ccb47b4e834c1f42e845bf74cdee9b301869e02f477c81023ad91e5766dba54f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IAssets.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IAssets.sol",
+      "sha256": "4ef47d7204a07add1518efe16f3365448b3910cfd24408fec20a5a7425f9a7ca"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IAuth.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IAuth.sol",
+      "sha256": "920d9673790b3a903882b6f3ce92ef9daed2cb3b26f656753fa84e66fec75a02"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IConditionalTokens.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IConditionalTokens.sol",
+      "sha256": "82230ae276333253bd6fdb9d63b39bf49999a19a6067a962f81c05133578809a"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IFees.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IFees.sol",
+      "sha256": "168620dc50ee1f1fae34404b37e9e98a0d0afd1fe8757716577067116b45d350"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IHashing.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IHashing.sol",
+      "sha256": "67cebf0208e22e5690ca6ca5f27e75056aae9e6068a0e680143ae5647f2c58e9"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IPausable.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IPausable.sol",
+      "sha256": "54e05e32da3bcde4ff98ffdeeceea65c81577c773494c680363da1244ca7759f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/ISignatures.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_ISignatures.sol",
+      "sha256": "db08c8b5789823b64aa5327e891860fca23bff2e4d33256be57700fe3b2b2816"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/ITrading.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_ITrading.sol",
+      "sha256": "df0a14ff32cfdfe38feb6f469d1cf5012df4fd2f658d1f1a6ce765a5a7dc8954"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/interfaces/IUserPausable.sol",
+      "file": "ctf-exchange-v2_src_exchange_interfaces_IUserPausable.sol",
+      "sha256": "fcac3770a560ab036a88e22ed34a56c0579e514df6b7b44377fc219ed4702661"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/CalculatorHelper.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_CalculatorHelper.sol",
+      "sha256": "b8dce122a07f5fe7898747ee61f73a82c4b96bf206b238e98da2ceed97737dc1"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/Create2Lib.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_Create2Lib.sol",
+      "sha256": "fada8419a5a128059a65ee62241c702957af5db5dc08738ffef14ee4465b0c0d"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/PolyProxyLib.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_PolyProxyLib.sol",
+      "sha256": "a2736a051b70d519bec2c2e5bde8be34e72481c544068f4236d3dbdb66d5f280"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/PolySafeLib.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_PolySafeLib.sol",
+      "sha256": "45598369f2454b368ccd4513eb30f72e3ccea7d04d26eb0b14ea70d0fb49a568"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/Structs.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_Structs.sol",
+      "sha256": "533fe017a934e9f7500519961f1b7d350c2e76732ca66cb837bd82406854c8c2"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/libraries/TransferHelper.sol",
+      "file": "ctf-exchange-v2_src_exchange_libraries_TransferHelper.sol",
+      "sha256": "9fb23dc0c29059edd9a188bc31f835da00461013204260decd9a03e1c255f412"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/AssetOperations.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_AssetOperations.sol",
+      "sha256": "320a0b48a78843a8a68769166a00b82cca15bec3216169d81015e7750833d7a4"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Assets.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Assets.sol",
+      "sha256": "76afe02c18d0fd2e141596147821f4f08dbdaa28a50c1d0048f08602e6f3af9f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Auth.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Auth.sol",
+      "sha256": "61ea7baf3e4f813c38389a8da8224bf13d3d962d85b07cb9a000c1cd604cdc02"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/ERC1155TokenReceiver.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_ERC1155TokenReceiver.sol",
+      "sha256": "ffc0fe32423956a718b7d723e0a924019153387a5602679d0b70b0d880c88724"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Events.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Events.sol",
+      "sha256": "50ec1ce60573fa46cf7776a9207aacbefa8881a899df706da2ce7275692c5f3b"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Fees.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Fees.sol",
+      "sha256": "38af8b9878e55bdddc3669e5771ba995321d7546716be894c851b723cad973fe"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Hashing.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Hashing.sol",
+      "sha256": "5f322bb6c3ea50843f00ae8cd66a7818256f09e5a05ac3873d9a0373d40f2100"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Pausable.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Pausable.sol",
+      "sha256": "4ebbf5cb0839aeb9022e844113a55196bb30706bdc9c05b79590f43a5d5b26cd"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/PolyFactoryHelper.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_PolyFactoryHelper.sol",
+      "sha256": "ef2366657a6b31ece60c6c1455857610dd3c3faafa174d21268f85e6dc2c4b71"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Signatures.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Signatures.sol",
+      "sha256": "2762905bfe7fedeafdf5ec6453c8f604f7ad0ec2a09f3299faa5f58738af9261"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/Trading.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_Trading.sol",
+      "sha256": "dd8d18fca897e664583a93944b379435e6f70e84f4190c39d669b2be62596012"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/ccc0596074f4dfd62c944fbca4de252893b82b4b/src/exchange/mixins/UserPausable.sol",
+      "file": "ctf-exchange-v2_src_exchange_mixins_UserPausable.sol",
+      "sha256": "89a1697aaad92af9d10a3398bdd91736811752f77f9c9847c23ca810562e1681"
+    }
+  ],
+  "closed_historical_gaps_reopened": false,
+  "guards_changed": false,
+  "production_code_changed": false,
+  "transactions_sent": false,
+  "investigation_complete": true
+}

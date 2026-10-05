@@ -1,0 +1,14 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "submit_allowed": false,
+  "all_authorizations_covered_from_wallet_genesis": false,
+  "source_abi_binding_verified": false,
+  "non_terminal_legacy_trades": "UNPROVEN",
+  "start_block": 94331195,
+  "end_block": 94901823,
+  "end_hash": "0x069b6212da9d08b6352214b721980afb2c0a9bf11b9facf3954f4e3493c446f8",
+  "block_timestamp": 1791057886,
+  "code_onset_verified": true,
+  "status": "BLOCKED_PARTIAL",
+  "error_type": "TimeoutError"
+}

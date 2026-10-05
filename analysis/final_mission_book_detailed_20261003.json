@@ -1,0 +1,45 @@
+{
+  "sdk_identity": {
+    "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+    "sdk_version": "0.11.0",
+    "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+    "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+    "environment": "production",
+    "independent_attestation": false,
+    "transport_qualified": false,
+    "submit_allowed": false,
+    "wallet_type": "DEPOSIT_WALLET",
+    "production_authority_bound": false,
+    "configured_wallet": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+    "active_environment_modified": false,
+    "explicit_production_composition": true,
+    "sdk_identity_binding_qualified": true,
+    "wallet_deployment_checked": false,
+    "credential_network_bootstrap": false
+  },
+  "real_streambook": {
+    "slug": "btc-updown-5m-1791060000",
+    "condition_id": "0xdb0ed859e4602e0d36f20ce8785879d1dcc38452b203f6c6ccc7c0c24ec6cf8f",
+    "tokens": [
+      "39949748818571732605221760394036460639536301448719269373046660939041778778235",
+      "27780689007386542531660384036275994371975399030444693507407169030015600124950"
+    ],
+    "observed_ms": 1791060161928,
+    "available": true,
+    "book_synced": true,
+    "messages": 5,
+    "book_state": {
+      "reason": null,
+      "market_eligible": true,
+      "available": true,
+      "connected": true,
+      "synchronized": true,
+      "fresh": true,
+      "book_synced": true,
+      "market_slug": "btc-updown-5m-1791060000",
+      "generation": 1,
+      "books": {
+        "39949748818571732605221760394036460639536301448719269373046660939041778778235": {
+          "bids": [
+            [
+              

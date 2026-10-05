@@ -1,0 +1,55 @@
+{
+  "wallet": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+  "owner": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "observed_ms": 1791102762426,
+  "CURRENT_SAFE_STATE_PROVEN": false,
+  "historical_access_completeness": false,
+  "submit_allowed": false,
+  "user_declaration_used_as_proof": false,
+  "active_sessions": {
+    "status": "AUTHENTICATED_CURRENT_LIST",
+    "count": 0,
+    "signers": [],
+    "canonical_response_sha256": "3e6dcba6f6c8d9da3b1e9ec951c86fd835eeaa548f4108d8699cb55f4c5ec96b"
+  },
+  "owner_credentials": {
+    "status": "AUTHENTICATED_CURRENT_LIST",
+    "count": 1,
+    "existing_key_listed": true,
+    "identifiers_logged": false,
+    "historical_completeness": false
+  },
+  "network_audit": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/v1/user/session-signers",
+      "started_ms": 1791102762430,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791102762613,
+      "parse_complete_ms": 1791102762613,
+      "shape": "dict",
+      "finished_ms": 1791102762613,
+      "elapsed_ms": 183,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/auth/api-keys",
+      "started_ms": 1791102762614,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791102762784,
+      "parse_complete_ms": 1791102762784,
+      "shape": "dict",
+      "finished_ms": 1791102762784,
+      "elapsed_ms": 170,
+      "thread_cpu_ms": 31.25
+    }
+  ],
+  "limitations": [
+    "Active sessions omit expired/revoked keys and their residual settlements.",
+    "Owner credentials cannot enumerate session-key orders.",
+    "No historical lifecycle, common account/chain cut or absence of residual liabilities proven."
+  ]
+}

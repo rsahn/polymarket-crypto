@@ -1,0 +1,23 @@
+{
+  "mode": "beacon",
+  "from_block": 94331195,
+  "to_block": 94902121,
+  "anchor_hash": "0xd594493e8c8acb1a58b3fc8092b68a3435c35f4f38725148085809eb05414b62",
+  "range_coverage_complete": true,
+  "failed_ranges": [],
+  "observed_ms": 1791058747877,
+  "read_only": true,
+  "logs": [],
+  "upgrade_events": [],
+  "implementation_calls": [
+    {
+      "block": 94331195,
+      "value": "0x000000000000000000000000f7f27c29e60fe6325bef8da7f93250353d2e3294"
+    },
+    {
+      "block": 94902121,
+      "value": "0x000000000000000000000000f7f27c29e60fe6325bef8da7f93250353d2e3294"
+    }
+  ],
+  "all_mutation_paths_proven": false
+}

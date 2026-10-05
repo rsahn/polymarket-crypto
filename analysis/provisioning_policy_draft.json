@@ -1,0 +1,53 @@
+{
+  "production_usable": false,
+  "approved_policy_digest": null,
+  "candidate_policy": {
+    "keys": {
+      "candidate-local-sidecar-01": {
+        "address": "0x1D75D4fE535d81b58Cf6D0e8f11B2984748e220f",
+        "kinds": []
+      }
+    },
+    "provider": "UNAPPROVED_LOCAL_SIDECAR_CANDIDATE",
+    "context": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "collateral": "pUSD",
+      "session": "provisioning-candidate-3480026f59fd4a1bb2904e5213cdb12a"
+    }
+  },
+  "candidate_policy_digest": "af72770c5f91a57690e9f09cc33e1825b60511023ec74df54eeccbc97b00ff5b",
+  "proposed_roles": {
+    "account": [
+      "baseline",
+      "snapshot",
+      "execution",
+      "wallet_account_identity_verified",
+      "balance_sufficient",
+      "account_evidence_adapter_qualified"
+    ],
+    "market_risk": [
+      "market_identity_verified",
+      "fee_upper_bound_proven"
+    ],
+    "custody": [
+      "exit_handoff_ready"
+    ],
+    "technical": [
+      "sdk_order_path_qualified",
+      "ledger_healthy",
+      "kill_switch_tested",
+      "reconciliation_tested",
+      "clock_sanity",
+      "ws_healthy",
+      "tests_green"
+    ],
+    "review": [
+      "audit_pass"
+    ]
+  },
+  "note": "No kinds granted. Candidate digest is NOT independent approval. Do not pass this draft to production.",
+  "collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "chain_id": 137,
+  "binding_scope": "PUBLIC DRAFT ONLY; active environment and runtime bindings unchanged"
+}

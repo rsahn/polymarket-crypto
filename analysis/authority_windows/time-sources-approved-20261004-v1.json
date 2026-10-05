@@ -1,0 +1,20 @@
+{
+  "schema": "D6_TIME_SOURCE_APPROVAL_V1",
+  "approved": true,
+  "sources": [
+    "time.google.com",
+    "time.cloudflare.com",
+    "time.windows.com"
+  ],
+  "authentication": "UNAUTHENTICATED_NTP",
+  "policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+  "approval_source": "Explicit user message in this conversation",
+  "approval_text": "APPROVE TIME SOURCES time.google.com time.cloudflare.com time.windows.com UNAUTHENTICATED_NTP",
+  "recorded_at": "2026-10-04T08:24:50.376573+00:00",
+  "clock_max_bound_ms": 100,
+  "proof_max_lifetime_ms": 5000,
+  "overlapping_intervals_required": true,
+  "clock_step_invalidation_required": true,
+  "remote_authentication_claimed": false,
+  "production_runtime_qualified": false
+}

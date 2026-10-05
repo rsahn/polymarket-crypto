@@ -1,0 +1,16 @@
+{
+  "credential_storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "credential_signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "relayer_deployed": {
+    "deployed": true
+  },
+  "existing_key_listed": true,
+  "key_list_schema": "dict"
+}

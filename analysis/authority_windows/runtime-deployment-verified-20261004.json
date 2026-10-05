@@ -1,0 +1,9 @@
+﻿{
+    "manifest_sha256":  "1625af95426122c36b6c2b8eb130fab7cfe8066940ffed7becf50c85abbfa549",
+    "file_mismatches":  0,
+    "files":  1578,
+    "supervisor_runtime_write_denied":  true,
+    "isolated_imports_exit_code":  0,
+    "protected_runtime_deployed":  true,
+    "signing_started":  false
+}

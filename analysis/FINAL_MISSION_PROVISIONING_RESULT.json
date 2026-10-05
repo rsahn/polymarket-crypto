@@ -1,0 +1,51 @@
+{
+  "FINAL_SHA": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8",
+  "REMOTE_SHA": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8",
+  "ACCOUNT_BINDING_PROVEN": true,
+  "SDK_IDENTITY_BINDING_QUALIFIED": true,
+  "ALL_SESSION_SIGNER_STORAGE_MUTATION_PATHS_COVERED": true,
+  "HISTORICAL_ZERO_SIGNERS_PROVEN": true,
+  "SECOND_PROVIDER_FULL_COVERAGE": true,
+  "PRIMARY_SECONDARY_RESULTS_IDENTICAL": true,
+  "NON_TERMINAL_LEGACY_TRADES": "UNPROVEN wallet-wide; zero in exhausted accessible owner view",
+  "SETTLEMENT_RECONCILIATION_PROVEN": false,
+  "CURRENT_SAFE_STATE_PROVEN": false,
+  "CLOCK_100MS_QUALIFIED": false,
+  "STREAMBOOK_QUALIFIED": false,
+  "AUTHORITY_POLICY_READY": false,
+  "AUTHORITY_POLICY_APPROVED": false,
+  "CUSTODY_CHALLENGE_READY": false,
+  "CUSTODY_ACCEPTED": false,
+  "CUSTODY_RECOVERY_PROVEN": false,
+  "PREFLIGHT_PROOFS": "0/14",
+  "PRODUCTION_COMPOSITION_QUALIFIED": false,
+  "PRODUCTION_SYNTHETIC_DEPENDENCIES": 0,
+  "ALL_TESTS_PASS": "UNPROVEN for final full suite; 56 targeted PASS; 1755 baseline PASS",
+  "TESTS_TOTAL": {
+    "baseline": 1755,
+    "targeted_this_run": 56,
+    "not_additive": true
+  },
+  "GIT_STATE_CLEAN": false,
+  "LOCAL_REMOTE_SHA_MATCH": true,
+  "LIVE_GATE": "BLOCKED",
+  "BLOCKERS": [
+    "Authoritative current owner CLOB obligation coverage across historical credentials plus cutoff/indexing/finality contract unproven; see REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt.",
+    "Independent capable Authority principals and policy are not approved; fresh production evidence absent.",
+    "Custody owner/key/channel not designated/accepted; genuine request depends on proven current safe state.",
+    "Final live assembly, final complete suite and publication depend on preceding provisioning."
+  ],
+  "HUMAN_ACTION_REQUIRED_NOW": "Obtain the official read-only scope/cutoff contract requested in analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt. Designate independent Authority/review and custody principals; do not approve the incomplete draft or run CALIBRATE.",
+  "historical_scope": {
+    "from_block": 94331195,
+    "to_block": 94902121
+  },
+  "positions_proof_scope": {
+    "from_block": 0,
+    "to_block": 94902553,
+    "standard_erc1155_only": true
+  },
+  "clock_observation": "9/9 numerical PASS; not a continuously refreshed approved signature",
+  "streambook_observation": "Actual connection SYNCHRONIZED after prior BOOK_REGRESSION rejection; diagnostic connection closed",
+  "no_monetary_actions": true
+}

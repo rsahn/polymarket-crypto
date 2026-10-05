@@ -1,0 +1,125 @@
+{
+  "HISTORICAL_SESSION_SIGNERS_ENUMERABLE": true,
+  "enumerable_scope": "All on-chain secp256k1 and P-256 authorization storage mutation paths; fixed interval 94331195..94902121",
+  "HISTORICAL_SESSION_SIGNER_COUNT": 0,
+  "ACTIVE_SIGNERS": {
+    "status": "AUTHENTICATED_CURRENT_LIST",
+    "count": 0,
+    "signers": [],
+    "canonical_response_sha256": "3e6dcba6f6c8d9da3b1e9ec951c86fd835eeaa548f4108d8699cb55f4c5ec96b"
+  },
+  "EXPIRED_SIGNERS": [],
+  "REVOKED_SIGNERS": [],
+  "UNKNOWN_SIGNERS": "0 on-chain in the proved interval; not a certificate for later blocks or pending off-chain authorizations",
+  "ALL_AUTHORIZATIONS_COVERED_FROM_WALLET_GENESIS": true,
+  "RPC_LOG_RANGE_COVERAGE_COMPLETE": true,
+  "from_block": 94331195,
+  "through_block": 94902121,
+  "covered_blocks": 570927,
+  "wallet_logs": 25,
+  "decoded_authorizations": 0,
+  "decoded_revocations": 0,
+  "per_signer": [],
+  "getter_reads": "NOT_APPLICABLE: no signer discovered; getter does not enumerate mappings",
+  "secondary_matched_ranges": [
+    [
+      94331195,
+      94336194
+    ],
+    [
+      94336195,
+      94341194
+    ],
+    [
+      94341195,
+      94346194
+    ],
+    [
+      94346195,
+      94351194
+    ],
+    [
+      94351195,
+      94356194
+    ],
+    [
+      94356195,
+      94361194
+    ],
+    [
+      94361195,
+      94366194
+    ],
+    [
+      94366195,
+      94371194
+    ]
+  ],
+  "EXPIRED_KEY_OPEN_ORDER_BEHAVIOR_PROVEN": false,
+  "NON_TERMINAL_LEGACY_TRADES": {
+    "MATCHED": 0,
+    "MINED": 0,
+    "RETRYING": 0,
+    "scope": "Accessible authenticated owner view; wallet-wide cross-credential coverage UNPROVEN"
+  },
+  "terminal_trade_statuses": [
+    "CONFIRMED",
+    "FAILED"
+  ],
+  "non_terminal_trade_statuses": [
+    "MATCHED",
+    "MINED",
+    "RETRYING"
+  ],
+  "LEGACY_UNCERTAINTY_REDUCED": true,
+  "CURRENT_SAFE_STATE_PATH_POSSIBLE": "Conditional on owner CLOB coverage and residual settlement/current-position evidence, no historical Session-Key blocker retained",
+  "REMAINING_GAPS": [
+    "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+    "OFFCHAIN_SETTLEMENT_WATERMARK"
+  ],
+  "tests": "44 distinct targeted cases passed across affected runs: 12 original scanner + 32 supplemental proof/accounting cases; no full-suite rerun",
+  "no_transactions": true,
+  "no_revocations": true,
+  "documentation": "https://docs.polymarket.com/trading/session-keys",
+  "implementation_reference": "https://github.com/Polymarket/contract-security",
+  "HISTORICAL_SESSION_SIGNER_COUNT_STATUS": "PROVEN_ONCHAIN_FIXED_INTERVAL",
+  "ALL_SESSION_SIGNER_STORAGE_MUTATION_PATHS_COVERED": true,
+  "HISTORICAL_ZERO_SIGNERS_PROVEN": true,
+  "SECOND_PROVIDER_FULL_COVERAGE": true,
+  "PRIMARY_SECONDARY_RESULTS_IDENTICAL": true,
+  "secondary_provider": {
+    "mode": "secondary",
+    "from_block": 94331195,
+    "to_block": 94902121,
+    "anchor_hash": "0xd594493e8c8acb1a58b3fc8092b68a3435c35f4f38725148085809eb05414b62",
+    "range_coverage_complete": true,
+    "failed_ranges": [],
+    "observed_ms": 1791059787137,
+    "read_only": true,
+    "primary_secondary_results_identical": true,
+    "primary_logs": 25,
+    "secondary_logs": 25,
+    "secondary_normalized_digest": "829a4b104e568e55e9b36d17282e714cbfc05f140ccdf6e8a0cd3658dbee029a",
+    "primary_normalized_digest": "829a4b104e568e55e9b36d17282e714cbfc05f140ccdf6e8a0cd3658dbee029a"
+  },
+  "storage_path_proof": "analysis/session_storage_path_proof.json",
+  "storage_path_review": "analysis/SESSION_STORAGE_PATH_PROOF.txt",
+  "natural_expiry_is_legacy_blocker_for_this_wallet": false,
+  "SETTLEMENT_RECONCILIATION_PROVEN": false,
+  "CURRENT_SAFE_STATE_PROVEN": false,
+  "CASH_RECEIPT_RECONCILIATION_PROVEN": true,
+  "cash_raw": 109160000,
+  "legacy_settlement_evidence": "analysis/legacy_settlement_observation_1791059799297.json",
+  "chain_reconciliation": "analysis/legacy_chain_reconciliation_20261003/report.json",
+  "external_data_requirement": "analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt",
+  "prior_report_sha256": "2f81e52bd6f904995102ca0765a09ff8d87fdf89d5c4d427742637240dc53df3",
+  "V1_or_guard_changes": false,
+  "ZERO_STANDARD_ERC1155_POSITIONS_AT_FIXED_CUT": true,
+  "position_proof": "analysis/standard_positions_genesis_proof.json",
+  "HISTORICAL_SESSION_KEY_GAP": "CLOSED",
+  "PREDEPLOYMENT_POSITION_GAP": "CLOSED",
+  "CURRENT_SAFE_STATE_BLOCKERS": [
+    "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+    "OFFCHAIN_SETTLEMENT_WATERMARK"
+  ]
+}

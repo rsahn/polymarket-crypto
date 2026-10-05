@@ -1,0 +1,14 @@
+{
+  "status": "LOCAL_PUBLIC_IDENTITY_BOUND_ONLY",
+  "sdk_version": "0.11.0",
+  "wallet": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+  "signer": "0x9348efd557a09e644795c8f114bcf0bef86f203a",
+  "environment": "production",
+  "independent_attestation": false,
+  "transport_qualified": false,
+  "submit_allowed": false,
+  "wallet_type": "EOA",
+  "production_authority_bound": false,
+  "wallet_deployment_checked": false,
+  "credential_network_bootstrap": false
+}

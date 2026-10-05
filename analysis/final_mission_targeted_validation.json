@@ -1,0 +1,19 @@
+{
+  "command": "python -B -m pytest -q analysis/test_predeployment_positions.py analysis/test_session_gap_proofs.py analysis/test_session_history_scanner.py",
+  "passed": 56,
+  "failed": 0,
+  "scope": "Targeted diagnostics/scanner proofs only, not complete production qualification",
+  "source_sha256": {
+    "analysis/scan_predeployment_positions.py": "47313f8915fed9274326708180634df77fdd83c016ab76cf4cba5d622a257278",
+    "analysis/test_predeployment_positions.py": "91a50a71e53d47dc87126f810127296fde977f79abc1fbe296ab3fbd1723f22b",
+    "analysis/provisioning_identity_book.py": "48b2a36edbc8c25642f80722166fe5fca0849a4b161607d32c166c5ab2e140a9",
+    "analysis/test_session_gap_proofs.py": "453346eb585e27e2c2e699adaea4d4f1f7ec4b1229289d6878ece911909d38d3",
+    "analysis/test_session_history_scanner.py": "55504e3a2c0ec2d32a9f1ddef483105b71e2755280460ab29abde6930fb56fab",
+    "analysis/scan_deposit_session_history.py": "a990f4f7ccd563fdff4fe95fc2364b1e1ae0f09d4b72cd414a2066debb3015e8",
+    "analysis/verify_session_storage_paths.py": "fbe9a25318b2675dbac6566ce99a7331fa432458aba3ae4439bb6c47e4cbe1ed",
+    "analysis/close_session_history_gaps.py": "7422f6ba783bc7980a271a84d5ccb0880e509c0ef59c6e19e0466945e17ecfe9",
+    "analysis/reconcile_legacy_chain.py": "cc4c0cddbc9913bf41fd2af21fdc4ae50d74f06d4a6db06918affb6da90b81bf",
+    "analysis/observe_legacy_settlements.py": "f8b5cb8ce8e8cd550952bd62dad0be8c7786579c30f233bfa36c6462aef1d16e"
+  },
+  "recorded_ms": 1791060344781
+}

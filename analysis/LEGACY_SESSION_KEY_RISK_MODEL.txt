@@ -1,0 +1,265 @@
+ANALYSE FORMELLE — RISQUE LEGACY SESSION KEYS — 2026-10-03
+
+RESULTAT
+Pas de preuve de risque nul ni de borne compatible avec les guards D6 pour ce
+wallet à partir des observations actuellement qualifiées. Cela ne prouve ni
+l'existence d'un ancien ordre dangereux, ni l'impossibilité universelle d'une
+preuve on-chain. Aucun guard/V1/limite économique modifié. Aucun ordre envoyé.
+
+PERIMETRE ET EXHAUSTIVITE
+Modèle: exécutions conformes aux contrats/protocoles, signatures valides, actifs
+Polymarket du wallet et opérations héritées. Nous séparons les comportements
+documentés des branches conditionnelles dont la sémantique déployée manque.
+Une liste universellement exhaustive incluant bugs arbitraires, corruption du
+consensus ou futurs upgrades inconnus n'est pas démontrable avec ces sources.
+La partition ci-dessous est exhaustive au niveau des transitions de ce modèle:
+(a) engagement non exécuté; (b) exécution partielle/restant; (c) annulation ou
+invalidation en concurrence; (d) règlement/retry; (e) inclusion non finale;
+(f) capacité d'autorisation persistante/réactivée; (g) autres voies autorisées;
+(h) changements entrants ou de projection; (i) état terminal sans effet restant.
+Les classes se chevauchent: ne pas additionner leurs risques comme des ordres
+distincts. Aucune classe conditionnelle n'est une affirmation de présence réelle.
+
+DEFINITION DU RISQUE
+Etat X=(cash par token, positions par actif, engagements exécutables, quantités
+restantes, règlements en attente, frais, permissions et état des contrats).
+O(X) = vues owner + sessions actives + positions indexées + état/receipts observés.
+Un bloc finalisé ne contient pas les messages hors chaîne ni les transactions
+privées en attente; des requêtes à des moments différents ne forment pas un cut.
+L'horizon H va du contrôle préentrée jusqu'à la fin de la session/custody, et
+inclut les actifs acquis par D6 et ses éventuelles modifications de permissions.
+U(O) = tous les états réels compatibles avec O et les propriétés réellement prouvées.
+Le risque n'est pas un unique solde: distinguer perte économique, débits BRUTS,
+réservations, variation de positions et violation de la règle une position.
+Un simple crédit peut casser la réconciliation sans être une perte financière.
+MAX_UNKNOWN_LEGACY_EXPOSURE=0 signifierait absence de tout effet legacy pertinent
+sur tous les futurs admissibles depuis chaque X dans U(O). Ce n'est pas démontré.
+
+SCENARIOS — SIX REPONSES POUR CHACUN
+
+S01 — BUY hérité encore exécutable (conditionnel pour une clé inactive)
+1 Mécanisme: ordre signé/accepté ou retardé, hors vue owner; exécution ultérieure
+  si la validation au règlement reste satisfaite. L'inactivité API seule ne
+  démontre pas l'invalidation contractuelle de tout engagement antérieur.
+2 Position future: oui, acquisition sur un marché D6 ou étranger.
+3 Collateral: débit prix+frais; réservations off-chain possibles avant règlement.
+4 Détection: inventaire wallet-wide des ordres/pending et scope des signers, ou
+  invalidation universelle vérifiée des signatures/préapprobations concernées.
+5 Borne: cash/allowance par transfert sous hypothèses ERC20; pas un plafond D6
+  ni une borne de session si cash/permissions sont réapprovisionnés.
+6 Historique complet requis: non; ensemble résiduel exhaustif ou fence actuel suffit.
+
+S02 — SELL hérité, actuellement sous-financé
+1 Ordre encore valide pour un token absent; un achat D6 ou transfert lui fournit
+  ultérieurement ce token. Aucun effet on-chain avant l'exécution.
+2 Oui: réduit/liquide une position future; peut perturber l'exit D6.
+3 Crédit net de vente, frais sur produit selon chemin; pas forcément une perte nette.
+4 Ordres résiduels tous signers + token IDs/remaining; permissions ERC1155/ERC20
+  et validation exacte de l'ordre au règlement.
+5 balance(token)=0 borne une exécution immédiate, PAS l'horizon incluant l'entrée.
+6 Non: clôture des capacités futures équivalente, si réellement prouvée.
+
+S03 — Ordre partiellement rempli / reliquat et fills distincts
+1 Une partie a des receipts; le reste peut être ouvert ou en règlement. Receipts
+  historiques n'impliquent pas quantité restante nulle.
+2 Oui, nouvelle augmentation/diminution correspondant au reliquat.
+3 Débit/crédit et frais de chaque fill.
+4 Quantité initiale, cumul réglé, cumul pending, reliquat terminal, hashes/receipts.
+5 Bornable par remaining authentifié/état de chaque hash; hashes inconnus empêchent
+  d'en déduire une borne globale à partir de quelques ordres connus.
+6 Non: état courant exhaustif des reliquats suffit.
+
+S04 — Annulation/révocation/expiration en concurrence avec un match
+1 Une clé disparaît de la liste active avant la fin du traitement backend;
+  une annulation ne défait pas une portion déjà matchée. L'expiration doit être
+  distinguée de la révocation et de l'expiration de l'ordre lui-même.
+2 Oui si un fill déjà engagé reste réglable; pas nécessairement un nouveau match.
+3 Débit/crédit du fill, ou libération de réservation sans transfert on-chain.
+4 Etat final de révocation ET des ordres/fills liés, ou barrière contractuelle
+  qui rend également les anciens règlements impossibles.
+5 Pas de borne temporelle sûre dérivée de «quelques minutes». Conditionnelle à
+  la sémantique exacte des contrats; ne pas postuler qu'un match survit à révocation.
+6 Non: certificat de fermeture couvrant toutes les obligations résiduelles suffit.
+
+S05 — MATCHED / RETRYING / transaction non incluse ou privée
+1 L'opérateur détient un match/ordre valide mais aucune transaction réussie n'est
+  encore dans les receipts. Une transaction revertée ne consomme pas nécessairement
+  l'ordre; l'opérateur peut réessayer si les conditions deviennent favorables.
+2 Oui au règlement réussi.
+3 Débit/crédit+frais atomiques; un revert ne justifie pas une dette token inventée.
+4 Queue de settlement wallet-wide, statut terminal, hash et quantité, ou fence
+  contractuel rendant tout retry invalide.
+5 Un timeout SDK/absence du mempool public ne borne pas cette queue.
+6 Non: fermeture de queue ou invalidation irréversible équivalente suffit.
+
+S06 — MINED non final / reorg / lectures à des frontières différentes
+1 Receipt sur branche non finale, ou lecture finalisée antérieure à une mutation.
+  Un rollback peut restaurer la possibilité de règlement d'un ordre.
+2 Oui: disparition/réapparition du fill ou règlement ultérieur.
+3 Débit/crédit restauré/annulé avec le changement de branche.
+4 Receipt canonique, bloc/hash finalisé, confirmation opérateur liée au même fill,
+  couverture de l'intervalle jusqu'à la décision.
+5 Oui pour une opération identifiée et finalisée; pas pour absence de toutes les
+  opérations inconnues. Risque de rupture du consensus hors modèle normal.
+6 Non; preuve de finalité/fermeture, pas tout l'historique.
+
+S07 — Préapprobation persistante / autre cache de validation
+1 Source officiel Exchange V2: _preapproveOrder vérifie la signature puis stocke
+  preapproved[hash]=true; validateOrderSignature avec signature vide ne consulte
+  que cette préapprobation. Invalidation séparée onlyOperator. Une révocation de
+  signer n'est donc PAS, par ce code seul, une invalidation des préapprobations.
+2 Oui si ordre préapprouvé restant, actifs et autres checks permettent l'exécution.
+3 BUY débit, SELL crédit et frais selon settlement.
+4 Mapping/événements OrderPreapproved/OrderPreapprovalInvalidated, calldata d'origine,
+  ordre/remaining, parcours complet des exchanges; binding code->bytecode déployé.
+5 En principe oui: inventaire exhaustif des préapprobations et inactivation/restant0,
+  ou fence global. Ce binding et cet inventaire ne sont PAS qualifiés ici.
+6 Pas les credentials historiques; reconstruction des capacités on-chain peut suffire.
+  S07 est démontré dans le SOURCE, pas attesté présent dans ce wallet/déploiement.
+
+S08 — Réactivation future / autorisation owner déjà signée mais non exécutée
+1 Un ordre échoue aujourd'hui mais une réautorisation, un batch valide en attente
+  ou un upgrade change son domaine de validité. Il faut prouver l'invalidation
+  d'époque/nonce, pas présumer que réautoriser une même adresse est sans effet.
+2/3 Conditionnel: reprise possible de BUY/SELL ou autre batch owner autorisé.
+4 Nonces/deadlines et domaines des signatures, epochs, journaux d'autorisation;
+  fermeture des producteurs et transactions owner en attente.
+5 Fence stable sur H; un snapshot d'autorisations seulement n'est pas une preuve
+  de sa stabilité future. Les futures décisions humaines sont des hypothèses explicites.
+6 Non: invariant d'époque/capacités suffit s'il couvre signatures et caches.
+
+S09 — Autre venue/contrat autorisé, notamment Combos/RFQ
+1 Sessions documentées avec scope CLOB, COMBOSRFQ ou All; ancien engagement d'une
+  autre venue peut être absent des vues CLOB et positions interrogées.
+2/3 Conditionnel au contrat: positions, collateral, frais/retours peuvent changer.
+4 Obligations par venue, mappings d'actifs, opérateurs/allowances, contracts et
+  transactions exacts; aucune supposition de levier/perps/dette sur ce wallet.
+5 Oui en théorie via fermeture de TOUTES les voies; CTF seul n'est pas exhaustif.
+6 Non: état résiduel par venue ou preuve que la voie est inaccessible.
+
+S10 — Ancienne allowance/autorisation de transfert; ancien batch OWNER
+1 Une permission persistante n'est pas une dette mais une capacité. Un spender
+  peut l'utiliser seulement selon son code; ne pas assimiler allowance à ordre.
+  Les Session Keys documentées ne peuvent pas retirer. Un batch OWNER est un
+  risque distinct à inclure seulement si le périmètre couvre les autres accès.
+2/3 Transfert de tokens/cash possible si une voie valide existe; le retrait direct
+  par une simple Session Key est EXCLU par le périmètre documenté, sauf bug.
+4 Contrats/spenders/allowances/approvals, nonces et signatures/batches non consommés.
+5 Zero permission immuable peut fermer une voie; renouvellement par D6 la rouvre.
+6 Non: état des capacités et stabilité, pas liste des anciennes clés API.
+
+S11 — Frais, remboursements, rebates ou transformations différés
+1 Frais d'un fill pas encore réglé relèvent S03/S05; frais réglés atomiquement ne
+  constituent PAS une dette future supplémentaire. Un paiement rebate/remboursement
+  ultérieur est un crédit. Redeem/merge/split/auto-redeem nécessitent une voie/position
+  valide; pas de débit fantôme déduit d'un simple enregistrement historique.
+2 Position peut diminuer lors d'un redeem/merge ou augmenter lors d'un split valide.
+3 Crédit/débit selon opération; recalcul comptable local ne modifie pas la chaîne.
+4 Receipts/frais effectifs, règles de paiement, positions/droits et autorisations
+  des contrats concernés; état résiduel du backend pour ce qui n'est pas exécuté.
+5 Frais bornables par code et volumes réels, sous binding déployé. Inconnus ici
+  faute de volumes résiduels; aucune dette non bornée n'est affirmée.
+6 Non: état résiduel courant et contrats suffisants en principe.
+
+S12 — Transfert entrant / indexation incomplète (pas une dette Session Key)
+1 Une autre adresse peut transférer des actifs au wallet, ou l'indexeur omet un
+  actif existant. Cela peut aussi financer S02/S05. Séparer mutation réelle et
+  correction tardive d'affichage.
+2 Oui pour tokens reçus; 3 crédit pour collateral reçu.
+4 Découverte complète des actifs/logs canoniques + monitoring; projections indexées
+  sont corroboration, pas preuve de l'absence de tous actifs.
+5 Incoming arbitraire n'est pas bornable par anciennes clés. Exclure des engagements
+  legacy mais détecter/reconcilier avant entrée, sinon invariant une position violé.
+6 Non. Cela subsiste même avec un historique complet des Session Keys.
+
+CAS SANS RISQUE FUTUR PROPRE
+Ordre jamais rempli, irrévocablement invalide et sans pending: effet legacy=0.
+Fill CONFIRMED/canonique/final, quantité entièrement consommée, frais réglés:
+pas de second débit légitime au titre du même fill si anti-replay prouvé.
+FAILED permanent est terminal selon documentation, mais un simple RPC revert ou
+timeout n'est pas cette preuve. Une clé API supprimée n'est pas une transaction
+annulant une signature EIP712. Ne pas confondre clé API et Session Key.
+
+PREUVE D'INSUFFISANCE DES OBSERVATIONS
+Dans le modèle permis par les interfaces, choisir X0 sans engagement caché et X1
+avec un BUY déjà matché, encore réglable, dans une queue d'une clé retirée du
+registre actif. Avant règlement les deux peuvent partager O: aucun ordre/trade
+owner, zéro session active, mêmes balances et receipts, mêmes positions.
+Si les contrats effectivement déployés rendent ce règlement impossible, X1 est
+exclu; MAIS cette propriété n'a pas été prouvée. L'observation API seule ne
+l'exclut pas. Dans X1 une transition legacy peut dépenser du cash/créer un token,
+donc O n'implique pas risque zéro. S07 illustre pourquoi revalidation/absence de
+cache sont des prémisses indispensables. Ce contre-modèle n'affirme pas un fill réel.
+
+BORNES CONSERVATRICES ET LEURS LIMITES
+Pour un transferFrom isolé d'un ERC20 standard, débit <= min(balance, allowance).
+Pour un token ERC1155 non empruntable, vente <= quantité disponible au règlement.
+Sous univers spot fermé, sans dette, sans apports et contrats corrects, perte NETTE
+totale <= valeur initiale à risque du portefeuille. Cette borne triviale n'est ni
+une borne des débits bruts (recyclage achat/vente), ni des positions créées, ni des
+engagements futurs financés par des apports; elle ne prouve pas respect 25/100/4/1.
+Le dernier cash observé109.16pUSD n'est pas une preuve fraîche ni une borne légale
+de risque legacy. Même une borne positive très petite peut violer UNE position.
+Des allowances partagées entre D6 et legacy ne réservent pas le budget à D6.
+MAX_UNKNOWN_LEGACY_EXPOSURE=UNPROVEN, et non 0, 109.16 ou +infini certifié.
+
+THEOREME CONDITIONNEL D'EQUIVALENCE ACTUELLE
+Sans historique complet, risque legacy=0 serait prouvable si:
+A état finalisé exhaustif des actifs/permissions/code/implémentations connu;
+B chaque transition legacy modifiant cash/position exige une capacité actuelle;
+C aucune capacité legacy valide: signers, préapprobations, epochs, batches, autres
+  venues, chemins opérateur et permissions; ou toutes leurs quantités restantes=0;
+D aucun état escrow/dette/règlement différé ne permet une transition sans C;
+E A-D restent vrais jusqu'à la décision et sur H, y compris après achats et
+  approvals D6; mutations extérieures détectées et ferment le gate;
+F anti-replay et finalité assurent que les transitions terminales restent terminales.
+Preuve par induction: état initial qualifié; toute transition legacy financière
+exige B, interdite par C/D; transitions D6 préservent E; terminalité conservée F.
+Donc aucune première transition legacy financière ne peut exister. L'historique
+des ordres annulés n'est pas une prémisse. A-F non établis pour ce déploiement.
+Un pause/allowance0 global peut empêcher AUSSI D6; sa levée invalide la preuve:
+ce n'est pas une équivalence permettant l'entrée demandée.
+
+CAPACITE EXTERNE PRECISE NECESSAIRE DANS L'ETAT ACTUEL
+Option1: snapshot authentifiable wallet-wide de TOUS engagements résiduels, incluant
+owner et sessions actives/expirées/révoquées, CLOB et autres venues autorisées:
+ordres/delayed/annulations, remaining et pending fills, retries, fees/liabilities,
+préapprobations actives et opérations en cours. Il faut domaine de couverture,
+barrière de séquence/settlement reliée à un bloc canonique, états terminaux et
+flux/relecture permettant de fermer l'intervalle jusqu'à la décision. Pas besoin
+de tous les cancelled/unfilled définitivement sans effet depuis création.
+Option2: fournir source/ABI/version et correspondance bytecode des contrats,
+invariants d'invalidation universelle des sessions ET engagements/préapprobations,
+inventaire reconstructible des capacités et interface read-only de vérification
+de A-F. Ceci peut remplacer l'export d'historique; ne pas exiger artificiellement
+un tiers ou une certification commerciale. Aucune révocation/transaction proposée.
+
+SOURCES ET LIMITES DE PREUVE
+https://docs.polymarket.com/trading/session-keys
+  Scope/visibilité/revocation asynchrone; aucune preuve de retrait direct session.
+https://docs.polymarket.com/concepts/order-lifecycle
+  Matching offchain, settlement atomique; MATCHED/MINED/RETRYING non terminaux,
+  CONFIRMED/FAILED terminaux. Le nombre de confirmations n'est pas inventé.
+https://docs.polymarket.com/resources/contracts
+  Plusieurs exchanges/venues/contrats et wallet beacon. Code déployé non qualifié ici.
+https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/main/src/exchange/mixins/Signatures.sol
+  :20-28 preapprove; :42-49 validation branche vide; :145-151 EIP1271.
+https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/main/src/exchange/CTFExchange.sol
+  :64-72 préapprobation/invalidation onlyOperator.
+https://raw.githubusercontent.com/Polymarket/ctf-exchange-v2/main/src/exchange/mixins/Trading.sol
+  :19 orderStatus; :48-56 checks de signature/pause; règlements et quantités restantes.
+Sources GitHub main consultées aujourd'hui, non assimilées au bytecode du wallet.
+Lecture explorer du beacon refusée HTTP403; pas de preuve d'implémentation déployée.
+Observations locales: session_access_independent_20261003.json et
+current_owner_observation_20261003.json. Leur couverture n'est pas élargie par ce rapport.
+
+DECISION
+UNKNOWN_LEGACY_EXPOSURE_BOUNDABLE=false signifie: aucune borne admissible pour
+autoriser D6 démontrée ici, pas un théorème d'exposition infinie.
+CURRENT_STATE_EQUIVALENT_PROOF_POSSIBLE=false signifie: pas constructible avec les
+prémisses actuellement vérifiées; le théorème conditionnel ci-dessus reste valable.
+SAFE_ENTRY_WITHOUT_FULL_SESSION_HISTORY=false pour CE wallet actuellement;
+un historique complet n'est pas une nécessité logique universelle.
+Pas d'implémentation positive ni tests simulés présentés comme preuve de production:
+la condition demandée d'équivalence démontrée n'est pas satisfaite.
+LIVE_GATE=BLOCKED.

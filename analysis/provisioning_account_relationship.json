@@ -1,0 +1,49 @@
+{
+  "signing_eoa": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "historical_account": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "derivations": {
+    "proxy": {
+      "address": "0x4BaC8C5C1D5890A5062Be03Be0F964CD83682877",
+      "matches_historical": false
+    },
+    "safe": {
+      "address": "0x9215b50625736b30d75C2d3bC6cd98d506E2B598",
+      "matches_historical": false
+    },
+    "uups_deposit": {
+      "address": "0x96f953bEF31810828b98191CbEf3cbE5dBFBA1d4",
+      "matches_historical": false
+    },
+    "beacon_deposit": {
+      "address": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "matches_historical": true
+    }
+  },
+  "sdk_collateral_contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "run_observations": {
+    "0088": {
+      "file": "D:\\polymarket-real-calibration\\live\\live-v1-run0088.jsonl",
+      "sha256": "f35eeb01e97456d9e226b76d383120687b09fb7ac7834351ea3af3294b38a404",
+      "identities": [
+        [
+          "account",
+          "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
+        ]
+      ],
+      "collaterals": [],
+      "rows": 2622
+    },
+    "0089": {
+      "file": "D:\\polymarket-real-calibration\\live\\live-v1-run0089.jsonl",
+      "sha256": "118293825925dfe48b0ca604f3d832ab38d1e8537c7b69587cc4e034ee969d1a",
+      "identities": [
+        [
+          "account",
+          "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
+        ]
+      ],
+      "collaterals": [],
+      "rows": 9341
+    }
+  }
+}

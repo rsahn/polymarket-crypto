@@ -1,0 +1,24 @@
+{
+  "name": "cash_in",
+  "from_block": 94376195,
+  "to_block": 94381194,
+  "logs": [
+    {
+      "address": "0xc011a7e12a19f7b1f670d46f03b03f3342e82dfb",
+      "topics": [
+        "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+        "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "0x000000000000000000000000871d37b430c42ddbd0bbd37c29c02a2974109de9"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000000000000000681a640",
+      "blockNumber": "0x5a0245b",
+      "transactionHash": "0xeee934cede451fa4feb9f441714d692d58717de77980765f5497aa5f8281051d",
+      "transactionIndex": "0x6",
+      "blockHash": "0x17070d47844f0e01feb179723309c1e9b50c5a4ddd808b60ac53623816895fec",
+      "logIndex": "0x57",
+      "blockTimestamp": "0x6ab574fd",
+      "removed": false
+    }
+  ],
+  "sha256": "91e7f6a92e79c365aa1380b21a8af864c4ae7f92e96e5e504c041262549b38b6"
+}

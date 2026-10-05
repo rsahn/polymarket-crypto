@@ -1,0 +1,24 @@
+{
+  "closed_gaps": {
+    "HISTORICAL_SESSION_KEY_GAP": {
+      "status": "CLOSED",
+      "from_block": 94331195,
+      "to_block": 94902121,
+      "proof": "analysis/session_storage_path_proof.json"
+    },
+    "PREDEPLOYMENT_POSITION_GAP": {
+      "status": "CLOSED",
+      "from_block": 0,
+      "to_block": 94331194,
+      "proof": "analysis/predeployment_positions_20261003/report.json"
+    }
+  },
+  "current_safe_state_blockers": [
+    "OWNER_API_CROSS_CREDENTIAL_SCOPE",
+    "OFFCHAIN_SETTLEMENT_WATERMARK"
+  ],
+  "reopening_rule": "Only new contradictory evidence can reopen these gaps on their proved intervals.",
+  "OWNER_API_CROSS_CREDENTIAL_SCOPE": "UNPROVEN",
+  "OFFCHAIN_SETTLEMENT_WATERMARK": "UNPROVEN",
+  "CURRENT_SAFE_STATE_PROVEN": false
+}

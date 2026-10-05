@@ -1,0 +1,31 @@
+{
+  "schema": "D6_OPERATOR_POLICY_APPROVAL_V1",
+  "policy": {
+    "keys": {
+      "d6-windows-telemetry-v1": {
+        "address": "0x42DEf9Ae2e61CC1e1f99f56B33852c4285A03810",
+        "kinds": [
+          "clock_sanity",
+          "ws_healthy"
+        ]
+      }
+    },
+    "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+    "context": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "collateral": "pUSD",
+      "session": "d6-authority-20261004-v1"
+    }
+  },
+  "approved_policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+  "approved": true,
+  "approval_source": "Explicit user message in this conversation",
+  "approval_text": "APPROVE POLICY 0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+  "recorded_at": "2026-10-04T08:23:27.862471+00:00",
+  "scope": "clock_sanity and ws_healthy only",
+  "source_trust_approved": true,
+  "protected_runtime_qualified": false,
+  "production_usable": false,
+  "source_trust_approval": "analysis/authority_windows/time-sources-approved-20261004-v1.json"
+}

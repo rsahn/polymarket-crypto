@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-10-04T08:22:29.349760+00:00",
+  "supervisor_sid": "S-1-5-21-996557404-12191610-680381608-1002",
+  "authority_sid": "S-1-5-21-996557404-12191610-680381608-1006",
+  "supervisor_elevated": false,
+  "key_read_denied": true,
+  "code_config_output_private_write_denied": true,
+  "cross_user_dpapi_denied": true,
+  "PASS": true,
+  "exit_code": 0,
+  "production_qualified": false,
+  "command": "powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:\\ProgramData\\D6Authority\\bin\\Test-SupervisorIsolation.ps1",
+  "script_sha256": "7d0d2e5e8722c80ddb16516413dcb59980447334590a4c15920d6c3cf89458a3",
+  "public_identity_sha256": "f46bad197968f10d49009b5d9d12baecaeb1606f9d276ec862a218f710c4594d",
+  "scope": "Actual non-elevated supervisor SID on this Windows host; Administrators and SYSTEM remain trusted."
+}

@@ -1,0 +1,5 @@
+{
+  "status": "FAILED",
+  "stage": "sdk_identity_binding",
+  "error_type": "ValueError"
+}

@@ -1,0 +1,27 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "submit_allowed": false,
+  "all_authorizations_covered_from_wallet_genesis": false,
+  "source_abi_binding_verified": false,
+  "non_terminal_legacy_trades": "UNPROVEN",
+  "start_block": 94331195,
+  "rpc": "https://tenderly.rpc.polygon.community",
+  "independent_provider_crosscheck": false,
+  "end_block": 94901863,
+  "end_hash": "0x525b3ea090de6ca6db77296640280ed00929598cec993479dcfd7c869f9537f2",
+  "block_timestamp": 1791057946,
+  "code_onset_verified": true,
+  "range_coverage_complete": true,
+  "manifest_digest": "87964acf31079edd85fc0aba9df13eef09a20a77099b9537398a51d68f661f5f",
+  "wallet_log_count": 25,
+  "events": [],
+  "signers": {},
+  "historical_event_signer_count": 0,
+  "status": "PASS_RPC_LOG_ENUMERATION_NOT_IMPLEMENTATION_COMPLETENESS",
+  "limitations": [
+    "Code onset is not a proof of no earlier deployment/redeployment.",
+    "Historical implementation ABI and exhaustive emission semantics not verified.",
+    "RPC range completeness relies on provider; matched receipts do not prove absence of omitted logs.",
+    "Fixed finalized anchor does not include later authorizations; active API comparison is separate."
+  ]
+}

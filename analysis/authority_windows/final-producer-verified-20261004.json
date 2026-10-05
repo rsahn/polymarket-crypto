@@ -1,0 +1,68 @@
+{
+  "verified_at_ms": 1791125271806,
+  "producer_pid": 9816,
+  "producer_sid": "S-1-5-21-996557404-12191610-680381608-1006",
+  "producer_started_utc": "2026-10-04T14:46:40.0042010Z",
+  "final_host_execution_proven": true,
+  "files_verified": 1578,
+  "signature_context_policy_freshness_verified": true,
+  "expired_or_other_context_replay_rejected": true,
+  "reuse_within_lease_allowed": true,
+  "telemetry": {
+    "clock_sanity": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "check": "clock_sanity",
+      "collateral": "pUSD",
+      "key_id": "d6-windows-telemetry-v1",
+      "kind": "clock_sanity",
+      "market": "0x7445708f8f25079d5b94c5a8484f19d67e823aa8d97c617e421ce1809912f59e",
+      "observed_ms": 1791125271439,
+      "payload": {
+        "offset_ms": 3,
+        "uncertainty_ms": 46
+      },
+      "provenance_signature": "1a909f425286cdbca3a4d5c8af1e9a6a95c04eea7956b7a6fd35db9ca4cc41db681dbea28d193deddd2d171125c5fce6258fb954eb1709cfc0d5113baaecbc851c",
+      "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+      "session": "d6-authority-20261004-v1",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "source_digest": "009b53651134b3e77d3583247524e631185958a2c25137a4e74404cbb5054440",
+      "strategy_hashes": {
+        "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+        "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+      },
+      "trust_policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+      "valid_until_ms": 1791125276439
+    },
+    "observed_ms": 1791125271791,
+    "ws_healthy": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "check": "ws_healthy",
+      "collateral": "pUSD",
+      "key_id": "d6-windows-telemetry-v1",
+      "kind": "ws_healthy",
+      "market": "0x7445708f8f25079d5b94c5a8484f19d67e823aa8d97c617e421ce1809912f59e",
+      "observed_ms": 1791125271775,
+      "payload": {
+        "generation": 1,
+        "receive_ms": 1791125271753,
+        "state": "SYNCHRONIZED",
+        "tokens": [
+          "59766420245998627892333116317529639876736963397656079611235242195510088985209",
+          "44279415160434701611240639790893231557943581867108117439457169041505435826586"
+        ]
+      },
+      "provenance_signature": "1d9b6c53a27038b0ba89fab666ea229dd6150597837c818a0a9d07502ed52776125cd9fad1cf34f2860a5f43e463ef0cda68908525abfbbbb69aa5e543a07f1e1c",
+      "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+      "session": "d6-authority-20261004-v1",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "source_digest": "7b256c7035d6589680311a5c7c18fb05c32497414ebd0858b401a6c0c31a8ee7",
+      "strategy_hashes": {
+        "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+        "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+      },
+      "trust_policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+      "valid_until_ms": 1791125272101
+    }
+  },
+  "scope": "Two authorized telemetry kinds only; full preflight remains blocked. Archived observations expire and must never be reused as fresh evidence."
+}

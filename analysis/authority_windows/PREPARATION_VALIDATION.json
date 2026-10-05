@@ -1,0 +1,28 @@
+{
+  "account_created": false,
+  "permissions_changed": false,
+  "production_key_created": false,
+  "authority_policy_approved": false,
+  "production_service_started": false,
+  "targeted_tests_passed": 10,
+  "powershell_scripts_parse_pass": true,
+  "dry_run_plan_pass": true,
+  "real_cross_identity_tests": "UNPROVEN: requires human-approved account/bootstrap execution",
+  "supervisor_sid": "S-1-5-21-996557404-12191610-680381608-1002",
+  "limitations": [
+    "Non-elevated supervisor boundary; local Administrators/SYSTEM remain trusted.",
+    "Final key/address/SID/session policy digest awaits actual public bootstrap.",
+    "Signing-runtime activation is separate and requires protected code/dependencies and approved policy."
+  ],
+  "files": {
+    "DEPLOYMENT.txt": "4223c1c1316f7b1aab71262f4f92b8237a3c9fdfa49dfc02c431363dad663406",
+    "finalize_policy.py": "aad9a15b46465fd92bf6fe0a9afc1bee96f1ae57be9d96db321fa9af0fb2cb6f",
+    "Initialize-AuthorityKey.ps1": "ff2b7c353cd1f0f89924015f23e1bb2fae133939fabd0e963e7174f829176602",
+    "policy-template.json": "716bdc7894f07341a70135dbde241c8c51202b0ffdc057925d991ae8d96436d1",
+    "Setup-Authority.ps1": "a2bdbebc74314618fc75352edeed05496740f98cb7bd72602b13dcac1ae42390",
+    "Test-SupervisorIsolation.ps1": "7d0d2e5e8722c80ddb16516413dcb59980447334590a4c15920d6c3cf89458a3",
+    "test_policy_preparation.py": "bf56cf4199970729171515a4e46a61ebc29b62c24497b6a10d09e3b1641f0b6a"
+  },
+  "OWNER_API_CROSS_CREDENTIAL_SCOPE": "UNPROVEN",
+  "OFFCHAIN_SETTLEMENT_WATERMARK": "UNPROVEN"
+}

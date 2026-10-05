@@ -1,0 +1,98 @@
+{
+  "samples": [
+    {
+      "host": "time.google.com",
+      "authenticated": false,
+      "offset_ms": 10.510921478271484,
+      "uncertainty_ms": 38.74149513244629,
+      "observed_ms": 1791059916909,
+      "stratum": 1,
+      "numerical_bound_ms": 49.25241661071777,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.cloudflare.com",
+      "authenticated": false,
+      "offset_ms": 8.178234100341797,
+      "uncertainty_ms": 44.7727997303009,
+      "observed_ms": 1791059916984,
+      "stratum": 3,
+      "numerical_bound_ms": 52.9510338306427,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.windows.com",
+      "authenticated": false,
+      "offset_ms": 1.757979393005371,
+      "uncertainty_ms": 54.04176902770996,
+      "observed_ms": 1791059917106,
+      "stratum": 4,
+      "numerical_bound_ms": 55.79974842071533,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.google.com",
+      "authenticated": false,
+      "offset_ms": 9.755492210388184,
+      "uncertainty_ms": 38.23855113983154,
+      "observed_ms": 1791059917179,
+      "stratum": 1,
+      "numerical_bound_ms": 47.99404335021973,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.cloudflare.com",
+      "authenticated": false,
+      "offset_ms": 8.139848709106445,
+      "uncertainty_ms": 44.7108108997345,
+      "observed_ms": 1791059917216,
+      "stratum": 3,
+      "numerical_bound_ms": 52.85065960884094,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.windows.com",
+      "authenticated": false,
+      "offset_ms": 2.439141273498535,
+      "uncertainty_ms": 53.19967460632324,
+      "observed_ms": 1791059917299,
+      "stratum": 4,
+      "numerical_bound_ms": 55.63881587982178,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.google.com",
+      "authenticated": false,
+      "offset_ms": 7.090568542480469,
+      "uncertainty_ms": 37.01629829406738,
+      "observed_ms": 1791059917370,
+      "stratum": 1,
+      "numerical_bound_ms": 44.10686683654785,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.cloudflare.com",
+      "authenticated": false,
+      "offset_ms": 7.845282554626465,
+      "uncertainty_ms": 44.49611496925354,
+      "observed_ms": 1791059917407,
+      "stratum": 3,
+      "numerical_bound_ms": 52.341397523880005,
+      "diagnostic_within_100ms": true
+    },
+    {
+      "host": "time.windows.com",
+      "authenticated": false,
+      "offset_ms": 1.7461776733398438,
+      "uncertainty_ms": 52.463318824768066,
+      "observed_ms": 1791059917489,
+      "stratum": 4,
+      "numerical_bound_ms": 54.20949649810791,
+      "diagnostic_within_100ms": true
+    }
+  ],
+  "numerical_samples_pass": true,
+  "CLOCK_100MS_QUALIFIED": false,
+  "submit_allowed": false,
+  "limitation": "Unauthenticated diagnostic samples; fresh authority evidence and ongoing monitoring remain required."
+}

@@ -1,0 +1,113 @@
+D6 Authority Windows - proposed deployment, not executed or approved
+
+Decision already supplied: a dedicated local Windows account on this computer.
+Proposed account: .\D6Authority, standard Users membership only, no administrator,
+service, scheduled task, remote-desktop grant or saved runas password provisioned.
+Main/supervisor SID pinned: S-1-5-21-996557404-12191610-680381608-1002.
+If the actual supervisor uses a different SID, STOP and bind/test that SID too.
+
+Actions awaiting human execution/approval:
+1. Create D6Authority with a unique password entered using SecureString.
+2. Create C:\ProgramData\D6Authority and its bin/config/private/out directories.
+3. Apply the explicit protected DACLs in Setup-Authority.ps1 only to these NEW paths.
+4. Copy the reviewed bootstrap scripts and policy template into administrator-owned bin/config.
+No existing account, wallet binding, .env, credentials, global execution policy,
+firewall policy or service is modified. Existing target account/path causes STOP.
+Setup has no automatic rollback deleting identities; if partly failed, preserve
+the error and inspect before attempting a repair.
+
+Permissions:
+root: Administrators/SYSTEM full; Authority/supervisor read+traverse, noninherited.
+bin/config: Administrators/SYSTEM full; Authority/supervisor read+execute.
+private: protected DACL, Authority SID full only. Initial owner Administrators;
+Authority claims ownership under its own token before creating the key.
+key: inherits Authority-only ACL, generated/owned under Authority identity.
+out: Authority modify, supervisor read+execute, Administrators/SYSTEM full.
+Supervisor cannot modify code, config, output, private directory or their parent.
+
+First action - PowerShell 64-bit ADMINISTRATOR:
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\Users\Ramy\Documents\polymarket-crypto\analysis\authority_windows\Setup-Authority.ps1" -Apply
+Expected: password prompt, ACCOUNT_AND_ACLS_PREPARED, distinct Authority SID.
+This process-scoped execution-policy option does not change system policy.
+Do not send the password. Send only the result/SID or the error.
+
+After successful review of step 1 - NORMAL user PowerShell:
+runas.exe /profile /user:.\D6Authority "powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\ProgramData\D6Authority\bin\Initialize-AuthorityKey.ps1"
+Enter D6Authority password in runas, never /savecred or /netonly.
+Expected under Authority token: wallet .env read denied; protected secp256k1 key
+generated using Windows CNG; DPAPI CurrentUser round trip PASS; only public key
+exported. No EIP191 production attestations, orders or transactions signed.
+Key: C:\ProgramData\D6Authority\private\authority-v1.dpapi.
+Public output: C:\ProgramData\D6Authority\out\public-identity.json.
+
+Then NORMAL, non-elevated ACTUAL SUPERVISOR account:
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\ProgramData\D6Authority\bin\Test-SupervisorIsolation.ps1"
+Expected: key_read_denied=true, code_config_output_private_write_denied=true,
+cross_user_dpapi_denied=true, PASS=true. Missing bootstrap/canary/file errors
+are errors, not proof of denial. DPAPI test uses separate random canary, never
+exports the encrypted real key. Failure blocks producer activation.
+Repeat under every actual supervisor service identity if there is more than one.
+
+Exact authorization to be proposed after public bootstrap:
+provider D6_WINDOWS_INDEPENDENT_TELEMETRY;
+key_id d6-windows-telemetry-v1; kinds ONLY clock_sanity, ws_healthy.
+account 0x871d37B430C42DDBD0BBD37C29c02A2974109DE9;
+owner signer 0x9348eFd557A09e644795C8F114BcF0BeF86F203a;
+collateral pUSD, Polygon137, contract 0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB, decimals6.
+Final session and public key are bound before computing the final policy digest.
+finalize_policy.py consumes PUBLIC data only and emits an UNAPPROVED proposal.
+Do not approve placeholder keys, a missing SID, or the earlier same-user candidate.
+Human approval of the final exact digest is separate from account/bootstrap setup.
+
+Clock: abs(offset)+uncertainty<=100ms, conservative integer rounding; lease <=5s,
+monotonic/wall step invalidation; failed refresh withdraws evidence. Existing UDP
+NTP sources are not authenticated by an EIP191 local signature. The source trust
+model still needs review; this deployment does not certify network time authenticity.
+Book: live real StreamBook, correct condition/tokens/generation, two fresh books,
+existing 500ms limit. No signing caller-supplied generic claims or completeness.
+The signing module is analysis/provisioning_telemetry_signing.py, targeted tests
+use ephemeral keys. No production service starts in this bootstrap.
+Activation must use an administrator-owned reviewed runtime and source snapshot
+outside Ramy's writable profile; do NOT run Authority from the mutable repository,
+Ramy's Python/site-packages, PYTHONPATH or user startup files. No wallet SDK,
+wallet private key, L2 credentials or .env is to be copied into that deployment.
+Only public time/market reads and outbound signed-evidence publication are needed.
+No incoming generic signing API is exposed. This bundle does not yet attest that
+the final signing-runtime deployment or live assembly is qualified.
+
+Limits of the isolation claim:
+Verified separation targets a non-elevated supervisor. Local administrators and
+SYSTEM remain trusted machine operators; same-machine ACL/DPAPI cannot provide
+an absolute guarantee against host administration or OS compromise.
+The Authority key has no wallet ownership, session authorization or funds. Its
+roles are evidence-only; no monetary authority is granted or installed.
+
+Rotation:
+1. Stop use of this producer at the consumer and fail-close entries.
+2. Under the dedicated identity run Initialize-AuthorityKey.ps1 -KeyVersion v2.
+   Existing v1 is NOT overwritten or deleted; public output now identifies v2.
+3. Re-run real cross-user ACL/DPAPI denial tests, derive the new public address,
+   prepare a new policy and request HUMAN approval of its new exact digest.
+4. Restart/rebind consumers to approved new key/digest, remove old key from trust.
+   Old-policy signatures must fail verification, even if otherwise fresh.
+5. Retain necessary public audit history; retire private v1 only after review.
+Never reset the Windows account password administratively as a rotation shortcut:
+it may make existing DPAPI data unrecoverable. Change via its normal user flow.
+
+Emergency revocation - administrator command, ONLY when explicitly requested:
+Disable-LocalUser -Name 'D6Authority'
+Disabling an account does not kill already-running processes or revoke cached
+signatures. Also stop the identified Authority process/task, remove its pinned
+key from the consumer policy, approve/rebind the new digest and keep entries
+closed. Check stale/cached records are rejected; do not rely on disable alone.
+No revoke or rotation action is executed by this preparation.
+
+CURRENT_SAFE_STATE still depends exclusively on:
+OWNER_API_CROSS_CREDENTIAL_SCOPE=UNPROVEN
+OFFCHAIN_SETTLEMENT_WATERMARK=UNPROVEN
+No Authority signature is permitted to substitute for either guarantee.
+
+References:
+https://learn.microsoft.com/en-us/windows/win32/api/dpapi/nf-dpapi-cryptprotectdata
+https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.localaccounts/new-localuser
+https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc771525(v=ws.11)

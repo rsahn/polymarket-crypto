@@ -1,0 +1,29 @@
+[
+  {
+    "source": "github_readme",
+    "bytes": 21610,
+    "url": "https://raw.githubusercontent.com/Polymarket/contract-security/main/README.md"
+  },
+  {
+    "source": "blockscout_impl",
+    "bytes": 710671,
+    "url": "https://polygon.blockscout.com/api/v2/smart-contracts/0xf7f27c29e60fe6325bef8da7f93250353d2e3294"
+  },
+  {
+    "source": "sourcify_impl",
+    "bytes": 1836342,
+    "url": "https://sourcify.dev/server/v2/contract/137/0xf7f27c29e60fe6325bef8da7f93250353d2e3294?fields=all"
+  },
+  {
+    "source": "polygonscan_impl",
+    "error_type": "HTTPError",
+    "code": 403,
+    "url": "https://polygonscan.com/address/0xf7f27c29e60fe6325bef8da7f93250353d2e3294#code"
+  },
+  {
+    "source": "polygonscan_beacon",
+    "error_type": "HTTPError",
+    "code": 403,
+    "url": "https://polygonscan.com/address/0x7a18edfe055488a3128f01f563e5b479d92ffc3a#code"
+  }
+]

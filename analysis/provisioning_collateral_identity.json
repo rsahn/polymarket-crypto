@@ -1,0 +1,24 @@
+{
+  "status": "PASS_ONCHAIN_IDENTITY",
+  "contract": "0xC011a7E12a19f7B1f670d46F03B03f3342E82DFB",
+  "rpc": "https://polygon.drpc.org",
+  "rpc_provenance": "https://docs.polygon.technology/pos/reference/rpc-endpoints",
+  "symbol_verified": true,
+  "decimals_verified": true,
+  "account_binding_verified": false,
+  "conversion_allowed": false,
+  "code_sha256": "c5731b62fc7c36236463af8d362688e37c08823abcda35d71ad7d1220eebf578",
+  "chain_id": 137,
+  "block_number": "0x5a80e6b",
+  "block_hash": "0x49d11fcb9587b1174f591beb0af37376b06c7cead66e0ea5ac39725e7c40f969",
+  "observed_ms": 1791054900878,
+  "symbol": "pUSD",
+  "decimals": 6,
+  "code_present": true,
+  "onchain_balance_raw": "109160000",
+  "mapping_provenance": [
+    "SDK 0.11.0 PRODUCTION_CONFIG.collateral_token",
+    "https://docs.polymarket.com/resources/contracts",
+    "https://docs.polymarket.com/concepts/pusd"
+  ]
+}

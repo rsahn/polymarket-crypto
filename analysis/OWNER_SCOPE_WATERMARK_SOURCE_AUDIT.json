@@ -1,0 +1,31 @@
+{
+  "OWNER_API_CROSS_CREDENTIAL_SCOPE": "UNPROVEN",
+  "OFFCHAIN_SETTLEMENT_WATERMARK": "UNPROVEN",
+  "closed_gaps_unchanged": true,
+  "official_sources": [
+    "https://docs.polymarket.com/api-reference/trade/get-user-orders",
+    "https://docs.polymarket.com/api-reference/trade/get-trades",
+    "https://docs.polymarket.com/api-reference/service/get-data-freshness",
+    "https://github.com/Polymarket/py-clob-client/blob/main/py_clob_client/client.py"
+  ],
+  "local_sdk": "polymarket-client/0.11.0",
+  "files": {
+    "_internal\\actions\\account.py": "35b05b050c42f5ae7c57ed2ebf840e0e8795fe85332ce5523d3aa5c4d359c479",
+    "clients\\async_secure.py": "66f622e2f5a9ac7e6ecb73cffd8ca899e3571d5378944f568664632fe28d47ff"
+  },
+  "findings": [
+    "Current SDK account.py builds filters/cursor GETs; parses data and next_cursor into Page. No backend authorization scope or settlement cutoff proven.",
+    "Current SDK async_secure.py:2303/2340 refers to authenticated account; does not define behavior across revoked credential sets.",
+    "Archived official py-clob-client describes orders for API key; not proof of current backend semantics.",
+    "Data API v2/status exposes indexing progress for Data API projections; not a documented CLOB off-chain settlement barrier.",
+    "No reviewed public implementation establishes backend cross-credential authorization or authoritative queue watermark. Search absence is not proof no such capability exists."
+  ],
+  "required_external_resolution": "Official scope/consistency contract or verifiable backend implementation needed; no behavior-only inference.",
+  "telemetry": {
+    "implementation": "analysis/provisioning_telemetry_signing.py",
+    "targeted_tests": 15,
+    "production_signed_records": 0,
+    "policy_review": "D:\\polymarket-real-calibration\\provisioning-authority-candidate\\TELEMETRY_AUTHORITY_DECISION.json",
+    "approved": false
+  }
+}

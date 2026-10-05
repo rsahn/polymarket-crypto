@@ -1,0 +1,147 @@
+{
+  "observed_ms": 1791053748679,
+  "candidate_wallet": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "candidate_signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+  "identity_origin": "existing repository configuration; not approval",
+  "credential_storage": {
+    "file_present": true,
+    "permissions_verified": true,
+    "dpapi_decrypted": true,
+    "triplet_complete": true,
+    "binding_verified": true,
+    "storage_validated": true
+  },
+  "reads": {
+    "cash": {
+      "status": "OBSERVED_ONLY",
+      "pages_sha256": [
+        "186372b54ffb1627a715b3931cdd1c1b21aa8e5bbbec1b2dbac05c9e20603b9a"
+      ],
+      "count": null,
+      "pagination_exhausted": null,
+      "wallet_completeness_proven": false,
+      "scope": "requested wallet/credential view; cross-credential coverage unproven"
+    },
+    "orders": {
+      "status": "OBSERVED_ONLY",
+      "pages_sha256": [
+        "3f557c34d5e8d608a735ab3668e4a59a6cb2c09074bb23f221425cd48f386d0d"
+      ],
+      "count": 0,
+      "pagination_exhausted": true,
+      "wallet_completeness_proven": false,
+      "scope": "requested wallet/credential view; cross-credential coverage unproven"
+    },
+    "trades": {
+      "status": "OBSERVED_ONLY",
+      "pages_sha256": [
+        "d54fa8f09c1cd2c21a04a69999b0688160f18d744a43ad662d51b45a4ff98c09"
+      ],
+      "count": 0,
+      "pagination_exhausted": true,
+      "wallet_completeness_proven": false,
+      "scope": "requested wallet/credential view; cross-credential coverage unproven"
+    },
+    "positions": {
+      "status": "OBSERVED_ONLY",
+      "pages_sha256": [
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      "count": 0,
+      "pagination_exhausted": true,
+      "wallet_completeness_proven": false,
+      "scope": "requested wallet/credential view; cross-credential coverage unproven"
+    }
+  },
+  "network_audit": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1791053748115,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791053748371,
+      "parse_complete_ms": 1791053748371,
+      "shape": "dict",
+      "finished_ms": 1791053748371,
+      "elapsed_ms": 256,
+      "thread_cpu_ms": 78.125
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1791053748149,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791053748380,
+      "parse_complete_ms": 1791053748380,
+      "shape": "dict",
+      "finished_ms": 1791053748380,
+      "elapsed_ms": 231,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1791053748171,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791053748427,
+      "parse_complete_ms": 1791053748428,
+      "shape": "dict",
+      "finished_ms": 1791053748428,
+      "elapsed_ms": 257,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/positions",
+      "started_ms": 1791053748214,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791053748584,
+      "parse_complete_ms": 1791053748584,
+      "shape": "list",
+      "finished_ms": 1791053748584,
+      "elapsed_ms": 370,
+      "thread_cpu_ms": 31.25
+    }
+  ],
+  "clock_samples": [
+    {
+      "host": "time.cloudflare.com",
+      "authenticated": false,
+      "offset_ms": 435.9245300292969,
+      "uncertainty_ms": 39.305861711502075,
+      "observed_ms": 1791053748639,
+      "stratum": 3,
+      "numerical_bound_ms": 475.23039174079895,
+      "diagnostic_within_100ms": false
+    },
+    {
+      "host": "time.google.com",
+      "authenticated": false,
+      "offset_ms": 435.894250869751,
+      "uncertainty_ms": 28.55196189880371,
+      "observed_ms": 1791053748638,
+      "stratum": 1,
+      "numerical_bound_ms": 464.4462127685547,
+      "diagnostic_within_100ms": false
+    },
+    {
+      "host": "time.windows.com",
+      "authenticated": false,
+      "offset_ms": 433.785080909729,
+      "uncertainty_ms": 45.02811622619629,
+      "observed_ms": 1791053748678,
+      "stratum": 4,
+      "numerical_bound_ms": 478.8131971359253,
+      "diagnostic_within_100ms": false
+    }
+  ],
+  "CLOCK_100MS_QUALIFIED": false,
+  "clock_limit": "Unauthenticated UDP samples; no continuous validity or independently pinned time authority.",
+  "LIVE_GATE": "BLOCKED",
+  "submit_allowed": false,
+  "raw_account_payloads_logged": false
+}

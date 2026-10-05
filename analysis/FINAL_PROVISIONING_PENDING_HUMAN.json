@@ -1,0 +1,33 @@
+{
+  "ACCOUNT_BINDING_PROVEN": true,
+  "CLOCK_100MS_QUALIFIED": false,
+  "STREAMBOOK_QUALIFIED": false,
+  "CURRENT_SAFE_STATE_PROVEN": "UNPROVEN",
+  "FULL_HISTORICAL_AUDIT_PROVEN": "UNPROVEN",
+  "FULL_HISTORICAL_AUDIT_REQUIRED_FOR_SAFE_ENTRY": false,
+  "historical_requirement_still_enforced_by_current_consumer": true,
+  "SDK_IDENTITY_BINDING_QUALIFIED": true,
+  "AUTHORITY_POLICY_READY": false,
+  "AUTHORITY_POLICY_APPROVED": false,
+  "CUSTODY_CHALLENGE_READY": false,
+  "CUSTODY_ACCEPTED": false,
+  "CUSTODY_RECOVERY_PROVEN": false,
+  "PREFLIGHT_PROOFS": "0/14",
+  "ALL_TESTS_PASS": "29 targeted PASS; baseline retained; full suite deferred until provisioning complete",
+  "LIVE_GATE": "BLOCKED",
+  "HUMAN_ACTION_REQUIRED_NOW": "Run analysis/sync_clock_admin_once.ps1 in elevated PowerShell; designate actual evidence producers and independent custody owner",
+  "BLOCKERS": [
+    "Clock measurements470..484ms; fresh StreamBook rejects future event -267ms",
+    "Current wallet-wide credential/session-key scope and consistent account/settlement decision boundary unproven",
+    "Full historical terminal orders not recovered; current consumer still requires that contract",
+    "Independent authority producer/principal/permissions approval missing",
+    "Actual complete exposure and custody acceptance/recovery missing"
+  ],
+  "policy_review_file": "D:/polymarket-real-calibration/provisioning-authority-candidate/policy-review-final-provisioning.json",
+  "candidate_policy_digest": "af72770c5f91a57690e9f09cc33e1825b60511023ec74df54eeccbc97b00ff5b",
+  "notes": [
+    "FULL_HISTORICAL_AUDIT_REQUIRED_FOR_SAFE_ENTRY=false is conditional necessity result, not permission to bypass current contract.",
+    "SDK flag proves real local Deposit Wallet binding, not fully qualified production assembly.",
+    "No V1 or guard changed; no order or CALIBRATE."
+  ]
+}

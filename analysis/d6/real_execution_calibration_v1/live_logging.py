@@ -15,7 +15,8 @@ EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_B
  'CALIBRATION_EXCEPTION','RECOVERY_COMPLETE','RECOVERY_WAIT','BACKGROUND_TASK_ENDED',
  'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
  'ACCOUNT_MONITOR_FAILURE','WS_DISCONNECT','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE',
- 'BTC_CONNECTED','BTC_TICK','BTC_HEALTH','BTC_RECONNECT','BTC_RECEIVE_REGRESSION'}
+ 'BTC_CONNECTED','BTC_TICK','BTC_HEALTH','BTC_RECONNECT','BTC_RECEIVE_REGRESSION',
+ 'MULTI_START','MULTI_RECONCILE','MULTI_TRANSIENT','MULTI_FATAL'}
 PAYLOAD_FIELDS={
  'CALIBRATION_EXCEPTION':{'incident_id','exception_type','classification','message_redacted','exposure_management'},
  'RECOVERY_COMPLETE':{'cleared_transient_errors','remaining_v1_errors'},
@@ -45,6 +46,10 @@ PAYLOAD_FIELDS={
  'WS_DISCONNECT':{'generation'},
  'WS_RECONNECT_FAILURE':{'exception_type','generation','attempt'},
  'ACCOUNT_MONITOR_FAILURE':{'exception_type','message','component','failures'},
+ 'MULTI_START':{'slots','total_cash','max_per_market','max_concurrent'},
+ 'MULTI_RECONCILE':{'cash','available','allocated','global_pnl','active_slots','opportunities','diagnostics'},
+ 'MULTI_TRANSIENT':{'error'},
+ 'MULTI_FATAL':{'error'},
 }
 class LiveLog(RotatingLog):
     def __init__(self,*args,max_bytes=64*1024**2,on_fault=None,require_drive=None,**kwargs):

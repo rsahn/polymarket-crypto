@@ -1,0 +1,12 @@
+{
+  "provider": "https://polygon.drpc.org",
+  "checks": [
+    {
+      "transaction": "0xeee934cede451fa4feb9f441714d692d58717de77980765f5497aa5f8281051d",
+      "receipt_identical": true
+    }
+  ],
+  "anchor_identical": true,
+  "cash_identical": true,
+  "cash_raw": 109160000
+}

@@ -1,0 +1,76 @@
+{
+  "base_sha": "d6112e1dc2689ed7c995a5496ea5706eb0894ab8",
+  "working_tree_changes": true,
+  "PREFLIGHT_PROOFS": "0/14",
+  "LIVE_GATE": "BLOCKED",
+  "HUMAN_ARM_REQUIRED": true,
+  "candidate_key_provisioned_not_approved": true,
+  "local_sdk_eoa_identity_verified": true,
+  "no_monetary_actions": true,
+  "full_production_preflight_completed": false,
+  "PRODUCTION_EVIDENCE_SOURCE_QUALIFIED": false,
+  "WALLET_COMPLETENESS_PROVEN": false,
+  "AUTHORITY_KEYS_PROVISIONED": false,
+  "INDEPENDENT_CUSTODY_QUALIFIED": false,
+  "CLOCK_100MS_QUALIFIED": false,
+  "PRODUCTION_STREAMBOOK_QUALIFIED": false,
+  "PRODUCTION_SDK_IDENTITY_QUALIFIED": false,
+  "HUMAN_ACTIONS_REMAINING": [
+    "Select EOA or historical D6 account",
+    "Administrator time synchronization and approved bounded time source",
+    "Usable archive RPC and complete historical terminal-order/credential-scope evidence",
+    "Custody owner/service principal and trust-policy approval",
+    "Real custody acceptance/probe and independent audit; CALIBRATE last"
+  ],
+  "BLOCKERS": [
+    "Production account selection unresolved",
+    "Wallet-wide history and on-chain cross-check absent; RPC attempts failed",
+    "Candidate authority has no approved roles or isolated principal",
+    "Actual custody acceptance/supervisor-death/recovery not qualified",
+    "Clock bound exceeds100ms; Windows service administration denied",
+    "Real StreamBook rejected STALE_WIRE_EVENT; full production assembly unbound"
+  ],
+  "tests": {
+    "full_suite_original_exit": 1,
+    "original_failed_group": "analysis/d6/causal_capture_24h_v1",
+    "corrected_group_report": "analysis/provisioning_capture_regressions.txt",
+    "final_passed_by_group": {
+      "analysis/d5/auditor_next": 38,
+      "analysis/d51/depth_cache_candidate_not_adopted": 3,
+      "analysis/d51/exact_depth_cache_candidate": 2,
+      "analysis/d51/latency_tools": 2,
+      "analysis/d51/native_json_candidate": 9,
+      "analysis/d51/side_projection_candidate": 1,
+      "analysis/d51": 1,
+      "analysis/d6/causal_capture_24h_v1": 22,
+      "analysis/d6/paper_runtime": 22,
+      "analysis/d6/pipeline": 4,
+      "analysis/d6/prospective_24h_v1": 10,
+      "analysis/d6/prospective_v1": 117,
+      "analysis/d6/real_execution_calibration_v1": 712,
+      "analysis/d6/research": 3,
+      "analysis/d6/tests": 35,
+      "analysis": 12,
+      "backend/tests": 755,
+      "tests": 8
+    },
+    "final_unique_suite_passed": 1756,
+    "additional_candidate_tests": 7,
+    "all_final_test_groups_pass": true,
+    "note": "18-group run plus rerun of the complete corrected22-case group. Seven candidate tests separate; no double counting.",
+    "candidate_report": "analysis/provisioning_model_standalone_results.txt",
+    "candidate_scope": "Explicit standalone multi-process architecture experiments; no relaxation of offline_suite subprocess restrictions."
+  },
+  "frozen_v1_hashes": {
+    "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+    "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+  },
+  "tested_changed_source_hashes": {
+    "analysis/d6/causal_capture_24h_v1/runner.py": "4015077b2caea87866e3ee273335e8c1f0adf8381a79459adae80f52f49f6a65",
+    "analysis/d6/real_execution_calibration_v1/readonly_provider.py": "03028fae144a042ec146df9449fe0edb8d8708c7c070ea5726f6096245992aef",
+    "analysis/d6/real_execution_calibration_v1/test_round5.py": "64426fddd680f5b606bb500e8ad1dd6f547cf0594d0f1ff364f7135b3e160a84",
+    "analysis/d6/real_execution_calibration_v1/test_sdk_environment_binding.py": "5330d3d317d0ed597d179bf2ca5c3887c63f5e4eca33b765d2d2731a6cb32efb",
+    "analysis/provisioning_signed_custody.py": "2883a8cd82b0bfe623b1088aecb57500e6c12218f51bae31b182597890266142",
+    "analysis/provisioning_model_checks.py": "00ce0047169959846e00d673fdd37402fbd33a6dd863309c66eaa4a0ff11d706"
+  }
+}

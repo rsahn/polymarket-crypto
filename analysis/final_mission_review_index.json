@@ -1,0 +1,19 @@
+{
+  "authority_review_outside_git": "D:\\polymarket-real-calibration\\provisioning-authority-candidate\\final-mission-readiness-review.json",
+  "authority_policy_ready": false,
+  "authority_policy_approved": false,
+  "preflight_table": "analysis/FINAL_PROVISIONING_PROOF_TABLE.json",
+  "external_requirement": "analysis/REMAINING_SETTLEMENT_DATA_REQUIREMENT.txt",
+  "read_only": true,
+  "no_transactions": true,
+  "no_revocations": true,
+  "no_orders": true,
+  "tests": {
+    "baseline": 1755,
+    "current_targeted": 56,
+    "current_targeted_passed": 56,
+    "full_current_suite_run": false
+  },
+  "clock_numerical_pass": true,
+  "streambook_observed_synced": true
+}

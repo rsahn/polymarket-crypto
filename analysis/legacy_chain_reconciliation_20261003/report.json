@@ -1,0 +1,21 @@
+{
+  "from_block": 94331195,
+  "to_block": 94902553,
+  "anchor_hash": "0x9943285bb3ae6ac8474cc3a12d83a3938507353c3bf75f6edbf477773578c286",
+  "complete_requested_ranges": true,
+  "transfer_logs": 1,
+  "cash_before": 0,
+  "cash_delta": 109160000,
+  "cash_after": 109160000,
+  "cash_reconciled": true,
+  "positions": [],
+  "verified_receipts": [
+    "0xeee934cede451fa4feb9f441714d692d58717de77980765f5497aa5f8281051d"
+  ],
+  "settlement_reconciliation_proven": false,
+  "limitations": [
+    "Transfer reconstruction does not prove absence of pending off-chain settlements.",
+    "Position IDs received before wallet deployment are outside this log interval.",
+    "No independent fee liability ledger or atomic CLOB/chain snapshot."
+  ]
+}

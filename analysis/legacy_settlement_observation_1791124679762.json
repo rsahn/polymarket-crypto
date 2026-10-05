@@ -1,0 +1,130 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "observed_ms": 1791124679762,
+  "private_archive": "D:\\polymarket-real-calibration\\legacy-settlement-1791124679759906600",
+  "read_only": true,
+  "settlement_reconciliation_proven": false,
+  "wallet_wide_coverage_proven": false,
+  "trade_status_counts": {
+    "MATCHED": 0,
+    "MINED": 0,
+    "RETRYING": 0,
+    "FAILED": 0,
+    "CONFIRMED": 0
+  },
+  "non_terminal_accessible_count": 0,
+  "clob_cash": {
+    "balance_raw": "109160000",
+    "sha256": "27ce7218d59ce0276fc9fe21f42e1e4f6898e4a156d4631f6f8ad8c07a0512b4"
+  },
+  "chain_anchor": {
+    "number": "0x5a8c42f",
+    "hash": "0x20a1957216f8cb792f770140419bdde12c454da3f3f38705bc5bb9f8659c077b",
+    "timestamp": "0x6ac264c6"
+  },
+  "chain_cash_raw": "109160000",
+  "cash_values_equal": true,
+  "receipt_checks": [],
+  "pages": {
+    "trades": {
+      "count": 0,
+      "pages_sha256": [
+        "14e252fec362c713b63b74fc665e11e7dd05fd5b1b1410b6f0236a147de84011"
+      ],
+      "pagination_exhausted": true
+    },
+    "orders": {
+      "count": 0,
+      "pages_sha256": [
+        "127a944a89f90b72234a563f1a1aa3c5d1cac9628395d3ce5aaa4b80ff77e5e1"
+      ],
+      "pagination_exhausted": true
+    },
+    "positions": {
+      "count": 0,
+      "pages_sha256": [
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      "pagination_exhausted": true
+    },
+    "activity": {
+      "count": 0,
+      "pages_sha256": [
+        "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      ],
+      "pagination_exhausted": true
+    }
+  },
+  "network_audit": [
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/trades",
+      "started_ms": 1791124679796,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791124680003,
+      "parse_complete_ms": 1791124680003,
+      "shape": "dict",
+      "finished_ms": 1791124680003,
+      "elapsed_ms": 207,
+      "thread_cpu_ms": 31.25
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/data/orders",
+      "started_ms": 1791124680007,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791124680169,
+      "parse_complete_ms": 1791124680169,
+      "shape": "dict",
+      "finished_ms": 1791124680169,
+      "elapsed_ms": 162,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/positions",
+      "started_ms": 1791124680172,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791124680550,
+      "parse_complete_ms": 1791124680550,
+      "shape": "list",
+      "finished_ms": 1791124680550,
+      "elapsed_ms": 378,
+      "thread_cpu_ms": 46.875
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://data-api.polymarket.com/activity",
+      "started_ms": 1791124680554,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791124680976,
+      "parse_complete_ms": 1791124680976,
+      "shape": "list",
+      "finished_ms": 1791124680976,
+      "elapsed_ms": 422,
+      "thread_cpu_ms": 15.625
+    },
+    {
+      "method": "GET",
+      "endpoint": "https://clob.polymarket.com/balance-allowance",
+      "started_ms": 1791124680981,
+      "transport": "URLLIB_NO_POOL",
+      "http_status": 200,
+      "response_received_ms": 1791124681161,
+      "parse_complete_ms": 1791124681161,
+      "shape": "dict",
+      "finished_ms": 1791124681161,
+      "elapsed_ms": 180,
+      "thread_cpu_ms": 46.875
+    }
+  ],
+  "limitations": [
+    "Credential view is not independently certified wallet-wide.",
+    "Finalized receipts establish settlement of listed transactions, not absence of unlisted pending trades.",
+    "Cash equality at different observations does not establish an atomic common cut or complete historical fee accounting."
+  ]
+}

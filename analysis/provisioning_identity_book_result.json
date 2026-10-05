@@ -1,0 +1,24 @@
+{
+  "sdk_identity": {
+    "status": "FAILED",
+    "error_type": "ValueError"
+  },
+  "real_streambook": {
+    "slug": "btc-updown-5m-1791053400",
+    "condition_id": "0xf0ba85e1ec61a0e2fe3c2b9d8c7eb77e35acb9aba4661663a784f3a6e27d41c5",
+    "tokens": [
+      "33416730547102941646414982181118890847200688383386023359041518560550427373855",
+      "24432253529691597808038728173651137071673626162770016660908605549377511263641"
+    ],
+    "observed_ms": 1791053502284,
+    "available": false,
+    "book_synced": false,
+    "messages": 0,
+    "failure": "STALE_WIRE_EVENT",
+    "production_session_bound": false,
+    "diagnostic_only": true,
+    "expiry_ms": 1791053700000
+  },
+  "LIVE_GATE": "BLOCKED",
+  "armed": false
+}

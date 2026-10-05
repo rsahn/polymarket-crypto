@@ -1,0 +1,202 @@
+{
+  "wallet": "0x871d37b430c42ddbd0bbd37c29c02a2974109de9",
+  "from_block": 94331195,
+  "to_block": 94902121,
+  "all_session_signer_storage_mutation_paths_covered": true,
+  "historical_zero_signers_proven": true,
+  "proof_scope": "On-chain secp256k1 and P-256 authorizations in the fixed interval; not off-chain pending authorizations or a current-account certificate.",
+  "implementation_count": 1,
+  "upgrade_events": 0,
+  "pin_events": 0,
+  "bindings": [
+    {
+      "contract": "DepositWallet",
+      "block": 94331195,
+      "keccak256": "0xf5c1072460e64902af84d35f5bb1d0a15d80a88c5827b831a977fbc5a0684b96"
+    },
+    {
+      "contract": "DepositWallet",
+      "block": 94902121,
+      "keccak256": "0xf5c1072460e64902af84d35f5bb1d0a15d80a88c5827b831a977fbc5a0684b96"
+    },
+    {
+      "contract": "DepositWalletBeacon",
+      "block": 94331195,
+      "keccak256": "0xf87b06a1302051471df08ff79a938757509569e16b7a7efa55a3ea7b29b0b9d1"
+    },
+    {
+      "contract": "DepositWalletBeacon",
+      "block": 94902121,
+      "keccak256": "0xf87b06a1302051471df08ff79a938757509569e16b7a7efa55a3ea7b29b0b9d1"
+    }
+  ],
+  "slots": {
+    "sessionSignerAuthorizedUntil": "0x262dd1cbe20a9ecc9fedf7b43d241ce1a18ea01dc95ca2bd68106e58474d85da",
+    "passkeySessionSigner": "0x3aeceb64e5bf1bc571c0f9d844588aca01e747977eb627cfe37418f8e321be25",
+    "nonce": "0x94f7bc44c1694f5bd8c155ad0b7a1459b9ede3ac9b5899315d5f1b0e469b1ee5",
+    "paused": "0xf29c213ff54caf2dcc22e0344a6394963a5cddbb1c5e4db726dab7cc16720a98",
+    "owner": "0x66d9d15ef4055f078cc0556eabd27f3d296f56a09ac262d6fa49e5803fb4d73a",
+    "pendingOwner": "0xa75cd6676e8c6931a1d5524e251b69c2d29aba2b846aed8220a29ba688a1476f",
+    "pendingOwnerDeadline": "0x83e56f89581bfd0d900ad9e7f5ffe08b050af9835151520198ecf6256538e8ca",
+    "pendingOwnerNonce": "0xa250db4cdd0e79ff2dcd111477627e89b67cf8b26f7530ac9c97168fe892adce"
+  },
+  "mapping_layout": "secp: keccak256(abi.encode(address, base)); passkey: keccak256(abi.encode(bytes32, base)) plus 0=x,1=y,2=validUntil",
+  "writers": [
+    {
+      "source": "src/DepositWallet.sol",
+      "function": "execute",
+      "writes": 1,
+      "src": "11423:1971:22"
+    },
+    {
+      "source": "src/DepositWallet.sol",
+      "function": "pause",
+      "writes": 1,
+      "src": "17556:202:22"
+    },
+    {
+      "source": "src/DepositWallet.sol",
+      "function": "unpause",
+      "writes": 1,
+      "src": "17887:207:22"
+    },
+    {
+      "source": "src/DepositWallet.sol",
+      "function": "_setSessionSigner",
+      "writes": 1,
+      "src": "26113:291:22"
+    },
+    {
+      "source": "src/DepositWallet.sol",
+      "function": "_setPasskeySessionSigner",
+      "writes": 3,
+      "src": "26466:501:22"
+    },
+    {
+      "source": "src/libraries/Ownable.sol",
+      "function": "_initializeOwner",
+      "writes": 1,
+      "src": "4045:289:28"
+    },
+    {
+      "source": "src/libraries/Ownable.sol",
+      "function": "_setOwner",
+      "writes": 1,
+      "src": "4458:257:28"
+    },
+    {
+      "source": "src/libraries/Ownable.sol",
+      "function": "_setPendingOwner",
+      "writes": 1,
+      "src": "4843:187:28"
+    },
+    {
+      "source": "src/libraries/Ownable.sol",
+      "function": "_setPendingOwnerDeadline",
+      "writes": 1,
+      "src": "5194:196:28"
+    },
+    {
+      "source": "src/libraries/Ownable.sol",
+      "function": "_incrementPendingOwnerNonce",
+      "writes": 1,
+      "src": "5537:237:28"
+    },
+    {
+      "source": "lib/solady/src/utils/Initializable.sol",
+      "function": "initializer",
+      "writes": 2,
+      "src": "3611:1114:17"
+    },
+    {
+      "source": "lib/solady/src/utils/Initializable.sol",
+      "function": "reinitializer",
+      "writes": 2,
+      "src": "5011:1050:17"
+    },
+    {
+      "source": "lib/solady/src/utils/Initializable.sol",
+      "function": "_disableInitializers",
+      "writes": 1,
+      "src": "7121:737:17"
+    }
+  ],
+  "session_paths": [
+    {
+      "function": "authorizeSessionSigner",
+      "setter": "_setSessionSigner",
+      "event": "SessionSignerAuthorized",
+      "modifiers": [
+        "onlySelf"
+      ],
+      "src": "13879:357:22"
+    },
+    {
+      "function": "revokeSessionSigner",
+      "setter": "_setSessionSigner",
+      "event": "SessionSignerRevoked",
+      "modifiers": [
+        "onlySelf"
+      ],
+      "src": "14434:176:22"
+    },
+    {
+      "function": "revokeSessionSignerEmergency",
+      "setter": "_setSessionSigner",
+      "event": "SessionSignerRevokedEmergency",
+      "modifiers": [
+        "onlyPaused",
+        "onlyOwner"
+      ],
+      "src": "20900:206:22"
+    },
+    {
+      "function": "authorizePasskeySessionSigner",
+      "setter": "_setPasskeySessionSigner",
+      "event": "PasskeySessionSignerAuthorized",
+      "modifiers": [
+        "onlySelf"
+      ],
+      "src": "14680:493:22"
+    },
+    {
+      "function": "revokePasskeySessionSigner",
+      "setter": "_setPasskeySessionSigner",
+      "event": "PasskeySessionSignerRevoked",
+      "modifiers": [
+        "onlySelf"
+      ],
+      "src": "15245:283:22"
+    },
+    {
+      "function": "revokePasskeySessionSignerEmergency",
+      "setter": "_setPasskeySessionSigner",
+      "event": "PasskeySessionSignerRevokedEmergency",
+      "modifiers": [
+        "onlyPaused",
+        "onlyOwner"
+      ],
+      "src": "21191:313:22"
+    }
+  ],
+  "wallet_events": {
+    "OwnershipTransferred": 1,
+    "Initialized": 1,
+    "Execution": 21,
+    "BatchExecuted": 2
+  },
+  "passkey_events_checked": true,
+  "source_sha256": "4ec5704b2fe08768d93cc44aca4ff501050a391fc52ffae95fd4806142460b00",
+  "genesis_creation": {
+    "type": "CREATE2",
+    "initcode_keccak256": "0x9c37dfd87d0722ff8bd75c6e5ff45d7383a098b7576977d06b3829c804bcc103",
+    "constructor_storage_writes": "Only ERC1967 beacon slot; session mappings initially zero"
+  },
+  "assumptions": [
+    "Canonical RPC log responses and finalized anchor are truthful.",
+    "EVM execution and Solidity compiler semantics; collision/preimage resistance of keccak256.",
+    "No claim about off-chain registry records, unsubmitted owner signatures or blocks after the stated anchor."
+  ],
+  "review": "SESSION_STORAGE_PATH_PROOF.txt",
+  "read_only": true
+}

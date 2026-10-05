@@ -1,0 +1,67 @@
+{
+  "verified_at_ms": 1791124665454,
+  "manifest_sha256": "d8b885fccd9cf0f73a3505f93dd7c5a377fbc241cd1a20c9d0495d52d3d7c98c",
+  "files_verified": 1578,
+  "producer_pid": 12336,
+  "producer_sid": "S-1-5-21-996557404-12191610-680381608-1006",
+  "signature_and_context_verified": true,
+  "expiry_and_context_replay_rejected": true,
+  "reuse_within_lease_allowed": true,
+  "telemetry": {
+    "clock_sanity": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "check": "clock_sanity",
+      "collateral": "pUSD",
+      "key_id": "d6-windows-telemetry-v1",
+      "kind": "clock_sanity",
+      "market": "0xa23de9320c13f05f8c4389c2dd8c460fe959d0fc77a8ef07191484cb4ee4c288",
+      "observed_ms": 1791124665183,
+      "payload": {
+        "offset_ms": -4,
+        "uncertainty_ms": 52
+      },
+      "provenance_signature": "f5046c5d9a5faa63847c5e9fd5b8a5011b109a7c7481a24cd9f7a39d9a463a4c6734857c1b2a5881205216d462c48406a9d30f17438346b1e3fe50d1659353d11b",
+      "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+      "session": "d6-authority-20261004-v1",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "source_digest": "c9c84579545b5a89abbca21e0ef2d8a31e77906a09f801fe3e0d1b28761f8b87",
+      "strategy_hashes": {
+        "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+        "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+      },
+      "trust_policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+      "valid_until_ms": 1791124670183
+    },
+    "observed_ms": 1791124665414,
+    "ws_healthy": {
+      "account": "0x871d37B430C42DDBD0BBD37C29c02A2974109DE9",
+      "check": "ws_healthy",
+      "collateral": "pUSD",
+      "key_id": "d6-windows-telemetry-v1",
+      "kind": "ws_healthy",
+      "market": "0xa23de9320c13f05f8c4389c2dd8c460fe959d0fc77a8ef07191484cb4ee4c288",
+      "observed_ms": 1791124665395,
+      "payload": {
+        "generation": 1,
+        "receive_ms": 1791124665377,
+        "state": "SYNCHRONIZED",
+        "tokens": [
+          "36692592359370256919706114355590283632497412749391870036010528809854103171956",
+          "47254451323205117744254230259442323678915110632042512192938743078989525068646"
+        ]
+      },
+      "provenance_signature": "365473f039f834b77c5602cbf75dd8ba7b5353a99ba33c7a0ec99ca7428c121c11e8ceea7f23b636c5cae63bb969847091a108e6af5a6ccf15fe0df181b925301b",
+      "provider": "D6_WINDOWS_INDEPENDENT_TELEMETRY",
+      "session": "d6-authority-20261004-v1",
+      "signer": "0x9348eFd557A09e644795C8F114BcF0BeF86F203a",
+      "source_digest": "5013e8776ca3c53f379077c3f13e5b29bfb97b5f04a17784c97dbf03331bebc6",
+      "strategy_hashes": {
+        "analysis/d6/paper_live.py": "5d9759024bbb6e51f6ecb73588fdfd73a5b11a01f582555b008b3f3e60a34364",
+        "analysis/run_d6_paper_live.py": "a9bd5809ccf1a1d5c363e1abb62fda7eca5925f98c467da5d87d922afabdf405"
+      },
+      "trust_policy_digest": "0f5222753756d6dba1cb72951308f43ede74c6ef116391c44875bc17f1a67b3c",
+      "valid_until_ms": 1791124665836
+    }
+  },
+  "scope": "clock_sanity and ws_healthy only; snapshot is not reusable after expiry"
+}
