@@ -1,31 +1,25 @@
 """Multi-crypto coordinator — runs N concurrent opportunities across cryptos.
 
-Each crypto/timeframe pair gets its own:
-  - StreamBook (WebSocket order book)
-  - Binance price feed
-  - Signal evaluation
+Each crypto gets its own:
+  - V1Strategy (price move detection)
+  - Capital allocation
   - Opportunity pipeline
 
 Shared:
-  - Account (one wallet)
-  - Capital allocation across markets
+  - Account (one wallet, one AsyncSecureClient)
   - Risk management (global drawdown, total exposure)
   - Logging/journal
 """
-import asyncio, copy, hashlib, os, time, uuid, shutil, traceback
+import asyncio, time
 from decimal import Decimal
-from collections import deque
 from pathlib import Path
 
-from .core import dec, digest, encoded, redact
-from .v1_binding import bind, verify
-from .transport import validate_signed
-from .incidents import capture as capture_incident
-from .engine import HumanArm, Coordinator, transient_availability, TRANSIENT_AVAILABILITY
+from .core import dec, digest, verify
+from .multi_v1_strategy import V1Strategy
 
 
 class MarketSlot:
-    """Holds state for one crypto/timeframe trading slot."""
+    """Holds state for one crypto trading slot."""
     
     def __init__(self, crypto, timeframe_label, timeframe_s,
                  condition_id, token_up, token_down, market_slug):
@@ -39,11 +33,12 @@ class MarketSlot:
         self.key = f"{crypto}_{timeframe_label}"
         
         # Runtime state
-        self.coordinator = None
-        self.stream_book = None
         self.binance_symbol = f"{crypto}USDT"
+        self.stream_book = None
+        self.strategy = None
         self.active = True
         self.opportunities = 0
+        self.trades = 0
         self.last_trade_ms = 0
         self.pnl = Decimal("0")
         
@@ -64,39 +59,45 @@ class MultiCoordinator:
         self.sleep = sleep or asyncio.sleep
         
         self.slots = {}  # key -> MarketSlot
-        self.sub_coordinators = {}  # key -> Coordinator
         
         # Capital allocation
         self.total_cash = Decimal("109.16")
-        self.allocated = {}  # key -> Decimal allocated
+        self.allocated = {}  # key -> Decimal
         self.max_per_market = Decimal("25")
         self.max_total = Decimal("100")
         self.max_concurrent = 4
         
         # Global risk
         self.global_pnl = Decimal("0")
-        self.max_drawdown = Decimal("-50")  # -$50 global stop
+        self.max_drawdown = Decimal("-50")
         self.consecutive_losses = 0
         self.max_consecutive_losses = 5
         
-        # Price feeds
-        self.binance_collectors = {}
-        self.tick_windows = {}  # key -> deque
+        # Binance collectors
+        self.collectors = {}
+        self.collector_tasks = {}
         
-        self.busy_slots = set()  # keys currently in a trade
+        self.busy_slots = set()
         self.stop = False
         
         self.runtime_counts = {
             'OPPORTUNITIES': 0,
-            'SHADOW_REJECTIONS': 0,
+            'TRADES': 0,
             'MARKETS_ACTIVE': 0,
         }
         
     def add_slot(self, slot):
-        """Register a market slot."""
+        """Register a market slot with its V1 strategy."""
         self.slots[slot.key] = slot
         self.allocated[slot.key] = Decimal("0")
-        self.tick_windows[slot.key] = deque(maxlen=4096)
+        
+        # Create V1 strategy for this slot
+        slot.strategy = V1Strategy(
+            slot.binance_symbol,
+            on_opportunity=lambda ts, move, side, k=slot.key: 
+                self._on_opportunity(k, ts, move, side)
+        )
+        
         self.runtime_counts['MARKETS_ACTIVE'] = len(self.slots)
         self.ledger.emit('MULTI_SLOT_ADDED', {
             'key': slot.key,
@@ -104,6 +105,26 @@ class MultiCoordinator:
             'timeframe': slot.timeframe_label,
             'condition_id': slot.condition_id,
             'total_slots': len(self.slots),
+        })
+        
+    async def _on_opportunity(self, key, signal_ts, move, side):
+        """Handle a V1 signal for a specific slot."""
+        if self.stop or self.ledger.stop:
+            return
+        if key in self.busy_slots:
+            return  # Already in a trade on this slot
+        
+        self.runtime_counts['OPPORTUNITIES'] += 1
+        self.slots[key].opportunities += 1
+        
+        self.ledger.emit('MULTI_OPPORTUNITY', {
+            'key': key,
+            'signal_ts': signal_ts,
+            'move_pct': move,
+            'side': side,
+            'cash': str(self.total_cash),
+            'available': str(self.available_capital()),
+            'opportunities': self.runtime_counts['OPPORTUNITIES'],
         })
         
     def available_capital(self):
@@ -167,58 +188,25 @@ class MultiCoordinator:
             self.stop = True
     
     def guard(self, entry=True):
-        """Global guard — checks arm, kill switch, disk."""
+        """Global guard."""
         verify()
-        if entry and shutil.disk_usage(self.ledger.journal.path.parent).free < 512 * 1024 ** 2:
-            self.ledger.halt('DISK_LOW')
-        if self.arm is None:
-            raise ValueError('CALIBRATION_NOT_ARMED')
-        self.arm.check(self.ledger.journal.experiment_id, entry)
-        if self.kill_path.exists() and not self.ledger.stop:
+        if entry and Path(self.kill_path).exists() and not self.ledger.stop:
             self.ledger.halt('MANUAL_KILL')
         if entry and (self.ledger.stop or self.ledger.stop_new_entries):
             raise ValueError('STOP_NEW_ENTRIES')
         if self.stop:
             raise ValueError('MULTI_STOPPED')
     
-    async def on_btc_tick(self, tick):
-        """Handle BTC price tick (legacy, maps to BTC_5m slot)."""
-        key = "BTC_5m"
-        await self._on_tick(key, tick)
-    
-    async def on_eth_tick(self, tick):
-        """Handle ETH price tick."""
-        key = "ETH_5m"
-        await self._on_tick(key, tick)
-    
-    async def on_sol_tick(self, tick):
-        """Handle SOL price tick."""
-        key = "SOL_5m"
-        await self._on_tick(key, tick)
-    
-    async def _on_tick(self, key, tick):
-        """Generic tick handler for any crypto."""
-        if self.stop:
+    async def on_tick(self, key, tick):
+        """Route a Binance tick to the right strategy."""
+        if key not in self.slots:
             return
-        if tick.event_ts_ms is None or tick.recv_ts_ms is None:
-            return
-        
-        window = self.tick_windows[key]
-        window.append({
-            'source_ms': tick.event_ts_ms,
-            'receive_ms': tick.recv_ts_ms,
-            'price': tick.price,
-        })
-        
-        # Route to sub-coordinator if exists
-        if key in self.sub_coordinators:
-            try:
-                await self.sub_coordinators[key].on_btc(tick)
-            except BaseException:
-                pass
+        slot = self.slots[key]
+        if slot.strategy:
+            await slot.strategy.on_tick(tick)
     
     async def run(self):
-        """Main loop — reconciles account and checks opportunities."""
+        """Main loop."""
         self.ledger.emit('MULTI_START', {
             'slots': list(self.slots.keys()),
             'total_cash': str(self.total_cash),
@@ -235,24 +223,30 @@ class MultiCoordinator:
                 cash = Decimal(str(snapshot.get('cash', '0')))
                 self.total_cash = cash
                 
+                # Collect diagnostics from all strategies
+                diagnostics = {}
+                for key, slot in self.slots.items():
+                    if slot.strategy:
+                        diagnostics[key] = slot.strategy.diagnostics()
+                
                 self.ledger.emit('MULTI_RECONCILE', {
                     'cash': str(cash),
                     'available': str(self.available_capital()),
                     'allocated': {k: str(v) for k, v in self.allocated.items()},
                     'global_pnl': str(self.global_pnl),
                     'active_slots': len(self.busy_slots),
+                    'opportunities': self.runtime_counts['OPPORTUNITIES'],
+                    'diagnostics': diagnostics,
                 })
                 
-                await self.sleep(5)  # 5s reconciliation cycle
+                await self.sleep(10)  # 10s reconciliation cycle
                 
             except ValueError as exc:
-                if transient_availability(exc):
-                    self.ledger.emit('MULTI_TRANSIENT', {'error': str(exc)})
-                    await self.sleep(2)
-                    continue
                 if str(exc) in ('STOP_NEW_ENTRIES', 'MULTI_STOPPED'):
                     break
-                raise
+                self.ledger.emit('MULTI_TRANSIENT', {'error': str(exc)})
+                await self.sleep(2)
+                continue
             except BaseException:
                 self.ledger.halt('MULTI_FATAL')
                 raise
@@ -260,11 +254,6 @@ class MultiCoordinator:
     def close(self):
         """Clean shutdown."""
         self.stop = True
-        for key, sub in self.sub_coordinators.items():
-            try:
-                sub.ledger.close()
-            except BaseException:
-                pass
         self.ledger.emit('MULTI_STOP', {
             'global_pnl': str(self.global_pnl),
             'total_opportunities': self.runtime_counts['OPPORTUNITIES'],

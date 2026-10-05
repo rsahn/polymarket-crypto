@@ -1,11 +1,12 @@
-"""Multi-crypto live runner — trades N cryptos simultaneously.
+"""Multi-crypto live runner — trades ALL cryptos simultaneously.
+
+Kills any existing single-crypto bot, then launches N strategies in parallel.
+ONE AsyncSecureClient, ONE wallet, NO nonce conflicts.
 
 Usage:
     python -m analysis.d6.real_execution_calibration_v1.multi_runner
-
-Discovers all active crypto Up/Down markets and runs them in parallel.
 """
-import asyncio, json, shutil, sys, time, os as _os
+import asyncio, json, shutil, sys, time, os as _os, signal
 from pathlib import Path
 from decimal import Decimal
 
@@ -13,17 +14,18 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path[:0] = [str(ROOT), str(ROOT / "backend")]
 
 from polymarket import AsyncSecureClient, ApiKeyCreds
-from polymarket.environments import PRODUCTION, _create_environment, _EnvironmentConfig, _WalletDerivation
+from polymarket.environments import PRODUCTION, _create_environment, _EnvironmentConfig
 from app.live.l2_existing_reader import load_existing
 from app.live.production_readonly import AccountStateSource, PositionSource
 from app.live.readonly_book_stream import StreamBook
+from app.collectors.binance import BinanceCollector
 
-from analysis.d6.real_execution_calibration_v1.runner import PreparedSession, SignalSource
-from analysis.d6.real_execution_calibration_v1.engine import HumanArm, Coordinator
+from analysis.d6.real_execution_calibration_v1.runner import PreparedSession
+from analysis.d6.real_execution_calibration_v1.engine import HumanArm
 from analysis.d6.real_execution_calibration_v1.multi_engine import MultiCoordinator, MarketSlot
-from analysis.d6.real_execution_calibration_v1.multi_market_discovery import discover_all, BINANCE_SYMBOLS, CRYPTO_SLUGS
+from analysis.d6.real_execution_calibration_v1.multi_market_discovery import discover_all, BINANCE_SYMBOLS
 from analysis.d6.real_execution_calibration_v1.evidence import SelfAttestingAuthority
-from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier, FeeRisk
+from analysis.d6.real_execution_calibration_v1.qualification import EvidenceVerifier
 from analysis.d6.real_execution_calibration_v1.custody import CustodyOwner, CustodyStateStore
 from analysis.d6.real_execution_calibration_v1.manual_custody import (
     ManualCustodyChannel, ManualReceiptAuthority, ManualReceiptVerifier,
@@ -32,7 +34,6 @@ from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_ve
 from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id, Journal, digest
 from analysis.d6.real_execution_calibration_v1.adapters import CalibrationEvidenceSource
 from analysis.d6.real_execution_calibration_v1.transport import SDKPort
-from analysis.d6.real_execution_calibration_v1.supervisor import run as supervisor_run
 
 # --- Production constants ---
 ACCOUNT = "0x871d37b430c42ddbd0bbd37c29c02a2974109de9"
@@ -44,6 +45,33 @@ DPAPI_DIR = Path.home() / "AppData/Local/PolymarketD6L2"
 DIRECTORY = Path("D:/polymarket-real-calibration/live")
 import tempfile as _tf
 CUSTODY_JOURNAL_PATH = Path(_tf.gettempdir()) / f"polymarket_d6_custody_multi_{_os.getpid()}.jsonl"
+
+# --- Kill any existing run016x bots ---
+def _kill_existing():
+    """Kill any old python processes running live_runner or earlier multi bots."""
+    import subprocess
+    try:
+        # Use wmic to find python processes with matching command lines
+        result = subprocess.run(
+            ['wmic', 'process', 'where', 'name="python.exe"', 'get', 'ProcessId,CommandLine', '/format:csv'],
+            capture_output=True, text=True, timeout=10
+        )
+        for line in result.stdout.split('\n'):
+            if 'live_runner' in line or 'multi_runner' in line:
+                parts = line.strip().split(',')
+                if len(parts) >= 2:
+                    try:
+                        pid = int(parts[-1])
+                        if pid != _os.getpid():
+                            _os.system(f'taskkill /F /PID {pid} >nul 2>&1')
+                            print(f"Killed old bot PID {pid}")
+                    except (ValueError, OSError):
+                        pass
+    except Exception as e:
+        print(f"Kill check (non-fatal): {e}")
+    print()
+
+_kill_existing()
 
 # --- PATCHED ENVIRONNEMENT ---
 _PRODUCTION_CONFIG = PRODUCTION._config
@@ -96,18 +124,17 @@ print("\n=== DISCOVERING ALL CRYPTO UP/DOWN MARKETS ===\n")
 markets, errors = discover_all()
 print(f"Discovered {len(markets)} active markets")
 for m in markets:
-    print(f"  {m['crypto']:4s} {m['timeframe_label']:3s} | cond={m['condition_id'][:10]}... | {m['market_slug']}")
+    print(f"  {m['crypto']:4s} {m['timeframe_label']:3s} | {m['market_slug']}")
 if errors:
-    print(f"\nErrors ({len(errors)}):")
     for e in errors:
-        print(f"  {e}")
+        print(f"  error: {e}")
 
 if not markets:
     print("FATAL: No markets discovered!")
     sys.exit(1)
 
 # --- Build market slots ---
-# Start with 5m only for safety, expand later
+# Only 5m for now (faster signals), 15m added later
 slots = []
 for m in markets:
     if m["timeframe_label"] != "5m":
@@ -123,25 +150,21 @@ for m in markets:
     )
     slot.binance_symbol = BINANCE_SYMBOLS.get(m["crypto"], f"{m['crypto']}USDT")
     slots.append(slot)
-    print(f"  Slot created: {slot.key} ({slot.binance_symbol})")
+    print(f"  Slot: {slot.key} ({slot.binance_symbol})")
 
-print(f"\nActive slots: {len(slots)}")
+print(f"\nActive 5m slots: {len(slots)}")
 
 # --- Baseline ---
 BASELINE_PATH = DIRECTORY / "BASELINE_MULTI.json"
 if BASELINE_PATH.exists():
     _baseline_data = json.loads(BASELINE_PATH.read_text())
-    print(f"Baseline charge (brut): {digest(_baseline_data)}")
 else:
     _baseline_data = {
         "version": "REAL_EXECUTION_CALIBRATION_V1_MULTI",
         "started": int(time.time() * 1000),
         "slots": [s.key for s in slots],
     }
-    BASELINE_PATH.write_text(json.dumps(_baseline_data, indent=2))
-    print(f"Baseline created: {digest(_baseline_data)}")
 
-# --- Allocate experiment_id ---
 EXPERIMENT_ID = allocate_experiment_id(DIRECTORY, base_name="multi-v1")
 print(f"Allocated experiment_id: {EXPERIMENT_ID}")
 _baseline_data['session'] = EXPERIMENT_ID
@@ -180,7 +203,7 @@ custody_owner = CustodyOwner(channel, receipt_verifier, state_store=custody_stor
 verifier = EvidenceVerifier(
     authority,
     account=ACCOUNT,
-    market=slots[0].condition_id,  # primary market for evidence
+    market=slots[0].condition_id,
     session=EXPERIMENT_ID,
     collateral=COLLATERAL,
     strategy_hashes=strategy_hashes,
@@ -216,7 +239,7 @@ async def build_secure_client():
             private_key = val
             break
     if not private_key:
-        raise ValueError("PRIVATE_KEY_REQUIRED")
+        raise ValueError("PRIVATE_KEY_REQUIRED: set SIGNER_PRIVATE_KEY env var")
     client = await AsyncSecureClient.create(
         private_key=private_key,
         wallet=ACCOUNT,
@@ -226,20 +249,22 @@ async def build_secure_client():
     )
     return client
 
+
 async def main():
     now_ms = lambda: int(time.time() * 1000)
+    expiry_ms = int(time.time() * 1000) + 86400000 * 30
 
-    print("\nCreating AsyncSecureClient...")
+    print("\n=== BUILDING ASYNC SECURE CLIENT ===")
     secure_client = await build_secure_client()
     print(f"  wallet={secure_client.wallet}")
     print(f"  signer={secure_client.signer}")
 
+    # --- Account readers ---
     account_reader = AccountStateSource(
         secure_client, wallet=ACCOUNT, spender=EXCHANGE_V2,
         clock=now_ms, collateral_symbol="pUSD",
     )
 
-    # Build token types for position reader
     all_tokens = {}
     for s in slots:
         all_tokens[s.token_up] = "CONDITIONAL"
@@ -251,7 +276,7 @@ async def main():
         clock=now_ms, collateral_symbol="pUSD",
     )
 
-    # --- 5. Build session ---
+    # --- Session ---
     baseline = _baseline_data
     session = PreparedSession(
         directory=DIRECTORY,
@@ -260,41 +285,34 @@ async def main():
         starting_cash="109.16",
         account_reader=account_reader,
         position_reader=position_reader,
-        stream=None,  # Will be set per-slot
+        stream=None,
         market=slots[0].condition_id,
         collateral=COLLATERAL,
         tokens={"UP": slots[0].token_up, "DOWN": slots[0].token_down},
         clock=now_ms,
         evidence_source=CalibrationEvidenceSource(
-            account_reader,
-            position_reader,
-            account=ACCOUNT,
-            collateral=COLLATERAL,
-            collateral_symbol='pUSD',
-            clock=now_ms,
-            baseline=baseline,
-            authority=authority,
-            session=EXPERIMENT_ID,
+            account_reader, position_reader,
+            account=ACCOUNT, collateral=COLLATERAL,
+            collateral_symbol='pUSD', clock=now_ms,
+            baseline=baseline, authority=authority, session=EXPERIMENT_ID,
         ),
         authority=authority,
         baseline=baseline,
     )
     print("OK PreparedSession built")
 
-    # --- 6. Build MultiCoordinator ---
+    # --- MultiCoordinator ---
     multi = MultiCoordinator(
         session.ledger,
         session.account,
         DIRECTORY / "STOP_MULTI",
         clock=now_ms,
     )
-
-    # Register all slots
     for s in slots:
         multi.add_slot(s)
 
-    # --- 7. Connect StreamBooks for each slot ---
-    expiry_ms = int(time.time() * 1000) + 86400000 * 30
+    # --- Connect StreamBooks ---
+    print("\n=== CONNECTING STREAMBOOKS ===")
     for s in slots:
         book = StreamBook(
             slug=s.market_slug,
@@ -305,20 +323,44 @@ async def main():
         )
         book.connect(s.market_slug, (s.token_up, s.token_down), 1)
         s.stream_book = book
-        print(f"  StreamBook connected: {s.key}")
+        print(f"  StreamBook: {s.key}")
 
-    # --- 8. Preflight ---
+    # --- Start Binance collectors ---
+    print("\n=== STARTING BINANCE PRICE FEEDS ===")
+    collector_tasks = []
+    for s in slots:
+        sym = s.binance_symbol.lower()
+        key = s.key
+        
+        async def make_collector(slot_key, symbol):
+            async def on_tick(tick):
+                await multi.on_tick(slot_key, tick)
+            async def on_status(kind):
+                pass
+            collector = BinanceCollector(symbol, on_tick, on_status)
+            await collector.run()
+        
+        task = asyncio.create_task(make_collector(key, sym))
+        collector_tasks.append(task)
+        print(f"  Binance feed: {key} ({sym})")
+
+    # --- Preflight ---
     from analysis.d6.real_execution_calibration_v1.preflight import evaluate as preflight_eval
     proof = evidence()
     free_bytes = shutil.disk_usage(DIRECTORY).free
     report = preflight_eval(proof, now_ms(), free_bytes, verifier)
-    print(f"Preflight status: {report['status']}")
+    print(f"\nPreflight status: {report['status']}")
 
     if report["status"] != "CALIBRATION_READY":
         print(f"BLOCKED: {report.get('blockers', [])}")
+        # Clean up collectors
+        for t in collector_tasks:
+            t.cancel()
+        await secure_client.close()
+        session.close()
         return
 
-    # --- 9. Auto-arm ---
+    # --- Auto-arm ---
     print(f"\n>>> AUTO-ARM: {EXPERIMENT_ID} (MULTI-CRYPTO)")
     from analysis.d6.real_execution_calibration_v1.engine import _ARM_FACTORY
     arm = HumanArm(EXPERIMENT_ID, report, _factory=_ARM_FACTORY)
@@ -326,21 +368,26 @@ async def main():
     print(f"ARMED: experiment_id={arm.experiment_id}, nonce={arm.nonce}")
 
     session.ledger.emit('ARM_STATE', {
-        'armed': True,
-        'pid': _os.getpid(),
-        'nonce': arm.nonce,
-        'persisted_arming': False,
+        'armed': True, 'pid': _os.getpid(), 'nonce': arm.nonce, 'persisted_arming': False,
     })
 
-    # --- 10. Run ---
-    print("\n=== MULTI-CRYPTO ENGINE STARTING ===\n")
+    # --- RUN ---
+    print("\n" + "=" * 60)
+    print("  MULTI-CRYPTO ENGINE  —  LIVE")
+    print(f"  {len(slots)} markets · {[s.key for s in slots]}")
+    print("=" * 60 + "\n")
+
     try:
         await multi.run()
     finally:
+        print("\nShutting down...")
         multi.close()
+        for t in collector_tasks:
+            t.cancel()
         await secure_client.close()
         session.close()
         print("Multi-crypto engine stopped")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
