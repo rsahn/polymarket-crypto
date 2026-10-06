@@ -32,6 +32,7 @@ from analysis.d6.real_execution_calibration_v1.manual_custody import (
 )
 from analysis.d6.real_execution_calibration_v1.v1_binding import verify as v1_verify
 from analysis.d6.real_execution_calibration_v1.core import allocate_experiment_id, Journal, digest
+from analysis.d6.real_execution_calibration_v1.multi_ledger import MultiCalibrationLedger
 from analysis.d6.real_execution_calibration_v1.adapters import CalibrationEvidenceSource, AccountAdapter, BookAdapter
 from analysis.d6.real_execution_calibration_v1.transport import SDKPort
 from analysis.d6.real_execution_calibration_v1.live_logging import LoggedJournal, LiveLog
@@ -329,9 +330,8 @@ async def main():
         EXPERIMENT_ID, log
     )
     
-    # CalibrationLedger
-    from analysis.d6.real_execution_calibration_v1.core import CalibrationLedger
-    ledger = CalibrationLedger(journal, ACCOUNT, "109.16")
+    # MultiCalibrationLedger (supports concurrent tokens)
+    ledger = MultiCalibrationLedger(journal, ACCOUNT, "109.16")
     
     def fault(reason):
         ledger.stop = True
@@ -339,39 +339,66 @@ async def main():
         ledger.reasons.append(reason)
     log.on_fault = fault
     
-    # AccountAdapter + BookAdapter for each slot
-    # We use the first slot's condition/tokens as primary
+    # AccountAdapter (single shared account source for all slots)
+    evidence_source = CalibrationEvidenceSource(
+        account_reader, position_reader,
+        account=ACCOUNT, collateral=COLLATERAL,
+        collateral_symbol='pUSD', clock=now_ms,
+        baseline=_baseline_data, authority=authority, session=EXPERIMENT_ID,
+    )
     account_adapter = AccountAdapter(
         account_reader, position_reader,
         account=ACCOUNT,
         collateral=COLLATERAL,
-        evidence_source=CalibrationEvidenceSource(
-            account_reader, position_reader,
-            account=ACCOUNT, collateral=COLLATERAL,
-            collateral_symbol='pUSD', clock=now_ms,
-            baseline=_baseline_data, authority=authority, session=EXPERIMENT_ID,
-        ),
+        evidence_source=evidence_source,
         authority=authority,
         baseline=_baseline_data,
         session=EXPERIMENT_ID,
         intents=lambda: ledger.orders,
         clock=now_ms,
     )
-    
+
+    # --- SDKPort (trading gateway) ---
+    sdk_port = SDKPort(
+        secure_client,
+        maker=ACCOUNT,
+        signer=SIGNER,
+        ledger=ledger,
+        arm=None,
+        qualified=False,
+    )
+
+    # --- Fee ceiling function ---
+    def current_fee():
+        current = evidence()
+        record = current["fee_upper_bound_proven"]
+        f = verifier.validate("fee_upper_bound_proven", record, now_ms())
+        return FeeRisk(
+            f["cash_collateral"], f["outcome_shares"],
+            f["collateral_per_share_upper"], f["fee_source_digest"],
+            verifier.context["market"], record["valid_until_ms"], f["epoch"],
+        )
+
     print("  Session components ready")
 
-    # --- MultiCoordinator ---
+    # --- MultiCoordinator (with full trade pipeline) ---
     multi = MultiCoordinator(
         ledger,
         account_adapter,
         DIRECTORY / "STOP_MULTI",
+        secure_client=secure_client,
+        sdk_port=sdk_port,
+        fee_ceiling_fn=current_fee,
         clock=now_ms,
     )
     for s in slots:
         multi.add_slot(s)
 
-    # --- Connect StreamBooks ---
-    print("\n=== CONNECTING STREAMBOOKS ===")
+    # --- Connect StreamBooks + BookAdapters ---
+    print("\n=== CONNECTING STREAMBOOKS + BOOKADAPTERS ===")
+    # Shared REST client for all BookAdapters (avoids rate-limit)
+    from polymarket import AsyncPublicClient
+    _shared_rest = AsyncPublicClient()
     for s in slots:
         book = StreamBook(
             slug=s.market_slug,
@@ -382,7 +409,24 @@ async def main():
         )
         book.connect(s.market_slug, (s.token_up, s.token_down), 1)
         s.stream_book = book
-        print(f"  StreamBook: {s.key}")
+        s.book_adapter = BookAdapter(
+            book,
+            market=s.condition_id,
+            tokens={"UP": s.token_up, "DOWN": s.token_down},
+            clock=now_ms,
+            rest_client=_shared_rest,
+        )
+        print(f"  {s.key}: StreamBook + BookAdapter")
+
+    # --- Seed books from REST (both UP and DOWN) ---
+    print("\n=== SEEDING BOOKS FROM REST ===")
+    for s in slots:
+        for side_name, side_token in [('UP', s.token_up), ('DOWN', s.token_down)]:
+            try:
+                rest_book = await s.book_adapter._rest_snapshot(side_token)
+                print(f"  {s.key} {side_name} book seeded ({len(rest_book.get('bids',[]))} bids, {len(rest_book.get('asks',[]))} asks)")
+            except Exception as e:
+                print(f"  {s.key} {side_name} seed failed: {e}")
 
     # --- Start Binance collectors ---
     print("\n=== STARTING BINANCE PRICE FEEDS ===")
@@ -394,7 +438,7 @@ async def main():
         async def make_collector(slot_key, symbol):
             async def on_tick(tick):
                 await multi.on_tick(slot_key, tick)
-            async def on_status(kind):
+            async def on_status(kind, data=None):
                 pass
             collector = BinanceCollector(symbol, on_tick, on_status)
             await collector.run()
@@ -424,6 +468,8 @@ async def main():
     from analysis.d6.real_execution_calibration_v1.engine import _ARM_FACTORY
     arm = HumanArm(EXPERIMENT_ID, report, _factory=_ARM_FACTORY)
     multi.arm = arm
+    sdk_port.arm = arm
+    sdk_port.qualified = True
     print(f"ARMED: experiment_id={arm.experiment_id}, nonce={arm.nonce}")
 
     ledger.emit('ARM_STATE', {
@@ -434,6 +480,7 @@ async def main():
     print("\n" + "=" * 60)
     print("  MULTI-CRYPTO ENGINE  —  LIVE")
     print(f"  {len(slots)} markets · {[s.key for s in slots]}")
+    print(f"  Cash: ${ledger.cash} · Max/trade: $25 · Max concurrent: 4")
     print("=" * 60 + "\n")
 
     try:

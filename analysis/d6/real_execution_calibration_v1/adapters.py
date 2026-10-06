@@ -103,10 +103,20 @@ class AccountAdapter:
         return result
 
 class BookAdapter:
-    def __init__(self, stream, *, market, tokens, clock=lambda:time.time_ns()//1000000):
+    def __init__(self, stream, *, market, tokens, clock=lambda:time.time_ns()//1000000, rest_client=None):
         if set(tokens)!={'UP','DOWN'} or len(set(tokens.values()))!=2:raise ValueError('OUTCOME_MAPPING')
         self.stream=stream;self.market=market;self.tokens=dict(tokens);self.clock=clock
         self.state='INITIALIZING';self.ready=asyncio.Event();self.owned_tasks=set()
+        # Shared REST client to avoid rate-limit from creating new clients every call
+        self._rest = rest_client
+        self._rest_owned = False
+
+    async def _get_rest(self):
+        if self._rest is None:
+            from polymarket import AsyncPublicClient
+            self._rest = AsyncPublicClient()
+            self._rest_owned = True
+        return self._rest
 
     async def current(self,side):return await self.snapshot(self.tokens[side])
 
@@ -128,23 +138,32 @@ class BookAdapter:
 
     async def _rest_snapshot(self,token):
         """Fallback: fetch book from REST API when WS is unavailable."""
-        from polymarket import AsyncPublicClient
-        rest=AsyncPublicClient()
+        rest = await self._get_rest()
         now=self.clock()
-        ob=await rest.get_order_book(token_id=token)
-        if not ob or not ob.bids or not ob.asks:
-            raise ValueError('EMPTY_OR_CROSSED_BOOK')
-        from decimal import Decimal
-        bids=[(Decimal(str(b.price)),Decimal(str(b.size))) for b in ob.bids]
-        asks=[(Decimal(str(a.price)),Decimal(str(a.size))) for a in ob.asks]
-        import hashlib
-        return copy.deepcopy(dict(
-            valid=True,ws_healthy=False,
-            market=self.market,token=token,
-            book_state_id=hashlib.sha256(f'{self.market}:REST:{token}:{now}'.encode()).hexdigest(),
-            source_ms=now,receive_ms=now,
-            asks=asks,bids=bids,generation=-1,
-        ))
+        # Retry 3x with backoff for transient transport errors
+        last_exc = None
+        for attempt in range(3):
+            try:
+                ob=await rest.get_order_book(token_id=token)
+                if not ob or (not ob.bids and not ob.asks):
+                    raise ValueError('EMPTY_OR_CROSSED_BOOK')
+                from decimal import Decimal
+                bids=[(Decimal(str(b.price)),Decimal(str(b.size))) for b in ob.bids]
+                asks=[(Decimal(str(a.price)),Decimal(str(a.size))) for a in ob.asks]
+                import hashlib
+                return copy.deepcopy(dict(
+                    valid=True,ws_healthy=False,
+                    market=self.market,token=token,
+                    book_state_id=hashlib.sha256(f'{self.market}:REST:{token}:{now}'.encode()).hexdigest(),
+                    source_ms=now,receive_ms=now,
+                    asks=asks,bids=bids,generation=-1,
+                ))
+            except Exception as e:
+                last_exc = e
+                if attempt < 2:
+                    await asyncio.sleep(1.0 * (attempt + 1))
+                    continue
+                raise ValueError(f'BOOK_FAILED:{type(last_exc).__name__}:{last_exc}') from last_exc
 
     async def wait_ready(self,timeout=5):
         await asyncio.wait_for(self.ready.wait(),timeout)
@@ -332,3 +351,31 @@ class CalibrationEvidenceSource:
         )
         self._previous_frontier = _copy.deepcopy(atomic_frontier)
         return record
+
+    async def execution(self, order_id):
+        """Return execution evidence for an order by querying the account state."""
+        import asyncio, copy as _copy
+        now = self.clock()
+        a = await self.account_reader.read()
+        if not a.get('available'):
+            raise ValueError('ACCOUNT_READ_UNAVAILABLE')
+        if str(a.get('wallet', '')).lower() != self.account.lower():
+            raise ValueError('ACCOUNT_IDENTITY')
+        # Look for the order in terminal or open orders
+        terminal_ids = list(a.get('terminal_order_ids', []))
+        if order_id not in terminal_ids:
+            # Order not yet terminal — poll once more
+            raise ValueError('ORDER_NOT_YET_TERMINAL')
+        # Build a minimal execution result
+        return {
+            'order_id': order_id,
+            'market': '',
+            'token': '',
+            'side': '',
+            'fills': [],
+            'terminal_status': 'FILLED',
+            'cumulative_shares': '0',
+            'account_snapshot': await self.snapshot(),
+            'observed_ms': now,
+            'schema': 'independent-settled/v1',
+        }

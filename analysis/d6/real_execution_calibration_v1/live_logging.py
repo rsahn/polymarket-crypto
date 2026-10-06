@@ -16,7 +16,9 @@ EVENTS=SAFE_EVENTS|{'ARM_STATE','ENTRY_DUE','SEND_DISPATCH_INTENT','POST_ORDER_B
  'EXPOSURE_CUSTODY_HANDOFF','ACCOUNT_OBSERVATION_DURING_ORDER','OPPORTUNITY_SKIPPED','OPPORTUNITY_COMPLETE',
  'ACCOUNT_MONITOR_FAILURE','WS_DISCONNECT','WS_RECONNECTING','WS_RECONNECTED','WS_RECONNECT_FAILURE',
  'BTC_CONNECTED','BTC_TICK','BTC_HEALTH','BTC_RECONNECT','BTC_RECEIVE_REGRESSION',
- 'MULTI_START','MULTI_RECONCILE','MULTI_TRANSIENT','MULTI_FATAL'}
+ 'MULTI_START','MULTI_RECONCILE','MULTI_TRANSIENT','MULTI_FATAL',
+ 'MULTI_OPPORTUNITY','MULTI_PNL','MULTI_SLOT_ADDED','MULTI_OPPORTUNITY_FATAL',
+ 'MULTI_STOP'}
 PAYLOAD_FIELDS={
  'CALIBRATION_EXCEPTION':{'incident_id','exception_type','classification','message_redacted','exposure_management'},
  'RECOVERY_COMPLETE':{'cleared_transient_errors','remaining_v1_errors'},
@@ -50,6 +52,11 @@ PAYLOAD_FIELDS={
  'MULTI_RECONCILE':{'cash','available','allocated','global_pnl','active_slots','opportunities','diagnostics'},
  'MULTI_TRANSIENT':{'error'},
  'MULTI_FATAL':{'error'},
+ 'MULTI_OPPORTUNITY':{'key','signal_ts','move_pct','side','cash','available','opportunities'},
+ 'MULTI_PNL':{'key','change','market_pnl','global_pnl','consecutive_losses'},
+ 'MULTI_SLOT_ADDED':{'key','crypto','timeframe','condition_id','total_slots'},
+ 'MULTI_OPPORTUNITY_FATAL':{'key','exception'},
+ 'MULTI_STOP':{'global_pnl','total_opportunities','total_trades'},
 }
 class LiveLog(RotatingLog):
     def __init__(self,*args,max_bytes=64*1024**2,on_fault=None,require_drive=None,**kwargs):
@@ -112,7 +119,7 @@ class LiveLog(RotatingLog):
                     fields=PAYLOAD_FIELDS.get(row.get('kind'),set())
                     row['payload']=nested_payload(row.get('kind'),{k:v for k,v in row['payload'].items() if k in fields},self.public_tokens) if isinstance(row['payload'],dict) else {}
                 allowed={'experiment_id','hash','kind','payload','previous','seq','mode'}
-                data={**self.canonical_tree({k:v for k,v in row.items() if k in allowed}),'mode':'REAL_CALIBRATION_PREPARATION'}
+                data={**self.canonical_tree({k:v for k,v in row.items() if k in allowed}),'mode':'LIVE'}
                 if row.get('kind')=='SHADOW_SEALED':
                     from .core import digest
                     p=data['payload']
@@ -126,6 +133,10 @@ class LiveLog(RotatingLog):
 class LoggedJournal(Journal):
     def __init__(self,path,experiment_id,log,**quota):
         self.log=log;super().__init__(path,experiment_id,**quota)
+
+    @property
+    def failed(self):
+        return getattr(self.log, 'failed', False)
     def project_shadow(self,shadow):
         from .log_schema import project,SHADOW
         return self.log.canonical_tree(project(shadow,SHADOW,self.log.public_tokens))

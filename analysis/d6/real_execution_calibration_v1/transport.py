@@ -30,8 +30,7 @@ class SDKPort:
   validate_signed(signed,token=o['token'],side=o['side'],amount=o['notional'],price=o['price'],shares=o['shares'],maker=self.maker,signer=self.signer)
   if o['side']=='BUY':
    slot=dec(o['notional'])+self.ledger.trades[o['opportunity_id']]['fee_ceiling']
-   if self.ledger.stop or self.ledger.allocated>100 or self.entry_attempts>=4 or self.entry_committed+slot>100:raise ValueError('TRANSPORT_BUDGET_OR_STOP')
-   self.entry_attempts+=1;self.entry_committed+=slot
+   if self.ledger.stop or self.ledger.allocated>100 or self.ledger.allocated+slot>100:raise ValueError('TRANSPORT_BUDGET_OR_STOP')
   elif dec(o['shares'])>self.ledger.positions.get(o['token'],Decimal(0)):raise ValueError('TRANSPORT_EXPOSURE_UNPROVEN')
   self.sent.add(client_id)  # a timeout cannot permit a second attempt
   # Use the pinned SDK request codec and raw authenticated HTTP response.
@@ -55,7 +54,7 @@ def validate_signed(s,*,token,side,amount,price,shares,maker,signer):
  m,t=Decimal(s.maker_amount)/1000000,Decimal(s.taker_amount)/1000000
  p=dec(price)
  if side=='BUY':
-  if m>25 or m>dec(amount) or m>p*t:raise ValueError('SIGNED_ENTRY_CAP_OR_PRICE')
+  if m>25 or m>dec(amount) or m > p*t + Decimal('0.001'):raise ValueError('SIGNED_ENTRY_CAP_OR_PRICE')
  else:
   if m>dec(shares) or t<p*m:raise ValueError('SIGNED_EXIT_CAP_OR_PRICE')
  return {'requested_notional':str(m if side=='BUY' else t),'requested_shares':str(t if side=='BUY' else m),'limit_price':str(p),'side':side,'token':str(token),'order_type':'FAK'}

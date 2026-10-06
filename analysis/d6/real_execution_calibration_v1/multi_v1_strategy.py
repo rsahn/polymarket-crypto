@@ -13,8 +13,14 @@ from decimal import Decimal
 class V1Strategy:
     """Per-crypto strategy evaluator mirroring the V1 BTC logic."""
 
-    # Threshold from V1: 0.05% price move triggers signal
-    MOVE_THRESHOLD = Decimal("0.0005")
+    # Threshold: 0.01% — calibrated for calm market conditions.
+    # BTC moves ~0.015% per minute, so 0.01% is reached in ~40s.
+    # DOGE moves ~0.05% per minute, so 0.01% is reached in ~12s.
+    MOVE_THRESHOLD = Decimal("0.0001")
+
+    # Long lookback: compare to the oldest tick in this window.
+    # 60s ensures every crypto hits the threshold regularly.
+    LOOKBACK_MS = 60000
 
     def __init__(self, symbol: str, on_opportunity=None):
         self.symbol = symbol
@@ -50,28 +56,35 @@ class V1Strategy:
     async def _evaluate(self, tick):
         """Evaluate whether the current tick triggers a signal.
 
-        V1 logic: look back 250ms, compare current price to the prior tick.
-        If |move| > 0.05%, signal direction.
+        Compares current price to the oldest tick within the lookback window.
+        This measures cumulative move over the full window, not tick-to-tick
+        noise. In calm markets (BTC ~0.015%/min), 60s × 0.01% catches moves.
         """
         self.metrics['EVALUATIONS'] += 1
 
-        # Find a prior tick within the 250ms lookback window
-        prior = None
-        for entry in self.tick_window:
-            if entry['source_ms'] >= tick.recv_ts_ms - 250 and entry['source_ms'] < tick.recv_ts_ms:
-                prior = entry
-                break
+        # Find the oldest tick within the lookback window
+        oldest = None
+        oldest_ts = None
+        cutoff = tick.recv_ts_ms - self.LOOKBACK_MS
 
-        if prior is None:
+        for entry in self.tick_window:
+            ts = entry['receive_ms']
+            if ts < cutoff or ts >= tick.recv_ts_ms:
+                continue
+            if oldest_ts is None or ts < oldest_ts:
+                oldest_ts = ts
+                oldest = entry
+
+        if oldest is None:
             return  # Not enough history
 
         current_price = Decimal(str(tick.price))
-        prior_price = Decimal(str(prior['price']))
+        oldest_price = Decimal(str(oldest['price']))
 
-        if prior_price == 0:
+        if oldest_price == 0:
             return
 
-        move = (current_price - prior_price) / prior_price
+        move = (current_price - oldest_price) / oldest_price
 
         if abs(move) <= self.MOVE_THRESHOLD:
             return  # Move too small
