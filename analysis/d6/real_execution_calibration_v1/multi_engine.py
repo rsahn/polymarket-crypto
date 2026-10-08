@@ -423,9 +423,10 @@ class MultiCoordinator:
                     # Track position timestamp for force-resolve timeout
                     self._position_timestamps[buy_token] = self.clock()
                 
-                # Release ledger capital for next trade (different token)
+                # DO NOT release allocated capital — stay locked until resolution.
+                # This keeps can_allocate() honest: allocated[key] > 0 blocks new entries
+                # on this slot until the position resolves or times out.
                 self.ledger.discard_opportunity(op)
-                self.release(key)
                 return
 
             # --- REAL MODE: submit order at FAIR PRICE (limit order, not market) ---
@@ -533,13 +534,13 @@ class MultiCoordinator:
     def can_allocate(self, amount=Decimal("25")):
         """Check if we can allocate $amount to a new trade."""
         if self.simulate and self.simulator:
-            active = len([p for p in self.simulator.positions if not p.resolved])
+            # Use allocated dict as source of truth: each slot with non-zero
+            # allocation is an active unresolved position.
+            active = sum(1 for v in self.allocated.values() if v > 0)
             if active >= self.max_concurrent:
                 return False
             if self.simulator.cash < amount:
                 return False
-            # Also enforce global max_total
-            total_used = (len(self.positions) if hasattr(self, 'positions') else 0) if False else active * Decimal("25")
             return True
         active_trades = sum(1 for v in self.allocated.values() if v > 0)
         if active_trades >= self.max_concurrent:
@@ -673,6 +674,7 @@ class MultiCoordinator:
                                               f"PnL=${float(pos.pnl):+.2f}", flush=True)
                                         self.total_cash = self.simulator.cash
                                         self.update_pnl(pos.slot_key, pos.pnl)
+                                        self.release(pos.slot_key)
                                         del self._position_timestamps[token]
                                         break
 
@@ -684,15 +686,22 @@ class MultiCoordinator:
                                   f"PnL=${float(pos.pnl):+.2f}", flush=True)
                             self.total_cash = self.simulator.cash
                             self.update_pnl(pos.slot_key, pos.pnl)
+                            self.release(pos.slot_key)
                             for tok in list(self._position_timestamps.keys()):
                                 if any(p.token == tok and p.resolved for p in self.simulator.closed_positions):
                                     del self._position_timestamps[tok]
 
                     cash = self.simulator.cash if self.simulator else self.total_cash
                     open_pos = len(self.simulator.positions)-len(self.simulator.closed_positions) if self.simulator else 0
-                    total_value = float(self.simulator.cash) if self.simulator else float(cash)
+                    # Include value of open positions at cost basis
+                    open_value = sum(
+                        float(p.shares) * float(p.entry_price)
+                        for p in (self.simulator.positions if self.simulator else [])
+                        if not p.resolved
+                    )
+                    total_value = float(cash) + open_value
                     print(f"MULTI: Cycle {cycle} — SIMULATE cash=${float(cash):.2f} "
-                          f"open={open_pos} total_value=${total_value:.2f} pnl=${float(self.simulator.total_pnl):+.2f}", flush=True)
+                          f"open={open_pos} (${open_value:.2f}) total_value=${total_value:.2f} pnl=${float(self.simulator.total_pnl):+.2f}", flush=True)
                 else:
                     print(f"MULTI: Cycle {cycle} — snapshot...", flush=True)
                     try:
