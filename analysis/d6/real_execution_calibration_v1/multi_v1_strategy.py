@@ -11,16 +11,32 @@ from decimal import Decimal
 
 
 class V1Strategy:
-    """Per-crypto strategy evaluator mirroring the V1 BTC logic."""
+    """Per-crypto strategy evaluator mirroring the V1 BTC logic.
 
-    # Threshold: 0.01% — calibrated for calm market conditions.
-    # BTC moves ~0.015% per minute, so 0.01% is reached in ~40s.
-    # DOGE moves ~0.05% per minute, so 0.01% is reached in ~12s.
-    MOVE_THRESHOLD = Decimal("0.0001")
+    Improvements v2:
+    - Per-crypto volatility thresholds (BTC least volatile, DOGE most)
+    - Momentum filter: require N consecutive ticks in same direction
+    - Signal strength scoring for dynamic position sizing
+    """
 
-    # Long lookback: compare to the oldest tick in this window.
-    # 60s ensures every crypto hits the threshold regularly.
-    LOOKBACK_MS = 60000
+    # Per-crypto move thresholds (higher = less volatile = tighter threshold)
+    # BTC daily range ~1-2%, DOGE ~3-5% so DOGE needs wider threshold
+    CRYPTO_THRESHOLDS = {
+        "BTC": Decimal("0.0006"),   # 0.06% — tight, BTC is least volatile
+        "ETH": Decimal("0.0007"),   # 0.07%
+        "SOL": Decimal("0.0008"),   # 0.08%
+        "XRP": Decimal("0.0009"),   # 0.09%
+        "DOGE": Decimal("0.0012"),  # 0.12% — wider, DOGE is most volatile
+    }
+    DEFAULT_THRESHOLD = Decimal("0.0008")  # 0.08% fallback
+
+    # Lookback: 120s — longer window = more stable trend detection.
+    # Filters short-term wicks and micro-spikes.
+    LOOKBACK_MS = 120000
+
+    # Momentum filter: require 2 consecutive ticks in the same direction
+    # before firing a signal. This eliminates whipsaw noise.
+    MOMENTUM_TICKS = 2
 
     def __init__(self, symbol: str, on_opportunity=None):
         self.symbol = symbol
@@ -33,6 +49,15 @@ class V1Strategy:
             'SIGNALS': 0,
             'LAST_TICK_MS': None,
         }
+
+        # Determine threshold based on crypto
+        crypto_name = symbol.replace('USDT', '')
+        self.move_threshold = self.CRYPTO_THRESHOLDS.get(crypto_name, self.DEFAULT_THRESHOLD)
+
+        # Momentum tracking
+        self._consecutive_same_direction = 0
+        self._last_move_sign = 0  # +1 for up, -1 for down, 0 for neutral
+        self._last_signal_ms = 0
 
     async def on_tick(self, tick):
         """Process a price tick from Binance (or any price feed).
@@ -59,6 +84,10 @@ class V1Strategy:
         Compares current price to the oldest tick within the lookback window.
         This measures cumulative move over the full window, not tick-to-tick
         noise. In calm markets (BTC ~0.015%/min), 60s × 0.01% catches moves.
+
+        Momentum filter: requires N consecutive ticks in the same direction
+        before emitting a signal. This eliminates whipsaw noise from rapid
+        micro-reversals that plagued v1.
         """
         self.metrics['EVALUATIONS'] += 1
 
@@ -86,8 +115,21 @@ class V1Strategy:
 
         move = (current_price - oldest_price) / oldest_price
 
-        if abs(move) <= self.MOVE_THRESHOLD:
+        if abs(move) <= self.move_threshold:
+            self._consecutive_same_direction = 0
+            self._last_move_sign = 0
             return  # Move too small
+
+        # --- Momentum filter ---
+        current_sign = 1 if move > 0 else -1
+        if current_sign == self._last_move_sign:
+            self._consecutive_same_direction += 1
+        else:
+            self._consecutive_same_direction = 1
+        self._last_move_sign = current_sign
+
+        if self._consecutive_same_direction < self.MOMENTUM_TICKS:
+            return  # Need more consecutive ticks in this direction
 
         # Signal!
         side = "BUY" if move > 0 else "SELL"

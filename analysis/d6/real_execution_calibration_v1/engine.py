@@ -150,7 +150,7 @@ class Coordinator:
    shadow={'opportunity_id':op,'market':b['market'],'token':b['token'],'direction':side,**context,'actual_selected_book':b,'actual_entry_observation_ts':observed,'expected_entry_price':str(price),'expected_quantity':str(qty),'expected_vwap':str(vwap),'expected_fill':str(qty),'expected_entry_cost':str(cost),'expected_residual':'0','expected_fee':None,'fee_status':'FEE_UNQUALIFIED','expected_exit_behavior':{'hold_ms':500,'depth':'actual future selected V1 top20 bids; no invented future depth'},'strategy_hashes':verify()}
    self.ledger.seal_shadow(op,shadow)
    if self.fee_ceiling is None:raise ValueError('FEE_RISK_BOUND_UNPROVEN')
-   amount=min(Decimal(25),Decimal(str(cost))).quantize(Decimal('.01'),rounding='ROUND_DOWN')
+   amount=min(Decimal("25"),Decimal(str(cost))).quantize(Decimal('.01'),rounding='ROUND_DOWN')
    if not self.ledger.reconcile(await self.account_source.snapshot(),self.clock()):raise ValueError('PRE_ENTRY_ACCOUNT_UNQUALIFIED')
    from .qualification import FeeRisk
    policy=self.fee_ceiling() if callable(self.fee_ceiling) else self.fee_ceiling

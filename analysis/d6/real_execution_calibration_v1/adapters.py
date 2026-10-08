@@ -161,7 +161,7 @@ class BookAdapter:
             except Exception as e:
                 last_exc = e
                 if attempt < 2:
-                    await asyncio.sleep(1.0 * (attempt + 1))
+                    await asyncio.sleep(2.0 * (attempt + 1))  # 2s, 4s backoff
                     continue
                 raise ValueError(f'BOOK_FAILED:{type(last_exc).__name__}:{last_exc}') from last_exc
 

@@ -497,4 +497,129 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    import sys
+    if "--simulate" in sys.argv or "--dry-run" in sys.argv:
+        STARTING_CASH = Decimal("100.00")
+        print("=" * 60)
+        print("  *** SIMULATION MODE ***")
+        print(f"  Starting capital: ${STARTING_CASH}")
+        print("  Tactic: Bonereaper - buy fair price, hold to resolution")
+        print("  No real orders - PnL tracked against live market resolution")
+        print("=" * 60)
+        async def sim_main():
+            from .multi_simulator import Simulator
+
+            now_ms = lambda: int(time.time() * 1000)
+            expiry_ms = int(time.time() * 1000) + 86400000 * 30
+
+            print("\n=== BUILDING ASYNC SECURE CLIENT (SIM) ===")
+            # In sim mode, skip real relayer connection (SSL cert issues)
+            secure_client = None
+
+            # Create stub readers that don't need the real client
+            class _StubReader:
+                async def get(self):
+                    return None
+            
+            log = LiveLog(DIRECTORY, EXPERIMENT_ID)
+            for s in slots:
+                log.public_tokens.update([s.token_up, s.token_down])
+                log.public_markets.add(s.market_slug)
+            journal = LoggedJournal(DIRECTORY / (EXPERIMENT_ID + '.jsonl'), EXPERIMENT_ID, log)
+            ledger = MultiCalibrationLedger(journal, ACCOUNT, str(STARTING_CASH))
+            ledger.reconciled = True
+            
+            def fault(reason):
+                ledger.stop = True
+                ledger.reconciled = False
+                ledger.reasons.append(reason)
+            log.on_fault = fault
+
+            account_adapter = _StubReader()
+
+            # Create simulator
+            simulator = Simulator(starting_cash=STARTING_CASH)
+
+            multi = MultiCoordinator(
+                ledger, account_adapter, DIRECTORY / "STOP_MULTI",
+                secure_client=None, sdk_port=None,
+                clock=now_ms,
+            )
+            multi.simulate = True
+            multi.simulator = simulator
+            multi.total_cash = STARTING_CASH
+            for s in slots:
+                multi.add_slot(s)
+
+            # Connect books
+            from polymarket import AsyncPublicClient
+            _shared_rest = AsyncPublicClient()
+            for s in slots:
+                book = StreamBook(
+                    slug=s.market_slug, condition=s.condition_id,
+                    tokens=(s.token_up, s.token_down), expiry=expiry_ms,
+                    clock=now_ms,
+                )
+                book.connect(s.market_slug, (s.token_up, s.token_down), 1)
+                s.stream_book = book
+                s.book_adapter = BookAdapter(
+                    book, market=s.condition_id,
+                    tokens={"UP": s.token_up, "DOWN": s.token_down},
+                    clock=now_ms, rest_client=_shared_rest,
+                )
+
+            # Seed books
+            print("\n=== SEEDING BOOKS ===")
+            for s in slots:
+                for side_name, side_token in [('UP', s.token_up), ('DOWN', s.token_down)]:
+                    try:
+                        rest_book = await s.book_adapter._rest_snapshot(side_token)
+                        print(f"  {s.key} {side_name}: {len(rest_book.get('bids',[]))} bids, {len(rest_book.get('asks',[]))} asks")
+                    except Exception as e:
+                        print(f"  {s.key} {side_name}: seed failed ({e})")
+
+            # Start Binance feeds
+            print("\n=== BINANCE PRICE FEEDS ===")
+            collector_tasks = []
+            for s in slots:
+                sym = s.binance_symbol.lower()
+                key = s.key
+                async def make_collector(slot_key, symbol):
+                    async def on_tick(tick):
+                        await multi.on_tick(slot_key, tick)
+                    async def on_status(kind, data=None):
+                        pass
+                    collector = BinanceCollector(symbol, on_tick, on_status)
+                    await collector.run()
+                task = asyncio.create_task(make_collector(key, sym))
+                collector_tasks.append(task)
+                print(f"  {key} ({sym})")
+
+            print("\n" + "=" * 60)
+            print("  *** SIMULATION RUNNING ***")
+            print(f"  {len(slots)} markets · {[s.key for s in slots]}")
+            print(f"  Capital: ${STARTING_CASH} · Max/trade: $25 · Max concurrent: 4")
+            print("  Detecting signals -> buying at fair price -> holding to resolution")
+            print("  PnL calculated when markets resolve via gamma-api")
+            print("=" * 60 + "\n")
+
+            try:
+                await multi.run()
+            finally:
+                print("\n" + "=" * 60)
+                print("  SIMULATION STOPPED")
+                print("=" * 60)
+                if simulator:
+                    print(simulator.summary())
+                    simulator.print_positions()
+                multi.close()
+                for t in collector_tasks:
+                    t.cancel()
+                journal.close()
+                log.close()
+                if secure_client:
+                    await secure_client.close()
+
+        asyncio.run(sim_main())
+    else:
+        asyncio.run(main())

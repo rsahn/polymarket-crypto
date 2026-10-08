@@ -33,6 +33,102 @@ TIMEFRAMES = {
 }
 
 
+def discover_crypto(crypto, tf_label="5m"):
+    """Discover a single crypto's active Up/Down market for the current slot.
+
+    Returns one market dict or raises ValueError.
+    """
+    if crypto not in CRYPTO_SLUGS:
+        raise ValueError(f"UNKNOWN_CRYPTO: {crypto}")
+    prefix = CRYPTO_SLUGS[crypto]
+    tf_seconds = TIMEFRAMES.get(tf_label, 300)
+    now_s = int(time.time())
+    slot_s = now_s // tf_seconds * tf_seconds
+
+    for attempt in range(2):
+        try:
+            slug = f"{prefix}-updown-{tf_label}-{slot_s}"
+            url = f"{_GAMMA_BASE}/markets?slug={slug}"
+            req = urllib.request.Request(url, headers={
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                "Accept": "application/json",
+            })
+            with urllib.request.urlopen(req, timeout=10) as r:
+                values = json.loads(r.read(50000))
+
+            if not isinstance(values, list) or len(values) == 0:
+                slot_s -= tf_seconds
+                continue
+
+            if len(values) != 1:
+                raise ValueError(f"AMBIGUOUS: {len(values)}")
+
+            raw = values[0]
+
+            if bool(raw.get("closed", True)):
+                raise ValueError("CLOSED")
+            if not bool(raw.get("active", False)):
+                raise ValueError("NOT_ACTIVE")
+            if not bool(raw.get("acceptingOrders", False)):
+                raise ValueError("NOT_ACCEPTING")
+
+            condition_id = raw.get("conditionId", "")
+            import re
+            if not re.fullmatch(r"0x[0-9a-fA-F]{64}", condition_id):
+                raise ValueError(f"INVALID_CONDITION_ID")
+
+            clob_raw = raw.get("clobTokenIds", "[]")
+            if isinstance(clob_raw, str):
+                try:
+                    ids = json.loads(clob_raw)
+                except (json.JSONDecodeError, TypeError):
+                    ids = []
+            elif isinstance(clob_raw, list):
+                ids = clob_raw
+            else:
+                ids = []
+            ids = [str(x) for x in ids if x]
+
+            if len(ids) < 2:
+                raise ValueError("MISSING_TOKENS")
+            token_up, token_down = ids[0], ids[1]
+
+            if not token_up.isdigit() or not token_down.isdigit():
+                raise ValueError(f"NON_DIGIT_TOKENS")
+            if token_up == token_down:
+                raise ValueError("IDENTICAL_TOKENS")
+
+            import datetime
+            end_date = raw.get("endDate", "")
+            expiry_ts_ms = 0
+            if end_date:
+                try:
+                    dt = datetime.datetime.fromisoformat(end_date.replace("Z", "+00:00"))
+                    expiry_ts_ms = int(dt.timestamp() * 1000)
+                except (ValueError, AttributeError):
+                    expiry_ts_ms = int(time.time() * 1000) + 86400000
+
+            return {
+                "crypto": crypto,
+                "prefix": prefix,
+                "timeframe_s": tf_seconds,
+                "timeframe_label": tf_label,
+                "condition_id": condition_id,
+                "token_up": token_up,
+                "token_down": token_down,
+                "market_slug": slug,
+                "expiry_ts_ms": expiry_ts_ms,
+                "slot_start_ts": slot_s * 1000,  # ms
+            }
+
+        except Exception as exc:
+            if attempt == 1:
+                raise ValueError(f"{crypto}/{tf_label}: {exc}") from exc
+            continue
+
+    raise ValueError(f"{crypto}/{tf_label}: NOT_FOUND")
+
+
 def discover_all():
     """Discover ALL active crypto Up/Down markets.
 
