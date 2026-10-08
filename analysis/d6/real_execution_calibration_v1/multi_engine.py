@@ -223,7 +223,7 @@ class MultiCoordinator:
             position_amount = Decimal(str(round(position_pct * 15, 2)))  # $6 to $15
 
             # Capital guard: check max concurrent positions and available cash
-            if not self.can_allocate(position_amount):
+            if not self.can_allocate(key, position_amount):
                 print(f"MULTI: {key} can't allocate — cash=${float(self.simulator.cash if self.simulate else self.total_cash):.2f} active={len([p for p in self.simulator.positions if not p.resolved]) if self.simulator else 0}/{self.max_concurrent}", flush=True)
                 self.ledger.emit('OPPORTUNITY_SKIPPED', {
                     'key': key, 'signal_ts': signal_ts, 'reason': 'CAPITAL_EXHAUSTED',
@@ -531,19 +531,22 @@ class MultiCoordinator:
         used = sum(self.allocated.values())
         return min(self.total_cash - used, self.max_total - used)
 
-    def can_allocate(self, amount=Decimal("25")):
+    def can_allocate(self, key=None, amount=Decimal("25")):
         """Check if we can allocate $amount to a new trade."""
         if self.simulate and self.simulator:
-            # Use allocated dict as source of truth: each slot with non-zero
-            # allocation is an active unresolved position.
             active = sum(1 for v in self.allocated.values() if v > 0)
             if active >= self.max_concurrent:
+                return False
+            # Slot already has an unresolved position — no double-dipping
+            if key and self.allocated.get(key, Decimal("0")) > 0:
                 return False
             if self.simulator.cash < amount:
                 return False
             return True
         active_trades = sum(1 for v in self.allocated.values() if v > 0)
         if active_trades >= self.max_concurrent:
+            return False
+        if key and self.allocated.get(key, Decimal("0")) > 0:
             return False
         return self.available_capital() >= amount
 
