@@ -419,6 +419,9 @@ class MultiCoordinator:
                         'simulated_cost': str(amount),
                         'predicted_direction': predicted,
                     })
+                    
+                    # Track position timestamp for force-resolve timeout
+                    self._position_timestamps[buy_token] = self.clock()
                 
                 # Release ledger capital for next trade (different token)
                 self.ledger.discard_opportunity(op)
